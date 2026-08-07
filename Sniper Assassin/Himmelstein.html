@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Last Yardbird — Himmelstein Range Card</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;500;700&family=Spectral:ital,wght@0,300;0,500;1,300&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0C141C; --panel:#152130; --panel2:#1C2B3C; --line:#2A3E52;
+  --frost:#C6D6E3; --dim:#7D93A6; --glacier:#5FB7D4; --brass:#C9A227;
+  --alarm:#E4572E; --amber:#E8A33D; --moss:#63A183; --violet:#9A87C4;
+  --display:"Oswald","Arial Narrow","Helvetica Neue",sans-serif;
+  --body:"Spectral",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:radial-gradient(1200px 600px at 70% -10%, #1B2E3F 0%, transparent 60%), var(--ink);
+  color:var(--frost);font-family:var(--body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1080px;margin:0 auto;padding:0 18px 90px}
+
+header.scope{border-bottom:1px solid var(--line);background:linear-gradient(180deg,rgba(12,20,28,.97),rgba(12,20,28,.85));
+  backdrop-filter:blur(8px);position:sticky;top:0;z-index:40}
+.scope-in{max-width:1080px;margin:0 auto;padding:12px 18px;display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.reticle{width:92px;height:92px;flex:0 0 92px;position:relative}
+.reticle .center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none}
+.reticle .big{font-family:var(--display);font-weight:700;font-size:24px;line-height:1;color:#fff}
+.reticle .small{font-family:var(--mono);font-size:9px;color:var(--dim);letter-spacing:.16em;margin-top:2px}
+.hdr-txt{flex:1 1 240px;min-width:220px}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.3em;color:var(--brass);text-transform:uppercase;margin:0 0 4px}
+h1{font-family:var(--display);font-weight:500;font-size:clamp(20px,4vw,30px);letter-spacing:.06em;text-transform:uppercase;margin:0;color:#fff}
+.sub{font-size:12.5px;color:var(--dim);margin:4px 0 0;font-style:italic}
+.counters{display:flex;gap:8px;flex-wrap:wrap;flex:1 1 100%}
+.ctr{border:1px solid var(--line);border-radius:2px;padding:5px 11px;background:var(--panel);min-width:100px}
+.ctr b{display:block;font-family:var(--display);font-size:18px;font-weight:500;color:#fff}
+.ctr span{font-family:var(--mono);font-size:9px;letter-spacing:.16em;color:var(--dim);text-transform:uppercase}
+.ctr.assn b{color:var(--glacier)} .ctr.feat b{color:var(--brass)} .ctr.left b{color:var(--amber)}
+
+nav.tabs{display:flex;border-bottom:1px solid var(--line);margin:0 0 20px;flex-wrap:wrap}
+nav.tabs button{font-family:var(--display);text-transform:uppercase;letter-spacing:.16em;font-size:12px;font-weight:500;
+  background:none;border:none;border-bottom:2px solid transparent;color:var(--dim);padding:14px 16px;cursor:pointer}
+nav.tabs button[aria-selected="true"]{color:#fff;border-bottom-color:var(--brass)}
+nav.tabs button:hover{color:var(--frost)}
+nav.tabs button:focus-visible,.jump button:focus-visible,.tick:focus-visible,.runbar:focus-visible,.more:focus-visible,.filters button:focus-visible{outline:2px solid var(--glacier);outline-offset:2px}
+
+/* run jump bar */
+.jump{position:sticky;top:0;z-index:30;display:flex;gap:6px;flex-wrap:wrap;padding:12px 0 14px;margin:0 0 18px;
+  border-bottom:1px solid var(--line);background:linear-gradient(180deg,rgba(12,20,28,.98),rgba(12,20,28,.9))}
+.jump button{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;background:var(--panel);
+  border:1px solid var(--line);color:var(--dim);padding:7px 11px;cursor:pointer;border-radius:2px}
+.jump button:hover{color:var(--frost);border-color:var(--glacier)}
+.jump button.full{border-color:var(--moss);color:var(--moss)}
+.jump .util{margin-left:auto;display:flex;gap:6px}
+
+.notice{border-left:3px solid var(--alarm);background:rgba(228,87,46,.07);padding:14px 16px;margin:0 0 16px;font-size:14.5px}
+.notice.info{border-left-color:var(--glacier);background:rgba(95,183,212,.07)}
+.notice.file{border-left-color:var(--violet);background:rgba(154,135,196,.08)}
+.notice h3{font-family:var(--display);letter-spacing:.12em;text-transform:uppercase;font-size:12px;margin:0 0 6px;color:var(--alarm);font-weight:600}
+.notice.info h3{color:var(--glacier)} .notice.file h3{color:var(--violet)}
+.notice p{margin:0 0 8px} .notice p:last-child{margin:0}
+
+/* RUN */
+.run{border:1px solid var(--line);background:var(--panel);margin:0 0 16px;scroll-margin-top:170px}
+.runbar{width:100%;display:flex;gap:14px;align-items:flex-start;text-align:left;padding:16px 18px;
+  background:none;border:none;color:inherit;cursor:pointer;border-bottom:1px solid transparent}
+.run.open .runbar{border-bottom-color:var(--line)}
+.run-no{font-family:var(--display);font-size:30px;font-weight:700;color:var(--brass);line-height:.9;opacity:.85;flex:0 0 auto}
+.runbar h2{font-family:var(--display);font-weight:500;text-transform:uppercase;letter-spacing:.07em;font-size:17.5px;margin:0;color:#fff}
+.runbar .goal{font-size:13.5px;color:var(--dim);margin:5px 0 0;font-style:italic}
+.runbar .chev{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--glacier);flex:0 0 auto;padding-top:4px}
+.run-body{display:none;padding:0 0 16px}
+.run.open .run-body{display:block}
+.rprog{font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--dim);margin:6px 0 0}
+
+.card{margin:16px 18px;border:1px dashed var(--line);background:var(--panel2);padding:13px 15px}
+.card h4{font-family:var(--mono);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--brass);margin:0 0 9px}
+.kv{display:grid;grid-template-columns:120px 1fr;gap:4px 14px;font-size:13.5px}
+.kv dt{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);padding-top:3px}
+.kv dd{margin:0}
+
+.sect{margin:20px 18px 0}
+.sect > h3{font-family:var(--display);text-transform:uppercase;letter-spacing:.18em;font-size:11.5px;color:var(--glacier);
+  margin:0 0 10px;padding-bottom:6px;border-bottom:1px solid var(--line);font-weight:500}
+
+/* STEP */
+.step{border:1px solid var(--line);margin:0 0 9px;background:rgba(12,20,28,.4)}
+.step-top{display:flex;gap:11px;padding:11px 13px;align-items:flex-start}
+.tick{flex:0 0 22px;width:22px;height:22px;margin-top:2px;border:1px solid var(--line);background:transparent;
+  color:transparent;cursor:pointer;border-radius:2px;font-size:13px;line-height:1}
+.tick:hover{border-color:var(--moss)}
+.tick[aria-pressed="true"]{background:var(--moss);border-color:var(--moss);color:#0C141C}
+.step-head{flex:1;background:none;border:none;color:inherit;text-align:left;cursor:pointer;padding:0;font:inherit}
+.snum{font-family:var(--mono);font-size:10px;color:var(--brass);letter-spacing:.1em}
+.step-head h5{font-family:var(--display);font-size:14.5px;letter-spacing:.05em;text-transform:uppercase;margin:1px 0 0;color:#fff;font-weight:500}
+.step.done .step-head h5{color:var(--dim);text-decoration:line-through}
+.step-head .chev{font-family:var(--mono);font-size:10px;color:var(--glacier);letter-spacing:.14em;margin-top:5px;display:inline-block}
+.badges{margin:8px 0 0;display:flex;gap:5px;flex-wrap:wrap}
+.badge{font-family:var(--mono);font-size:10px;letter-spacing:.06em;padding:3px 8px;border-radius:2px;border:1px solid;display:inline-block}
+.badge.assn{color:var(--glacier);border-color:rgba(95,183,212,.5);background:rgba(95,183,212,.09)}
+.badge.feat{color:var(--brass);border-color:rgba(201,162,39,.5);background:rgba(201,162,39,.09)}
+.badge.warn{color:var(--alarm);border-color:rgba(228,87,46,.55);background:rgba(228,87,46,.1);font-weight:600}
+.badge.time{color:var(--amber);border-color:rgba(232,163,61,.55);background:rgba(232,163,61,.1)}
+.badge.unv{color:var(--violet);border-color:rgba(154,135,196,.55);background:rgba(154,135,196,.1)}
+.detail{display:none;padding:2px 13px 14px 46px;border-top:1px dashed var(--line);margin-top:2px}
+.step.open .detail{display:block}
+.f{display:grid;grid-template-columns:96px 1fr;gap:3px 12px;font-size:14px;margin:10px 0 0}
+.f dt{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--brass);padding-top:4px}
+.f dd{margin:0}
+.f dd.none{color:var(--dim);font-style:italic}
+.f ul{margin:0;padding-left:16px} .f li{margin:0 0 3px}
+.wbox{border-left:3px solid var(--alarm);background:rgba(228,87,46,.07);padding:8px 11px;margin:11px 0 0;font-size:13.5px}
+.ubox{border-left:3px solid var(--violet);background:rgba(154,135,196,.07);padding:8px 11px;margin:9px 0 0;font-size:13.5px}
+.tbox{border-left:3px solid var(--amber);background:rgba(232,163,61,.07);padding:8px 11px;margin:9px 0 0;font-size:13.5px}
+
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 16px}
+.filters button{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;background:var(--panel);
+  border:1px solid var(--line);color:var(--dim);padding:7px 12px;cursor:pointer;border-radius:2px}
+.filters button[aria-pressed="true"]{border-color:var(--brass);color:var(--brass);background:rgba(201,162,39,.09)}
+.filters button:disabled{opacity:.4;cursor:not-allowed}
+.row{display:flex;gap:11px;padding:11px 13px;border:1px solid var(--line);margin:0 0 6px;background:var(--panel);align-items:flex-start}
+.row.done{opacity:.55} .row.done .rname{text-decoration:line-through}
+.rmain{flex:1}
+.rname{font-family:var(--display);font-size:14.5px;letter-spacing:.04em;text-transform:uppercase;color:#fff;font-weight:500}
+.rcond{font-size:14px;margin:2px 0 0}
+.rmeta{font-family:var(--mono);font-size:10px;color:var(--dim);letter-spacing:.08em;margin:5px 0 0}
+.rnote{font-size:13px;color:var(--violet);margin:5px 0 0}
+
+.vtable{width:100%;border-collapse:collapse;font-size:13.5px;margin:0 0 20px}
+.vtable th,.vtable td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+.vtable th{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--brass);background:var(--panel2)}
+h3.blk{font-family:var(--display);text-transform:uppercase;letter-spacing:.16em;font-size:13px;color:#fff;margin:26px 0 10px;font-weight:500}
+.src{font-family:var(--mono);font-size:11.5px;color:var(--dim);line-height:1.7}
+a{color:var(--glacier)}
+@media (max-width:640px){
+  .kv,.f{grid-template-columns:1fr;gap:1px 0}
+  .kv dt,.f dt{padding-top:8px}
+  .card,.sect{margin-left:11px;margin-right:11px}
+  .detail{padding-left:14px}
+  .jump{top:0}
+  .run{scroll-margin-top:120px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<header class="scope">
+  <div class="scope-in">
+    <div class="reticle">
+      <svg viewBox="0 0 92 92" width="92" height="92" aria-hidden="true">
+        <circle cx="46" cy="46" r="39" fill="none" stroke="#2A3E52" stroke-width="6"/>
+        <circle id="ring" cx="46" cy="46" r="39" fill="none" stroke="#C9A227" stroke-width="6"
+                stroke-dasharray="245" stroke-dashoffset="245" transform="rotate(-90 46 46)"/>
+        <line x1="46" y1="2" x2="46" y2="12" stroke="#5FB7D4" stroke-width="1"/>
+        <line x1="46" y1="80" x2="46" y2="90" stroke="#5FB7D4" stroke-width="1"/>
+        <line x1="2" y1="46" x2="12" y2="46" stroke="#5FB7D4" stroke-width="1"/>
+        <line x1="80" y1="46" x2="90" y2="46" stroke="#5FB7D4" stroke-width="1"/>
+      </svg>
+      <div class="center"><span class="big" id="ringN">0</span><span class="small">of 28</span></div>
+    </div>
+    <div class="hdr-txt">
+      <p class="eyebrow">Sniper Assassin · Himmelstein, Austria</p>
+      <h1>The Last Yardbird</h1>
+      <p class="sub">Step-by-step challenge route — Hitman World of Assassination</p>
+    </div>
+    <div class="counters">
+      <div class="ctr assn"><b id="cA">0/14</b><span>Assassination</span></div>
+      <div class="ctr feat"><b id="cF">0/14</b><span>Feats</span></div>
+      <div class="ctr"><b id="cD">0/0</b><span>Discovery</span></div>
+      <div class="ctr left"><b id="cL">28</b><span>Remaining</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <nav class="tabs" role="tablist">
+    <button role="tab" id="t-runs" aria-selected="true">Runs</button>
+    <button role="tab" id="t-list" aria-selected="false">Checklist</button>
+    <button role="tab" id="t-ver" aria-selected="false">Verification log</button>
+  </nav>
+  <section id="p-runs" role="tabpanel" aria-labelledby="t-runs"></section>
+  <section id="p-list" role="tabpanel" aria-labelledby="t-list" hidden></section>
+  <section id="p-ver" role="tabpanel" aria-labelledby="t-ver" hidden></section>
+</div>
+
+<script>
+/* ═══════════════ CHALLENGE DATA ═══════════════
+   Names + conditions for 27 taken verbatim from the uploaded in-game
+   challenge file. Faster Than Rocco added from web sources and flagged.
+   ═══════════════════════════════════════════════ */
+const CH = [
+ {id:"elab",  n:"An Elabyrinth Plot", t:"a", c:"Eliminate Dorian Lang and Doris Lee with the statue in the maze.", m:"×1.10", run:5, f:1},
+ {id:"smoke", n:"Smokestack Lightnin'", t:"a", c:"Eliminate three targets by electrocution within thirty seconds.", m:"×1.10", run:4, f:1},
+ {id:"swtf",  n:"Sleeping with the Fishes", t:"a", c:"Eliminate and hide five targets in water.", m:"×1.08", run:6, f:1},
+ {id:"body",  n:"Bodysnatcher", t:"a", c:"Eliminate all of the bodyguards.", m:"×1.05", run:1, f:1, note:"15 bodyguards. Confirmed by the HUD counter, gamepressure and Shacknews."},
+ {id:"clean", n:"Clean Slate", t:"a", c:"Eliminate and hide all targets.", m:"×1.10", run:6, f:1, note:"Wiki challenge page: all three principals plus every bodyguard, bodies concealed."},
+ {id:"loose", n:"No Loose Ends", t:"a", c:"Eliminate all bodyguards after starting the evacuation.", m:"×1.10", run:7, f:1},
+ {id:"killer",n:"Killer Shot", t:"a", c:"Eliminate Dorian Lang and Guillaume Maison with the loudspeaker outside the art gallery.", m:"×1.09", run:4, f:1},
+ {id:"ahotc", n:"A Head Off the Curve", t:"a", c:"Eliminate all targets with headshots.", m:"×1.12", run:6, f:1, v:"partial",
+  note:"Your file says \u201call targets\u201d. Shacknews says only the three principals. Unresolved \u2014 plan for all 18 and it satisfies both readings."},
+ {id:"heavy", n:"Heavy Burden", t:"a", c:"Eliminate the three main targets with the same suspended object.", m:"×1.10", run:1, f:1},
+ {id:"touch", n:"Touch and Go", t:"a", c:"Eliminate the three main targets while they are escaping.", m:"×1.08", run:7, f:1},
+ {id:"light", n:"Got a Light?", t:"a", c:"Eliminate the three main targets in the same explosion.", m:"×1.14", run:3, f:1},
+ {id:"boom",  n:"Boom Boom", t:"a", c:"Eliminate five targets in explosions within thirty seconds.", m:"×1.09", run:3, f:1},
+ {id:"waltz", n:"A Waltz with Death", t:"a", c:"Eliminate seven targets during the bridal waltz.", m:"×1.09", run:2, f:1},
+ {id:"rocco", n:"Faster Than Rocco", t:"a", c:"Complete The Last Yardbird in 1 minute 47 seconds or less.", m:"none", run:8, f:0, v:"conflict",
+  note:"NOT PRESENT in your uploaded challenge file. Added to World of Assassination in the October 2023 roadmap; reward is The Sniper Challenge Suit. Confirmed by four web sources. Check your in-game list \u2014 if it shows 28, your file is stale; if it shows 27, ignore this row."},
+
+ {id:"gnome", n:"Agnomaly", t:"f", c:"Shoot the six garden gnomes hidden around the mansion and its grounds.", m:"×1.07", run:1, f:1, v:"partial",
+  note:"Condition redacted in your file; wording reconstructed from the Hitman Wiki challenge page. Gnomes reveal sequentially."},
+ {id:"black", n:"Blackout", t:"f", c:"Turn off the lights in all rooms of the mansion.", m:"×1.06", run:1, f:1, v:"partial",
+  note:"Switch count is single-sourced (gameplay.tips says 18). A separate Steam guide maps it as nine building blocks instead. Do not stop at 18 if it has not popped."},
+ {id:"kiln",  n:"Kiln Time", t:"f", c:"Destroy all 47 potted plants around the map.", m:"×1.06", run:1, f:1,
+  note:"Condition redacted in your file; the count 47 is confirmed by four web sources."},
+ {id:"prom",  n:"Prometheus", t:"f", c:"Shoot the campfire in the cave below the helipad.", m:"×1.04", run:1, f:1, note:"Condition redacted in your file; reconstructed from three web sources."},
+ {id:"climb", n:"The Higher You Climb", t:"f", c:"Shoot the base jumper's bottle, then kill him once he starts his jump.", m:"×1.08", run:1, f:1, note:"Condition redacted in your file; reconstructed from three web sources."},
+ {id:"hike",  n:"Take a Hike", t:"f", c:"Shoot the fence sign so the hiker can pass.", m:"×1.04", run:1, f:1, note:"Condition redacted in your file; reconstructed from three web sources."},
+ {id:"rats",  n:"Are You Pondering What I'm Pondering?", t:"f", c:"Shoot the two rodents in the kitchen.", m:"×1.04", run:1, f:1, note:"Condition redacted in your file. Wiki says rats, other guides say mice \u2014 same pair."},
+ {id:"art",   n:"Art Critic", t:"f", c:"Shoot the second-floor painting, wait for it to be re-hung, then shoot it again.", m:"×1.05", run:1, f:1, v:"partial",
+  note:"Condition redacted in your file. Wiki says an art critic re-hangs it; three other guides say the butler."},
+ {id:"daisy", n:"Psycho Daisies", t:"f", c:"Shoot the bridal bouquet.", m:"×1.04", run:2, f:1},
+ {id:"faith", n:"Faithless", t:"f", c:"Shoot the priest's wine glass before the bride reaches the altar.", m:"×1.04", run:2, f:1, note:"Condition redacted in your file; reconstructed from three web sources."},
+ {id:"pigeon",n:"How Do You Due?", t:"f", c:"Shoot the ten pigeons hidden around the map.", m:"×1.07", run:1, f:1, v:"partial",
+  note:"Condition redacted in your file. The mirrored location list contains only nine; the tenth comes from Steam guide comments."},
+ {id:"duck",  n:"Quacker than the Eye", t:"f", c:"Shoot the ten rubber ducks hidden around the map.", m:"×1.07", run:1, f:1, note:"Condition redacted in your file; ten locations recovered from two web guides."},
+ {id:"rice",  n:"And He Shall Rice", t:"f", c:"Shoot the sack of rice on the roof.", m:"×1.04", run:1, f:1, note:"Condition redacted in your file; reconstructed from three web sources."},
+ {id:"hawk",  n:"Hawkeye", t:"f", c:"Shoot all of the hawks.", m:"×1.06", run:1, f:1, note:"Three hawks, per two web sources."}
+];
+const byId = Object.fromEntries(CH.map(c=>[c.id,c]));
+
+const RANGE = {
+  nest:"One fixed hillside nest west of the estate. Sniper Assassin has no selectable starting locations and 47 never moves \u2014 every step below is a shot taken from the same spot.",
+  disg:"None. Your uploaded file reports disguiseCount 0 and an empty disguise array; the wiki states outright that this mission has no disguises. No step in this guide requires one.",
+  item:"Sieger 300 Ghost only, fixed. 18 rounds (6 loaded + 12 spare). No gadgets, no pickups, no smuggled weapons \u2014 the file also reports areaCount 0, so there are no items to collect anywhere on the map.",
+  ammo:"Body-Piercing (unlimited) \u00b7 Wall-Piercing (limited, shoots through walls) \u00b7 Shockwave (limited, knocks bodies over railings and into the chasm).",
+  mast:"Himmelstein mastery 1\u201320 unlocks Sieger 300 Ghost upgrades only \u2014 accuracy, reload speed, magazine size; Flared Magwell IV at Level 20. They apply inside this mission only.",
+  mode:"Solo. Hold fire to stabilise the scope and trigger the short slow-motion window."
+};
+
+/* ═══════════════ RUNS ═══════════════ */
+const RUNS = [
+{no:1, title:"Feats sweep + the chandelier", tag:"Feats \u00b7 Heavy Burden",
+ goal:"Bank thirteen of the fourteen Feats plus the chandelier assassination and all fifteen bodyguards, by doing the time-gated Feats early and everything else after the clock stops.",
+ sections:[
+ {h:"Phase 1 \u2014 time-gated Feats, first few minutes", steps:[
+  {t:"Shoot the fence sign for the hiker",
+   where:"The mountain path directly ahead of your nest \u2014 the fence with the posted sign is the first man-made object on the trail.",
+   npc:"A tourist/hiker walking that path. He must already be beside the fence.",
+   act:"Shoot the sign so he can pass.",
+   warn:"Firing at an empty fence does nothing. If you miss the window he walks a route, so wait for him to come back round rather than restarting.",
+   ch:["hike"]},
+  {t:"Break the jumper's bottle, then kill him mid-air",
+   where:"The summit of the mountain above the estate.",
+   npc:"A base jumper standing next to a bottle.",
+   act:"Shoot the bottle first. He reacts, steps to the edge and looks down. Once he has committed to the jump, kill him in mid-air.",
+   warn:"Strict order. Killing him before the bottle breaks awards nothing and there is only one jumper on the map. A hit before he leaves the ledge does not count.",
+   ch:["climb"], W:1},
+  {t:"Shoot the painting twice",
+   where:"Second floor of the chateau, the room on the left/west side \u2014 the same art gallery room used for Killer Shot in Run 4.",
+   npc:"An NPC comes to straighten it. The wiki calls him an art critic; three other guides call him the butler.",
+   act:"Shoot the large painting, wait for it to be re-hung, then shoot it a second time.",
+   unv:"No source states whether shooting inside the mansion this early disturbs Guillaume Maison's routine. If your chandelier meeting later fails to form, move this step to Run 4 or Run 5.",
+   ch:["art"], U:1},
+  {t:"Destroy the rice sack on the roof",
+   where:"Right-hand roof of the mansion, on the cornice beside the stacked cages and sacks.",
+   act:"Shoot the sack of rice.",
+   warn:"Do this before you start counting pigeons \u2014 two sources confirm one of the ten pigeons is hidden behind this sack and only appears once it is destroyed.",
+   ch:["rice"], W:1}
+ ]},
+ {h:"Phase 2 \u2014 keep the routing clean and wait", steps:[
+  {t:"Sabotage nothing else until the meeting",
+   where:"Specifically leave alone: the labyrinth flag pole, the photographer's lamp above the wedding area, and the chandelier itself.",
+   act:"Shoot props only, and only props well away from the three principals.",
+   warn:"Raising the flag diverts Dorian and Doris to the maze (Run 5). Flag plus photographer's lamp sends Dorian and Guillaume to the gallery balcony (Run 4). Dropping the chandelier early moves all three to the cannon room (Run 3). gamepressure also warns that meetings can fail entirely if you alert a principal.",
+   ch:[], W:1},
+  {t:"Wait for the three-way meeting at roughly 4:12 remaining",
+   where:"Top floor of the mansion, the room with the elaborate chandelier.",
+   npc:"Dorian Lang, Guillaume Maison and Doris Lee all converge there on their own.",
+   act:"Do nothing. Use the wait for Prometheus and the gnome chain in Phase 3 if you want \u2014 both are far from the mansion interior.",
+   time:"Shacknews gives 4:12 remaining; gamepressure says about four minutes. If they have not gathered by 3:30, restart \u2014 Sniper Assassin has no manual saves and nothing can be recovered.",
+   ch:[], T:1},
+  {t:"Cut the chandelier chain",
+   where:"One floor above the chandelier \u2014 aim at the chain, not the fixture.",
+   npc:"All three principals must be settled underneath and talking.",
+   act:"One shot on the chain drops it and kills all three at once.",
+   unv:"If the room is walled off from your angle, switch to Wall-Piercing Ammo. It is limited, so do not spend it on props earlier in the run.",
+   ch:["heavy"]}
+ ]},
+ {h:"Phase 3 \u2014 clock stopped, unlimited time", steps:[
+  {t:"Confirm the timer has stopped",
+   where:"HUD timer, top of screen.",
+   act:"Check the counter has frozen before committing to a long sweep.",
+   unv:"gamepressure and the Steam guide both describe continued play with the clock halted after the last principal dies. A PSNProfiles summary instead says the mission ends automatically. Verify on your own attempt before relying on it.",
+   ch:[], U:1},
+  {t:"Shoot the six gnomes in sequence",
+   where:"Wiki-listed positions: on top of the right ruined tower west of the chateau in the mountain pass \u00b7 floating in the left pond of the ceremony courtyard \u00b7 in the creek bed between the fountain area and the mountain, just west of the photographer \u00b7 floating in the river east of the courtyard by an island \u00b7 in the fountain area, in the far right upper fountain \u00b7 in the pond near the southern aqueduct.",
+   act:"Shoot one, then immediately scan for the next.",
+   warn:"Each gnome only becomes visible after the previous one is destroyed, so this is a fixed sequence, not a free scavenger hunt. Two sources confirm the reveal mechanic.",
+   unv:"The wiki lists six positions but does not state which is first. Sweep the six listed spots after each hit.",
+   ch:["gnome"], W:1, U:1},
+  {t:"Shoot three hawks, ten pigeons and ten rubber ducks",
+   where:"Hawks: circling above the mansion. Pigeons: mountainside at half height \u00b7 parking lot in front of the white car \u00b7 tree on the cliffside below the labyrinth (look straight down from the red flag) \u00b7 corner of a left-side balcony \u00b7 left roof tower \u00b7 central dome \u00b7 cornice by the roof cages \u00b7 head of the right-most wedding-garden statue \u00b7 behind the destroyed rice sack \u00b7 behind a flower pot in front of the breaker box on the right side of the mansion. Ducks: right-hand kitchen \u00b7 head of the upper-most wedding-garden statue \u00b7 lower pool before the garden \u00b7 above the left wine cellar \u00b7 by the waterfall source \u00b7 left-side roofs \u00b7 beside a statue at the left-most corner of the labyrinth \u00b7 near the chandelier room \u00b7 in the water behind the garden, right of the photographer's stand \u00b7 in the upper aqueduct.",
+   act:"Work roof to garden so you are not panning back and forth.",
+   unv:"The tenth pigeon comes from Steam guide comments, not the wiki \u2014 every mirrored copy of the original list contains only nine.",
+   ch:["hawk","pigeon","duck"], U:1},
+  {t:"Campfire, rodents, light switches",
+   where:"Campfire: the cave below the helipad on the right \u2014 look for the smoke plume, then hit the fire/log pile. Rodents: the right-hand kitchen. Switches: every room of the mansion.",
+   act:"Shoot the campfire, the two rodents, and every light switch you can see.",
+   unv:"Only one source gives a switch number (18). A separate Steam guide maps Blackout as nine building blocks instead \u2014 left block in three portions, centre block in four, right and far-right \u2014 and notes the chandelier itself covers the centre-upper portion, which your Heavy Burden shot may already have handled. Do not stop counting at 18.",
+   ch:["prom","rats","black"], U:1},
+  {t:"Destroy all 47 potted plants",
+   where:"Follow the edges of the garden. Commonly missed: at the photographer's position, at the top of the stairs in front of the house, and in the right-hand part of the wedding garden where several are partly hidden.",
+   act:"Work one continuous perimeter loop rather than jumping around the map.",
+   time:"If you reach the high forties with no pop you have missed one behind cover. Finish the bodyguards first so the run still banks Bodysnatcher, then re-run Kiln Time fresh.",
+   ch:["kiln"], T:1},
+  {t:"Clear all fifteen bodyguards",
+   where:"Seven are reachable in the opening minute if you ever need them early: on the roof \u00b7 two walking the mansion's upper storey \u00b7 one by the bushes near the helipad \u00b7 two by the pool at the hedge-maze entrance \u00b7 one at the staircase by the mansion corner. Of the rest, one escorts Guillaume Maison, one exits the car with Dorian Lang, one waits for Doris Lee at the helicopter, and five are in the hedge maze, at the concert venue, on the second storey, or patrolling the wedding grounds.",
+   act:"Fire a deliberate miss to put a question mark over an isolated guard and pull him toward the impact, then shoot him once he is alone.",
+   warn:"Shooting scenery never raises the alarm, but a guard who sees a kill gets a yellow icon \u2014 kill him before it turns white or the whole map evacuates. Guards marked with a red icon are fleeing; take those first.",
+   ch:["body"], W:1}
+ ]}]},
+
+{no:2, title:"The ceremony \u2014 waltz, bouquet, wine glass", tag:"Wedding scripts",
+ goal:"Take the three wedding-scripted challenges. Split into two attempts because sabotaging the ceremony may cancel the reception the waltz depends on.",
+ sections:[
+ {h:"Attempt A \u2014 the bridal waltz", steps:[
+  {t:"Let the ceremony run untouched",
+   where:"The wedding grounds at the eastern end of the map.",
+   npc:"Dorian Lang walks his daughter, the bride, from the driveway to the altar.",
+   act:"Do not shoot the priest's glass or the bouquet on this attempt, and do not kill any bodyguards yet.",
+   warn:"Bodysnatcher is already banked in Run 1. Killing guards early here directly starves the seven-kill count you need during the dance.",
+   unv:"No source states whether Faithless cancels the waltz. This split is a precaution, not a documented conflict \u2014 if you confirm both fire in one attempt, collapse 2A and 2B.",
+   ch:[], W:1, U:1},
+  {t:"Kill seven targets during the dance",
+   where:"The reception area, plus the mansion frontage where guards stand.",
+   npc:"Bride and groom start the first dance in the final minutes of the mission. \u201cTargets\u201d counts bodyguards, not just the three principals.",
+   act:"Once the music starts, drop the chandelier on the three principals if they have gathered, then shoot four guards standing outside. The published alternative is to distract the couple with a shot into the ground as they head to the front of the building so the timing lines up.",
+   time:"The 15-minute limit still applies to the principals, so the seven kills must finish with all three dead. If the dance starts late, prioritise principals over guard count.",
+   unv:"The chandelier-during-waltz method is single-sourced (steamsolo). If it works it also banks Heavy Burden, which is a free bonus, not something to rely on.",
+   ch:["waltz"], T:1, U:1}
+ ]},
+ {h:"Attempt B \u2014 sabotage the ceremony", steps:[
+  {t:"Break the priest's wine glass",
+   where:"The altar at the wedding grounds.",
+   npc:"The priest, holding a wine glass. The bride must still be walking the aisle.",
+   act:"Shoot the glass, then wait for the reaction to play out.",
+   warn:"Hard timing gate \u2014 once the bride reaches the altar the window is closed and the run is spent.",
+   ch:["faith"], W:1},
+  {t:"Shoot the bouquet out of the bride's hands",
+   where:"The aisle, while she is still walking it.",
+   npc:"The bride \u2014 Dorian Lang's daughter, Elizabeth Lang.",
+   act:"Knock the bouquet out of her hands while it is held clear of her body.",
+   unv:"Sources disagree on whether this is altar-gated. Your file just says \u201cshoot the bridal bouquet\u201d; two guides say before she reaches the altar. Taking it during the walk satisfies every version.",
+   ch:["daisy"], U:1},
+  {t:"Close out the mission",
+   where:"Wherever the principals are standing.",
+   act:"Kill all three by any method before the clock expires.",
+   warn:"Two failure conditions: running past 15 minutes, and letting a principal escape the area after an alarm \u2014 the contract is invalidated if any Yardbird leaves alive.",
+   ch:[], W:1}
+ ]}]},
+
+{no:3, title:"The cannon room", tag:"Got a Light? \u00b7 Boom Boom",
+ goal:"Drop the chandelier empty to re-route all three principals to the cannon, kill them with one blast, then chain two more explosive kills inside thirty seconds.",
+ sections:[
+ {h:"Setup", steps:[
+  {t:"Drop the empty chandelier at mission start",
+   where:"Top floor of the mansion, chandelier chain.",
+   act:"Shoot it in the opening seconds, with nobody underneath.",
+   warn:"This is the prerequisite \u2014 three sources agree the cannon meeting only forms once the chandelier is already down. It is also why Runs 1 and 3 can never be the same attempt: a chandelier on the floor cannot kill anyone.",
+   ch:[], W:1},
+  {t:"Pick your gas lamp and its guards now",
+   where:"The gas lamps around the main entrance to the mansion, and the tanks near the main staircase.",
+   npc:"Any two bodyguards standing near one lamp.",
+   act:"Identify a lamp with two guards beside it before you fire the cannon, and lure a second guard over with a deliberate miss if needed.",
+   warn:"The thirty-second window starts on the cannon shot, not on your first kill. There is no time to go hunting for a group afterwards.",
+   ch:[], W:1},
+  {t:"Then genuinely do nothing else",
+   where:"Leave the flag pole and the photographer's lamp alone.",
+   act:"No prop hunting, no guard thinning near the principals.",
+   time:"Restart-decision point at 3:20 remaining. If the three have not converged near the cannon, restart \u2014 there are no saves and the window cannot be recovered.",
+   ch:[], T:1}
+ ]},
+ {h:"Execution", steps:[
+  {t:"Fire the cannon at roughly four minutes remaining",
+   where:"The room with the cannon; the cannon sits to the left of where the group gathers.",
+   npc:"All three principals, settled into their conversation.",
+   act:"Shoot the cannon \u2014 gamepressure says the cannon itself, PlayStationTrophies says the fuse; both point at the firing end. It discharges and the explosion kills all three.",
+   ch:["light"]},
+  {t:"Blow the gas lamp within thirty seconds",
+   where:"The lamp you scouted by the main entrance.",
+   npc:"The two guards standing beside it.",
+   act:"Immediately after the cannon, shoot the lamp. Three principals plus two guards equals five in one window.",
+   unv:"Shacknews describes an entirely different Boom Boom method \u2014 raise the flag, then at about the nine-minute mark two principals and two guards cross a heater left of the main entrance. That method conflicts with the cannon routing, so it belongs in its own attempt if this one fails.",
+   ch:["boom"], U:1}
+ ]}]},
+
+{no:4, title:"The loudspeaker and the flooded helipad", tag:"Killer Shot \u00b7 Smokestack",
+ goal:"Route Dorian and Guillaume onto the gallery balcony for the loudspeaker, while Doris and her escort die separately in an electrocution at the landing pad.",
+ sections:[
+ {h:"Opening seconds \u2014 two sabotage shots", steps:[
+  {t:"Destroy the photographer's lamp",
+   where:"The photographer's stand overlooking the wedding area.",
+   act:"Shoot the lamp on the stand.",
+   unv:"Four sources agree the lamp is required. Only a forum post explains why: with the light broken, Dorian Lang ends up taking the couple's photo himself, which is what he later shows Guillaume in the gallery.",
+   ch:[], U:1},
+  {t:"Raise the labyrinth flag",
+   where:"The flag pole / pulley mechanism near the gazebo inside the garden maze.",
+   act:"Shoot the mechanism so the flag goes up.",
+   warn:"Dorian meets Doris in the maze first and only then goes on to the gallery. Let that meeting happen and let both walk away \u2014 killing Dorian with the statue here is An Elabyrinth Plot, and it removes the man you need on the balcony. Runs 4 and 5 can never be the same attempt.",
+   ch:[], W:1}
+ ]},
+ {h:"The helipad electrocution", steps:[
+  {t:"Pin the helipad guards before the helicopter lands",
+   where:"The landing pad in the southern part of the map, and the two sprinklers by the main walkway beside it.",
+   npc:"The two bodyguards waiting for Doris Lee.",
+   act:"Fire deliberate misses around them so they stay inside the helipad area, then break the two sprinklers by the main path just before the helicopter touches down.",
+   warn:"Timing is tight and one-shot \u2014 the helicopter arrives within seconds of mission start, so this is the first thing you do after the lamp and flag.",
+   ch:[], W:1},
+  {t:"Drop the light fixtures into the water",
+   where:"The lamps beside the flooded walkway.",
+   npc:"Doris Lee plus her two bodyguards, grouped in the water.",
+   act:"With all three standing in the pooled water, shoot both light fixtures to electrocute them inside thirty seconds.",
+   warn:"Do not touch Dorian or Guillaume at any point in this run. Killing Doris is explicitly safe \u2014 the wiki says you may kill some guards and Doris Lee for Killer Shot provided the alarm never goes off \u2014 but alerting the other two breaks the balcony routing.",
+   ch:["smoke"], W:1}
+ ]},
+ {h:"The balcony shot", steps:[
+  {t:"Wait for 3:40\u20133:30 remaining, then shoot the speaker",
+   where:"Second floor of the chateau, west side, next to the painting room \u2014 the pair then continue talking at the railing outside, beneath the loudspeaker.",
+   npc:"Dorian Lang and Guillaume Maison.",
+   act:"Once both are under the speaker, shoot it. It falls and crushes them together.",
+   time:"The 3:40\u20133:30 window is the wiki's; gamepressure and PlayStationTrophies both describe the same event around four minutes. If they have not stepped to the railing by 3:00, the routing did not take \u2014 restart and confirm both the lamp and the flag were hit.",
+   ch:["killer"], T:1}
+ ]}]},
+
+{no:5, title:"The maze statue", tag:"An Elabyrinth Plot",
+ goal:"A short single-challenge run: raise the flag, wait for the maze meeting, and topple the statue onto Dorian and Doris.",
+ sections:[
+ {h:"Setup and execution", steps:[
+  {t:"Raise the labyrinth flag and touch nothing else",
+   where:"The flag pole mechanism in the garden maze.",
+   act:"Shoot the mechanism. Do not also break the photographer's lamp.",
+   warn:"Lamp plus flag is the art-gallery recipe from Run 4. Here you want the maze meeting to be the terminal event, not a waypoint.",
+   ch:[], W:1},
+  {t:"Cut the statue's supports at roughly 7:40 remaining",
+   where:"The gazebo meeting point inside the maze; the statue stands on two visible planks.",
+   npc:"Dorian Lang and Doris Lee, talking beneath it.",
+   act:"With both inside the fall area, shoot the two planks holding the statue.",
+   time:"Shacknews puts the meeting at about 7:40; gamepressure says wait until eight minutes remain. Some guides describe the shot as the statue's base rather than the planks \u2014 take whichever support is exposed from your angle.",
+   ch:["elab"], T:1},
+  {t:"Finish Guillaume and bank the mastery",
+   where:"His study on the upper floor, left side of the mansion.",
+   npc:"Guillaume Maison, with one bodyguard.",
+   act:"Kill him by any method, then use the stopped clock to clear guards for mastery XP.",
+   unv:"Himmelstein mastery 1\u201320 unlocks the rifle upgrades that make Runs 6, 7 and especially 8 easier. Abandoned attempts bank nothing, so always finish. This is also the cheapest run to retry any Feat that failed to pop in Run 1.",
+   ch:[]}
+ ]}]},
+
+{no:6, title:"Clean Slate \u2014 every body hidden", tag:"Clean Slate \u00b7 Fishes \u00b7 Headshots",
+ goal:"The precision run: eighteen eliminations, all concealed, all headshots, five of them into water. Also the natural Silent Assassin attempt.",
+ sections:[
+ {h:"Principals first", steps:[
+  {t:"Kill the three principals into cover inside 15 minutes",
+   where:"Take each one where a body can vanish \u2014 water, bushes, over a ledge, over a balustrade, or through a window for roof positions.",
+   npc:"Guillaume Maison in his upper-floor study from the start; Doris Lee at the southern helipad seconds in; Dorian Lang at the west driveway, arriving by limousine with the bride.",
+   act:"Line up the head and the edge in the same shot. Shockwave Ammo pushes a body over a railing \u2014 it is limited, so reserve it for principals.",
+   warn:"The two challenges fight each other: a body shot that hides the corpse loses A Head Off the Curve, a headshot that leaves the body in the open loses Clean Slate. gamepressure confirms hiding bodies is the slow part, so spend the 15 minutes here and clear guards afterwards.",
+   ch:["clean","ahotc"], W:1},
+  {t:"Put five kills specifically into water",
+   where:"The pool by the hedge-maze entrance, the lower garden pool before the wedding area, the water barrel by the mansion, and the open water behind the garden right of the photographer's stand.",
+   npc:"Shacknews notes three water kills are available at the very start \u2014 two guards talking together near a heater and one not far from the water barrel by the mansion.",
+   act:"Fire near the pool's edge to draw a guard closer, then take him so the body falls in.",
+   ch:["swtf"]}
+ ]},
+ {h:"Guard clearance with the clock stopped", steps:[
+  {t:"Lure and drop each guard alone",
+   where:"Railings, water tanks, balustrades and the chasm edge.",
+   npc:"The remaining bodyguards, one at a time.",
+   act:"Deliberate miss to pull him, wait until he is out of everyone's line of sight, then take the concealing headshot.",
+   warn:"If a witness gets a yellow icon, kill him before it turns white or the map evacuates and Clean Slate is dead. If a civilian witnesses a kill, Silent Assassin is gone \u2014 restart rather than finish.",
+   ch:[], W:1},
+  {t:"Verify 18 of 18 before ending",
+   where:"HUD bodyguard counter.",
+   act:"Confirm three principals plus fifteen guards, no discovered bodies, no civilian deaths.",
+   time:"There are no saves, so every witness event is a restart decision. Restarting at minute two costs far less than finishing a dead attempt.",
+   ch:[], T:1}
+ ]}]},
+
+{no:7, title:"The evacuation", tag:"Touch and Go \u00b7 No Loose Ends",
+ goal:"Deliberately blow the alarm, kill all three principals while they flee, then clear every bodyguard before any of them reach an exit.",
+ sections:[
+ {h:"Trigger and execute", steps:[
+  {t:"Get spotted on purpose",
+   where:"Anywhere in open view of the estate.",
+   npc:"Any bodyguard or civilian.",
+   act:"Shoot one in plain sight, or let a witness's yellow icon turn white instead of silencing him.",
+   warn:"Hard fail: if a principal actually leaves the map the mission is over. Have your firing solution ready before you trigger the alarm.",
+   ch:[], W:1},
+  {t:"Drop all three while they are moving",
+   where:"Along their escape routes \u2014 driveway, helipad, mansion exits.",
+   npc:"Dorian Lang, Guillaume Maison, Doris Lee, all fleeing.",
+   act:"Fire Shockwave Ammo into the ground near them rather than leading a running headshot. Take whichever principal is nearest their exit first.",
+   ch:["touch"]},
+  {t:"Clear all fifteen guards before any escapes",
+   where:"Their exit points around the estate perimeter.",
+   npc:"Guards evacuate roughly three at a time, marked with a red icon while fleeing.",
+   act:"Shoot the stationary ones first \u2014 they are easier \u2014 unless a runner is close to his exit. A guard who reaches his exit point stands still for a few seconds before disappearing and can still be killed there, including through cover.",
+   warn:"Wall-Piercing Ammo is limited: save it for guards who reach exit points behind geometry, which is the only place a clean shot is impossible. The moment one guard disappears, No Loose Ends is lost \u2014 but Touch and Go may already be banked, so check the challenge feed before restarting.",
+   ch:["loose"], W:1}
+ ]}]},
+
+{no:8, title:"Faster Than Rocco \u2014 the 1:47 sprint", tag:"Speedrun",
+ goal:"Complete the entire mission in one minute forty-seven seconds or less. Nothing else is attempted.",
+ sections:[
+ {h:"The sprint", steps:[
+  {t:"Do the mastery work before attempting this",
+   where:"Runs 1\u20137 above.",
+   act:"Reach a high Himmelstein mastery level first \u2014 faster reload and a larger magazine are the binding constraints at this pace, and the rifle starts with only 6 loaded plus 12 spare.",
+   unv:"This challenge is absent from your uploaded challenge file. Four web sources confirm it exists in World of Assassination, added October 2023, rewarding The Sniper Challenge Suit. Check your in-game list before spending attempts on it.",
+   ch:["rocco"], U:1},
+  {t:"Take the three principals at their arrival points",
+   where:"Guillaume Maison in his upper-floor study, left side of the mansion, present from the very start with one bodyguard. Doris Lee at the southern landing pad seconds after start, one bodyguard waiting. Dorian Lang at the west driveway immediately, arriving by limousine with the bride.",
+   npc:"All three principals only \u2014 ignore guards entirely.",
+   act:"Use Wall-Piercing Ammo on Guillaume rather than waiting for him to step outside; there is no time to wait for anything.",
+   unv:"No source checked specifies whether the mission must be formally ended within 1:47 or whether the third kill stops the count. Leave margin and aim to have all three down well under the limit.",
+   ch:[], U:1}
+ ]}]}
+];
+
+/* ═══════════════ STATE ═══════════════ */
+let done={}, steps={}, openRun={}, openStep={};
+const KEY="yardbird-v2";
+function reportProgress(){try{const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r['m14']={done:CH.filter(c=>done[c.id]).length,total:CH.length,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
+async function load(){try{const r=localStorage.getItem(KEY);if(r){const o=JSON.parse(r);done=o.done||{};steps=o.steps||{};}}catch(e){}}
+async function persist(){try{localStorage.setItem(KEY,JSON.stringify({done,steps}));}catch(e){}reportProgress();}
+
+const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+
+function stats(){
+  const a=CH.filter(c=>c.t==="a"),f=CH.filter(c=>c.t==="f");
+  const da=a.filter(c=>done[c.id]).length,df=f.filter(c=>done[c.id]).length,tot=da+df;
+  document.getElementById("cA").textContent=da+"/"+a.length;
+  document.getElementById("cF").textContent=df+"/"+f.length;
+  document.getElementById("cL").textContent=CH.length-tot;
+  document.getElementById("ringN").textContent=tot;
+  const C=2*Math.PI*39;
+  document.getElementById("ring").style.strokeDashoffset=C-(tot/CH.length)*C;
+}
+function runProgress(no){
+  const ids=CH.filter(c=>c.run===no);
+  return [ids.filter(c=>done[c.id]).length, ids.length];
+}
+
+function badges(st){
+  let h="";
+  (st.ch||[]).forEach(id=>{const c=byId[id];if(c)h+=`<span class="badge ${c.t==="a"?"assn":"feat"}">${esc(c.n)}</span>`;});
+  if(st.W)h+=`<span class="badge warn">! Ordering rule</span>`;
+  if(st.T)h+=`<span class="badge time">\u25c6 Timing / restart</span>`;
+  if(st.U)h+=`<span class="badge unv">? Unverified</span>`;
+  return h?`<div class="badges">${h}</div>`:"";
+}
+function fields(st){
+  let h=`<dl class="f">`;
+  h+=`<dt>Where</dt><dd>${esc(st.where||"\u2014")}</dd>`;
+  h+=`<dt>Disguise</dt><dd class="none">None \u2014 this mission has no disguises.</dd>`;
+  h+=`<dt>Item</dt><dd>${esc(st.item||"Sieger 300 Ghost (fixed). No other items exist in this mission.")}</dd>`;
+  h+=`<dt>NPC</dt><dd${st.npc?"":' class="none"'}>${esc(st.npc||"None involved in this step.")}</dd>`;
+  h+=`<dt>Action</dt><dd>${esc(st.act||"\u2014")}</dd>`;
+  h+=`</dl>`;
+  if(st.warn)h+=`<div class="wbox"><b>Warning \u2014 </b>${esc(st.warn)}</div>`;
+  if(st.time)h+=`<div class="tbox"><b>Timing \u2014 </b>${esc(st.time)}</div>`;
+  if(st.unv)h+=`<div class="ubox"><b>Note \u2014 </b>${esc(st.unv)}</div>`;
+  return h;
+}
+
+function renderRuns(){
+  let h=`<div class="jump" id="jump"></div>
+  <div class="notice file"><h3>Reconciled against your uploaded file</h3>
+    <p>Your file confirms <b>disguiseCount 0, areaCount 0, empty disguise and area arrays</b>. That settles it: no disguises, no map areas, no Discovery challenges, no items to collect. Every step below therefore lists Disguise as none and Item as the fixed rifle \u2014 that is the mission, not an omission.</p>
+    <p>Your file lists <b>27 challenges</b> (13 Assassination, 14 Feats). Web sources confirm a 28th, <b>Faster Than Rocco</b>, added in October 2023. It is tracked here and flagged; check your in-game list to see which count is current for you.</p>
+    <p>Fourteen of your Feat descriptions came through as <b>[REDACTED]</b>. Those conditions were reconstructed from web sources and each one is marked in the checklist.</p>
+  </div>
+  <div class="notice"><h3>Two things that shape the whole route</h3>
+    <p><b>No manual saves.</b> Sniper Assassin cannot save mid-mission, so nothing can be split off partway. Every amber marker is a restart decision, not a save point.</p>
+    <p><b>Eight incompatible end-states for the three principals</b> \u2014 chandelier, cannon, loudspeaker, maze statue, fleeing, hidden bodies, waltz-timed, and a 1:47 sprint. Each destroys the setup for the others, which is why the route needs eight runs. Runs 1, 6 and 7 absorb everything stackable so the rest stay short.</p>
+  </div>`;
+
+  RUNS.forEach(r=>{
+    const [dn,tt]=runProgress(r.no);
+    const open=openRun[r.no];
+    h+=`<article class="run ${open?"open":""}" id="run${r.no}">
+      <button class="runbar" data-run="${r.no}" aria-expanded="${!!open}">
+        <span class="run-no">${r.no}</span>
+        <span style="flex:1">
+          <h2>${esc(r.title)}</h2>
+          <p class="goal">${esc(r.goal)}</p>
+          <p class="rprog">${dn}/${tt} challenges banked \u00b7 ${esc(r.tag)}</p>
+        </span>
+        <span class="chev">${open?"Collapse \u25b4":"Expand \u25be"}</span>
+      </button>
+      <div class="run-body">
+        <div class="card"><h4>Range card \u2014 identical for every run</h4><dl class="kv">
+          <dt>Nest</dt><dd>${esc(RANGE.nest)}</dd>
+          <dt>Disguise</dt><dd>${esc(RANGE.disg)}</dd>
+          <dt>Items</dt><dd>${esc(RANGE.item)}</dd>
+          <dt>Ammo</dt><dd>${esc(RANGE.ammo)}</dd>
+          <dt>Mastery</dt><dd>${esc(RANGE.mast)}</dd>
+          <dt>Mode</dt><dd>${esc(RANGE.mode)}</dd>
+        </dl></div>`;
+
+    let n=0;
+    r.sections.forEach((sec,si)=>{
+      h+=`<div class="sect"><h3>${esc(sec.h)}</h3>`;
+      sec.steps.forEach((st,ix)=>{
+        n++;
+        const k=`${r.no}-${si}-${ix}`, on=!!steps[k], op=!!openStep[k];
+        h+=`<div class="step ${on?"done":""} ${op?"open":""}" id="s-${k}">
+          <div class="step-top">
+            <button class="tick" aria-pressed="${on}" data-step="${k}" aria-label="Mark step done">\u2713</button>
+            <button class="step-head" data-open="${k}" aria-expanded="${op}">
+              <span class="snum">STEP ${n}</span>
+              <h5>${esc(st.t)}</h5>
+              ${badges(st)}
+              <span class="chev">${op?"Hide detail \u25b4":"Show detail \u25be"}</span>
+            </button>
+          </div>
+          <div class="detail">${fields(st)}</div>
+        </div>`;
+      });
+      h+=`</div>`;
+    });
+    h+=`</div></article>`;
+  });
+  document.getElementById("p-runs").innerHTML=h;
+  renderJump();
+}
+
+function renderJump(){
+  let h="";
+  RUNS.forEach(r=>{
+    const [d,t]=runProgress(r.no);
+    h+=`<button data-goto="${r.no}" class="${t&&d===t?"full":""}">Run ${r.no} · ${esc(r.tag.split(" · ")[0])} <span style="opacity:.6">${d}/${t}</span></button>`;
+  });
+  h+=`<span class="util"><button data-all="1">Expand all</button><button data-all="0">Collapse all</button></span>`;
+  document.getElementById("jump").innerHTML=h;
+}
+
+let filter="all";
+function renderList(){
+  const nA=CH.filter(c=>c.t==="a").length,nF=CH.filter(c=>c.t==="f").length,nI=CH.filter(c=>!done[c.id]).length;
+  let h=`<div class="filters">
+    <button data-f="all" aria-pressed="${filter==="all"}">All · ${CH.length}</button>
+    <button data-f="a" aria-pressed="${filter==="a"}">Assassination · ${nA}</button>
+    <button data-f="f" aria-pressed="${filter==="f"}">Feats · ${nF}</button>
+    <button disabled>Discovery · 0</button>
+    <button data-f="inc" aria-pressed="${filter==="inc"}">Incomplete · ${nI}</button>
+  </div>`;
+  const shown=CH.filter(c=>filter==="all"?true:filter==="inc"?!done[c.id]:c.t===filter);
+  if(!shown.length)h+=`<p class="src">Nothing left in this filter. Switch to All to review what you have finished.</p>`;
+  shown.forEach(c=>{
+    h+=`<div class="row ${done[c.id]?"done":""}">
+      <button class="tick" aria-pressed="${!!done[c.id]}" data-ch="${c.id}" aria-label="Mark challenge done">\u2713</button>
+      <div class="rmain">
+        <div class="rname">${esc(c.n)}</div>
+        <p class="rcond">${esc(c.c)}</p>
+        <p class="rmeta">${c.t==="a"?"Assassination":"Feat"} · multiplier ${esc(c.m)} · Run ${c.run} · ${c.f?"in your file":"NOT in your file"}</p>
+        ${c.note?`<p class="rnote">${esc(c.note)}</p>`:""}
+      </div></div>`;
+  });
+  h+=`<p class="src" style="margin-top:16px">Sniper Assassin challenges award a permanent score multiplier rather than flat XP. No source checked publishes per-challenge XP for this mission, so multipliers from the Hitman Wiki mission table are shown instead.</p>`;
+  document.getElementById("p-list").innerHTML=h;
+}
+
+function renderVer(){
+  document.getElementById("p-ver").innerHTML=`
+  <div class="notice info"><h3>Audit result</h3>
+    <p>28 challenges tracked: 27 from your uploaded file (13 Assassination + 14 Feats) plus Faster Than Rocco from web sources. Every challenge is assigned to exactly one run, runs 1\u20138 cover all 28, no duplicates.</p>
+    <p>Run coverage: R1 = 14 · R2 = 3 · R3 = 2 · R4 = 2 · R5 = 1 · R6 = 3 · R7 = 2 · R8 = 1.</p>
+  </div>
+
+  <h3 class="blk">Count conflict</h3>
+  <table class="vtable">
+    <tr><th>Source</th><th>Total</th><th>Reading</th></tr>
+    <tr><td>Your uploaded challenge file</td><td>27</td><td>challengeCount 27; two categories only; Faster Than Rocco absent.</td></tr>
+    <tr><td>Hitman Wiki mission table</td><td>27</td><td>Same 27. Predates October 2023.</td></tr>
+    <tr><td>Wiki challenge page + 3 unlock sources</td><td>28th exists</td><td>Faster Than Rocco, added Oct 2023, rewards The Sniper Challenge Suit, no score multiplier.</td></tr>
+    <tr><td><b>Resolution</b></td><td colspan="2"><b>Not resolved.</b> Both readings are recorded rather than guessed. Your file may predate the patch, or the challenge may sit outside the two exported categories. Your in-game list is the tiebreaker.</td></tr>
+  </table>
+
+  <h3 class="blk">Run-logic simulation</h3>
+  <table class="vtable">
+    <tr><th>Check</th><th>Result</th></tr>
+    <tr><td>Every run completable start to finish</td><td>Pass. Each run kills all three principals inside 15 minutes, the only hard fail besides a principal escaping.</td></tr>
+    <tr><td>No step needs an item/disguise/NPC made unavailable earlier</td><td>Pass by construction \u2014 there are no items, disguises or pickups. The only consumable is limited ammo, budgeted explicitly in Runs 1, 3, 6 and 7.</td></tr>
+    <tr><td>No NPC needed later is killed earlier</td><td>Pass. Run 4 kills Doris early but needs only Dorian and Guillaume afterwards, which the wiki explicitly permits. Run 2A defers all guard kills until the waltz. Run 3 keeps two guards alive at a gas lamp.</td></tr>
+    <tr><td>Scripted events intact given step order</td><td>Pass. Run 1 forbids all three sabotage shots; Run 3 requires exactly one; Run 4 requires exactly two; Run 5 requires exactly one.</td></tr>
+    <tr><td>Mutually exclusive challenges separated</td><td>Pass \u2014 see the table below.</td></tr>
+    <tr><td>Prerequisites obtained before use</td><td>Pass. Rice sack before the pigeon count; bottle before the jumper; flag before both meetings; lamp scouted before the cannon fires.</td></tr>
+    <tr><td>Route efficiency / no needless back-and-forth</td><td>Pass. Run 1 is ordered mountain \u2192 roof \u2192 interior \u2192 grounds, with the entire prop sweep deferred to after the clock stops so nothing is visited twice.</td></tr>
+    <tr><td>Save/reload points break nothing</td><td>N/A \u2014 no saves exist. All amber markers are restart decisions and none of them assume recoverable state.</td></tr>
+  </table>
+
+  <h3 class="blk">Mutually exclusive challenges</h3>
+  <table class="vtable">
+    <tr><th>Cannot share a run</th><th>Reason</th><th>Confidence</th></tr>
+    <tr><td>Heavy Burden (R1) ↔ Got a Light? (R3)</td><td>The cannon meeting only forms once the chandelier is already down, so it can no longer kill anyone.</td><td>Confirmed \u2014 3 sources</td></tr>
+    <tr><td>Killer Shot (R4) ↔ An Elabyrinth Plot (R5)</td><td>Killer Shot needs Dorian alive after the maze meeting; the statue kills him during it.</td><td>Confirmed \u2014 2 sources</td></tr>
+    <tr><td>Killer Shot (R4) ↔ Heavy Burden / Got a Light?</td><td>Different terminal meeting, incompatible sabotage prerequisites.</td><td>Confirmed \u2014 3 sources</td></tr>
+    <tr><td>Touch and Go (R7) ↔ Clean Slate (R6)</td><td>One requires an alarm and an escape; the other requires no discovered bodies.</td><td>Confirmed by conditions</td></tr>
+    <tr><td>A Head Off the Curve (R6) ↔ all accident kills</td><td>Chandelier, cannon, statue, loudspeaker and electrocution are not headshots. Shacknews states this explicitly for Got a Light?.</td><td>Confirmed \u2014 2 sources</td></tr>
+    <tr><td>Boom Boom cannon method (R3) ↔ Boom Boom flag method</td><td>The Shacknews nine-minute heater method needs the flag raised, which re-routes the cannon meeting.</td><td>Inferred from two conflicting methods</td></tr>
+    <tr><td>Faithless (R2B) ↔ A Waltz with Death (R2A)</td><td>Precautionary split only.</td><td><b>Unverified</b> \u2014 no source says whether disrupting the ceremony cancels the waltz</td></tr>
+  </table>
+
+  <h3 class="blk">Timing windows</h3>
+  <table class="vtable">
+    <tr><th>Event</th><th>Prerequisite</th><th>Window (time remaining)</th><th>Sources</th></tr>
+    <tr><td>Maze gazebo meeting</td><td>Flag raised</td><td>~7:40 (Shacknews) / ~8:00 (gamepressure)</td><td>2 agree closely</td></tr>
+    <tr><td>Boom Boom heater crossing</td><td>Flag raised</td><td>~9:00</td><td>1 only \u2014 alternative method</td></tr>
+    <tr><td>Chandelier three-way meeting</td><td>Nothing sabotaged</td><td>4:12 (Shacknews) / ~4:00 (gamepressure)</td><td>2 agree</td></tr>
+    <tr><td>Cannon room meeting</td><td>Chandelier already dropped</td><td>~4:00</td><td>3 agree</td></tr>
+    <tr><td>Gallery balcony</td><td>Photographer's lamp + flag</td><td>3:40\u20133:30 (wiki) / ~4:00 (2 others)</td><td>3 agree closely</td></tr>
+    <tr><td>Bridal waltz</td><td>Ceremony completes</td><td>Final minutes</td><td>2 agree, no exact figure published</td></tr>
+  </table>
+
+  <h3 class="blk">Flagged as unverified</h3>
+  <table class="vtable">
+    <tr><th>Item</th><th>Problem</th></tr>
+    <tr><td>A Head Off the Curve scope</td><td>Your file says "all targets"; Shacknews says only the three principals. Guide plans for all 18, which satisfies both.</td></tr>
+    <tr><td>Blackout switch count</td><td>Single source gives 18; another maps it as nine building blocks; your file only says "all rooms".</td></tr>
+    <tr><td>Gnome firing order</td><td>The wiki lists six positions but not which is first, and the reveal is sequential.</td></tr>
+    <tr><td>Tenth pigeon</td><td>From Steam guide comments, not the wiki.</td></tr>
+    <tr><td>Play after the third principal dies</td><td>Two sources say the clock stops and play continues; one summary says the mission ends automatically.</td></tr>
+    <tr><td>Boom Boom method</td><td>Two incompatible published methods (cannon + gas lamp vs flag + heater at nine minutes).</td></tr>
+    <tr><td>Waltz + chandelier stacking</td><td>Single-sourced. Treated as a bonus, never as a dependency.</td></tr>
+    <tr><td>Faster Than Rocco stop condition</td><td>Unclear whether the mission must be formally ended within 1:47.</td></tr>
+    <tr><td>Art Critic NPC</td><td>Wiki says art critic; three guides say butler.</td></tr>
+    <tr><td>Psycho Daisies window</td><td>Sources disagree on whether the shot is altar-gated.</td></tr>
+    <tr><td>Per-challenge XP</td><td>Not published anywhere checked. Score multipliers shown instead.</td></tr>
+    <tr><td>Known bugs</td><td>No credible mission-specific bug reports found. No bug warnings have been invented \u2014 every red marker is an ordering rule.</td></tr>
+  </table>
+
+  <h3 class="blk">Sources</h3>
+  <p class="src">Your uploaded challenge file (names, conditions, disguiseCount, areaCount) · Hitman Wiki: mission page, Killer Shot, Clean Slate, Kiln Time, Agnomaly, Faster Than Rocco, The Sniper Challenge Suit, Sieger 300 Ghost · gamepressure Himmelstein walkthrough and trophy pages · Shacknews challenge guide · gameplay.tips challenge and feats-location guides · Steam Community and steamsolo guides · PlayStationTrophies Completionist guide · Hitman Forum · halfglassgaming unlock list.</p>
+  <p class="src">Nothing above comes from a live in-game challenge screen except your uploaded file. Where sources conflicted, the conflict is recorded rather than resolved by guesswork.</p>`;
+}
+
+/* ═══════════════ EVENTS ═══════════════ */
+document.addEventListener("click",e=>{
+  const tab=e.target.closest('nav.tabs button');
+  if(tab){
+    document.querySelectorAll('nav.tabs button').forEach(b=>b.setAttribute("aria-selected",b===tab));
+    ["runs","list","ver"].forEach(k=>document.getElementById("p-"+k).hidden=(tab.id!=="t-"+k));
+    return;
+  }
+  const go=e.target.closest("[data-goto]");
+  if(go){const n=+go.dataset.goto;openRun[n]=true;renderRuns();document.getElementById("run"+n).scrollIntoView({behavior:"smooth",block:"start"});return;}
+  const all=e.target.closest("[data-all]");
+  if(all){const v=all.dataset.all==="1";RUNS.forEach(r=>openRun[r.no]=v);renderRuns();return;}
+  const rb=e.target.closest("[data-run]");
+  if(rb){const n=+rb.dataset.run;openRun[n]=!openRun[n];renderRuns();return;}
+  const op=e.target.closest("[data-open]");
+  if(op){const k=op.dataset.open;openStep[k]=!openStep[k];
+    const el=document.getElementById("s-"+k);el.classList.toggle("open",openStep[k]);
+    op.setAttribute("aria-expanded",!!openStep[k]);
+    op.querySelector(".chev").textContent=openStep[k]?"Hide detail \u25b4":"Show detail \u25be";return;}
+  const st=e.target.closest("[data-step]");
+  if(st){const k=st.dataset.step;steps[k]=!steps[k];st.setAttribute("aria-pressed",!!steps[k]);
+    document.getElementById("s-"+k).classList.toggle("done",!!steps[k]);persist();return;}
+  const ct=e.target.closest("[data-ch]");
+  if(ct){done[ct.dataset.ch]=!done[ct.dataset.ch];stats();renderList();renderJump();persist();return;}
+  const fb=e.target.closest("[data-f]");
+  if(fb){filter=fb.dataset.f;renderList();}
+});
+
+(async function(){await load();openRun[1]=true;renderRuns();renderList();renderVer();stats();reportProgress();})();
+</script>
+<!-- step-progress-bridge -->
+<script>
+/* Reports route-step ticks into 'hitman-progress-registry' so the index can
+   show them beside the challenge counts. Counts what is on screen rather than
+   any guide-specific state, so one implementation serves every guide. */
+(function(){
+  var RID="m14", SEL=".step";
+  function isDone(s){
+    var c=s.classList;
+    if(c.contains('done')||c.contains('dn')) return true;
+    if(s.getAttribute('data-done')==='1'||s.getAttribute('aria-pressed')==='true') return true;
+    return !!s.querySelector('.done,.dn,[data-done="1"],[aria-pressed="true"]');
+  }
+  function tally(){
+    var steps=document.querySelectorAll(SEL);
+    if(!steps.length) return null;
+    var n=0;
+    for(var i=0;i<steps.length;i++) if(isDone(steps[i])) n++;
+    return {steps:n,stepTotal:steps.length};
+  }
+  function push(){
+    var t;
+    try{ t=tally(); }catch(err){ return; }
+    if(!t||!t.stepTotal) return;
+    try{
+      var r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');
+      var e=r[RID]||(r[RID]={});
+      /* the guide's own reportProgress() rewrites this entry wholesale, so
+         re-add the step counts whenever they go missing or stale */
+      if(e.steps===t.steps&&e.stepTotal===t.stepTotal) return;
+      e.steps=t.steps; e.stepTotal=t.stepTotal; e.updated=Date.now();
+      localStorage.setItem('hitman-progress-registry',JSON.stringify(r));
+    }catch(err){}
+  }
+  var pending=false;
+  function schedule(){
+    if(pending) return; pending=true;
+    setTimeout(function(){pending=false;push();},120);
+  }
+  try{
+    new MutationObserver(schedule).observe(document.body,
+      {subtree:true,childList:true,attributes:true,attributeFilter:['class','aria-pressed','data-done']});
+  }catch(err){}
+  window.addEventListener('load',schedule);
+  setTimeout(push,600);
+})();
+</script>
+<!-- /step-progress-bridge -->
+</body>
+</html>

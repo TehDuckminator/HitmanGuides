@@ -1,0 +1,540 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Shadows in the Water — Run Planner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@400;600;800&family=Spline+Sans:wght@400;500;600&family=Spline+Sans+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#07131a; --hull:#0d2028; --deck:#132c36; --line:#20444f;
+  --verdigris:#5fc9a8; --brass:#d1972f; --coral:#e2573f; --bone:#e9e4d5; --dim:#7d9aa3;
+  --disp:'Big Shoulders Display',sans-serif; --body:'Spline Sans',system-ui,sans-serif; --mono:'Spline Sans Mono',ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(1100px 500px at 12% -8%,#14343f 0%,transparent 62%),linear-gradient(180deg,#07131a 0%,#050d12 100%);
+  color:var(--bone);font-family:var(--body);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;min-height:100vh}
+.wrap{max-width:1080px;margin:0 auto;padding:28px 20px 90px}
+a{color:var(--verdigris)}
+.mast{border-bottom:1px solid var(--line);padding-bottom:18px;margin-bottom:22px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--brass)}
+h1{font-family:var(--disp);font-weight:800;font-size:clamp(40px,8vw,74px);line-height:.9;margin:6px 0 4px;letter-spacing:-.01em;text-transform:uppercase}
+h1 span{color:var(--verdigris)}
+.sub{color:var(--dim);font-size:14px;max-width:64ch}
+.meter{position:relative;margin:20px 0 8px;border:1px solid var(--line);background:var(--hull);border-radius:3px;overflow:hidden;height:74px}
+.water{position:absolute;left:0;bottom:0;width:100%;background:linear-gradient(180deg,rgba(95,201,168,.55),rgba(95,201,168,.18));transition:height .5s cubic-bezier(.4,0,.2,1)}
+.water::before{content:"";position:absolute;top:-3px;left:0;right:0;height:3px;background:var(--verdigris);box-shadow:0 0 14px rgba(95,201,168,.8)}
+.meter-txt{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;height:100%;padding:0 18px}
+.meter-txt b{font-family:var(--disp);font-size:44px;font-weight:800;line-height:1}
+.meter-txt small{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--bone)}
+.cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:8px;margin-bottom:26px}
+.cat{border:1px solid var(--line);background:var(--hull);padding:10px 12px;border-radius:3px}
+.cat u{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);text-decoration:none;margin-bottom:4px}
+.cat b{font-family:var(--disp);font-size:26px;font-weight:600}
+.cat i{font-style:normal;color:var(--dim);font-size:13px;font-family:var(--mono)}
+.bar{height:3px;background:#0a1c23;margin-top:7px;border-radius:2px;overflow:hidden}
+.bar>div{height:100%;background:var(--brass);transition:width .4s}
+.tabs{display:flex;gap:2px;border-bottom:1px solid var(--line);margin-bottom:24px;flex-wrap:wrap}
+.tab{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;background:none;border:0;border-bottom:2px solid transparent;color:var(--dim);padding:11px 16px;cursor:pointer}
+.tab:hover{color:var(--bone)}
+.tab[aria-selected=true]{color:var(--verdigris);border-bottom-color:var(--verdigris)}
+.tab:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+.panel[hidden]{display:none}
+.notice{border:1px solid var(--brass);background:rgba(209,151,47,.08);padding:14px 16px;border-radius:3px;margin-bottom:24px}
+.notice h4{margin:0 0 6px;font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--brass)}
+.notice p{margin:0 0 8px;font-size:13.5px;color:#efe6d2}.notice p:last-child{margin:0}
+.run{border:1px solid var(--line);background:var(--hull);border-radius:3px;margin-bottom:20px;overflow:hidden}
+.run>header{padding:18px 20px;border-bottom:1px solid var(--line);background:var(--deck)}
+.run-no{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--brass);text-transform:uppercase}
+.run h3{font-family:var(--disp);font-weight:600;font-size:31px;margin:2px 0 6px;text-transform:uppercase;letter-spacing:.01em}
+.run header p{margin:0;color:var(--dim);font-size:14px;max-width:74ch}
+.loadout{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;background:var(--line);border-bottom:1px solid var(--line)}
+.slot{background:var(--hull);padding:11px 14px}
+.slot u{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--brass);text-decoration:none;margin-bottom:3px}
+.slot span{font-size:13.5px;display:block}
+.slot em{font-style:normal;color:var(--dim);font-size:11.5px;font-family:var(--mono);display:block;margin-top:2px}
+.sect{padding:6px 20px 14px}
+.sect>h5{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--verdigris);margin:18px 0 8px;padding-bottom:6px;border-bottom:1px dashed var(--line)}
+.step{border-left:2px solid var(--line);padding:2px 0 2px 14px;margin-bottom:14px}
+.step.done{border-left-color:var(--verdigris)}
+.step-head{display:flex;gap:11px;align-items:flex-start}
+.num{flex:0 0 auto;font-family:var(--mono);font-size:12px;color:var(--brass);margin-top:3px;min-width:26px}
+.tick{flex:0 0 auto;width:21px;height:21px;margin-top:1px;border:1px solid var(--line);background:#0a1c23;border-radius:3px;cursor:pointer;color:transparent;font-size:12px;line-height:1;padding:0}
+.tick.on{background:var(--verdigris);border-color:var(--verdigris);color:var(--ink);font-weight:700}
+.step-body{flex:1;min-width:0}
+.step-body b{display:block;font-size:15px;font-weight:600}
+.step.done .step-body b{text-decoration:line-through;color:var(--dim)}
+.bl{margin:7px 0 0;padding:0;list-style:none}
+.bl li{position:relative;padding-left:15px;margin:4px 0;font-size:13.7px;color:#c3d4d9}
+.bl li::before{content:"";position:absolute;left:2px;top:8px;width:5px;height:5px;background:var(--line);border-radius:50%}
+.bl li b{display:inline;font-weight:600;color:var(--bone)}
+.bl li.go b,.bl li.dis b,.bl li.item b,.bl li.npc b,.bl li.act b,.bl li.warn b{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase}
+.bl li.go::before{background:var(--verdigris)}
+.bl li.warn::before{background:var(--coral)}
+.bl li.warn{color:#ffd9d0}
+.bl li.warn b{color:#ffb3a4}
+.badges{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px}
+.b{font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;padding:3px 8px;border-radius:2px;border:1px solid}
+.b.ch{color:var(--verdigris);border-color:rgba(95,201,168,.5);background:rgba(95,201,168,.09)}
+.b.warn{color:#ffd9d0;border-color:var(--coral);background:rgba(226,87,63,.2)}
+.b.save{color:#ffe9bd;border-color:var(--brass);background:rgba(209,151,47,.18)}
+.b.unv{color:#c9b8ff;border-color:#7b6bd6;background:rgba(123,107,214,.15)}
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.f{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:6px 12px;border:1px solid var(--line);background:var(--hull);color:var(--dim);border-radius:2px;cursor:pointer}
+.f[aria-pressed=true]{background:var(--verdigris);color:var(--ink);border-color:var(--verdigris);font-weight:600}
+.grp{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--brass);margin:22px 0 8px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+.row{display:flex;gap:11px;align-items:flex-start;padding:9px 11px;border:1px solid transparent;border-radius:3px}
+.row:hover{background:var(--hull);border-color:var(--line)}
+.row.done b{text-decoration:line-through;color:var(--dim)}
+.row b{font-weight:600;font-size:14.5px}
+.row p{margin:1px 0 0;color:var(--dim);font-size:13px}
+.tagrow{display:flex;gap:5px;flex-wrap:wrap;margin-top:5px}
+.reset{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;background:none;border:1px solid var(--line);color:var(--dim);padding:7px 13px;border-radius:2px;cursor:pointer}
+.reset:hover{border-color:var(--coral);color:var(--coral)}
+.detail{border:1px solid var(--line);border-radius:3px;background:#0a1c23;padding:13px 15px;margin:10px 0;font-size:13.5px}
+.detail dl{margin:0}.detail dt{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--brass);margin-top:12px}.detail dt:first-child{margin-top:0}.detail dd{margin:2px 0 0}
+h3.rh{font-family:var(--disp);font-size:28px;text-transform:uppercase;margin:28px 0 10px}
+.foot{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);color:var(--dim);font-size:12.5px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+<header class="mast">
+  <div class="eyebrow">Ambrose Island · Andaman Sea · Shadows in the Water</div>
+  <h1>Shadows in<br><span>the Water</span></h1>
+  <p class="sub">A 49-challenge completion planner built from your mission file. Five runs, ordered so that mutually exclusive kills are separated by reloads rather than whole extra playthroughs. Every step names where to go, what to wear, what to carry, and what to watch for.</p>
+  <div class="meter" role="progressbar" aria-label="Overall completion" aria-valuemin="0" aria-valuemax="100" id="meter">
+    <div class="water" id="water" style="height:0%"></div>
+    <div class="meter-txt"><div><b id="pctBig">0%</b></div>
+      <div style="text-align:right"><small id="meterLbl">0 of 49 challenges logged</small></div></div>
+  </div>
+  <div class="cats" id="cats"></div>
+</header>
+
+<div class="tabs" role="tablist">
+  <button class="tab" role="tab" aria-selected="true" data-p="runs">Optimized runs</button>
+  <button class="tab" role="tab" aria-selected="false" data-p="list">Challenge checklist</button>
+  <button class="tab" role="tab" aria-selected="false" data-p="ref">Reference &amp; sourcing</button>
+</div>
+
+<section class="panel" id="p-runs"></section>
+<section class="panel" id="p-list" hidden>
+  <div class="filters" id="filters"></div>
+  <div id="listBody"></div>
+  <p style="margin-top:22px"><button class="reset" id="reset">Clear all progress</button></p>
+</section>
+<section class="panel" id="p-ref" hidden></section>
+<p class="foot">Progress is saved in this browser and persists across reloads. Nothing is sent anywhere.</p>
+</div>
+
+<script>
+/* ===== 49 CHALLENGES — verbatim names/descriptions from your mission file ===== */
+const CH=[
+{id:'a1',c:'Assassination',n:'... I Thought About It',d:'[REDACTED] Win the slapping contest so Crest recruits you, then burn him at the oil drum during his private job offer.',run:'Run 2'},
+{id:'a2',c:'Assassination',n:'Ingenuity',d:'Eliminate Crest with a spark of ingenuity — the repaired workshop boat engine.',run:'Run 2'},
+{id:'a3',c:'Assassination',n:'A Kill to Treasure',d:'[REDACTED] Make Akka kick Crest off the lookout cliff.',run:'Run 3'},
+{id:'a4',c:'Assassination',n:'Another for Good Measure',d:'[REDACTED] Blow up Akka with the leaking gas canister while she smokes, right after she kills Crest.',run:'Run 3'},
+{id:'a5',c:'Assassination',n:'Jump Start',d:'[REDACTED] Electrocute Akka in the flooded prison cell at the Pirate Camp.',run:'Run 2'},
+{id:'a6',c:'Assassination',n:"A Pirate's Life For Me",d:'[REDACTED] Eliminate both targets with the Saber while wearing The Buccaneer outfit.',run:'Run 4'},
+{id:'a7',c:'Assassination',n:'Made to Order',d:'Eliminate Crest with lethal poison while he is eating.',run:'Run 2'},
+{id:'a8',c:'Assassination',n:'A Bridge Too Far',d:'[REDACTED] Eliminate Crest via the loosened board on the rope bridge.',run:'Run 2'},
+{id:'a9',c:'Assassination',n:'Two Birds',d:'Eliminate both targets simultaneously with a cannon while they are in the meeting room.',run:'Run 3'},
+{id:'a10',c:'Assassination',n:'Hippie Ki-Yay',d:'Eliminate Akka while dressed as the hippie.',run:'Run 4'},
+{id:'a11',c:'Assassination',n:'Straight Shot',d:'Assassinate the target with a headshot.',run:'Run 5'},
+{id:'a12',c:'Assassination',n:"I'll Always Know ...",d:'Eliminate a target with the hook.',run:'Run 4'},
+{id:'a13',c:'Assassination',n:'Piano Man',d:'Assassinate the target with the fiber wire.',run:'Run 4'},
+{id:'a14',c:'Assassination',n:'Hold My Hair',d:'Assassinate the target by drowning them.',run:'Run 2'},
+{id:'a15',c:'Assassination',n:'Tasteless, Traceless',d:'Assassinate the target with lethal poison.',run:'Run 2'},
+{id:'a16',c:'Assassination',n:'Someone Could Hurt Themselves',d:'Assassinate the target in an accident.',run:'Run 2'},
+{id:'a17',c:'Assassination',n:'Versatile Assassin',d:'Complete: Piano Man, Someone Could Hurt Themselves, Hold My Hair, Straight Shot, Tasteless Traceless.',run:'Cumulative'},
+{id:'d1',c:'Discovery',n:'Picturesque',d:'Take a picture of Lance Hsu.',run:'Run 1'},
+{id:'d2',c:'Discovery',n:'47 Leagues Under The Sea',d:'Exfiltrate in the submarine dressed as the Hippie.',run:'Run 4'},
+{id:'d3',c:'Discovery',n:'Tactical Exfiltration',d:"Exfiltrate in the militia's tactical speedboat.",run:'Run 5'},
+{id:'d4',c:'Discovery',n:"Fisherman's Friend",d:'Obtain the hook.',run:'Run 1'},
+{id:'d5',c:'Discovery',n:'Penned Pal',d:'[REDACTED] Collect all four of Agent Smith\u2019s diary entries.',run:'Run 1'},
+{id:'d6',c:'Discovery',n:'Shortcut: Pirate Outhouse',d:'Unlock the ladder shortcut in the pirate outhouse.',run:'Run 1'},
+{id:'d7',c:'Discovery',n:'Sail Away',d:'Exfiltrate in the workshop boat.',run:'Run 2'},
+{id:'d8',c:'Discovery',n:'Le Pew!',d:'Obtain a Durian.',run:'Run 1'},
+{id:'d9',c:'Discovery',n:'A Bone To Pick',d:'[REDACTED] Pick up the Bone Lockpick.',run:'Run 1'},
+{id:'d10',c:'Discovery',n:'Firestarter',d:'Obtain a molotov cocktail.',run:'Run 1'},
+{id:'d11',c:'Discovery',n:'Discover Ambrose Island',d:'Reveal all undiscovered areas on Ambrose Island.',run:'Run 1'},
+{id:'d12',c:'Discovery',n:'Waiting in the Wings',d:"Exfiltrate in Grey's helicopter.",run:'Run 1'},
+{id:'d13',c:'Discovery',n:'Shortcut: Colonial Ruins',d:'Unlock the ladder shortcut in the colonial ruins.',run:'Run 1'},
+{id:'d14',c:'Discovery',n:'Chameleon',d:'Find and equip all disguises on Ambrose Island.',run:'Run 1'},
+{id:'d15',c:'Discovery',n:'Under The Bridge',d:'Exfiltrate in the cove boat.',run:'Run 3'},
+{id:'d16',c:'Discovery',n:'The Smuggler',d:'Become Torres Piombo.',run:'Run 1'},
+{id:'f1',c:'Feats',n:'Destructive Neutralization',d:'Destroy the Satellite Control Unit.',run:'Run 4'},
+{id:'f2',c:'Feats',n:'Irrefutable',d:'Give Farah the evidence she seeks.',run:'Run 3'},
+{id:'f3',c:'Feats',n:'The Beacon is Lit',d:'Manually activate the light on the Radar Tower.',run:'Run 3'},
+{id:'f4',c:'Feats',n:'Access Denied',d:'Obtain both Satellite Control Unit access cards.',run:'Run 1'},
+{id:'f5',c:'Feats',n:'Elegant Neutralization',d:'Overload the Satellite Control Unit.',run:'Run 1'},
+{id:'f6',c:'Feats',n:'Locksmith',d:'[REDACTED] Free Agent Smith from his cell in the Pirate Camp.',run:'Run 2'},
+{id:'f7',c:'Feats',n:'Talk to the Hand',d:'[REDACTED] Win the slapping tournament.',run:'Run 2'},
+{id:'f8',c:'Feats',n:"Nature's Bounty",d:'Help out Gregory M. Yeager.',run:'Run 1'},
+{id:'f9',c:'Feats',n:'Get It Yourself',d:'[REDACTED] Knock out Farah by throwing a coconut at her.',run:'Run 4'},
+{id:'t1',c:'Targets',n:'The Ronin',d:'Eliminate Noel Crest.',run:'Cumulative'},
+{id:'t2',c:'Targets',n:'The Corsair',d:'Eliminate Sinhi "Akka" Venthan.',run:'Cumulative'},
+{id:'c1',c:'The Classics',n:'Silent Assassin, Suit Only',d:'Complete the mission; only kill targets, no bodies found, not compromised, wipe camera evidence, in your suit.',run:'Run 5'},
+{id:'c2',c:'The Classics',n:'Silent Assassin',d:'Complete the mission; only kill targets, no bodies found, not compromised, wipe camera evidence.',run:'Run 5'},
+{id:'c3',c:'The Classics',n:'Suit Only',d:'Assassinate the targets and finish the mission in your suit.',run:'Run 5'},
+{id:'c4',c:'The Classics',n:'The Classics',d:'Complete Silent Assassin, SASO, Sniper Assassin, and Suit Only.',run:'Run 5'},
+{id:'c5',c:'The Classics',n:'Sniper Assassin',d:'Assassinate both targets with a sniper rifle, only the targets, without being spotted.',run:'Run 5'}
+];
+
+/* ===== RUNS — step format ===== */
+const RUNS=[
+{no:'Run 01',title:'The Long Walk',
+ goal:'A no-kill sightseeing lap that clears almost every Discovery challenge plus the quiet satellite objectives. Nothing here conflicts with anything, so do it first and learn the island while it is calm.',
+ load:[['Start','West Beach','Default \u2014 Mastery 1'],['Suit','Signature Suit','No stealth rating needed here'],['Slot 1','Crowbar','Opens the outhouse shortcut'],['Slot 2','Lockpick','Doors, huts, the durian building'],['Slot 3','Camera','Required for Picturesque'],['Slot 4','Silenced Pistol','Drops durians and shoots braziers at range']],
+ sections:[
+  {h:'East beach & Shrine camp',steps:[
+   {t:'Take the Bone Lockpick from the beach skeleton',
+    li:[['go','Go to','the small beach in the corner below the hippie/graduate-student camp on the east side of the island'],['npc','NPC','none guard this corner'],['act','Do','pick up the Bone Lockpick from the skeleton lying there'],['item','Note','a second Bone Lockpick exists on the chained skeleton inside the Colonial Ruins cell, if you miss this one']],
+    ch:['A Bone To Pick'],save:''},
+   {t:'Become Torres Piombo for the Hippie disguise',
+    li:[['go','Go to','the Shrine beside the camp, where the hippie Torres Piombo is asleep'],['npc','NPC','Gregory M. Yeager (graduate student) is the only witness \u2014 flip the generator next to the camp to pull him away'],['act','Do','subdue Torres in the bushes and take his outfit'],['dis','Grants','Hippie disguise \u2014 also counts toward Chameleon']],
+    ch:['The Smuggler','Chameleon (Hippie)'],save:''},
+   {t:'Help Gregory M. Yeager for the Rusty Key',
+    li:[['go','Go to','the same camp; the emetic flower is just south \u2014 down the stairs, then immediately left'],['item','Bring','the emetic flower plus one poison frog (frogs sit in militia ground \u2014 grab one on your ruins leg and return)'],['npc','NPC','Gregory M. Yeager stays put at the camp'],['act','Do','hand him both items; he rewards the Rusty Key, the master key to the Colonial Ruins']],
+    ch:["Nature's Bounty"],save:''},
+   {t:'Drop a durian from the camp trees',
+    li:[['go','Go to','under the trees at the hippie camp and look straight up'],['act','Do','shoot a hanging durian to drop it, then pick it up'],['item','Alt','a durian also sits in a basket inside the locked building left of Farah\u2019s Place \u2014 needs a lockpick or the restaurant master key (hidden behind the Akka/Farah photo)']],
+    ch:['Le Pew!'],save:''}
+  ]},
+  {h:'Pirate Camp',steps:[
+   {t:'Open the pirate outhouse shortcut',
+    li:[['go','Go to','the outhouse just outside the pirate fortress main gate, well to its right'],['item','Use','the Crowbar'],['npc','NPC','time it against the patrol rotating past the gate \u2014 prying is a suspicious action'],['warn','Missable','this shortcut is permanent across every future run \u2014 the single most valuable thing you unlock today']],
+    ch:['Shortcut: Pirate Outhouse'],save:'Save right after it opens \u2014 the unlock persists between runs and re-doing it wastes a whole trip.'},
+   {t:'Pick up the hook',
+    li:[['go','Go to','the inner-wall entrance of the Pirate Camp, where a hook hangs on the wall'],['dis','Wear','Pirate (isolate a lone pirate near the village edge to get it)'],['act','Do','grab the hook out of sight \u2014 it counts as a weapon'],['item','Keep it','Run 4 uses this same hook for I\u2019ll Always Know\u2026']],
+    ch:["Fisherman's Friend"],save:''},
+   {t:'Grab a molotov cocktail',
+    li:[['go','Go to','the pirate explosives work table inside the camp'],['dis','Wear','Pirate'],['act','Do','take one molotov'],['item','Alt','a second molotov sits in the Colonial Ruins prison if you would rather grab it up north']],
+    ch:['Firestarter'],save:''},
+   {t:'Collect all four diary entries',
+    li:[['go','Go to','four spots: (1) a garbage bag in Akka\u2019s compound, (2) a tree on the path below the Old Colonial Tower toward the beach, (3) a small shack by the coast, (4) inside the prisoner\u2019s cell in the Colonial Ruins'],['dis','Wear','Pirate for the compound entries'],['act','Do','pick up each page'],['warn','Note','the cell entry (4) is collected during the Picturesque step below \u2014 do them together']],
+    ch:['Penned Pal'],save:''}
+  ]},
+  {h:'Colonial Ruins & satellite',steps:[
+   {t:'Photograph Lance Hsu in the guarded cell',
+    li:[['go','Go to','the permanently guarded cell in the Colonial Ruins'],['dis','Wear','Militia Soldier (talk the guard away) \u2014 or use the Rusty Key / a lockpick'],['npc','NPC','one militia guards this cell at all times'],['act','Do','open it, photograph the body of Lance Hsu, and grab diary entry #4 and the wall skeleton\u2019s Bone Lockpick while inside'],['warn','Keep','the photo \u2014 Run 3 needs it for both Irrefutable and the summit']],
+    ch:['Picturesque'],save:''},
+   {t:'Open the Colonial Ruins shortcut',
+    li:[['go','Go to','directly behind the cell block'],['dis','Wear','Militia Soldier'],['act','Do','open the ladder shortcut \u2014 also permanent across runs']],
+    ch:['Shortcut: Colonial Ruins'],save:'Save once both shortcuts are open.'},
+   {t:'Overload the satellite control unit',
+    li:[['go','Go to','the militia cave holding the Satellite Control Unit'],['dis','Wear','Militia Soldier'],['item','Use','a screwdriver and a blade \u2014 both spawn inside the cave, no need to bring them'],['act','Do','pry the security panel with the screwdriver, cut the cable with the blade, overload the machine'],['warn','Exclusive','this is the overload; the destroy version (Run 4) cannot be done the same run']],
+    ch:['Elegant Neutralization'],save:''},
+   {t:'Take both satellite keycards',
+    li:[['go','Go to','wherever Orson Mills is patrolling the ruins near Akka'],['npc','NPC','Orson Mills carries one card and looks distinct from rank-and-file militia; Diana flags him when near'],['act','Do','subdue him for card one; the second card comes from Akka \u2014 or lift both non-lethally as you pass'],['item','Note','Access Denied only needs both cards obtained, not used']],
+    ch:['Access Denied'],save:''},
+   {t:'Sweep every named zone, then fly out with Grey',
+    li:[['go','Go to','the areas that are easy to miss: Old Colonial Tower, radio tower platform, cove under the rope bridge, submarine dock, militia cave, Shrine, beach restaurant, workshop'],['act','Do','reveal them all, then use the GPS device at the marked point to call Grey\u2019s helicopter and leave'],['warn','Only exit','the helicopter is the sole exit that completes Waiting in the Wings']],
+    ch:['Discover Ambrose Island','Waiting in the Wings'],save:''}
+  ]}
+ ]},
+
+{no:'Run 02',title:"Crest's Rounds",
+ goal:'Every Crest-specific kill lives on his patrol loop and each one kills him, so they are all mutually exclusive. Hard-save once before the first kill, then reload that save for each method. Finish on Akka.',
+ load:[['Start',"Farah's Bar",'Unlocks at Mastery 7'],['Suit','Signature Suit','\u2014'],['Slot 1','Lethal Poison','For Made to Order'],['Slot 2','Screwdriver','Silently punctures oil drums'],['Slot 3','Crowbar','Loosens the bridge board'],['Slot 4','Wrench','Repairs the boat engine']],
+ sections:[
+  {h:'Set up before any kill',steps:[
+   {t:'Free Agent Smith (do this before Jump Start)',
+    li:[['go','Go to','Smith\u2019s cell in the Pirate Camp; the Cage Key is in Akka\u2019s office'],['dis','Wear','Pirate'],['npc','NPC','one pirate stands at the cell door \u2014 lure him toward the radio tower interior, subdue him, box the body'],['act','Do','unlock the cell with the Cage Key (or Bone Lockpick) and let Smith escape'],['warn','Ordering','Smith MUST be gone before you flood the cell, or the Jump Start trap will not arm']],
+    ch:['Locksmith'],save:''},
+   {t:'Win the slapping tournament',
+    li:[['go','Go to','the contest table in the plaza outside Farah\u2019s Place'],['npc','NPC','four militia opponents; Crest spectates'],['act','Do','beat all four. Keep playing and Crest calls you over to recruit you'],['warn','Note','Talk to the Hand pops on the wins alone, even if you never follow him']],
+    ch:['Talk to the Hand'],save:'HARD SAVE HERE. This save is the anchor you reload for all four Crest kills below.'}
+  ]},
+  {h:'Crest kill A \u2014 the recruitment talk',steps:[
+   {t:'Burn Crest at the oil drum during his job offer',
+    li:[['go','Go to','follow Crest through the container passage right of the plaza after the contest'],['item','Use','the Screwdriver to puncture the oil drum in the dark corner (silent)'],['act','Do','get ahead, puncture the drum, then let him catch up; he stops, pitches you the job, and flicks his cigar into the spilled oil'],['warn','If it fails','the ignited drum must be the one beside his stopping mark \u2014 reload and re-puncture the correct drum']],
+    ch:['... I Thought About It','Someone Could Hurt Themselves'],save:''}
+  ]},
+  {h:'Crest kill B \u2014 the workshop boat',steps:[
+   {t:'Repair the engine and spill fuel',
+    li:[['go','Go to','the southern workshop where the boat is being repaired (reload the anchor save first)'],['dis','Wear','Engineer \u2014 flip the water pump on the two-militia side to lure a technician out, take his outfit'],['item','Use','the Wrench on the engine, then puncture the drum beside it'],['npc','NPC','remove the worker sitting in the chair inside'],['act','Do','report the repair as an Engineer to summon Crest; he starts the engine and the sparks ignite the fuel']],
+    ch:['Ingenuity','Chameleon (Engineer)'],save:''},
+   {t:'Exfiltrate on the workshop boat',
+    li:[['go','Go to','the workshop boat, now that the engine is fixed'],['act','Do','board and leave'],['item','Pairing','Sail Away is cheapest done in this same reload as Ingenuity']],
+    ch:['Sail Away'],save:''}
+  ]},
+  {h:'Crest kill C \u2014 the poisoned meal',steps:[
+   {t:'Wake the chef and poison Crest\u2019s dish',
+    li:[['go','Go to','the beach restaurant at the southern docks (reload the anchor save)'],['dis','Wear','Cook \u2014 the male chef watches TV in the kitchen; subdue him for the outfit and the Cook\u2019s Key'],['npc','NPC','the real cook sleeps off-shift in a house on the southern coast \u2014 set the alarm clock to wake her; she walks to work'],['item','Use','Lethal Poison on the prepared dish while it rests on the side shelf'],['act','Do','she serves the poisoned plate to Crest; poison counts as an accident, so no body worries']],
+    ch:['Made to Order','Tasteless, Traceless','Chameleon (Cook)'],save:''}
+  ]},
+  {h:'Crest kill D \u2014 the rope bridge',steps:[
+   {t:'Loosen the board, then break the antenna',
+    li:[['go','Go to','the rope bridge from the Shrine camp to the militia base (reload the anchor save)'],['item','Use','the Crowbar on the centre plank first \u2014 no NPC steps there, so the bridge stays clear'],['dis','Wear','Militia Soldier for the next part'],['act','Do','then sabotage the antenna control computer by the ruins kitchen; Crest storms across the bridge to inspect and falls to the beach, scored as a drowning'],['warn','Ordering','loosen the plank BEFORE the computer \u2014 sabotaging first sends Crest walking too soon']],
+    ch:['A Bridge Too Far','Hold My Hair'],save:''}
+  ]},
+  {h:'Close on Akka',steps:[
+   {t:'Electrocute Akka in the flooded cell',
+    li:[['go','Go to','the now-empty prison cell in the Pirate Camp (Smith already freed)'],['dis','Wear','Pirate'],['act','Do','turn the wall valve to flood the cell and switch on the car battery; Akka storms in hunting for Smith and is electrocuted'],['item','Note','you can arm the battery early \u2014 there is no timing window, the trap simply waits']],
+    ch:['Jump Start'],save:''}
+  ]}
+ ]},
+
+{no:'Run 03',title:'The Summit',
+ goal:'The Akka\u2013Crest meeting can end two ways that cancel each other out. Trigger the meeting, hard-save, then take the cannon ending and the cliff ending on separate reloads.',
+ load:[['Start','West Beach','Default \u2014 Mastery 1'],['Suit','Signature Suit','\u2014'],['Slot 1','Camera','Unless you kept the photo route in mind from Run 1'],['Slot 2','Wrench','Loosens the gas canister valve'],['Slot 3','Coin','Distracts the lookout guards'],['Slot 4','Shovel','Digs up Farah\u2019s cigarettes']],
+ sections:[
+  {h:"Farah's errand chain",steps:[
+   {t:'Coconut, then buried cigarettes, then the photo',
+    li:[['go','Go to','Farah at her bar in the village centre'],['item','Bring, in order','coconut (right-hand path as you first enter the jungle from West Beach) \u2192 cigarettes (dig with the Shovel near the burning drum on the route back toward the west coast) \u2192 photograph of Lance Hsu (Colonial Ruins cell)'],['act','Do','deliver each in sequence; the third hand-off completes Irrefutable'],['warn','Missable','give the photo to FARAH, not to Akka\u2019s desk \u2014 the desk still triggers the meeting but loses Irrefutable']],
+    ch:['Irrefutable'],save:''}
+  ]},
+  {h:'Trigger the meeting the right way',steps:[
+   {t:'Light the radio-tower beacon to summon the summit',
+    li:[['go','Go to','the top of the radio tower inside the Pirate Camp'],['dis','Wear','Pirate'],['act','Do','manually activate the signal light; both targets walk to the ruin room above Farah\u2019s Place and linger'],['warn','Ordering','use the beacon, NOT the photo, if you want the cannon \u2014 the photo-triggered meeting ends too fast to load the cannon']],
+    ch:['The Beacon is Lit'],save:'HARD SAVE the moment both targets are walking to the meeting room.'}
+  ]},
+  {h:'Ending A \u2014 the cannon',steps:[
+   {t:'Load and fire the ruins cannon',
+    li:[['go','Go to','the cannon in the Colonial Ruins aimed at the village meeting room'],['dis','Wear','Militia Soldier'],['item','Use','a Cannonball (beside the cannon) and a Bag of Gunpowder \u2014 both are in the treasure chest by the militia-cave entrance (enter the cave, go right to the small beach, check the dead-end)'],['act','Do','clear the two nearest militia patrols, load ball and powder, and fire once both targets are inside; scored as an accident, so it keeps Silent Assassin'],['warn','Exclusive','this cancels the cliff ending \u2014 do the other one on a reload']],
+    ch:['Two Birds'],save:''}
+  ]},
+  {h:'Ending B \u2014 the cliff & the canister',steps:[
+   {t:'Leak the gas, then let the script run',
+    li:[['go','Go to','the lookout where the pair move after the meeting (reload the summit save)'],['item','Use','the Wrench on the gas canister valve directly behind Akka\u2019s smoking mark (wrenches spawn at the maintenance window in front of the Pirate Camp)'],['npc','NPC','two guards cover the lookout \u2014 throw a Coin to pull them off before loosening the valve'],['act','Do','let it play: Akka kicks Crest off the cliff, walks to her smoking spot, lights up, and the gas reaches her'],['warn','Single script','A Kill to Treasure and Another for Good Measure are one continuous event \u2014 killing Akka early forfeits both']],
+    ch:['A Kill to Treasure','Another for Good Measure'],save:''},
+   {t:'Exfiltrate on the cove boat',
+    li:[['go','Go to','the beach beneath the rope bridge, where the cove boat is moored'],['item','Use','the boat key hidden under a brick in the house directly behind the mooring'],['act','Do','board and leave']],
+    ch:['Under The Bridge'],save:''}
+  ]}
+ ]},
+
+{no:'Run 04',title:'Pirate Treasure',
+ goal:'The costume-and-prop run: the buried saber, the Buccaneer outfit, the hook, fiber wire, hippie kill, and the loud satellite demolition. Nothing here is stealth-rated, so play it messy and reload between the mutually exclusive kills.',
+ load:[['Start','West Beach','Default \u2014 Mastery 1'],['Suit','The Buccaneer','If already unlocked via Haven Island escalation, you can start wearing it'],['Slot 1',"Jarl's Pirate Saber",'Haven Island Mastery 2 reward \u2014 bringing it skips the brazier dig'],['Slot 2','Remote Explosive','For Destructive Neutralization'],['Slot 3','Fiber Wire','Carried by default'],['Slot 4','Silenced Pistol','Drops durians / lights braziers if needed']],
+ sections:[
+  {h:'Kit up',steps:[
+   {t:'Open the treasure chest for The Buccaneer',
+    li:[['go','Go to','the treasure chest by the militia-cave entrance (same cave as the satellite unit) \u2014 enter, go right to the small beach, check the dead-end'],['act','Do','open the chest for The Buccaneer outfit (also holds cannonball/gunpowder)'],['dis','Grants','The Buccaneer \u2014 counts toward Chameleon, gives suit-level access'],['warn','Source note','one guide instead places a "Pirate Disguise" chest in the cave northwest of the village \u2014 if the beach chest is empty, check there']],
+    ch:['Chameleon (The Buccaneer)'],save:''},
+   {t:'Light four braziers, then dig up the Saber',
+    li:[['go','Go to','the four braziers: (1) rocky ledge north of the militia cave, (2) old fort north of the radio tower, (3) beside the rope bridge on the Colonial Ruins side, (4) next to the gravestone on the east beach'],['dis','Wear','Metal Worker if you also want the (patch) Forged in Fire challenge \u2014 not in your file, optional'],['item','Use','a Shovel on the gravestone once all four are lit'],['act','Do','shoot or torch each brazier, then dig for Jarl\u2019s Pirate Saber'],['warn','Skip option','bringing the Saber in your loadout removes the need to light braziers at all']],
+    ch:[],save:'Save after the Saber is in hand.'}
+  ]},
+  {h:'The prop kills (reload between them)',steps:[
+   {t:'Saber both targets in the Buccaneer outfit',
+    li:[['go','Go to','each target: Crest is easiest to isolate on his workshop leg, Akka in her office'],['dis','Wear','The Buccaneer (mandatory for this challenge; suit-level access, so expect to trespass)'],['item','Use','Jarl\u2019s Pirate Saber'],['act','Do','kill both targets with the saber in this single run'],['warn','Note','this conflicts with the hook kill on the same target \u2014 use reloads from the save above']],
+    ch:["A Pirate's Life For Me"],save:'Save before the first saber kill \u2014 the second target is the fragile half.'},
+   {t:'Hook a target',
+    li:[['go','Go to','whichever target you can isolate (reload if needed)'],['item','Use','the hook from the Pirate Camp inner-wall entrance'],['act','Do','kill either target with the hook \u2014 Crest is easier, more time away from crowds']],
+    ch:["I'll Always Know ..."],save:''},
+   {t:'Fiber-wire a target',
+    li:[['go','Go to','an isolated moment on either target\u2019s route (reload)'],['item','Use','the Fiber Wire'],['act','Do','strangle one target from behind, out of sight']],
+    ch:['Piano Man'],save:''},
+   {t:'Kill Akka in the Hippie outfit',
+    li:[['go','Go to','Akka on her patrol, or cross the submarine-side bridge into the camp for the escorted meeting (reload)'],['dis','Wear','Hippie (mandatory) \u2014 taken from Torres at the Shrine'],['act','Do','eliminate Akka by any method while wearing the hippie outfit'],['item','Grab','the submarine key from the ruin near the Pirate Camp during the approach']],
+    ch:['Hippie Ki-Yay'],save:''},
+   {t:'Exfiltrate by submarine as the Hippie',
+    li:[['go','Go to','the submarine on the Pirate Camp beach'],['dis','Wear','Hippie (mandatory for this exit)'],['item','Use','the submarine key from the ruin'],['act','Do','board and leave']],
+    ch:['47 Leagues Under The Sea'],save:''}
+  ]},
+  {h:'Loose ends',steps:[
+   {t:'Destroy the satellite control unit',
+    li:[['go','Go to','the militia cave with the Satellite Control Unit'],['dis','Wear','Militia Soldier'],['item','Use','a Remote Explosive \u2014 screwdriver the vent above the unit, drop it in, detonate (on-map: nitroglycerin between the desks at the abandoned camp, or a fire extinguisher placed and shot)'],['act','Do','ensure the room is empty, then destroy it'],['warn','Exclusive','cancels Elegant Neutralization (done in Run 1)']],
+    ch:['Destructive Neutralization'],save:''},
+   {t:'Coconut Farah',
+    li:[['go','Go to','Farah at her bar'],['item','Use','a coconut from the jungle path off West Beach'],['act','Do','throw it at her to knock her out \u2014 no fetch quest needed, just walk up and throw']],
+    ch:['Get It Yourself'],save:''}
+  ]}
+ ]},
+
+{no:'Run 05',title:'Clean Water',
+ goal:'The scoring run. Silent Assassin, Suit Only in one clean attempt using poisoned drinks, then a separate Sniper Assassin attempt because the two need incompatible loadouts and exits.',
+ load:[['Start','West Beach or Shrine','West Beach = Mastery 1; Shrine = Mastery 11 (stronger SASO start)'],['Suit','Signature Suit','Mandatory for Suit Only'],['Slot 1','Lockpick','Opens Akka\u2019s office / cell doors quietly'],['Slot 2','Lethal Poison','Poisons one whisky glass'],['Slot 3','Lethal Poison (smuggled)','Second glass \u2014 or use the level\u2019s emetic-flower poison'],['Slot 4','Sniper Rifle in a case','Swap in for the separate Sniper Assassin attempt']],
+ sections:[
+  {h:'SASO \u2014 the poisoned-drinks route',steps:[
+   {t:'Poison Crest\u2019s whisky in the meeting room',
+    li:[['go','Go to','the room above Farah\u2019s Place where two whisky glasses sit'],['dis','Wear','Suit (no disguise \u2014 this is Suit Only)'],['item','Use','one Lethal Poison vial'],['act','Do','poison only the RIGHT glass \u2014 that is the one Crest drinks from; poison kills count as accidents, so the body is safe'],['warn','Note','if you only have one vial, collect a second poison in the level from the emetic flower near the bridge']],
+    ch:[],save:'Save after both glasses are poisoned and you are clear.'},
+   {t:'Poison Akka\u2019s whisky in her office',
+    li:[['go','Go to','Akka\u2019s office in the two-storey building by her hut'],['dis','Wear','Suit'],['npc','NPC','check with Instinct that Akka is not in the office; mind the patrolling guard by the containers'],['item','Use','the second Lethal Poison on the whisky just right of the door'],['act','Do','poison it and leave the way you came']],
+    ch:[],save:''},
+   {t:'Trigger the meeting and wipe any camera footage',
+    li:[['go','Go to','the radio tower in front of the containers'],['act','Do','activate the signal light to send both targets to drink; they poison themselves on schedule'],['item','Use','if a camera caught you, sabotage the recorder \u2014 Pirate Camp recorder is on the ground floor of Akka\u2019s office building; everyone faces away'],['warn','No Evidence','the rating requires footage erased, not merely unseen']],
+    ch:['Silent Assassin','Suit Only','Silent Assassin, Suit Only','The Classics'],save:''}
+  ]},
+  {h:'Sniper Assassin \u2014 separate attempt',steps:[
+   {t:'Snipe both targets from the grass by Farah\u2019s bar',
+    li:[['go','Go to','the grass patch with a clear line on the bar plaza, out of the right-hand guards\u2019 sightlines (restart with a silenced sniper in a case)'],['dis','Wear','Suit'],['item','Use','a silenced sniper rifle in a case (unlocked via Berlin mastery); the Radio Tower is an alternate perch'],['npc','NPC','Crest watches the slapping contest; Akka heads to her office or sits with the window open'],['act','Do','tranquilise wandering civilians first, then headshot both targets'],['warn','Strict','Sniper Assassin fails if you are spotted at all \u2014 even by a target you then kill']],
+    ch:['Sniper Assassin','Straight Shot'],save:'Save before the first shot.'},
+   {t:'Exfiltrate on the militia speedboat',
+    li:[['go','Go to','the satellite basement where the recorder desk sits'],['dis','Wear','Militia Soldier or careful suit work'],['npc','NPC','a soldier sits at the desk, legs out; behind him are a crate and generator, and a dumbbell soldier watches both'],['item','Use','the speedboat key on the right side of that desk'],['act','Do','strangle the seated soldier from behind the crate, box him, kill the generator to move the standing one, take the key, exit by water']],
+    ch:['Tactical Exfiltration'],save:''}
+  ]}
+ ]}
+];
+
+/* ===== REFERENCE ===== */
+const REF=`
+<div class="notice">
+<h4>How this version was built</h4>
+<p><b>Count.</b> Your mission file lists exactly <b>49 challenges</b> (17 Assassination, 16 Discovery, 9 Feats, 2 Targets, 5 Classics) and the numbers sum cleanly. This planner matches that file one-to-one \u2014 no invented entries, no difficulty-tier duplicates. The earlier "53" and "62" figures are discarded.</p>
+<p><b>Four live challenges are NOT in your file</b> and are therefore excluded from the checklist and progress count: Forged in Fire, Rotten Fruit, Adding Fuel to the Fire, and Maneki-Hitman. These verifiably exist in the current game (added by patch between Apr 2024 and Jan 2025) but are absent from your file, so per your "never assume" instruction they are listed here only, not counted. If your in-game total is 53, these four plus your 49 would be the likely source \u2014 confirm in-game.</p>
+<p><b>Mission Stories.</b> Ambrose Island has none (it is one of three WoA maps without them). There is no "Hero of Ambrose Island" challenge and no mandatory story order. The ordering rules below are scripted-event constraints, not Mission-Story chains.</p>
+<p><b>XP.</b> Omitted \u2014 no per-challenge XP figure could be verified against two sources, so none are invented.</p>
+</div>
+
+<h3 class="rh">Run validation (simulated before output)</h3>
+<div class="detail"><dl>
+<dt>Coverage</dt><dd>All 49 challenges are assigned. 46 sit in a run; Versatile Assassin, The Ronin, and The Corsair are cumulative (they complete as their component kills happen across Runs 2\u20135).</dd>
+<dt>Satellite pair</dt><dd>Elegant Neutralization (overload) is in Run 1; Destructive Neutralization (destroy) is in Run 4. Separated \u2014 they cannot coexist in one run.</dd>
+<dt>Summit pair</dt><dd>Two Birds vs A Kill to Treasure + Another for Good Measure share one meeting. Both are in Run 3, split by a hard-save reload. Verified separable.</dd>
+<dt>Crest kills</dt><dd>All six Crest methods are in Run 2 (plus saber/hook/wire/sniper elsewhere), each reached from one anchor save. He dies once per reload.</dd>
+<dt>Exits</dt><dd>Five exit challenges, one usable per run: helicopter (R1), workshop boat (R2), cove boat (R3), submarine (R4), speedboat (R5). This is the hard floor of five runs.</dd>
+<dt>Prerequisite order</dt><dd>Locksmith before Jump Start; bridge board before antenna; photo to Farah before triggering the meeting; disguises and items are always picked up before the step that needs them.</dd>
+</dl></div>
+
+<h3 class="rh">The disguises (Chameleon)</h3>
+<div class="detail"><dl>
+<dt>Engineer</dt><dd>Technician at the southern workshop \u2014 lure one out with the water pump. Access: workshop and most of the Pirate Camp.</dd>
+<dt>Cook</dt><dd>Male chef watching TV in the beach restaurant kitchen. Access: kitchens of Farah\u2019s, the beach restaurant, and the militia cooking area.</dd>
+<dt>The Buccaneer</dt><dd>Treasure chest by the militia cave (or Haven Island escalation reward). Suit-level access.</dd>
+<dt>Militia Soldier</dt><dd>Any isolated militia patrol on the camp perimeter. Access: workshop, villagers\u2019 homes, whole Militia Camp.</dd>
+<dt>Hippie</dt><dd>Torres Piombo, asleep at the Shrine. Temporary tower-ruin access during the Akka meeting; otherwise suit-level.</dd>
+<dt>Pirate</dt><dd>Any isolated pirate near the village edge. Access: everywhere except the Militia Camp and the meeting room above Farah\u2019s.</dd>
+<dt>Metal Worker</dt><dd>Same access as Engineer. (Only strictly needed for the patch challenge Forged in Fire, which is not in your file.)</dd>
+</dl>
+<p style="margin:12px 0 0;color:var(--dim);font-size:12.5px">The file\u2019s Chameleon challenge requires finding and equipping all disguises. One further outfit exists only during Lockdown and does not count toward Chameleon.</p></div>
+
+<h3 class="rh">Starting locations</h3>
+<div class="detail"><dl>
+<dt>West Beach \u2014 Mastery 1</dt><dd>Default. Suit start.</dd>
+<dt>Village \u2014 level unverified</dt><dd>Confirmed a suit start point; exact unlock level not sourced to two references.</dd>
+<dt>Farah\u2019s Bar / Tavern \u2014 Mastery 7</dt><dd>Suit start, next to the slapping contest.</dd>
+<dt>Shrine \u2014 Mastery 11</dt><dd>Suit start; strongest SASO opening near the ruins and the hippie.</dd>
+</dl>
+<p style="margin:12px 0 0;color:var(--dim);font-size:12.5px">Mastery runs to level 20. The full per-level unlock table (item stashes, Guerilla Wetsuit, Molotov) is confirmed to exist but was not sourced level-by-level.</p></div>
+
+<h3 class="rh">Ordering rules that break scripts</h3>
+<div class="detail"><dl>
+<dt>Locksmith before Jump Start</dt><dd>Free Smith first; Akka only enters the cell because she is hunting the escapee.</dd>
+<dt>Beacon before cannon</dt><dd>A photo-triggered summit ends too fast for the cannon. Use the radio-tower light for Two Birds.</dd>
+<dt>Photo to Farah, not Akka\u2019s desk</dt><dd>The desk still triggers the meeting but forfeits Irrefutable.</dd>
+<dt>Bridge board before antenna</dt><dd>Loosen the plank first; sabotaging the computer starts Crest walking.</dd>
+</dl>
+<p style="margin:12px 0 0;color:#ffd9d0;font-size:12.5px"><b>No confirmed bugs.</b> These are design constraints, not bugs. No mission-breaking bug for Shadows in the Water was corroborated by two independent sources.</p></div>
+
+<h3 class="rh">Sources</h3>
+<div class="detail">
+<p style="margin:0">Your uploaded mission file (<span style="font-family:var(--mono)">25_-_Shadows_in_the_Water.json</span>) \u2014 authoritative for challenge names, descriptions, categories, and count.</p>
+<p style="margin:8px 0 0">Cross-referenced for step detail: Gameranx (assassination, SASO, Two Birds guides), TheGamer and GameRant SASO walkthroughs, the Ambrose Island Challenges Steam guide, the Hitman Wiki disguise-access table, NamuWiki challenge tables. Where two sources conflicted (e.g. the Buccaneer chest, the third diary entry) the conflict is noted inline rather than resolved by guesswork.</p></div>
+`;
+
+/* ===== RENDER ===== */
+const state={done:new Set(),steps:new Set(),filter:'All'};
+try{const saved=JSON.parse(localStorage.getItem('ambrose_done_v1')||'[]');saved.forEach(id=>state.done.add(id));}catch(e){}
+try{const _s=JSON.parse(localStorage.getItem('ambrose_done_v1:steps'));if(Array.isArray(_s))_s.forEach(k=>state.steps.add(k));}catch(e){}
+function reportProgress(){try{const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r['m25']={done:state.done.size,total:CH.length,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
+function saveDone(){try{localStorage.setItem('ambrose_done_v1',JSON.stringify([...state.done]));localStorage.setItem('ambrose_done_v1:steps',JSON.stringify([...state.steps]));}catch(e){}reportProgress();}
+const CATS=['Assassination','Discovery','Feats','Targets','The Classics'];
+const esc=s=>String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+
+function renderStats(){
+  const total=CH.length,done=state.done.size,pct=total?Math.round(done/total*100):0;
+  water.style.height=pct+'%';pctBig.textContent=pct+'%';
+  meterLbl.textContent=done+' of '+total+' challenges logged';
+  meter.setAttribute('aria-valuenow',pct);
+  cats.innerHTML=CATS.map(c=>{const inC=CH.filter(x=>x.c===c),d=inC.filter(x=>state.done.has(x.id)).length,p=inC.length?Math.round(d/inC.length*100):0;
+    return `<div class="cat"><u>${esc(c)}</u><b>${d}</b><i>/${inC.length}</i><div class="bar"><div style="width:${p}%"></div></div></div>`}).join('');
+}
+function renderRuns(){
+  document.getElementById('p-runs').innerHTML=RUNS.map((r,ri)=>`
+  <article class="run"><header><div class="run-no">${esc(r.no)}</div><h3>${esc(r.title)}</h3><p>${esc(r.goal)}</p></header>
+    <div class="loadout">${r.load.map(l=>`<div class="slot"><u>${esc(l[0])}</u><span>${esc(l[1])}</span><em>${esc(l[2])}</em></div>`).join('')}</div>
+    <div class="sect">${r.sections.map((s,si)=>`<h5>${esc(s.h)}</h5>${s.steps.map((st,ti)=>{
+      const key=ri+'-'+si+'-'+ti,on=state.steps.has(key);
+      return `<div class="step ${on?'done':''}"><div class="step-head">
+        <button class="tick ${on?'on':''}" data-step="${key}" aria-pressed="${on}" aria-label="Mark step done">\u2713</button>
+        <div class="step-body"><b>${esc(st.t)}</b>
+          <ul class="bl">${st.li.map(x=>`<li class="${x[0]}"><b>${esc(x[1])}:</b> ${esc(x[2])}</li>`).join('')}</ul>
+          <div class="badges">
+            ${(st.ch||[]).map(c=>`<span class="b ch">${esc(c)}</span>`).join('')}
+            ${st.save?`<span class="b save">\u25c6 Save \u2014 ${esc(st.save)}</span>`:''}
+          </div>
+        </div></div></div>`;
+    }).join('')}`).join('')}</div>
+  </article>`).join('');
+}
+function renderList(){
+  const F=['All','Assassination','Discovery','Feats','Targets','The Classics','Incomplete'];
+  filters.innerHTML=F.map(f=>`<button class="f" data-f="${f}" aria-pressed="${state.filter===f}">${esc(f)}</button>`).join('');
+  let rows=CH.slice();
+  if(state.filter==='Incomplete')rows=rows.filter(x=>!state.done.has(x.id));
+  else if(state.filter!=='All')rows=rows.filter(x=>x.c===state.filter);
+  const g={};rows.forEach(x=>{(g[x.c]=g[x.c]||[]).push(x)});
+  listBody.innerHTML=Object.keys(g).map(k=>`<div class="grp">${esc(k)} \u2014 ${g[k].length}</div>`+g[k].map(x=>{
+    const on=state.done.has(x.id);
+    return `<div class="row ${on?'done':''}"><button class="tick ${on?'on':''}" data-ch="${x.id}" aria-pressed="${on}" aria-label="Mark ${esc(x.n)} done">\u2713</button>
+      <div><b>${esc(x.n)}</b><p>${esc(x.d)}</p><div class="tagrow">${x.run&&x.run!=='\u2014'?`<span class="b ch">${esc(x.run)}</span>`:''}</div></div></div>`;
+  }).join('')).join('')||'<p style="color:var(--dim)">Nothing left in this filter.</p>';
+}
+document.addEventListener('click',e=>{
+  const tab=e.target.closest('.tab');
+  if(tab){document.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-selected',t===tab));
+    ['runs','list','ref'].forEach(p=>document.getElementById('p-'+p).hidden=(p!==tab.dataset.p));return;}
+  const ch=e.target.closest('[data-ch]');
+  if(ch){const id=ch.dataset.ch;state.done.has(id)?state.done.delete(id):state.done.add(id);saveDone();renderStats();renderList();return;}
+  const st=e.target.closest('[data-step]');
+  if(st){const k=st.dataset.step;state.steps.has(k)?state.steps.delete(k):state.steps.add(k);saveDone();renderRuns();return;}
+  const f=e.target.closest('[data-f]');
+  if(f){state.filter=f.dataset.f;renderList();return;}
+  if(e.target.id==='reset'){state.done.clear();state.steps.clear();saveDone();renderStats();renderList();renderRuns();}
+});
+document.getElementById('p-ref').innerHTML=REF;
+renderStats();renderRuns();renderList();
+reportProgress();
+</script>
+
+<!-- step-progress-bridge -->
+<script>
+/* Reports route-step ticks into 'hitman-progress-registry' so the index can
+   show them beside the challenge counts. Counts what is on screen rather than
+   any guide-specific state, so one implementation serves every guide. */
+(function(){
+  var RID="m25", SEL=".step";
+  function isDone(s){
+    var c=s.classList;
+    if(c.contains('done')||c.contains('dn')) return true;
+    if(s.getAttribute('data-done')==='1'||s.getAttribute('aria-pressed')==='true') return true;
+    return !!s.querySelector('.done,.dn,[data-done="1"],[aria-pressed="true"]');
+  }
+  function tally(){
+    var steps=document.querySelectorAll(SEL);
+    if(!steps.length) return null;
+    var n=0;
+    for(var i=0;i<steps.length;i++) if(isDone(steps[i])) n++;
+    return {steps:n,stepTotal:steps.length};
+  }
+  function push(){
+    var t;
+    try{ t=tally(); }catch(err){ return; }
+    if(!t||!t.stepTotal) return;
+    try{
+      var r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');
+      var e=r[RID]||(r[RID]={});
+      /* the guide's own reportProgress() rewrites this entry wholesale, so
+         re-add the step counts whenever they go missing or stale */
+      if(e.steps===t.steps&&e.stepTotal===t.stepTotal) return;
+      e.steps=t.steps; e.stepTotal=t.stepTotal; e.updated=Date.now();
+      localStorage.setItem('hitman-progress-registry',JSON.stringify(r));
+    }catch(err){}
+  }
+  var pending=false;
+  function schedule(){
+    if(pending) return; pending=true;
+    setTimeout(function(){pending=false;push();},120);
+  }
+  try{
+    new MutationObserver(schedule).observe(document.body,
+      {subtree:true,childList:true,attributes:true,attributeFilter:['class','aria-pressed','data-done']});
+  }catch(err){}
+  window.addEventListener('load',schedule);
+  setTimeout(push,600);
+})();
+</script>
+<!-- /step-progress-bridge -->

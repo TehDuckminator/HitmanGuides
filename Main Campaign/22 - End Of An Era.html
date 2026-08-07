@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>End of an Era — Chongqing Step Guide</title>
+<style>
+:root{
+  --bg:#080D12;--panel:#101A22;--panel2:#0C141A;--line:#1D2B35;--line2:#2A3D4A;
+  --text:#D9E6EE;--dim:#7590A2;--neon:#FF2E63;--jade:#2CE0A6;--amber:#FFB627;
+  --violet:#8A6BFF;--blue:#59C2FF;--orange:#FF8A5B;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:radial-gradient(1100px 620px at 80% -14%,rgba(255,46,99,.13),transparent 60%),
+ radial-gradient(900px 500px at 6% 2%,rgba(44,224,166,.06),transparent 60%),var(--bg);
+ color:var(--text);font-family:var(--sans);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1120px;margin:0 auto;padding:0 18px 70px}
+header{padding:34px 0 20px;border-bottom:1px solid var(--line)}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--neon)}
+h1{margin:.28em 0 .3em;font-size:clamp(28px,5.2vw,50px);font-weight:800;letter-spacing:-.03em;line-height:1}
+.lede{color:var(--dim);max-width:78ch;margin:0}
+.metarow{display:flex;flex-wrap:wrap;gap:7px;margin-top:16px}
+.pill{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+ border:1px solid var(--line2);border-radius:99px;padding:5px 10px;color:var(--dim);background:var(--panel2)}
+
+.tracker{margin-top:22px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px}
+.tk-top{display:flex;align-items:baseline;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.tk-num{font-family:var(--mono);font-size:32px;font-weight:700;letter-spacing:-.02em}
+.tk-num small{font-size:14px;color:var(--dim);font-weight:400}
+.tk-xp{font-family:var(--mono);font-size:11.5px;color:var(--dim)}
+.bar{height:9px;border-radius:99px;background:#070C10;border:1px solid var(--line);margin:13px 0 15px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--neon),var(--violet) 55%,var(--jade));transition:width .3s}
+.cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:9px}
+.cat{border:1px solid var(--line);border-radius:10px;padding:9px 11px;background:var(--panel2)}
+.cat b{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);font-weight:500}
+.cat span{font-family:var(--mono);font-size:18px;font-weight:700}
+.cat .cbar{height:4px;border-radius:99px;background:#070C10;margin-top:6px;overflow:hidden}
+.cat .cbar i{display:block;height:100%;width:0}
+
+nav.tabs{display:flex;gap:3px;margin:24px 0 18px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.tab{background:none;border:0;border-bottom:2px solid transparent;color:var(--dim);font-family:var(--mono);
+ font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;padding:11px 13px;cursor:pointer}
+.tab:hover{color:var(--text)}.tab[aria-selected="true"]{color:var(--text);border-bottom-color:var(--neon)}
+.panel[hidden]{display:none}
+
+/* run nav */
+.runnav{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:20px;position:sticky;top:0;z-index:20;
+ background:linear-gradient(180deg,var(--bg) 70%,transparent);padding:10px 0}
+.rb{background:var(--panel2);border:1px solid var(--line2);border-radius:9px;color:var(--text);
+ padding:8px 12px;cursor:pointer;text-align:left;font-size:12.5px;line-height:1.3}
+.rb:hover{border-color:var(--jade)}
+.rb b{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--neon);font-weight:600}
+.rb i{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--dim)}
+.tools{display:flex;gap:6px;margin-left:auto;align-self:center}
+.tbtn{background:none;border:1px solid var(--line2);border-radius:7px;color:var(--dim);font-family:var(--mono);
+ font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:6px 9px;cursor:pointer}
+.tbtn:hover{color:var(--text);border-color:var(--jade)}
+
+/* run */
+.run{border:1px solid var(--line);border-radius:15px;background:var(--panel);margin-bottom:16px;overflow:hidden;scroll-margin-top:70px}
+.run-hd{padding:18px 20px;cursor:pointer;display:flex;gap:14px;align-items:flex-start;
+ background:linear-gradient(180deg,rgba(255,255,255,.03),transparent)}
+.run-hd:hover{background:rgba(255,255,255,.04)}
+.caret{flex:none;font-family:var(--mono);color:var(--neon);font-size:13px;margin-top:3px;transition:transform .2s}
+.run.open .caret{transform:rotate(90deg)}
+.run-hd .rt{flex:1;min-width:0}
+.run-tag{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--neon)}
+.run-hd h2{margin:.3em 0 .3em;font-size:21px;letter-spacing:-.02em;font-weight:750}
+.run-hd p{margin:0;color:var(--dim);font-size:14px;max-width:74ch}
+.rprog{flex:none;font-family:var(--mono);font-size:11px;color:var(--dim);text-align:right;margin-top:4px}
+.run-body{padding:0 20px 22px;border-top:1px solid var(--line)}
+.run-body[hidden]{display:none}
+
+.loadout{display:grid;grid-template-columns:1fr 1fr;gap:14px;border:1px solid var(--line2);border-radius:11px;
+ background:var(--panel2);padding:14px;margin:18px 0 20px}
+@media(max-width:720px){.loadout{grid-template-columns:1fr}}
+.lo-h{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin-bottom:7px}
+.lo-line{display:flex;gap:9px;padding:4px 0;border-bottom:1px dotted var(--line);font-size:13.5px}
+.lo-line:last-child{border-bottom:0}
+.lo-line b{font-family:var(--mono);font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--dim);min-width:60px;font-weight:500;padding-top:2px;flex:none}
+
+.sec-h{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--violet);
+ margin:24px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+
+.step{border:1px solid var(--line);border-radius:10px;background:var(--panel2);margin-bottom:8px}
+.step.done{border-color:rgba(44,224,166,.4);background:rgba(44,224,166,.035)}
+.step-top{display:flex;gap:11px;padding:12px 13px;align-items:flex-start}
+.chk{flex:none;width:22px;height:22px;border-radius:6px;border:1px solid var(--line2);background:#070C10;
+ cursor:pointer;color:transparent;font-size:13px;line-height:20px;text-align:center;padding:0;margin-top:1px}
+.chk:hover{border-color:var(--jade)}
+.chk.on{background:var(--jade);border-color:var(--jade);color:#06231B;font-weight:700}
+.sno{flex:none;font-family:var(--mono);font-size:10px;color:var(--dim);border:1px solid var(--line);
+ border-radius:5px;padding:2px 5px;margin-top:2px}
+.step-main{flex:1;min-width:0}
+.step-t{font-weight:700;letter-spacing:-.01em;cursor:pointer}
+.step-t:hover{color:var(--jade)}
+.step-s{color:var(--dim);font-size:13.5px;margin-top:2px}
+.detail{padding:2px 13px 13px 76px}
+.detail[hidden]{display:none}
+@media(max-width:600px){.detail{padding-left:16px}}
+.dl{display:flex;gap:9px;padding:4px 0;font-size:13.5px;align-items:flex-start}
+.dl b{flex:none;font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
+ min-width:66px;padding-top:3px;font-weight:600}
+.dl.where b{color:var(--blue)}.dl.disguise b{color:var(--violet)}.dl.item b{color:var(--amber)}
+.dl.npc b{color:var(--jade)}.dl.action b{color:var(--text)}.dl.note b{color:var(--dim)}
+
+.badges{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.bdg{font-family:var(--mono);font-size:10px;padding:3px 7px;border-radius:5px;cursor:pointer;border:1px solid;background:transparent}
+.bdg.A{color:var(--neon);border-color:rgba(255,46,99,.45)}
+.bdg.D{color:var(--blue);border-color:rgba(89,194,255,.45)}
+.bdg.F{color:var(--violet);border-color:rgba(138,107,255,.45)}
+.bdg.T{color:var(--amber);border-color:rgba(255,182,39,.45)}
+.bdg.C{color:var(--jade);border-color:rgba(44,224,166,.45)}
+.bdg.X{color:var(--orange);border-color:rgba(255,138,91,.45)}
+.bdg.on{background:currentColor;color:#08121A!important;font-weight:700}
+.bdg.on::before{content:"✓ "}
+
+.flag{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;
+ padding:2px 6px;border-radius:4px;margin-right:6px;vertical-align:1px}
+.flag.warn{background:rgba(255,46,99,.15);color:#FF6E92;border:1px solid rgba(255,46,99,.45)}
+.flag.save{background:rgba(255,182,39,.13);color:var(--amber);border:1px solid rgba(255,182,39,.42)}
+.flag.unv{background:rgba(255,138,91,.12);color:var(--orange);border:1px solid rgba(255,138,91,.4)}
+.note-box{border-left:2px solid;padding:8px 11px;border-radius:0 7px 7px 0;margin:8px 0;font-size:13px}
+.note-box.warn{border-color:var(--neon);background:rgba(255,46,99,.07)}
+.note-box.save{border-color:var(--amber);background:rgba(255,182,39,.06)}
+
+.filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:15px}
+.fbtn{background:var(--panel2);border:1px solid var(--line2);border-radius:99px;color:var(--dim);
+ font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;padding:6px 12px;cursor:pointer}
+.fbtn:hover{color:var(--text)}
+.fbtn[aria-pressed="true"]{background:var(--text);color:#08121A;border-color:var(--text);font-weight:700}
+.crow{display:flex;gap:11px;align-items:flex-start;padding:10px 13px;border:1px solid var(--line);
+ border-radius:10px;background:var(--panel2);margin-bottom:6px}
+.crow.done{opacity:.55;border-color:rgba(44,224,166,.3)}
+.crow .cn{font-weight:650}.crow .cd{color:var(--dim);font-size:13px}
+.crow .cx{font-family:var(--mono);font-size:10.5px;color:var(--dim);flex:none;text-align:right;min-width:74px}
+.ctype{font-family:var(--mono);font-size:9px;letter-spacing:.1em;padding:2px 5px;border-radius:4px;border:1px solid;margin-right:6px;vertical-align:1px}
+.rtag{font-family:var(--mono);font-size:9px;color:var(--dim);border:1px solid var(--line2);border-radius:4px;padding:1px 5px;margin-left:6px}
+.grp{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin:20px 0 9px}
+
+.src{border:1px solid var(--line);border-radius:12px;background:var(--panel);padding:17px 19px;margin-bottom:14px}
+.src h3{margin:0 0 9px;font-size:16.5px;letter-spacing:-.01em}
+.src ul{margin:0;padding-left:17px;color:var(--dim)}
+.src li{margin:6px 0}.src li b{color:var(--text)}
+a{color:var(--jade)}
+footer{margin-top:30px;padding-top:16px;border-top:1px solid var(--line);color:var(--dim);font-size:12.5px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+:focus-visible{outline:2px solid var(--jade);outline-offset:2px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">HITMAN World of Assassination · Mission 04 · Step guide v2</div>
+  <h1>End of an Era</h1>
+  <p class="lede">Chongqing, China. Five runs, 57 challenges. Every step names where to go, what to wear, what to carry, who's involved, and what breaks if you do it out of order. Challenge names and descriptions are taken from your uploaded in-game challenge data and cross-checked against the Hitman Wiki.</p>
+  <div class="metarow">
+    <span class="pill">Targets: Hush · Imogen Royce</span>
+    <span class="pill">Handler: Olivia Hall</span>
+    <span class="pill">15 A · 18 D · 16 F · 2 T · 5 TC · 1 C47</span>
+    <span class="pill">29 areas · 11 disguises · 5 exits</span>
+    <span class="pill">Codes: 0118 · 2552</span>
+  </div>
+  <div class="tracker">
+    <div class="tk-top">
+      <span class="tk-num" id="tkNum">0<small> / 57 challenges</small></span>
+      <span class="tk-xp" id="tkXp"></span>
+    </div>
+    <div class="bar"><i id="tkBar"></i></div>
+    <div class="cats" id="cats"></div>
+  </div>
+</header>
+
+<nav class="tabs" role="tablist">
+  <button class="tab" role="tab" aria-selected="true" data-panel="runs">Runs</button>
+  <button class="tab" role="tab" aria-selected="false" data-panel="list">Checklist</button>
+  <button class="tab" role="tab" aria-selected="false" data-panel="srcs">Validation &amp; sources</button>
+</nav>
+
+<section class="panel" id="runs">
+  <div class="runnav" id="runnav"></div>
+  <div id="runBody"></div>
+</section>
+
+<section class="panel" id="list" hidden>
+  <div class="filters" id="filters"></div>
+  <div id="listBody"></div>
+</section>
+
+<section class="panel" id="srcs" hidden></section>
+
+<footer>Progress is saved in this browser and persists across reloads. Sources are listed on the Validation tab; anything a second source couldn't confirm is flagged UNVERIFIED where it appears.</footer>
+</div>
+
+<script>
+/* ===== CHALLENGES — names & descriptions from uploaded 22_-_End_Of_An_Era.json,
+   XP from Hitman Wiki. xp:null = not confirmed twice. ===== */
+const CH=[
+{id:"stickit",n:"Stick It to the Man",t:"A",xp:2000,r:3,d:"Eliminate Hush whilst disguised as a Homeless Person. (In-game: REDACTED)"},
+{id:"venting",n:"Venting Some Stress",t:"A",xp:2000,r:2,d:"Eliminate Imogen Royce by poisoning the ventilation system. (In-game: REDACTED)"},
+{id:"depriv",n:"Deprivation",t:"A",xp:4000,r:3,d:"Eliminate Hush when he is using his deprivation chamber."},
+{id:"mnemonic",n:"Mnemonic",t:"A",xp:4000,r:3,d:"Overload Hush's brain."},
+{id:"bigbada",n:"Big Bada Boom",t:"A",xp:4000,r:5,d:"Eliminate Hush and Imogen Royce in one explosion."},
+{id:"shock",n:"A Shock to the System",t:"A",xp:2000,r:2,d:"Eliminate Imogen Royce by electrocution."},
+{id:"cooling",n:"Cooling Down",t:"A",xp:4000,r:2,d:"Eliminate Imogen Royce by drowning her in the core's coolant."},
+{id:"bullet",n:"Bullet Points",t:"A",xp:4000,r:1,d:"Eliminate Hush and Imogen Royce with a single bullet from a sniper rifle."},
+{id:"medium",n:"Medium Rare",t:"A",xp:4000,r:2,d:"Eliminate Imogen Royce by having an employee start the core cleansing."},
+{id:"holdhair",n:"Hold My Hair",t:"A",xp:2000,r:2,d:"Assassinate a target by drowning them."},
+{id:"versatile",n:"Versatile Assassin",t:"A",xp:4000,r:5,d:"Complete all Versatile challenges: Piano Man, Someone Could Hurt Themselves, Hold My Hair, Straight Shot, Tasteless Traceless."},
+{id:"tasteless",n:"Tasteless, Traceless",t:"A",xp:2000,r:2,d:"Assassinate a target with lethal poison."},
+{id:"straight",n:"Straight Shot",t:"A",xp:2000,r:1,d:"Assassinate a target with a headshot."},
+{id:"piano",n:"Piano Man",t:"A",xp:2000,r:3,d:"Assassinate a target with the fiber wire."},
+{id:"someone",n:"Someone Could Hurt Themselves",t:"A",xp:2000,r:2,d:"Assassinate a target in an accident."},
+
+{id:"scCourt",n:"Shortcut: Inner Courtyard",t:"D",xp:1000,r:4,d:"Unlock the door shortcut to the inner courtyard."},
+{id:"training",n:"Training Hard",t:"D",xp:1000,r:3,d:"Escape Chongqing via the train station."},
+{id:"beat",n:"The Beat",t:"D",xp:1000,r:4,d:"Disguise yourself as a Street Guard."},
+{id:"blockb",n:"Block Buster",t:"D",xp:1000,r:3,d:"Disguise yourself as a Block Guard."},
+{id:"scLift",n:"Shortcut: Facility Elevator Shaft",t:"D",xp:1000,r:2,d:"Unlock the door shortcut to the facility elevator shaft."},
+{id:"hatch",n:"Quite a Hatch",t:"D",xp:1000,r:3,d:"Unlock the secret hatch."},
+{id:"corpladder",n:"Climbing the Corporate Ladder",t:"D",xp:2000,r:2,d:"Disguise yourself as Mr. Pritchard."},
+{id:"scoot",n:"Scoot Over",t:"D",xp:1000,r:4,d:"Escape Chongqing via the scooter."},
+{id:"superdoor",n:"Super Special Door",t:"D",xp:2000,r:2,d:"Escape Chongqing via the facility emergency exit."},
+{id:"downtrod",n:"The Downtrodden",t:"D",xp:1000,r:3,d:"Disguise yourself as a Homeless Person."},
+{id:"lastres",n:"Last Resort",t:"D",xp:1000,r:3,d:"Obtain three block flyers."},
+{id:"safehouse",n:"Apartment Safe House",t:"D",xp:1000,r:1,d:"Escape Chongqing via the apartment safe house."},
+{id:"scLadder",n:"Shortcut: The Block Ladder",t:"D",xp:1000,r:3,d:"Unlock the ladder shortcut to the block."},
+{id:"dumpling",n:"Dumplings Cook",t:"D",xp:1000,r:4,d:"Disguise yourself as a Dumpling Cook."},
+{id:"rabbit",n:"Down the Rabbit Hole",t:"D",xp:1000,r:4,d:"Escape Chongqing via a manhole."},
+{id:"hackplanet",n:"Hack the Planet",t:"D",xp:2000,r:2,d:"Obtain all tiers of the hacking access dongles."},
+{id:"discover",n:"Discover Chongqing",t:"D",xp:2000,r:4,d:"Reveal all undiscovered areas in Chongqing (29 areas)."},
+{id:"chameleon",n:"Chameleon",t:"D",xp:4000,r:5,d:"Find and equip all disguises in Chongqing (11 total)."},
+
+{id:"humanerr",n:"Human Error",t:"F",xp:2000,r:2,d:"Disable the safety mechanism of the core chamber."},
+{id:"easepain",n:"Ease of Pain",t:"F",xp:null,r:3,d:"Relieve the test subject from the pain."},
+{id:"leime",n:"Lei Me to Sleep",t:"F",xp:null,r:3,d:"Pacify Sister Lei with a cowboy bust."},
+{id:"hairsoup",n:"A Hair in My Soup",t:"F",xp:2000,r:2,d:"Serve Angus Pritchard the food he ordered. (In-game: REDACTED)"},
+{id:"msEyes",n:"Mission Story — All-Seeing Eyes",t:"F",xp:null,r:1,d:"Complete the mission story \"All-Seeing Eyes.\""},
+{id:"thinktank",n:"Think! Tank!",t:"F",xp:null,r:3,d:"Pacify a researcher with the toy tank."},
+{id:"postal",n:"Going Postal",t:"F",xp:1000,r:2,d:"Give Xiao Ming his special delivery."},
+{id:"killpast",n:"Killing the Past",t:"F",xp:null,r:2,d:"Delete the files on 47 and Diana Burnwood from the ICA data core."},
+{id:"glorious",n:"What a Glorious Feeling…",t:"F",xp:1000,r:4,d:"Pacify the dancing guard with an umbrella."},
+{id:"msImpulse",n:"Mission Story — Impulse Control",t:"F",xp:null,r:3,d:"Complete the mission story \"Impulse Control.\""},
+{id:"bigsis",n:"Big Sister",t:"F",xp:null,r:1,d:"Destroy five surveillance drones."},
+{id:"happy",n:"…I'm Happy Again",t:"F",xp:2000,r:4,d:"Pacify the dancing guard…again."},
+{id:"contact",n:"Contact",t:"F",xp:1000,r:3,d:"Make Hush turn on the antenna."},
+{id:"msCert",n:"Mission Story — Certainty Principle",t:"F",xp:null,r:2,d:"Complete the mission story \"Certainty Principle.\""},
+{id:"showmust",n:"The Show Must Go On",t:"F",xp:null,r:3,d:"Make Hush reset the test pods."},
+{id:"vengeance",n:"Vengeance",t:"F",xp:null,r:3,d:"Pacify 5 guards in the block with a hammer."},
+
+{id:"tHush",n:"Eliminate Hush",t:"T",xp:null,r:1,d:"Eliminate Hush."},
+{id:"tRoyce",n:"Eliminate Imogen Royce",t:"T",xp:null,r:1,d:"Eliminate Imogen Royce."},
+
+{id:"sa",n:"Silent Assassin",t:"C",xp:null,r:1,d:"Complete the mission. Only kill the targets, no bodies found, never compromised."},
+{id:"sniper",n:"Sniper Assassin",t:"C",xp:null,r:1,d:"Assassinate both targets with a sniper rifle and complete the mission."},
+{id:"so",n:"Suit Only",t:"C",xp:null,r:1,d:"Assassinate the targets and complete the mission, all in your suit."},
+{id:"saso",n:"Silent Assassin, Suit Only",t:"C",xp:null,r:1,d:"Silent Assassin conditions, in your suit only."},
+{id:"classics",n:"The Classics",t:"C",xp:null,r:1,d:"Complete all Classic challenges for End of an Era."},
+
+{id:"reddragon",n:"The Red Dragon",t:"X",xp:null,r:5,d:"Eliminate any target with a sniper-rifle headshot, taken from the neon sign vantage point. (Codename 47 pack, Oct 2023 — not in the uploaded JSON.)"}
+];
+const TYPES={A:{label:"Assassination",total:15},D:{label:"Discovery",total:18},F:{label:"Feats",total:16},
+ T:{label:"Targets",total:2},C:{label:"The Classics",total:5},X:{label:"Codename 47",total:1}};
+const TC={A:"var(--neon)",D:"var(--blue)",F:"var(--violet)",T:"var(--amber)",C:"var(--jade)",X:"var(--orange)"};
+
+/* ===== RUNS ===== */
+const RUNS=[
+{
+ short:"Run 1", nav:"Classics / SASO", navsub:"12 challenges",
+ tag:"Run 1 · Laundromat roof · suit only",
+ title:"All five Classics in one clean pass",
+ blurb:"A no-disguise, no-detection sniper run built entirely on the All-Seeing Eyes mission story. Do this first — it is the only run that cannot tolerate a single body being found, so getting it out of the way stops you contaminating it later.",
+ loadout:{start:"River-side Walkway — Chongqing Mastery Level 4",
+  suit:"47's Signature Suit. Never change clothes at any point in this run.",
+  items:["Slot 1 — Coin (used once, at the exit)","Slot 2 — empty","Slot 3 — empty","Slot 4 — no smuggled item; the level provides the sniper rifle"]},
+ sections:[
+ {h:"Setup", steps:[
+  {t:"Pick River-side Walkway so the core hack stays optional",
+   s:"This start point turns Hack Data Core from a required objective into an optional one, so you can leave the moment both targets are dead.",
+   b:[["Where","Pre-mission planning screen → Starting Location → River-side Walkway."],
+      ["Note","The Hitman Wiki objective table lists Hack Data Core as optional unless you start at Train Station or the Director Commentary intro. Starting at the station forces you to walk into the facility in your suit, which is where SASO attempts die."],
+      ["Note","Below Mastery 4 you don't have this start yet. Run 3 first to bank levels, then come back."]],
+   ch:[]},
+  {t:"Turn on the Silent Assassin HUD before you load in",
+   s:"Two green pistol icons appear bottom-left. If either turns red, the run is already failed and you reload instead of wasting ten minutes.",
+   b:[["Where","Game Options → Gameplay → HUD → Silent Assassin HUD."],
+      ["Action","Verify both icons are green after spawning."],
+      ["Note","Subduing non-targets is legal for both Silent Assassin and Suit Only, provided the body is never found. Taking a disguise is not."]],
+   ch:[]}
+ ]},
+ {h:"Reach the sniper perch", steps:[
+  {t:"Enter the Laundromat and open the stairwell door with 0118",
+   s:"The Laundromat is on Floor 01, on the rooftop side of the map from your spawn. A keypad locks the stairwell door behind it.",
+   b:[["Where","Floor 01, Laundromat. Keypad on the locked interior door."],
+      ["Action","Enter code 0118. This same code opens the ICA Apartment on Floor 02 and the container keypad at the facility entrance."],
+      ["Note","Reveals the Laundromat area toward Discover Chongqing."]],
+   ch:["discover"]},
+  {t:"Subdue the lone roof guard and take his rifle — do not take his clothes",
+   s:"Slip past the guards in the stairwell without touching them. One guard stands by himself on the laundry roof holding the sniper rifle.",
+   b:[["Where","Up the stairwell, out onto the laundry roof balcony (Floor 04 area)."],
+      ["Action","Choke him out from behind, take the sniper rifle, stash the body in the container on the roof."],
+      ["Warning","Taking his disguise instantly voids Suit Only and Silent Assassin Suit Only. Leave it."],
+      ["Note","At Chongqing Mastery 20 the Hackl Leviathan Sniper Rifle Covert spawns at this same spot. Either rifle works. The stairwell and roof guards are unnamed in every source I checked and nobody publishes their patrol timings — watch one full loop before moving rather than trusting a window."]],
+   save:"Save the instant the body is hidden and the rifle is in hand. You will reload here repeatedly during the drones.",
+   ch:[]}
+ ]},
+ {h:"All-Seeing Eyes", steps:[
+  {t:"Scan the broken drone with your camera",
+   s:"Keep climbing to the top of the roof. The downed drone sits on the roof edge. Scanning it is what formally opens the mission story.",
+   b:[["Where","Top of the laundry roof, on the edge, just above the sniper spot."],
+      ["Item","Camera (always equipped, no loadout slot)."],
+      ["Action","Aim the camera at the drone and hack it. Olivia reads the chip and the drone objectives appear."],
+      ["Note","Overhearing the two guards on the roof discussing their search also reveals the story if you haven't tracked it from the menu."]],
+   ch:[]},
+  {t:"Shoot the five distant drones from the vantage point",
+   s:"Stand directly left of the broken drone and scope the far skyline. Five drones patrol fixed left-right lines in the distance.",
+   b:[["Where","The vantage point immediately left of the broken drone. Do not reposition — you'll use this exact spot for the kill shot too."],
+      ["Action","Park the crosshair on the point where a drone turns around and fire as it stalls into it. Do not track them across the sky."],
+      ["Warning","Ammo is limited. If you've spent more than four rounds on one drone, reload rather than keep firing."],
+      ["Note","Big Sister completes on this objective. Shooting the drones is also what drags Royce out of hiding."]],
+   save:"Save after every single drone kill — five drones, five saves.",
+   ch:["bigsis"]},
+  {t:"Hang off a ledge while the guards sweep the roof",
+   s:"Guards come up after the shooting. Hanging off a ledge removes you from their search area entirely.",
+   b:[["Where","Any climbable ledge on the laundry roof."],
+      ["Action","Grab the ledge and wait. Don't shoot, don't move, don't peek."],
+      ["Warning","Being seen here ends the run. Reload the last drone save."]],
+   ch:[]},
+  {t:"Shoot the last two drones from the lower roof",
+   s:"Two more drones spawn close by, above Hush's building. These need no scope discipline.",
+   b:[["Where","Drop to the roof one level below the sniper spot."],
+      ["Action","Shoot both. A pistol is fine at this range if you want to save rifle rounds."],
+      ["Note","This triggers Royce blaming Hush for the sabotage and demanding a meeting on the Lotus Passage. Mission Story — All-Seeing Eyes completes here."]],
+   ch:["msEyes"]}
+ ]},
+ {h:"One bullet, two targets", steps:[
+  {t:"Wait on the perch for the Lotus Passage meeting",
+   s:"Hush and Royce both walk onto the Lotus Passage — the walkway between the two towers on Floor 05 — in clear line of sight from where you shot the drones.",
+   b:[["Where","Back on the original vantage point. No repositioning needed."],
+      ["NPCs","Hush arrives first and stands. Royce approaches and, during the argument, paces directly behind him so the two line up front-to-back."],
+      ["Action","Hold the shot until she is fully behind him at head height."]],
+   save:"Save before they line up. Run 5 (Big Bada Boom) and The Red Dragon both reuse this exact save.",
+   ch:[]},
+  {t:"Fire one round through both heads",
+   s:"A single bullet through the pair clears four challenges plus both targets at once.",
+   b:[["Action","One shot, head height, while Royce is directly behind Hush."],
+      ["Note","If you only hit one, reload. Killing them separately still gives Sniper Assassin but throws away Bullet Points, which is the harder half."],
+      ["Note","If the argument ends without a clean overlap she won't line up again — reload and re-trigger the meeting."]],
+   ch:["bullet","sniper","straight","tHush","tRoyce"]},
+  {t:"Exit through the roof door — Apartment Safe House",
+   s:"The exit sits a few metres from the sniper spot. Pull the roof guards off it with the coin and walk out.",
+   b:[["Where","Apartment Safe House exit, Floor 04, on the same rooftops as the sniping spot."],
+      ["Item","Coin — throw it away from the door so the guards drift toward the noise."],
+      ["Action","Walk out. Do not hack the core; the River-side Walkway start is exactly why you don't have to."],
+      ["Note","Silent Assassin, Suit Only, Silent Assassin Suit Only, The Classics and Apartment Safe House all pop on exit. PowerPyx puts the Classics bundle at 20,000 XP — roughly four Mastery levels."]],
+   ch:["sa","so","saso","classics","safehouse"]}
+ ]}]
+},
+
+{
+ short:"Run 2", nav:"Facility / Royce", navsub:"16 challenges",
+ tag:"Run 2 · Restaurant → ICA Data Facility",
+ title:"Certainty Principle and every way to kill Imogen Royce",
+ blurb:"The long run. Walk in as an ICA board member, finish Certainty Principle, save at Royce's console, then reload through six separate Royce assassinations before sweeping the facility for dongles, disguises and the emergency exit.",
+ loadout:{start:"Restaurant Kitchen — Chongqing Mastery Level 7. Train Station works if you're not there yet, you just walk further.",
+  suit:"Any. This run is built on disguises.",
+  items:["Slot 1 — Lethal Poison Vial or Lethal Syringe (Tasteless Traceless, and the ventilation kill)",
+         "Slot 2 — ICA Pen Syringe Emetic, Chongqing Mastery 5 (Hold My Hair)",
+         "Slot 3 — Lockpick Mk III (locked side doors, and the antenna fence if you detour)",
+         "Slot 4 — Coin"]},
+ sections:[
+ {h:"The restaurant", steps:[
+  {t:"Overhear Angus Pritchard and Chen Ting to open Certainty Principle",
+   s:"A visiting ICA board member complains to his facility guide about a delayed flight and being starving. That conversation is the story trigger.",
+   b:[["Where","The noodle restaurant, Floor 01. Enter from street level."],
+      ["NPCs","Angus Pritchard — the visiting ICA board member. Chen Ting — the facility guide who escorts him into the ICA site."],
+      ["Action","Stand in earshot and listen to the whole exchange."],
+      ["Note","Reveals the intel 'The Final Ingredient' (he won't tour before eating) and 'True to Form' (he's left a P41 form in his apartment). Also reveals the Restaurant area."]],
+   ch:["discover"]},
+  {t:"Collect the P41 form from the apartment across the street — before you touch Pritchard",
+   s:"Chen Ting will not take Pritchard on the tour without this form, so fetch it while he's still eating.",
+   b:[["Where","ICA Apartment, Floor 02, across the street from the restaurant. Keypad on the door; the form is in the room with a bed."],
+      ["Action","Enter code 0118, take the P41 form."],
+      ["Warning","The story lists the form before the disguise. Grab it first — taking Pritchard's clothes with no form in your pocket is the usual way people get stuck at 'bring the form to the guide'."],
+      ["Note","The apartment can also be entered from the roof by hanging off the ledge above and climbing down. Reveals the ICA Apartment area."]],
+   ch:["discover"]},
+  {t:"Poison the noodles and let a cook deliver them — A Hair in My Soup",
+   s:"Emetic rat poison sits in the restaurant bathroom. The challenge requires the food to actually reach Pritchard, so use the doorbell and let a second cook carry it.",
+   b:[["Where","Restaurant bathroom for the poison (door on the east side), then the restaurant kitchen."],
+      ["Item","Emetic Rat Poison — restaurant bathroom."],
+      ["Action","Prepare the food in the kitchen → add the poison → ring the doorbell → another cook delivers it → Pritchard eats, sickens, and walks to the bathroom alone."],
+      ["Note","TheGamer says the Restaurant Kitchen start puts you in cook attire so none of this raises suspicion. Unconfirmed by a second source — check the loadout preview; if you spawn in the suit, subdue a Dumpling Cook in the kitchen first."]],
+   ch:["hairsoup","dumpling"]},
+  {t:"Take Pritchard's disguise in the bathroom — Climbing the Corporate Ladder",
+   s:"He arrives alone and vomiting, which is the one moment nobody is watching him.",
+   b:[["Where","Restaurant bathroom."],
+      ["NPC","Angus Pritchard."],
+      ["Action","Subdue, hide the body in the bathroom, take the disguise."],
+      ["Warning","Hide him properly. A found body here alerts the facility before you have even reached it."]],
+   ch:["corpladder","chameleon"]}
+ ]},
+ {h:"The escorted tour — do not break disguise until it ends", steps:[
+  {t:"Meet Chen Ting behind the kitchen and follow her in",
+   s:"She waits in the stairwell behind the restaurant kitchen and opens the container keypad herself.",
+   b:[["Where","Stairwell behind the restaurant kitchen, then follow her down to the ICA container entrance."],
+      ["Disguise","Mr. Pritchard. Required — she won't talk to anyone else."],
+      ["Action","Talk to her, hand over the form, then follow without overtaking her."],
+      ["Note","The code she enters is 0118. On later runs you can open that container yourself and skip the escort entirely. Reveals ICA Entrance Checkpoint on Floor -1."]],
+   ch:["discover"]},
+  {t:"Drop your illegal items, then get frisked",
+   s:"Guards search you at the checkpoint. Anything the inventory flags red has to be somewhere else first.",
+   b:[["Where","ICA Entrance Checkpoint, Floor -1."],
+      ["Action","Drop firearms and any red-flagged item out of sight, walk into the frisk, collect them afterwards."],
+      ["Note","Poison vials and syringes are not flagged illegal, so your kill tools come through with you."],
+      ["Note","A PowerPyx commenter reports bypassing the frisk entirely through the vent in the adjacent room. Single report, unconfirmed."]],
+   ch:[]},
+  {t:"Beat the 60-second vetting timer — frost the glass first",
+   s:"A timer starts and you have one minute to intercept the vetting AI. The computer is in the same room, on the left.",
+   b:[["Where","ICA Employee Vetting, Floor -1."],
+      ["Item","Take the Tier 2 Access Dongle off the desk in this room while you're here."],
+      ["Action","Point your camera at the panel by the window in front of the PC to frost the glass, then hack the laptop."],
+      ["Warning","Hack without frosting first and the employee across the glass sees you and blows the disguise."]],
+   ch:["discover"]},
+  {t:"Follow Royce through the core to her office and hear her out",
+   s:"Chen Ting hands you to Imogen Royce, who walks you past the data core and into her office on Floor -2 where a large console waits.",
+   b:[["Where","Floor -2, ending in Royce's Office."],
+      ["Disguise","Still Mr. Pritchard. Changing clothes mid-tour ends the story."],
+      ["NPC","Imogen Royce explains her prediction algorithm and offers you three employees to fire."],
+      ["Note","Listen to the entire speech or the branch won't close. This walk reveals Analysis Area, Royce's Office, Core Control Room and The Data Core."]],
+   ch:["msCert","discover"]},
+  {t:"Save at the console. Everything below branches from here.",
+   s:"Royce dies once per run but there are six Royce-kill challenges, so this save is the hub for all of them.",
+   b:[["Action","Manual save in a dedicated slot. Keep a second copy in another slot."],
+      ["Note","Branching from here: Medium Rare + Human Error, Tasteless Traceless, Venting Some Stress, A Shock to the System, Cooling Down, Hold My Hair."],
+      ["Warning","Do not overwrite this slot while experimenting. Everything after this point is reload-driven."]],
+   save:"The single most important save in the guide. Dedicated slot, leave it alone.",
+   ch:[]}
+ ]},
+ {h:"Royce, six ways — reload the console save between each", steps:[
+  {t:"Medium Rare + Human Error — fire three employees in strict order",
+   s:"Fire Alicia Reynolds, immediately fire Jeremy Bolt, then fire Sharon Reed at the exact moment Royce steps into the core.",
+   b:[["Where","The Premonitions console in Royce's Office, Floor -2."],
+      ["NPCs","Alicia Reynolds, Facility Safety Engineer — 98.3% chance she disables the core safety mechanism. Jeremy Bolt, Facility Guard — 99.4% chance he leaves the core door to phone his mother. Sharon Reed, Core Maintenance Engineer — 97.8% chance she presses the core maintenance button within 11 seconds."],
+      ["Action","Fire Alicia (top right) → immediately fire Jeremy (bottom left) so he abandons the door → Alicia walks in and kills the safety mechanism, popping Human Error → watch the bottom-right feed and the moment Royce enters the core, fire Sharon → she starts the cleansing and Royce burns."],
+      ["Warning","Ordering dependency. Royce's own notes say only fire Alicia while Jeremy is at his post, and never fire Sharon with the safety off — you are deliberately inverting that, and the inversion is the kill. Fire Sharon first and the demonstration ends with nobody dead."],
+      ["Note","Counts as an accident, so Someone Could Hurt Themselves pops too. On-screen positions come from PowerPyx only — if your console is laid out differently, go by name, not position."]],
+   ch:["medium","humanerr","someone","tRoyce"]},
+  {t:"Reload → Tasteless, Traceless — lethal poison in her office",
+   s:"At the end of the tour she stands in her own office with no guards inside. It's the only place she's reliably alone.",
+   b:[["Where","Royce's Office, Floor -2."],
+      ["Item","Lethal Poison Vial or Lethal Syringe from your loadout."],
+      ["Action","Frost the office glass with your camera, walk up, and hit her with lethal poison."],
+      ["Warning","The ICA Pen Syringe Emetic from Chongqing Mastery 5 is emetic, not lethal. You need a lethal item from another map's mastery track."]],
+   ch:["tasteless"]},
+  {t:"Reload → Venting Some Stress — force a break, then poison the vent",
+   s:"Send three analysts to the break room, wait for Royce to follow them in and then sit down herself, and poison the ventilation.",
+   b:[["Where","Break Room and Analysis Area, both Floor -2."],
+      ["Item","Lethal poison, and your camera."],
+      ["Action","Frost the Break Room glass and switch off the air conditioning outside → subdue both occupants and hide them in the adjacent room → in the Analysis Area, camera-scan the small panels on top of three analysts' PCs to shut them down → the three walk to the Break Room → Royce notices the empty desks on patrol, sends them back, then sits down alone → poison the AC unit next door and switch the air conditioning back on."],
+      ["Note","Supporting intel: 'In Need of a Break', 'Ventilation System', 'Angry Memo'. Reveals the Break Room area. A PowerPyx commenter says you can skip pre-clearing the room and just scan the three terminals — unconfirmed."]],
+   ch:["venting","discover"]},
+  {t:"Reload → A Shock to the System — water, then socket",
+   s:"Knock her out, lay her under the Break Room water tank, shoot the tank, then shoot the socket beneath it.",
+   b:[["Where","Break Room, Floor -2. Water tank with an electrical socket directly underneath."],
+      ["Action","Drag her unconscious body onto the floor under the tank → shoot the tank to start the leak → then shoot the socket."],
+      ["Warning","Order matters. Socket first does nothing."],
+      ["Note","Two alternatives, each from a single source: PSNProfiles describes taking the screwdriver from Royce's office, sabotaging the break-room outlet, then sabotaging the water cooler once she's inside. A PowerPyx commenter describes bringing a taser, drawing her to the Lotus Passage via the drones, and throwing the taser into the puddle on her path — the only suit-friendly version anyone describes. Both unconfirmed."]],
+   ch:["shock"]},
+  {t:"Reload → Cooling Down — push her into the coolant",
+   s:"Remove her escort, wear their clothes, follow her back to the core, and push when she leans on the railing.",
+   b:[["Where","The core railing, Floor -2 / -3."],
+      ["Disguise","The guards who follow her — subdue one and wear it so her escort doesn't react to you walking her route."],
+      ["Action","Follow her patrol until she stops and leans on the railing above the core, then push."],
+      ["Note","Whether this also credits Hold My Hair is undocumented in every source I checked. Assume it doesn't and do the toilet version below."]],
+   ch:["cooling"]},
+  {t:"Reload → Hold My Hair — emetic, then the toilet",
+   s:"Clear the path between her office and the Floor -2 bathroom first, or your distractions pull the wrong people.",
+   b:[["Where","Floor -2, between Royce's Office and the bathroom in the lower-left corner."],
+      ["Item","ICA Pen Syringe Emetic (Chongqing Mastery 5)."],
+      ["Action","Remove everyone along that route → lead her toward the toilets with coins → inject the emetic when close → she heads for the toilet → drown her in the bowl."],
+      ["Note","The same challenge can be taken on Hush instead; that version is routed in Run 3 in case you'd rather not clear this floor."]],
+   ch:["holdhair"]}
+ ]},
+ {h:"Facility sweep — do this after the tour, never during it", steps:[
+  {t:"Tier 1 Security — dongle, screwdriver, and the elevator shaft shortcut",
+   s:"Three things in one room, but it needs a disguise Pritchard's suit can't provide.",
+   b:[["Where","Tier 1 Security, left side of Floor -1. Reception area with a large 'TIER 01' sign."],
+      ["Disguise","Facility Security — white shirt, green hat. Subdue one on the way in and change; the security zone rejects Pritchard."],
+      ["Item","Tier 1 Access Dongle, and the screwdriver in the toolbox next to the TIER 01 sign."],
+      ["Action","Take both, then open the shortcut door directly opposite the reception window. Shortcuts stay open on every future visit to Chongqing."],
+      ["Note","Why this comes after the console save: changing out of Pritchard mid-tour ends Certainty Principle. Reveals Tier 1 Security and, while you're down here, Resting Capsules in the bottom-right of the floor."]],
+   ch:["scLift","chameleon","discover"]},
+  {t:"Going Postal — the parcel for Xiao Ming",
+   s:"A package addressed to an analyst, delivered by hand to his head.",
+   b:[["Where","Parcel in the ICA Entrance Checkpoint area, Floor -1. Xiao Ming is in his own small office off the Analysis Area, Floor -2."],
+      ["Item","Package / Parcel."],
+      ["NPC","Xiao Ming — the only unique male Facility Analyst."],
+      ["Action","Throw the package at him, or subdue him with it equipped. This is a pacify challenge, not a kill."],
+      ["Warning","Xiao Ming and Royce are both enforcers for the Facility Analyst disguise — they see through it. Do not approach him wearing it."]],
+   ch:["postal"]},
+  {t:"Collect the remaining facility disguises for Chameleon",
+   s:"Four of the eleven live down here, and one of them has a catch.",
+   b:[["Where","Throughout the ICA facility, Floors -1 and -2."],
+      ["Disguise","Facility Engineer — red biohazard protection. Only the male ones can be looted; this is the one people get stuck on. Facility Security — white shirt, green hat. Facility Guard — black clothes, red hat. Facility Analyst — black suit, yellow tie, unarmed."],
+      ["Action","Subdue and change into each in turn, hiding every body."],
+      ["Note","Tier 2 Security is in the lower-right of Floor -2 and its far-right room is the Armory, which holds explosives — worth remembering for Run 5. Reveals Tier 2 Security and the Service Tunnels, which are reached through vents you open by camera-scanning them."]],
+   ch:["chameleon","discover"]},
+  {t:"Hack the Planet — all three dongle tiers",
+   s:"Tier 1 and Tier 2 are fixed pickups. Tier 3 has two known locations.",
+   b:[["Where","Tier 1 → Tier 1 Security, Floor -1. Tier 2 → ICA Employee Vetting, Floor -1. Tier 3 → dropped by Royce when killed or pacified."],
+      ["Action","Hold all three at once for the challenge."],
+      ["Note","XboxAchievements reports a second Tier 3 on a table in the outer ring around the core room on Floor -2, which would mean this challenge doesn't require Royce dead at all. Single source, unconfirmed — but worth checking, since it saves you sequencing this against a kill."]],
+   ch:["hackplanet"]}
+ ]},
+ {h:"Close the run", steps:[
+  {t:"Kill Hush quietly, then hack the core — Killing the Past",
+   s:"The Data Core only unlocks once both targets are dead, so Hush has to go on this run too.",
+   b:[["Where","Hush is in The Block. Return through the container entrance (0118) or the Facility Elevator Shaft shortcut you just opened."],
+      ["Action","Kill Hush by any means, then hack the Data Core on Floor -3 and let Olivia dump the files on 47 and Diana Burnwood."],
+      ["Warning","Kill quietly. A loud kill triggers target lockdown, which relocates the survivor — the wiki lists Hush being escorted to his Therapy Room, the corner of his Private Lab, the top-floor kitchen or the Level 4 bathroom, and Royce to her Office, Tier 1 Security or the Block's top-floor kitchen. That wrecks every scripted setup in Run 3."],
+      ["Note","Mandatory on a first playthrough, optional afterwards unless you started at Train Station."]],
+   ch:["killpast","tHush","discover"]},
+  {t:"Exit via the facility emergency exit — Super Special Door",
+   s:"Leave through the emergency exit near the core rather than walking back out to the street.",
+   b:[["Where","Facility emergency exit, near the Data Core."],
+      ["Action","Walk out. Each exit is its own challenge and you only get one per completed run, so don't use any other door on this run."],
+      ["Note","A PowerPyx commenter states this exit needs the Tier 3 Access Dongle, which you'll already be holding. Single report, unconfirmed but consistent with the tier system."]],
+   ch:["superdoor"]}
+ ]}]
+},
+
+{
+ short:"Run 3", nav:"The Block / Hush", navsub:"17 challenges",
+ tag:"Run 3 · The Block · street level to Floor 05",
+ title:"Hush, top to bottom",
+ blurb:"Everything inside the tower where Hush runs his experiments. The ordering here is load-bearing: every feat that needs Hush alive comes before the save, and Sister Lei has to survive until after Mnemonic.",
+ loadout:{start:"The Block — Chongqing Mastery Level 13. Train Station works if you're not there yet.",
+  suit:"Any. You change clothes constantly on this run.",
+  items:["Slot 1 — Fiber Wire (Piano Man; it isn't lying around the level)",
+         "Slot 2 — ICA Pen Syringe Emetic, Chongqing Mastery 5 (Hold My Hair on Hush, if you skipped Royce's)",
+         "Slot 3 — Lockpick Mk III (the antenna fence, in case you can't reach a crowbar)",
+         "Slot 4 — Coin"]},
+ sections:[
+ {h:"Street level — disguise and items first", steps:[
+  {t:"Take a homeless disguise behind The Block and overhear the group",
+   s:"The same conversation that reveals Impulse Control also sits next to the disguise you need for two challenges.",
+   b:[["Where","Floor 00, end of the street behind the Arcade building, where a group of homeless people are gathered around a barrel."],
+      ["NPC","Easiest mark is the man asleep on the floor in the alley around the corner from the group — throw something at his head. His friend patrols back and forth past that alley."],
+      ["Action","Overhear the group discussing the flyer and the paid experiment, then take the disguise and hide the body in one of the two nearby containers."],
+      ["Note","A crowbar lies in this camp, and a manhole sits in the same alley — that's Run 4's exit. Pops The Downtrodden and reveals the Impulse Control story."]],
+   ch:["downtrod","chameleon","msImpulse"]},
+  {t:"Grab the Toy Tank and open the secret hatch in the Arcade",
+   s:"Both are inside the Arcade, so do them in one visit.",
+   b:[["Where","Arcade, entered from the street at the end of Floor 00. The keypad is on the wall of its fenced courtyard."],
+      ["Item","Toy Tank — inside the Arcade. Needed on Floor 05 later."],
+      ["NPCs","Two Street Guards stand in the courtyard. Coin-distract them or wait until they face away."],
+      ["Action","Enter code 2552 on the keypad to unlock the hatch. The same code opens Hush's Therapy Room on Floor 05."],
+      ["Note","Reveals the Arcade and Yuzhong Square areas."]],
+   ch:["hatch","discover"]},
+  {t:"Open the Block Ladder shortcut with a crowbar",
+   s:"A padlock on the balcony side of The Block. One crowbar swing and the ladder is permanent.",
+   b:[["Where","The balcony area of The Block; the lock is on your left as you arrive."],
+      ["Item","Crowbar. Seven spawn in this mission — the nearest are the homeless camp behind The Block, the garbage near the Arcade, and Level 3 of The Block sitting on a box in the north of the Derelict Apartments."],
+      ["Action","Pry the lock and drop the ladder."],
+      ["Note","Prima Games raised the possibility that two Chongqing shortcut names don't match their in-game locations. Unconfirmed, and it doesn't affect completion — if a shortcut pops under an unexpected name, that's why."]],
+   ch:["scLadder"]}
+ ]},
+ {h:"Working up the tower — collect before you climb", steps:[
+  {t:"Three flyers in the Recruitment Station — Last Resort",
+   s:"All three are in one room, so this is a thirty-second stop on the way up.",
+   b:[["Where","Recruitment Station, Floor 02 of The Block."],
+      ["Action","Take the flyer on the noticeboard by the entrance, the one on the table where a scientist is working, and the one on the table with computers at the far end of the room."],
+      ["Note","This is the 'Future Progress Initiative' pamphlet the homeless outside are discussing. Reveals the Recruitment Station area."]],
+   ch:["lastres","discover"]},
+  {t:"Pick up the Cowboy Bust, the Hammer and the Fuse Cell",
+   s:"Three items on three consecutive floors. Get all of them now so you never walk back down.",
+   b:[["Where","Cowboy Bust — the stairwell between Floor 01 and Floor 02. Hammer — Floor 03, near the Derelict Apartments label. Fuse Cell — Floor 03, in plain sight as you pass but behind a chain-link fence, so walk around to reach it."],
+      ["Action","Carry all three up. The bust is for Sister Lei, the hammer for the guards, the fuse for the Therapy Room chair."],
+      ["Warning","The Fuse Cell is the one people forget. Deprivation is impossible without it and it's two floors below where you need it."],
+      ["Note","Reveals the Derelict Apartments area."]],
+   ch:["discover"]},
+  {t:"Vengeance — five Block guards with the hammer",
+   s:"Blue pandemic suits with pistols, concentrated on the upper floors of the tower.",
+   b:[["Where","Inside The Block, mostly the top couple of floors."],
+      ["Item","Hammer from Floor 03."],
+      ["Action","Pacify five of the blue-suited Block Guards. Hide each body before starting the next."],
+      ["Warning","This is a pacify challenge, not a kill. Also take one of their outfits while you're here — that pops Block Buster."]],
+   ch:["vengeance","blockb","chameleon"]},
+  {t:"Take a Researcher disguise on Floor 04",
+   s:"Needed for Chameleon, and it makes the whole Benchmark Lab section trivial.",
+   b:[["Where","Floor 04 and the top floors of The Block."],
+      ["Action","Subdue a researcher, hide the body, change."],
+      ["Note","You may have to wait for Hush and his bodyguard to move up to Floor 05 before the route is clear."]],
+   ch:["chameleon"]}
+ ]},
+ {h:"Floor 04 — everything that needs Hush alive", steps:[
+  {t:"Ease of Pain and The Show Must Go On — sabotage all four pods",
+   s:"Tamper with every test pod in the Benchmark Lab and Hush comes down personally to reset the system.",
+   b:[["Where","Benchmark Lab, Floor 04. Four pods with test subjects inside, each with a keyboard terminal beside it."],
+      ["Disguise","Researcher makes this unremarkable."],
+      ["Action","Subdue the scientists in the area first or they repair each pod behind you → sabotage the pod with a subject inside, which pops Ease of Pain → sabotage all four and wait for Hush to arrive and start the reboot."],
+      ["Warning","Both of these need Hush alive. Do them before any kill attempt."],
+      ["Note","Reveals the Benchmark Lab area."]],
+   ch:["easepain","showmust","discover"]},
+  {t:"Contact — disable the antenna so Hush comes out to restore it",
+   s:"The in-game description is 'Make Hush turn on the antenna', which is not the same thing as flipping a switch and walking away.",
+   b:[["Where","Northeastern Rooftop, Floor 04. The antenna sits inside a locked, caged-off area."],
+      ["Item","Crowbar or Lockpick to break into the fence."],
+      ["Action","Switch the antenna off. The wiki states this forces Hush to head outside to turn it back on, which is what the challenge credits."],
+      ["Note","PowerPyx, PlayStationTrophies and XboxAchievements all report the challenge pops the moment you flip the switch yourself, with XboxAchievements saying outright that you don't need to wait for Hush. If it doesn't fire, stay hidden nearby and wait for him — and don't kill him before it does."],
+      ["Note","Related intel: 'The Satellite Dish' — Hush handles repairs to his own rooftop equipment personally. Reveals the Northeastern Rooftop area."]],
+   ch:["contact","discover"]}
+ ]},
+ {h:"Floor 05 — arm the chair, then save", steps:[
+  {t:"Insert the Fuse Cell in the Therapy Room",
+   s:"Do this before the save, so every later reload already has the chair armed.",
+   b:[["Where","Therapy Room, Floor 05, top-left room of the floor. Door code 2552."],
+      ["Item","Fuse Cell from Floor 03."],
+      ["Action","Put the fuse into the device. Next time Hush checks on the maintenance he'll sit down in the chair."],
+      ["Note","Related intel: 'Missing Fuse', 'Sensory Calibration Unit', 'Sensory Calibration Unit Manual'. Reveals the Therapy Room area."]],
+   ch:["discover"]},
+  {t:"Save here, in the homeless disguise",
+   s:"This is the Floor 05 hub save. Being in the homeless disguise when you make it is deliberate — one of the branches needs it and the replacements are all the way down at street level.",
+   b:[["Action","Manual save while wearing the Homeless Person disguise, with the fuse already inserted and Hush still alive."],
+      ["Warning","If you save in the Perfect Test Subject gown instead, Stick It to the Man means walking back to Floor 00 for another homeless outfit."],
+      ["Note","Branching from here: Stick It to the Man + Piano Man, then Impulse Control → Mnemonic → Think! Tank!, then Deprivation, then Lei Me to Sleep, then Hold My Hair."]],
+   save:"Floor 05 hub save. Homeless disguise on, fuse in, Hush alive.",
+   ch:[]},
+  {t:"Stick It to the Man + Piano Man on the same attempt",
+   s:"Both conditions are satisfied by one action: fiber wire, from behind, while dressed as a homeless person.",
+   b:[["Where","Wherever Hush is stationary — usually his computer desk in the Private Lab, Floor 05."],
+      ["Disguise","Homeless Person. This is the entire requirement for Stick It to the Man."],
+      ["Item","Fiber Wire from your loadout."],
+      ["Action","Approach from behind while he's stationary and garrotte him."],
+      ["Note","Reveals Hush's Private Lab area if you haven't been in yet."]],
+   ch:["stickit","piano","tHush","discover"]}
+ ]},
+ {h:"Impulse Control — reload the hub save", steps:[
+  {t:"Become the Perfect Test Subject",
+   s:"He's locked himself in the small bathroom on the north side of Floor 05, talking himself into it.",
+   b:[["Where","Small bathroom, north side of Floor 05."],
+      ["NPC","The test subject, in a medical gown with a large letter A on it."],
+      ["Action","Subdue him, hide him in the bathroom locker, take the gown."],
+      ["Warning","Don't let Hush see the swap. Related intel: 'Voluntary Lockup' — the experiment won't continue until the subject comes out."]],
+   ch:["chameleon"]},
+  {t:"Tell Junli you're ready and take the chair",
+   s:"This closes the mission story. Two chairs with blue lights; Hush sits opposite and tries to override your will while you counteract the prompts.",
+   b:[["Where","The testing area on Floor 05."],
+      ["Disguise","Perfect Test Subject."],
+      ["NPCs","Junli — the lab assistant behind the computer screens, who argues the intensity is too dangerous. Sister Lei — the scientist pushing Hush to go further."],
+      ["Action","Talk to Junli to begin, sit when asked, and resist each prompt."]],
+   ch:["msImpulse"]},
+  {t:"Mnemonic + Think! Tank! — remove Junli during the break, with the toy tank",
+   s:"The experiment halts halfway and Hush takes a short break. Junli is the only thing holding the power down.",
+   b:[["Where","Floor 05, at the computer screens behind the test chairs."],
+      ["Item","Toy Tank from the Arcade — using it here pacifies a researcher and pops Think! Tank! at the same time."],
+      ["NPC","Junli, the assistant who tells Hush he's overdoing it. Not Sister Lei."],
+      ["Action","During the halt only, pacify Junli with the toy tank and hide her body. When the test resumes nobody caps the power and Hush's brain overloads."],
+      ["Warning","Take out Sister Lei by mistake and the test simply ends. Lei is the one who overloads the system on Hush's order, so she must still be alive and present — which is why Lei Me to Sleep comes later, on a separate reload."]],
+   ch:["mnemonic","thinktank","tHush"]},
+  {t:"Reload → Deprivation — Hush in the chair",
+   s:"With the fuse already inserted, he sits down the next time he checks the maintenance.",
+   b:[["Where","Therapy Room, Floor 05, door code 2552."],
+      ["Action","Wait for him to sit, then shoot him or throw a lethal object at him."],
+      ["Note","More reliable alternative: subdue Hush anywhere, drag his unconscious body to the chair and shoot him there. You'll know the position is right because the chair starts greeting Mr. Hush as you drag him close."]],
+   save:"Save before he sits. Miss the window and you wait out a full patrol loop.",
+   ch:["depriv","tHush"]},
+  {t:"Reload → Lei Me to Sleep — cowboy bust on Sister Lei",
+   s:"Safe to do now that Mnemonic is banked and she's no longer needed for anything.",
+   b:[["Where","Hush's Private Lab, Floor 05. Neoseeker places her there; PowerPyx says Floor 04 or 05 — both agree on the top two floors, so go by appearance."],
+      ["Item","Cowboy Bust from the Floor 01–02 stairwell."],
+      ["NPC","Sister Lei — female lead scientist, white lab coat over a purple shirt, black trousers."],
+      ["Action","Pacify her with the bust. This is a pacify challenge, not a kill."]],
+   ch:["leime"]},
+  {t:"Reload → Hold My Hair on Hush, if you skipped Royce's version",
+   s:"Emetic first, then follow him to the Floor 05 toilet.",
+   b:[["Where","Hush's computer desk, then the bathroom on the same floor."],
+      ["Item","ICA Pen Syringe Emetic, or emetic poison in the ventilation outside his room."],
+      ["NPC","His bodyguard follows him to the desk and has to go first."],
+      ["Action","Take out the bodyguard → coin-distract Hush → hide the bodyguard in the room behind → inject Hush → he walks to the toilet → drown him in the bowl."],
+      ["Note","Only needed once across the whole map. Skip if you already drowned Royce in Run 2."]],
+   ch:["holdhair"]}
+ ]},
+ {h:"Close the run", steps:[
+  {t:"Kill Royce, then exit at the train station — Training Hard",
+   s:"Any exit needs both targets dead, so make one trip down to the facility with a lethal syringe.",
+   b:[["Where","Into the facility via the container entrance (0118) or the Facility Elevator Shaft shortcut, then out to the Train Station exit."],
+      ["Item","A lethal syringe is the fastest — walk up to her and use it."],
+      ["Action","Kill Royce, then walk to the train station and exit. The core hack is optional because you started at The Block, so skip it."],
+      ["Note","Starting at Train Station would have made the core hack mandatory. Starting at The Block does not, even though you're exiting there."]],
+   ch:["training","tRoyce"]}
+ ]}]
+},
+
+{
+ short:"Run 4", nav:"Streets / exits", navsub:"8 challenges",
+ tag:"Run 4 · streets and rooftops · two short laps",
+ title:"Discovery sweep, the umbrella pair, and the last two exits",
+ blurb:"Two short completions. Lap A does all the street work and exits by scooter; Lap B repeats the fast double kill and exits down a manhole. Each lap closes with the same eight-minute All-Seeing Eyes kill you already know from Run 1.",
+ loadout:{start:"River-side Walkway — Mastery 4. Keeps the core hack optional on both laps.",
+  suit:"Any.",
+  items:["Slot 1 — Crowbar substitute: Lockpick Mk III (Zhao's Apartment door, antenna fence)",
+         "Slot 2 — Coin","Slot 3 — free","Slot 4 — free (crowbars are plentiful in the level)"]},
+ sections:[
+ {h:"Lap A — street disguises and the courtyard", steps:[
+  {t:"Street Guard — The Beat",
+   s:"Street Guards patrol outside the shipping container that hides the ICA entrance.",
+   b:[["Where","Floor 00, the street outside the ICA container entrance. Two more stand in the Arcade's fenced courtyard."],
+      ["Action","Subdue one out of sight, hide the body, take the uniform."]],
+   ch:["beat","chameleon"]},
+  {t:"Dumpling Cook",
+   s:"Cooks work the restaurant kitchen and wander the streets. Any one of them counts.",
+   b:[["Where","Restaurant, Floor 01, or on the streets."],
+      ["Action","Subdue and change. The kitchen is easiest — several cooks, tight space, and a bathroom next door to stash a body."]],
+   ch:["dumpling","chameleon"]},
+  {t:"Shortcut: Inner Courtyard",
+   s:"A door shortcut reached through the alley system south of Hush's building.",
+   b:[["Where","From Hush's building, down the alleyway opposite → enter the area on the right → straight down the corridor → the shortcut door is at the end."],
+      ["Disguise","The Inner Courtyard is restricted, so a guard disguise helps. It can also be reached by dropping in from the walkways to the south."],
+      ["NPC","Gamepur notes a guard leaning against the wall on the narrow path near the courtyard — distract or wait him out."],
+      ["Action","Open the door. Reveals the Inner Courtyard area."]],
+   ch:["scCourt","discover"]},
+  {t:"What a Glorious Feeling… — umbrella the dancing guard",
+   s:"There's a lone guard on a roof who periodically dances in the rain. You don't have to wait for the dance for this first hit.",
+   b:[["Where","Umbrella is inside Zhao's Apartment, Floor 01 — you'll need a lockpick or crowbar to get in. Then go to the Laundromat (0118), up to the roof where All-Seeing Eyes starts, and one flight of stairs below the two talking guards."],
+      ["Item","Umbrella."],
+      ["Action","Sneak up behind the lone guard and knock him out with it."],
+      ["Warning","Play on Professional. The umbrella is flagged as an illegal item on Casual and you'll be shot for carrying it. And do not kill him — the next challenge needs him alive."]],
+   ch:["glorious"]},
+  {t:"…I'm Happy Again — let him be found, then hit him again",
+   s:"His body has to be discovered and he has to be revived, which is the opposite of your normal instinct.",
+   b:[["Where","Same roof. Drag his body toward the other guards above, or close to the edge so they can spot him, then go and hide."],
+      ["Action","Wait for the search to end and everyone to return to non-hostile patrols → wait for him to start dancing in the rain again → sneak up and hit him with the umbrella a second time."],
+      ["Warning","Do not hide this body. If he's never found, he's never revived, and the challenge can't fire."]],
+   save:"Save right after the first umbrella hit — if you're spotted during the wait you'd otherwise redo the whole setup.",
+   ch:["happy"]},
+  {t:"Sweep the areas people miss, then exit by scooter — Scoot Over",
+   s:"Walk the remaining named areas, then run the fast All-Seeing Eyes kill and leave on the scooter.",
+   b:[["Where","Still missing, typically: OK Karaoke and Onelectrics Store (Floor 01), Glorious Leap Sign, The Lotus Passage and Southeastern Rooftop (Floor 05), and the Service Tunnels (Floor -2, through camera-scanned vents) — that last one is the single most-missed area on the map."],
+      ["Action","Walk each area, then do the laundry-roof drone sequence and one-bullet kill from Run 1, then exit at the scooter."],
+      ["Note","Scooter exit is at the end of the street on Floor 01, beside the Onelectrics Store. 29 areas total across Floors -3 to 5 for Discover Chongqing."]],
+   ch:["scoot","discover","tHush","tRoyce"]}
+ ]},
+ {h:"Lap B — the manhole", steps:[
+  {t:"Down the Rabbit Hole — crowbar, then any manhole",
+   s:"A second short completion whose only purpose is a different exit.",
+   b:[["Where","Crowbar in the homeless camp behind The Block, Floor 00. Manhole in the same alley behind The Block; others exist around the streets."],
+      ["Item","Crowbar."],
+      ["Action","Run the laundry-roof kill again, then pry a manhole and drop out."],
+      ["Note","XboxAchievements notes that manholes labelled 'body dump' still work as mission exits."]],
+   ch:["rabbit"]}
+ ]}]
+},
+
+{
+ short:"Run 5", nav:"Cleanup / C47", navsub:"4 challenges",
+ tag:"Run 5 · Lotus Passage · cleanup",
+ title:"Big Bada Boom, The Red Dragon, and the two bundles",
+ blurb:"Two set-piece kills that fit nowhere else, and the two meta-challenges that complete themselves once their components are banked. If you kept the Run 1 pre-meeting save, this is a ten-minute run.",
+ loadout:{start:"River-side Walkway — Mastery 4.",
+  suit:"Any.",
+  items:["Slot 1 — Coin",
+         "Slot 2 — Remote or proximity explosive, if you'd rather not rely on the gas bottle",
+         "Slot 3 — free",
+         "Slot 4 — Sniper rifle as smuggled item, so The Red Dragon doesn't depend on reaching the laundry roof first"]},
+ sections:[
+ {h:"One explosion, two targets", steps:[
+  {t:"Set up the Lotus Passage meeting again",
+   s:"Same laundry-roof drone sequence as Run 1, up to the point where Hush and Royce walk out to argue.",
+   b:[["Where","Laundromat (0118) → roof → scan the broken drone → five distant drones → two close drones."],
+      ["Action","Or just load the Run 1 save from immediately before the meeting and skip all of it."],
+      ["Note","This is the only scripted moment where both targets stand together in the open."]],
+   save:"If you kept the Run 1 pre-meeting save, this whole section is a two-minute job.",
+   ch:[]},
+  {t:"Big Bada Boom — shoot the gas bottle, not the targets",
+   s:"A large gas bottle stands beside them on the passage. One round into it kills both in a single explosion.",
+   b:[["Where","Lotus Passage, Floor 05, seen from the laundry-roof vantage point."],
+      ["Action","Wait until Royce has closed the distance to Hush so both are inside the blast, then shoot the gas bottle."],
+      ["Warning","Fire while she's still approaching and the explosion only catches one of them."],
+      ["Note","Registers as an accident, so it also satisfies Someone Could Hurt Themselves if you still need it. Alternative: a remote explosive placed on the passage beforehand — explosives can be looted from the Armory in Tier 2 Security, Floor -2."]],
+   ch:["bigbada","tHush","tRoyce","someone"]}
+ ]},
+ {h:"Codename 47", steps:[
+  {t:"The Red Dragon — sniper headshot from the neon sign",
+   s:"Three conditions at once: sniper rifle, headshot, and the shot must originate from the neon sign vantage point.",
+   b:[["Where","The Glorious Leap Sign is the only named neon-sign area on the map — Floor 05, top-left corner."],
+      ["Item","Any sniper rifle."],
+      ["Action","Take a headshot on either target from the sign. A headshot from anywhere else does not count."],
+      ["Warning","The wiki says only 'the neon sign vantage point' and does not name which sign. Glorious Leap is my inference from the area list, not a source's statement. If the challenge doesn't fire, reposition along the sign structure before assuming the method was wrong."],
+      ["Note","Added with the Codename 47 challenge pack for IO Interactive's 25th anniversary, October 2023. It progresses the cross-map Codename 47 master challenge, which unlocks The Codename 47 Suit. It is not in your uploaded JSON, which is why that file counts 56 and the wiki counts 57."]],
+   ch:["reddragon","straight"]}
+ ]},
+ {h:"The bundles", steps:[
+  {t:"Versatile Assassin — verify all five components",
+   s:"Completes on its own once the five accumulate across your whole Chongqing history, in any number of runs.",
+   b:[["Action","Check off: Piano Man (Run 3), Someone Could Hurt Themselves (Run 2, from Medium Rare), Hold My Hair (Run 2 or 3), Straight Shot (Run 1), Tasteless Traceless (Run 2)."],
+      ["Note","+4000 XP. Not a single-run challenge."]],
+   ch:["versatile"]},
+  {t:"Chameleon — verify all eleven disguises",
+   s:"Also cumulative. Four are in the facility, five in and around The Block and the streets, one is Pritchard, one is the test subject.",
+   b:[["Action","Mr. Pritchard (Restaurant, Floor 01) · Street Guard (streets by the ICA container, Floor 00) · Block Guard (inside The Block, blue pandemic suits) · Homeless Person (Floor 00 behind the Arcade) · Dumplings Cook (Restaurant, Floor 01) · Researcher (top floors of The Block) · Perfect Test Subject (Floor 05 bathroom) · Facility Engineer (red biohazard, ICA facility) · Facility Security (white shirt, green hat) · Facility Guard (black clothes, red hat) · Facility Analyst (black suit, yellow tie)."],
+      ["Warning","Facility Engineer: only the male ones can be looted. This is the one that strands people at 10 of 11."],
+      ["Note","+4000 XP."]],
+   ch:["chameleon"]}
+ ]}]
+}
+];
+
+const SRC_HTML=`
+<div class="src">
+  <h3>What changed after reading your JSON</h3>
+  <ul>
+    <li><b>Contact was wrong in v1.</b> Your file gives the in-game text as "Make Hush turn on the antenna", and the wiki's Contact page confirms the intent: disable The Block's new antenna to force Hush outside to restore it. v1 followed PowerPyx and said "turn it off with the switch, challenge complete." Both are now in the step, because PowerPyx, PlayStationTrophies and XboxAchievements all report it firing on the switch alone — XboxAchievements says outright you don't need to wait for Hush. Either way: don't kill Hush before it pops.</li>
+    <li><b>What a Glorious Feeling… is about a guard who already dances.</b> Your file says "Pacify the dancing guard with an umbrella." Neoseeker confirms he dances periodically and that you don't need to wait for it on the first hit. v1 implied the dancing only started after he was revived.</li>
+    <li><b>Killing the Past is specifically the files on 47 and Diana Burnwood</b>, not a generic core wipe.</li>
+    <li><b>Run 2 and Run 3 were reordered.</b> In v1, Tier 1 Security and the elevator shaft shortcut sat inside the Certainty Principle tour — but they need the Facility Security disguise, and changing clothes mid-tour ends the mission story. They now come after the console save. In Run 3, Lei Me to Sleep was before Mnemonic; Sister Lei is the scientist who overloads the system on Hush's order, so she has to survive until Mnemonic is banked.</li>
+    <li><b>The Floor 05 save is now made in the homeless disguise</b>, because Stick It to the Man needs it and the nearest replacement is at street level.</li>
+    <li><b>Exits were re-split.</b> Five exits need five completions. Run 4 is now two short laps rather than three, and Training Hard moved to Run 3's close-out because you finish that run near street level anyway.</li>
+  </ul>
+</div>
+
+<div class="src">
+  <h3>Count audit</h3>
+  <ul>
+    <li><b>Your JSON: 56.</b> 15 assassination + 18 discovery + 16 feats + 2 targets + 5 classic. No Codename 47 category.</li>
+    <li><b>Hitman Wiki: 57</b> — the same 56 plus 1 Codename 47, worth 127,000 XP.</li>
+    <li><b>The difference is The Red Dragon</b>, added with the Codename 47 pack in October 2023. Both figures are correct for what they describe; this guide tracks 57 and labels which one is the extra.</li>
+    <li><b>This guide: 57.</b> 15 / 18 / 16 / 2 / 5 / 1. Every challenge appears once in the checklist and in exactly one run's badge set. No duplicates.</li>
+    <li><b>PowerPyx's 84</b> folds in cross-mission Escalation tracks, which aren't Chongqing challenges.</li>
+  </ul>
+</div>
+
+<div class="src">
+  <h3>Run validation — what I checked</h3>
+  <ul>
+    <li><b>Items before use.</b> Fuse Cell (Floor 03) is collected before the Therapy Room on Floor 05. Toy Tank (Arcade, Floor 00) before Junli on Floor 05. Cowboy Bust (Floor 01–02 stairwell) before Sister Lei. Hammer (Floor 03) before the Block guards. Crowbar before both the Block Ladder and the manhole. Emetic Rat Poison (restaurant bathroom) before the noodles. P41 form before Chen Ting. Parcel (Floor -1) before Xiao Ming (Floor -2).</li>
+    <li><b>Disguises before need.</b> Homeless before the shelter and before Stick It to the Man. Pritchard before Chen Ting. Facility Security before the Tier 1 Security zone. Researcher before the Benchmark Lab. Perfect Test Subject before Impulse Control.</li>
+    <li><b>NPCs still alive when needed.</b> Pritchard alive until the food is served. Chen Ting alive until the escort ends. Alicia, Jeremy and Sharon all alive at the console. Junli alive until the test's mid-point. Sister Lei alive until after Mnemonic. Xiao Ming alive until the parcel. Hush alive for Contact, The Show Must Go On, Ease of Pain and every Hush-kill branch.</li>
+    <li><b>Scripts not broken by clothing changes.</b> No step changes disguise during an escorted sequence. The Run 2 facility sweep is deliberately placed after Certainty Principle closes.</li>
+    <li><b>Save points.</b> Run 1: post-rifle, per-drone, pre-meeting. Run 2: the console save, reloaded six times. Run 3: the Floor 05 hub save, reloaded five times, with the fuse already placed so no reload loses it. Run 4: post-umbrella. None of these reloads undo a challenge, because completions persist through reloads.</li>
+    <li><b>Mutually exclusive sets separated.</b> The five exits are in five different completions. All six Royce kills branch from one save. All five Hush kills branch from another. Bullet Points (Run 1) and Big Bada Boom (Run 5) both consume the Lotus Passage meeting and are in different runs. SASO is isolated in Run 1, away from every pacify-a-non-target feat.</li>
+    <li><b>Nothing becomes impossible.</b> The only genuine lockout risk is target lockdown from a loud kill, which relocates the surviving target and breaks the scripted setups — flagged in Run 2's close-out.</li>
+  </ul>
+</div>
+
+<div class="src">
+  <h3>Still unverified — do not treat these as fact</h3>
+  <ul>
+    <li><b>NPC names beyond the eleven the sources give.</b> Confirmed: Hush, Imogen Royce, Olivia Hall, Angus Pritchard, Chen Ting, Alicia Reynolds, Jeremy Bolt, Sharon Reed, Sister Lei, Junli, Xiao Ming. Every other guard, cook and scientist is unnamed in all sources I checked, and nobody publishes patrol timings. Steps describe them by position and clothing instead of inventing names.</li>
+    <li><b>XP.</b> Confirmed from the wiki table for all 15 Assassination and all 18 Discovery challenges, plus Human Error, A Hair in My Soup, Going Postal, Contact, What a Glorious Feeling… and …I'm Happy Again. The rest show UNVERIFIED. PowerPyx confirms the five Classics together are 20,000 XP.</li>
+    <li><b>The Red Dragon's vantage point.</b> The wiki says "the neon sign" without naming it. Glorious Leap Sign is my inference.</li>
+    <li><b>Second Tier 3 dongle</b> on a table in the core room's outer ring, Floor -2 (XboxAchievements only). If true, Hack the Planet doesn't need Royce dead.</li>
+    <li><b>Single-source items:</b> Super Special Door requiring a Tier 3 dongle; the vent bypass around the frisk; the taser-in-the-puddle electrocution; the screwdriver-and-water-cooler electrocution; the Restaurant Kitchen start providing cook attire; the Tier 2 dongle on Xiao Ming's desk (fan wiki); the Discover Chongqing trophy failing to pop; the possibility that two shortcut names are swapped.</li>
+    <li><b>Cooling Down / Hold My Hair overlap.</b> Undocumented. The route assumes no overlap.</li>
+  </ul>
+</div>
+
+<div class="src">
+  <h3>Codes, items and habits</h3>
+  <ul>
+    <li><b>0118</b> — Laundromat stairwell, ICA Apartment (Floor 02), and the container keypad at the facility entrance. Described as the shared code for all ICA keypads on this level.</li>
+    <li><b>2552</b> — Arcade courtyard secret hatch, and Hush's Therapy Room on Floor 05.</li>
+    <li><b>Crowbars (seven).</b> Floor -3 vents · the staircase near the emergency exit ladder · the garbage near the Arcade · the Inner Courtyard · the Derelict Apartments (Floor 03, on a box in the north) · the Laundromat roof · Hush's Private Lab.</li>
+    <li><b>Challenges only track online.</b> Play offline and none of it counts.</li>
+    <li><b>Completions survive reloads.</b> Do a challenge, reload an earlier save, and it stays done. That's the mechanic the entire route is built on.</li>
+  </ul>
+</div>
+
+<div class="src">
+  <h3>Chongqing mastery track</h3>
+  <ul>
+    <li><b>Starting locations:</b> Train Station (default) · River-side Walkway (L4) · Restaurant Kitchen (L7) · Facility Rooftop (L9) · The Block (L13) · Balcony (L16) · Facility Locker Room (L19). A Director Commentary — Mission Introduction start also exists and forces the core hack like Train Station.</li>
+    <li><b>Gear:</b> Electronic Key Hacker Mk III (L2) · ICA Pen Syringe Emetic (L5) · ICA Proximity Concussion Device Mk III (L7) · ICA Tactical Shotgun (L10) · ICA SMG Raptor Covert (L15) · Neon City Suit with Gloves + Hackl Leviathan Sniper Rifle Covert (L20).</li>
+    <li><b>Agency pickups:</b> Corridor (L6) · Facility Maintenance Tunnel (L8) · Arcade (L11) · Side Alley (L12) · Apartment (L18).</li>
+    <li><b>Hidden stashes:</b> Facility Server Supply Room (L2) · Restaurant Back Stairwell (L3) · Facility Rooftop (L10) · Facility Ventilation Room (L14) · The Laundry (L17).</li>
+    <li>Mastery 20 unlocks the Hack the Planet trophy; roughly 85% of challenges gets you there.</li>
+  </ul>
+</div>
+
+<div class="src">
+  <h3>Sources</h3>
+  <ul>
+    <li><b>Your upload</b> — 22_-_End_Of_An_Era.json: authoritative for challenge names, in-game descriptions and category counts.</li>
+    <li><b>Hitman Wiki</b> — End of an Era mission page (XP table, mission stories, intel, objectives, target lockdown), plus Contact, What a Glorious Feeling…, …I'm Happy Again, Going Postal, A Hair in My Soup, The Red Dragon, Versatile Assassin, Codename 47.</li>
+    <li><b>PowerPyx</b> — all-challenges guide, undiscovered areas, Certainty Principle, All-Seeing Eyes, Impulse Control, SASO/Sniper walkthrough. Primary source for methods and item locations.</li>
+    <li><b>XboxAchievements &amp; PlayStationTrophies</b> — Hack the Planet achievement walkthroughs: Contact, Tier 3 dongle locations, Vengeance targets, umbrella route, manhole exits.</li>
+    <li><b>Neoseeker</b> — Certainty Principle sequencing, Chen Ting, Sister Lei's location, the dancing guard, Fuse Cell floor, cowboy bust.</li>
+    <li><b>Gamepressure, Gamepur, PC Invasion, TheGamer, GameRant</b> — Impulse Control detail, the letter-A gown, Junli vs Sister Lei roles, Going Postal, A Hair in My Soup, the ladder-and-window bypass.</li>
+    <li><b>SegmentNext</b> — shortcut locations and the TIER 01 screwdriver. <b>SuperCheats</b> — mastery track, cross-checked with Gfinity and DBLTAP. <b>PSNProfiles</b> — alternate electrocution and the P41 form location.</li>
+    <li><b>Forum and comment reports</b> — used only for bug/workaround notes, all labelled unconfirmed in place.</li>
+  </ul>
+</div>`;
+
+/* ===== state ===== */
+const state={done:new Set(),steps:new Set(),filter:"ALL"};
+try{const saved=JSON.parse(localStorage.getItem('chongqing_done_v1')||'[]');saved.forEach(id=>state.done.add(id));}catch(e){}
+try{const _s=JSON.parse(localStorage.getItem('chongqing_done_v1:steps'));if(Array.isArray(_s))_s.forEach(k=>state.steps.add(k));}catch(e){}
+function reportProgress(){try{const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r['m22']={done:state.done.size,total:CH.length,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
+function saveDone(){try{localStorage.setItem('chongqing_done_v1',JSON.stringify([...state.done]));localStorage.setItem('chongqing_done_v1:steps',JSON.stringify([...state.steps]));}catch(e){}reportProgress();}
+const byId=Object.fromEntries(CH.map(c=>[c.id,c]));
+const fmtXp=x=>x===null?"UNVERIFIED":"+"+x.toLocaleString()+" XP";
+
+function renderTracker(){
+  const total=CH.length,done=state.done.size;
+  tkNum.innerHTML=done+"<small> / "+total+" challenges</small>";
+  tkBar.style.width=(done/total*100)+"%";
+  let known=0,banked=0,unk=0;
+  CH.forEach(c=>{if(c.xp===null){if(state.done.has(c.id))unk++}else{known+=c.xp;if(state.done.has(c.id))banked+=c.xp}});
+  tkXp.textContent=banked.toLocaleString()+" / "+known.toLocaleString()+" XP confirmed"+(unk?"  ·  "+unk+" done with unverified XP":"");
+  cats.innerHTML=Object.entries(TYPES).map(([k,v])=>{
+    const d=CH.filter(c=>c.t===k&&state.done.has(c.id)).length;
+    return `<div class="cat"><b>${v.label}</b><span>${d}<span style="color:var(--dim);font-size:12px">/${v.total}</span></span>
+      <div class="cbar"><i style="width:${d/v.total*100}%;background:${TC[k]}"></i></div></div>`}).join("");
+  document.querySelectorAll("[data-rp]").forEach(el=>{
+    const n=+el.dataset.rp, list=CH.filter(c=>c.r===n);
+    el.textContent=list.filter(c=>state.done.has(c.id)).length+"/"+list.length;
+  });
+}
+const badge=id=>{const c=byId[id];return c?`<button class="bdg ${c.t} ${state.done.has(id)?'on':''}" data-ch="${id}" title="${c.d}">${c.n}</button>`:""};
+
+function renderRuns(){
+  runnav.innerHTML=RUNS.map((r,i)=>`<button class="rb" data-goto="${i}"><b>${r.short}</b>${r.nav} <i>· ${r.navsub}</i></button>`).join("")
+    +`<span class="tools"><button class="tbtn" data-all="open">Expand all</button><button class="tbtn" data-all="close">Collapse all</button></span>`;
+  runBody.innerHTML=RUNS.map((r,ri)=>{
+    const secs=r.sections.map((sec,si)=>{
+      const steps=sec.steps.map((st,ti)=>{
+        const key=`${ri}-${si}-${ti}`,on=state.steps.has(key);
+        const rows=st.b.map(([lab,txt])=>{
+          let cls=lab.toLowerCase().replace(/[^a-z]/g,"");
+          if(cls==="npcs")cls="npc";
+          const kind=["where","disguise","item","npc","action","warning","note"].includes(cls)?cls:"note";
+          if(kind==="warning") return `<div class="note-box warn"><span class="flag warn">Warning</span>${txt}</div>`;
+          return `<div class="dl ${kind==='warning'?'note':kind}"><b>${lab}</b><span>${txt}</span></div>`;
+        }).join("");
+        const save=st.save?`<div class="note-box save"><span class="flag save">Save here</span>${st.save}</div>`:"";
+        const bd=st.ch.length?`<div class="badges">${st.ch.map(badge).join("")}</div>`:"";
+        return `<div class="step ${on?'done':''}" id="s-${key}">
+          <div class="step-top">
+            <button class="chk ${on?'on':''}" data-step="${key}" aria-label="Mark step done">✓</button>
+            <span class="sno">${ti+1}</span>
+            <div class="step-main">
+              <div class="step-t" data-det="${key}" role="button" tabindex="0" aria-expanded="false">${st.t}</div>
+              <div class="step-s">${st.s}</div>${bd}
+            </div>
+          </div>
+          <div class="detail" id="d-${key}" hidden>${rows}${save}</div>
+        </div>`}).join("");
+      return `<div class="sec-h">${sec.h}</div>${steps}`}).join("");
+    return `<article class="run" id="run-${ri}">
+      <div class="run-hd" data-run="${ri}">
+        <span class="caret">▸</span>
+        <div class="rt"><div class="run-tag">${r.tag}</div><h2>${r.title}</h2><p>${r.blurb}</p></div>
+        <div class="rprog" data-rp="${ri+1}"></div>
+      </div>
+      <div class="run-body" hidden>
+        <div class="loadout">
+          <div><div class="lo-h">Loadout</div>
+            <div class="lo-line"><b>Start</b><span>${r.loadout.start}</span></div>
+            <div class="lo-line"><b>Suit</b><span>${r.loadout.suit}</span></div></div>
+          <div><div class="lo-h">Slots</div>
+            ${r.loadout.items.map(i=>`<div class="lo-line"><span>${i}</span></div>`).join("")}</div>
+        </div>${secs}
+      </div></article>`}).join("");
+}
+
+function renderList(){
+  const order=["A","D","F","T","C","X"],f=state.filter;let html="";
+  order.forEach(k=>{
+    if(f!=="ALL"&&f!=="INC"&&f!==k)return;
+    let items=CH.filter(c=>c.t===k);
+    if(f==="INC")items=items.filter(c=>!state.done.has(c.id));
+    if(!items.length)return;
+    html+=`<div class="grp">${TYPES[k].label} — ${CH.filter(c=>c.t===k&&state.done.has(c.id)).length}/${TYPES[k].total}</div>`;
+    html+=items.map(c=>{const on=state.done.has(c.id);
+      return `<div class="crow ${on?'done':''}">
+        <button class="chk ${on?'on':''}" data-ch="${c.id}" aria-label="Mark ${c.n} done">✓</button>
+        <div style="flex:1;min-width:0">
+          <div class="cn"><span class="ctype" style="color:${TC[c.t]};border-color:currentColor">${c.t}</span>${c.n}<span class="rtag">Run ${c.r}</span></div>
+          <div class="cd">${c.d}</div></div>
+        <div class="cx">${fmtXp(c.xp)}</div></div>`}).join("");
+  });
+  listBody.innerHTML=html||`<p style="color:var(--dim)">Nothing left in this filter.</p>`;
+}
+function renderFilters(){
+  filters.innerHTML=[["ALL","All"],["A","Assassination"],["D","Discovery"],["F","Feats"],["T","Targets"],["C","Classics"],["X","Codename 47"],["INC","Incomplete"]]
+    .map(([k,l])=>`<button class="fbtn" data-f="${k}" aria-pressed="${state.filter===k}">${l}</button>`).join("");
+}
+function toggleCh(id){
+  state.done.has(id)?state.done.delete(id):state.done.add(id);
+  saveDone();
+  renderTracker();renderList();
+  document.querySelectorAll(`.bdg[data-ch="${id}"]`).forEach(b=>b.classList.toggle("on",state.done.has(id)));
+}
+function setRun(i,open){
+  const a=document.getElementById("run-"+i),b=a.querySelector(".run-body");
+  b.hidden=!open;a.classList.toggle("open",open);
+}
+function toggleDet(k){
+  const el=document.getElementById("d-"+k),t=document.querySelector(`[data-det="${k}"]`);
+  el.hidden=!el.hidden;t.setAttribute("aria-expanded",String(!el.hidden));
+}
+
+document.addEventListener("click",e=>{
+  const tab=e.target.closest(".tab");
+  if(tab){document.querySelectorAll(".tab").forEach(t=>t.setAttribute("aria-selected",t===tab));
+    document.querySelectorAll(".panel").forEach(p=>p.hidden=p.id!==tab.dataset.panel);return}
+  const g=e.target.closest("[data-goto]");
+  if(g){const i=+g.dataset.goto;setRun(i,true);document.getElementById("run-"+i).scrollIntoView({behavior:"smooth",block:"start"});return}
+  const al=e.target.closest("[data-all]");
+  if(al){RUNS.forEach((_,i)=>setRun(i,al.dataset.all==="open"));return}
+  const d=e.target.closest("[data-det]");
+  if(d){toggleDet(d.dataset.det);return}
+  const s=e.target.closest("[data-step]");
+  if(s){const k=s.dataset.step;state.steps.has(k)?state.steps.delete(k):state.steps.add(k);saveDone();
+    s.classList.toggle("on",state.steps.has(k));
+    document.getElementById("s-"+k).classList.toggle("done",state.steps.has(k));return}
+  const c=e.target.closest("[data-ch]");
+  if(c){toggleCh(c.dataset.ch);return}
+  const f=e.target.closest("[data-f]");
+  if(f){state.filter=f.dataset.f;renderFilters();renderList();return}
+  const rh=e.target.closest("[data-run]");
+  if(rh){const i=+rh.dataset.run;setRun(i,document.getElementById("run-"+i).querySelector(".run-body").hidden);return}
+});
+document.addEventListener("keydown",e=>{
+  if((e.key==="Enter"||e.key===" ")&&e.target.dataset&&e.target.dataset.det){e.preventDefault();toggleDet(e.target.dataset.det)}
+});
+
+srcs.innerHTML=SRC_HTML;
+renderRuns();renderFilters();renderList();renderTracker();setRun(0,true);
+reportProgress();
+</script>
+<!-- step-progress-bridge -->
+<script>
+/* Reports route-step ticks into 'hitman-progress-registry' so the index can
+   show them beside the challenge counts. Counts what is on screen rather than
+   any guide-specific state, so one implementation serves every guide. */
+(function(){
+  var RID="m22", SEL=".step";
+  function isDone(s){
+    var c=s.classList;
+    if(c.contains('done')||c.contains('dn')) return true;
+    if(s.getAttribute('data-done')==='1'||s.getAttribute('aria-pressed')==='true') return true;
+    return !!s.querySelector('.done,.dn,[data-done="1"],[aria-pressed="true"]');
+  }
+  function tally(){
+    var steps=document.querySelectorAll(SEL);
+    if(!steps.length) return null;
+    var n=0;
+    for(var i=0;i<steps.length;i++) if(isDone(steps[i])) n++;
+    return {steps:n,stepTotal:steps.length};
+  }
+  function push(){
+    var t;
+    try{ t=tally(); }catch(err){ return; }
+    if(!t||!t.stepTotal) return;
+    try{
+      var r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');
+      var e=r[RID]||(r[RID]={});
+      /* the guide's own reportProgress() rewrites this entry wholesale, so
+         re-add the step counts whenever they go missing or stale */
+      if(e.steps===t.steps&&e.stepTotal===t.stepTotal) return;
+      e.steps=t.steps; e.stepTotal=t.stepTotal; e.updated=Date.now();
+      localStorage.setItem('hitman-progress-registry',JSON.stringify(r));
+    }catch(err){}
+  }
+  var pending=false;
+  function schedule(){
+    if(pending) return; pending=true;
+    setTimeout(function(){pending=false;push();},120);
+  }
+  try{
+    new MutationObserver(schedule).observe(document.body,
+      {subtree:true,childList:true,attributes:true,attributeFilter:['class','aria-pressed','data-done']});
+  }catch(err){}
+  window.addEventListener('load',schedule);
+  setTimeout(push,600);
+})();
+</script>
+<!-- /step-progress-bridge -->
+</body>
+</html>

@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Showstopper — Verified Challenge Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ═══ PARIS — editorial / haute couture ═══
+   Centred masthead, hairline rules, no boxes. Everything is set on a page,
+   not in a card: the run list reads like the contents of a fashion magazine. */
+:root{
+  --ink:#0a0908; --paper:#f4efe6; --dim:#8e877c; --faint:#5a544c;
+  --gold:#c8a04a; --rose:#c88f8f; --rust:#c0503f; --violet:#9a8fd0; --sky:#7fb0c8;
+  --rule:rgba(244,239,230,.16); --rule-2:rgba(244,239,230,.07);
+  /* aliases kept so the category-colour map in the script still resolves */
+  --amber:#c88f8f; --jade:#c8a04a;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--ink);color:var(--paper);font-family:"Jost",system-ui,sans-serif;
+     font-size:15px;font-weight:300;line-height:1.7;-webkit-font-smoothing:antialiased}
+.wrap{max-width:940px;margin:0 auto;padding:0 24px 100px}
+b,strong{font-weight:500}
+code{font-family:"Jost",monospace;font-size:.9em;color:var(--gold);letter-spacing:.02em}
+
+/* ── masthead ───────────────────────────────────────────── */
+.backlink{display:inline-block;margin:26px 0 0;font-size:11px;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--faint);text-decoration:none}
+.backlink:hover{color:var(--gold)}
+.mast{text-align:center;padding:30px 0 34px;margin-bottom:46px;border-bottom:1px solid var(--rule)}
+.eyebrow{font-size:10px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);
+  margin:0 0 26px;font-weight:500}
+.eyebrow:after{content:"";display:block;width:46px;height:1px;background:var(--gold);
+  margin:16px auto 0;opacity:.6}
+h1{font-family:"Playfair Display",Georgia,serif;font-weight:900;
+  font-size:clamp(38px,8vw,78px);line-height:.96;letter-spacing:-.025em;margin:0 0 22px}
+h1 em{display:block;font-size:.30em;font-weight:400;font-style:italic;letter-spacing:.02em;
+  color:var(--dim);margin-top:14px}
+.facts{font-size:12.5px;line-height:2.05;color:var(--dim);max-width:660px;margin:0 auto;
+  letter-spacing:.015em}
+.facts b{color:var(--paper);font-weight:500}
+
+/* ── tracker: a masthead strip, not a panel ─────────────── */
+.tracker{margin-bottom:44px}
+.tracker-top{display:flex;justify-content:center;align-items:baseline;gap:20px;
+  flex-wrap:wrap;margin-bottom:18px}
+.tracker-top h2{font-size:10px;letter-spacing:.34em;text-transform:uppercase;
+  color:var(--faint);margin:0;font-weight:500}
+.tally{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin:0}
+/* numerals stay in the sans — Playfair's zero is too close to a capital O */
+.tally b{color:var(--gold);font-size:26px;font-weight:500;letter-spacing:0;
+  vertical-align:-2px;margin-right:4px}
+.bar{height:1px;background:var(--rule);margin-bottom:30px;position:relative}
+.bar span{display:block;height:3px;width:0;background:var(--gold);margin-top:-1px;
+  transition:width .5s cubic-bezier(.2,.7,.3,1)}
+.cats{display:flex;flex-wrap:wrap}
+.cat{flex:1 1 128px;text-align:center;padding:4px 10px 0;border-left:1px solid var(--rule-2)}
+.cat:first-child{border-left:0}
+.cat .v{font-size:30px;font-weight:500;line-height:1;display:block;letter-spacing:-.01em}
+.cat .v em{font-style:normal;font-size:14px;color:var(--faint);font-weight:300}
+.cat .n{display:block;font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--dim);margin-top:9px}
+.cat .mb{display:block;height:1px;background:var(--rule);margin:11px 14px 0}
+.cat .mb i{display:block;height:1px;width:0;transition:width .4s ease}
+.resetbtn{font-family:inherit;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;
+  background:none;border:0;border-bottom:1px solid var(--rule);color:var(--faint);
+  padding:2px 0;cursor:pointer}
+.resetbtn:hover{color:var(--rust);border-color:var(--rust)}
+
+/* ── tabs ───────────────────────────────────────────────── */
+.tabs{display:flex;justify-content:center;gap:38px;margin-bottom:38px;
+  border-bottom:1px solid var(--rule);flex-wrap:wrap}
+.tab{font-family:inherit;font-size:10.5px;letter-spacing:.28em;text-transform:uppercase;
+  background:none;border:0;border-bottom:1px solid transparent;color:var(--faint);
+  padding:0 2px 15px;margin-bottom:-1px;cursor:pointer;font-weight:400}
+.tab:hover{color:var(--paper)}
+.tab[aria-selected="true"]{color:var(--gold);border-bottom-color:var(--gold)}
+.panel[hidden]{display:none}
+
+/* ── run index: a contents page ─────────────────────────── */
+.runnav{margin-bottom:40px;padding-bottom:20px;border-bottom:1px solid var(--rule);
+  position:sticky;top:0;background:var(--ink);z-index:20;padding-top:16px}
+.runnav button{font-family:inherit;font-size:11px;letter-spacing:.12em;background:none;
+  border:0;color:var(--faint);padding:3px 0;cursor:pointer;margin-right:22px;font-weight:300}
+.runnav button:hover{color:var(--gold)}
+.runnav button.hot{color:var(--gold);font-weight:500}
+.runnav .util{float:right}
+.runnav .util button{margin:0 0 0 16px;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase}
+
+/* ── runs ───────────────────────────────────────────────── */
+.run{border-top:1px solid var(--rule);scroll-margin-top:80px}
+.run:last-child{border-bottom:1px solid var(--rule)}
+.run-head{width:100%;text-align:left;background:none;border:0;color:inherit;font:inherit;
+  padding:30px 0;cursor:pointer;display:flex;gap:26px;align-items:baseline}
+.run-head:hover .rh h3{color:var(--gold)}
+.rnum{flex:0 0 auto;font-family:"Playfair Display",serif;font-size:44px;font-weight:400;
+  line-height:.8;color:transparent;-webkit-text-stroke:1px var(--faint);width:64px}
+.run.open .rnum{-webkit-text-stroke-color:var(--gold);color:transparent}
+.rh{flex:1;min-width:0}
+.run-no{display:block;font-size:9.5px;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:10px}
+.run-head h3{font-family:"Playfair Display",serif;font-size:clamp(23px,3.6vw,33px);
+  font-weight:700;letter-spacing:-.015em;line-height:1.12;margin:0 0 10px;transition:color .18s}
+.run-head p{margin:0;font-size:14px;font-style:italic;font-family:"Playfair Display",serif;
+  color:var(--dim);max-width:60ch;line-height:1.6}
+.run-prog{flex:0 0 auto;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--faint);white-space:nowrap}
+.run-body[hidden]{display:none}
+.run-body{padding-bottom:44px}
+
+/* loadout as a specification table */
+.loadout{border-top:1px solid var(--rule-2);border-bottom:1px solid var(--rule-2);
+  padding:24px 0 26px;margin:0 0 8px 90px}
+.loadout h4{font-size:9.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);
+  margin:0 0 18px;font-weight:500}
+.lo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px 34px}
+.lo-grid div{font-size:13px;line-height:1.5}
+.lo-grid div span{display:block;font-size:9px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--faint);margin-bottom:5px}
+.lo-note{margin:20px 0 0;font-size:13px;font-style:italic;font-family:"Playfair Display",serif;
+  color:var(--dim);max-width:70ch}
+
+.sect{margin-left:90px}
+.sect>h4{font-family:"Playfair Display",serif;font-style:italic;font-size:17px;font-weight:400;
+  color:var(--gold);margin:34px 0 4px;letter-spacing:0}
+
+/* steps — hanging numerals, hairlines, no boxes */
+.step{border-bottom:1px solid var(--rule-2);padding:19px 0}
+.step.done .step-title,.step.done .bul{opacity:.42}
+.step-top{display:flex;gap:16px;align-items:flex-start}
+.snum{flex:0 0 auto;width:26px;font-family:"Playfair Display",serif;font-size:14px;
+  color:var(--faint);padding-top:2px}
+.step.done .snum{color:var(--gold)}
+.tick{flex:0 0 auto;width:15px;height:15px;border:1px solid var(--rule);border-radius:50%;
+  background:none;cursor:pointer;color:transparent;font-size:9px;line-height:13px;
+  padding:0;margin-top:5px;transition:.15s}
+.tick:hover{border-color:var(--gold)}
+.done .tick{background:var(--gold);border-color:var(--gold);color:var(--ink)}
+.step-body{flex:1;min-width:0}
+.step-title{font-family:"Playfair Display",serif;font-size:17px;font-weight:700;
+  margin:0 0 9px;line-height:1.3}
+.bul{margin:0;padding:0;list-style:none;font-size:13.5px;color:var(--paper)}
+.bul li{display:flex;gap:14px;margin-bottom:5px;line-height:1.6}
+.bul k{flex:0 0 76px;font-size:9px;letter-spacing:.19em;text-transform:uppercase;
+  color:var(--faint);padding-top:5px}
+.badges{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:13px}
+.badge{font-size:9px;letter-spacing:.18em;text-transform:uppercase;padding:0 0 3px;
+  border-bottom:1px solid;display:inline-block}
+.b-chal{color:var(--gold);border-color:rgba(200,160,74,.5)}
+.b-warn{color:var(--rust);border-color:rgba(192,80,63,.55)}
+.b-save{color:var(--rose);border-color:rgba(200,143,143,.5)}
+.b-unv{color:var(--violet);border-color:rgba(154,143,208,.5)}
+.b-src{color:var(--sky);border-color:rgba(127,176,200,.5)}
+.more{font-family:inherit;font-size:9px;letter-spacing:.22em;text-transform:uppercase;
+  background:none;border:0;color:var(--faint);cursor:pointer;padding:12px 0 0 118px}
+.more:hover{color:var(--gold)}
+.detail{padding:6px 0 2px 118px;font-size:13px;color:var(--dim);max-width:74ch}
+.detail[hidden]{display:none}
+.detail dl{margin:0}
+.detail dt{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);
+  margin-top:15px}
+.detail dd{margin:5px 0 0;line-height:1.7}
+.flag{border-left:1px solid var(--rust);padding-left:14px;margin-top:15px;color:#e0b3ab}
+.flag.amber{border-color:var(--rose);color:#e6c3c3}
+.flag.unv{border-color:var(--violet);color:#c8c0e6}
+
+/* ── checklist ──────────────────────────────────────────── */
+.filters{display:flex;gap:26px;flex-wrap:wrap;margin-bottom:26px;padding-bottom:16px;
+  border-bottom:1px solid var(--rule)}
+.filters button{font-family:inherit;font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;
+  background:none;border:0;color:var(--faint);padding:0;cursor:pointer}
+.filters button:hover{color:var(--paper)}
+.filters button.on{color:var(--gold)}
+.chal{display:flex;gap:16px;padding:17px 0;border-bottom:1px solid var(--rule-2);align-items:flex-start}
+.chal-main{flex:1;min-width:0}
+.chal-name{font-family:"Playfair Display",serif;font-size:16.5px;font-weight:700;margin:0}
+.chal.done .chal-name{color:var(--faint);text-decoration:line-through}
+.chal-cond{margin:4px 0 0;font-size:13px;color:var(--dim);line-height:1.6}
+.chal-meta{display:flex;gap:16px;flex-wrap:wrap;margin-top:9px}
+
+/* ── audit ──────────────────────────────────────────────── */
+.audit{max-width:78ch}
+.audit h3{font-family:"Playfair Display",serif;font-size:24px;font-weight:700;
+  margin:40px 0 14px}
+.audit h3:first-child{margin-top:0}
+.audit p{color:var(--dim);font-size:14px}
+.audit ul{padding-left:0;list-style:none;margin:0 0 18px}
+.audit li{margin-bottom:9px;padding-left:20px;position:relative;color:var(--dim);font-size:13.5px}
+.audit li:before{content:"—";position:absolute;left:0;color:var(--gold)}
+.audit li b{color:var(--paper)}
+table.src{font-size:12.5px;border-collapse:collapse;width:100%;margin-bottom:10px}
+table.src th,table.src td{border-bottom:1px solid var(--rule-2);padding:11px 14px 11px 0;
+  text-align:left;vertical-align:top;color:var(--dim)}
+table.src th{color:var(--faint);font-size:9px;letter-spacing:.22em;text-transform:uppercase;
+  font-weight:500;border-bottom-color:var(--rule)}
+.pass{color:var(--gold)}.fail{color:var(--rust)}.part{color:var(--rose)}
+footer{margin-top:60px;padding-top:24px;border-top:1px solid var(--rule);
+  font-size:10.5px;letter-spacing:.14em;color:var(--faint);line-height:2.1;text-align:center}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (max-width:680px){
+  .loadout,.sect{margin-left:0}
+  .more,.detail{padding-left:0}
+  .rnum{font-size:30px;width:44px}
+  .run-head{gap:14px}
+  .bul li{display:block}
+  .bul k{display:block;padding:0 0 2px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="mast">
+  <a class="backlink" href="../index.html">← All guides</a>
+  <p class="eyebrow">Main Campaign 02 · Palais de Walewska, Paris · World of Assassination</p>
+  <h1>The Showstopper <em>— challenge run planner</em></h1>
+  <p class="facts">
+    <b>Targets:</b> Viktor Novikov (&ldquo;The Moneyman&rdquo;) · Dalia Margolis (&ldquo;The Mastermind&rdquo;)<br>
+    <b>Challenges:</b> 65 — 29 Assassination · 19 Discovery · 10 Feats · 2 Targets · 5 The Classics<br>
+    <b>Tracked disguises:</b> 10 &nbsp;·&nbsp; <b>Tracked areas:</b> 39 &nbsp;·&nbsp; <b>Mission Stories:</b> 8<br>
+    <b>Runs needed:</b> 9 &nbsp;·&nbsp; <b>Route source:</b> fish's Steam challenge guide, plus new research for the Sniper run
+  </p>
+</header>
+
+<section class="tracker">
+  <div class="tracker-top">
+    <h2>Progress</h2>
+    <p class="tally"><b id="tDone">0</b> / 65 challenges complete &nbsp; <button class="resetbtn" id="reset">Reset</button></p>
+  </div>
+  <div class="bar"><span id="tBar"></span></div>
+  <div class="cats" id="cats"></div>
+</section>
+
+<div class="tabs" role="tablist">
+  <button class="tab" role="tab" aria-selected="true" data-panel="runs">Optimized runs</button>
+  <button class="tab" role="tab" aria-selected="false" data-panel="checklist">Checklist</button>
+  <button class="tab" role="tab" aria-selected="false" data-panel="audit">Audit &amp; sources</button>
+</div>
+
+<div class="panel" id="p-runs">
+  <div class="runnav" id="runnav"></div>
+  <div id="runList"></div>
+</div>
+
+<div class="panel" id="p-checklist" hidden>
+  <div class="filters" id="filters"></div>
+  <div id="chalList"></div>
+</div>
+
+<div class="panel audit" id="p-audit" hidden>
+  <h3>Verification result</h3>
+  <p>All 65 challenge names and unlock conditions are copied from the in-game challenge data in this repository (<code>missions/02 - The Showstopper.json</code>), so the challenge list itself is <b>fully verified</b>. Runs 1&ndash;8 are a faithful conversion of fish's Steam guide <i>HITMAN I &mdash; All Paris Challenges</i>, which is a tested route. Run 9 (Sniper Assassin) is new: fish left that section as a video with no text, so it was rebuilt from two written sources and is labelled accordingly.</p>
+
+  <table class="src">
+    <thead><tr><th>Check</th><th>Result</th><th>Evidence</th></tr></thead>
+    <tbody>
+      <tr><td>Total count (65)</td><td class="pass">Pass</td><td>In-game challenge data: declared <code>challengeCount: 65</code>, category sum also 65</td></tr>
+      <tr><td>Category split 29/19/10/2/5</td><td class="pass">Pass</td><td>In-game challenge data</td></tr>
+      <tr><td>All 65 names &amp; conditions</td><td class="pass">Pass</td><td>In-game challenge data, verbatim</td></tr>
+      <tr><td>Runs 1&ndash;8 routes</td><td class="pass">Pass</td><td>fish, Steam guide 3437436846 — a written, tested 8-run route</td></tr>
+      <tr><td>Every loadout (start, suit, weapon, gear, smuggle)</td><td class="pass">Pass</td><td>Read off the eight planning-screen screenshots embedded in that guide</td></tr>
+      <tr><td>Starting-location mastery levels</td><td class="pass">Pass</td><td>Hitman Wiki, <i>List of Mastery Unlocks by Mission</i> — every name in this guide matches a listed Paris unlock</td></tr>
+      <tr><td>Shed smuggle point (Run 4 / 9)</td><td class="pass">Pass</td><td>Same wiki list: Shed is the Paris Agency Pickup at mastery 3</td></tr>
+      <tr><td>SASO route (Run 8)</td><td class="pass">Pass</td><td>fish's Run 8 <b>and</b> NamuWiki's Paris challenge page independently describe the same fireworks → push-Dalia-onto-Viktor route</td></tr>
+      <tr><td>Sniper Assassin route (Run 9)</td><td class="pass">Pass</td><td>fish's Run 4 barge setup + NamuWiki: "when you activate the fireworks button, Victor first comes out to the lobby downstairs, and after a while, Dahlia comes out to the balcony … you can shoot it with a sniper rifle from the top of the barge. Perhaps the Sniper Assassin challenge will also be unlocked."</td></tr>
+      <tr><td>Bodyguard-spots-you bug</td><td class="part">Single source</td><td>Only fish reports it. Repeated here as a warning, not as fact.</td></tr>
+      <tr><td>Per-challenge XP values</td><td class="fail">Unverified</td><td>No source consulted breaks the mission XP down per challenge. Not guessed, so no XP is shown.</td></tr>
+      <tr><td>Chameleon / Discover Paris</td><td class="part">Not routed</td><td>fish excludes both from his run plan and points at his separate <i>HITMAN I — All Disguises</i> guide. They are listed in the checklist and marked "Not routed" rather than invented into a run.</td></tr>
+      <tr><td>Bull In A China Shop / Careful What You Wish For</td><td class="pass">Pass</td><td>Both are <code>[REDACTED]</code> in the in-game data. fish gives the actions: shoot the vase in the room outside the museum director's office; throw a coin into the fountain. Conditions left redacted in the checklist, actions given in the runs.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Run-logic validation (simulated step by step)</h3>
+  <ul>
+    <li><b>63 of 65 challenges are assigned to a run.</b> The two left out are Chameleon and Discover Paris, which are exploration passes rather than route steps — see above.</li>
+    <li><b>Prerequisites precede use.</b> Run 1 takes Helmut's phone before calling Dalia; Run 2 takes the invitation before the two checkpoints that need it; Run 4 takes the speedboat key before the barge; Run 5 takes the security guard's outfit before it is needed for the exit; Run 8 drops the pistol before the frisk.</li>
+    <li><b>Nothing needed later is destroyed earlier.</b> Every kill branch inside a run sits behind a save, and the branch that is <em>kept</em> is always the last one — Run 1 keeps the fiber wire on both targets so <i>The Personal Touch</i> survives, Run 3 keeps the push into the Seine, Run 7 keeps the on-stage shot.</li>
+    <li><b>Mutually exclusive kills are separated.</b> Dalia has nine distinct kill challenges and Viktor eleven; no run tries to stack two of them without a reload between.</li>
+    <li><b>Un-spotted requirements are isolated.</b> Runs 4, 5 and 7 each carry a "can't be spotted" challenge (<i>In Plain Sight</i>, <i>Close Personal Protection</i>, <i>Setting the Stage</i>) and none of them shares a run with another one.</li>
+    <li><b>Suit-only conflicts are isolated.</b> Run 8 takes no disguise at all and kills with a push, so it never collides with the disguise-heavy runs. Run 9 is allowed disguises because Sniper Assassin does not require the suit.</li>
+    <li><b>The Classics capstone lands last.</b> Run 8 delivers Silent Assassin, Silent Assassin Suit Only and Suit Only; Run 9 delivers Sniper Assassin and fires the capstone on completion.</li>
+  </ul>
+
+  <h3>Known conflicts, bugs and ordering rules</h3>
+  <ul>
+    <li><b>Run 4, sniper bug:</b> fish reports that Viktor's bodyguard can spot you after both targets die even with a suppressed rifle. In Run 4 he shoots the bodyguard to clear it. <b>Do not shoot him in Run 9</b> — killing a non-target voids Sniper Assassin. Reload instead.</li>
+    <li><b>Run 4, coconut of Paris:</b> <i>In Plain Sight</i> requires the fireworks to be triggered <em>and</em> both targets sniped within ten seconds <em>and</em> no spotting. All three, or it does not fire.</li>
+    <li><b>Run 5, order matters:</b> the security guard on the director's-office balcony must be pacified and hidden <em>before</em> you climb to the attic for the magician outfit, because you come back for his clothes afterwards.</li>
+    <li><b>Run 2, sink timing:</b> Dalia and her personal bodyguard must already be in the meeting room and talking before you overflow the sink, otherwise they investigate it before the CICADA bodyguard does and the whole sequence breaks.</li>
+    <li><b>Run 8, the frisk:</b> the pistol has to be dropped in the library first. You are frisked on the way back up to the auction room and a found weapon ends the suit-only attempt.</li>
+    <li><b>Difficulty:</b> the save-and-reload branches assume unlimited manual saves, i.e. Casual. In World of Assassination the Classic challenges are no longer difficulty-tiered, so playing Casual costs nothing.</li>
+  </ul>
+
+  <h3>Sources</h3>
+  <ul>
+    <li><b>In-game challenge data</b> (<code>missions/02 - The Showstopper.json</code>) — authoritative for names, conditions and counts.</li>
+    <li><b>fish, <i>HITMAN I — All Paris Challenges</i></b> (Steam guide 3437436846) — the eight-run route and all eight loadout screenshots. His "Sniper Assassin" section contains a video only, no text.</li>
+    <li><b>NamuWiki</b>, <i>Hitman (game) / Challenges / Paris</i> — independent SASO and <i>In Plain Sight</i> / Sniper Assassin notes. Machine-translated from Korean.</li>
+    <li><b>Steam guide 644994482</b>, <i>Hitman | Silent Assassin, Suit Only</i> — an alternative Paris SASO route (poisoned sushi, then the double sink overflow), recorded in Run 8's notes.</li>
+    <li><b>Hitman Wiki</b>, <i>List of Mastery Unlocks by Mission</i> — starting locations, agency pickups and hidden stashes with their mastery levels.</li>
+  </ul>
+</div>
+
+<footer>
+  Progress is saved in this browser and persists across reloads.<br>
+  Compiled 2 August 2026 against the in-game challenge list. Unverified detail is labelled, never filled in.
+</footer>
+</div>
+
+<script>
+/* ---------------- challenges (verbatim from in-game data) ---------------- */
+const CH=[
+ {id:'a1',cat:'Assassination',name:"Speechless",cond:"Assassinate Viktor Novikov with a firearm while he is onstage.",run:7},
+ {id:'a2',cat:'Assassination',name:"Center Of Attention",cond:"Drop a chandelier on Dalia Margolis during the auction.",run:7},
+ {id:'a3',cat:'Assassination',name:"In Seine",cond:"Push Viktor Novikov into the Seine river.",run:3},
+ {id:'a4',cat:'Assassination',name:"Terminal Velocity",cond:"Push Dalia Margolis onto Viktor Novikov.",run:8},
+ {id:'a5',cat:'Assassination',name:"The Showstopper",cond:"Assassinate Viktor Novikov with the light rig.",run:7},
+ {id:'a6',cat:'Assassination',name:"In Plain Sight",cond:"Trigger the fireworks display. / Assassinate Dalia Margolis and Viktor Novikov with a sniper rifle within ten seconds of each other. / Do not get spotted.",run:4},
+ {id:'a7',cat:'Assassination',name:"Public Speaker",cond:"Drop a speaker on Viktor Novikov.",run:6},
+ {id:'a8',cat:'Assassination',name:"Smoking Hazard",cond:"Assassinate Viktor Novikov with a gas lamp explosion.",run:3},
+ {id:'a9',cat:'Assassination',name:"That Sick Drop",cond:"Assassinate Viktor Novikov with a chandelier.",run:5},
+ {id:'a10',cat:'Assassination',name:"Do Svedanja",cond:"Arrange the meeting with Decker. / Assassinate Viktor Novikov with an explosion.",run:3},
+ {id:'a11',cat:'Assassination',name:"A Break from the Auction",cond:"Wait for Dalia Margolis to greet you as Mr. Rieper. / Assassinate Dalia Margolis with a silenced pistol.",run:2},
+ {id:'a12',cat:'Assassination',name:"The Personal Touch",cond:"Assassinate both Dalia Margolis and Viktor Novikov with the fiber wire.",run:1},
+ {id:'a13',cat:'Assassination',name:"To Your Very Good Health",cond:"Assassinate Dalia Margolis by poisoning her drink.",run:1},
+ {id:'a14',cat:'Assassination',name:"A Permanent Break",cond:"Get Dalia Margolis to check her laptop. / Assassinate Dalia Margolis with a neck snap.",run:6},
+ {id:'a15',cat:'Assassination',name:"Powdering Her Nose",cond:"Assassinate Dalia Margolis by drowning her.",run:1},
+ {id:'a16',cat:'Assassination',name:"Watch Your Step",cond:"Trigger an evacuation. / Drop a chandelier on both Viktor Novikov and Dalia Margolis.",run:5},
+ {id:'a17',cat:'Assassination',name:"Knockout Punch",cond:"Assassinate Viktor Novikov with a poisoned cocktail.",run:1},
+ {id:'a18',cat:'Assassination',name:"Drowned Rat",cond:"Assassinate Viktor Novikov by drowning him.",run:1},
+ {id:'a19',cat:'Assassination',name:"Bad Habits",cond:"Assassinate Dalia Margolis with a gas heater lamp explosion.",run:4},
+ {id:'a20',cat:'Assassination',name:"Safe Room Explosion",cond:"Trigger an evacuation. / Assassinate both Viktor Novikov and Dalia Margolis with an explosion while they are in their safe room.",run:5},
+ {id:'a21',cat:'Assassination',name:"Photobomb",cond:"Arrange the interview with Viktor Novikov. / Conceal an explosive in the camera. / Assassinate Viktor Novikov.",run:2},
+ {id:'a22',cat:'Assassination',name:"More Than You Bargained For",cond:"Assassinate Dalia Margolis during the meeting while disguised as Helmut Kruger.",run:1},
+ {id:'a23',cat:'Assassination',name:"Someone Could Hurt Themselves",cond:"Assassinate a target in an accident.",run:1},
+ {id:'a24',cat:'Assassination',name:"Hold My Hair",cond:"Assassinate a target by drowning them.",run:1},
+ {id:'a25',cat:'Assassination',name:"Versatile Assassin",cond:"Complete all the Versatile challenges in Paris: / Piano Man / Someone Could Hurt Themselves / Hold My Hair / Straight Shot / Tasteless, Traceless",run:2},
+ {id:'a26',cat:'Assassination',name:"Piano Man",cond:"Assassinate a target with the fiber wire.",run:1},
+ {id:'a27',cat:'Assassination',name:"Straight Shot",cond:"Assassinate a target with a headshot.",run:2},
+ {id:'a28',cat:'Assassination',name:"Tasteless, Traceless",cond:"Assassinate a target with lethal poison.",run:1},
+ {id:'a29',cat:'Assassination',name:"The Phantom of the Palace",cond:"Assassinate a target with a chandelier while disguised as the Vampire Magician.",run:5},
+
+ {id:'d1',cat:'Discovery',name:"A Drink to Die For",cond:"Mix a Bare Knuckle Boxer for Viktor Novikov.",run:1},
+ {id:'d2',cat:'Discovery',name:"An Invitation Upstairs",cond:"Find an IAGO invitation.",run:2},
+ {id:'d3',cat:'Discovery',name:"Your Excellency",cond:"Win the IAGO Auction while disguised as the Sheikh.",run:3},
+ {id:'d4',cat:'Discovery',name:"The Undercover Model",cond:"Become Helmut Kruger. / Meet Dalia Margolis. / Learn how IAGO operates.",run:1},
+ {id:'d5',cat:'Discovery',name:"The Key to the Auction",cond:"Find Dalia Margolis' laptop dongle.",run:6},
+ {id:'d6',cat:'Discovery',name:"One Little Mistake",cond:"Make Sebastian Sato sick.",run:7},
+ {id:'d7',cat:'Discovery',name:"Ducks in a Row",cond:"Collect the stage schedule.",run:7},
+ {id:'d8',cat:'Discovery',name:"I'm Invited",cond:"Find an IAGO invitation. / Show the Invitation to the CICADA bodyguards.",run:2},
+ {id:'d9',cat:'Discovery',name:"Salute Too Soon",cond:"Trigger the fireworks ahead of schedule.",run:4},
+ {id:'d10',cat:'Discovery',name:"A Rare Scoop",cond:"Find the camera lens. / Give it to the blogger.",run:2},
+ {id:'d11',cat:'Discovery',name:"The Mysterious Mr. Rieper",cond:"Attend the IAGO auction as Mr. Rieper.",run:2},
+ {id:'d12',cat:'Discovery',name:"Bare Knuckle Boxer",cond:"Find the recipe for Viktor Novikov's favorite cocktail.",run:1},
+ {id:'d13',cat:'Discovery',name:"IAGO at Work",cond:"Reach the IAGO auction and witness Dalia Margolis's speech.",run:6},
+ {id:'d14',cat:'Discovery',name:"Bull In A China Shop",cond:"[REDACTED]",run:5},
+ {id:'d15',cat:'Discovery',name:"Careful What You Wish For",cond:"[REDACTED]",run:1},
+ {id:'d16',cat:'Discovery',name:"Piano Forty Seven",cond:"Knock someone out with the piano.",run:3},
+ {id:'d17',cat:'Discovery',name:"Chameleon",cond:"Find and equip all disguises in Paris.",run:0},
+ {id:'d18',cat:'Discovery',name:"Discover Paris",cond:"Reveal all undiscovered areas in Paris.",run:0},
+ {id:'d19',cat:'Discovery',name:"Baron Larin's Boat",cond:"Escape the palace in Baron Larin's speedboat.",run:4},
+
+ {id:'f1',cat:'Feats',name:"Setting The Stage",cond:"Eliminate Sebastian Sato. / Hide the body without getting spotted.",run:7},
+ {id:'f2',cat:'Feats',name:"Close Personal Protection",cond:"Eliminate Viktor Novikov’s personal bodyguard. / Do so without getting spotted.",run:5},
+ {id:'f3',cat:'Feats',name:"Mission Story - 15 Seconds Of Fame",cond:"Impersonate the famous model Helmut Kruger and find out what Dalia is plotting.",run:1},
+ {id:'f4',cat:'Feats',name:"Mission Story - A Drink to Die For",cond:"Viktor Novikov has a favorite drink, and a rather obscure one at that. Sounds like an expert is needed.",run:1},
+ {id:'f5',cat:'Feats',name:"Mission Story - Guest of Honor",cond:"Become the Sheikh.",run:3},
+ {id:'f6',cat:'Feats',name:"Mission Story - Lights Out",cond:"Trick Viktor Novikov into exposing himself on the catwalk.",run:7},
+ {id:'f7',cat:'Feats',name:"Mission Story - A Quick Break",cond:"Hack Dalia Margolis’s computer and sabotage the auction.",run:6},
+ {id:'f8',cat:'Feats',name:"Mission Story - A Private Meeting",cond:"Facilitate the meeting between Max Decker and Viktor Novikov.",run:3},
+ {id:'f9',cat:'Feats',name:"Mission Story - Playing with Fire",cond:"Find the fireworks remote.",run:4},
+ {id:'f10',cat:'Feats',name:"Mission Story - A Rare Scope",cond:"Viktor Novikov has agreed to an interview. A shame about the cracked lens.",run:2},
+
+ {id:'t1',cat:'Targets',name:"The Mastermind",cond:"Assassinate Dalia Margolis.",run:1},
+ {id:'t2',cat:'Targets',name:"The Moneyman",cond:"Assassinate Viktor Novikov.",run:1},
+
+ {id:'c1',cat:'The Classics',name:"Silent Assassin",cond:'Complete "The Showstopper." / Only eliminate the targets. / No bodies found. / Do not get spotted.',run:8},
+ {id:'c2',cat:'The Classics',name:"Silent Assassin, Suit Only",cond:'Complete "The Showstopper." / Only eliminate the targets. / No bodies found. / Do not get spotted. / Do it all in your suit.',run:8},
+ {id:'c3',cat:'The Classics',name:"Suit Only",cond:"Assassinate the targets and complete the mission. / Do it all in your suit.",run:8},
+ {id:'c4',cat:'The Classics',name:"Sniper Assassin",cond:'Complete "The Showstopper." / Assassinate your targets with a sniper rifle. / Only eliminate the targets. / Do not get spotted.',run:9},
+ {id:'c5',cat:'The Classics',name:"The Classics",cond:'Complete all the Classic challenges for "The Showstopper." / Silent Assassin / Silent Assassin, Suit Only / Sniper Assassin / Suit Only',run:9}
+];
+const CAT_COLOR={'Assassination':'var(--rust)','Discovery':'var(--sky)','Feats':'var(--amber)','Targets':'var(--violet)','The Classics':'var(--jade)'};
+
+/* ---------------- runs ---------------- */
+const RUNS=[
+{
+ id:'r1', tag:'Run 1', title:'Helmut Kruger, then the bar',
+ goal:"Become Helmut, meet Dalia in the Voltaire suite, and kill her four different ways off one save. Then tend the bar for Viktor and kill him three ways off another. Clears 15 challenges — the biggest run on the map.",
+ diff:'Casual — you need unlimited manual saves.',
+ loadout:{
+   start:'The Red Carpet · Paris mastery level 1 (default)',
+   suit:'Tuxedo — 47\'s Paris suit',
+   items:['Concealed weapon: Krugermeier 2-2','Gear: Fiber Wire','Gear: Coin ×3','Smuggled item: none']
+ },
+ note:'Both target challenges fire in this run, so from Run 2 onward you never need to worry about them again. Keep the fiber-wire kill for last on each target — The Personal Touch needs both of them garroted in the same run.',
+ sections:[
+ {h:'The north garden',steps:[
+  {t:'Throw a coin into the fountain',
+   b:[['Where','The fountain on the Red Carpet, right where you spawn.'],
+      ['Action','Throw one of your three coins into the water.'],
+      ['Note','The in-game condition for this one is redacted; the coin toss is the documented action.']],
+   badges:[['chal','Careful What You Wish For']],
+   d:{'Why now':'It costs two seconds at the spawn point and never needs a second visit.'}},
+  {t:'Set up Helmut and clear his bodyguard',
+   b:[['Where','The north garden — sneak in through the Three Lions Fountain entrance.'],
+      ['NPC','Helmut Kruger is standing by the helicopter; walk near him to trigger his conversation so he calls Dalia later.'],
+      ['Action','A bodyguard walks toward a hiding-spot crate. Pacify him there, hide his body in the crate, take his gun and drop it somewhere to the right of the pathway where nobody will see it.']],
+   badges:[['save','Save once the bodyguard is in the crate']],
+   d:{'Why the gun':'Leaving a pistol lying in the open starts an investigation. Dropping it off the path keeps the garden calm for the next two minutes.'}},
+  {t:'Take Helmut\'s clothes and his phone',
+   b:[['NPC','Helmut Kruger, after his phone call with Dalia ends.'],
+      ['Action','Listen to the whole call — that starts the mission story — then pacify Helmut, take his disguise and his phone, and drag him to the same crate.'],
+      ['Warning','Do it immediately after the call. If you wait, the second bodyguard comes back round and sees the drag.']],
+   badges:[['chal','Mission Story - 15 Seconds Of Fame'],['warn','Pacify him right after the call, not later']],
+   d:{'The phone':'You need it to call Dalia. Taking the outfit without the phone means walking back for it.'}},
+ ]},
+ {h:'Becoming the model',steps:[
+  {t:'Call Dalia and walk the catwalk',
+   b:[['Where','The dressing room, then the catwalk.'],
+      ['Disguise','Helmut Kruger.'],
+      ['Action','Call Dalia on Helmut\'s phone while you walk to the dressing room, sit in the chair to get your makeup done, then walk the catwalk.']],
+   badges:[],
+   d:{}},
+  {t:'Collect both poisons on the way up',
+   b:[['Where','The palace kitchen for the rat poison; the table in the Voltaire suite for the lethal poison vial.'],
+      ['Item','Rat poison (emetic) and a lethal poison vial — both found on site, neither needs a loadout slot.'],
+      ['Action','Grab the rat poison in the kitchen, head upstairs to Dalia\'s meeting room and take the lethal vial off the table.']],
+   badges:[['warn','Both poisons are needed — one for the kill, one for the drowning setup']],
+   d:{}},
+  {t:'Sit down with Dalia, then save',
+   b:[['NPC','Dalia Margolis, in the Voltaire suite.'],
+      ['Action','Take the meeting and let the whole conversation play out. When Dalia gets up and starts her phone call, save.'],
+      ['Result','This save is the branch point for all four Dalia kills below.']],
+   badges:[['chal','The Undercover Model'],['chal','Mission Story - 15 Seconds Of Fame'],['save','Save the moment her phone call starts']],
+   d:{'Note':'Every branch below reloads to exactly this point, so make it a clean save with no bodies discovered.'}}
+ ]},
+ {h:'Dalia — reload between each branch',steps:[
+  {t:'Branch A · Lethal poison',
+   b:[['Item','The lethal poison vial from the suite table.'],
+      ['Action','Poison her drink and let her take it. Three challenges land at once because you are wearing Helmut\'s face.'],
+      ['Then','Reload the save.']],
+   badges:[['chal','To Your Very Good Health'],['chal','More Than You Bargained For'],['chal','Tasteless, Traceless']],
+   d:{'Why it triple-dips':'More Than You Bargained For only asks that she dies during the meeting while you are Helmut — the method is free, so spend it on the poison kill.'}},
+  {t:'Branch B · Emetic, then drown',
+   b:[['Item','Rat poison from the kitchen.'],
+      ['Action','Spike her drink with rat poison instead, follow her to the bathroom and drown her in the sink.'],
+      ['Then','Reload the save.']],
+   badges:[['chal','Powdering Her Nose'],['chal','Someone Could Hurt Themselves'],['chal','Hold My Hair']],
+   d:{'Why it counts as an accident':'Drowning is scored as an accident kill, which is what Someone Could Hurt Themselves wants.'}},
+  {t:'Branch C · Fiber wire — keep this one',
+   b:[['Item','Fiber wire.'],
+      ['Action','Garrote Dalia. Do not reload after this branch — the rest of the run continues from here.'],
+      ['Why','The Personal Touch needs both targets fiber-wired in the same playthrough, and Viktor is garroted at the end of this run.']],
+   badges:[['chal','Piano Man'],['chal','The Mastermind'],['warn','Do NOT reload after this branch']],
+   d:{'Ordering':'This is the only Dalia branch that has to be last, because it is the one you carry forward.'}}
+ ]},
+ {h:'The bar and Viktor',steps:[
+  {t:'Start A Drink to Die For',
+   b:[['Where','The outside stairwell by the Three Lions Fountain area, right next to the terrace.'],
+      ['NPC','Two staff members having a conversation.'],
+      ['Action','Listen to the whole conversation to start the mission story.']],
+   badges:[],
+   d:{}},
+  {t:'Palace staff outfit and the recipe',
+   b:[['Where','The basement locker room, then the bar area.'],
+      ['Disguise','Palace Staff — a free disguise hanging in the locker room, no pacify needed.'],
+      ['Action','Change, then find the cocktail recipe.']],
+   badges:[['chal','Bare Knuckle Boxer']],
+   d:{}},
+  {t:'Tend the bar, then save',
+   b:[['Disguise','Palace Staff.'],
+      ['Action','Tend the bar and mix the Bare Knuckle Boxer. Wait until Viktor is about to walk into the bar area, then save.']],
+   badges:[['chal','A Drink to Die For'],['chal','Mission Story - A Drink to Die For'],['save','Save as Viktor approaches']],
+   d:{}},
+  {t:'Branch A · Lethal poison in the cocktail',
+   b:[['Action','Put lethal poison in the drink you serve him.'],
+      ['Then','Reload the save.']],
+   badges:[['chal','Knockout Punch']],
+   d:{}},
+  {t:'Branch B · Emetic, then drown',
+   b:[['Action','Spike his drink with rat poison instead. When Viktor reaches the toilet, save again, then drown him.'],
+      ['Then','Reload to that second save.']],
+   badges:[['chal','Drowned Rat'],['save','Save again once he is at the toilet']],
+   d:{'Two saves':'The second save sits after the emetic has already worked, so you do not have to re-serve the drink for the last branch.'}},
+  {t:'Branch C · Fiber wire, then exit',
+   b:[['Item','Fiber wire.'],
+      ['Action','Garrote Viktor in the toilet. With Dalia already garroted earlier in this same run, The Personal Touch fires.'],
+      ['Then','Exit the mission.']],
+   badges:[['chal','The Personal Touch'],['chal','The Moneyman'],['warn','Only counts if Dalia was also fiber-wired in this run']],
+   d:{'Run 1 tally':'Careful What You Wish For · MS 15 Seconds of Fame · The Undercover Model · To Your Very Good Health · More Than You Bargained For · Tasteless Traceless · Powdering Her Nose · Someone Could Hurt Themselves · Hold My Hair · Piano Man · The Mastermind · Bare Knuckle Boxer · A Drink to Die For · MS A Drink to Die For · Knockout Punch · Drowned Rat · The Personal Touch · The Moneyman.'}}
+ ]}]
+},
+{
+ id:'r2', tag:'Run 2', title:'The invitation, Mr. Rieper and the blogger',
+ goal:"Pick up an IAGO invitation, get greeted as Mr. Rieper, headshot Dalia in her own bathroom, then rig the blogger's camera for Viktor. Six challenges plus Versatile Assassin.",
+ diff:'Casual.',
+ loadout:{
+   start:'Palace Garden · Paris mastery level 12',
+   suit:'Tuxedo',
+   items:['Concealed weapon: Krugermeier 2-2','Gear: Classic Lockpick','Gear: Coin ×3','Smuggled item: none']
+ },
+ note:'You must keep the pistol this run — A Break from the Auction needs a silenced kill, so you cannot go through the frisked route to the upper floor. Climb the pipe instead.',
+ sections:[
+ {h:'Getting invited',steps:[
+  {t:'Take an IAGO invitation from the bathrooms',
+   b:[['Where','The bathrooms between the bar and the gift shop, inside the palace. The left-hand bathroom holds the invitation.'],
+      ['Action','Pick it up.']],
+   badges:[['chal','An Invitation Upstairs']],
+   d:{}},
+  {t:'Show it at both checkpoints',
+   b:[['Where','First the security check to the right of the terrace, then the guards by the staircase in the grand hall.'],
+      ['Action','Show the invitation at the outside check to get in, then show it again to the staircase guards inside.']],
+   badges:[['chal',"I'm Invited"]],
+   d:{'Why two':'An Invitation Upstairs is the pickup; I\'m Invited needs it shown to the CICADA bodyguards specifically.'}},
+  {t:'Climb the pipe instead of walking up',
+   b:[['Where','The pipe to the left of the grand hall doors.'],
+      ['Why','The staircase route frisks you and takes the pistol. You need it for the kill.'],
+      ['Action','Climb the pipe to the top floor — you come out on the auction room balcony.']],
+   badges:[['warn','Do not take the frisked staircase — you lose the pistol']],
+   d:{}},
+  {t:'Sit in the auction as Mr. Rieper',
+   b:[['Where','The auction room chair, as Agent 47 in his tuxedo.'],
+      ['NPC','Dalia walks over to greet you.'],
+      ['Action','Sit down and wait until she greets you as Mr. Rieper.']],
+   badges:[['chal','The Mysterious Mr. Rieper'],['warn','A Break from the Auction only counts if she greets you first']],
+   d:{}}
+ ]},
+ {h:'Dalia in the bathroom',steps:[
+  {t:'Get into the Voltaire suite through the attic',
+   b:[['Where','Attic storage room — vault the railing immediately to your right on entry, then take the bathroom on your left into the Voltaire suite.'],
+      ['Action','Wait until Dalia and her personal bodyguard are in the meeting room and have started their conversation before you touch anything.']],
+   badges:[['warn','Wait for their conversation to start first']],
+   d:{'Why the wait':'If they are not talking yet, they investigate the sink before the CICADA bodyguard does and the sequence collapses.'}},
+  {t:'Overflow the sink and take the CICADA bodyguard',
+   b:[['NPC','The CICADA bodyguard posted in the suite.'],
+      ['Action','Overflow the sink to draw him in, pacify him, turn the tap off immediately so nobody else comes, then take his disguise and gun and hide the body.']],
+   badges:[['warn','Turn the sink off right after the pacify']],
+   d:{}},
+  {t:'Overflow it again and headshot Dalia',
+   b:[['NPC','Dalia and her personal bodyguard.'],
+      ['Action','Overflow the sink a second time. Both walk over; the bodyguard pauses at the door before entering — pacify him during that pause. Dalia starts a phone call in the bathroom and does not look at you. Headshot her with the silenced pistol.'],
+      ['Result','Straight Shot completes the Versatile Assassin set if Run 1 delivered the other four.']],
+   badges:[['chal','A Break from the Auction'],['chal','Straight Shot'],['chal','Versatile Assassin'],['save','Save before the second overflow']],
+   d:{'Versatile Assassin':'The set is Piano Man, Someone Could Hurt Themselves, Hold My Hair, Straight Shot and Tasteless, Traceless. Run 1 gives you four of the five; this headshot is the last.'}}
+ ]},
+ {h:'The camera',steps:[
+  {t:'Take a remote explosive from the CICADA control room',
+   b:[['Where','The CICADA security control room — the explosive is on the desk directly in front as you enter.'],
+      ['Disguise','CICADA Bodyguard, taken in the previous step.']],
+   badges:[],
+   d:{}},
+  {t:'Start A Rare Scope and fix the lens',
+   b:[['Where','The gift shop on the ground floor.'],
+      ['NPC','The woman on the phone in the gift shop; then the blogger.'],
+      ['Action','Listen to her call to start the story, find the camera lens and give it to the blogger.']],
+   badges:[['chal','A Rare Scoop']],
+   d:{}},
+  {t:'Plant the explosive and detonate on Viktor',
+   b:[['Action','Place the remote explosive inside the camera, follow the blogger to the interview spot, and wait for Viktor to arrive. Detonate when he is in position.'],
+      ['Then','Exit the mission.']],
+   badges:[['chal','Mission Story - A Rare Scope'],['chal','Photobomb']],
+   d:{}}
+ ]}]
+},
+{
+ id:'r3', tag:'Run 3', title:'The Sheikh and the private meeting',
+ goal:"Become the Sheikh, win the auction, drop the office chandelier on Dalia, then broker the Decker meeting and take Viktor twice. Seven challenges.",
+ diff:'Casual.',
+ loadout:{
+   start:'Undercover in AV Center · Paris mastery level 7 (starts you in the Tech Crew disguise)',
+   suit:'Disguise is fixed by the starting location: Tech Crew',
+   items:['Concealed weapon: Krugermeier 2-2','Gear: Classic Lockpick','Gear: Coin ×3','Smuggled item: none']
+ },
+ note:'The fire extinguisher is worth the detour — it knocks Dalia out much faster than a bare-handed subdue, and the chandelier winch is on a timer once she is under it.',
+ sections:[
+ {h:'The piano room',steps:[
+  {t:'Break the support beam for Piano Forty Seven',
+   b:[['Where','The room with the piano, between the museum owner\'s study and the living quarters.'],
+      ['Action','Push the piano pin to cause a distraction. An auction staff member comes to investigate — while he is under it, shoot the support beam so the piano drops on him.']],
+   badges:[['chal','Piano Forty Seven']],
+   d:{'Note':'The challenge only asks for a knockout, not a kill, so this is safe to do in any run.'}},
+  {t:'Lure and take the Sheikh',
+   b:[['Where','Lockpick the door to the living quarters from the piano room.'],
+      ['NPC','Sheikh Salman al-Ghazali.'],
+      ['Action','Wait for him to start walking, lay a trail of coins to bring him into the piano room, pacify him and take his identity.']],
+   badges:[['chal','Mission Story - Guest of Honor']],
+   d:{}}
+ ]},
+ {h:'The auction',steps:[
+  {t:'Grab the fire extinguisher on the way',
+   b:[['Where','On top of a cart, straight ahead as you leave the piano room back into the AV centre.'],
+      ['Why','It is the fastest knockout you have for Dalia, and the chandelier timing is tight.']],
+   badges:[['warn','Do not skip it — the bare-handed subdue is too slow']],
+   d:{}},
+  {t:'Bid as the Sheikh',
+   b:[['Where','The auction room, upstairs.'],
+      ['Disguise','Sheikh Salman al-Ghazali.'],
+      ['Action','Sit down and place a bid. The prompt can take a few seconds to appear.']],
+   badges:[['chal','Your Excellency']],
+   d:{}},
+  {t:'Chandelier on Dalia in her office',
+   b:[['NPC','Dalia walks to her office to meet you once you have bid.'],
+      ['Action','Close the door behind her, knock her out with the extinguisher while she is standing under the chandelier, then release the winch straight away.'],
+      ['Warning','She has to be unconscious under the chandelier — released too early it misses, too late she has moved.']],
+   badges:[['warn','Knock her out under the chandelier, then release immediately']],
+   d:{'Note':'This kills Dalia but does not score Center Of Attention, which needs the auction-room chandelier during the auction — that one is in Run 7.'}}
+ ]},
+ {h:'Decker and Viktor',steps:[
+  {t:'Get a CICADA outfit and start A Private Meeting',
+   b:[['Where','Ground floor of the palace, then the terrace.'],
+      ['NPC','A CICADA bodyguard around the north garden for the outfit; two men in the far corner of the terrace for the story.'],
+      ['Action','Pacify a bodyguard, take his clothes, then listen to the terrace conversation.']],
+   badges:[],
+   d:{}},
+  {t:'Escort Decker, then save',
+   b:[['Action','Escort Max Decker to the pavilion and wait for Viktor to arrive. Save the moment the meeting starts.']],
+   badges:[['chal','Mission Story - A Private Meeting'],['save','Save as the meeting begins']],
+   d:{}},
+  {t:'Branch A · Shoot the gas lamp',
+   b:[['Action','Shoot the gas lamp by the pavilion during the meeting. Two challenges land together.'],
+      ['Then','Reload the save.']],
+   badges:[['chal','Smoking Hazard'],['chal','Do Svedanja']],
+   d:{'Why both':'Do Svedanja wants the meeting arranged plus an explosive kill; the gas lamp satisfies both it and Smoking Hazard.'}},
+  {t:'Push him into the Seine',
+   b:[['Action','Let the meeting finish. Viktor walks to the railing afterwards — push him into the river.'],
+      ['Then','Exit the mission.']],
+   badges:[['chal','In Seine']],
+   d:{}}
+ ]}]
+},
+{
+ id:'r4', tag:'Run 4', title:'Fireworks and the barge',
+ goal:"Set the fireworks off early, snipe both targets from the pile-driver barge within ten seconds, and leave by speedboat. Five challenges, and the same setup Run 9 uses for Sniper Assassin.",
+ diff:'Casual.',
+ loadout:{
+   start:'Undercover in AV Center · Paris mastery level 7',
+   suit:'Disguise fixed by starting location: Tech Crew',
+   items:['Concealed weapon: Krugermeier 2-2','Gear: Classic Lockpick','Gear: Coin ×3','Smuggled item: Sieger 300 Advanced → Shed (Agency Pickup, mastery 3)']
+ },
+ note:'In Plain Sight forbids being spotted at any point, so treat this whole run as a no-detection run.',
+ sections:[
+ {h:'Setup',steps:[
+  {t:'Take the fireworks remote at the spawn',
+   b:[['Where','Right beside where you start in the AV centre.'],
+      ['Action','Pick up the fireworks remote.']],
+   badges:[['chal','Mission Story - Playing with Fire']],
+   d:{}},
+  {t:'Take the speedboat key',
+   b:[['Where','The museum owner\'s study — the key is on the desk.'],
+      ['Why','It is the only way to unlock the speedboat exit, and it is a long walk back if you forget it.']],
+   badges:[['warn','Grab it now — Baron Larin\'s Boat needs it at the very end']],
+   d:{}},
+  {t:'Collect the rifle and set the fireworks off',
+   b:[['Where','The shed outside the palace.'],
+      ['Item','Your smuggled Sieger 300 Advanced, in its briefcase.'],
+      ['Action','Retrieve the briefcase, then detonate the fireworks remote.']],
+   badges:[['chal','Salute Too Soon']],
+   d:{'Why early':'The fireworks are what bring Viktor down to the lobby and Dalia out onto the balcony above him.'}},
+  {t:'Get onto the barge',
+   b:[['Where','The stairwell to the left of the shed.'],
+      ['Action','Lockpick the gate, walk onto the barge, take the rifle out of the briefcase and climb the barge ladder. Save at the top.']],
+   badges:[['save','Save at the top of the ladder']],
+   d:{}}
+ ]},
+ {h:'The shots',steps:[
+  {t:'Branch · Blow the gas lamp under Dalia',
+   b:[['NPC','Dalia, smoking next to a gas lamp on the balcony.'],
+      ['Action','Shoot the gas lamp rather than her.'],
+      ['Then','Reload the save.']],
+   badges:[['chal','Bad Habits']],
+   d:{}},
+  {t:'Both targets within ten seconds',
+   b:[['Action','Wait until Viktor is outside, standing underneath Dalia. Snipe them within ten seconds of each other.'],
+      ['Warning','Being spotted at any point in the run voids In Plain Sight, and the fireworks must already have been triggered.']],
+   badges:[['chal','In Plain Sight'],['warn','Fireworks first, ten-second window, no spotting']],
+   d:{'Bug':'fish reports that Viktor\'s bodyguard can spot you after both kills even with a suppressed rifle. In this run you can simply snipe the bodyguard as well. Do not do that in Run 9 — Sniper Assassin forbids killing anyone but the targets.'}},
+  {t:'Leave by the speedboat',
+   b:[['Where','Off the barge and down to the pier.'],
+      ['Action','Exit the mission in Baron Larin\'s speedboat using the key from the study.']],
+   badges:[['chal',"Baron Larin's Boat"]],
+   d:{}}
+ ]}]
+},
+{
+ id:'r5', tag:'Run 5', title:'The vampire magician and the safe room',
+ goal:"Kill Viktor's bodyguard to force a lockdown, then take both targets in the safe room twice — once with the chandelier as the magician, once with a bomb. Six challenges.",
+ diff:'Casual.',
+ loadout:{
+   start:'Undercover in Kitchen · Paris mastery level 2 (starts you in the Palace Staff disguise)',
+   suit:'Disguise fixed by starting location: Palace Staff',
+   items:['Concealed weapon: Krugermeier 2-2','Gear: Napoleon Blownaparte','Gear: Coin ×3','Smuggled item: none']
+ },
+ note:'Close Personal Protection must be done without being spotted, so the whole first half of this run is a stealth run.',
+ sections:[
+ {h:'Sushi and the tech crew',steps:[
+  {t:'Poison the sushi',
+   b:[['Where','The kitchen upstairs — two rat poisons sit there.'],
+      ['Action','Take both and spike the sushi so Viktor\'s bodyguard gets sick.']],
+   badges:[['warn','This is what sends the bodyguard to the ground-floor bathroom later']],
+   d:{}},
+  {t:'Take a tech crew outfit',
+   b:[['Where','The second floor of the stairwell in the centre of the palace behind the catwalk.'],
+      ['NPC','A lone tech crew member — he is by himself there.'],
+      ['Action','Pacify him and take the disguise.']],
+   badges:[],
+   d:{}}
+ ]},
+ {h:'Wiring the safe room',steps:[
+  {t:'Shoot the vase and plant the bomb',
+   b:[['Where','The museum director\'s office; the vase is in the room just outside it.'],
+      ['Item','Napoleon Blownaparte.'],
+      ['Action','Shoot the vase, then place the Napoleon Blownaparte on the office desk. The director\'s office is the safe room the targets run to.']],
+   badges:[['chal','Bull In A China Shop']],
+   d:{'Redacted':'Bull In A China Shop is listed as [REDACTED] in the game data. Shooting this vase is the documented trigger.'}},
+  {t:'Bank the security guard\'s outfit before you leave',
+   b:[['NPC','The security guard standing on the balcony of the director\'s office.'],
+      ['Action','Pacify him and drag him behind the windows. You come back for his clothes shortly.'],
+      ['Warning','Do this before the attic trip — otherwise you have no clean way out at the end.']],
+   badges:[['warn','Order matters: guard first, then the attic']],
+   d:{}},
+  {t:'Fetch the vampire magician outfit',
+   b:[['Where','Up the ladder on the office balcony, then the attic chamber.'],
+      ['Action','Take the Vampire Magician disguise, come back down to the director\'s office and switch into the security guard outfit you banked.']],
+   badges:[],
+   d:{}}
+ ]},
+ {h:'Lockdown',steps:[
+  {t:'Kill Viktor\'s bodyguard and call it in',
+   b:[['Where','The ground-floor bathroom, where the poisoned sushi sent him.'],
+      ['Disguise','Security Guard.'],
+      ['Action','Kill him without being seen, then take his phone and use it to trigger the lockdown.']],
+   badges:[['chal','Close Personal Protection'],['warn','Cannot be spotted — this is the run\'s no-detection challenge']],
+   d:{}},
+  {t:'Switch to the magician and wait, then save',
+   b:[['Where','Back in the museum director\'s office.'],
+      ['Action','Change into the Vampire Magician. Dalia and Viktor run here — it is the safe room. Save when they are close.']],
+   badges:[['save','Save as they approach the safe room']],
+   d:{}},
+  {t:'Branch · Chandelier on both, as the magician',
+   b:[['Disguise','Vampire Magician — required, or The Phantom of the Palace does not fire.'],
+      ['Action','Shoot the chandelier while both are underneath. Three challenges land together.'],
+      ['Then','Reload the save.']],
+   badges:[['chal','That Sick Drop'],['chal','Watch Your Step'],['chal','The Phantom of the Palace']],
+   d:{'Why all three':'Watch Your Step needs an evacuation plus a chandelier on both; That Sick Drop needs the chandelier on Viktor; Phantom needs the magician outfit. One drop, three conditions.'}},
+  {t:'Blow the safe room',
+   b:[['Action','Change back into the security guard outfit and leave the room — it makes the exit far easier — then detonate the Napoleon Blownaparte.'],
+      ['Then','Exit the mission.']],
+   badges:[['chal','Safe Room Explosion']],
+   d:{}}
+ ]}]
+},
+{
+ id:'r6', tag:'Run 6', title:'The auction office',
+ goal:"Sabotage the auction from Dalia's laptop, snap her neck at the desk, then drop a speaker on Viktor on the way out. Five challenges.",
+ diff:'Casual.',
+ loadout:{
+   start:'Undercover at IAGO Auction · Paris mastery level 19 (you stay in the tuxedo)',
+   suit:'Disguise fixed by starting location: Tuxedo',
+   items:['Concealed weapon: Krugermeier 2-2','Gear: Classic Lockpick','Gear: Coin ×3','Smuggled item: none']
+ },
+ note:'Same attic-window entry as Run 2. This time you take the crowbar and the dongle as well, because the laptop sequence needs them.',
+ sections:[
+ {h:'Into the suite',steps:[
+  {t:'Listen to Dalia\'s speech first',
+   b:[['Where','You start in the auction room — stay for the speech.'],
+      ['Action','Witness Dalia\'s speech before you move.']],
+   badges:[['chal','IAGO at Work']],
+   d:{'Why first':'The speech only happens once, at the start. Leaving early means restarting the run for it.'}},
+  {t:'Attic window into the Voltaire suite',
+   b:[['Where','The attic storage window, exactly as in Run 2.'],
+      ['Action','Overflow the sink, pacify the CICADA bodyguard, take his disguise and gun and hide him.']],
+   badges:[],
+   d:{}},
+  {t:'Crowbar and the laptop dongle',
+   b:[['Where','The CICADA security control room, left of the Voltaire suite.'],
+      ['Action','Take the crowbar to the left of the two talking bodyguards, then take Dalia\'s laptop dongle from the main computer setup.']],
+   badges:[['chal','The Key to the Auction']],
+   d:{}}
+ ]},
+ {h:'The laptop',steps:[
+  {t:'Start the secretary\'s phone call',
+   b:[['Where','The auction office.'],
+      ['NPC','The woman inside — walk near her to start her call.'],
+      ['Action','Trigger the call, then go back to the Voltaire suite.']],
+   badges:[],
+   d:{}},
+  {t:'Clear Dalia\'s personal bodyguard',
+   b:[['Action','Once Dalia and her personal bodyguard have entered the Voltaire suite, overflow the sink again, pacify the bodyguard and hide the body.']],
+   badges:[],
+   d:{}},
+  {t:'Sabotage the auction',
+   b:[['Where','Back in the auction office.'],
+      ['Action','Listen to the woman\'s phone call to start the story, investigate Dalia\'s laptop, then sabotage the auction.']],
+   badges:[['chal','Mission Story - A Quick Break']],
+   d:{}},
+  {t:'Snap her neck at the laptop',
+   b:[['Action','Wait for the secretary and the bodyguard to leave. Dalia walks to the office; when she is checking her laptop, snap her neck.'],
+      ['Warning','It has to be a neck snap while she is at the laptop — a shot or a garrote does not count.']],
+   badges:[['chal','A Permanent Break'],['warn','Neck snap only, and only while she is checking the laptop']],
+   d:{}}
+ ]},
+ {h:'On the way out',steps:[
+  {t:'Drop the speaker on Viktor',
+   b:[['Where','Slide down the pipe from the auction room balcony one floor, then go to the speaker left of the AV centre.'],
+      ['Action','Wait until Viktor walks directly underneath and release the speaker.'],
+      ['Then','Exit the mission.']],
+   badges:[['chal','Public Speaker']],
+   d:{}}
+ ]}]
+},
+{
+ id:'r7', tag:'Run 7', title:'Backstage — Sato, the light rig and the stage',
+ goal:"Chandelier on Dalia during the auction, make Sebastian Sato sick and remove him unseen, then take Viktor twice on the catwalk. Seven challenges.",
+ diff:'Casual.',
+ loadout:{
+   start:'Undercover at IAGO Auction · Paris mastery level 19',
+   suit:'Disguise fixed by starting location: Tuxedo',
+   items:['Concealed weapon: Krugermeier 2-2','Gear: Classic Lockpick','Gear: Coin ×3','Smuggled item: none']
+ },
+ note:'Setting the Stage cannot be done while spotted, so the Sato half of this run is a stealth section.',
+ sections:[
+ {h:'The auction chandelier',steps:[
+  {t:'Drop it on Dalia from the balcony',
+   b:[['Where','The auction room balcony — hide behind a column.'],
+      ['Action','Shoot the chandelier while Dalia is underneath during the auction. From the balcony nobody should spot you.']],
+   badges:[['chal','Center Of Attention']],
+   d:{'Why the balcony':'It is the one angle on the chandelier that is not overlooked by the auction crowd.'}},
+  {t:'Take an auction staff outfit',
+   b:[['Where','The attic storage room.'],
+      ['NPC','An auction staff member — lure him in with coins.'],
+      ['Action','Pacify him, take the disguise and hide the body.'],
+      ['Why','You need it to spike Sebastian\'s champagne without raising suspicion.']],
+   badges:[],
+   d:{}}
+ ]},
+ {h:'Sebastian Sato',steps:[
+  {t:'Rat poison and the stage schedule',
+   b:[['Where','The ground-floor kitchen for the poison, then behind the catwalk for the schedule.'],
+      ['Action','Take one rat poison, then collect the stage schedule.']],
+   badges:[['chal','Ducks in a Row']],
+   d:{}},
+  {t:'Make Sato sick',
+   b:[['Where','The dressing room.'],
+      ['NPC','Sebastian Sato.'],
+      ['Action','Spike the glass of champagne next to where he stands, then put a coin into the diorama behind him. That annoys him into drinking.']],
+   badges:[['chal','One Little Mistake']],
+   d:{'Why the coin':'He will not touch the champagne unless something irritates him first.'}},
+  {t:'Change to CICADA and kill him',
+   b:[['Where','Climb the pipe to the auction room balcony for an easy bodyguard — the one there stands in a corner where nobody finds the body.'],
+      ['Action','Take the CICADA disguise, go down to the ground-floor bathrooms and kill Sato, then hide the body without being seen.']],
+   badges:[['chal','Setting The Stage'],['warn','Body must be hidden and you must not be spotted']],
+   d:{}}
+ ]},
+ {h:'The catwalk',steps:[
+  {t:'Start Lights Out and rig the light rig',
+   b:[['Where','The CICADA security control room.'],
+      ['NPC','Two bodyguards talking.'],
+      ['Action','Listen to their conversation, take the crowbar and investigate the light rig. Viktor taking the stage completes the story. Save when he walks on.']],
+   badges:[['chal','Mission Story - Lights Out'],['save','Save as Viktor enters the stage']],
+   d:{}},
+  {t:'Branch · Drop the light rig',
+   b:[['Action','Release the light rig onto Viktor.'],
+      ['Then','Reload the save.']],
+   badges:[['chal','The Showstopper']],
+   d:{}},
+  {t:'Shoot him on stage',
+   b:[['Action','Exit the light rig and shoot Viktor with a firearm while he is still onstage.'],
+      ['Then','Exit the mission.']],
+   badges:[['chal','Speechless'],['warn','He must be onstage when the bullet lands']],
+   d:{}}
+ ]}]
+},
+{
+ id:'r8', tag:'Run 8', title:'Silent Assassin, Suit Only',
+ goal:"No disguise, no bodies found, nobody sees you. Trigger the fireworks early and push Dalia off the auction balcony onto Viktor. One push, both targets, three Classics.",
+ diff:'Any. These Classics are no longer difficulty-tiered in World of Assassination.',
+ loadout:{
+   start:'Undercover at IAGO Auction · Paris mastery level 19 — you start in the tuxedo, which counts as the suit',
+   suit:'Tuxedo — mandatory. Any disguise voids Suit Only and SASO.',
+   items:['Concealed weapon: Krugermeier 2-2 (dropped in the library before the frisk)','Gear: Classic Lockpick','Gear: Coin ×3','Smuggled item: none']
+ },
+ note:'The whole run is roughly two minutes once you know it. The single hard requirement is that you are unarmed when you are frisked on the way back to the auction room.',
+ sections:[
+ {h:'Setting up',steps:[
+  {t:'Drop the pistol in the library',
+   b:[['Where','Downstairs in the library.'],
+      ['Action','Drop the Krugermeier here.'],
+      ['Warning','You are frisked on the way back up. A weapon on you at that point ends the attempt.']],
+   badges:[['warn','Must be unarmed for the frisk']],
+   d:{'Alternative':'You can also leave the weapon slot empty in planning. Dropping it is only worth it if you want the pistol available on other runs from the same loadout.'}},
+  {t:'Clear the AV centre',
+   b:[['Where','The AV centre, after the two tech crew members walk past you.'],
+      ['NPC','Two tech crew — one investigates, one walks off.'],
+      ['Action','Turn off the rack case to cause a distraction, pacify the one who comes to look and hide his body. The other leaves on his own.'],
+      ['Warning','A found body voids Silent Assassin — hide him properly.']],
+   badges:[['warn','Hide the body — "no bodies found" is a hard requirement']],
+   d:{}},
+  {t:'Take the fireworks remote and fire it',
+   b:[['Where','Still in the AV centre.'],
+      ['Action','Take the fireworks remote and detonate it immediately.'],
+      ['Result','The fireworks bring Viktor to the lobby below the auction balcony and Dalia out onto the balcony itself.']],
+   badges:[],
+   d:{}}
+ ]},
+ {h:'The push',steps:[
+  {t:'Go back up and push Dalia onto Viktor',
+   b:[['Where','Back up to the auction room, getting frisked on the way.'],
+      ['NPC','Dalia leaning on the balcony railing; Viktor standing below.'],
+      ['Action','Push her from behind. She lands on Viktor and both die — it scores as an accident, so no body needs hiding.'],
+      ['Then','Exit the mission to bank all three Classics.']],
+   badges:[['chal','Terminal Velocity'],['chal','Silent Assassin'],['chal','Silent Assassin, Suit Only'],['chal','Suit Only']],
+   d:{'Why it survives SA':'Accident kills do not break Silent Assassin when the bodies are found, which is exactly what a two-for-one fall needs.',
+      'Second source':'NamuWiki describes the same route from the Red Carpet start: destroy the basement camera terminal with a silenced pistol, take an IAGO invitation from the bathroom by the ballroom, show it, climb the pipe from the balcony, clear the corridor guards, take the fireworks remote, then "the moment Margolis leans on the railing, push from behind and escape". The CICADA guard on the balcony is watching the fireworks and does not look at her.',
+      'Alternative route':'Steam guide 644994482 gives a different SASO: rat poison from the basement pantry onto the sushi, wait for Novikov\'s bodyguard to eat it and leave for the bathroom, trigger the fireworks and kill Novikov in the hallway; then wait in Dalia\'s private bathroom, overflow both sinks as she enters so two guards investigate, slip into her room, throw a coin into the corner and kill her before her bodyguard turns round. Slower and far more fragile — recorded here only as a fallback.'}}
+ ]}]
+},
+{
+ id:'r9', tag:'Run 9', title:'Sniper Assassin — the barge shot',
+ goal:"The same fireworks-and-barge setup as Run 4, but nothing dies except the two targets. Finishing this fires the Classics capstone.",
+ diff:'Any. Not difficulty-tiered in World of Assassination.',
+ loadout:{
+   start:'Undercover in AV Center · Paris mastery level 7',
+   suit:'Any — Sniper Assassin does not require the suit, so the Tech Crew disguise is fine',
+   items:['Concealed weapon: Krugermeier 2-2','Gear: Classic Lockpick','Gear: Coin ×3','Smuggled item: silenced Sieger 300 Advanced → Shed (Agency Pickup, mastery 3)']
+ },
+ note:'fish left the Sniper Assassin section of his guide as a video with no text. This run was rebuilt from his Run 4 (which does the same shot) plus NamuWiki\'s In Plain Sight entry, which states that Sniper Assassin unlocks alongside it.',
+ sections:[
+ {h:'Same setup as Run 4',steps:[
+  {t:'Fireworks remote, then the shed',
+   b:[['Where','The fireworks remote is beside the AV centre spawn; the briefcase is in the shed outside the palace.'],
+      ['Action','Take the remote, collect your briefcase at the shed, and detonate the fireworks.'],
+      ['Why','The fireworks are what put Viktor in the lobby and Dalia on the balcony above him — without them neither target is in the open.']],
+   badges:[['src','fish Run 4 + NamuWiki']],
+   d:{}},
+  {t:'Climb the barge',
+   b:[['Where','The stairwell left of the shed.'],
+      ['Action','Lockpick the gate, walk onto the barge, unpack the silenced rifle and climb the ladder. Save at the top.']],
+   badges:[['save','Save at the top of the ladder']],
+   d:{'Why silenced':'An unsuppressed shot alerts the whole courtyard and costs you the no-spotting requirement instantly.'}}
+ ]},
+ {h:'Two shots, nothing else',steps:[
+  {t:'Snipe Dalia, then Viktor',
+   b:[['NPC','Viktor comes out to the lobby first; Dalia follows onto the balcony above him.'],
+      ['Action','Take Dalia and then Viktor. Both must die to the rifle — no other weapon counts.'],
+      ['Warning','Only the two targets may die. Do not shoot the bodyguard the way Run 4 does.']],
+   badges:[['chal','Sniper Assassin'],['warn','Killing any non-target voids the challenge'],['src','fish Run 4 + NamuWiki']],
+   d:{'Known bug':'fish reports that Viktor\'s bodyguard sometimes spots you after both kills even with a suppressed rifle. That is a single-source report. If it happens, reload the ladder save — shooting him instead would fail the challenge.',
+      'Ten seconds':'Sniper Assassin has no time limit; only In Plain Sight does. If you want both in one attempt, keep the ten-second window anyway and simply do not shoot anyone else.'}},
+  {t:'Leave without being seen',
+   b:[['Action','Climb down, leave the rifle behind and exit. The mission must actually be completed for the challenge to bank.'],
+      ['Result','With Silent Assassin, Silent Assassin Suit Only and Suit Only already banked in Run 8, finishing here fires the capstone.']],
+   badges:[['chal','The Classics']],
+   d:{'Capstone':'The Classics needs Silent Assassin, Silent Assassin Suit Only, Sniper Assassin and Suit Only. Run 8 delivers three of the four; this run delivers the fourth.',
+      'Exit':'The pier exit is closest. If you took the speedboat key in an earlier run it is not needed here — any exit works.'}}
+ ]}]
+}];
+
+/* ---------------- state ---------------- */
+const KEY='showstopper_done_v1', RID='m02';
+const SKEY=KEY+':steps', OKEY=KEY+':open';
+const done=new Set(), stepsDone=new Set(), openRuns=new Set();
+function loadSet(k,set,fallback){
+  try{const v=JSON.parse(localStorage.getItem(k));if(Array.isArray(v)){v.forEach(x=>set.add(x));return;}}catch(e){}
+  if(fallback)fallback.forEach(x=>set.add(x));
+}
+loadSet(KEY,done);          /* ticked challenges */
+loadSet(SKEY,stepsDone);    /* ticked route steps */
+loadSet(OKEY,openRuns,['r1']); /* which runs are expanded */
+function reportProgress(){try{const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r[RID]={done:done.size,total:CH.length,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
+/* one writer for all three sets — every toggle below calls this */
+function persist(){
+  try{
+    localStorage.setItem(KEY,JSON.stringify([...done]));
+    localStorage.setItem(SKEY,JSON.stringify([...stepsDone]));
+    localStorage.setItem(OKEY,JSON.stringify([...openRuns]));
+    localStorage.setItem(KEY+':auto',JSON.stringify([...autoDone]));
+  }catch(e){}
+  reportProgress();
+}
+const saveDone=persist;
+
+/* ---- steps -> challenges ----------------------------------------
+   A step's 'chal' badges name the challenges it earns. A challenge counts as
+   done once every step carrying its badge is ticked. Only challenges this
+   code ticked are ever un-ticked here, so manual ticks survive. */
+const AUTO_KEY=KEY+':auto';
+const ID_BY_NAME={}; CH.forEach(c=>{ID_BY_NAME[c.name]=c.id;});
+const STEPS_FOR={};
+RUNS.forEach(r=>r.sections.forEach((sec,si)=>sec.steps.forEach((st,ti)=>{
+  const key=`${r.id}-${si}-${ti}`;
+  (st.badges||[]).forEach(b=>{
+    if(b[0]!=='chal')return;
+    const id=ID_BY_NAME[b[1]];
+    if(!id)return;
+    (STEPS_FOR[id]||(STEPS_FOR[id]=[])).push(key);
+  });
+})));
+const autoDone=new Set();
+loadSet(AUTO_KEY,autoDone);
+function syncChallenges(){
+  Object.keys(STEPS_FOR).forEach(id=>{
+    const earned=STEPS_FOR[id].every(k=>stepsDone.has(k));
+    if(earned){ if(!done.has(id)){ done.add(id); autoDone.add(id); } }
+    else if(autoDone.has(id)){ done.delete(id); autoDone.delete(id); }
+  });
+}
+syncChallenges();
+let filter='All';
+
+/* ---------------- tracker ---------------- */
+function renderTracker(){
+  const cats=['Assassination','Discovery','Feats','Targets','The Classics'];
+  document.getElementById('cats').innerHTML=cats.map(c=>{
+    const all=CH.filter(x=>x.cat===c), d=all.filter(x=>done.has(x.id)).length;
+    return `<div class="cat">
+      <span class="v">${d}<em>&thinsp;/&thinsp;${all.length}</em></span>
+      <span class="n">${c}</span>
+      <span class="mb"><i style="width:${Math.round(d/all.length*100)}%;background:${CAT_COLOR[c]}"></i></span></div>`;
+  }).join('');
+  document.getElementById('tDone').textContent=done.size;
+  document.getElementById('tBar').style.width=(done.size/CH.length*100)+'%';
+}
+
+/* ---------------- contents ---------------- */
+function renderNav(){
+  document.getElementById('runnav').innerHTML=
+    `<span class="util"><button data-all="open">Expand all</button><button data-all="close">Collapse</button></span>`+
+    RUNS.map(r=>`<button data-jump="${r.id}">${String(RUNS.indexOf(r)+1).padStart(2,'0')} &nbsp;${r.title}</button>`).join('');
+}
+
+/* ---------------- runs ---------------- */
+function badgeHTML(b){
+  const cls={chal:'b-chal',warn:'b-warn',save:'b-save',unv:'b-unv',src:'b-src'}[b[0]];
+  const pre={warn:'⚠ ',save:'◆ ',unv:'? ',src:'✎ ',chal:''}[b[0]];
+  return `<span class="badge ${cls}">${pre}${b[1]}</span>`;
+}
+function renderRuns(){
+  document.getElementById('runList').innerHTML=RUNS.map((r,ri)=>{
+    const open=openRuns.has(r.id);
+    let n=0;
+    const total=r.sections.reduce((a,s)=>a+s.steps.length,0);
+    const doneCount=r.sections.reduce((a,s,si)=>a+s.steps.filter((_,ti)=>stepsDone.has(`${r.id}-${si}-${ti}`)).length,0);
+    return `<article class="run ${open?'open':''}" id="${r.id}">
+      <button class="run-head" data-toggle="${r.id}" aria-expanded="${open}">
+        <span class="rnum">${String(ri+1).padStart(2,'0')}</span>
+        <span class="rh">
+          <span class="run-no">${r.tag} &nbsp;·&nbsp; ${r.diff.split('.')[0]}</span>
+          <h3>${r.title}</h3>
+          <p>${r.goal}</p>
+        </span>
+        <span class="run-prog">${doneCount} / ${total}</span>
+      </button>
+      <div class="run-body" ${open?'':'hidden'}>
+        <div class="loadout">
+          <h4>Loadout</h4>
+          <div class="lo-grid">
+            <div><span>Starting location</span>${r.loadout.start}</div>
+            <div><span>Difficulty</span>${r.diff}</div>
+            <div><span>Suit</span>${r.loadout.suit}</div>
+            ${r.loadout.items.map((it,i)=>`<div><span>Slot ${i+1}</span>${it}</div>`).join('')}
+          </div>
+          ${r.note?`<p class="lo-note">${r.note}</p>`:''}
+        </div>
+        <div class="sect">
+          ${r.sections.map((sec,si)=>`<h4>${sec.h}</h4>`+sec.steps.map((st,ti)=>{
+            const key=`${r.id}-${si}-${ti}`; n++;
+            const hasD=st.d&&Object.keys(st.d).length;
+            return `<div class="step ${stepsDone.has(key)?'done':''}" id="s-${key}">
+              <div class="step-top">
+                <span class="snum">${String(n).padStart(2,'0')}</span>
+                <button class="tick" data-step="${key}" aria-label="Mark step complete">✓</button>
+                <div class="step-body">
+                  <p class="step-title">${st.t}</p>
+                  <ul class="bul">${st.b.map(x=>`<li><k>${x[0]}</k><span>${x[1]}</span></li>`).join('')}</ul>
+                  <div class="badges">${st.badges.map(badgeHTML).join('')}</div>
+                </div>
+              </div>
+              ${hasD?`<button class="more" data-more="${key}" aria-expanded="false">+ Notes</button>
+              <div class="detail" id="d-${key}" hidden><dl>${Object.entries(st.d).map(([k,v])=>{
+                const c=k==='Unverified'?'flag unv':(/^(Why the order|Ordering|Order note|Requirement|Warning|Why first|Known bug|Bug)/.test(k)?'flag amber':'');
+                return c?`<div class="${c}"><dt style="margin-top:0">${k}</dt><dd>${v}</dd></div>`:`<dt>${k}</dt><dd>${v}</dd>`;
+              }).join('')}</dl></div>`:''}
+            </div>`;
+          }).join('')).join('')}
+        </div>
+      </div>
+    </article>`;
+  }).join('');
+}
+
+/* ---------------- checklist ---------------- */
+function renderFilters(){
+  const opts=['All','Assassination','Discovery','Feats','Targets','The Classics','Incomplete'];
+  document.getElementById('filters').innerHTML=opts.map(o=>`<button class="${o===filter?'on':''}" data-f="${o}">${o}</button>`).join('');
+}
+function renderChecklist(){
+  const list=CH.filter(c=>filter==='All'?true:filter==='Incomplete'?!done.has(c.id):c.cat===filter);
+  document.getElementById('chalList').innerHTML=list.length?list.map(c=>`
+    <div class="chal ${done.has(c.id)?'done':''}">
+      <button class="tick" data-ch="${c.id}" aria-label="Mark ${c.name} complete">✓</button>
+      <div class="chal-main">
+        <p class="chal-name">${c.name}</p>
+        <p class="chal-cond">${c.cond}</p>
+        <div class="chal-meta">
+          <span class="badge" style="color:${CAT_COLOR[c.cat]};border-color:${CAT_COLOR[c.cat]}">${c.cat}</span>
+          ${c.run?`<span class="badge b-chal">Run ${c.run}</span>`:'<span class="badge b-unv">Not routed — see Audit</span>'}
+        </div>
+      </div>
+    </div>`).join(''):'<p style="color:var(--dim)">Nothing matches this filter.</p>';
+}
+
+document.addEventListener('click',e=>{
+  const tab=e.target.closest('.tab');
+  if(tab){
+    document.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-selected',t===tab));
+    document.querySelectorAll('.panel').forEach(p=>p.hidden=p.id!=='p-'+tab.dataset.panel);
+    return;
+  }
+  const jump=e.target.closest('[data-jump]');
+  if(jump){
+    const id=jump.dataset.jump;
+    openRuns.add(id); persist(); renderRuns();
+    document.querySelectorAll('[data-jump]').forEach(b=>b.classList.toggle('hot',b.dataset.jump===id));
+    document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});
+    return;
+  }
+  const all=e.target.closest('[data-all]');
+  if(all){
+    if(all.dataset.all==='open') RUNS.forEach(r=>openRuns.add(r.id)); else openRuns.clear();
+    persist(); renderRuns(); return;
+  }
+  const tg=e.target.closest('[data-toggle]');
+  if(tg){
+    const id=tg.dataset.toggle;
+    openRuns.has(id)?openRuns.delete(id):openRuns.add(id);
+    persist(); renderRuns(); return;
+  }
+  const f=e.target.closest('[data-f]');
+  if(f){ filter=f.dataset.f; renderFilters(); renderChecklist(); return; }
+  const ch=e.target.closest('[data-ch]');
+  if(ch){
+    const id=ch.dataset.ch;
+    done.has(id)?done.delete(id):done.add(id);
+    saveDone(); renderTracker(); renderChecklist(); return;
+  }
+  const sp=e.target.closest('[data-step]');
+  if(sp){
+    const k=sp.dataset.step;
+    stepsDone.has(k)?stepsDone.delete(k):stepsDone.add(k);
+    syncChallenges();
+    persist(); renderRuns(); renderTracker(); renderChecklist(); return;
+  }
+  const rs=e.target.closest('#reset');
+  if(rs){
+    if(confirm('Clear every ticked challenge for this mission?')){
+      done.clear(); stepsDone.clear(); autoDone.clear(); saveDone(); renderTracker(); renderChecklist(); renderRuns();
+    }
+    return;
+  }
+  const m=e.target.closest('[data-more]');
+  if(m){
+    const d=document.getElementById('d-'+m.dataset.more);
+    d.hidden=!d.hidden;
+    m.setAttribute('aria-expanded',String(!d.hidden));
+    m.textContent=d.hidden?'+ Notes':'− Notes';
+  }
+});
+
+renderTracker(); renderNav(); renderFilters(); renderChecklist(); renderRuns();
+reportProgress();
+</script>
+<!-- step-progress-bridge -->
+<script>
+/* Reports route-step ticks into 'hitman-progress-registry' so the index can
+   show them beside the challenge counts. Counts what is on screen rather than
+   any guide-specific state, so one implementation serves every guide. */
+(function(){
+  var RID="m02", SEL=".step";
+  function isDone(s){
+    var c=s.classList;
+    if(c.contains('done')||c.contains('dn')) return true;
+    if(s.getAttribute('data-done')==='1'||s.getAttribute('aria-pressed')==='true') return true;
+    return !!s.querySelector('.done,.dn,[data-done="1"],[aria-pressed="true"]');
+  }
+  function tally(){
+    var steps=document.querySelectorAll(SEL);
+    if(!steps.length) return null;
+    var n=0;
+    for(var i=0;i<steps.length;i++) if(isDone(steps[i])) n++;
+    return {steps:n,stepTotal:steps.length};
+  }
+  function push(){
+    var t;
+    try{ t=tally(); }catch(err){ return; }
+    if(!t||!t.stepTotal) return;
+    try{
+      var r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');
+      var e=r[RID]||(r[RID]={});
+      /* the guide's own reportProgress() rewrites this entry wholesale, so
+         re-add the step counts whenever they go missing or stale */
+      if(e.steps===t.steps&&e.stepTotal===t.stepTotal) return;
+      e.steps=t.steps; e.stepTotal=t.stepTotal; e.updated=Date.now();
+      localStorage.setItem('hitman-progress-registry',JSON.stringify(r));
+    }catch(err){}
+  }
+  var pending=false;
+  function schedule(){
+    if(pending) return; pending=true;
+    setTimeout(function(){pending=false;push();},120);
+  }
+  try{
+    new MutationObserver(schedule).observe(document.body,
+      {subtree:true,childList:true,attributes:true,attributeFilter:['class','aria-pressed','data-done']});
+  }catch(err){}
+  window.addEventListener('load',schedule);
+  setTimeout(push,600);
+})();
+</script>
+<!-- /step-progress-bridge -->
+</body>
+</html>

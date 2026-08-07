@@ -1,0 +1,839 @@
+<!-- The Farewell (Mendoza) — 61-challenge step-format guide, v2 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Farewell — Mendoza Step Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,600;0,800;1,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --ink:#15111a; --ink-2:#1e1824; --panel:#241d2c; --panel-2:#2c2436;
+  --line:#3a3044; --wine:#7c1f3d; --wine-lit:#c33a58; --gold:#d7b25c;
+  --straw:#efe4c6; --vine:#7ea25c; --text:#e7dfd4; --dim:#a496a8;
+  --alert:#e04a4a; --amber:#e0952f;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:radial-gradient(1200px 500px at 15% -10%,#2a1c30 0,transparent 60%),
+             radial-gradient(900px 400px at 95% 0%,#3a1a28 0,transparent 55%),var(--ink);
+  color:var(--text);font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:15px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:26px 18px 90px}
+
+/* masthead */
+.masthead{border-bottom:1px solid var(--line);padding-bottom:20px;margin-bottom:20px}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin:0 0 10px}
+h1{font-family:'Spectral',serif;font-weight:800;font-size:clamp(30px,5.5vw,50px);line-height:1;margin:0;letter-spacing:-.01em}
+h1 em{font-style:italic;font-weight:300;color:var(--gold)}
+.sub{color:var(--dim);max-width:64ch;margin:10px 0 0}
+
+/* tracker */
+.tracker{background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:4px;padding:18px;margin-bottom:22px}
+.tracker-top{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;justify-content:space-between}
+.bigcount{font-family:'Spectral',serif;font-size:42px;font-weight:800;line-height:1}
+.bigcount span{font-size:19px;color:var(--dim);font-weight:300}
+.xpline{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--gold);letter-spacing:.06em}
+.glass{position:relative;height:15px;margin:16px 0 4px;border:1px solid var(--line);border-radius:2px;background:#191320;overflow:hidden}
+.pour{position:absolute;inset:0 auto 0 0;width:0;background:linear-gradient(180deg,var(--wine-lit),var(--wine) 45%,#4d1026);transition:width .5s cubic-bezier(.22,.61,.36,1)}
+.pour::after{content:"";position:absolute;top:0;right:0;width:3px;height:100%;background:rgba(255,220,180,.55)}
+.pct{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--dim);letter-spacing:.1em}
+.cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(115px,1fr));gap:9px;margin-top:16px}
+.cat{background:var(--panel-2);border:1px solid var(--line);border-radius:3px;padding:9px 11px}
+.cat b{display:block;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);margin-bottom:3px;font-weight:400}
+.cat i{font-style:normal;font-family:'Spectral',serif;font-size:21px;font-weight:600}
+.cat i small{font-size:13px;color:var(--dim);font-weight:300}
+
+/* tabs */
+.tabs{display:flex;gap:2px;margin:0 0 18px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.tab{appearance:none;background:none;border:0;border-bottom:2px solid transparent;color:var(--dim);
+  font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;padding:12px 15px;cursor:pointer}
+.tab:hover{color:var(--text)}
+.tab[aria-selected="true"]{color:var(--gold);border-bottom-color:var(--gold)}
+.tab:focus-visible,.runbtn:focus-visible,.filter:focus-visible,.tick:focus-visible,.exp:focus-visible,.runhead:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.view[hidden]{display:none}
+
+/* run nav buttons */
+.runnav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.runbtn{appearance:none;text-align:left;background:var(--panel-2);border:1px solid var(--line);border-radius:3px;
+  color:var(--text);padding:9px 12px;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;font-size:12.5px;line-height:1.3}
+.runbtn:hover{border-color:var(--wine-lit)}
+.runbtn b{display:block;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:400;margin-bottom:2px}
+.runbtn i{font-style:normal;color:var(--dim);font-size:11px}
+
+/* run */
+.run{border:1px solid var(--line);border-radius:4px;margin-bottom:18px;background:var(--ink-2);overflow:hidden;scroll-margin-top:12px}
+.runhead{width:100%;text-align:left;appearance:none;border:0;background:var(--panel);color:var(--text);padding:17px 20px;cursor:pointer;display:block}
+.runhead .rn{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.2em;color:var(--wine-lit);text-transform:uppercase}
+.runhead h2{font-family:'Spectral',serif;font-size:23px;font-weight:600;margin:4px 0 5px;line-height:1.15}
+.runhead p{margin:0;color:var(--dim);max-width:72ch;font-size:14px}
+.runhead .chev{float:right;color:var(--gold);font-size:13px;margin-left:12px}
+.runbody[hidden]{display:none}
+
+.loadout{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:1px;background:var(--line);border-top:1px solid var(--line)}
+.lo{background:var(--ink-2);padding:13px 16px}
+.lo b{display:block;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:4px;font-weight:400}
+.lo span{font-size:13px}
+.lo em{display:block;font-style:normal;color:var(--dim);font-size:11.5px;margin-top:2px}
+
+.secbar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 20px 6px;border-top:1px solid var(--line)}
+.sech{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.exp{appearance:none;background:none;border:1px solid var(--line);border-radius:2px;color:var(--dim);
+  font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;padding:5px 9px;cursor:pointer}
+
+/* step */
+.step{border-top:1px solid var(--line);padding:0}
+.sthead{display:flex;gap:11px;align-items:flex-start;padding:12px 20px}
+.tick{flex:0 0 auto;width:23px;height:23px;margin-top:2px;border:1px solid var(--line);border-radius:2px;background:var(--panel-2);
+  color:transparent;cursor:pointer;font-size:13px;line-height:1;display:flex;align-items:center;justify-content:center}
+.tick[aria-pressed="true"]{background:var(--vine);border-color:var(--vine);color:#12200c}
+.stnum{flex:0 0 auto;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--wine-lit);margin-top:5px;min-width:26px}
+.sttoggle{flex:1;appearance:none;background:none;border:0;color:var(--text);text-align:left;cursor:pointer;padding:0;font-family:inherit}
+.sttitle{font-weight:600;font-size:15px}
+.sttitle .chev{color:var(--gold);font-size:11px;margin-left:6px;font-weight:400}
+.step.done .sttitle{color:var(--dim);text-decoration:line-through}
+.badges{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}
+.badge{font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;padding:3px 7px;border-radius:2px;border:1px solid}
+.b-a{color:#f2a0b4;border-color:#7c1f3d;background:rgba(124,31,61,.28)}
+.b-d{color:#9fd0e8;border-color:#2c5b73;background:rgba(44,91,115,.25)}
+.b-f{color:#cbb6e8;border-color:#4d3a6b;background:rgba(77,58,107,.28)}
+.b-t{color:#f0c98a;border-color:#7a5a1d;background:rgba(122,90,29,.25)}
+.b-tc{color:#a8dfa0;border-color:#3d6b33;background:rgba(61,107,51,.25)}
+.b-warn{color:#fff;border-color:var(--alert);background:var(--alert);font-weight:600}
+.b-save{color:#1c1408;border-color:var(--amber);background:var(--amber);font-weight:600}
+.b-unv{color:#161016;border-color:#c8c0cc;background:#c8c0cc;font-weight:600}
+
+.stbody{padding:0 20px 15px 60px}
+.stbody[hidden]{display:none}
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:7px 16px;margin:2px 0 11px;
+  padding:10px 12px;background:var(--panel-2);border-left:2px solid var(--wine);border-radius:0 2px 2px 0}
+.meta div{font-size:12.5px;color:#d5cbc4}
+.meta k{font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--gold);display:block}
+.does{margin:0 0 10px;padding-left:17px}
+.does li{margin-bottom:5px;font-size:14px}
+.does strong{color:var(--straw)}
+.note-line{font-size:13px;padding:9px 11px;border-radius:2px;margin-bottom:9px}
+.nl-warn{background:rgba(224,74,74,.13);border-left:3px solid var(--alert)}
+.nl-save{background:rgba(224,149,47,.12);border-left:3px solid var(--amber)}
+.nl-alt{background:var(--panel-2);border-left:3px solid var(--dim)}
+.note-line b{color:var(--straw)}
+
+/* checklist */
+.filters{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:15px}
+.filter{appearance:none;background:var(--panel-2);border:1px solid var(--line);color:var(--dim);
+  font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;padding:7px 11px;border-radius:2px;cursor:pointer}
+.filter[aria-pressed="true"]{background:var(--wine);border-color:var(--wine-lit);color:#fff}
+.ch{display:flex;gap:11px;align-items:flex-start;padding:11px 3px;border-bottom:1px solid var(--line)}
+.ch.done .ch-name{color:var(--dim);text-decoration:line-through}
+.ch-name{font-weight:600}
+.ch-desc{color:var(--dim);font-size:13.5px;margin-top:1px}
+.ch-meta{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--gold);margin-top:4px;letter-spacing:.05em}
+
+/* notes */
+.note{border:1px solid var(--line);background:var(--panel);border-radius:4px;padding:17px 19px;margin-bottom:15px}
+.note h3{font-family:'Spectral',serif;font-size:19px;font-weight:600;margin:0 0 8px}
+.note p,.note li{color:#d5cbc4}
+.note ul{padding-left:18px;margin:8px 0}
+.note li{margin-bottom:5px}
+.flag{border-left:3px solid var(--alert)}
+.flag-u{border-left:3px solid #c8c0cc}
+.flag-ok{border-left:3px solid var(--vine)}
+table{width:100%;border-collapse:collapse;font-size:13px;margin-top:10px}
+th,td{text-align:left;padding:7px 9px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--gold);font-weight:400}
+.reset{appearance:none;background:none;border:1px solid var(--line);color:var(--dim);font-family:'IBM Plex Mono',monospace;
+  font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;padding:8px 13px;border-radius:2px;cursor:pointer;margin-top:14px}
+.reset:hover{border-color:var(--alert);color:var(--alert)}
+@media (max-width:600px){.stbody{padding-left:20px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+
+<header class="masthead">
+  <p class="eyebrow">HITMAN World of Assassination · Mission 05 · Viñedo Yates</p>
+  <h1>The Farewell <em>— step guide</em></h1>
+  <p class="sub">61 challenges across 6 runs. Targets: Don Archibald Yates and Tamara Vidal. Diana Burnwood must survive — killing her, or letting her die in your accident, fails the mission instantly.</p>
+</header>
+
+<section class="tracker" aria-label="Progress">
+  <div class="tracker-top">
+    <div>
+      <div class="bigcount"><span id="tDone">0</span><span> / 61 challenges</span></div>
+      <div class="xpline" id="tXp">0 / 130,000 XP</div>
+    </div>
+    <div class="pct" id="tPct">0% complete</div>
+  </div>
+  <div class="glass"><div class="pour" id="tBar"></div></div>
+  <div class="cats" id="tCats"></div>
+</section>
+
+<div class="tabs" role="tablist">
+  <button class="tab" role="tab" aria-selected="true" data-view="runs">Runs</button>
+  <button class="tab" role="tab" aria-selected="false" data-view="list">Checklist</button>
+  <button class="tab" role="tab" aria-selected="false" data-view="verify">Verification</button>
+</div>
+
+<div class="view" id="view-runs">
+  <div class="runnav" id="runnav"></div>
+  <div id="runs"></div>
+</div>
+
+<div class="view" id="view-list" hidden>
+  <div class="filters" id="filters"></div>
+  <div id="chList"></div>
+  <button class="reset" id="resetBtn">Clear all progress</button>
+</div>
+
+<div class="view" id="view-verify" hidden>
+
+  <div class="note flag-ok">
+    <h3>Count reconciled — your JSON confirms 61</h3>
+    <p>Your uploaded file (<code>23_-_The_Farewell.json</code>) reports <strong>challengeCount: 59</strong>, broken down as 17 Assassination / 20 Discovery / 15 Feats / 2 Targets / 5 Classics. I diffed it line by line against the Hitman Wiki's 61-challenge list. Exactly two entries are missing from your file:</p>
+    <ul>
+      <li><strong>A Fine Vintage</strong> (Assassination) — 17 → 18</li>
+      <li><strong>Banana Blazer</strong> (Feats) — 15 → 16</li>
+    </ul>
+    <p>Both are late additions, so your file is a dump from a build that predates them. 59 + 2 = 61, and the category split lands exactly on the wiki's 18 / 20 / 16 / 2 / 5. That independently resolves the conflict flagged in v1 of this guide: the "67" figure in older web guides counts 14 entries in The Classics tab because that tab also displays 9 <em>cross-mission</em> Classics that don't belong to Mendoza's own total.</p>
+    <p>All 61 challenge names and descriptions in this guide's checklist are now taken from your JSON wording where the entry exists there, so they match your in-game text exactly.</p>
+  </div>
+
+  <div class="note flag">
+    <h3>Corrections made to v1 of this guide</h3>
+    <p>Deeper sourcing (Gamepressure's per-target assassination pages, which v1 didn't have) contradicted several v1 steps. Those are fixed here:</p>
+    <ul>
+      <li><strong>The Talented Mr. Rieper is an ambush, not a safe isolation.</strong> v1 recommended it as the cleanest suit-only fiber-wire opportunity on Vidal. Wrong — mercenaries are waiting in the Cinema and attack. It is now a save-then-reload step, and the SASO route no longer uses it.</li>
+      <li><strong>Pencil Pusher — wrong location.</strong> v1 had you intercept the lawyer in the Parking Lot. Gamepressure explicitly calls that an unnecessary risk: wait for him to occupy the Villa Guest Room instead, and the Research File is already on the desk there.</li>
+      <li><strong>Firebrand is in the Asado, not "around the guest areas",</strong> and the documented trigger is a <em>screwdriver-sabotaged lamp plus a faucet</em>, not shooting the lamp.</li>
+      <li><strong>Piano Man / Straight Shot have a specific spot:</strong> Yates stops at the fireplace in the Villa Foyer with a single mercenary present. v1 said vaguely "the upper floor".</li>
+      <li><strong>Hold My Hair is far easier on Vidal</strong> (emetic Pinot in the Tasting Room → she uses the Level 2 bathroom) and now stacks with Notes of Hemlock off one save.</li>
+      <li><strong>Secondary Fermentation needs a Security Keycard staged in advance</strong> — the Security Room is locked. v1 sent you there empty-handed.</li>
+      <li><strong>Grand Theft Auto is free at the end of Closing Statement</strong> — the car keys are in the same bedroom the story ends in. v1 spent a separate run on it.</li>
+    </ul>
+  </div>
+
+  <div class="note flag-u">
+    <h3>Marked UNVERIFIED — insufficient evidence from available sources</h3>
+    <ul>
+      <li><strong>Patch number for A Fine Vintage.</strong> The wiki footnotes patches 3.130, 3.190 and 3.230.1 but only <em>Brother from another Brother</em> → 3.130 reads unambiguously. <em>Banana Blazer</em> is confirmed live 24 Aug 2025 by community reports and an official IOI post, but its build number is unverified.</li>
+      <li><strong>All XP values.</strong> Single-source (Hitman Wiki) except QR codes, which Gamepressure independently confirms at 2,000 XP. Your JSON carries no XP data. Treat the rest as indicative.</li>
+      <li><strong>Does Diana survive the lethal ventilation gas?</strong> Secondary Fermentation's documented method puts lethal poison in the barrel-room ventilation while Diana is in the room. The wiki separately states Diana reacts normally to poisons other than sedatives, and her death is an instant fail. No source addresses this directly. Save before attempting.</li>
+      <li><strong>Whether emetic gas satisfies Secondary Fermentation.</strong> The wording is "poison both targets with gas", not "eliminate". If emetic counts, the challenge isn't a kill and isn't mutually exclusive with anything. Unverified — the guide follows the documented lethal method.</li>
+      <li><strong>Does the fishing line count as a fiber wire?</strong> Gamepressure calls the fishing line outside the boatdock shed "identical use to a fibrewire". Whether it registers for Piano Man or A Fine Vintage is unverified. Bring the real fiber wire.</li>
+      <li><strong>Does the attic's Bartoli Woodsman Hunting Rifle count for Sniper Assassin?</strong> It is a hunting rifle, not a sniper rifle. Unverified — bring the Sieger 300 Viper or use the silo team's rifle.</li>
+      <li><strong>Sniper Assassin and being spotted.</strong> Gamepressure states that firing from the attic alerts the estate but "should not fail" Sniper Assassin. Your JSON lists "Do not get spotted" as a condition. The two are hard to reconcile; save before the shot.</li>
+      <li><strong>Suit-only poisoning in the Tasting Room.</strong> Sources describe taking the waiter's outfit before serving Vidal. Whether you can poison and have her drink without the disguise is unverified, which is why the SASO route uses the propane method instead.</li>
+      <li><strong>NPC names.</strong> Only these are named anywhere: Don Archibald Yates, Tamara Vidal, Diana Burnwood, Valentina Morales Yates, Corvo Black, Gabriel Vargas, Kenneth Flowers, Juan Cortázar, Aron Ford Jr., Pablo Llosa / the Llosa Bros. Every other guard, worker and waiter is unnamed in all sources, so this guide identifies them by post and landmark. None are invented.</li>
+      <li><strong>Guard patrol loops are not documented anywhere.</strong> Movement described in this guide is scripted story movement that multiple sources confirm, or documented patrol <em>zones</em> (two-man gaucho patrols in the gardens, mercenaries on the eastern path). No route is invented.</li>
+    </ul>
+  </div>
+
+  <div class="note flag">
+    <h3>Bugs and hard ordering rules</h3>
+    <ul>
+      <li><strong>Eyes On Target "Mission Story Missed" bug.</strong> The snipers kill Vidal but the story logs as failed. Reported cause, attributed to an IOI developer post: saving and reloading <em>after</em> you camera-scan Vidal. Do not save between the scan and the kill order. A fix was slated for the late-Feb-2021 patch; current status in World of Assassination is unverified.</li>
+      <li><strong>The Tour must finish before Closing Statement exists.</strong> Closing Statement has no menu entry. It is added to your log only when Yates, at the end of the tour, tells his guard to fetch wine from the sommelier. Kill either target before that line and Closing Statement, The Hidden Hand, A Vintage Year, the Sommelier and Head of Security disguises and 47's Signature Suit are all gone for that timeline.</li>
+      <li><strong>The Orator ordering.</strong> Swap the microphone and raise the voltage regulator <em>before</em> lighting the asado pit. Light the fire first and Yates can reach the stage before the trap is armed. Also don't drop or throw the torch in public after use.</li>
+      <li><strong>Cuckoo's Nest vs Eyes On Target.</strong> Stealing the silo team's rifle removes the weapon the snipers need to shoot Vidal. Reveal the story first, then branch: rifle theft on one save, the sniper kill order on another.</li>
+      <li><strong>Melon Head needs the sniper team alive and functional.</strong> Don't pacify them on the Eyes On Target branch.</li>
+      <li><strong>Shortcuts open from one side only.</strong> All three Mendoza shortcuts are locked doors that cannot be opened from the front even with keys, a lockpick or a crowbar. Each must be reached from the opposite side. Backdoor and Maintenance Door: approach from the north.</li>
+      <li><strong>Coldhearted kills a civilian.</strong> Sealing Vidal in the freezer also kills Gabriel Vargas. Diana berates you for it and it breaks Silent Assassin. Fine in Run 2, fatal in Run 6.</li>
+      <li><strong>Discover Mendoza counter bug.</strong> Players reported the map showing all areas revealed while the counter stuck at 42/45. Historical (2021), current status unverified. If it happens, re-enter Wine Fridge, Villa Attic and Backside.</li>
+      <li><strong>Pulp Friction physics quirk.</strong> The body sometimes bounces back onto the crusher rim. Cosmetic — the wiki confirms the challenge still awards.</li>
+      <li><strong>Diana cannot be permanently subdued.</strong> Sedative gas drops her but she wakes as soon as the ventilation is off, while everyone else stays down. Plan around her.</li>
+    </ul>
+  </div>
+
+  <div class="note">
+    <h3>Mutually exclusive challenges</h3>
+    <p>Each target dies once per timeline, so every kill-method challenge for the same target competes with every other. The runs below separate them with manual saves; challenge progress is written to your profile the moment it pops and survives a reload, so only the last kill of a run needs to reach an exit.</p>
+    <ul>
+      <li><strong>Vidal methods (one per timeline):</strong> Notes of Hemlock · Hold My Hair · Firebrand · Pulp Friction · Coldhearted · A Thick Must · Eyes On Target/Murder by Proxy · Brother from another Brother · Piano Man · Secondary Fermentation · the SASO propane accident.</li>
+      <li><strong>Yates methods (one per timeline):</strong> Domestic Disturbance · The Orator · Pencil Pusher · Get Rid of the Body · To Loyalty · Closing Statement's knife finish · Over The Top's electrocution · Straight Shot · Piano Man · Secondary Fermentation · Brother from another Brother.</li>
+      <li><strong>A Fine Vintage</strong> forbids any outfit change — it cannot share a run with any Chameleon pickup, The Hidden Hand, or any disguise-gated area.</li>
+      <li><strong>Sniper Assassin</strong> requires both targets shot with a sniper rifle, locking out every other kill challenge that run.</li>
+      <li><strong>Silent Assassin, Suit Only</strong> locks out all 15 disguises and all four disguise Discovery challenges.</li>
+      <li><strong>Secondary Fermentation</strong> consumes both targets at once and cannot combine with any other kill challenge.</li>
+      <li><strong>To Loyalty</strong> kills Yates mid-meeting and ends the Closing Statement chain early — it must be a save-branch, never the main line.</li>
+    </ul>
+  </div>
+
+  <div class="note">
+    <h3>Route validation — what was checked</h3>
+    <ul>
+      <li><strong>Prerequisites before use.</strong> Every tool is picked up before the step that needs it: screwdriver and wrench before the Over The Top sabotage; Security Keycard before the Secondary Fermentation sprint; grape knife before Harvest Season and Grapes of Wrath; safe file before Valentina; microphone and voltage before the torch; car keys before the car; boat key before the boat; Tactical Wet Suit before the cave.</li>
+      <li><strong>No NPC removed before they're needed.</strong> Vargas survives until after the tour clue fires (Run 1). The silo sniper team survives on the Eyes On Target branch (Melon Head and the kill order both need them). Kenneth Flowers is only taken after the wine-fetch line. Valentina is left alive in Run 3 and Run 4.</li>
+      <li><strong>No scripted event broken by ordering.</strong> Both targets are alive when the tour ends in Run 1, so Closing Statement triggers. Both are alive when the Heralds sit down. The lawyer is given time to walk to the Guest Room before Run 4 goes there.</li>
+      <li><strong>Save points don't strand objectives.</strong> Every branch reloads to a save taken before the branch's irreversible action, and the run's final branch is the one that exits.</li>
+      <li><strong>Persistent progress used deliberately.</strong> Chameleon, Discover Mendoza and the three shortcuts all track across playthroughs, so they are spread across runs rather than crammed into one. Run 1 opens the two basement shortcuts first, which shortens Runs 3–6.</li>
+      <li><strong>Backtracking minimised.</strong> Run 1 ends in the Villa Bedroom, which is where the car keys are — so Grand Theft Auto costs nothing. Run 2 stays inside the winery. Run 3 works west to east, gardens up into the villa basement. Run 4 works bottom-up: Cinema → Asado → Villa. Run 5 handles the four remaining exits from one save.</li>
+      <li><strong>Coverage.</strong> All 61 challenges are assigned to at least one run; no duplicates in the assignment; the Checklist tab and the run assignments both total 61.</li>
+    </ul>
+  </div>
+
+  <div class="note">
+    <h3>Sources</h3>
+    <p>Your <code>23_-_The_Farewell.json</code> in-game dump (authoritative for names, descriptions and category counts). Hitman Wiki: <em>The Farewell</em>, <em>Closing Statement</em>, <em>Banana Blazer</em>. Gamepressure: Mendoza map and mission information, QR codes, Eliminate Tamara Vidal, Eliminate Don Archibald Yates, shortcuts. PowerPyx: Mendoza challenges, undiscovered areas, and the four mission-story walkthroughs. Neoseeker Mendoza walkthrough. PCGamesN and Gfinity (independent corroboration of the propane SASO method). SegmentNext. HitmanForum (Banana Blazer date and bug reports only).</p>
+  </div>
+</div>
+
+</div>
+
+<script>
+/* ================= CHALLENGES (names/descriptions from the uploaded JSON where present) ================ */
+const CH=[
+{id:'hemlock',n:'Notes of Hemlock',t:'A',xp:2000,d:'Serve Tamara Vidal a poisoned glass of Pinot Noir.'},
+{id:'brother',n:'Brother from another Brother',t:'A',xp:4000,d:'Pacify or eliminate the sniper team near the silos. / Eliminate the targets from that position, using the sniper teams rifle.'},
+{id:'domestic',n:'Domestic Disturbance',t:'A',xp:2000,d:'Eliminate Don Archibald Yates by mariticide.'},
+{id:'finevintage',n:'A Fine Vintage',t:'A',xp:4000,d:'Eliminate Don Archibald Yates and Tamara Vidal with a fiber wire. / Exfiltrate via boat. / Do not change outfit during the mission. NOT PRESENT in the uploaded JSON — later addition.'},
+{id:'orator',n:'The Orator',t:'A',xp:2000,d:'Eliminate Don Archibald Yates with a Branson MD-2 microphone.'},
+{id:'pencil',n:'Pencil Pusher',t:'A',xp:4000,d:'Eliminate Don Archibald Yates with a pen.'},
+{id:'shredder',n:'Get Rid of the Body',t:'A',xp:2000,d:'Eliminate Don Archibald Yates with a garden shredder.'},
+{id:'firebrand',n:'Firebrand',t:'A',xp:2000,d:'Eliminate Tamara Vidal by electrocution.'},
+{id:'pulp',n:'Pulp Friction',t:'A',xp:2000,d:'Eliminate Tamara Vidal with the grape crusher.'},
+{id:'proxy',n:'Murder by Proxy',t:'A',xp:2000,d:'Eliminate both targets by proxy.'},
+{id:'cold',n:'Coldhearted',t:'A',xp:2000,d:'Eliminate Tamara Vidal by hypothermia.'},
+{id:'loyalty',n:'To Loyalty',t:'A',xp:2000,d:'Eliminate Don Archibald Yates with a poisoned glass of 1945 Grand Paladin.'},
+{id:'straight',n:'Straight Shot',t:'A',xp:2000,d:'Assassinate a target with a headshot.'},
+{id:'tasteless',n:'Tasteless, Traceless',t:'A',xp:2000,d:'Assassinate a target with lethal poison.'},
+{id:'accident',n:'Someone Could Hurt Themselves',t:'A',xp:2000,d:'Assassinate a target in an accident.'},
+{id:'hair',n:'Hold My Hair',t:'A',xp:2000,d:'Assassinate a target by drowning them.'},
+{id:'versatile',n:'Versatile Assassin',t:'A',xp:4000,d:'Complete all the Versatile challenges in Mendoza: Piano Man / Someone Could Hurt Themselves / Hold My Hair / Straight Shot / Tasteless, Traceless'},
+{id:'piano',n:'Piano Man',t:'A',xp:2000,d:'Assassinate a target with the fiber wire.'},
+{id:'hidden',n:'The Hidden Hand',t:'D',xp:1000,d:'Disguise yourself as a Providence Herald.'},
+{id:'lago',n:'Lago Lurker',t:'D',xp:2000,d:'Exfiltrate via boat.'},
+{id:'scCellar',n:'Shortcut: Cellar Door',t:'D',xp:1000,d:'Unlock the cellar door shortcut in the wine cellar.'},
+{id:'cuckoo',n:"Cuckoo's Nest",t:'D',xp:1000,d:"Steal the sniper rifle from the sniper's nest."},
+{id:'vintage',n:'A Vintage Year',t:'D',xp:1000,d:'Steal the 1945 Grand Paladin.'},
+{id:'cave',n:'The Cave',t:'D',xp:1000,d:'Exfiltrate Mendoza via the underground cave system.'},
+{id:'gta',n:'Grand Theft Auto',t:'D',xp:1000,d:"Exfiltrate Mendoza in Don Yates's car."},
+{id:'taste',n:'Tastemaker',t:'D',xp:1000,d:'Disguise yourself as a Waiter.'},
+{id:'grapepick',n:'Grape Picker',t:'D',xp:1000,d:'Disguise yourself as a Winery Worker.'},
+{id:'harvest',n:'Harvest Season',t:'D',xp:1000,d:'Harvest a ripe Malbec grapevine.'},
+{id:'scBack',n:'Shortcut: Backdoor',t:'D',xp:1000,d:'Unlock the backdoor shortcut.'},
+{id:'tango',n:'One Last Tango',t:'D',xp:2000,d:'Exfiltrate Mendoza with Diana Burnwood.'},
+{id:'chameleon',n:'Chameleon',t:'D',xp:4000,d:'Find and equip all disguises in Mendoza. (15 total)'},
+{id:'sunset',n:'Into the Sunset',t:'D',xp:1000,d:'Exfiltrate Mendoza through the grapefields.'},
+{id:'discover',n:'Discover Mendoza',t:'D',xp:2000,d:'Reveal all undiscovered areas in Mendoza. (45 areas)'},
+{id:'estate',n:'Estate Wines',t:'D',xp:2000,d:"Collect Viñedo Yates's Malbec, Cabernet Sauvignon and Pinot Noir."},
+{id:'scandal',n:'Scandal',t:'D',xp:1000,d:'[REDACTED in-game] Open the safe in the wine cellar and retrieve its contents.'},
+{id:'cowboy',n:'Hello, Cowboy',t:'D',xp:1000,d:'Disguise yourself as a Gaucho.'},
+{id:'llosa',n:'The Famous Llosa Brothers',t:'D',xp:1000,d:'Disguise yourself as an Asado Chef.'},
+{id:'scMaint',n:'Shortcut: Maintenance Door',t:'D',xp:1000,d:'Unlock the maintenance door shortcut in the wine cellar.'},
+{id:'wrath',n:'Grapes of Wrath',t:'F',xp:2000,d:'Pacify someone with a cluster of grapes.'},
+{id:'msTour',n:'Mission Story - The Tour',t:'F',xp:2000,d:'Complete the mission story "The Tour."'},
+{id:'above',n:'Going Above',t:'F',xp:2000,d:'Gain access to the wine fridge by disabling the security doors and getting inside before the timer runs out.'},
+{id:'closing',n:'Closing Statement',t:'F',xp:2000,d:'[REDACTED in-game] Complete the mission story "Closing Statement."'},
+{id:'primary',n:'Primary Fermentation',t:'F',xp:2000,d:'Hide a body in a fermentation tank.'},
+{id:'msEyes',n:'Mission Story - Eyes On Target',t:'F',xp:2000,d:'Complete the mission story "Eyes On Target."'},
+{id:'asador',n:'Asador',t:'F',xp:2000,d:'Light the asado fire pit.'},
+{id:'secondary',n:'Secondary Fermentation',t:'F',xp:2000,d:'Poison both targets with gas.'},
+{id:'melon',n:'Melon Head',t:'F',xp:2000,d:'Target paint a watermelon for the sniper team with your camera.'},
+{id:'tourguide',n:'Tour Guide',t:'F',xp:2000,d:'Present three stages of wine production while disguised as the chief winemaker.'},
+{id:'below',n:'Going Below',t:'F',xp:2000,d:'Gain access to the wine fridge via the ventilation tunnels.'},
+{id:'rieper',n:'The Talented Mr. Rieper',t:'F',xp:2000,d:'Meet Tamara Vidal for a private word in the cinema.'},
+{id:'msTop',n:'Mission Story - Over The Top',t:'F',xp:2000,d:'Complete the mission story "Over The Top."'},
+{id:'qr',n:'QR codes',t:'F',xp:2000,d:'Scan all 7 Viñedo Yates QR codes.'},
+{id:'must',n:'A Thick Must',t:'F',xp:2000,d:'Dispose of a body in the grape presser.'},
+{id:'banana',n:'Banana Blazer',t:'F',xp:1000,d:'Suitable snack, appealing attire. Throw a banana into a fireplace in Yates\u2019 villa. NOT PRESENT in the uploaded JSON — added 24 Aug 2025.'},
+{id:'tVidal',n:'Eliminate Tamara Vidal',t:'T',xp:4000,d:'Eliminate Tamara Vidal.'},
+{id:'tYates',n:'Eliminate Don Archibald Yates',t:'T',xp:4000,d:'Eliminate Don Archibald Yates.'},
+{id:'saso',n:'Silent Assassin, Suit Only',t:'TC',xp:4000,d:'Complete "The Farewell." / Only kill the targets. / No bodies found. / Do not get compromised. / If you are detected by cameras, erase or destroy the evidence. / Do it all in your suit.'},
+{id:'classics',n:'The Classics',t:'TC',xp:4000,d:'Complete all the Classic challenges for "The Farewell." / Silent Assassin / Silent Assassin, Suit Only / Sniper Assassin / Suit Only'},
+{id:'sniper',n:'Sniper Assassin',t:'TC',xp:4000,d:'Complete "The Farewell." / Assassinate your targets with a sniper rifle. / Only eliminate the targets. / Do not get spotted.'},
+{id:'so',n:'Suit Only',t:'TC',xp:4000,d:'Assassinate the targets and complete the mission. / Do it all in your suit.'},
+{id:'sa',n:'Silent Assassin',t:'TC',xp:4000,d:'Complete "The Farewell." / Only kill the targets. / No bodies found. / Do not get compromised. / If you are detected by cameras, erase or destroy the evidence.'}
+];
+const TYPES={A:'Assassination',D:'Discovery',F:'Feats',T:'Targets',TC:'The Classics'};
+const BC={A:'b-a',D:'b-d',F:'b-f',T:'b-t',TC:'b-tc'};
+const byId=Object.fromEntries(CH.map(c=>[c.id,c]));
+
+/* ================= RUNS ================= */
+const RUNS=[
+{
+key:'r1',short:'Story spine',title:'The Tour into Closing Statement',
+goal:'Run the two chained stories end to end. This single run banks both targets, seven disguises, the Grand Paladin, the safe, both wine-fridge routes and the car exit.',
+loadout:{start:'Winery Viewpoint <em>(Mastery 1 — always available)</em>',suit:"47's Signature Suit with Gloves",
+items:['Lethal Poison Pill Jar <em>(or take the jar in the Villa Bathroom, Level 5)</em>','Lockpick','Coin','Screwdriver <em>(or take one from the Tech Room)</em>']},
+sections:[
+{h:'Opening — the vineyard floor',steps:[
+{n:'Meet Diana and take the invitation',where:'Viewing Platform, Level 4 — up the road from the start',npc:'Diana Burnwood',
+does:['Walk the path and talk to Diana. She hands you the <strong>invitation</strong>, which gets you through the winery entrance without a disguise, and the mission stories unlock.'],
+warn:'Snipers and briefcases cannot be selected on a first playthrough or from this starting point — the game blocks them so you can\'t shoot Yates before this scene. Save sniper work for Run 6.',
+alt:'From Mastery 2 the Parking Lot start skips this scene; an unused invitation sits on a low wall there instead.',ch:[]},
+{n:'Reveal The Tour',where:'Wine Production Room entrance by the grapefields, Level 0',npc:'Gabriel Vargas (chief winemaker)',
+does:['Track "The Tour" from the mission-stories menu and follow the waypoint to the production room entrance.','Stand near Vargas and let the scripted conversation about the private tour play out. That conversation is the clue.'],
+warn:'Do not pacify or kill Vargas before the clue fires — the story is lost for that timeline. If the workers aren\'t talking, follow them a while or restart.',ch:[]},
+{n:'Take a Winery Worker disguise',where:'Staff Locker Room, top-left corner of the Production Room, Level 0',disguise:'→ Winery Worker',
+does:['An <strong>unused Winery Worker outfit</strong> hangs in the locker room — no pacification, no witnesses. A winery worker\'s key is on the same shelf.'],
+alt:'Any worker down in the grape fields; several are isolated enough to subdue quietly.',ch:['grapepick']},
+{n:'Isolate Vargas with the waterpump',where:'Grapefields, at the table where Vargas waits for his grape delivery',disguise:'Winery Worker',npc:'Gabriel Vargas + one worker',
+does:['Follow Vargas until he stops at the table with one worker. Go round the corner to the left and <strong>turn on the waterpump</strong> — the noise pulls the worker over.','Subdue the worker and hide the body in the container nearby, then turn the pump on a second time to pull Vargas alone.','Subdue Vargas and take the <strong>Chief Winemaker</strong> outfit.'],
+warn:'Hide the first body before the second pump activation or Vargas walks straight into it.',
+alt:'Dressed as a Winery Worker you can simply deliver the grapes to him instead, to get close without noise.',save:true,ch:[]},
+{n:'Guide the tour through three stages',where:'Back to the tour start, then Fermentation Room → Barrel Room',disguise:'Chief Winemaker',npc:'Diana Burnwood, Tamara Vidal, Corvo Black',
+does:['Diana and Vidal are waiting where you got the clue. Walk them into the <strong>Fermentation Room</strong> and use every marked talking point, then repeat in the <strong>Barrel Room</strong> — three presented stages is what Tour Guide counts.','Go up the stairs and wait at the far end of the barrel room. A door opens and Don Yates arrives; The Tour completes here.'],
+warn:'Do NOT kill either target yet. Closing Statement only appears if both are alive when the tour ends.',ch:['msTour','tourguide']}
+]},
+{h:'The hidden story — Closing Statement',steps:[
+{n:'Let the wine-fetch line play out',where:'Barrel Room, Level 1',npc:'Don Yates and his guard',
+does:['Let Yates and Vidal walk away and let the dialogue finish. The exact trigger is <strong>Yates telling his guard to fetch a bottle from the sommelier</strong> — Closing Statement then appears in your log with no menu entry.'],
+warn:'This is the single most important ordering rule on the map. A kill before this line costs you Closing Statement, The Hidden Hand, A Vintage Year, the Sommelier and Head of Security disguises, and 47\'s Signature Suit.',save:true,ch:[]},
+{n:'Drop into the ventilation tunnels',where:'Walk the edges of the Barrel Room until a drop-down prompt appears; tunnels run beneath',item:'Screwdriver (Tech Room corner, directly left of the Barrel Room) or Camera + Tier 1 Access Dongle',
+does:['Drop down, then head for the gratings in the <strong>eastern part of the tunnels</strong> nearest the wine fridge.','<strong>Two documented ways through:</strong> unscrew the vent cover with a screwdriver, or camera-hack the gratings — the hack needs the <strong>Tier 1 Access Dongle</strong> from the Tech Room.'],
+alt:'This is also the safest way in generally: there are cameras above the wine fridge doors.',ch:['below']},
+{n:'Frost the glass and take the Sommelier outfit',where:'Wine Fridge, Level 1',disguise:'→ Sommelier',npc:'Kenneth Flowers (sommelier) + assistant',
+does:['Use the <strong>wall panel inside the room to frost the windows</strong> so nobody outside can see in, then subdue Flowers and his assistant unnoticed.','A <strong>Waiter</strong> outfit is also available in this room and in the Barrel Room — take it now for Tastemaker.'],
+alt:'Wait for Flowers to stand by the tunnel exit, climb the ledge and pull him down.',ch:['taste']},
+{n:'Disable the lasers and clear the fridge',where:'Wine Fridge, Level 1; Cabernet is in the Production Room, Level 0',item:'Nothing — the code is 1945',
+does:['Enter <strong>1945</strong> on the laser panel and take the <strong>1945 Grand Paladin</strong> from behind the grid.','Estate Wines needs three bottles: <strong>Malbec and Pinot Noir are both here</strong>; the <strong>Cabernet Sauvignon is on the northwest side of the Production Room</strong> on Level 0 — grab it on the way in or out.'],ch:['vintage','estate']},
+{n:'Re-enter through the security doors for Going Above',where:'Security Room, Level 2, overlooking the Barrel Room',item:'Security Keycard (from the Security Room itself, or the bodyguard in a Level 2 bathroom cabin)',
+does:['Leave the fridge, go up to the Security Room and use the <strong>touch panel to unlock the ballistic-glass fridge doors</strong>. A timer starts — walk back in through the door before it expires.','Doing it in this order means Going Below and Going Above both pop in one run, no reload needed.'],
+alt:'While you are here you can also erase camera footage and open the fridge gas line — that panel is the Secondary Fermentation trigger used in Run 2.',ch:['above']},
+{n:'BRANCH — poison his Paladin glass (To Loyalty)',where:'Villa Basement, Level 3, at the meeting table',item:'Lethal Poison Pill Jar (loadout, or Villa Bathroom, Level 5)',npc:'Don Yates',
+does:['Save first. Deliver the bottle and place it on the table, then <strong>poison the glass Yates drinks from</strong>. He dies at the table.','Lethal poison also claims Tasteless, Traceless. It is a poisoning, not an accident, so it does not count for Someone Could Hurt Themselves.'],
+warn:'This ends the Closing Statement chain early — the Diana rescue, the knife finish and 47\'s Signature Suit all need Yates alive. Take this on a branch, then RELOAD before continuing.',save:true,ch:['loyalty','tasteless']},
+{n:'Deliver the Paladin and follow security',where:'Barrel Room → up to the Villa Basement',disguise:'Sommelier',npc:'Juan Cortázar (head of security)',
+does:['Hand the bottle to the guard waiting in the Barrel Room. He escorts you up. His outfit, <strong>Head of Security</strong>, is one of the fifteen — take it after the escort, not before, or the script breaks.','<strong>You get frisked on the way up.</strong> Drop every firearm and illegal item beforehand.'],
+alt:'Head of Security can also be taken independently in the Fermentation Room, where he stands on the phone by the stairs — distract him with a thrown item.',ch:[]},
+{n:'Present the wine, then take the Herald outfit',where:'Villa Basement meeting, Level 3',disguise:'Sommelier → Providence Herald',npc:'The Heralds, Yates, Vidal, Diana',
+does:['Place the bottle on the table, give the history speech, then stand back. The meeting runs several minutes: Yates argues for killing Diana, Vidal refuses, and <strong>Yates orders his guards to shoot Vidal</strong> — that is a proxy kill.','One of the blue-suited men at the corner of the table wears the <strong>Providence Herald</strong> outfit. Take it once the meeting disperses.'],
+alt:'The guards shooting Vidal is half of Murder by Proxy, but Yates dies by your hand here, so that challenge is banked in Run 3 instead.',ch:['closing','hidden','tVidal']},
+{n:'Clear the top floor and finish Yates',where:'Villa upper floor, Level 5 — stairs and two balconies',npc:'Three guards, then Diana, then Yates and two escorts',
+does:['Take out the guard at the stairs and the two on the balconies and <strong>hide all three bodies fast</strong> — Yates arrives shortly and cannot see a body. Bodies dumped on the roof count as hidden.','Talk to Diana, take the chair she indicates, and wait. Diana stabs Yates; drop the two escorts, then <strong>interact with Yates on the floor to push the knife in</strong> and register the elimination. Hide him in the bedroom or bathroom.'],
+warn:'From the moment Diana is walked upstairs you are on a timer — roughly ten minutes before the guards kill her.',save:true,ch:['tYates']},
+{n:"Take 47's suit from the coat rack",where:'Same bedroom, corner by the fireplace, Level 5',disguise:"→ 47's Signature Suit with Gloves",
+does:['The final story objective is "disguise yourself appropriately". The suit is on the <strong>coat rack by the fireplace</strong>. This is the fifteenth Chameleon disguise and exists nowhere else on the map.'],ch:[]},
+{n:'Open the basement safe',where:'Villa Basement, safe on the wall, Level 3',item:'Nothing — the code is 2006',
+does:['Enter <strong>2006</strong> and take the <strong>Report on Data Leak</strong>. The calendar in the upstairs office is the in-game hint for that code.','Keep it in mind — Run 3 hands this document to Valentina for Domestic Disturbance.'],
+alt:'Mercenaries down here can see through most disguises. Distract them with a thrown item rather than walking past.',ch:['scandal']},
+{n:'Unlock both basement shortcuts',where:'Villa Basement, Level 3 — north-east wall and south-east wall',
+does:['<strong>Cellar Door</strong> is on the north-east side; it opens onto the Villa Front Yard and lets you drop into the basement from outside forever after.','<strong>Maintenance Door</strong> is on the south-east side, north of the Asado; it can only be unlocked from the basement side.'],
+warn:'Both are one-way locks. Neither can be opened from the far side, even with keys, a lockpick or a crowbar — so if you skip them here you will have to come back through the basement.',ch:['scCellar','scMaint']},
+{n:'Drive out in Yates\u2019 car',where:'Car keys on the bedside table, Villa Bedroom, Level 5; the convertible is in the Villa Front Yard, Level 4',item:'Yates\u2019 Car Key',
+does:['You finish the story standing in the room the keys are in — take them, walk down through the Cellar Door shortcut you just opened, and drive out.','Both targets are already dead (Vidal by the guards, Yates by the knife), so the exit is live.'],ch:['gta']}
+]}]},
+
+{
+key:'r2',short:'Winery carousel',title:'The winery: six deaths for Tamara Vidal',
+goal:'Everything inside the winery building. One tour setup gives four Vidal accidents, the Tasting Room gives two poison kills, and Over The Top and Secondary Fermentation close it out.',
+loadout:{start:'Vineyard <em>(Mastery 4 — starts you in the fields as a Winery Worker)</em>. Tasting Room <em>(Mastery 7)</em> starts you as a Waiter and makes the poison pair much faster. Below Mastery 4 use Winery Viewpoint.',
+suit:'Any — disguises get overwritten immediately',
+items:['Lethal Poison Pill Jar','Emetic Rat Poison','Lockpick <em>(needed for the presser above Casual)</em>','Coin']},
+sections:[
+{h:'Fields and tools — collect before anything else',steps:[
+{n:'Take the grape knife',where:'Grape Shed, inside the grapevines, Level 0',disguise:'Winery Worker (free from the Vineyard start)',item:'→ Grape Knife',
+does:['The knife is in the shed. A gaucho or winery worker outfit is also easy to take here, and the shed holds a distillation machine that turns a poisonous flower from the Grapefield Cliff into lethal poison.'],ch:[]},
+{n:'Harvest a Malbec vine',where:'Malbec Field — the UPPER section of the grapevines, Level 0',item:'Grape Knife',
+does:['Cut a ripe vine in the upper field. <strong>The lower section is the Chardonnay field and does not count.</strong>'],ch:['harvest']},
+{n:'Make a guard slip on grapes',where:'Grapefields — the lone guard on the far side of the Grape Shed, Level 0',item:'Cluster of grapes + a coin',
+does:['<strong>Place</strong> the grape cluster on the ground on his path, then throw a coin past it to walk him over it. He slips and is pacified.'],
+warn:'Throwing the grapes or melee-ing with them does not count. It has to be a slip on a placed cluster.',ch:['wrath']},
+{n:'Collect the screwdriver and wrench',where:'Production Room, Level 0 — wrench on a blue toolbox along the big purple pump tube; screwdriver nearby, or in the Tech Room corner (Level 1)',item:'→ Screwdriver, → Wrench, → Fuse Cell',
+does:['Highlight both with instinct. Also pick up the <strong>Fuse Cell</strong> from the Production Room — it powers the high-voltage outlet used at the end of Over The Top.','Enter through the ventilation grate south of the room if the guarded field entrance is a problem: it can be camera-hacked, then climb the crates.'],
+alt:'There is a second wrench on the trailer roof at the Parking Lot, and screwdrivers in the Cinema and the boatdock shed.',ch:[]},
+{n:'Stage the Security Keycard now',where:'Level 2 bathroom cabin (above Reception), or the Security Room itself',item:'→ Security Keycard',
+does:['Attack the bodyguard in one of the cabins; he leaves a <strong>Security Keycard and a silenced pistol</strong>. This also banks the Bodyguard disguise for Chameleon.'],
+warn:'Do this before the tour. The Secondary Fermentation branch later is a timed sprint into the locked Security Room — going there without the keycard wastes the whole attempt.',ch:[]},
+{n:'Overhear the pump conversation',where:'Fermentation Atrium, Level 2 — the balcony above the fermentation room',npc:'Two workers in blue',
+does:['Stand near them and let them finish talking about the pump malfunction. That reveals <strong>Over The Top</strong>, which you will run as a branch later.'],
+alt:'If they aren\'t talking, follow them for a while or restart and come straight here.',ch:[]},
+{n:'Dump a body in a fermentation tank',where:'Top of the fermentation tanks — Fermentation Room upper level (Level 1) or the Atrium above (Level 2)',
+does:['Pacify or kill any worker standing on top of a tank and <strong>drop him in</strong>. Any body works; it does not have to be a target.'],ch:['primary']}
+]},
+{h:'Tasting Room — the poison pair (do this before starting the tour)',steps:[
+{n:'Take the Waiter outfit and the blue bottle',where:'Small stash room in the corner of the Tasting Room, Level 2',disguise:'→ Waiter',item:'→ Pinot Noir (blue bottle)',
+does:['<strong>Switch off the fusebox</strong> in the stash and step out. When the waiter comes to check it, attack him and hide the body in the container nearby.','The <strong>blue Pinot Noir bottle</strong> is in the same stash. Take it to the counter and place it there.'],
+alt:'At Mastery 7 the Tasting Room start hands you the Waiter outfit and skips this whole step.',save:true,ch:['taste']},
+{n:'BRANCH A — lethal poison (Notes of Hemlock)',where:'Tasting Room counter, Level 2',disguise:'Waiter',item:'Lethal Poison Pill Jar',npc:'Tamara Vidal (arrives with Diana)',
+does:['Poison the bottle on the counter. When Vidal and Diana arrive, <strong>turn towards Vidal and offer her the wine</strong>. She dies as soon as she tastes it.','Then RELOAD to the save above for Branch B.'],ch:['hemlock','tasteless','tVidal']},
+{n:'BRANCH B — emetic, then drown her (Hold My Hair)',where:'Tasting Room, then the Bathroom next to Reception, Level 2',disguise:'Waiter',item:'Emetic Rat Poison',npc:'Tamara Vidal + her bodyguard',
+does:['Use <strong>emetic</strong> instead of lethal. Vidal heads north to the bathroom beside Reception.','<strong>Get to the first stall before her and hide behind the door</strong>, or pre-emptively distract her bodyguard — otherwise he spots you entering the cabin with her.','Drown her in the toilet.'],
+warn:'If her bodyguard is still with her he will catch you at the stall door. Deal with him first.',save:true,ch:['hair','tVidal']}
+]},
+{h:'The tour — four accidents off one save',steps:[
+{n:'Set up the tour and take the master save',where:'Production Room / Fermentation Room, Level 0–1',disguise:'Chief Winemaker (waterpump trick, as in Run 1)',npc:'Diana, Vidal, Corvo Black, Vargas',
+does:['Repeat the Run 1 setup and walk the party in. Once Vidal is inside with you, <strong>take a hard manual save</strong> — every branch below reloads to it.','Take <strong>Corvo Black\'s</strong> outfit on one of these reloads: he attends the tour in the black suit and is a Chameleon disguise available nowhere else.'],save:true,ch:[]},
+{n:'BRANCH C — the grape crusher',where:'North side of the Production Room, Level 0',disguise:'Chief Winemaker',npc:'Tamara Vidal, Gabriel Vargas, Diana',
+does:['Present the grape crusher. Vidal <strong>leans on the rim</strong> — that is the position you need.','Wait for <strong>Diana to switch on the radio</strong>; that distracts Vargas and gives you the window. Check no other worker has line of sight, then push from behind and slightly to her side.'],
+alt:'The body sometimes bounces back onto the rim. Cosmetic only — the challenge still awards.',ch:['pulp','accident','tVidal']},
+{n:'BRANCH D — the grape presser',where:'Fermentation Room, Level 0–1',disguise:'Chief Winemaker',item:'Lockpick (above Casual difficulty)',npc:'Tamara Vidal',
+does:['Show her the presser and <strong>unlock the safety mechanism</strong>. She steps inside; run the console beside it.'],
+alt:'Guaranteed version: pacify her anywhere, drag the body into the presser and activate it — the challenge is worded as disposing of a body, so unconscious counts.',ch:['must','accident']},
+{n:'BRANCH E — the freezer',where:'Freezer near the Production Room entrance, Level 0',disguise:'Chief Winemaker',item:'Screwdriver',npc:'Tamara Vidal, Gabriel Vargas',
+does:['Ask about the freezer. The moment Vidal and Vargas step inside, <strong>sabotage the access panel with the screwdriver</strong>; the door seals with both of them in and hypothermia does the rest.'],
+warn:'This also kills Vargas, a civilian. Diana calls you callous for it and it breaks Silent Assassin. Never use this route in Run 6.',ch:['cold','accident']},
+{n:'BRANCH F — Over The Top and the electrified wine',where:'Fermentation Atrium centre, then the Fermentation Room pump, then the Production Room fusebox',disguise:'Winery Worker (the story asks for a worker outfit)',item:'Screwdriver, Wrench, Fuse Cell',npc:'Don Yates',
+does:['<strong>Step 1:</strong> screwdriver on the <strong>electrical outlet at the centre of the fermentation atrium</strong> to expose the wire. <strong>Step 2:</strong> wrench on the <strong>pump</strong> to release the interior seal. Throw something to pull the watching worker before each step.','The tanks overflow and wine floods the floor. Yates comes running to see the damage.','Be at the Production Room <strong>fusebox with the Fuse Cell already placed</strong> before he arrives, and power the exposed wire once he is standing in the wine.'],
+warn:'The two sabotage steps have a fixed order — outlet first, pump second. Reaching the fusebox after he arrives means waiting for another pass.',save:true,ch:['msTop','accident','tYates']},
+{n:'BRANCH G — gas both targets (do this last)',where:'Tech Room ventilation, Level 1 → Security Room console, Level 2',disguise:'Winery Worker',item:'Lethal Poison + Security Keycard',npc:'Both targets in the Barrel Room; Diana is also present',
+does:['Play the tour to its end so Yates enters the Barrel Room while Vidal is still there, and <strong>throw something to stop Vidal following you</strong>.','Clear the two people in the Tech Room, <strong>poison the ventilation system and switch it on</strong>, then sprint up to the Security Room and <strong>use the touch panel to route the airflow into the Barrel Room</strong>.','Walk the Tech Room → Security Room route once beforehand so you know the timing.'],
+warn:'Diana is in that room. Sources document this method with lethal poison, but the wiki separately says Diana reacts normally to non-sedative poisons and her death fails the mission outright. Save before you switch the vent on. It is also unclear whether emetic gas would satisfy the challenge instead.',save:true,ch:['secondary','tVidal','tYates']}
+]}]},
+
+{
+key:'r3',short:'Silos & proxies',title:'Silos, gardens, and both proxy kills',
+goal:'The sniper team and the gardens, then straight up into the villa basement so both proxy kills land in the same timeline for Murder by Proxy.',
+loadout:{start:'Sniper Spot <em>(Mastery 13 — puts you in the nest as a Gaucho)</em>. Below that use Parking Lot <em>(Mastery 2)</em>.',
+suit:'Any',items:['Camera <em>(mandatory — Melon Head)</em>','Coin','Lockpick','Emetic Rat Poison']},
+sections:[
+{h:'Reach the nest',steps:[
+{n:'Get up to the silo balcony',where:'Silos, Level 3, top-left of the map — snipers on the highest balcony',disguise:'Mercenary or Gaucho (or Gaucho free from the Sniper Spot start)',npc:'Two snipers',
+does:['<strong>Route A:</strong> take a Mercenary outfit from the armed men in black by the parked cars, then go through the door from the parking-lot room into the tunnel that leads to the silos.','<strong>Route B:</strong> the staircase up the silos, or climb the vertical metal beams.','<strong>Stand behind the two snipers while they talk</strong> to reveal Eyes On Target.'],ch:[]},
+{n:'BRANCH A — steal the rifle, then use it',where:'Sniper balcony, Silos, Level 3',item:'Coin → the sniper team\'s rifle',npc:'The rifleman (left) and his spotter (binoculars)',
+does:['Save first. <strong>Throw a coin to pull the rifleman off his post</strong> and take the rifle — the spotter notices nothing. That is Cuckoo\'s Nest.','Now pacify or eliminate the sniper team and <strong>kill both targets from that same position using their rifle</strong>. Moving the rifle elsewhere does not count. A headshot also banks Straight Shot.','Reward: Agent 17\'s Signature Suit. Then RELOAD — the next branch needs the targets alive.'],
+warn:'Stealing the rifle removes the weapon the snipers need for Eyes On Target. Reveal the story first, and keep these two branches on separate saves.',save:true,ch:['cuckoo','brother','straight','tVidal','tYates']}
+]},
+{h:'BRANCH B — Eyes On Target',steps:[
+{n:'Take a Gaucho outfit',where:'Lower Gardens, Level 3, directly below the silo',disguise:'→ Gaucho',npc:'Two-man gaucho patrols',
+does:['The game marks one specific gaucho, but <strong>that one is an enforcer</strong> and sees through his own outfit. Take any other. Split a pair with a coin first; there is plenty of tall grass here.'],ch:['cowboy']},
+{n:"Steal the spotter's earpiece",where:'Lower Gardens, next to the pick-up truck, Level 3',disguise:'Gaucho',item:'→ Spotter\'s Earpiece',npc:'Two enforcers standing over it',
+does:['Crouch through the tall grass on approach. <strong>Turn on the nearby radio</strong> and take the earpiece while both men move to investigate.'],
+warn:'Both of these are enforcers even against the Gaucho outfit. Do not be seen.',ch:[]},
+{n:'Target-paint the watermelons',where:'Just in front of where the earpiece was, Lower Gardens',item:'Camera',
+does:['Equip the camera from the item wheel, aim at the <strong>watermelons</strong> at the marked objective and scan. The snipers destroy the melon.'],
+warn:'The sniper team must still be alive and armed for this — so on this branch, do not pacify them.',ch:['melon']},
+{n:'Scan Vidal — and do not save',where:'Wherever Vidal is; zoom if her bodyguards keep you back',item:'Camera',npc:'Tamara Vidal',
+does:['She is marked automatically. Scan her with the camera.'],
+warn:'Do NOT save or reload between this scan and the kill order. A save here is the reported cause of the "Mission Story Missed" bug, attributed to an IOI developer post.',ch:[]},
+{n:'Send Diana to the gardens, then clear the bodyguards',where:'Party area, then the gardens south of the winery',npc:'Diana Burnwood, Tamara Vidal, three bodyguards',
+does:['Approach Diana from a side her bodyguards aren\'t watching and talk to her. She invents a cigarette break in the garden and Vidal follows.','The <strong>three bodyguards halt out of sight of the guests</strong>. Take them from behind, one at a time.'],
+warn:'This is where you would normally save — but not on this story. See the step above.',ch:[]},
+{n:'Give the kill order',where:'Beside Vidal in the garden',item:'Spotter\'s Earpiece',npc:'Tamara Vidal, the silo snipers',
+does:['Get close enough for the <strong>Give Kill Order</strong> prompt and use it. The snipers shoot her and <strong>her body is hidden automatically</strong>.','Timing: one report specifies giving the order mid-conversation while Diana is still speaking, rather than waiting for the dialogue to end.'],ch:['msEyes','tVidal']}
+]},
+{h:'Same timeline — Valentina kills Yates',steps:[
+{n:'Take the safe file',where:'Villa Basement, safe on the wall, Level 3 — fastest via the Cellar Door shortcut opened in Run 1',item:'Nothing — code 2006 → Report on Data Leak',
+does:['Enter <strong>2006</strong> and take the report. It proves Yates leaked the story that destroyed Valentina\'s diplomatic career.'],
+alt:'Three mercenaries down here can recognise you through a disguise. Distract them rather than walking past.',ch:['scandal']},
+{n:'Take a Mercenary outfit',where:'Anywhere around the villa; the Secret Tunnel fusebox and the Armory locker are both easy',disguise:'→ Mercenary',
+does:['Valentina will only accept the document from a mercenary. Sabotaging the fusebox in the Secret Tunnel gets you one cleanly.'],ch:[]},
+{n:'Hand the report to Valentina',where:'Main part of the villa, Level 4–5',disguise:'Mercenary',npc:'Valentina Morales Yates',
+does:['<strong>Wait until she is alone and not in a meeting with her husband</strong>, then talk to her to give her the file. She goes up to the office to read it and comes out enraged.','That is all you have to do. If you want to watch, wait by the balcony: she pushes Yates over the railing.'],
+warn:'Do not kill Valentina in this run — she is the murder weapon.',ch:['domestic','tYates']},
+{n:'Confirm Murder by Proxy',where:'Anywhere — the challenge resolves on the second proxy kill',
+does:['Vidal was shot by the snipers and Yates was pushed by his wife, so <strong>neither died by your hand in this timeline</strong> and the challenge pops.','Exit however you like — the grapefield exit below the Grape Shed is closest to the gardens.'],ch:['proxy']}
+]}]},
+
+{
+key:'r4',short:'Villa & party',title:'The villa: five ways to kill a lawyer',
+goal:'Bottom-up through the party into Yates\u2019 house. Seven QR codes, three disguises, the asado, and five separate Yates kills off staggered saves.',
+loadout:{start:'Parking Lot <em>(Mastery 2 — the invitation is on a low wall here and the lawyer spawns nearby)</em>',
+suit:"47's Signature Suit with Gloves",
+items:['Camera <em>(mandatory — QR codes)</em>','Emetic Rat Poison','Lockpick','Coin']},
+sections:[
+{h:'The public sweep — all seven QR codes',steps:[
+{n:'Grab the invitation and scan code 1',where:'Parking Lot and traffic circle, Level 2',item:'Camera + Invitation',
+does:['Take the unused <strong>invitation</strong> from the low wall. <strong>QR 1 (Viñedo Yates)</strong> is on a plate in front of the vineyard entrance right here.','All seven plates are in <strong>public areas</strong>, so you can do this whole section in the suit. Stand opposite each plate and scan — no photo needed.'],ch:[]},
+{n:'Scan codes 2 to 6 through the winery',where:'Reception, Tasting Room entrance, main level south end, Level 1 landing, Barrel Room',item:'Camera',
+does:['<strong>QR 3</strong> — beside the reception desk in the Fermentation Atrium. <strong>QR 4</strong> — by the Tasting Room entrance off Reception. <strong>QR 5</strong> — south end of the main winery level. <strong>QR 6</strong> — Level 1, on the circular landing between the main level and Level 0. <strong>QR 2</strong> — inside the winery on Level 2, near the Barrel Room.'],
+warn:'For QR 2, stay off the lower metal balconies — that area is restricted for party guests.',ch:[]},
+{n:'Take the microphone from the cinema',where:'Cinema, Level 0, lower-right of the winery complex',item:'→ Branson MD-2 Microphone (+ screwdriver, propane flask, emetic in the locked stash)',
+does:['The <strong>Branson MD-2</strong> is in the screening room. Take a <strong>screwdriver</strong> too — Firebrand needs one.','The stash door is locked: use a key, lockpick or crowbar. Emetic rat poison is inside.'],
+warn:'The eastern cinema door has a camera above it.',ch:[]},
+{n:'Scan code 7 and arm the microphone trap',where:'Asado / dining patio, Level 3',item:'Branson MD-2 Microphone',
+does:['<strong>QR 7</strong> is on a plate on the patio.','<strong>Swap the stage microphone</strong> for the one you carried up, then use the <strong>Voltage Regulator</strong> beside the stand to turn the voltage up. The trap is now armed and inert until Yates is called here.'],
+warn:'Arm the trap BEFORE lighting the asado pit. If Yates reaches the stage before the voltage is raised you have to wait for another cycle.',ch:['qr']}
+]},
+{h:'Asado business',steps:[
+{n:'BRANCH — The Talented Mr. Rieper',where:'Three conversations in the Asado (Level 3), ending in the Cinema (Level 0)',disguise:'Your suit — not a disguise',npc:'Diana Burnwood, Tamara Vidal',
+does:['Save first. In the suit, inside the party, <strong>talk to Diana three times</strong> as the icon appears above her head; you introduce yourself as Mr. Rieper each time. All three happen in the Asado.','After the third, Vidal offers a private word and <strong>walks you down to the Cinema</strong>. The challenge pops when the walk ends.','RELOAD immediately after it pops.'],
+warn:'The cinema meeting is an ambush — mercenaries are waiting there and will attack. Do not treat this as a safe isolation. If you want the kill here, drop Vidal with a syringe before descending the stairs.',save:true,ch:['rieper']},
+{n:'Take an Asado Chef outfit',where:'Beside the barbecue display, Asado, Level 3 (also available in the Villa Front Yard)',disguise:'→ Asado Chef',npc:'The Llosa Bros.',
+does:['Take one of the chefs working the fire pit. Isolate first — the patio is crowded.'],ch:['llosa']},
+{n:'BRANCH — Firebrand',where:'Asado, Level 3 — lamps with garden hoses and faucets nearby',item:'Screwdriver + a throwable',npc:'Tamara Vidal + 2–3 bodyguards',
+does:['<strong>Sabotage a lamp with the screwdriver</strong> and spill water around it from the hose or faucet.','<strong>Clear 2–3 of her bodyguards first</strong> — throw objects to draw them off, drop them well away from other guests and hide the bodies in tall grass. While she still has guards she delegates investigating and never moves.','Throw an item towards the sabotaged lamp to walk her onto the wet ground, then <strong>turn the faucet</strong> to electrocute her.'],
+alt:'A second source describes shooting the lamp instead once she is standing in the puddle. The faucet method needs no weapon and is cleaner.',save:true,ch:['firebrand','accident','tVidal']}
+]},
+{h:'Inside the villa — Yates, five ways',steps:[
+{n:'Wait for the lawyer to reach the Guest Room',where:'Villa Guest Room, Level 4, right of the Foyer',disguise:'→ Lawyer',npc:'Aron Ford Jr. (the lawyer) + one mercenary',
+does:['He walks up from the parking lot a few minutes into the mission. <strong>Do not intercept him at the parking lot</strong> — that is unnecessary risk.','In the Guest Room, <strong>surprise the mercenary first</strong>, then the lawyer. Take his outfit and hide both bodies.'],
+alt:'A second source describes taking his disguise and briefcase at the parking lot after his phone call and being escorted in through the iron gate. Either works; the Guest Room version is safer and the file is already on the desk.',save:true,ch:[]},
+{n:'BRANCH — Pencil Pusher',where:'Villa Guest Room, Level 4',disguise:'Lawyer',item:'Research File on Diana Burnwood (on the desk)',npc:'Don Yates',
+does:['Take the <strong>Research File</strong> from the desk and place it on the <strong>adjacent desk to the right — the one with the pen</strong>.','Yates visits the lawyer every few minutes. Talk to him and <strong>suggest he read Diana\'s file</strong>. Wait until he is positioned in front of the pen, then use the kill prompt.'],
+alt:'This same private window is the easiest headshot on the map if you would rather bank Straight Shot here.',save:true,ch:['pencil','tYates']},
+{n:'BRANCH — Get Rid of the Body',where:'Guest Room shutter → Garden Shredder by the basement stairs, Level 4',npc:'Don Yates, 2+ mercenaries near the shredder',
+does:['Same setup, different ending: <strong>stun Yates and throw his body through the shutter to the right of the pen desk</strong>.','Drag him round to the <strong>garden shredder</strong> outside, throw him in and press the button.'],
+alt:'You can also subdue the guard outside the Guest Room door and drag Yates round the corner directly.',ch:['shredder','accident']},
+{n:'BRANCH — Hold My Hair or Tasteless, Traceless',where:'North balcony, Villa upper floor, Level 5; bathroom adjoins',item:'Emetic Rat Poison, or Lethal Poison from the Villa Bathroom',npc:'Don Yates, with Valentina',
+does:['There is a <strong>wine glass on the north balcony</strong>; Yates returns to it periodically with Valentina.','<strong>Emetic</strong> → he goes to the adjoining bathroom to be sick → drown him from behind (Hold My Hair). <strong>Lethal</strong> → he dies on the balcony, but Valentina witnesses it.'],
+alt:'The Villa Bathroom on Level 5 has a ready-to-use lethal poison jar and the ladder to the attic.',ch:['hair','tasteless','accident']},
+{n:'BRANCH — Piano Man and Straight Shot',where:'By the fireplace in the Villa Foyer, Level 4',item:'Fiber Wire, or a silenced pistol',npc:'Don Yates + one mercenary in the room',
+does:['Yates comes down to the ground floor and <strong>stops at the Foyer fireplace</strong>. Fiber-wire him there for Piano Man, or take the headshot for Straight Shot.','The mercenary in the room usually will not notice immediately — throw something to stun him, then hide both bodies.'],save:true,ch:['piano','straight','tYates']},
+{n:'Banana Blazer',where:'Villa kitchen for the banana; any fireplace inside the villa',disguise:'Waiter or a guard outfit (the kitchen is trespass for a Waiter)',item:'→ Banana',npc:'Two cooks',
+does:['The <strong>banana is on a kitchen table</strong> watched by two cooks — wait out their conversation or throw a distraction.','<strong>Throw it into a fireplace inside the villa.</strong> The Foyer and the upstairs office both have one. Reward: The Pastel Suit.'],
+alt:'Single-source on the exact table (a community report); the fireplace requirement itself is from the wiki. Added 24 Aug 2025.',ch:['banana']},
+{n:'FINAL — light the asado and let the mic do the work',where:'Torch from the delivery van in the Villa Front Yard (Level 4) → fire pit in the Asado (Level 3)',item:'→ Torch',npc:'Don Yates; the cook by the pit phones him',
+does:['Take a <strong>torch</strong> from the front yard, walk down and <strong>light the asado fire pit</strong> — that is Asador on its own.','The cook standing by the pit calls Yates, who comes to the patio and takes the microphone during his speech. The raised voltage kills him.'],
+warn:'Do not drop or throw the torch in public after using it — it alarms everyone nearby.',ch:['asador','orator','accident','tYates']}
+]}]},
+
+{
+key:'r5',short:'Exits & Chameleon',title:'Every exit, the fiber-wire purist run, and the map sweep',
+goal:'A Fine Vintage in a single clean suit-only timeline, then reload branches for the other four exits, the last shortcut, the last disguises and the 45-area sweep.',
+loadout:{start:'Shrine <em>(Mastery 9 — behind the villa; the best start for staying in the suit)</em>. Winery Viewpoint if you want the Diana exit in the same run.',
+suit:"47's Signature Suit with Gloves",items:['Fiber Wire <em>(mandatory)</em>','Lockpick','Coin','Camera']},
+sections:[
+{h:'A Fine Vintage — fiber wire, boat, no outfit change',steps:[
+{n:'Understand the lockout before you start',where:'—',disguise:'Your suit, for the entire mission',
+does:['The conditions are: <strong>fiber-wire both targets, exfiltrate by boat, and never change outfit</strong>. Reward: the Pinot Noir item.','That rules out every Chameleon pickup, The Hidden Hand, all four disguise Discovery challenges, and every disguise-gated area including the Security Room and the Parking Area tunnel. It needs its own timeline.'],
+warn:'Patch attribution for this challenge is UNVERIFIED. It is also absent from your JSON dump, which predates it.',ch:[]},
+{n:'Collect the boat key first',where:'Shed beside the Boatdock, top of the map, Level 2',item:'→ Yates\u2019 Boat Key (also villa key, crowbar, screwdriver)',
+does:['Lure the men away from the hut and take the key from inside. Get this <strong>before</strong> the kills so the exit is ready.','A <strong>fishing line</strong> lies outside the shed — a second source calls it identical in use to the fiber wire, but whether it registers for this challenge is unverified. Bring the real one.'],save:true,ch:[]},
+{n:'Fiber-wire Yates at the Foyer fireplace',where:'Villa Foyer, Level 4 — reachable from the Shrine via the back paths',item:'Fiber Wire',npc:'Don Yates + one mercenary',
+does:['Wait for him to <strong>stop at the fireplace</strong>, stun the mercenary with a thrown object, and wire Yates.','You are trespassing in the villa in the suit, so move on the mercenaries\u2019 backs and hide both bodies.'],ch:['piano','tYates']},
+{n:'Fiber-wire Vidal — the hard half',where:'Tasting Room → Level 2 bathroom stall, or the garden after Diana walks her out',item:'Fiber Wire + Emetic Rat Poison',npc:'Tamara Vidal',
+does:['<strong>Best documented option:</strong> emetic her Pinot Noir in the Tasting Room, follow her to the bathroom stall beside Reception, and wire her in the cabin.','<strong>Alternative:</strong> use Diana\'s garden walk from Eyes On Target to pull her away from the guests — but clear her three bodyguards first.'],
+warn:'Whether you can serve the poisoned wine without taking the waiter outfit is UNVERIFIED. If it forces a disguise change, the run is void — save before trying. Do NOT use the Rieper cinema walk here: it is an ambush.',save:true,ch:['tVidal']},
+{n:'Leave by boat',where:'Boatdock, Level 2',item:'Yates\u2019 Boat Key',
+does:['Both targets down, no outfit ever changed — take the boat. Lago Lurker and A Fine Vintage pop together, and <strong>Suit Only comes free</strong> with them.'],ch:['lago','finevintage','so']}
+]},
+{h:'The other three exits and the last shortcut',steps:[
+{n:'Armory run — wetsuit, mercenary, and the Backdoor',where:'Secret Tunnel → Armory (Level 2) → Backside at the east end of the map',disguise:'→ Tactical Wet Suit, → Mercenary',
+does:['New timeline. Sabotage the fusebox in the Secret Tunnel for a <strong>Mercenary</strong> outfit; the <strong>Tactical Wet Suit</strong> is in the Armory, with a second mercenary outfit in a locked locker.','Continue east along the tunnel to <strong>Backside</strong> and unlock <strong>Shortcut: Backdoor from the north side</strong> — it cannot be opened from the front.','Watch for mercenaries patrolling the eastern cliff path.'],
+warn:'The wetsuit is an outfit change, so this can never share a timeline with A Fine Vintage.',ch:['scBack']},
+{n:'Exit through the cave',where:'Underground cave system, reached past the shrine and back paths',disguise:'Tactical Wet Suit (required)',
+does:['Kill both targets by whatever is quickest — the Foyer fireplace works — then take the cave exit in the wetsuit.'],save:true,ch:['cave']},
+{n:'Exit through the grapefields',where:'Very bottom of the map, below the Grape Shed, Level 0',
+does:['No key and no special outfit needed, and it is the least-patrolled exit on the map. Reload to the save above and take this one instead.'],ch:['sunset']},
+{n:'Leave with Diana',where:'Dance Floor, Level 2',npc:'Diana Burnwood',
+does:['After both targets are down, <strong>find Diana with instinct and take the exit prompt with her</strong>. This is the default exfiltration on a first playthrough.'],ch:['tango']}
+]},
+{h:'Completion sweep',steps:[
+{n:'Finish Chameleon — all 15 disguises',where:'Tracked across playthroughs, so it pops on whichever is your last',
+does:['<strong>Winery Worker</strong> Staff Locker Room L0 · <strong>Chief Winemaker</strong> Vargas, waterpump · <strong>Corvo Black</strong> tour attendee · <strong>Sommelier</strong> Kenneth Flowers, Wine Fridge · <strong>Head of Security</strong> Juan Cortázar, Barrel Room escort or Fermentation Room phone call · <strong>Providence Herald</strong> corner of the meeting table · <strong>47\u2019s Signature Suit</strong> coat rack, end of Closing Statement.','<strong>Waiter</strong> Barrel Room, Wine Fridge, Tasting Room fusebox, Asado or Villa Front Yard · <strong>Gaucho</strong> Lower Gardens · <strong>Asado Chef</strong> by the fire pit · <strong>Lawyer</strong> Villa Guest Room · <strong>Mercenary</strong> Secret Tunnel fusebox or Armory locker · <strong>Bodyguard</strong> Level 2 bathroom cabin or the parking-lot fusebox room · <strong>Tango Musician</strong> Dance Floor, Level 2 · <strong>Tactical Wet Suit</strong> Armory.'],
+warn:'Three exist only inside scripted events: Corvo Black during The Tour, and the Sommelier plus 47\u2019s suit inside the Closing Statement chain. If Runs 1 and 2 went correctly you already have all three.',ch:['chameleon']},
+{n:'Finish Discover Mendoza — 45 areas',where:'Seven floors; six areas are the ones people miss',
+does:['<strong>L0 (9):</strong> Chardonnay Field, Grape Shed, Grapefield Roads, Malbec Field, Cinema, Production Room, Staff Locker Room, Staff Restroom, Fermentation Room. <strong>L1 (3):</strong> Tech Room, Barrel Room, <em>Wine Fridge</em>.','<strong>L2 (14):</strong> Grapefield Cliff, Parking Lot, <em>Parking Area and Tunnel</em>, Security Tunnel, Boatdock, Dance Floor, Reception, Fermentation Atrium, Tasting Room, Bathroom, <em>Security Room</em>, <em>Secret Tunnel</em>, <em>Armory</em>, <em>Backside</em>. <strong>L3 (5):</strong> Silo, Lower Gardens, Higher Gardens, Villa Basement, Asado.','<strong>L4 (7):</strong> Security Checkpoint, Viewing Platform, Villa Front Yard, Villa Back Yard, Villa Foyer, Villa Guest Room, Villa Living Room. <strong>L5 (6):</strong> Villa Roof, Villa Office, Villa Bedroom, Villa Bathroom, Villa Front Balcony, Villa Back Balcony. <strong>L6 (1):</strong> <em>Villa Attic</em> — ladder in the Villa Bathroom.'],
+warn:'A 2021-era bug left the counter at 42/45 with the map showing everything revealed. If it hits you, re-enter Wine Fridge, Villa Attic and Backside.',ch:['discover']}
+]}]},
+
+{
+key:'r6',short:'The Classics',title:'The Classics — four restrictive runs',
+goal:'Four timelines with one job each and no souvenirs. Suit Only usually arrives free from Run 5.',
+loadout:{start:'Winery Viewpoint <em>(Mastery 1)</em> for the stealth runs; Shrine <em>(Mastery 9)</em> or Parking Lot <em>(Mastery 2)</em> for the sniper run',
+suit:"47's Signature Suit with Gloves",
+items:['Silenced pistol — ICA DTI Stealth <em>(Mastery 2)</em> or Krugermeier 2-2 <em>(Mastery 10)</em>','Sieger 300 Viper <em>(Mastery 20)</em> for the sniper run','Fiber Wire','Lockpick']},
+sections:[
+{h:'Silent Assassin, Suit Only — the propane route',steps:[
+{n:'Turn on the Silent Assassin HUD first',where:'Game Options → Gameplay → HUD',
+does:['Switch on <strong>Silent Assassin HUD</strong>. Two green pistols appear bottom-left; if they turn red the run is broken and you should reload rather than continue.','Save often. Bring a silenced pistol — you need exactly two shots later.'],ch:[]},
+{n:'Start clean and fetch a propane flask',where:'Winery Viewpoint start → Cinema, Level 0',item:'→ Propane Flask',npc:'Diana Burnwood',
+does:['Take the invitation from Diana, show it at the winery entrance, and go down to the <strong>Cinema</strong> for a <strong>propane flask</strong>.','You are a legitimate invited guest in the suit — that is the whole basis of a suit-only run here.'],ch:[]},
+{n:'Plant the flask behind Vidal on the balcony',where:'Asado balcony, Level 3',item:'Propane Flask',npc:'Tamara Vidal, Diana, one guard leaning on the flowerbed',
+does:['Place the flask <strong>as close as you can to the spot behind Vidal</strong> while she is at the balcony railing.','Turn around and <strong>get into the flowerbed behind the guard leaning against it</strong>, then subdue him from inside it — that hides the body without being seen.'],save:true,ch:[]},
+{n:'Pop the flask on the cigarette cue',where:'From the flowerbed',item:'Silenced pistol',npc:'Tamara Vidal (Diana must be clear)',
+does:['Let the Vidal–Diana conversation run. <strong>Just as Vidal stubs out her cigarette, and with Diana a good distance away, shoot the flask twice.</strong>','This registers as an <strong>accident</strong>, so it is Silent-Assassin-legal and needs no disguise.'],
+warn:'Diana must be well clear. Catching her in the blast is an instant mission failure.',ch:['accident','tVidal']},
+{n:'Flood the winery and electrocute Yates',where:'Fermentation Atrium outlet → Fermentation Room pump → Production Room fusebox',item:'Screwdriver, Wrench, Fuse Cell',npc:'Don Yates',
+does:['Sneak out of the flowerbed back into the winery. Take the stairs down, avoiding the two chatty workers on the upper balcony, and vault the safety tape near the bottom rather than walking into view.','Grab the <strong>fuse from the worker at the table on the left</strong>, then sabotage the outlet and the pump as in Run 2 — <strong>in the suit</strong>, unobserved.','When Yates comes to inspect the flood and stands in the wine, power the exposed wire. Another accident, no bodies, no disguise.'],
+warn:'Doing the sabotage in the suit means Mission Story - Over The Top will not register (it wants a worker outfit). That challenge is already banked in Run 2.',save:true,ch:['accident','tYates']},
+{n:'Exit and bank three challenges at once',where:'Grapefields exit below the Grape Shed, or the Dance Floor with Diana',
+does:['Two accidents, no bodies found, never compromised, suit throughout — <strong>Silent Assassin, Silent Assassin Suit Only and Suit Only all resolve together</strong>.'],ch:['sa','saso','so']}
+]},
+{h:'Sniper Assassin',steps:[
+{n:'Set up in the villa attic',where:'Villa Attic, Level 6 — ladder in the upstairs Villa Bathroom, or a short climb from the Villa Roof',item:'Sieger 300 Viper, or the silo team\'s rifle',
+does:['Bring your own <strong>suppressed</strong> rifle, or have it delivered to the attic agency pickup at Mastery 14. The attic already holds a Bartoli Woodsman Hunting Rifle, but <strong>whether a hunting rifle counts for this challenge is unverified</strong>.','The attic\'s value is that mercenaries cannot reach it.'],
+warn:'Snipers cannot be selected on a first playthrough or from the Winery Viewpoint start. Use the Shrine, Parking Lot or Sniper Spot start.',save:true,ch:[]},
+{n:'Two shutters, two targets',where:'Attic shutters — one overlooks the Villa Back Yard, one overlooks the Asado',item:'Sniper rifle',npc:'Don Yates, Tamara Vidal',
+does:['<strong>Yates:</strong> the shutter facing the <strong>Villa Back Yard</strong>. Shoot as he appears, or wait until he stops at the railing.','<strong>Vidal:</strong> the shutter facing the <strong>Asado</strong>. Wait for a clean headshot.','After each shot, retreat into the attic and wait out the search.'],
+warn:'One source states the estate alert does not fail Sniper Assassin; your JSON lists "Do not get spotted" as a condition. Treat that as unresolved and save before each shot.',
+alt:'A second source combines this with SASO by throwing a briefcased silenced rifle onto the villa roof before scaling it from the Shrine.',ch:['sniper','tYates','tVidal']}
+]},
+{h:'Automatic completions',steps:[
+{n:'The Classics',where:'—',
+does:['Resolves once Silent Assassin, Silent Assassin Suit Only, Sniper Assassin and Suit Only are all done. No extra run.'],ch:['classics']},
+{n:'Versatile Assassin',where:'—',
+does:['Resolves once Piano Man, Someone Could Hurt Themselves, Hold My Hair, Straight Shot and Tasteless, Traceless are all done — spread across Runs 1 to 5, so nothing extra is needed.'],ch:['versatile']}
+]}]}
+];
+
+/* ================= STATE ================= */
+let done={},steps={},openRuns={r1:true},openSteps={};
+function reportProgress(){try{const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r['m23']={done:CH.filter(c=>done[c.id]).length,total:CH.length,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
+async function load(){
+  try{const r=localStorage.getItem('farewell-v2');if(r){const p=JSON.parse(r);done=p.done||{};steps=p.steps||{};}}catch(e){}
+  render();
+  reportProgress();
+}
+async function save(){try{localStorage.setItem('farewell-v2',JSON.stringify({done,steps}));}catch(e){}reportProgress();}
+
+/* ================= RENDER ================= */
+function badgeHTML(ids,warn,sv){
+  let h=(ids||[]).map(id=>{const c=byId[id];return c?`<span class="badge ${BC[c.t]}">${c.n}</span>`:'';}).join('');
+  if(warn)h+='<span class="badge b-warn">&#9888; Warning</span>';
+  if(sv)h+='<span class="badge b-save">&#9670; Save here</span>';
+  return h;
+}
+function metaHTML(s){
+  const rows=[];
+  if(s.where)rows.push(`<div><k>Where</k>${s.where}</div>`);
+  if(s.disguise)rows.push(`<div><k>Disguise</k>${s.disguise}</div>`);
+  if(s.item)rows.push(`<div><k>Item</k>${s.item}</div>`);
+  if(s.npc)rows.push(`<div><k>NPC</k>${s.npc}</div>`);
+  return rows.length?`<div class="meta">${rows.join('')}</div>`:'';
+}
+function renderRuns(){
+  document.getElementById('runnav').innerHTML=RUNS.map((r,i)=>{
+    const all=r.sections.reduce((a,s)=>a+s.steps.length,0);
+    const dn=r.sections.reduce((a,s,si)=>a+s.steps.filter((_,x)=>steps[`${r.key}-${si}-${x}`]).length,0);
+    return `<button class="runbtn" data-jump="${r.key}"><b>Run ${i+1}</b>${r.short}<i> · ${dn}/${all} steps</i></button>`;
+  }).join('');
+
+  document.getElementById('runs').innerHTML=RUNS.map((run,ri)=>{
+    const open=!!openRuns[run.key];
+    const secs=run.sections.map((sec,si)=>{
+      const st=sec.steps.map((s,x)=>{
+        const key=`${run.key}-${si}-${x}`;const dn=!!steps[key];const op=!!openSteps[key];
+        return `<div class="step ${dn?'done':''}">
+          <div class="sthead">
+            <button class="tick" data-step="${key}" aria-pressed="${dn}" aria-label="Mark step done">&#10003;</button>
+            <span class="stnum">${si+1}.${x+1}</span>
+            <button class="sttoggle" data-stepopen="${key}" aria-expanded="${op}">
+              <span class="sttitle">${s.n}<span class="chev">${op?'\u25B4':'\u25BE'}</span></span>
+              <span class="badges">${badgeHTML(s.ch,s.warn,s.save)}</span>
+            </button>
+          </div>
+          <div class="stbody" id="b-${key}" ${op?'':'hidden'}>
+            ${metaHTML(s)}
+            <ul class="does">${(s.does||[]).map(d=>`<li>${d}</li>`).join('')}</ul>
+            ${s.warn?`<div class="note-line nl-warn"><b>Warning —</b> ${s.warn}</div>`:''}
+            ${s.alt?`<div class="note-line nl-alt"><b>If that fails —</b> ${s.alt}</div>`:''}
+            ${s.save?`<div class="note-line nl-save"><b>Save here —</b> take a manual save before this step\u2019s irreversible action; the next branch reloads to it.</div>`:''}
+          </div>
+        </div>`;
+      }).join('');
+      return `<div class="secbar"><span class="sech">${sec.h}</span>
+        <button class="exp" data-expand="${run.key}-${si}">Expand section</button></div>${st}`;
+    }).join('');
+
+    return `<section class="run" id="run-${run.key}">
+      <button class="runhead" data-run="${run.key}" aria-expanded="${open}">
+        <span class="chev">${open?'\u25B4 Collapse':'\u25BE Expand'}</span>
+        <span class="rn">Run ${ri+1} of ${RUNS.length}</span>
+        <h2>${run.title}</h2>
+        <p>${run.goal}</p>
+      </button>
+      <div class="runbody" ${open?'':'hidden'}>
+        <div class="loadout">
+          <div class="lo"><b>Starting location</b><span>${run.loadout.start}</span></div>
+          <div class="lo"><b>Suit</b><span>${run.loadout.suit}</span></div>
+          ${run.loadout.items.map((it,i)=>`<div class="lo"><b>Item slot ${i+1}</b><span>${it}</span></div>`).join('')}
+        </div>
+        ${secs}
+      </div>
+    </section>`;
+  }).join('');
+}
+let filter='all';
+function renderList(){
+  const opts=[['all','All'],['A','Assassination'],['D','Discovery'],['F','Feats'],['T','Targets'],['TC','Classics'],['inc','Incomplete']];
+  document.getElementById('filters').innerHTML=opts.map(([k,l])=>`<button class="filter" data-filter="${k}" aria-pressed="${filter===k}">${l}</button>`).join('');
+  const list=CH.filter(c=>filter==='all'?true:filter==='inc'?!done[c.id]:c.t===filter);
+  document.getElementById('chList').innerHTML=list.map(c=>`
+    <div class="ch ${done[c.id]?'done':''}">
+      <button class="tick" data-ch="${c.id}" aria-pressed="${!!done[c.id]}" aria-label="Mark ${c.n} complete">&#10003;</button>
+      <div><div class="ch-name">${c.n}</div><div class="ch-desc">${c.d}</div>
+      <div class="ch-meta">${TYPES[c.t]} · +${c.xp.toLocaleString()} XP</div></div>
+    </div>`).join('')||'<p style="color:var(--dim)">Nothing left in this filter.</p>';
+}
+function renderTracker(){
+  const n=CH.filter(c=>done[c.id]).length,total=CH.length;
+  const xp=CH.filter(c=>done[c.id]).reduce((a,c)=>a+c.xp,0),tx=CH.reduce((a,c)=>a+c.xp,0);
+  document.getElementById('tDone').textContent=n;
+  document.getElementById('tXp').textContent=`${xp.toLocaleString()} / ${tx.toLocaleString()} XP`;
+  document.getElementById('tPct').textContent=`${Math.round(n/total*100)}% complete`;
+  document.getElementById('tBar').style.width=(n/total*100)+'%';
+  document.getElementById('tCats').innerHTML=Object.entries(TYPES).map(([k,l])=>{
+    const set=CH.filter(c=>c.t===k),d=set.filter(c=>done[c.id]).length;
+    return `<div class="cat"><b>${l}</b><i>${d}<small> / ${set.length}</small></i></div>`;}).join('');
+}
+function render(){renderTracker();renderRuns();renderList();}
+
+/* ================= EVENTS ================= */
+document.addEventListener('click',e=>{
+  const tab=e.target.closest('.tab');
+  if(tab){document.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-selected',t===tab));
+    document.querySelectorAll('.view').forEach(v=>v.hidden=(v.id!=='view-'+tab.dataset.view));return;}
+
+  const jump=e.target.closest('[data-jump]');
+  if(jump){const k=jump.dataset.jump;openRuns={};openRuns[k]=true;renderRuns();
+    document.getElementById('run-'+k).scrollIntoView({behavior:'smooth',block:'start'});return;}
+
+  const rh=e.target.closest('[data-run]');
+  if(rh){const k=rh.dataset.run;openRuns[k]=!openRuns[k];renderRuns();return;}
+
+  const ex=e.target.closest('[data-expand]');
+  if(ex){const[rk,si]=ex.dataset.expand.split('-');
+    const run=RUNS.find(r=>r.key===rk);const sec=run.sections[+si];
+    const anyClosed=sec.steps.some((_,x)=>!openSteps[`${rk}-${si}-${x}`]);
+    sec.steps.forEach((_,x)=>{openSteps[`${rk}-${si}-${x}`]=anyClosed;});
+    renderRuns();return;}
+
+  const so=e.target.closest('[data-stepopen]');
+  if(so){const k=so.dataset.stepopen;openSteps[k]=!openSteps[k];renderRuns();return;}
+
+  const st=e.target.closest('[data-step]');
+  if(st){const k=st.dataset.step;steps[k]=!steps[k];if(!steps[k])delete steps[k];save();renderRuns();return;}
+
+  const ch=e.target.closest('[data-ch]');
+  if(ch){const k=ch.dataset.ch;done[k]=!done[k];if(!done[k])delete done[k];save();renderTracker();renderList();return;}
+
+  const fl=e.target.closest('[data-filter]');
+  if(fl){filter=fl.dataset.filter;renderList();return;}
+
+  if(e.target.id==='resetBtn'){done={};steps={};save();render();}
+});
+load();
+</script>
+
+<!-- step-progress-bridge -->
+<script>
+/* Reports route-step ticks into 'hitman-progress-registry' so the index can
+   show them beside the challenge counts. Counts what is on screen rather than
+   any guide-specific state, so one implementation serves every guide. */
+(function(){
+  var RID="m23", SEL=".step";
+  function isDone(s){
+    var c=s.classList;
+    if(c.contains('done')||c.contains('dn')) return true;
+    if(s.getAttribute('data-done')==='1'||s.getAttribute('aria-pressed')==='true') return true;
+    return !!s.querySelector('.done,.dn,[data-done="1"],[aria-pressed="true"]');
+  }
+  function tally(){
+    var steps=document.querySelectorAll(SEL);
+    if(!steps.length) return null;
+    var n=0;
+    for(var i=0;i<steps.length;i++) if(isDone(steps[i])) n++;
+    return {steps:n,stepTotal:steps.length};
+  }
+  function push(){
+    var t;
+    try{ t=tally(); }catch(err){ return; }
+    if(!t||!t.stepTotal) return;
+    try{
+      var r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');
+      var e=r[RID]||(r[RID]={});
+      /* the guide's own reportProgress() rewrites this entry wholesale, so
+         re-add the step counts whenever they go missing or stale */
+      if(e.steps===t.steps&&e.stepTotal===t.stepTotal) return;
+      e.steps=t.steps; e.stepTotal=t.stepTotal; e.updated=Date.now();
+      localStorage.setItem('hitman-progress-registry',JSON.stringify(r));
+    }catch(err){}
+  }
+  var pending=false;
+  function schedule(){
+    if(pending) return; pending=true;
+    setTimeout(function(){pending=false;push();},120);
+  }
+  try{
+    new MutationObserver(schedule).observe(document.body,
+      {subtree:true,childList:true,attributes:true,attributeFilter:['class','aria-pressed','data-done']});
+  }catch(err){}
+  window.addEventListener('load',schedule);
+  setTimeout(push,600);
+})();
+</script>
+<!-- /step-progress-bridge -->

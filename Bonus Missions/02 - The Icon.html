@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>THE ICON — Multi-Run Challenge Guide (22 Challenges)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#100E0B; --slate:#1B1815; --slate-2:#241F1A; --slate-3:#2C251E;
+    --line:#3A322A; --paper:#EDE4D0; --paper-2:#DED2B8;
+    --amber:#E8A33D; --red:#C4452F; --stock:#6FA8A2; --violet:#8E7CC3; --gold:#E4C76B;
+    --muted:#9C8F7E;
+    --display:"Oswald","Arial Narrow",Impact,sans-serif;
+    --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{background:var(--ink);color:var(--paper);font-family:var(--body);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 18px 80px}
+
+  /* header slate */
+  .slate{margin-top:22px;border:2px solid var(--line);background:var(--slate)}
+  .clapper{height:32px;background:repeating-linear-gradient(115deg,var(--paper) 0 26px,var(--ink) 26px 52px);border-bottom:2px solid var(--line)}
+  .slate-body{padding:20px 22px 22px}
+  h1{font-family:var(--display);font-weight:700;font-size:clamp(32px,7vw,60px);letter-spacing:.04em;line-height:.95;margin:0;text-transform:uppercase}
+  h1 span{color:var(--amber)}
+  .sub{font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-top:8px}
+  .run-tag{font-family:var(--mono);font-size:11px;letter-spacing:.15em;color:var(--amber);text-transform:uppercase}
+
+  .slate-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-top:20px}
+  .cell{background:var(--slate-2);padding:10px 12px}
+  .cell .k{font-family:var(--mono);font-size:10px;letter-spacing:.13em;color:var(--muted);text-transform:uppercase}
+  .cell .v{font-family:var(--display);font-size:20px;letter-spacing:.03em;margin-top:2px}
+  .cell .v small{font-size:12px;color:var(--muted);font-family:var(--mono)}
+
+  .strip{margin-top:18px;border:1px solid var(--line);background:var(--slate-2);padding:9px 10px}
+  .strip-track{position:relative;height:24px;background:var(--ink);overflow:hidden}
+  .strip-fill{position:absolute;inset:0 auto 0 0;width:0%;background:linear-gradient(90deg,var(--red),var(--amber));transition:width .35s ease}
+  .strip-holes{position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 12px,rgba(16,14,11,.9) 12px 20px);mix-blend-mode:multiply;pointer-events:none}
+  .strip-label{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--muted);margin-top:7px;text-transform:uppercase}
+  .strip-label b{color:var(--paper);font-weight:600}
+
+  /* tabs */
+  nav.tabs{display:flex;margin:26px 0 0;border-bottom:2px solid var(--line);flex-wrap:wrap}
+  .tab{appearance:none;background:none;border:none;border-bottom:3px solid transparent;font-family:var(--display);font-size:16px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);padding:10px 16px;cursor:pointer;margin-bottom:-2px}
+  .tab:hover{color:var(--paper)}
+  .tab[aria-selected="true"]{color:var(--amber);border-bottom-color:var(--amber)}
+  .tab:focus-visible,.filt:focus-visible,.runbtn:focus-visible,.tick:focus-visible,.toggle:focus-visible,.ghost:focus-visible,.runhead:focus-visible{outline:2px solid var(--stock);outline-offset:2px}
+  section[role=tabpanel]{padding-top:24px}
+  [hidden]{display:none !important}
+
+  /* run selector */
+  .runnav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+  .runbtn{appearance:none;background:var(--slate);border:1px solid var(--line);color:var(--paper-2);font-family:var(--display);font-size:14px;letter-spacing:.08em;text-transform:uppercase;padding:9px 14px;cursor:pointer;border-radius:2px;text-align:left}
+  .runbtn small{display:block;font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.06em;text-transform:none;margin-top:2px}
+  .runbtn:hover{border-color:var(--amber)}
+  .runbtn[aria-pressed="true"]{background:var(--amber);color:var(--ink);border-color:var(--amber)}
+  .runbtn[aria-pressed="true"] small{color:#4A3208}
+
+  /* run card */
+  .run{border:1px solid var(--line);background:var(--slate);margin-bottom:26px}
+  .runhead{width:100%;text-align:left;appearance:none;background:var(--slate-2);border:none;border-bottom:1px solid var(--line);padding:15px 18px;cursor:pointer;color:var(--paper);display:flex;gap:14px;align-items:flex-start}
+  .runhead .chev{font-family:var(--mono);color:var(--amber);font-size:15px;margin-top:5px;flex:0 0 auto}
+  .runhead h2{font-family:var(--display);font-size:23px;letter-spacing:.03em;text-transform:uppercase;margin:3px 0 5px;font-weight:600}
+  .runhead p{margin:0;color:var(--paper-2);font-size:14px;max-width:72ch}
+  .runmeta{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:9px;letter-spacing:.05em}
+
+  .loadout{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1px;background:var(--line);border-bottom:1px solid var(--line)}
+  .lo{background:var(--slate);padding:11px 14px}
+  .lo .k{font-family:var(--mono);font-size:10px;letter-spacing:.13em;color:var(--amber);text-transform:uppercase}
+  .lo .v{font-size:14px;margin-top:3px}
+  .lo .n{font-size:12px;color:var(--muted);margin-top:3px}
+
+  .sec-head{font-family:var(--display);font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--stock);padding:15px 18px 5px;border-top:1px solid var(--line)}
+
+  /* steps */
+  .step{border-top:1px solid rgba(58,50,42,.55)}
+  .step-row{display:flex;gap:11px;padding:11px 18px;align-items:flex-start}
+  .tick{flex:0 0 auto;width:25px;height:25px;border:1px solid var(--line);background:var(--ink);color:transparent;font-size:14px;line-height:1;cursor:pointer;border-radius:2px;margin-top:3px}
+  .tick:hover{border-color:var(--amber)}
+  .step.done .tick{background:var(--amber);border-color:var(--amber);color:var(--ink)}
+  .step.done .step-title{text-decoration:line-through;color:var(--muted)}
+  .toggle{flex:1;appearance:none;background:none;border:none;text-align:left;color:var(--paper);cursor:pointer;padding:0;font:inherit;min-width:0}
+  .step-num{font-family:var(--mono);font-size:11px;color:var(--amber);letter-spacing:.1em}
+  .step-title{font-weight:600;font-size:15px;letter-spacing:.01em;margin-top:1px}
+  .step-goal{color:var(--paper-2);font-size:13.5px;margin-top:2px}
+  .chev2{flex:0 0 auto;font-family:var(--mono);color:var(--muted);font-size:13px;margin-top:4px}
+  .badges{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}
+  .badge{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:3px 7px;border-radius:2px;border:1px solid}
+  .b-ass{color:var(--amber);border-color:var(--amber);background:rgba(232,163,61,.10)}
+  .b-dis{color:var(--stock);border-color:var(--stock);background:rgba(111,168,162,.10)}
+  .b-fea{color:var(--violet);border-color:var(--violet);background:rgba(142,124,195,.12)}
+  .b-tar{color:var(--paper);border-color:var(--paper);background:rgba(237,228,208,.08)}
+  .b-cla{color:var(--gold);border-color:var(--gold);background:rgba(228,199,107,.10)}
+  .b-warn{color:#FFD9D2;border-color:var(--red);background:rgba(196,69,47,.35);font-weight:600}
+  .b-save{color:#2A1D06;border-color:var(--amber);background:var(--amber);font-weight:600}
+  .b-flag{color:var(--muted);border-color:var(--line)}
+
+  .detail{padding:0 18px 14px 54px}
+  .fields{border:1px solid var(--line);background:var(--slate-3)}
+  .f{display:grid;grid-template-columns:110px 1fr;gap:0;border-bottom:1px solid rgba(58,50,42,.7)}
+  .f:last-child{border-bottom:none}
+  .f dt{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:8px 10px;background:rgba(16,14,11,.35)}
+  .f dd{margin:0;padding:8px 12px;font-size:14px;color:var(--paper-2)}
+  .f dd b{color:var(--paper)}
+  .warnbox{border-left:3px solid var(--red);background:rgba(196,69,47,.12);padding:9px 12px;margin-top:10px;font-size:13.5px;color:#F6DCD6}
+  .savebox{border-left:3px solid var(--amber);background:rgba(232,163,61,.10);padding:9px 12px;margin-top:10px;font-size:13.5px;color:#F7E4C4}
+  .flagbox{border-left:3px solid #B8722A;background:rgba(184,114,42,.14);padding:9px 12px;margin-top:10px;font-size:13.5px;color:#F3DCB8}
+
+  /* checklist */
+  .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+  .filt{appearance:none;background:var(--slate);border:1px solid var(--line);color:var(--muted);font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:6px 12px;cursor:pointer;border-radius:2px}
+  .filt:hover{color:var(--paper)}
+  .filt[aria-pressed="true"]{background:var(--amber);color:var(--ink);border-color:var(--amber);font-weight:600}
+  .ch{display:flex;gap:12px;padding:11px 14px;border:1px solid var(--line);border-bottom:none;background:var(--slate);align-items:flex-start}
+  .ch:last-child{border-bottom:1px solid var(--line)}
+  .ch.done{background:var(--slate-2)}
+  .ch.done .ch-name{text-decoration:line-through;color:var(--muted)}
+  .ch-name{font-family:var(--display);font-size:17px;letter-spacing:.03em;text-transform:uppercase}
+  .ch-desc{font-size:13.5px;color:var(--paper-2);margin-top:1px}
+  .ch-meta{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:5px;letter-spacing:.05em}
+  .ch-meta em{color:var(--amber);font-style:normal}
+
+  /* verification */
+  .doc{background:var(--paper);color:#241E16;padding:24px 26px;border:1px solid var(--paper-2)}
+  .doc h3{font-family:var(--display);text-transform:uppercase;letter-spacing:.06em;font-size:19px;margin:26px 0 8px}
+  .doc h3:first-child{margin-top:0}
+  .doc p,.doc li{font-size:14px;line-height:1.6}
+  .doc table{width:100%;border-collapse:collapse;margin-top:10px;font-size:13px}
+  .doc th,.doc td{border:1px solid #C6B896;padding:6px 9px;text-align:left;vertical-align:top}
+  .doc th{background:var(--paper-2);font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+  .doc code{font-family:var(--mono);font-size:12.5px;background:#DFD4B9;padding:1px 4px}
+  .unv{background:#F4D7A8;border-left:3px solid #B8722A;padding:9px 12px;margin:10px 0;font-size:13.5px}
+  .ok{background:#D9E5CE;border-left:3px solid #5C7A45;padding:9px 12px;margin:10px 0;font-size:13.5px}
+
+  .toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:14px 0 18px}
+  .ghost{appearance:none;background:none;border:1px solid var(--line);color:var(--muted);font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:7px 12px;cursor:pointer;border-radius:2px}
+  .ghost:hover{border-color:var(--red);color:#F0B3A6}
+  .note{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.05em}
+  footer{margin-top:40px;border-top:1px solid var(--line);padding-top:16px;font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.05em}
+
+  @media (max-width:620px){
+    .detail{padding-left:18px}
+    .slate-body{padding:16px}
+    .f{grid-template-columns:1fr}
+    .f dt{padding-bottom:0;background:none}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none !important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="slate">
+    <div class="clapper" aria-hidden="true"></div>
+    <div class="slate-body">
+      <div class="run-tag">L'Avventura Pictures · Sapienza, Italy · March 2017</div>
+      <h1>The <span>Icon</span></h1>
+      <div class="sub">Target: Dino Bosco · 22 challenges · 4 runs · Built against your extracted mission data</div>
+
+      <div class="slate-grid">
+        <div class="cell"><div class="k">Assassination</div><div class="v"><span data-count="assassination">0</span><small> / 10</small></div></div>
+        <div class="cell"><div class="k">Discovery</div><div class="v"><span data-count="discovery">0</span><small> / 3</small></div></div>
+        <div class="cell"><div class="k">Feats</div><div class="v"><span data-count="feats">0</span><small> / 5</small></div></div>
+        <div class="cell"><div class="k">Targets</div><div class="v"><span data-count="targets">0</span><small> / 1</small></div></div>
+        <div class="cell"><div class="k">The Classics</div><div class="v"><span data-count="classics">0</span><small> / 3</small></div></div>
+        <div class="cell"><div class="k">XP banked</div><div class="v"><span id="xp">0</span><small> / 39,000+</small></div></div>
+      </div>
+
+      <div class="strip">
+        <div class="strip-track" role="progressbar" aria-valuemin="0" aria-valuemax="22" aria-valuenow="0" aria-label="Challenges completed">
+          <div class="strip-fill" id="fill"></div>
+          <div class="strip-holes" aria-hidden="true"></div>
+        </div>
+        <div class="strip-label"><span>Reel status</span><span><b id="done">0</b> of <b>22</b> challenges</span></div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="Guide sections">
+    <button class="tab" role="tab" id="tab-runs" aria-controls="panel-runs" aria-selected="true">Optimized runs</button>
+    <button class="tab" role="tab" id="tab-list" aria-controls="panel-list" aria-selected="false">Checklist</button>
+    <button class="tab" role="tab" id="tab-ver" aria-controls="panel-ver" aria-selected="false">Verification</button>
+  </nav>
+
+  <section role="tabpanel" id="panel-runs" aria-labelledby="tab-runs">
+    <div class="runnav" id="runnav"></div>
+    <div class="toolbar">
+      <span class="note">Click a run to collapse or expand it · click any step for its full detail</span>
+      <span style="display:flex;gap:8px">
+        <button class="ghost" id="expandall">Expand all steps</button>
+        <button class="ghost" id="reset">Reset progress</button>
+      </span>
+    </div>
+
+    <div class="warnbox" style="margin-bottom:22px">
+      <b>The rule the whole guide is built on.</b> Challenges bank to your profile the moment they unlock, and they stay unlocked after a reload or a quit. That is why one run can farm three different kills on the same target: kill, watch the challenge pop, reload the save from just before the kill, kill differently. Confirmed by the Sapienza Steam challenge guide and used by every source route below.
+    </div>
+
+    <div id="runs"></div>
+  </section>
+
+  <section role="tabpanel" id="panel-list" aria-labelledby="tab-list" hidden>
+    <div class="filters" id="filters"></div>
+    <div id="checklist"></div>
+  </section>
+
+  <section role="tabpanel" id="panel-ver" aria-labelledby="tab-ver" hidden>
+    <div class="doc" id="verdoc"></div>
+  </section>
+
+  <footer>
+    Challenge names, descriptions, disguise list and area data taken from your extracted mission file. Route detail cross-checked against Hitman Wiki (mission + walkthrough pages), Gamepressure, Neoseeker, NamuWiki's challenge rules, PSNProfiles and Steam community guides. Anything a source could not confirm is marked UNVERIFIED. Progress is stored on this device only.
+  </footer>
+</div>
+
+<script>
+/* ── storage (localStorage, degrades to memory) ── */
+const mem={};
+const store={
+  async get(k){ try{ const v=localStorage.getItem(k); if(v!==null)return v; }catch(e){} return k in mem?mem[k]:null; },
+  async set(k,v){ mem[k]=v; try{ localStorage.setItem(k,v); }catch(e){} }
+};
+
+/* ── 22 challenges, exactly as in the mission data ── */
+const CH=[
+ {id:'dinos-inferno',n:"Dino's Inferno",t:'assassination',xp:2000,d:'Assassinate Dino Bosco by setting him on fire.',r:'Run 1'},
+ {id:'critically-acclaimed',n:'Critically Acclaimed',t:'assassination',xp:2000,d:'Assassinate Dino Bosco with a gas lamp explosion.',r:'Run 2'},
+ {id:'mega-byte',n:'Mega Byte',t:'assassination',xp:2000,d:'Assassinate Dino Bosco with the monster teeth.',r:'Run 1'},
+ {id:'performance',n:'Performance of a Lifetime',t:'assassination',xp:2000,d:'Assassinate Dino Bosco in a pyrotechnics explosion.',r:'Run 1'},
+ {id:'versatile',n:'Versatile Assassin',t:'assassination',xp:4000,d:'Complete all the Versatile challenges in Sapienza: Piano Man, Someone Could Hurt Themselves, Hold My Hair, Straight Shot, Tasteless Traceless.',r:'Pops in Run 3'},
+ {id:'accident',n:'Someone Could Hurt Themselves',t:'assassination',xp:1000,d:'Assassinate a target in an accident in Sapienza.',r:'Run 1'},
+ {id:'tasteless',n:'Tasteless, Traceless',t:'assassination',xp:1000,d:'Assassinate a target with lethal poison in Sapienza.',r:'Run 2'},
+ {id:'hold-my-hair',n:'Hold My Hair',t:'assassination',xp:1000,d:'Assassinate a target by drowning them in Sapienza.',r:'Run 2'},
+ {id:'piano-man',n:'Piano Man',t:'assassination',xp:1000,d:'Assassinate a target with the fiber wire in Sapienza.',r:'Run 3'},
+ {id:'straight-shot',n:'Straight Shot',t:'assassination',xp:1000,d:'Assassinate a target with a headshot in Sapienza.',r:'Run 3'},
+ {id:'call-back',n:'Call Back',t:'discovery',xp:1000,d:'Disguise yourself as a Special Effects Crew Member.',r:'Run 1'},
+ {id:'discover',n:'Discover Sapienza',t:'discovery',xp:null,d:'Reveal all undiscovered areas in Sapienza.',r:'Run 4 — not possible inside The Icon'},
+ {id:'car-chase',n:'Car Chase',t:'discovery',xp:1000,d:"Escape in Bosco's car.",r:'Run 3'},
+ {id:'ms-fire',n:'Mission Story — Light My Fire',t:'feats',xp:1000,d:'Swap the fuel.',r:'Run 1'},
+ {id:'ms-chew',n:'Mission Story — Something To Chew On',t:'feats',xp:1000,d:'Sabotage the monster teeth.',r:'Run 1'},
+ {id:'ms-explosive',n:'Mission Story — An Explosive Ending',t:'feats',xp:1000,d:'Override the pyrotechnic effects.',r:'Run 1'},
+ {id:'ms-fans',n:'Mission Story — Time To Meet The Fans',t:'feats',xp:1000,d:'Interrupt the shoot.',r:'Run 2'},
+ {id:'chameleon',n:'Chameleon',t:'feats',xp:2000,d:'Find and equip all disguises. Your mission data lists four for The Icon: Security, Kitchen Assistant, Movie Crew, SFX Crew.',r:'Run 1'},
+ {id:'thespian',n:'The Thespian',t:'targets',xp:2000,d:'Assassinate Dino Bosco.',r:'Run 1'},
+ {id:'sa',n:'Silent Assassin',t:'classics',xp:4000,d:'Only the target dies, no bodies found, never spotted, camera evidence erased.',r:'Run 3'},
+ {id:'saso',n:'Silent Assassin, Suit Only',t:'classics',xp:4000,d:'All of the above, and never change out of your suit.',r:'Run 3'},
+ {id:'suit-only',n:'Suit Only',t:'classics',xp:4000,d:'Assassinate the target and complete the mission in your suit.',r:'Run 3'}
+];
+const TYPE_LABEL={assassination:'Assassination',discovery:'Discovery',feats:'Feats',targets:'Targets',classics:'The Classics'};
+const TYPE_CLASS={assassination:'b-ass',discovery:'b-dis',feats:'b-fea',targets:'b-tar',classics:'b-cla'};
+const byId=Object.fromEntries(CH.map(c=>[c.id,c]));
+
+/* ── runs ── */
+const RUNS=[
+{
+ short:'Run 1', blurb:'Set pieces · 10 challenges',
+ tag:'Run 1 of 4 · ~30 min · 17,000 XP',
+ title:'Take One — The Set Pieces',
+ goal:'Collect all four disguises and every piece of set sabotage in one clean sweep, then take three different accident kills off a single save. Never interrupt the shoot in this run.',
+ meta:'Covers 10 challenges · one save slot needed · route runs west → north → set, no backtracking',
+ loadout:[
+  {k:'Starting location',v:'City Gates',n:'The only starting location in this mission. Nothing else unlocks at any mastery level.'},
+  {k:'Suit',v:'Any (Signature Suit)',n:'No suit requirement in this run.'},
+  {k:'Weapon slot',v:'Silenced pistol',n:'Emergencies only here. It is genuinely needed in Runs 2 and 3.'},
+  {k:'Item slot 1',v:'Lockpick',n:'Opens the café basement and the locked high-octane fuel case. Unlocked by the ICA Facility mission story challenges.'},
+  {k:'Item slot 2',v:'Coin',n:'Your lure for single crew members. Coins also lie on the ground near the start.'},
+  {k:'Smuggled item (Café Basement)',v:'Crowbar',n:'Backup opener for the fuel case. The café basement is the only agency pickup in the mission.'}
+ ],
+ sections:[
+  {name:'Stage 1 — Café alley: poison and the first outfit', steps:[
+   {t:'Open the café basement and take emetic rat poison',
+    goal:'You need rat poison later to clear a technician away from the pyrotechnics computer. Get it now so you never come back here.',
+    where:'From the City Gates start, head down the café alley to the basement back door, which opens straight off the street.',
+    dis:'None — the basement is empty, nobody objects to you being there.',
+    item:'Lockpick (or the shop key lying in the open near the café entrance).',
+    npc:'None.',
+    act:'Pick the door, take one emetic rat poison container (there are two down here), and collect your smuggled crowbar from the large agency pickup.',
+    warn:'Do not go up the internal stairs to the café side entrance. That door is covered by a security camera. It costs you nothing this run, but it is the exact mistake that ruins Run 3.'},
+   {t:'Take the Kitchen Assistant outfit from the white van',
+    goal:'One of the four disguises Chameleon needs, and the cheapest of them — no violence required.',
+    where:'The white van parked at the far end of the café alley, in the back alley behind the town hall.',
+    dis:'None needed to take it.',
+    item:'None.',
+    npc:'Alternative source: a kitchen assistant inside the café or in the back street behind the main building — subdue and strip.',
+    act:'Check the alley is empty, take the outfit from the van and change.',
+    badges:['chameleon']},
+   {t:'Coin-lure a movie crew member for the Movie Crew outfit',
+    goal:'Disguise two of four, and the outfit that makes the Run 2 gas lamp sabotage legal.',
+    where:'Crew members stand around the edge of the set near the starting area.',
+    dis:'None yet.',
+    item:'Coin.',
+    npc:'Any single movie crew member who is not standing in a group.',
+    act:'Throw a coin into a nearby alcove or alley, follow him in, subdue, change, and stash the body in a container.',
+    warn:'There is a spare Movie Crew outfit by the toilets in the east, but that is a restricted area with several witnesses. Not worth the walk.',
+    badges:['chameleon']}
+  ]},
+  {name:'Stage 2 — North alleyways: key and Security', steps:[
+   {t:'Grab the town hall key from the open shop',
+    goal:'The key to the upper town hall floors, including the security room where camera footage is deleted.',
+    where:'An open shop in the alleyways north of the set — the one everybody is allowed to walk into.',
+    dis:'None. Public area.',
+    item:'The town hall key is inside.',
+    npc:'Three security guards stand very close together right outside this shop.',
+    act:'Walk in, take the key.'},
+   {t:'Lure the static guard into the shop for the Security outfit',
+    goal:'Disguise three of four, and the outfit that gets you into the northern building without questions.',
+    where:'Same shop doorway in the north alleyways.',
+    dis:'None yet.',
+    item:'Coin.',
+    npc:'Of the three guards outside, take the one who always stands in the same spot — not either of the moving pair.',
+    act:'Lure him inside the shop, subdue him, take the uniform, and leave the body in there.',
+    warn:'The two alternative guards are worse: the tower guard by the spotlight has a crew member glancing at him, and the guard at the SFX computer is surrounded. Security does not fool everyone — the guard by the café, the one at the trailer entrance and the one patrolling by the pyro trigger all see through it.',
+    badges:['chameleon']}
+  ]},
+  {name:'Stage 3 — Northern building: tools, fuel, SFX Crew', steps:[
+   {t:'Take the screwdriver and the high-octane fuel',
+    goal:'Both items for the teeth and fire kills, from one room, before you need either.',
+    where:'The northern building, past the set.',
+    dis:'Security — it makes the approach legal.',
+    item:'Lockpick or crowbar for the locked fuel case.',
+    npc:'SFX crew are working in the main room. Do not touch them yet.',
+    act:'Pocket the screwdriver, open the case and take the high-octane fuel. Do not swap it into anything yet.',
+    warn:'A fuel case key also exists near the third-floor toilets in the east and works in any outfit — only worth fetching if you left the lockpick and crowbar at home.'},
+   {t:'Pull one SFX member into the stairwell',
+    goal:'Disguise four of four, plus the only Discovery challenge you can earn in this mission.',
+    where:'The stairwell of the same northern building.',
+    dis:'Security going in, SFX Crew coming out.',
+    item:'Anything throwable.',
+    npc:'One SFX crew member — the one who comes to investigate.',
+    act:'Open the stairwell door, throw an object in, subdue him on the stairs and change.',
+    warn:'Do not attack anyone in the main room. The others working there will see it and you lose the quiet approach for the rest of the run.',
+    badges:['call-back','chameleon']}
+  ]},
+  {name:'Stage 4 — Arm the set', steps:[
+   {t:'Sabotage the robot jaws from the balcony',
+    goal:'Turns the prop teeth into a lethal trap. This is the sabotage the Mega Byte kill depends on.',
+    where:'The back of the movie set — climb the ladder to the metal balcony above.',
+    dis:'SFX Crew.',
+    item:'Screwdriver.',
+    npc:'None on the balcony itself.',
+    act:'Open the jaw control panel and sabotage it. The teeth stay sabotaged for the rest of the run.',
+    warn:'Do not touch the ramp pressure console yet. Raise it now and a technician notices the fault and resets it long before Bosco jumps.',
+    badges:['ms-chew']},
+   {t:'Take the pyrotechnics trigger off the table',
+    goal:'The remote for the explosive kill. Pocket it, do not press it.',
+    where:'On a table in the western part of the main square, across the set from the balcony.',
+    dis:'SFX Crew or Security — both can be seen through here at close range.',
+    item:'None.',
+    npc:'The guard patrolling this corner and the pyro crew working nearby.',
+    act:'Wait for backs to turn or for the patrol to walk out, take the remote, and walk away without using it.'},
+   {t:'Clear the two technicians and override the pyro computer',
+    goal:'The remote does nothing on its own — the automatic explosions must be overridden at the computer first.',
+    where:'The platform on the north-west side of the set holding the special effects computer.',
+    dis:'SFX Crew.',
+    item:'The emetic rat poison from Stage 1.',
+    npc:'Two SFX technicians: one drinks from a glass beside him, the other can be pulled off station.',
+    act:'Poison the glass so the first leaves to be sick, turn off the nearby generator to draw the second away, then use the computer to override the pyrotechnics and walk off.',
+    badges:['ms-explosive']},
+   {t:'Save with everything armed and nobody dead',
+    goal:'This single save is what turns three separate runs into one.',
+    where:'Somewhere with a clear view of the set — the café plaza railing is ideal.',
+    dis:'SFX Crew (you need it for the fuel swap later).',
+    item:'Pyro trigger and high-octane fuel both in your pockets, fuel NOT swapped.',
+    npc:'None.',
+    act:'Manual save into a slot you will not overwrite. You will load it twice.',
+    save:'Save here. State to bank: 4 disguises taken, jaws sabotaged, pyro computer overridden, trigger and fuel in inventory, fuel not swapped.'}
+  ]},
+  {name:'Stage 5 — Three kills off one save', steps:[
+   {t:'Kill A — trigger the pyrotechnics at the ramp',
+    goal:'The explosive kill. Watch one full take first so you know where the charges sit.',
+    where:'Anywhere overlooking the run-up and the air ramp. The plaza railing works.',
+    dis:'Any — you are not near anyone.',
+    item:'Pyrotechnics trigger.',
+    npc:'Dino Bosco, mid-scene, being chased by the robot.',
+    act:'Select the trigger and fire it as he is about to jump onto the ramp — not while he is still being chased, not once he is airborne.',
+    warn:'Mistimed is not fatal: trigger too early or late and the charges are replenished, so you can retry on the next take. What IS fatal is having swapped the fuel — he burns earlier in the scene and never reaches your charges.',
+    badges:['performance','accident','thespian']},
+   {t:'Reload → Kill B — the monster teeth',
+    goal:'Raise the ramp pressure mid-take so he overshoots into the sabotaged jaws.',
+    where:'The ramp pressure control console on the west side of the set, beside the manual pyro detonator.',
+    dis:'SFX Crew.',
+    item:'None — the jaws are already sabotaged in this save.',
+    npc:'Two crew members work right at the console and can spot you tampering. Approach from behind them.',
+    act:'Wait for the scene to start and the call to action, then raise the pressure. He launches too high and lands in the teeth.',
+    warn:'Touch the console before the take begins and a technician resets it. This is the single most common failure on this kill.',
+    badges:['mega-byte','ms-chew']},
+   {t:'Reload → Kill C — swap the fuel and let him burn',
+    goal:'The fire kill. Do it last, because swapped fuel pre-empts everything later in the scene.',
+    where:'The refuelling station in the central part of the movie set.',
+    dis:'SFX Crew — mandatory. The swap is only unsuspicious in this outfit; in anything else, including your suit, the people around the station react.',
+    item:'High-octane fuel.',
+    npc:'The smaller robot with the flamethrower — that is what actually kills him.',
+    act:'Swap the tanks, walk clear, and wait for the flamethrower beat of the scene. He catches light and burns, counted as an accident.',
+    badges:['dinos-inferno','ms-fire','accident']},
+   {t:'Walk out through the old town gate',
+    goal:'Bank the completed mission. The car exit is not available this run.',
+    where:'Behind an unlocked grille near the alleyways in the north of the map.',
+    dis:'Any.',
+    item:'None.',
+    npc:'None.',
+    act:'Leave through the gate.',
+    warn:"Bosco's car needs the car key from inside his trailer, which you never entered this run. That exit belongs to Run 3."}
+  ]}
+ ]
+},
+{
+ short:'Run 2', blurb:'The Q&A · 4 challenges',
+ tag:'Run 2 of 4 · ~25 min · 5,000 XP',
+ title:'Take Two — Time to Meet the Fans',
+ goal:'Interrupt the shoot to pull Bosco off the set and into a Q&A, then use that one scripted stop for three different kills off a single save.',
+ meta:'Covers 4 challenges · one save slot · mutually exclusive with every kill in Run 1',
+ loadout:[
+  {k:'Starting location',v:'City Gates',n:'Only option.'},
+  {k:'Suit',v:'Any',n:'No suit requirement.'},
+  {k:'Weapon slot',v:'Silenced pistol',n:'For shooting the gas leak from cover if you would rather not wait for it to blow.'},
+  {k:'Item slot 1',v:'Lethal Poison Vial (or Modern Lethal Syringe)',n:'The rat poison on the map is emetic, not lethal. Tasteless Traceless specifically requires lethal poison.'},
+  {k:'Item slot 2',v:'Coin',n:'Crew lures around the generators and the Q&A stand.'},
+  {k:'Smuggled item (Café Basement)',v:'A second lethal poison, or nothing',n:'Only one agency pickup exists, so pick deliberately.'}
+ ],
+ sections:[
+  {name:'Stage 1 — Gather before you trigger anything', steps:[
+   {t:'Basement first: take emetic rat poison',
+    goal:'You need the emetic version for the drowning kill later — it is what sends him to the toilet.',
+    where:'Café basement, back door off the alley.',
+    dis:'None.',
+    item:'Lockpick or the shop key near the café entrance.',
+    npc:'None.',
+    act:'Pick the door, take a rat poison container, collect your smuggled item.'},
+   {t:'Kitchen Assistant from the white van',
+    goal:'The only outfit that lets you dose the Q&A refreshments without drawing attention.',
+    where:'White van at the far end of the café alley.',
+    dis:'None needed.',
+    item:'None.',
+    npc:'Or subdue a kitchen assistant in the café.',
+    act:'Take and wear the outfit — but swap to Movie Crew before you sabotage anything.'},
+   {t:'Coin-lure a Movie Crew outfit',
+    goal:'Movie Crew is what makes both the generator sabotage and the gas lamp sabotage legal.',
+    where:'Crew standing around the set edge near the start.',
+    dis:'None yet.',
+    item:'Coin.',
+    npc:'Any lone movie crew member.',
+    act:'Lure, subdue, change, hide the body.'},
+   {t:'Pick up the monkey wrench',
+    goal:'The tool that opens the gas lamp. Get it before the shoot is interrupted, while the west set is quiet.',
+    where:'The western part of the movie set, in the machinery area.',
+    dis:'Movie Crew or Security.',
+    item:'You are collecting the wrench.',
+    npc:'Pyro crew work this corner.',
+    act:'Take the wrench.',
+    warn:'If you cannot reach it safely, the lamp can instead be cracked open by shooting it — the wiki route uses the hippie apartment window as a firing position.'},
+   {t:'Flag Time to Meet the Fans in the ice cream shop',
+    goal:'Sets up the Q&A stand, its water bottle and the gas lamp behind it.',
+    where:'Inside the ice cream shop.',
+    dis:'None.',
+    item:'None.',
+    npc:'Sophia Wilde, Bosco\'s manager, on the phone complaining he will not attend the Q&A she arranged.',
+    act:'Listen to the whole call to flag the story and get the map markers.'}
+  ]},
+  {name:'Stage 2 — Interrupt the shoot', steps:[
+   {t:'Sabotage the generators',
+    goal:'This is what makes Bosco stop filming and go to meet his fans.',
+    where:'The generators in the south-eastern part of the movie set.',
+    dis:'Movie Crew — you can tamper openly in it.',
+    item:'None.',
+    npc:'Another movie crew member works this corner; coin-lure him or wait for him to turn.',
+    act:'Sabotage the generators. Bosco calls a pause, walks to the town hall, through the restaurant, and out to the Q&A.',
+    warn:'Point of no return. Once the shoot is interrupted, the teeth, pyrotechnics and fire kills are all unavailable for the rest of the run. Never combine this run with Run 1.',
+    badges:['ms-fans'],
+    flag:'Alternative documented by the wiki: tamper with — or simply shoot — the light rack near the robot that all the lights are wired into. Same result.'},
+   {t:'Save while he is walking his route',
+    goal:'Three kills come off this save.',
+    where:'Near the Q&A stand but out of the crowd, so each reload puts you in position.',
+    dis:'Movie Crew.',
+    item:'Wrench, lethal poison and rat poison all in hand.',
+    npc:'Bosco is mid-walk through the town hall and restaurant.',
+    act:'Manual save into a slot you will not overwrite.',
+    save:'Save here. State to bank: shoot interrupted, gas lamp still intact, water bottle still clean, wrench and both poisons carried.'}
+  ]},
+  {name:'Stage 3 — Three kills off one save', steps:[
+   {t:'Kill A — blow the gas lamp',
+    goal:'The gas lamp heater stands right behind his Q&A stand, and he stands next to it while answering questions.',
+    where:'Behind the Q&A stand.',
+    dis:'Movie Crew — the guard posted there will not react to you opening it.',
+    item:'Monkey wrench (or a silenced pistol to shoot the leak).',
+    npc:'Bosco, standing at the stand mid-Q&A.',
+    act:'Wrench the lamp open once he is close, then either wait for it to go up on its own or put one silenced round into the leak from cover.',
+    warn:'Do not open the gas early. A leak left running can ignite before he arrives and you waste the setup on an empty stand.',
+    badges:['critically-acclaimed','accident']},
+   {t:'Reload → Kill B — lethal poison in the water',
+    goal:'Instant death at the stand, and the only method that satisfies Tasteless Traceless.',
+    where:'The refreshments on the Q&A stand — the water bottle set out for the star.',
+    dis:'Kitchen Assistant. Change into it after the reload.',
+    item:'Lethal Poison Vial or Modern Lethal Syringe from your loadout.',
+    npc:'Bosco drinks it during the Q&A.',
+    act:'Dose the bottle, step away, and let him drink.',
+    warn:'Emetic rat poison will not do it. Only lethal poison counts for this challenge.',
+    badges:['tasteless']},
+   {t:'Reload → Kill C — rat poison, then drown him',
+    goal:'Emetic poison sends him to the toilet, and the toilet is where the drowning happens.',
+    where:'Dose the same bottle at the stand; he then walks to the portable toilet at the back of the café.',
+    dis:'Kitchen Assistant for the dosing.',
+    item:'Emetic rat poison from Stage 1.',
+    npc:'Bosco alone, vomiting into the toilet.',
+    act:'Poison the water, follow at a distance, and drown him while he is bent over the toilet.',
+    warn:'Shooting him there does not count — it must be a drowning, and dragging a subdued target into water does not register either. Clear or lure anyone nearby before he arrives, and reload rather than settling for a shot.',
+    badges:['hold-my-hair'],
+    flag:'Useful rule: drowning registers as an accidental death, so a found body does not by itself break Silent Assassin.'},
+   {t:'Exit through the old town gate',
+    goal:'Close the run out.',
+    where:'The unlocked grille in the north alleyways.',
+    dis:'Any.',
+    item:'None.',
+    npc:'None.',
+    act:'Leave. Four of the five Versatile challenges are now done — Piano Man and Straight Shot land in Run 3.'}
+  ]}
+ ]
+},
+{
+ short:'Run 3', blurb:'Trailer & SASO · 7 challenges',
+ tag:'Run 3 of 4 · ~12 min · 19,000 XP',
+ title:'Take Three — The Trailer and the Quiet Exit',
+ goal:"The most valuable run in the mission. One save inside Bosco's trailer gives you the headshot and the fiber wire, then a clean reload gives you Silent Assassin, Suit Only and his own car as the exit.",
+ meta:'Covers 7 challenges including all three Classics · shortest run in the guide · touch nothing else on the map',
+ loadout:[
+  {k:'Starting location',v:'City Gates',n:'Only option.'},
+  {k:'Suit',v:'Signature Suit — and it never comes off',n:'Suit Only and SASO fail the instant you wear any disguise. No outfits at all this run.'},
+  {k:'Weapon slot',v:'Silenced pistol',n:'Needed for the headshot kill. It is fired before the reload, so it never touches your Silent Assassin attempt.'},
+  {k:'Item slot 1',v:'Lockpick',n:'Opens the café basement door without a key detour.'},
+  {k:'Item slot 2',v:'Coin',n:'Emergency lure. Ideally unused.'},
+  {k:'Smuggled item (Café Basement)',v:'Leave empty',n:'Nothing in this route needs it.'}
+ ],
+ sections:[
+  {name:'Stage 1 — Into the trailer without being seen', steps:[
+   {t:'Take the café stairs up to the roof level',
+    goal:'The roof is the only safe way into the trailer while you are in a suit.',
+    where:'From the City Gates, along the café alley, then up the café stairs to the level above.',
+    dis:'None — you are in your suit for the whole run.',
+    item:'Lockpick if a door on your route is locked.',
+    npc:'Two guards watch the trailer entrance at ground level. You are avoiding them entirely.',
+    act:'Climb to the roof level above the café and cross to the trailer.',
+    warn:'There is also a ladder up. Sources call it the worse option without a disguise — use the stairs. And do not open the café side entrance at the top of the basement stairs: it is on camera, and camera evidence breaks Silent Assassin unless you erase it in the town hall security room.'},
+   {t:'Drop through the hole in the trailer roof',
+    goal:'Gets you inside past the two door guards, into the only area that is hostile to you in a suit.',
+    where:"The opening in the roof of Bosco's trailer, eastern part of the set.",
+    dis:'None.',
+    item:'None.',
+    npc:'Trailer should be empty when you enter — Bosco is out on the set filming.',
+    act:'Drop in and stay low.',
+    warn:"The trailer interior is the only hostile area on the map while you wear a suit. Being seen inside is being spotted, and that alone kills the run."},
+   {t:"Take Bosco's car key off the counter",
+    goal:'Without it, the sports car exit stays locked and Car Chase does not happen.',
+    where:'On the counter inside the trailer, visible as soon as you are in.',
+    dis:'None.',
+    item:'You are collecting the car key.',
+    npc:'None.',
+    act:'Pocket the key. Ignore the battle axe in here — loud, messy, and it breaks Silent Assassin.'},
+   {t:'Hide in the container and save',
+    goal:'He comes back here between takes on his own. This save carries both kills.',
+    where:'The cabinet and wardrobe area at the north end of the trailer interior.',
+    dis:'None.',
+    item:'Car key already in your pocket, fiber wire ready.',
+    npc:'Wait for Bosco to finish the take and walk in.',
+    act:'Crouch or hide, then manual save before he arrives.',
+    save:'Save here, inside the trailer, with the car key already taken. Both trailer kills come off this one save.'}
+  ]},
+  {name:'Stage 2 — Two kills, then the clean version', steps:[
+   {t:'Kill A — subdue him first, then headshot',
+    goal:'His costume works as armour, so a straight shot at a standing Bosco just knocks him down. Subduing first solves it.',
+    where:'Inside the trailer, once he has walked past the door.',
+    dis:'None.',
+    item:'Silenced pistol.',
+    npc:'Dino Bosco, alone.',
+    act:'Subdue him, then put a silenced round through his head. Stunning the target first is allowed — what matters is that the first shot fired hits the head.',
+    warn:'If your first bullet hits his body, the challenge will not register no matter what follows. Reload rather than trying to salvage it.',
+    badges:['straight-shot','versatile']},
+   {t:'Reload → Kill B — fiber wire',
+    goal:'The garrotte ignores his armour entirely, and it is the kill that keeps Silent Assassin intact.',
+    where:'Same spot inside the trailer.',
+    dis:'None.',
+    item:'Fiber wire.',
+    npc:'Dino Bosco, alone, once he is past the door.',
+    act:'Garrote him from behind.',
+    badges:['piano-man']},
+   {t:'Put the body in the wardrobe',
+    goal:'No body found is one of the four Silent Assassin conditions.',
+    where:'The wardrobe inside the trailer.',
+    dis:'None.',
+    item:'None.',
+    npc:'The body.',
+    act:'Stash him immediately, before you do anything else.'}
+  ]},
+  {name:'Stage 3 — Drive out', steps:[
+   {t:'Back out through the roof and check your evidence',
+    goal:'Everything is done except leaving cleanly. This is where runs get thrown away.',
+    where:'Up through the roof opening and back along the café stairs route.',
+    dis:'None.',
+    item:'Town hall key only if you need the security room.',
+    npc:'Stay crouched while anyone is in view.',
+    act:'Confirm three things before you move: nobody spotted you, no body was found, and you were not recorded. If a camera did catch you, erase the footage in the town hall security room first.'},
+   {t:"Escape in Bosco's car",
+    goal:'Four challenges pop on this one exit.',
+    where:'The sports car parked near the city gates.',
+    dis:'None — the suit stays on.',
+    item:"Bosco's car key.",
+    npc:'None.',
+    act:'Get in and drive out.',
+    badges:['car-chase','sa','saso','suit-only']}
+  ]}
+ ]
+},
+{
+ short:'Run 4', blurb:'Discover Sapienza + fallbacks · 1 challenge',
+ tag:'Run 4 of 4 · World of Tomorrow, not The Icon',
+ title:'Take Four — Discover Sapienza and Cleanup',
+ goal:'The 22nd challenge sits in The Icon\'s challenge list but cannot be completed inside The Icon. Everything else here is a fallback for something that did not pop in Runs 1 to 3.',
+ meta:'Covers 1 challenge · played in World of Tomorrow · all other steps are optional repairs',
+ loadout:[
+  {k:'Mission',v:'World of Tomorrow (or Landslide)',n:'Not The Icon. Your mission data lists 0 discoverable areas for The Icon, shared with World of Tomorrow.'},
+  {k:'Starting location',v:'Main Square or any unlocked start',n:'Whichever puts you nearest the areas you still need.'},
+  {k:'Suit',v:'Any',n:'Nothing here is stealth-rated.'},
+  {k:'Item slot 1',v:'Lockpick',n:'Several discoverable areas sit behind locked doors.'},
+  {k:'Item slot 2',v:'Free',n:'Take whatever you like — no challenge here depends on it.'},
+  {k:'Smuggled item',v:'None required',n:''}
+ ],
+ sections:[
+  {name:'Discover Sapienza', steps:[
+   {t:'Play World of Tomorrow and sweep the map for undiscovered areas',
+    goal:'Reveal every area in the Sapienza location. The counter runs to 47 areas.',
+    where:'The full Sapienza map — town, church, mansion, laboratory, caves, harbour. The Icon only opens a fraction of it.',
+    dis:'Whatever gets you into the mansion and lab — the mansion security or lab tech routes are the usual ones.',
+    item:'Lockpick for locked side rooms.',
+    npc:'None specifically.',
+    act:'Walk into every marked area, checking each floor level on the map screen — several are tiny storage rooms or corners rather than obvious zones. Commonly missed: the mansion garage, and the wine cellar on the corner by the church square.',
+    warn:'Do not expect any progress from playing The Icon. This challenge is listed in The Icon, Landslide, The Author and The Badboy but cannot be unlocked in any of them.',
+    badges:['discover'],
+    flag:'Historic bug: progress counters for Discover [Location] broke for many players in the HITMAN 2 era, including areas revealed in Contract Creation mode not counting. A fix shipped in the February 2021 patch. If your counter reads 46/47 with no marker left, that history is why.'}
+  ]},
+  {name:'Fallbacks if something did not pop', steps:[
+   {t:'Chameleon still locked after four disguises',
+    goal:'Confirm whether your build wants four outfits or the whole location.',
+    where:'Challenge list, in game.',
+    dis:'Security, Kitchen Assistant, Movie Crew, SFX Crew — the four your mission data lists for The Icon.',
+    item:'None.',
+    npc:'None.',
+    act:'Open the challenge and read its counter. If all four are ticked and it is still locked, it is scoped to the whole of Sapienza and the rest come from World of Tomorrow and Landslide.',
+    flag:'The in-game description reads "in Sapienza" while the mission data lists exactly 4 disguises for this mission. Scope is UNVERIFIED — check the counter rather than trusting either reading.'},
+   {t:'A mission story challenge did not register',
+    goal:'All four pop on the sabotage action, not on any kill.',
+    where:'Fuel station, jaw balcony, pyro computer, generators.',
+    dis:'SFX Crew for the first three, Movie Crew for the last.',
+    item:'Screwdriver and fuel as in Run 1.',
+    npc:'None required.',
+    act:'Do only the missing action, then quit out. You can bank all four in one run with nobody dying at all.',
+    badges:['ms-fire','ms-chew','ms-explosive','ms-fans']},
+   {t:'Silent Assassin failed and you cannot see why',
+    goal:'Four conditions break it, and one of them is invisible.',
+    where:'Town hall security room for the invisible one.',
+    dis:'None if you are protecting Suit Only.',
+    item:'Town hall key.',
+    npc:'Nobody may be killed except Bosco, and nobody may find a body.',
+    act:'Check in this order: camera footage left undeleted, a body found, a non-target death, being spotted. The café side entrance camera is the usual culprit.',
+    badges:['sa','saso','suit-only']},
+   {t:'Straight Shot still refuses to register',
+    goal:'The rule is stricter than it looks.',
+    where:'Bosco\'s trailer, or any target in World of Tomorrow.',
+    dis:'None needed.',
+    item:'Silenced pistol.',
+    npc:'Bosco, or Silvio Caruso / Francesca De Santis as location-wide alternatives.',
+    act:'The first shot fired at the target must hit the head. Subduing first is fine. If Bosco keeps frustrating you, take a clean headshot in World of Tomorrow instead — it is the same Sapienza-wide challenge.',
+    badges:['straight-shot']}
+  ]}
+ ]
+}
+];
+
+/* ── state ── */
+let doneCh={}, doneStep={}, filter='all', activeRun='all', openRun={0:true,1:true,2:true,3:true}, openStep={};
+function reportProgress(){try{const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r['b02']={done:CH.filter(c=>doneCh[c.id]).length,total:CH.length,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
+
+function badgeHTML(ids){return (ids||[]).map(id=>{const c=byId[id];return c?`<span class="badge ${TYPE_CLASS[c.t]}">${c.n}</span>`:'';}).join('');}
+
+function renderRunNav(){
+  const btns=[`<button class="runbtn" data-run="all" aria-pressed="${activeRun==='all'}">All runs<small>22 challenges · 4 runs</small></button>`]
+    .concat(RUNS.map((r,i)=>`<button class="runbtn" data-run="${i}" aria-pressed="${activeRun===String(i)}">${r.short}<small>${r.blurb}</small></button>`));
+  document.getElementById('runnav').innerHTML=btns.join('');
+}
+
+function fieldRow(label,val){ return val?`<div class="f"><dt>${label}</dt><dd>${val}</dd></div>`:''; }
+
+function renderRuns(){
+  document.getElementById('runs').innerHTML=RUNS.map((run,ri)=>{
+    if(activeRun!=='all' && String(ri)!==activeRun) return '';
+    const lo=run.loadout.map(l=>`<div class="lo"><div class="k">${l.k}</div><div class="v">${l.v}</div>${l.n?`<div class="n">${l.n}</div>`:''}</div>`).join('');
+    let counter=0;
+    const secs=run.sections.map((sec,si)=>{
+      const steps=sec.steps.map((st,pi)=>{
+        counter++;
+        const key=`r${ri}s${si}p${pi}`;
+        const on=doneStep[key]?' done':'';
+        const open=!!openStep[key];
+        const badges=[];
+        if(st.badges&&st.badges.length) badges.push(badgeHTML(st.badges));
+        if(st.save) badges.push('<span class="badge b-save">Save here</span>');
+        if(st.warn) badges.push('<span class="badge b-warn">Warning</span>');
+        if(st.flag) badges.push('<span class="badge b-flag">Note</span>');
+        return `<div class="step${on}" id="${key}">
+          <div class="step-row">
+            <button class="tick" data-step="${key}" aria-pressed="${!!doneStep[key]}" aria-label="Mark step done">✓</button>
+            <button class="toggle" data-detail="${key}" aria-expanded="${open}">
+              <div class="step-num">Step ${String(counter).padStart(2,'0')}</div>
+              <div class="step-title">${st.t}</div>
+              <div class="step-goal">${st.goal}</div>
+              ${badges.length?`<div class="badges">${badges.join('')}</div>`:''}
+            </button>
+            <span class="chev2">${open?'▾':'▸'}</span>
+          </div>
+          <div class="detail" id="d-${key}" ${open?'':'hidden'}>
+            <dl class="fields">
+              ${fieldRow('Where',st.where)}
+              ${fieldRow('Disguise',st.dis)}
+              ${fieldRow('Item',st.item)}
+              ${fieldRow('NPC',st.npc)}
+              ${fieldRow('Do this',st.act)}
+            </dl>
+            ${st.warn?`<div class="warnbox"><b>Watch out:</b> ${st.warn}</div>`:''}
+            ${st.save?`<div class="savebox"><b>Save point:</b> ${st.save}</div>`:''}
+            ${st.flag?`<div class="flagbox"><b>Note:</b> ${st.flag}</div>`:''}
+          </div>
+        </div>`;
+      }).join('');
+      return `<div class="sec-head">${sec.name}</div>${steps}`;
+    }).join('');
+
+    const ro=openRun[ri]!==false;
+    return `<article class="run">
+      <button class="runhead" data-runtoggle="${ri}" aria-expanded="${ro}">
+        <span class="chev">${ro?'▾':'▸'}</span>
+        <span>
+          <span class="run-tag">${run.tag}</span>
+          <h2>${run.title}</h2>
+          <p>${run.goal}</p>
+          <div class="runmeta">${run.meta}</div>
+        </span>
+      </button>
+      <div ${ro?'':'hidden'}>
+        <div class="loadout">${lo}</div>
+        ${secs}
+      </div>
+    </article>`;
+  }).join('');
+}
+
+const FILTERS=[['all','All'],['assassination','Assassination'],['discovery','Discovery'],['feats','Feats'],['targets','Targets'],['classics','Classics'],['incomplete','Incomplete']];
+function renderFilters(){
+  document.getElementById('filters').innerHTML=FILTERS.map(([k,l])=>`<button class="filt" data-filter="${k}" aria-pressed="${filter===k}">${l}</button>`).join('');
+}
+function renderChecklist(){
+  const list=CH.filter(c=> filter==='all'?true : filter==='incomplete'?!doneCh[c.id] : c.t===filter);
+  document.getElementById('checklist').innerHTML=list.length?list.map(c=>`
+    <div class="ch${doneCh[c.id]?' done':''}">
+      <button class="tick" data-ch="${c.id}" aria-pressed="${!!doneCh[c.id]}" aria-label="Mark ${c.n} complete">✓</button>
+      <div>
+        <div class="ch-name">${c.n}</div>
+        <div class="ch-desc">${c.d}</div>
+        <div class="ch-meta"><span class="badge ${TYPE_CLASS[c.t]}">${TYPE_LABEL[c.t]}</span> &nbsp; <em>${c.xp?('+'+c.xp.toLocaleString()+' XP'):'XP unverified'}</em> &nbsp; · &nbsp; ${c.r}</div>
+      </div>
+    </div>`).join('') : `<p class="note">Nothing left in this filter.</p>`;
+}
+function renderTracker(){
+  const counts={assassination:0,discovery:0,feats:0,targets:0,classics:0};
+  let xp=0,n=0;
+  CH.forEach(c=>{ if(doneCh[c.id]){counts[c.t]++; xp+=(c.xp||0); n++;} });
+  Object.keys(counts).forEach(k=>{const el=document.querySelector(`[data-count="${k}"]`); if(el) el.textContent=counts[k];});
+  document.getElementById('xp').textContent=xp.toLocaleString();
+  document.getElementById('done').textContent=n;
+  document.getElementById('fill').style.width=(n/CH.length*100)+'%';
+  document.querySelector('[role=progressbar]').setAttribute('aria-valuenow',n);
+}
+
+/* ── verification doc ── */
+document.getElementById('verdoc').innerHTML=`
+<h3>Count reconciled — 22 confirmed</h3>
+<div class="ok"><b>Your mission file settles it.</b> The extracted data declares <code>challengeCount: 22</code> and its five category arrays contain exactly 10 Assassination, 3 Discovery, 5 Feats, 1 Target and 3 Classics — 22 with no duplicates. The previous 21 came from the Hitman Wiki, which omits <code>Discover Sapienza</code> from its mission table. That is the 22nd, and it is the one challenge in the list you cannot earn inside this mission.</div>
+
+<h3>Discover Sapienza — why it is in Run 4 and not Run 1</h3>
+<p>Your mission data reports <code>areaCount: 0</code>, an empty <code>areas</code> array, and <code>areasSharedWith: "World of Tomorrow"</code>. The Icon contains no discoverable areas at all, so no amount of exploring it moves the counter. The Hitman Wiki says the same from the other direction: the challenge is listed for The Icon, The Badboy, Landslide and The Author despite being impossible to unlock in them. Player reports put the full Sapienza counter at 47 areas. Complete it in World of Tomorrow.</p>
+<div class="unv"><b>XP value for Discover Sapienza — UNVERIFIED.</b> The wiki's 39,000 XP total covers only the other 21 challenges, so no reliable figure exists for this one. The tracker counts it toward 22 but adds no XP, which is why the header reads 39,000+.</div>
+
+<h3>Naming conflict resolved</h3>
+<div class="ok">The umbrella challenge is <b>Versatile Assassin</b>, confirmed by your mission data, which also spells out its five components: Piano Man, Someone Could Hurt Themselves, Hold My Hair, Straight Shot, Tasteless Traceless. Older guides calling it "Master Assassin" are using the HITMAN 2016 name. The components are identical either way.</div>
+
+<h3>Full challenge table (22)</h3>
+<table>
+<tr><th>Challenge</th><th>Type</th><th>Condition</th><th>XP</th><th>Run</th></tr>
+${CH.map(c=>`<tr><td><b>${c.n}</b></td><td>${TYPE_LABEL[c.t]}</td><td>${c.d}</td><td>${c.xp?c.xp.toLocaleString():'—'}</td><td>${c.r}</td></tr>`).join('')}
+</table>
+
+<h3>Run logic simulation — what was checked</h3>
+<p>Each run was walked step by step against the requirement list you gave. Findings, and the fixes made because of them:</p>
+<ul>
+<li><b>Straight Shot was in the wrong place in the previous version.</b> Two sources describe the correct method as subduing Bosco in his trailer and then shooting him in the head, because his costume is functional armour and a standing target needs several hits. A third source spells out the rule: the first shot fired must hit the head, and stunning the target first is explicitly allowed. Moved out of Run 2 and into the Run 3 trailer save, where it shares a save with Piano Man.</li>
+<li><b>Rat poison is now picked up in Stage 1 of Run 1</b>, before the pyrotechnics computer needs it. In the previous version the route reached the computer platform without it.</li>
+<li><b>The pyrotechnics computer override is a hard prerequisite for the remote.</b> Taking the trigger alone does nothing — the automatic explosions must be overridden first. Both are now completed before the Run 1 save.</li>
+<li><b>The town hall key and the Security disguise are collected at the same doorway</b> in the north alleyways, removing a separate trip to the tower.</li>
+<li><b>Screwdriver, fuel, and the SFX outfit all come from the northern building in one visit</b>, and the outfit is taken last so the earlier pickups are done under the Security disguise that legitimises being there.</li>
+<li><b>Run 1 route order is west → north → set → exit north.</b> No step sends you back across the map, and the exit gate is beside the last area you work in.</li>
+<li><b>No NPC needed later is removed earlier.</b> Run 1 subdues one kitchen assistant substitute, one movie crew member, one static guard and one SFX member — none of whom appear in any later step. The two SFX technicians at the computer are cleared only after the balcony sabotage, which does not need them.</li>
+<li><b>Save points do not strand you.</b> Every save is taken with all required items already in inventory and all sabotage already done, so each reload lands in a state from which the next kill is immediately possible.</li>
+</ul>
+
+<h3>Mutually exclusive — kept in separate runs</h3>
+<ul>
+<li><b>Time to Meet the Fans vs every set kill.</b> By default Bosco never leaves the set. Sabotaging the generators (or the light rack near the robot) sends him to the town hall, through the restaurant, to the Q&A — permanently, for that run. Run 1 and Run 2 can never be merged.</li>
+<li><b>The fuel swap vs the teeth and pyrotechnics kills.</b> The scene runs flamethrower → chase with charges → ramp jump. Swapped fuel kills him at the flamethrower beat, before the other two ever trigger. The fuel swap is therefore the last kill in Run 1.</li>
+<li><b>The headshot kill vs Silent Assassin.</b> Straight Shot is taken before the reload in Run 3; the Silent Assassin attempt runs from the same save afterwards, untouched by it.</li>
+<li><b>Any disguise vs Suit Only and SASO.</b> Run 3 uses none.</li>
+</ul>
+
+<h3>Ordering rules that break things</h3>
+<ul>
+<li>Raise the ramp pressure before the take starts and a technician resets it. Wait for the call to action.</li>
+<li>Mistimed pyrotechnics are recoverable — the charges are replenished for the next take.</li>
+<li>Open the gas lamp too early and it can ignite before Bosco reaches the stand.</li>
+<li>Drowning must be a drowning: shooting him at the toilet does not count, and dragging a subdued target into water does not count either.</li>
+<li>Emetic rat poison sends him to the toilet; only lethal poison from your loadout satisfies Tasteless Traceless.</li>
+<li>The café side entrance at the top of the basement stairs is camera-covered. Erase the footage in the town hall security room or avoid the door.</li>
+<li>Drowning registers as an accidental death, so a found body from that kill does not by itself break Silent Assassin.</li>
+</ul>
+<div class="unv"><b>Reproducible bugs specific to The Icon — UNVERIFIED.</b> No confirmed defect in this mission appears in two independent sources. The wiki's mission story bug list names Hokkaido and others, not this one. Everything above is documented scripting behaviour rather than a bug. The one genuine bug history in this challenge list belongs to Discover Sapienza, and it was patched in February 2021.</div>
+
+<h3>Named NPCs</h3>
+<div class="unv"><b>Guard and crew names — UNVERIFIED, because they do not exist.</b> Only three characters in The Icon are named in any source: <b>Dino Bosco</b> (target), <b>Sophia Wilde</b> (his manager, in the ice cream shop and later fetching him for the Q&A) and <b>Luisa Doria</b> (a background character sitting alone away from the filming). Every guard and technician is generic, so this guide identifies them by post and behaviour — "the guard who always stands in the same spot", "the technician who drinks from the glass". Any guide giving you names for those is inventing them.</div>
+
+<h3>Disguises — all four, with sources</h3>
+<table>
+<tr><th>Disguise</th><th>Where</th><th>What it unlocks</th></tr>
+<tr><td>Movie Crew</td><td>Coin-lure a crew member near the start; spare by the eastern toilets (restricted, witnesses)</td><td>Centre of the square with the props, eastern set with generators and the trailer. Legal generator and gas lamp sabotage. No access to the northern building or the western console and trigger.</td></tr>
+<tr><td>Kitchen Assistant</td><td>White van at the far end of the café alley; or subdue an assistant in the café or back street</td><td>The café interior, and unsuspicious handling of the Q&A refreshments.</td></tr>
+<tr><td>Security</td><td>Lure the static guard of the three in the north alleyways into the open shop that holds the town hall key</td><td>Most of the map. Seen through by the guard at the café, the one at the trailer entrance, and the one patrolling by the pyro trigger.</td></tr>
+<tr><td>SFX Crew</td><td>Northern building — open the stairwell door, throw an object, take the one who investigates</td><td>Legal machinery work including the fuel swap. Everywhere except Bosco's trailer. Pops Call Back.</td></tr>
+</table>
+
+<h3>Key items</h3>
+<table>
+<tr><th>Item</th><th>Location</th></tr>
+<tr><td>Shop key</td><td>In the open near the café entrance; takeable in your suit</td></tr>
+<tr><td>Town hall key</td><td>Inside the open shop in the north alleyways; opens the upper town hall floors and the security room</td></tr>
+<tr><td>Trailer key</td><td>In the café — skippable, the roof hole is the better entry</td></tr>
+<tr><td>Car key</td><td>On the counter inside Bosco's trailer; unlocks the sports car exit near the city gates</td></tr>
+<tr><td>Fuel case key</td><td>Near the third-floor toilets in the east; lockpick or crowbar work instead</td></tr>
+<tr><td>High-octane fuel</td><td>Locked case in the northern building</td></tr>
+<tr><td>Screwdriver</td><td>Northern building; another on the set near the trailer</td></tr>
+<tr><td>Monkey wrench</td><td>Western part of the movie set</td></tr>
+<tr><td>Emetic rat poison</td><td>Two containers in the café basement; more in the café and the northern building</td></tr>
+<tr><td>Pyrotechnics trigger</td><td>On a table in the western part of the main square</td></tr>
+</table>
+
+<h3>Starting location and exits</h3>
+<p>One starting location, <b>City Gates</b>, and one agency pickup, the <b>large pickup in the café basement</b> — confirmed by the wiki walkthrough, PSNProfiles and Neoseeker independently. Two exits: <b>Bosco's car</b>, the sports car near the city gates, which needs the car key from his trailer, and the <b>old town gate</b>, behind an unlocked grille near the alleyways in the north.</p>
+<div class="unv"><b>The Iconator's current unlock condition — UNVERIFIED.</b> It was the Mission Mastery reward in HITMAN 2016 and HITMAN 2 (all mission stories plus four assassination challenges). Mission Mastery was retired in HITMAN III with its rewards folded into location mastery, and no two sources agree on which Sapienza level now grants it.</div>
+
+<h3>Sources</h3>
+<p>Your extracted mission data file (challenge names, descriptions, categories, disguise list, area counts); Hitman Wiki mission and walkthrough pages, plus the Critically Acclaimed, Time to Meet the Fans, SFX Crew and Mission Mastery entries; Gamepressure's disguises/items and Murdering Dino Bosco pages; Neoseeker's The Icon bonus chapter walkthrough; NamuWiki's challenge rules page for the Straight Shot, Hold My Hair and Tasteless Traceless conditions; PSNProfiles' Legacy Bonus Missions trophy guide; Steam community guides and discussion threads for save behaviour and the Discover Sapienza bug history.</p>
+`;
+
+/* ── events ── */
+document.addEventListener('click',async e=>{
+  const t=e.target.closest('button'); if(!t) return;
+
+  if(t.classList.contains('tab')){
+    document.querySelectorAll('.tab').forEach(b=>b.setAttribute('aria-selected',b===t?'true':'false'));
+    document.querySelectorAll('[role=tabpanel]').forEach(p=>{p.hidden=(p.getAttribute('aria-labelledby')!==t.id);});
+    return;
+  }
+  if(t.dataset.run!==undefined){ activeRun=t.dataset.run; renderRunNav(); renderRuns(); window.scrollTo({top:0,behavior:'smooth'}); return; }
+  if(t.dataset.runtoggle!==undefined){ const i=t.dataset.runtoggle; openRun[i]=openRun[i]===false; renderRuns(); return; }
+  if(t.dataset.detail){ const k=t.dataset.detail; openStep[k]=!openStep[k]; renderRuns(); return; }
+  if(t.dataset.step){
+    const k=t.dataset.step; doneStep[k]=!doneStep[k];
+    await store.set('icon-steps',JSON.stringify(doneStep)); renderRuns(); return;
+  }
+  if(t.dataset.ch){
+    const id=t.dataset.ch; doneCh[id]=!doneCh[id];
+    await store.set('icon-challenges',JSON.stringify(doneCh)); reportProgress(); renderChecklist(); renderTracker(); return;
+  }
+  if(t.dataset.filter){ filter=t.dataset.filter; renderFilters(); renderChecklist(); return; }
+  if(t.id==='expandall'){
+    const anyClosed=RUNS.some((r,ri)=>r.sections.some((s,si)=>s.steps.some((p,pi)=>!openStep[`r${ri}s${si}p${pi}`])));
+    RUNS.forEach((r,ri)=>r.sections.forEach((s,si)=>s.steps.forEach((p,pi)=>{openStep[`r${ri}s${si}p${pi}`]=anyClosed;})));
+    t.textContent=anyClosed?'Collapse all steps':'Expand all steps';
+    renderRuns(); return;
+  }
+  if(t.id==='reset'){
+    doneCh={}; doneStep={};
+    await store.set('icon-challenges','{}'); await store.set('icon-steps','{}');
+    reportProgress(); renderRuns(); renderChecklist(); renderTracker(); return;
+  }
+});
+
+/* ── boot ── */
+(async function(){
+  try{
+    const a=await store.get('icon-challenges'); if(a) doneCh=JSON.parse(a);
+    const b=await store.get('icon-steps'); if(b) doneStep=JSON.parse(b);
+  }catch(e){ doneCh={}; doneStep={}; }
+  renderRunNav(); renderRuns(); renderFilters(); renderChecklist(); renderTracker();
+  reportProgress();
+})();
+</script>
+<!-- step-progress-bridge -->
+<script>
+/* Reports route-step ticks into 'hitman-progress-registry' so the index can
+   show them beside the challenge counts. Counts what is on screen rather than
+   any guide-specific state, so one implementation serves every guide. */
+(function(){
+  var RID="b02", SEL=".step";
+  function isDone(s){
+    var c=s.classList;
+    if(c.contains('done')||c.contains('dn')) return true;
+    if(s.getAttribute('data-done')==='1'||s.getAttribute('aria-pressed')==='true') return true;
+    return !!s.querySelector('.done,.dn,[data-done="1"],[aria-pressed="true"]');
+  }
+  function tally(){
+    var steps=document.querySelectorAll(SEL);
+    if(!steps.length) return null;
+    var n=0;
+    for(var i=0;i<steps.length;i++) if(isDone(steps[i])) n++;
+    return {steps:n,stepTotal:steps.length};
+  }
+  function push(){
+    var t;
+    try{ t=tally(); }catch(err){ return; }
+    if(!t||!t.stepTotal) return;
+    try{
+      var r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');
+      var e=r[RID]||(r[RID]={});
+      /* the guide's own reportProgress() rewrites this entry wholesale, so
+         re-add the step counts whenever they go missing or stale */
+      if(e.steps===t.steps&&e.stepTotal===t.stepTotal) return;
+      e.steps=t.steps; e.stepTotal=t.stepTotal; e.updated=Date.now();
+      localStorage.setItem('hitman-progress-registry',JSON.stringify(r));
+    }catch(err){}
+  }
+  var pending=false;
+  function schedule(){
+    if(pending) return; pending=true;
+    setTimeout(function(){pending=false;push();},120);
+  }
+  try{
+    new MutationObserver(schedule).observe(document.body,
+      {subtree:true,childList:true,attributes:true,attributeFilter:['class','aria-pressed','data-done']});
+  }catch(err){}
+  window.addEventListener('load',schedule);
+  setTimeout(push,600);
+})();
+</script>
+<!-- /step-progress-bridge -->
+</body>
+</html>

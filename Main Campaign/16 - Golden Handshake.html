@@ -1,0 +1,1626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Golden Handshake — Milton-Fitzpatrick Challenge Ledger</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,600;0,6..96,800;1,6..96,400&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --vault:#0E1310; --felt:#16261E; --felt-2:#1D3128;
+  --brass:#C9A227; --brass-dim:#8A6F1C;
+  --slip:#F3EFE2; --slip-2:#DAD4C2;
+  --up:#3FB57A; --down:#D6453C; --amber:#E0952B; --ink:#0A0C09;
+  --rule:rgba(201,162,39,.22);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--vault);color:var(--slip);
+  font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 80px}
+
+/* ticker */
+.ticker{background:var(--ink);border-bottom:1px solid var(--rule);overflow:hidden;white-space:nowrap;position:sticky;top:0;z-index:60}
+.ticker-track{display:inline-block;padding:7px 0;font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.08em;animation:slide 42s linear infinite}
+@keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.ticker-track{animation:none}}
+.ticker-track span{padding:0 14px;color:var(--slip-2)}
+.ticker-track b{color:var(--brass);font-weight:600}
+.ticker-track .u{color:var(--up)}.ticker-track .d{color:var(--down)}
+
+/* masthead */
+header.mast{padding:44px 0 26px;border-bottom:1px solid var(--rule)}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--brass-dim);margin:0 0 12px}
+h1{font-family:"Bodoni Moda",Didot,Georgia,serif;font-weight:800;font-size:clamp(38px,7vw,68px);line-height:.96;margin:0 0 10px;letter-spacing:-.01em}
+h1 em{font-style:italic;color:var(--brass)}
+.dek{max-width:64ch;color:var(--slip-2);margin:0}
+
+/* tracker */
+.tracker{margin:26px 0 8px;border:1px solid var(--rule);background:var(--felt);border-radius:2px}
+.tracker-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;padding:16px 18px 10px;border-bottom:1px solid var(--rule)}
+.tracker-head h2{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--brass-dim);margin:0;font-weight:600}
+.quote{font-family:"Bodoni Moda",Georgia,serif;font-size:34px;line-height:1}
+.quote small{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--slip-2);letter-spacing:.06em}
+.bar{height:10px;background:rgba(0,0,0,.4);border-top:1px solid var(--rule);position:relative;overflow:hidden}
+.bar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--brass-dim),var(--brass));transition:width .35s ease}
+.cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--rule)}
+.cat{background:var(--felt);padding:14px 16px}
+.cat h3{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--brass-dim);margin:0 0 6px;font-weight:600}
+.cat .n{font-family:"Bodoni Moda",Georgia,serif;font-size:24px;line-height:1}
+.cat .n b{font-weight:600}.cat .n span{color:var(--slip-2);font-size:15px}
+.cat .cbar{height:3px;background:rgba(0,0,0,.45);margin-top:9px}
+.cat .cbar i{display:block;height:100%;width:0;background:var(--brass);transition:width .3s ease}
+
+/* tabs */
+nav.tabs{display:flex;gap:2px;margin:30px 0 0;border-bottom:1px solid var(--rule);flex-wrap:wrap}
+nav.tabs button{background:none;border:0;border-bottom:2px solid transparent;color:var(--slip-2);font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;padding:12px 16px;cursor:pointer;font-weight:600}
+nav.tabs button:hover{color:var(--slip)}
+nav.tabs button[aria-selected="true"]{color:var(--brass);border-bottom-color:var(--brass)}
+nav.tabs button:focus-visible{outline:2px solid var(--brass);outline-offset:-2px}
+.panel{display:none;padding-top:24px}
+.panel.on{display:block}
+
+/* run nav buttons */
+.runnav{position:sticky;top:33px;z-index:40;background:var(--vault);padding:14px 0 12px;margin-bottom:6px;border-bottom:1px solid var(--rule)}
+.runnav-lab{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--brass-dim);margin:0 0 8px;font-weight:600}
+.runnav-row{display:flex;gap:6px;flex-wrap:wrap}
+.runnav-row button{background:none;border:1px solid var(--rule);color:var(--slip-2);cursor:pointer;font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:8px 12px;border-radius:2px;font-weight:600;display:flex;gap:8px;align-items:baseline}
+.runnav-row button:hover{color:var(--slip);border-color:var(--brass-dim)}
+.runnav-row button b{color:var(--brass);font-family:"Bodoni Moda",Georgia,serif;font-size:14px;font-weight:600}
+.runnav-row button .rc{font-size:9.5px;color:var(--brass-dim)}
+.runnav-row button:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+
+/* run (collapsible) */
+.run{border:1px solid var(--rule);margin:0 0 20px;background:var(--felt);border-radius:2px;scroll-margin-top:120px}
+.run>summary{list-style:none;cursor:pointer;padding:18px 22px;display:flex;gap:14px;align-items:flex-start}
+.run>summary::-webkit-details-marker{display:none}
+.run>summary:focus-visible{outline:2px solid var(--brass);outline-offset:-2px}
+.chev{flex:0 0 auto;margin-top:5px;color:var(--brass);font-size:13px;transition:transform .2s ease}
+.run[open]>summary .chev{transform:rotate(90deg)}
+.run-hd{flex:1;min-width:0}
+.run-tag{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--brass-dim);font-weight:600}
+.run-hd h2{font-family:"Bodoni Moda",Georgia,serif;font-size:27px;margin:5px 0 7px;line-height:1.1}
+.run-hd .goal{color:var(--slip-2);margin:0;max-width:72ch;font-size:14.5px}
+.run-prog{flex:0 0 auto;text-align:right;font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--brass-dim);margin-top:3px}
+.run-prog b{color:var(--brass);font-size:15px}
+.run-inner{border-top:1px solid var(--rule)}
+
+/* loadout */
+.loadout{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1px;background:var(--rule)}
+.slot{background:var(--felt-2);padding:12px 15px}
+.slot h4{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--brass-dim);margin:0 0 4px;font-weight:600}
+.slot p{margin:0;font-size:14px}
+.slot p small{display:block;color:var(--slip-2);font-size:12px;margin-top:2px}
+
+.sect{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--brass);padding:20px 22px 4px;font-weight:600;border-top:1px solid var(--rule)}
+
+/* step (collapsible) */
+.step{border-top:1px solid rgba(201,162,39,.1)}
+.step-row{display:flex;gap:12px;align-items:flex-start;padding:13px 22px}
+.tick{flex:0 0 auto;width:22px;height:22px;margin-top:1px;border:1px solid var(--brass-dim);background:none;color:transparent;cursor:pointer;border-radius:2px;font-size:13px;line-height:1;display:flex;align-items:center;justify-content:center;padding:0}
+.tick[aria-pressed="true"]{background:var(--brass);border-color:var(--brass);color:var(--ink)}
+.tick:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+.step-summary{flex:1;min-width:0;cursor:pointer;list-style:none}
+.step-summary::-webkit-details-marker{display:none}
+details.stepd{flex:1;min-width:0}
+details.stepd>summary{list-style:none;cursor:pointer;display:flex;gap:10px;align-items:flex-start}
+details.stepd>summary::-webkit-details-marker{display:none}
+details.stepd>summary:focus-visible{outline:2px solid var(--brass);outline-offset:2px;border-radius:2px}
+.step-num{flex:0 0 auto;font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--brass-dim);margin-top:3px;font-weight:600;min-width:26px}
+.step-txt{flex:1;min-width:0}
+.step-txt h5{margin:0 0 3px;font-size:15.5px;font-weight:700}
+.step-txt .sum{margin:0;color:var(--slip-2);font-size:14px}
+.mini-chev{flex:0 0 auto;color:var(--brass);font-size:11px;margin-top:5px;transition:transform .2s ease}
+details.stepd[open]>summary .mini-chev{transform:rotate(90deg)}
+.step.done .step-txt h5,.step.done .step-txt .sum{opacity:.42;text-decoration:line-through;text-decoration-thickness:1px}
+
+.detail{margin:11px 0 14px;margin-left:36px;padding:0}
+.dl{display:grid;grid-template-columns:88px 1fr;gap:2px 12px;margin:0 0 10px;font-size:14px}
+.dl dt{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--brass);font-weight:600;padding-top:3px}
+.dl dd{margin:0}
+.dl dd b{color:var(--slip)}
+.detail>p{font-size:13.5px;color:var(--slip-2);margin:0 0 9px;padding-left:12px;border-left:2px solid rgba(201,162,39,.25)}
+
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0}
+.badge{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:2px;font-weight:600}
+.b-ch{background:rgba(63,181,122,.15);color:var(--up);border:1px solid rgba(63,181,122,.4)}
+.b-warn{background:rgba(214,69,60,.15);color:var(--down);border:1px solid rgba(214,69,60,.45)}
+.b-save{background:rgba(224,149,43,.14);color:var(--amber);border:1px solid rgba(224,149,43,.42)}
+.b-unv{background:rgba(218,212,194,.1);color:var(--slip-2);border:1px solid rgba(218,212,194,.3)}
+
+/* checklist */
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 20px}
+.filters button{background:none;border:1px solid var(--rule);color:var(--slip-2);cursor:pointer;font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;padding:7px 13px;border-radius:2px;font-weight:600}
+.filters button[aria-pressed="true"]{background:var(--brass);border-color:var(--brass);color:var(--ink)}
+.filters button:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+.crow{display:flex;gap:12px;align-items:flex-start;padding:11px 4px;border-bottom:1px solid rgba(201,162,39,.1)}
+.crow.done .cname,.crow.done .cdesc{opacity:.42;text-decoration:line-through;text-decoration-thickness:1px}
+.cmeta{flex:1;min-width:0}
+.cname{font-weight:700;font-size:15px}
+.cdesc{color:var(--slip-2);font-size:14px}
+.ctag{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--brass-dim);font-weight:600;margin-top:4px;display:inline-block}
+.cxp{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--brass);flex:0 0 auto}
+
+/* prose */
+.note{border:1px solid var(--rule);background:var(--felt);padding:18px 20px;margin:0 0 24px;border-radius:2px}
+.note h3{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--brass);margin:0 0 8px;font-weight:600}
+.note p{margin:0 0 9px;font-size:14.5px;color:var(--slip-2)}
+.note p:last-child{margin:0}
+.note strong{color:var(--slip)}
+.note ul{margin:0 0 4px;padding-left:18px;font-size:14.5px;color:var(--slip-2)}
+.note li{margin-bottom:5px}
+.note.alert{border-color:rgba(214,69,60,.45)}
+.note.alert h3{color:var(--down)}
+table.mast-tbl{width:100%;border-collapse:collapse;font-size:14px;margin:0 0 24px}
+table.mast-tbl th,table.mast-tbl td{text-align:left;padding:8px 10px;border-bottom:1px solid rgba(201,162,39,.13)}
+table.mast-tbl th{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--brass-dim);font-weight:600}
+table.mast-tbl td:first-child{font-family:"IBM Plex Mono",monospace;color:var(--brass);width:64px}
+footer{padding:34px 0 0;border-top:1px solid var(--rule);color:var(--slip-2);font-size:13px}
+@media(max-width:520px){.dl{grid-template-columns:1fr}.dl dt{padding-top:8px}.run-prog{display:none}}
+</style>
+</head>
+<body>
+
+<div class="ticker"><div class="ticker-track" id="tick"></div></div>
+
+<div class="wrap">
+
+<header class="mast">
+  <p class="eyebrow">Hitman: World of Assassination · New York, USA</p>
+  <h1>Golden <em>Handshake</em></h1>
+  <p class="dek">All 55 challenges at the Milton-Fitzpatrick bank, sorted into six runs. One target: Athena Savalas, Bank Director. Written for someone who has never set foot in this building — each step tells you where to go, what to wear, what to carry, who's involved, and what to do.</p>
+</header>
+
+<section class="tracker">
+  <div class="tracker-head">
+    <h2>Completion</h2>
+    <div class="quote"><span id="pct">0.0</span><small>% &nbsp;·&nbsp; <span id="frac">0 / 55</span> &nbsp;·&nbsp; <span id="xp">0</span> / 96,000 XP</small></div>
+  </div>
+  <div class="bar"><i id="mainbar"></i></div>
+  <div class="cats" id="cats"></div>
+</section>
+
+<nav class="tabs" role="tablist">
+  <button role="tab" aria-selected="true" data-tab="runs">Optimized runs</button>
+  <button role="tab" aria-selected="false" data-tab="check">Checklist</button>
+  <button role="tab" aria-selected="false" data-tab="brief">Briefing &amp; sourcing</button>
+</nav>
+
+<!-- ===================== RUNS ===================== -->
+<div class="panel on" id="panel-runs">
+
+  <div class="runnav">
+    <p class="runnav-lab">Jump to run · click to open &amp; scroll</p>
+    <div class="runnav-row" id="runnav"></div>
+  </div>
+
+  <div class="note alert">
+    <h3>Read this before you start</h3>
+    <p><strong>Reloading a save can stop a challenge from registering.</strong> This is the most common cause of a "bugged" challenge in the series and is widely reported. If something you clearly did doesn't pop, restart the mission and go straight for it without touching a save. Every SAVE HERE badge is a convenience, not a guarantee.</p>
+    <p><strong>There is no "Hero of New York" challenge.</strong> The old "complete 3 mission stories" challenge and "No Evidence" were both cut in HITMAN III. The five mission stories each have their own separate challenge now and can be done in any order relative to each other.</p>
+    <p><strong>Every Savalas kill method is mutually exclusive within a run.</strong> One target, one death per attempt. Save immediately before the kill, take one method, reload, take the next.</p>
+  </div>
+
+  <!-- RUN 1 -->
+  <details class="run" id="run1" open>
+    <summary>
+      <span class="chev">▶</span>
+      <div class="run-hd">
+        <div class="run-tag">Run 1 · Ground floor · suit start</div>
+        <h2>The Applicant</h2>
+        <p class="goal">Walk in the front door and sweep the public half of the bank: the account, the pigeon, the interview, the deposit boxes, the map reveal, and one quiet exit. Nothing here needs a real kill until the exit.</p>
+      </div>
+      <div class="run-prog" data-run="1"><b>0</b>/12</div>
+    </summary>
+    <div class="run-inner">
+      <div class="loadout">
+        <div class="slot"><h4>Start</h4><p>Main Entrance<small>Mastery 1 — first play</small></p></div>
+        <div class="slot"><h4>Suit</h4><p>The New Yorker<small>Any suit; nothing is suit-gated</small></p></div>
+        <div class="slot"><h4>Pistol</h4><p>ICA19 Silverballer, silenced<small>For the pigeon</small></p></div>
+        <div class="slot"><h4>Gear 1</h4><p>Lockpick<small>Cubicle + janitor doors</small></p></div>
+        <div class="slot"><h4>Gear 2</h4><p>Coins ×3 (default)</p></div>
+        <div class="slot"><h4>Smuggle</h4><p>Waiting Area Bathroom<small>Mastery 4 — optional pistol drop</small></p></div>
+      </div>
+
+      <div class="sect">Teller Hall</div>
+
+      <div class="step">
+        <div class="step-row">
+          <button class="tick" aria-pressed="false" aria-label="Mark step complete">✓</button>
+          <details class="stepd"><summary>
+            <span class="step-num">1.1</span>
+            <div class="step-txt"><h5>Open an account at the teller window</h5><p class="sum">Talk to the male teller and follow the prompts. Takes about a minute standing still.</p></div>
+            <span class="mini-chev">▶</span>
+          </summary>
+          <div class="detail">
+            <dl class="dl">
+              <dt>Where</dt><dd>The long teller counter straight ahead from the main entrance, in the Teller Hall.</dd>
+              <dt>Disguise</dt><dd>None — you're a customer in your suit.</dd>
+              <dt>Item</dt><dd>None.</dd>
+              <dt>NPC</dt><dd><b>The male teller</b> behind the counter (the same one who later frosts the privacy glass on the booth — worth remembering for Run 6).</dd>
+              <dt>Action</dt><dd>Interact and hold the prompt through each step of the paperwork.</dd>
+              <dt>Warning</dt><dd>None. If he's serving another customer, wait ~10s and re-prompt.</dd>
+            </dl>
+            <div class="badges"><span class="badge b-ch">Seven Figures · +1000</span></div>
+          </div></details>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-row">
+          <button class="tick" aria-pressed="false" aria-label="Mark step complete">✓</button>
+          <details class="stepd"><summary>
+            <span class="step-num">1.2</span>
+            <div class="step-txt"><h5>Shoot the pigeon in the Teller Hall</h5><p class="sum">A pigeon circles the ceiling. Shoot it with the silenced pistol from a spot no one faces.</p></div>
+            <span class="mini-chev">▶</span>
+          </summary>
+          <div class="detail">
+            <dl class="dl">
+              <dt>Where</dt><dd>Upper volume of the Teller Hall. The stairwell down toward the vault gives an elevated angle with fewer sightlines.</dd>
+              <dt>Disguise</dt><dd>Suit is fine.</dd>
+              <dt>Item</dt><dd>Silenced pistol (a time-slow sniper makes it trivial but isn't required).</dd>
+              <dt>NPC</dt><dd>None — the pigeon.</dd>
+              <dt>Action</dt><dd>Wait for the top of its arc where it slows, then fire from cover.</dd>
+              <dt>Warning</dt><dd>Even silenced, firing is noticed if an NPC faces you. Redacted challenge — description stays hidden until done. Safe to take last, since a lost rating doesn't matter here.</dd>
+            </dl>
+            <div class="badges"><span class="badge b-ch">Due You Even Care · +1000</span></div>
+          </div></details>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-row">
+          <button class="tick" aria-pressed="false" aria-label="Mark step complete">✓</button>
+          <details class="stepd"><summary>
+            <span class="step-num">1.3</span>
+            <div class="step-txt"><h5>Take the Bank Robber outfit — then change straight back</h5><p class="sum">Two would-be robbers argue in a locked cubicle in the lobby toilets. Lockpick in, subdue both, take the outfit, equip, revert.</p></div>
+            <span class="mini-chev">▶</span>
+          </summary>
+          <div class="detail">
+            <dl class="dl">
+              <dt>Where</dt><dd>Turn right from the main entrance into the Teller Hall bathroom. The outfit is in a duffel bag in the locked cubicle.</dd>
+              <dt>Disguise</dt><dd>Approach in your suit.</dd>
+              <dt>Item</dt><dd>Lockpick for the cubicle door.</dd>
+              <dt>NPC</dt><dd>The <b>two would-be bank robbers</b> shut in the cubicle working up their nerve.</dd>
+              <dt>Action</dt><dd>Lockpick in, subdue both, take the Bank Robber outfit from the bag, equip it so the challenge fires, then immediately switch back to your suit.</dd>
+              <dt>Warning</dt><dd><b>Every bank employee — even the robbers — is an enforcer for this outfit.</b> Do not travel in it. Redacted challenge.</dd>
+            </dl>
+            <div class="badges"><span class="badge b-ch">The Other Frank · +1000</span><span class="badge b-warn">Change back at once — all staff are enforcers</span></div>
+          </div></details>
+        </div>
+      </div>
+
+      <div class="sect">Waiting Area &amp; Interview Room</div>
+
+      <div class="step">
+        <div class="step-row">
+          <button class="tick" aria-pressed="false" aria-label="Mark step complete">✓</button>
+          <details class="stepd"><summary>
+            <span class="step-num">1.4</span>
+            <div class="step-txt"><h5>Spy on Mr. Thomas through the pipe hole</h5><p class="sum">Pull the loose pipe off the wall in the waiting-area bathroom and look through the hole at the applicant being sick.</p></div>
+            <span class="mini-chev">▶</span>
+          </summary>
+          <div class="detail">
+            <dl class="dl">
+              <dt>Where</dt><dd>The <b>waiting-area</b> bathroom (not the Teller Hall one). Loose pipe fitting on the left-hand wall.</dd>
+              <dt>Disguise</dt><dd>Suit.</dd>
+              <dt>Item</dt><dd>None.</dd>
+              <dt>NPC</dt><dd><b>Mr. Thomas</b>, the final job applicant, throwing up with nerves in the locked cubicle next door.</dd>
+              <dt>Action</dt><dd>Interact with the pipe to open the peephole, then look through until it fires.</dd>
+              <dt>Warning</dt><dd><b>Do this before you knock him out</b> in the next step — once he's unconscious he's no longer being sick and the trigger has nothing to fire on.</dd>
+            </dl>
+            <div class="badges"><span class="badge b-ch">Peeping Tom · +1000</span><span class="badge b-warn">Must precede knocking out Mr. Thomas</span></div>
+          </div></details>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-row">
+          <button class="tick" aria-pressed="false" aria-label="Mark step complete">✓</button>
+          <details class="stepd"><summary>
+            <span class="step-num">1.5</span>
+            <div class="step-txt"><h5>Take the Job Applicant disguise</h5><p class="sum">Lockpick the cubicle, subdue Mr. Thomas, take his suit. Save before the interview.</p></div>
+            <span class="mini-chev">▶</span>
+          </summary>
+          <div class="detail">
+            <dl class="dl">
+              <dt>Where</dt><dd>Same locked cubicle in the waiting-area bathroom.</dd>
+              <dt>Disguise</dt><dd>You'll be putting <b>on</b> the Job Applicant here.</dd>
+              <dt>Item</dt><dd>Lockpick (or the cubicle key).</dd>
+              <dt>NPC</dt><dd><b>Mr. Thomas</b>.</dd>
+              <dt>Action</dt><dd>Lockpick in, subdue him, take his clothes, shut the door on the body.</dd>
+              <dt>Warning</dt><dd>SAVE HERE — the interview is the fiddliest scripted sequence on the map; you want a rollback point.</dd>
+            </dl>
+            <div class="badges"><span class="badge b-ch">The Applicant · +1000</span><span class="badge b-save">Save before the interview</span></div>
+          </div></details>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-row">
+          <button class="tick" aria-pressed="false" aria-label="Mark step complete">✓</button>
+          <details class="stepd"><summary>
+            <span class="step-num">1.6</span>
+            <div class="step-txt"><h5>Sit the interview: Hawk, Hitman, Piles of Money</h5><p class="sum">Register at the desk, get shown in, and pick the correct card for all three questions to get hired as Investment Banker.</p></div>
+            <span class="mini-chev">▶</span>
+          </summary>
+          <div class="detail">
+            <dl class="dl">
+              <dt>Where</dt><dd>Register at the waiting-area desk; you're escorted into the interview room and seated opposite the interviewers.</dd>
+              <dt>Disguise</dt><dd>Job Applicant.</dd>
+              <dt>Item</dt><dd>None.</dd>
+              <dt>NPC</dt><dd>The two <b>interviewers</b>.</dd>
+              <dt>Action</dt><dd>Three questions, each a spread of picture cards. The verified correct answers are <b>Q1 "Opportunity" → Hawk (middle) · Q2 "Execution" → Hitman (left) · Q3 "Prosperity" → Piles of Money (right)</b>. Match the quoted word to the picture — the framed poster behind them also gives the pairing away.</dd>
+              <dt>Warning</dt><dd>All three correct = hired as Investment Banker with third-floor access. Any wrong answer gives the lesser Auditor job (first two floors only), which still completes the mission story but not You're Hired!</dd>
+            </dl>
+            <p>Easter egg: after the interview, skip the closing chat and grab the deposit-box 237 key from the top-left corner of the room — it opens a box that gushes blood and holds a fire axe (a <em>Shining</em> nod), and gives you Open Sesame! in one move.</p>
+            <div class="badges"><span class="badge b-ch">You're Hired! · +2000</span><span class="badge b-ch">Mission Story – The Job Interview · +1000</span></div>
+          </div></details>
+        </div>
+      </div>
+
+      <div class="sect">Mezzanine &amp; basement sweep</div>
+
+      <div class="step">
+        <div class="step-row">
+          <button class="tick" aria-pressed="false" aria-label="Mark step complete">✓</button>
+          <details class="stepd"><summary>
+            <span class="step-num">1.7</span>
+            <div class="step-txt"><h5>Get the Janitor Key</h5><p class="sum">The simplest copy is on the desk in the basement IT room.</p></div>
+            <span class="mini-chev">▶</span>
+          </summary>
+          <div class="detail">
+            <dl class="dl">
+              <dt>Where</dt><dd>On the desk in the basement IT room. (Also carried by janitors and some guards, and one sits in the second-floor Security Hub.)</dd>
+              <dt>Disguise</dt><dd>Any that reaches the IT room; the Investment Banker from the interview works.</dd>
+              <dt>Item</dt><dd>None to obtain it.</dd>
+              <dt>NPC</dt><dd>None required if you take the desk copy.</dd>
+              <dt>Action</dt><dd>Pick it up.</dd>
+              <dt>Warning</dt><dd>Taking the key is an illegal action for most disguises — crouch and grab it when nobody faces you.</dd>
+            </dl>
+            <div class="badges"><span class="badge b-ch">Maintenance Man · +1000</span></div>
+          </div></details>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-row">
+          <button class="tick" aria-pressed="false" aria-label="Mark step complete">✓</button>
+          <details class="stepd"><summary>
+            <span class="step-num">1.8</span>
+            <div class="step-txt"><h5>Throw an item into a ventilation duct</h5><p class="sum">Find a brass-rimmed vent grille and dump something into it. Some need a screwdriver first.</p></div>
+            <span class="mini-chev">▶</span>
+          </summary>
+          <div class="detail">
+            <dl class="dl">
+              <dt>Where</dt><dd>Gold-rimmed floor/wall vents around the bank; several are in the basement.</dd>
+              <dt>Disguise</dt><dd>Any legal one for the area.</dd>
+              <dt>Item</dt><dd>Something disposable to throw (coin, wrench). A screwdriver if the grille is screwed shut — common in the basement maintenance/IT areas.</dd>
+              <dt>NPC</dt><dd>None.</dd>
+              <dt>Action</dt><dd>Open the grille if needed, then throw an item in.</dd>
+              <dt>Warning</dt><dd>The item is gone permanently — don't feed it a key or keycard you still need.</dd>
+            </dl>
+            <div class="badges"><span class="badge b-ch">Where Did it Go? · +1000</span></div>
+          </div></details>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-row">
+          <button class="tick" aria-pressed="false" aria-label="Mark step complete">✓</button>
+          <details class="stepd"><summary>
+            <span class="step-num">1.9</span>
+            <div class="step-txt"><h5>Open a deposit box</h5><p class="sum">Open any one box in the basement deposit room. The 237 key from the interview is the fun one.</p></div>
+            <span class="mini-chev">▶</span>
+          </summary>
+          <div class="detail">
+            <dl class="dl">
+              <dt>Where</dt><dd>The basement deposit box room.</dd>
+              <dt>Disguise</dt><dd>Security Guard or Investment Banker for legal access to the box area.</dd>
+              <dt>Item</dt><dd>Any box key — box 237 (interview room), 429, 577, 664, or the Deposit Master Key.</dd>
+              <dt>NPC</dt><dd>None.</dd>
+              <dt>Action</dt><dd>Open any single box.</dd>
+              <dt>Warning</dt><dd>None. (Box 577's key appears on the Mette P. Anderson portrait if you shoot out the lights above every <em>other</em> CEO portrait in the interview-room corridor — it holds the Gold Idol for the film-noir easter egg.)</dd>
+            </dl>
+            <div class="badges"><span class="badge b-ch">Open Sesame! · +1000</span></div>
+          </div></details>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-row">
+          <button class="tick" aria-pressed="false" aria-label="Mark step complete">✓</button>
+          <details class="stepd"><summary>
+            <span class="step-num">1.10</span>
+            <div class="step-txt"><h5>Walk every named area of the bank</h5><p class="sum">Sweep the floors you haven't entered so no undiscovered zones remain.</p></div>
+            <span class="mini-chev">▶</span>
+          </summary>
+          <div class="detail">
+            <dl class="dl">
+              <dt>Where</dt><dd>Every zone. Easy-to-miss ones: the Lost and Found side room off the Teller Hall, the storage room next to the IT room, the vault loading bay behind the garage, and the observation room behind the executive-floor mirror.</dd>
+              <dt>Disguise</dt><dd>Use whatever gets you legally into each floor — Investment Banker covers most; IT/Security Guard for the basement.</dd>
+              <dt>Item</dt><dd>None.</dd>
+              <dt>NPC</dt><dd>None.</dd>
+              <dt>Action</dt><dd>Physically enter each undiscovered area until the map has none left.</dd>
+              <dt>Warning</dt><dd>Historical bug (June 2019): players who'd already explored everything before the challenge was added had no way to re-trigger it. IO acknowledged and patched it. Long resolved, but it's the known cause if it misbehaves for a returning player.</dd>
+            </dl>
+            <div class="badges"><span class="badge b-ch">Discover Milton-Fitzpatrick · +1000</span><span class="badge b-unv">No official enumerated zone list published</span></div>
+          </div></details>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-row">
+          <button class="tick" aria-pressed="false" aria-label="Mark step complete">✓</button>
+          <details class="stepd"><summary>
+            <span class="step-num">1.11</span>
+            <div class="step-txt"><h5>Kill Savalas quickly (to arm the exits)</h5><p class="sum">Exits stay inert until she's dead and the data objective is met. Take her any way and grab her backup disk.</p></div>
+            <span class="mini-chev">▶</span>
+          </summary>
+          <div class="detail">
+            <dl class="dl">
+              <dt>Where</dt><dd>The executive floor / Director's office.</dd>
+              <dt>Disguise</dt><dd>Investment Banker gets you up; the Fired Banker route (Run 2) is the cleanest audience if you want it.</dd>
+              <dt>Item</dt><dd>Any lethal method — nothing method-specific is scored on this run.</dd>
+              <dt>NPC</dt><dd><b>Athena Savalas</b>, the target, plus her personal guard.</dd>
+              <dt>Action</dt><dd>Eliminate her, then take her backup data disk, and secure the data objective (her disk is only one of three, so also grab the Data Core in the vault or the other two disks — or accept that this discovery run just needs a valid completed exit).</dd>
+              <dt>Warning</dt><dd>Don't over-invest here; the scored kill methods all live in Run 2. This is just to make the exits live.</dd>
+            </dl>
+            <div class="badges"><span class="badge b-ch">The CEO · +4000 (if not already done)</span></div>
+          </div></details>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-row">
+          <button class="tick" aria-pressed="false" aria-label="Mark step complete">✓</button>
+          <details class="stepd"><summary>
+            <span class="step-num">1.12</span>
+            <div class="step-txt"><h5>Leave through the maintenance exit</h5><p class="sum">The red door in the mezzanine corner. Needs the janitor key.</p></div>
+            <span class="mini-chev">▶</span>
+          </summary>
+          <div class="detail">
+            <dl class="dl">
+              <dt>Where</dt><dd>Red door in the corner of the First Floor Mezzanine.</dd>
+              <dt>Disguise</dt><dd>Any; you're leaving.</dd>
+              <dt>Item</dt><dd>Janitor Key (from step 1.7).</dd>
+              <dt>NPC</dt><dd>None.</dd>
+              <dt>Action</dt><dd>Open the red door and exit.</dd>
+              <dt>Warning</dt><dd>Mutually exclusive with the other two exfiltration challenges — you leave once. Executive is in Run 2, Heavy (armored car) in Run 3.</dd>
+            </dl>
+            <div class="badges"><span class="badge b-ch">Superintendent Exfiltration · +1000</span><span class="badge b-warn">One exit per run only</span></div>
+          </div></details>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- RUN 2 -->
+  <details class="run" id="run2">
+    <summary>
+      <span class="chev">▶</span>
+      <div class="run-hd">
+        <div class="run-tag">Run 2 · Executive floor · kill farm</div>
+        <h2>Hostile Termination</h2>
+        <p class="goal">Get a legitimate audience with Savalas as the fired banker, then save-scum through every scored kill method plus the two Versatile prerequisites you can't get elsewhere.</p>
+      </div>
+      <div class="run-prog" data-run="2"><b>0</b>/9</div>
+    </summary>
+    <div class="run-inner">
+      <div class="loadout">
+        <div class="slot"><h4>Start</h4><p>First Floor Mezzanine<small>Mastery 3 — Janitor disguise</small></p></div>
+        <div class="slot"><h4>Suit</h4><p>N/A — disguised start<small>No briefcase from a disguised start</small></p></div>
+        <div class="slot"><h4>Pistol</h4><p>Silverballer, silenced<small>For Straight Shot</small></p></div>
+        <div class="slot"><h4>Gear 1</h4><p>Emetic Rat Poison<small>Sends the fired banker off alone</small></p></div>
+        <div class="slot"><h4>Gear 2</h4><p>Lethal Poison<small>Vodka + Tasteless, Traceless</small></p></div>
+        <div class="slot"><h4>Smuggle</h4><p>Executive Floor<small>Mastery 16 — drop a fiber wire / screwdriver</small></p></div>
+      </div>
+
+      <div class="sect">Setting up the termination</div>
+
+      <div class="step">
+        <div class="step-row">
+          <button class="tick" aria-pressed="false" aria-label="Mark step complete">✓</button>
+          <details class="stepd"><summary>
+            <span class="step-num">2.1</span>
+            <div class="step-txt"><h5>Poison the fired banker's drink</h5><p class="sum">Emetic in the sweater-wearing banker's water glass; he leaves to be sick alone.</p></div>
+            <span class="mini-chev">▶</span>
+          </summary>
+          <div class="detail">
+            <dl class="dl">
+              <dt>Where</dt><dd>Up the main stairs at the back of the Teller Hall, then right, on the corner of the First Floor Mezzanine.</dd>
+              <dt>Disguise</dt><dd>Janitor (your start) is fine to approach the glass.</dd>
+              <dt>Item</dt><dd>Emetic Rat Poison.</dd>
+              <dt>NPC</dt><dd>The <b>sweater-wearing banker</b> (being fired for his attire), standing with a security guard who's listening to him complain.</dd>
+              <dt>Action</dt><dd>Drop emetic in his water. He drinks, gets sick, and walks off alone — separating him from the guard.</dd>
+              <dt>Warning</dt><dd>Do the poison first (Injury to Insult), then follow for the disguise (next step).</dd>
+            </dl>
+            <div class="badges"><span class="badge b-ch">Injury to Insult · +1000</span></div>
+          </div></details>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-row">
+          <button class="tick" aria-pressed="false" aria-label="Mark step complete">✓</button>
+          <details class="stepd"><summary>
+            <span class="step-num">2.2</span>
+            <div class="step-txt"><h5>Take the Fired Banker disguise + Letter of Termination</h5><p class="sum">Follow him to the toilet, subdue him alone, take the sweater and letter. This is your master save.</p></div>
+            <span class="mini-chev">▶</span>
+          </summary>
+          <div class="detail">
+            <dl class="dl">
+              <dt>Where</dt><dd>Wherever he goes to be sick after the emetic.</dd>
+              <dt>Disguise</dt><dd>You'll take the <b>Fired Banker</b> — few enforcers, and uniquely it grants a scheduled audience with the target in her office.</dd>
+              <dt>Item</dt><dd>The Letter of Termination on him (report to the top-floor reception).</dd>
+              <dt>NPC</dt><dd>The <b>fired banker</b>. Known enforcer: the guard who was listening to him — avoid that specific guard.</dd>
+              <dt>Action</dt><dd>Subdue him alone, take clothes + letter.</dd>
+              <dt>Warning</dt><dd>SAVE HERE — master save for the whole run; you'll reload to it repeatedly.</dd>
+            </dl>
+            <div class="badges"><span class="badge b-ch">The Sweater · +1000</span><span class="badge b-save">Master save for the run</span></div>
+          </div></details>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-row">
+          <button class="tick" aria-pressed="false" aria-label="Mark step complete">✓</button>
+          <details class="stepd"><summary>
+            <span class="step-num">2.3</span>
+            <div class="step-txt"><h5>Get the Security Keycard from the second-floor hub</h5><p class="sum">Fusebox trick draws a High Security Guard out; take his uniform and the keycard inside.</p></div>
+            <span class="mini-chev">▶</span>
+          </summary>
+          <div class="detail">
+            <dl class="dl">
+              <dt>Where</dt><dd>The Security Hub on the second floor, up from the mezzanine.</dd>
+              <dt>Disguise</dt><dd>Take a <b>High Security Guard</b> uniform here (also a Chameleon tick).</dd>
+              <dt>Item</dt><dd>A crowbar to break the fusebox (janitor room / 2F bathroom / garage).</dd>
+              <dt>NPC</dt><dd>A <b>High Security Guard</b> who comes to investigate the fusebox.</dd>
+              <dt>Action</dt><dd>Break the fusebox right of the hub door and switch it off; knock out the investigating guard, take his uniform; inside, grab the Security Keycard (and the recorder + a janitor key).</dd>
+              <dt>Warning</dt><dd>If you don't let him switch the box back on, a second guard investigates — handy for a spare body, or a nuisance. Keycard is also on High Security Guards and IT staff if you'd rather skip the hub.</dd>
+            </dl>
+            <div class="badges"><span class="badge b-ch">Access Granted · +1000</span></div>
+          </div></details>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-row">
+          <button class="tick" aria-pressed="false" aria-label="Mark step complete">✓</button>
+          <details class="stepd"><summary>
+            <span class="step-num">2.4</span>
+            <div class="step-txt"><h5>Report for termination and sit it out</h5><p class="sum">Register at top-floor reception as the fired banker; stay seated until she actually fires you. Save after.</p></div>
+            <span class="mini-chev">▶</span>
+          </summary>
+          <div class="detail">
+            <dl class="dl">
+              <dt>Where</dt><dd>Top-floor reception → escorted into the Director's Office → sit opposite Savalas.</dd>
+              <dt>Disguise</dt><dd>Fired Banker (required for the audience).</dd>
+              <dt>Item</dt><dd>Letter of Termination.</dd>
+              <dt>NPC</dt><dd><b>Athena Savalas</b>.</dd>
+              <dt>Action</dt><dd>Sit through the entire termination conversation.</dd>
+              <dt>Warning</dt><dd>Standing up early or attacking mid-scene loses the challenge. This scripts her into a predictable spot for the clock and award kills below. SAVE HERE the moment you're back on your feet.</dd>
+            </dl>
+            <div class="badges"><span class="badge b-ch">Where is My Stapler? · +1000</span><span class="badge b-ch">Mission Story – Hostile Termination · +2000</span><span class="badge b-save">Post-meeting kill-farm save</span></div>
+          </div></details>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-row">
+          <button class="tick" aria-pressed="false" aria-label="Mark step complete">✓</button>
+          <details class="stepd"><summary>
+            <span class="step-num">2.5</span>
+            <div class="step-txt"><h5>Step into the observation room + grab the CEO Exit Keycard</h5><p class="sum">Walk into the inner sanctum behind the one-way mirror and take the exit keycard.</p></div>
+            <span class="mini-chev">▶</span>
+          </summary>
+          <div class="detail">
+            <dl class="dl">
+              <dt>Where</dt><dd>Off the Director's Office — the private chambers / observation room behind the one-way mirror.</dd>
+              <dt>Disguise</dt><dd>Any that reached the office; shut the door behind you fast.</dd>
+              <dt>Item</dt><dd>Pick up the <b>CEO Exit Keycard</b> here (needed for the executive exit, step 2.9).</dd>
+              <dt>NPC</dt><dd>None once you're alone inside.</dd>
+              <dt>Action</dt><dd>Enter the room (that's the whole challenge), grab the keycard.</dd>
+              <dt>Warning</dt><dd>It's a hostile zone — anyone who sees you enter reacts; close the door immediately. This same room is the firing position for the Run 4 mirror kill.</dd>
+            </dl>
+            <div class="badges"><span class="badge b-ch">Behind Closed Doors · +2000</span></div>
+          </div></details>
+        </div>
+      </div>
+
+      <div class="sect">Kill farm — reload between every method</div>
+
+      <div class="step">
+        <div class="step-row">
+          <button class="tick" aria-pressed="false" aria-label="Mark step complete">✓</button>
+          <details class="stepd"><summary>
+            <span class="step-num">2.6</span>
+            <div class="step-txt"><h5>Drop the clock on her (accident)</h5><p class="sum">Loosen or push the office clock so it falls on Savalas as she passes under it.</p></div>
+            <span class="mini-chev">▶</span>
+          </summary>
+          <div class="detail">
+            <dl class="dl">
+              <dt>Where</dt><dd>The large wall clock in the Director's office.</dd>
+              <dt>Disguise</dt><dd>Any legal for the office.</dd>
+              <dt>Item</dt><dd>A screwdriver to loosen it (or push it from behind).</dd>
+              <dt>NPC</dt><dd><b>Savalas</b> — the termination scene walks her through the kill zone.</dd>
+              <dt>Action</dt><dd>Loosen/push the clock as she passes; it registers as an accident.</dd>
+              <dt>Warning</dt><dd>Also satisfies Someone Could Hurt Themselves (accident). Reload to the post-meeting save afterwards.</dd>
+            </dl>
+            <div class="badges"><span class="badge b-ch">Time's Up · +2000</span><span class="badge b-ch">Someone Could Hurt Themselves · +2000</span><span class="badge b-save">Reload after</span></div>
+          </div></details>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-row">
+          <button class="tick" aria-pressed="false" aria-label="Mark step complete">✓</button>
+          <details class="stepd"><summary>
+            <span class="step-num">2.7</span>
+            <div class="step-txt"><h5>Kill her with her award</h5><p class="sum">Start the phonograph; she walks over to switch it off, next to the award. Clear her guards first.</p></div>
+            <span class="mini-chev">▶</span>
+          </summary>
+          <div class="detail">
+            <dl class="dl">
+              <dt>Where</dt><dd>The Director's office — record player in the corner, award on its stand.</dd>
+              <dt>Disguise</dt><dd>Any legal for the office.</dd>
+              <dt>Item</dt><dd>The <b>award</b> itself is the weapon (the heavy, pointed trophy from the Magazine Interview intel).</dd>
+              <dt>NPC</dt><dd><b>Savalas</b>, plus her personal guard + office enforcers.</dd>
+              <dt>Action</dt><dd>Remove/distract the guards, play the record; when she comes to switch it off, kill her with the award.</dd>
+              <dt>Warning</dt><dd>Leaves a body — plan your exit. Reload afterwards.</dd>
+            </dl>
+            <div class="badges"><span class="badge b-ch">Pride Goeth Before Destruction · +2000</span><span class="badge b-save">Reload after</span></div>
+          </div></details>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-row">
+          <button class="tick" aria-pressed="false" aria-label="Mark step complete">✓</button>
+          <details class="stepd"><summary>
+            <span class="step-num">2.8</span>
+            <div class="step-txt"><h5>Poison her vodka + fiber/headshot/drown</h5><p class="sum">Spike the vodka, then on separate reloads take her by fiber wire, headshot and drowning to finish Versatile.</p></div>
+            <span class="mini-chev">▶</span>
+          </summary>
+          <div class="detail">
+            <dl class="dl">
+              <dt>Where</dt><dd>Vodka bottle: the narrow side room in the ground-floor Lost and Found. Lethal poison: the basement security room cabinet near the ventilation. Then bring the bottle to the office.</dd>
+              <dt>Disguise</dt><dd>Any legal for each area.</dd>
+              <dt>Item</dt><dd>Vodka bottle + lethal poison; a fiber wire; a silenced pistol; emetic (to send her to a sink for the drown).</dd>
+              <dt>NPC</dt><dd><b>Savalas</b> each time.</dd>
+              <dt>Action</dt><dd>Spike the vodka and place it (A Drink to Die For + Tasteless, Traceless). Reload → fiber-wire her alone in the observation room (Piano Man). Reload → silenced headshot (Straight Shot). Reload → emetic her, follow to a sink/toilet, drown (Hold My Hair). Versatile Assassin fires once Piano Man + accident + Hold My Hair + Straight Shot + Tasteless are all green.</dd>
+              <dt>Warning</dt><dd>The vodka bottle is the same one reserved for Frank — do the Frank challenge on a separate reload. Reload between each method.</dd>
+            </dl>
+            <div class="badges"><span class="badge b-ch">A Drink to Die For · +2000</span><span class="badge b-ch">Tasteless, Traceless · +2000</span><span class="badge b-ch">Piano Man · +2000</span><span class="badge b-ch">Straight Shot · +2000</span><span class="badge b-ch">Hold My Hair · +2000</span><span class="badge b-ch">Versatile Assassin · +4000</span><span class="badge b-warn">Vodka shared with Frank — separate reloads</span></div>
+          </div></details>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-row">
+          <button class="tick" aria-pressed="false" aria-label="Mark step complete">✓</button>
+          <details class="stepd"><summary>
+            <span class="step-num">2.9</span>
+            <div class="step-txt"><h5>Ruin Frank's day, then take the director's exit</h5><p class="sum">Subdue Frank the retiring guard, then leave through the green executive door with the CEO Exit Keycard.</p></div>
+            <span class="mini-chev">▶</span>
+          </summary>
+          <div class="detail">
+            <dl class="dl">
+              <dt>Where</dt><dd>Frank patrols as a guard; the executive exit is the green door next to the second-floor security office.</dd>
+              <dt>Disguise</dt><dd>Any; you're finishing up.</dd>
+              <dt>Item</dt><dd>CEO Exit Keycard (from step 2.5).</dd>
+              <dt>NPC</dt><dd><b>Frank</b> — the retiring guard with an afro, no hat, tie loosened/absent.</dd>
+              <dt>Action</dt><dd>Subdue Frank (I'm Getting Too Old for This...), then exit through the green door.</dd>
+              <dt>Warning</dt><dd>Exit only works with Savalas dead and the data objective met on the run you actually finish. Mutually exclusive with the other two exfiltration challenges.</dd>
+            </dl>
+            <div class="badges"><span class="badge b-ch">I'm Getting Too Old for This... · +1000</span><span class="badge b-ch">Executive Exfiltration · +1000</span><span class="badge b-unv">Whether tampering with Frank's vodka is an alternative trigger — unconfirmed</span></div>
+          </div></details>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- RUN 3 -->
+  <details class="run" id="run3">
+    <summary>
+      <span class="chev">▶</span>
+      <div class="run-hd">
+        <div class="run-tag">Run 3 · Basement · the vault</div>
+        <h2>The Heist</h2>
+        <p class="goal">Everything below ground: gas the vault security room, open the vault, take the gold and the data core, and drive out in the armored car.</p>
+      </div>
+      <div class="run-prog" data-run="3"><b>0</b>/9</div>
+    </summary>
+    <div class="run-inner">
+      <div class="loadout">
+        <div class="slot"><h4>Start</h4><p>Deposit Box Room<small>Mastery 12 — Security Guard disguise</small></p></div>
+        <div class="slot"><h4>Suit</h4><p>N/A — disguised start</p></div>
+        <div class="slot"><h4>Pistol</h4><p>Silverballer, silenced<small>For cameras</small></p></div>
+        <div class="slot"><h4>Gear 1</h4><p>Lockpick<small>Poison cabinet without hunting a crowbar</small></p></div>
+        <div class="slot"><h4>Gear 2</h4><p>Scrambler ×2 / Key Hacker<small>Vault button + vault security system</small></p></div>
+        <div class="slot"><h4>Smuggle</h4><p>Vault Loading Bay<small>Mastery 18 — briefcase where you need it</small></p></div>
+      </div>
+
+      <div class="sect">IT room &amp; the gas trick</div>
+
+      <div class="step">
+        <div class="step-row">
+          <button class="tick" aria-pressed="false" aria-label="Mark step complete">✓</button>
+          <details class="stepd"><summary>
+            <span class="step-num">3.1</span>
+            <div class="step-txt"><h5>Take an IT Worker disguise</h5><p class="sum">Two IT staff work the basement IT room. Isolate one and take his clothes.</p></div>
+            <span class="mini-chev">▶</span>
+          </summary>
+          <div class="detail">
+            <dl class="dl">
+              <dt>Where</dt><dd>The basement IT room.</dd>
+              <dt>Disguise</dt><dd>You'll take the <b>IT Worker</b> outfit.</dd>
+              <dt>Item</dt><dd>A coin/thrown object to lure one out; the Janitor Key is also on the desk here.</dd>
+              <dt>NPC</dt><dd>The <b>two IT workers</b>.</dd>
+              <dt>Action</dt><dd>Lure one into the corridor, subdue, take clothes, hide body in the adjacent storage room.</dd>
+              <dt>Warning</dt><dd>IT access extends to the whole third floor (except private chambers) once the Director's Wi-Fi is down — that's the basis of Run 4.</dd>
+            </dl>
+            <div class="badges"><span class="badge b-ch">The IT Individual · +1000</span></div>
+          </div></details>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-row">
+          <button class="tick" aria-pressed="false" aria-label="Mark step complete">✓</button>
+          <details class="stepd"><summary>
+            <span class="step-num">3.2</span>
+            <div class="step-txt"><h5>Poison the vault security room's ventilation</h5><p class="sum">Introduce agent into the garage air intake, then switch the ventilation on at the guard-room door. Everyone inside drops.</p></div>
+            <span class="mini-chev">▶</span>
+          </summary>
+          <div class="detail">
+            <dl class="dl">
+              <dt>Where</dt><dd>Air intake in the basement garage; ventilation control at the vault security room door.</dd>
+              <dt>Disguise</dt><dd>Security Guard / IT both fine in the basement.</dd>
+              <dt>Item</dt><dd>Poison for the intake (or fumes from a running car).</dd>
+              <dt>NPC</dt><dd>The <b>guards inside the vault security hub</b>.</dd>
+              <dt>Action</dt><dd>Poison the intake, then switch the ventilation on — the sealed room fills and everyone inside goes down. One drops the green vault-area keycard.</dd>
+              <dt>Warning</dt><dd>Unusually, this room stays poisoned while the climate control runs, and re-poisons if you cycle the ventilation off then on. SAVE HERE once the room is clear and you're inside.</dd>
+            </dl>
+            <div class="badges"><span class="badge b-ch">Breath of Bad Air · +1000</span><span class="badge b-save">Security room cleared</span></div>
+          </div></details>
+        </div>
+      </div>
+
+      <div class="sect">Opening the vault</div>
+
+      <div class="step">
+        <div class="step-row">
+          <button class="tick" aria-pressed="false" aria-label="Mark step complete">✓</button>
+          <details class="stepd"><summary>
+            <span class="step-num">3.3</span>
+            <div class="step-txt"><h5>Get the Vault Keycard from the small safe</h5><p class="sum">Open the small safe in the vault security room; its key is on a downed guard.</p></div>
+            <span class="mini-chev">▶</span>
+          </summary>
+          <div class="detail">
+            <dl class="dl">
+              <dt>Where</dt><dd>Inside the vault security room (now cleared).</dd>
+              <dt>Disguise</dt><dd>Any legal here after the gas.</dd>
+              <dt>Item</dt><dd>Small-safe key from a downed guard → opens the safe → Vault Keycard.</dd>
+              <dt>NPC</dt><dd>The <b>gassed guards</b> (loot the key).</dd>
+              <dt>Action</dt><dd>Take the key, open the safe, take the Vault Keycard. Destroy the basement recorder here if you care about evidence.</dd>
+              <dt>Warning</dt><dd>Alternative path reaches the same place from the second-floor Security Hub with a High Security Guard + Security Keycard (the route the mission story actually hints at).</dd>
+            </dl>
+          </div></details>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-row">
+          <button class="tick" aria-pressed="false" aria-label="Mark step complete">✓</button>
+          <details class="stepd"><summary>
+            <span class="step-num">3.4</span>
+            <div class="step-txt"><h5>Crowbar the vault button cover</h5><p class="sum">Break open the protective cover over the vault door button with a crowbar.</p></div>
+            <span class="mini-chev">▶</span>
+          </summary>
+          <div class="detail">
+            <dl class="dl">
+              <dt>Where</dt><dd>The vault door button, under its cover.</dd>
+              <dt>Disguise</dt><dd>Any legal here.</dd>
+              <dt>Item</dt><dd>Crowbar (janitor room off the mezzanine, 2F bathroom, or garage; a robber carries one).</dd>
+              <dt>NPC</dt><dd>None.</dd>
+              <dt>Action</dt><dd>Break the cover with the crowbar, then open the door (next step) — both on one visit.</dd>
+              <dt>Warning</dt><dd>One source says the IT-room vault lock must be released first before the cover can be broken — unconfirmed. If the crowbar prompt won't appear, deal with the IT-room control, then return.</dd>
+            </dl>
+            <div class="badges"><span class="badge b-ch">Brute Force · +1000</span><span class="badge b-unv">IT-room lock prerequisite — unconfirmed</span></div>
+          </div></details>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-row">
+          <button class="tick" aria-pressed="false" aria-label="Mark step complete">✓</button>
+          <details class="stepd"><summary>
+            <span class="step-num">3.5</span>
+            <div class="step-txt"><h5>Open the vault door</h5><p class="sum">Use the vault keycard, hit the release, and switch off the vault's internal security system.</p></div>
+            <span class="mini-chev">▶</span>
+          </summary>
+          <div class="detail">
+            <dl class="dl">
+              <dt>Where</dt><dd>The vault door in the basement.</dd>
+              <dt>Disguise</dt><dd>Any legal here.</dd>
+              <dt>Item</dt><dd>Vault Keycard + a scrambler for the door lock and one for the security system.</dd>
+              <dt>NPC</dt><dd>None.</dd>
+              <dt>Action</dt><dd>Open the door, then disable the vault's internal security before touching anything.</dd>
+              <dt>Warning</dt><dd>Completes the mission story. SAVE HERE with the vault open and nothing taken.</dd>
+            </dl>
+            <div class="badges"><span class="badge b-ch">Ocean's 47 · +1000</span><span class="badge b-ch">Mission Story – The Heist · +2000</span><span class="badge b-save">Vault open, nothing taken</span></div>
+          </div></details>
+        </div>
+      </div>
+
+      <div class="sect">Inside the vault</div>
+
+      <div class="step">
+        <div class="step-row">
+          <button class="tick" aria-pressed="false" aria-label="Mark step complete">✓</button>
+          <details class="stepd"><summary>
+            <span class="step-num">3.6</span>
+            <div class="step-txt"><h5>Knock someone out with a gold bar</h5><p class="sum">Take a full-size gold bar from the vault and use it as a blunt weapon.</p></div>
+            <span class="mini-chev">▶</span>
+          </summary>
+          <div class="detail">
+            <dl class="dl">
+              <dt>Where</dt><dd>Inside the vault; use it on an isolated NPC in the loading bay or garage.</dd>
+              <dt>Disguise</dt><dd>Any.</dd>
+              <dt>Item</dt><dd>A full <b>Goldbar</b> from the vault (not the small throwable one from Mastery 2).</dd>
+              <dt>NPC</dt><dd>Any isolated guard.</dd>
+              <dt>Action</dt><dd>Grab a bar, subdue a guard from behind with it.</dd>
+              <dt>Warning</dt><dd>Redacted challenge.</dd>
+            </dl>
+            <div class="badges"><span class="badge b-ch">Show Me the Money · +1000</span></div>
+          </div></details>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-row">
+          <button class="tick" aria-pressed="false" aria-label="Mark step complete">✓</button>
+          <details class="stepd"><summary>
+            <span class="step-num">3.7</span>
+            <div class="step-txt"><h5>Take the Data Core, then throw it at someone</h5><p class="sum">Grab the hard-drive rack. With it in hand, aim at an isolated NPC's head and throw to knock them out.</p></div>
+            <span class="mini-chev">▶</span>
+          </summary>
+          <div class="detail">
+            <dl class="dl">
+              <dt>Where</dt><dd>Inside the vault; throw it at a guard in the loading bay/garage.</dd>
+              <dt>Disguise</dt><dd>Irrelevant — see warning.</dd>
+              <dt>Item</dt><dd>The <b>Data Core</b> (completes the data objective by itself).</dd>
+              <dt>NPC</dt><dd>An already-isolated guard.</dd>
+              <dt>Action</dt><dd>Pick up the core (Hard Core), aim until the red head-marker shows, throw it (You've Been Served), then retrieve it.</dd>
+              <dt>Warning</dt><dd><b>Carrying the Data Core makes every NPC an enforcer in any disguise.</b> Take it out, do the throw on someone already isolated, then stash the core near the driver's seat of the armored car and move freely.</dd>
+            </dl>
+            <div class="badges"><span class="badge b-ch">Hard Core · +2000</span><span class="badge b-ch">You've Been Served · +1000</span><span class="badge b-warn">Core = everyone is an enforcer; stash it in the van</span></div>
+          </div></details>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-row">
+          <button class="tick" aria-pressed="false" aria-label="Mark step complete">✓</button>
+          <details class="stepd"><summary>
+            <span class="step-num">3.8</span>
+            <div class="step-txt"><h5>Take the Cronkite files + Money Transport Key</h5><p class="sum">Open the corner safe in the basement storage room for the files; grab the van key beside the sleeping guard.</p></div>
+            <span class="mini-chev">▶</span>
+          </summary>
+          <div class="detail">
+            <dl class="dl">
+              <dt>Where</dt><dd>The corner safe in the basement room staffed by two tellers; the sleeping guard's room is adjacent.</dd>
+              <dt>Disguise</dt><dd>Security Guard / IT fine here.</dd>
+              <dt>Item</dt><dd>Take the <b>Cronkite files</b> from the safe and the <b>Money Transport Key</b> next to the sleeping guard.</dd>
+              <dt>NPC</dt><dd>Two <b>tellers</b> nearby; a <b>sleeping guard</b> in the next room.</dd>
+              <dt>Action</dt><dd>Open the safe, take the files and the key.</dd>
+              <dt>Warning</dt><dd>Don't spend the files on this run — they trigger three challenges in Run 4. Just carrying them satisfies Sensitive Files.</dd>
+            </dl>
+            <div class="badges"><span class="badge b-ch">Sensitive Files · +1000</span></div>
+          </div></details>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-row">
+          <button class="tick" aria-pressed="false" aria-label="Mark step complete">✓</button>
+          <details class="stepd"><summary>
+            <span class="step-num">3.9</span>
+            <div class="step-txt"><h5>Kill Savalas, then drive out in the armored car</h5><p class="sum">Take the target upstairs any way, return, collect the stashed core, and leave in the money transport.</p></div>
+            <span class="mini-chev">▶</span>
+          </summary>
+          <div class="detail">
+            <dl class="dl">
+              <dt>Where</dt><dd>Executive floor for the kill; the money transport in the basement garage for the exit.</dd>
+              <dt>Disguise</dt><dd>Any that reaches her.</dd>
+              <dt>Item</dt><dd>Money Transport Key; the stashed Data Core.</dd>
+              <dt>NPC</dt><dd><b>Savalas</b>.</dd>
+              <dt>Action</dt><dd>Eliminate her (no scored method needed here), return, grab the core from the van, drive out.</dd>
+              <dt>Warning</dt><dd>Exits need Savalas dead + data secured. Mutually exclusive with the other two exfiltration challenges.</dd>
+            </dl>
+            <div class="badges"><span class="badge b-ch">Heavy Exfiltration · +1000</span><span class="badge b-warn">One exit per run only</span></div>
+          </div></details>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- RUN 4 -->
+  <details class="run" id="run4">
+    <summary>
+      <span class="chev">▶</span>
+      <div class="run-hd">
+        <div class="run-tag">Run 4 · 2nd &amp; 3rd floors · information warfare</div>
+        <h2>The Exposé &amp; the Wi-Fi</h2>
+        <p class="goal">Leak the Cronkite files to a journalist, sabotage the Director's internet to invite IT into her office, and use that access for the mirror kill and the three data disks.</p>
+      </div>
+      <div class="run-prog" data-run="4"><b>0</b>/6</div>
+    </summary>
+    <div class="run-inner">
+      <div class="loadout">
+        <div class="slot"><h4>Start</h4><p>Investment Floor<small>Mastery 14 — Investment Banker</small></p></div>
+        <div class="slot"><h4>Suit</h4><p>N/A — disguised start</p></div>
+        <div class="slot"><h4>Pistol</h4><p>Silverballer, silenced<small>For the mirror shot</small></p></div>
+        <div class="slot"><h4>Gear 1</h4><p>Kalmer 1 Tranquilizer<small>Sedates Mann &amp; Pérez cleanly</small></p></div>
+        <div class="slot"><h4>Gear 2</h4><p>Emetic Rat Poison<small>Backup for separating them</small></p></div>
+        <div class="slot"><h4>Smuggle</h4><p>Second Floor Bathroom<small>Mastery 8 — small item near the action</small></p></div>
+      </div>
+
+      <div class="sect">The Exposé</div>
+
+      <div class="step">
+        <div class="step-row">
+          <button class="tick" aria-pressed="false" aria-label="Mark step complete">✓</button>
+          <details class="stepd"><summary>
+            <span class="step-num">4.1</span>
+            <div class="step-txt"><h5>Retrieve the Cronkite files</h5><p class="sum">Same corner safe in the basement storage room. Save the moment you have them.</p></div>
+            <span class="mini-chev">▶</span>
+          </summary>
+          <div class="detail">
+            <dl class="dl">
+              <dt>Where</dt><dd>The corner safe in the basement storage room.</dd>
+              <dt>Disguise</dt><dd>Investment Banker reaches the basement storage and locked-down deposits.</dd>
+              <dt>Item</dt><dd>The <b>Cronkite files</b>.</dd>
+              <dt>NPC</dt><dd>Two tellers nearby.</dd>
+              <dt>Action</dt><dd>Open the safe, take the files.</dd>
+              <dt>Warning</dt><dd>SAVE HERE — this is the branch point; there's only one set of files.</dd>
+            </dl>
+            <div class="badges"><span class="badge b-save">Files in hand, before you commit them</span></div>
+          </div></details>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-row">
+          <button class="tick" aria-pressed="false" aria-label="Mark step complete">✓</button>
+          <details class="stepd"><summary>
+            <span class="step-num">4.2</span>
+            <div class="step-txt"><h5>Hand the files to Ruby Red</h5><p class="sum">Give the documents to the journalist in the lobby. The stock crashes a couple of minutes later.</p></div>
+            <span class="mini-chev">▶</span>
+          </summary>
+          <div class="detail">
+            <dl class="dl">
+              <dt>Where</dt><dd><b>Ruby Red</b> waits in a corner of the lobby.</dd>
+              <dt>Disguise</dt><dd>Investment Banker fine.</dd>
+              <dt>Item</dt><dd>The Cronkite files.</dd>
+              <dt>NPC</dt><dd><b>Ruby Red</b>, the red-haired investigative reporter (the wiki's "the investigator").</dd>
+              <dt>Action</dt><dd>Hand her the files — completes The Exposé, fires Whistleblower, and (after a delay) Insider Trading when the market crashes.</dd>
+              <dt>Warning</dt><dd>The crash is delayed — move on for a minute or two. Giving her the files means you no longer have them for the conference room, so the Run 4 mirror kill uses the laptop reschedule instead (by design). Selling stock yourself at the 2F terminal crashes the market but skips Whistleblower + the story, so Ruby Red is strictly better.</dd>
+            </dl>
+            <div class="badges"><span class="badge b-ch">Mission Story – The Exposé · +2000</span><span class="badge b-ch">Whistleblower · +1000</span><span class="badge b-ch">Insider Trading · +1000</span></div>
+          </div></details>
+        </div>
+      </div>
+
+      <div class="sect">On and Off Again</div>
+
+      <div class="step">
+        <div class="step-row">
+          <button class="tick" aria-pressed="false" aria-label="Mark step complete">✓</button>
+          <details class="stepd"><summary>
+            <span class="step-num">4.3</span>
+            <div class="step-txt"><h5>Kill the Director's Wi-Fi, then switch to IT</h5><p class="sum">Turn off a Wi-Fi repeater; IT becomes welcome on the third floor. Grab an IT disguise if you don't have one.</p></div>
+            <span class="mini-chev">▶</span>
+          </summary>
+          <div class="detail">
+            <dl class="dl">
+              <dt>Where</dt><dd>Wi-Fi repeater in the third-floor lounge, or the one in the basement IT room.</dd>
+              <dt>Disguise</dt><dd>Switch into <b>IT Worker</b> after — it then reaches the whole third floor except the private chambers.</dd>
+              <dt>Item</dt><dd>None to flip the switch.</dd>
+              <dt>NPC</dt><dd>None required.</dd>
+              <dt>Action</dt><dd>Switch off a repeater (per the IT Note intel, downed office Wi-Fi grants IT immediate access), then equip an IT outfit.</dd>
+              <dt>Warning</dt><dd>None.</dd>
+            </dl>
+            <div class="badges"><span class="badge b-ch">Have You Tried Turning It Off and On Again? · +1000</span></div>
+          </div></details>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-row">
+          <button class="tick" aria-pressed="false" aria-label="Mark step complete">✓</button>
+          <details class="stepd"><summary>
+            <span class="step-num">4.4</span>
+            <div class="step-txt"><h5>Reschedule the meeting on her laptop</h5><p class="sum">As IT, enter the office to "fix" the laptop and bring the meeting with Mann &amp; Pérez forward.</p></div>
+            <span class="mini-chev">▶</span>
+          </summary>
+          <div class="detail">
+            <dl class="dl">
+              <dt>Where</dt><dd>The Director's office (you're invited in as IT to fix her laptop).</dd>
+              <dt>Disguise</dt><dd>IT Worker.</dd>
+              <dt>Item</dt><dd>None — but disarm first (ditch firearms before entering).</dd>
+              <dt>NPC</dt><dd><b>Savalas</b> (and the calendar showing her meeting with Mann &amp; Pérez).</dd>
+              <dt>Action</dt><dd>Use the laptop to move the meeting forward — fires Expediter 47 + completes On and Off Again, and pulls all three disk-holders together.</dd>
+              <dt>Warning</dt><dd>Being caught carrying illegal items breaks the escorted-technician pretext. SAVE HERE with the meeting rescheduled.</dd>
+            </dl>
+            <div class="badges"><span class="badge b-ch">Expediter 47 · +1000</span><span class="badge b-ch">Mission Story – On and Off Again · +1000</span><span class="badge b-save">Meeting rescheduled</span></div>
+          </div></details>
+        </div>
+      </div>
+
+      <div class="sect">The mirror &amp; the disks</div>
+
+      <div class="step">
+        <div class="step-row">
+          <button class="tick" aria-pressed="false" aria-label="Mark step complete">✓</button>
+          <details class="stepd"><summary>
+            <span class="step-num">4.5</span>
+            <div class="step-txt"><h5>Shoot her through the conference-room mirror</h5><p class="sum">With Savalas drawn into the conference room, shoot her from the observation room through the one-way glass.</p></div>
+            <span class="mini-chev">▶</span>
+          </summary>
+          <div class="detail">
+            <dl class="dl">
+              <dt>Where</dt><dd>Fire from the private chambers / observation room behind the one-way mirror, which looks into the third-floor conference room.</dd>
+              <dt>Disguise</dt><dd>Any that reached the executive floor.</dd>
+              <dt>Item</dt><dd>Silenced pistol.</dd>
+              <dt>NPC</dt><dd><b>Savalas</b>, brought into the conference room by the rescheduled meeting.</dd>
+              <dt>Action</dt><dd>Aim through the glass and fire.</dd>
+              <dt>Warning</dt><dd>Only one set of Cronkite files — if you gave them to Ruby Red, the file-in-the-conference-room trigger is gone, so the laptop reschedule (step 4.4) is what draws her in. That's why this run is ordered this way.</dd>
+            </dl>
+            <div class="badges"><span class="badge b-ch">Mirror, Mirror, on the Wall · +2000</span><span class="badge b-warn">Reschedule is the trigger once files are with Ruby Red</span></div>
+          </div></details>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-row">
+          <button class="tick" aria-pressed="false" aria-label="Mark step complete">✓</button>
+          <details class="stepd"><summary>
+            <span class="step-num">4.6</span>
+            <div class="step-txt"><h5>Collect all three backup data disks</h5><p class="sum">Savalas, Pérez and Mann each carry one. Kalmer the two non-targets; take Savalas's off her body.</p></div>
+            <span class="mini-chev">▶</span>
+          </summary>
+          <div class="detail">
+            <dl class="dl">
+              <dt>Where</dt><dd>The executive floor, where the rescheduled meeting gathers all three.</dd>
+              <dt>Disguise</dt><dd>IT / any legal for the floor.</dd>
+              <dt>Item</dt><dd>Kalmer 1 dart (cleanest) or emetic (to send each to a bathroom alone).</dd>
+              <dt>NPC</dt><dd><b>Athena Savalas</b> (target), <b>Mateo Pérez</b> (Head of Security), <b>Fabian Mann</b> (Head of Accounts).</dd>
+              <dt>Action</dt><dd>Take Savalas's disk off her body; sedate Mann and Pérez and take theirs.</dd>
+              <dt>Warning</dt><dd>Mann and Pérez are NOT targets — killing them costs points and any SA rating. Sedate, don't kill.</dd>
+            </dl>
+            <div class="badges"><span class="badge b-ch">Triple Core · +2000</span></div>
+          </div></details>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- RUN 5 -->
+  <details class="run" id="run5">
+    <summary>
+      <span class="chev">▶</span>
+      <div class="run-hd">
+        <div class="run-tag">Run 5 · Wardrobe &amp; gold</div>
+        <h2>Chameleon &amp; the Golden Shotgun</h2>
+        <p class="goal">Equip all nine disguises in one pass, then strip the vault of gold as the Bank Robber to spawn the Golden Sawed-Off Bartoli 12G and use it on the target.</p>
+      </div>
+      <div class="run-prog" data-run="5"><b>0</b>/3</div>
+    </summary>
+    <div class="run-inner">
+      <div class="loadout">
+        <div class="slot"><h4>Start</h4><p>Garage<small>Mastery 17 — Bank Robber</small></p></div>
+        <div class="slot"><h4>Suit</h4><p>N/A — disguised start</p></div>
+        <div class="slot"><h4>Pistol</h4><p>Silverballer, silenced</p></div>
+        <div class="slot"><h4>Gear 1</h4><p>Lockpick</p></div>
+        <div class="slot"><h4>Gear 2</h4><p>Emetic Rat Poison<small>Cheapest way to isolate NPCs</small></p></div>
+        <div class="slot"><h4>Smuggle</h4><p>First Floor Janitor Room<small>Mastery 6 — briefcase drop</small></p></div>
+      </div>
+
+      <div class="sect">All nine disguises</div>
+
+      <div class="step">
+        <div class="step-row">
+          <button class="tick" aria-pressed="false" aria-label="Mark step complete">✓</button>
+          <details class="stepd"><summary>
+            <span class="step-num">5.1</span>
+            <div class="step-txt"><h5>Equip all nine disguises</h5><p class="sum">Nine outfits exist here. Equip each once in a single run — and re-equip your starting one.</p></div>
+            <span class="mini-chev">▶</span>
+          </summary>
+          <div class="detail">
+            <dl class="dl">
+              <dt>Where / who</dt><dd>
+                <b>Bank Robber</b> — Teller Hall bathroom bag (you start in it) · <b>Bank Teller</b> — tellers at the counter / interview area · <b>Investment Banker</b> — staff on the investment &amp; executive floors and near the deposit boxes · <b>Janitor</b> — the balcony right of and overlooking the Teller Hall · <b>Fired Banker</b> — the sweater NPC up the back stairs, then right, on the mezzanine · <b>Job Applicant</b> — Mr. Thomas in the waiting-area bathroom cubicle · <b>IT Worker</b> — the two staff in the basement IT room · <b>Security Guard</b> — guards around the basement deposit boxes · <b>High Security Guard</b> — vault security detail / second-floor Security Hub (fusebox trick).
+              </dd>
+              <dt>Disguise</dt><dd>This step <em>is</em> the disguises.</dd>
+              <dt>Item</dt><dd>Lockpick (cubicles), emetic (to isolate the fired banker), crowbar (hub fusebox).</dd>
+              <dt>NPC</dt><dd>As listed above.</dd>
+              <dt>Action</dt><dd>Equip each outfit at least once.</dd>
+              <dt>Warning</dt><dd><b>A disguise you START in doesn't count until you swap out and re-equip it</b> — so change out of the Bank Robber, then put a Bank Robber outfit back on later to close the loop. Chameleon moved from Feats to Discovery in HITMAN III. SAVE HERE after the eighth, before the last.</dd>
+            </dl>
+            <div class="badges"><span class="badge b-ch">Chameleon · +4000</span><span class="badge b-ch">The Other Frank · +1000</span><span class="badge b-warn">Starting disguise counts only after swap-out &amp; back</span><span class="badge b-save">Save before the last disguise</span></div>
+          </div></details>
+        </div>
+      </div>
+
+      <div class="sect">The Golden Shotgun</div>
+
+      <div class="step">
+        <div class="step-row">
+          <button class="tick" aria-pressed="false" aria-label="Mark step complete">✓</button>
+          <details class="stepd"><summary>
+            <span class="step-num">5.2</span>
+            <div class="step-txt"><h5>Strip the vault of gold as the Bank Robber</h5><p class="sum">Take every gold bar while wearing the rabbit mask; the mask turns gold and the Golden Sawed-Off Bartoli 12G appears.</p></div>
+            <span class="mini-chev">▶</span>
+          </summary>
+          <div class="detail">
+            <dl class="dl">
+              <dt>Where</dt><dd>Inside the open vault.</dd>
+              <dt>Disguise</dt><dd><b>Bank Robber</b> (required for the trigger).</dd>
+              <dt>Item</dt><dd>None — you're collecting the gold bars.</dd>
+              <dt>NPC</dt><dd>Clear the guards near the vault first.</dd>
+              <dt>Action</dt><dd>Take every gold bar in the vault (one source: seven; the wiki: all of them). The mask turns gold and the shotgun spawns on a pile of goldbars in a puff of gold smoke.</dd>
+              <dt>Warning</dt><dd>Vault must already be open with security off (do the Run 3 vault sequence first or repeat it). Every employee is an enforcer for this outfit — stay deep in the basement.</dd>
+            </dl>
+            <div class="badges"><span class="badge b-warn">Bank Robber = every employee is an enforcer</span></div>
+          </div></details>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-row">
+          <button class="tick" aria-pressed="false" aria-label="Mark step complete">✓</button>
+          <details class="stepd"><summary>
+            <span class="step-num">5.3</span>
+            <div class="step-txt"><h5>Kill Savalas with the Golden Sawed-Off Bartoli 12G</h5><p class="sum">Carry the spawned shotgun upstairs (out of the robber outfit) and use it on the Director.</p></div>
+            <span class="mini-chev">▶</span>
+          </summary>
+          <div class="detail">
+            <dl class="dl">
+              <dt>Where</dt><dd>Take the gun from the gold pile; kill her somewhere isolated (observation room, or her office with guards handled).</dd>
+              <dt>Disguise</dt><dd>Change OUT of the Bank Robber; use an executive-capable disguise (Fired Banker route is most reliable).</dd>
+              <dt>Item</dt><dd>The <b>Golden Sawed-Off Bartoli 12G</b> (holsters, so carry it up concealed).</dd>
+              <dt>NPC</dt><dd><b>Savalas</b>.</dd>
+              <dt>Action</dt><dd>Shoot her with the golden shotgun.</dd>
+              <dt>Warning</dt><dd>Loud — isolate her first. Completes the challenge and permanently unlocks the gun (the mission's one unlock). Added post-launch — one source dates it 30 Apr 2024; exact patch unconfirmed.</dd>
+            </dl>
+            <div class="badges"><span class="badge b-ch">The Great Thief · +2000 · unlocks the gun</span><span class="badge b-unv">Exact patch/date of addition unconfirmed</span></div>
+          </div></details>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- RUN 6 -->
+  <details class="run" id="run6">
+    <summary>
+      <span class="chev">▶</span>
+      <div class="run-hd">
+        <div class="run-tag">Run 6 · Ratings · do last</div>
+        <h2>The Classics</h2>
+        <p class="goal">One clean suited run that takes Silent Assassin, Suit Only, SASO and Sniper Assassin together — she comes to you.</p>
+      </div>
+      <div class="run-prog" data-run="6"><b>0</b>/4</div>
+    </summary>
+    <div class="run-inner">
+      <div class="loadout">
+        <div class="slot"><h4>Start</h4><p>Main Entrance<small>Mastery 1 — only suit start</small></p></div>
+        <div class="slot"><h4>Suit</h4><p>The New Yorker<small>Any earned suit</small></p></div>
+        <div class="slot"><h4>Pistol</h4><p>Silenced pistol<small>Cameras only</small></p></div>
+        <div class="slot"><h4>Gear 1</h4><p>Lockpick</p></div>
+        <div class="slot"><h4>Gear 2</h4><p>Scrambler / Key Hacker</p></div>
+        <div class="slot"><h4>Smuggle</h4><p>Waiting Area Bathroom<small>Mastery 4 — silenced sniper briefcase</small></p></div>
+      </div>
+
+      <div class="sect">Route</div>
+
+      <div class="step">
+        <div class="step-row">
+          <button class="tick" aria-pressed="false" aria-label="Mark step complete">✓</button>
+          <details class="stepd"><summary>
+            <span class="step-num">6.1</span>
+            <div class="step-txt"><h5>Open an account, slip past the frisk, kill the first camera</h5><p class="sum">The frosted booth hides you; take the teller's key (or lockpick the door), then destroy the camera beyond it.</p></div>
+            <span class="mini-chev">▶</span>
+          </summary>
+          <div class="detail">
+            <dl class="dl">
+              <dt>Where</dt><dd>Teller counter → the locked door next to the Lost and Found → camera immediately beyond it.</dd>
+              <dt>Disguise</dt><dd>Suit (only suit start).</dd>
+              <dt>Item</dt><dd>Silenced pistol for the camera; a lockpick can replace the teller's key.</dd>
+              <dt>NPC</dt><dd>The <b>male teller</b> (frosts the booth glass; subdue him unobserved for his key).</dd>
+              <dt>Action</dt><dd>Open an account; when he frosts the glass, subdue him and take the key; open the locked door and destroy the camera before stepping through.</dd>
+              <dt>Warning</dt><dd>The camera behind that door will flag you if not destroyed (rating turns yellow until the recorder is dealt with). SAVE HERE inside, unspotted.</dd>
+            </dl>
+            <div class="badges"><span class="badge b-save">Inside, unspotted, before the basement</span></div>
+          </div></details>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-row">
+          <button class="tick" aria-pressed="false" aria-label="Mark step complete">✓</button>
+          <details class="stepd"><summary>
+            <span class="step-num">6.2</span>
+            <div class="step-txt"><h5>Gas the vault security room, take the core, stash it in the van</h5><p class="sum">Chloroform the ventilation, clear the room, take the Data Core and stash it near the van's driver seat.</p></div>
+            <span class="mini-chev">▶</span>
+          </summary>
+          <div class="detail">
+            <dl class="dl">
+              <dt>Where</dt><dd>Basement: cabinet by the vault security room door → garage air intake → ventilation control → vault → money transport in the garage.</dd>
+              <dt>Disguise</dt><dd>Suit throughout is possible on this route; avoid trespass zones.</dd>
+              <dt>Item</dt><dd>Chloroform (from the cabinet, opened by crowbar/lockpick); two scramblers (vault button + security system).</dd>
+              <dt>NPC</dt><dd>The <b>gassed vault guards</b> (loot the green keycard).</dd>
+              <dt>Action</dt><dd>Kill the second camera, chloroform the intake, switch ventilation on to down the guards, scramble the vault open, take the Data Core, and stash it near the van's driver seat.</dd>
+              <dt>Warning</dt><dd>Carrying the Data Core makes everyone an enforcer — fatal to Silent Assassin. Stash it in the van early. Guards are unconscious, not dead — keep bodies unfound.</dd>
+            </dl>
+            <div class="badges"><span class="badge b-warn">Never carry the core on a rating run — stash it</span></div>
+          </div></details>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-row">
+          <button class="tick" aria-pressed="false" aria-label="Mark step complete">✓</button>
+          <details class="stepd"><summary>
+            <span class="step-num">6.3</span>
+            <div class="step-txt"><h5>Crash the stock and wait in the fire-axe room</h5><p class="sum">Give the files to Ruby Red, then hide in the second-floor cabinet with the sniper ready. Savalas comes down alone.</p></div>
+            <span class="mini-chev">▶</span>
+          </summary>
+          <div class="detail">
+            <dl class="dl">
+              <dt>Where</dt><dd>Take the Cronkite files + transport key from the basement storage → hand files to Ruby Red in the lobby → go up to the 2F room in the left corner with the fire axe.</dd>
+              <dt>Disguise</dt><dd>Suit.</dd>
+              <dt>Item</dt><dd>Cronkite files; the silenced sniper rifle from your Mastery-4 briefcase (sling it, keep the case).</dd>
+              <dt>NPC</dt><dd><b>Ruby Red</b> (hand off files); <b>Savalas</b> (arrives after the crash).</dd>
+              <dt>Action</dt><dd>Hand over the files and move immediately; take out the sniper, hide in the cabinet, and wait. When she enters alone and shuts the door, stun her with the briefcase, then shoot her with the silenced sniper; get back in the cabinet.</dd>
+              <dt>Warning</dt><dd>The crash is delayed — move to the cabinet at once. Using the sniper here is what earns Sniper Assassin in the same run. SAVE HERE hidden, before she arrives.</dd>
+            </dl>
+            <div class="badges"><span class="badge b-save">Hidden in the cabinet, before she arrives</span></div>
+          </div></details>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-row">
+          <button class="tick" aria-pressed="false" aria-label="Mark step complete">✓</button>
+          <details class="stepd"><summary>
+            <span class="step-num">6.4</span>
+            <div class="step-txt"><h5>Down the pipe, into the van, out clean</h5><p class="sum">Climb down the railing pipe to the basement, grab the stashed core, and drive out with all four ratings intact.</p></div>
+            <span class="mini-chev">▶</span>
+          </summary>
+          <div class="detail">
+            <dl class="dl">
+              <dt>Where</dt><dd>Pipe on the railing → basement → money transport in the garage.</dd>
+              <dt>Disguise</dt><dd>Suit.</dd>
+              <dt>Item</dt><dd>Money Transport Key; the stashed Data Core.</dd>
+              <dt>NPC</dt><dd>None required.</dd>
+              <dt>Action</dt><dd>Climb down (avoids a frisk point), collect the core from the van, drive out.</dd>
+              <dt>Warning</dt><dd>Before leaving: only Savalas killed, no bodies found, not spotted, both recorders dealt with. If you lack the sniper unlock or the Mastery-4 stash, split into two runs — one clean SA/SASO kill, one dedicated sniper run; route is otherwise identical. The Classics fires once all four ratings are green.</dd>
+            </dl>
+            <div class="badges"><span class="badge b-ch">Silent Assassin · +4000</span><span class="badge b-ch">Suit Only · +4000</span><span class="badge b-ch">Silent Assassin, Suit Only · +4000</span><span class="badge b-ch">Sniper Assassin · +4000</span><span class="badge b-ch">The Classics · +4000</span></div>
+          </div></details>
+        </div>
+      </div>
+    </div>
+  </details>
+
+</div>
+
+<!-- ===================== CHECKLIST ===================== -->
+<div class="panel" id="panel-check">
+  <div class="filters" id="filters"></div>
+  <div id="list"></div>
+</div>
+
+<!-- ===================== BRIEFING ===================== -->
+<div class="panel" id="panel-brief">
+  <div class="note">
+    <h3>Verified totals</h3>
+    <p>55 challenges: <strong>11 Assassination, 18 Discovery, 20 Feats, 1 Targets, 5 The Classics</strong>. Total <strong>96,000 XP</strong>, one unlock (the Golden Sawed-Off Bartoli 12G).</p>
+    <p>Checked three ways. The category counts come from the Hitman Wiki table; your uploaded in-game JSON matches it name-for-name and description-for-description; and the individual XP values sum independently to exactly 96,000 (24,000 + 23,000 + 25,000 + 4,000 + 20,000). A missing or invented entry would break that sum. The JSON's <code>UI_PEACOCK…</code> and <code>LOCATION_PARENT_GREEDY</code> strings are server placeholders for the escalation-support slot, not a real 56th challenge.</p>
+  </div>
+
+  <div class="note">
+    <h3>Cut &amp; changed</h3>
+    <ul>
+      <li><strong>Cut in HITMAN III:</strong> "Mission Stories – The Milton-Fitzpatrick Bank" (do 3 stories) and "No Evidence".</li>
+      <li><strong>Added in HITMAN III:</strong> the individual The Job Interview and On and Off Again story challenges.</li>
+      <li><strong>Moved category:</strong> Chameleon, Seven Figures and You're Hired! → Discovery; Brute Force, Expediter 47 and Ocean's 47 → Feats.</li>
+      <li><strong>The Great Thief</strong> added post-launch (one source: 30 Apr 2024; exact patch unconfirmed).</li>
+    </ul>
+  </div>
+
+  <div class="note">
+    <h3>Mutually exclusive within one run</h3>
+    <ul>
+      <li><strong>Every Savalas kill method</strong> — one target, one death per attempt. Save-scum (Run 2).</li>
+      <li><strong>The three exfiltrations</strong> — you leave once. Superintendent (R1), Executive (R2), Heavy (R3).</li>
+      <li><strong>The Cronkite files</strong> — one set: Ruby Red (Whistleblower/Exposé/Insider Trading) OR the conference room (Mirror kill trigger). Use the laptop reschedule for the mirror so both fit in Run 4.</li>
+      <li><strong>The vodka bottle</strong> — shared between A Drink to Die For and the Frank challenge. Separate reloads.</li>
+      <li><strong>Hard Core vs any rating</strong> — carrying the core makes everyone an enforcer. Stash it or skip it on Run 6.</li>
+      <li><strong>Peeping Tom before The Applicant</strong> — Mr. Thomas must still be conscious and being sick.</li>
+    </ul>
+  </div>
+
+  <div class="note alert">
+    <h3>Known bugs — confirmed vs unconfirmed</h3>
+    <p><strong>Confirmed (historical):</strong> at the map's June 2019 launch, players who'd fully explored the bank couldn't re-trigger Discover Milton-Fitzpatrick. IO acknowledged it and patched it. Long resolved.</p>
+    <p><strong>Confirmed (engine-wide):</strong> loading a save can stop a challenge registering. Restart and take it fresh if one won't pop.</p>
+    <p><strong>Not confirmed:</strong> no verified Golden Handshake-specific scripting conflict between mission stories. The five stories are independent and need no fixed order. If a guide claims otherwise, I couldn't source it.</p>
+  </div>
+
+  <div class="note"><h3>Starting locations &amp; mastery</h3></div>
+  <table class="mast-tbl">
+    <thead><tr><th>Level</th><th>Unlock</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Main Entrance (start)</td><td>Only suit start.</td></tr>
+      <tr><td>2</td><td>Small Goldbar</td><td>Throwable distraction, not the vault bar.</td></tr>
+      <tr><td>3</td><td>First Floor Mezzanine (start)</td><td>Starts as Janitor.</td></tr>
+      <tr><td>4</td><td>Waiting Area Bathroom (stash)</td><td>Small item — key to the SASO route.</td></tr>
+      <tr><td>5</td><td>ICA Remote Flash Device</td><td></td></tr>
+      <tr><td>6</td><td>First Floor Janitor Room (pickup)</td><td>Briefcase, large item.</td></tr>
+      <tr><td>7</td><td>Audit Hall (start)</td><td>Starts as Bank Teller.</td></tr>
+      <tr><td>8</td><td>Second Floor Bathroom (stash)</td><td>Was ML7 in HITMAN 2.</td></tr>
+      <tr><td>10</td><td>Deposit Box (stash)</td><td>Was ML8 in HITMAN 2.</td></tr>
+      <tr><td>12</td><td>Deposit Box Room (start)</td><td>Starts as Security Guard. Was ML9.</td></tr>
+      <tr><td>13</td><td>Sawed Off Bartoli 12G</td><td>Was ML10.</td></tr>
+      <tr><td>14</td><td>Investment Floor (start)</td><td>Starts as Investment Banker. Was ML11.</td></tr>
+      <tr><td>16</td><td>Executive Floor (pickup)</td><td>Assistant's back room. Was ML12.</td></tr>
+      <tr><td>17</td><td>Garage (start)</td><td>Starts as Bank Robber. Was ML13.</td></tr>
+      <tr><td>18</td><td>Vault Loading Bay (pickup)</td><td>Basement garage briefcase. Was ML14.</td></tr>
+      <tr><td>20</td><td>The New Yorker with Gloves</td><td>Was ML15.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note">
+    <h3>Sourcing &amp; what's still unverified</h3>
+    <p>Primary: the Hitman Wiki Golden Handshake article (challenge list, XP, intel, mastery). Cross-checked against your uploaded in-game challenge JSON, NamuWiki's New York breakdown (methods), the wiki disguise pages and a Steam disguise compendium (Chameleon), the wiki walkthrough (security-hub route), Gameranx + a video guide (interview answers, now agreeing), the wiki's own Whistleblower page (resolves the investigator location to Ruby Red), and Steam threads (bug history).</p>
+    <p>Now resolved since the first draft: the interview answers (Hawk/middle, Hitman/left, Piles of Money/right — two independent sources agree) and Whistleblower (the wiki confirms it's the investigator/Ruby Red, not the conference room).</p>
+    <p>Still marked unverified in the runs:</p>
+    <ul>
+      <li>Whether the IT-room vault lock must be released before the button cover can be crowbarred (single source).</li>
+      <li>Whether tampering with Frank's vodka is an alternative trigger for "Ruin Frank's day", or the subdue is the only method.</li>
+      <li>The exact patch that added The Great Thief.</li>
+      <li>An official enumerated area list for Discover Milton-Fitzpatrick — none is published; the sweep list is assembled from confirmed area names.</li>
+    </ul>
+    <p>Individual NPC patrol timings aren't reliably documented and vary by difficulty, so I describe positions and behaviour rather than invent timed routes. Every named person — Savalas, Pérez, Mann, Ruby Red, Mr. Thomas, Frank, Mette P. Anderson — is sourced.</p>
+  </div>
+
+  <div class="note">
+    <h3>Progress isn't saved</h3>
+    <p>Ticks live in the page only and clear on reload. Keep the tab open for a session, or tick along in the game's own challenge screen.</p>
+  </div>
+
+  <footer><p>Golden Handshake · Milton-Fitzpatrick, New York · One target, 55 challenges, six runs.</p></footer>
+</div>
+
+</div>
+
+<script>
+const CH = [
+ ["Time's Up","A","Assassinate Director Savalas by making her fall through the clock.",2000],
+ ["The Great Thief","A","Eliminate Athena Savalas with the Golden Sawed-Off Bartoli 12G.",2000],
+ ["Mirror, Mirror, on the Wall","A","Assassinate Director Savalas by shooting her through the conference room mirror.",2000],
+ ["A Drink to Die For","A","Assassinate Director Savalas by poisoning her vodka.",2000],
+ ["Pride Goeth Before Destruction","A","Assassinate Director Savalas with her award.",2000],
+ ["Someone Could Hurt Themselves","A","Assassinate a target in an accident.",2000],
+ ["Tasteless, Traceless","A","Assassinate a target with lethal poison.",2000],
+ ["Hold My Hair","A","Assassinate a target by drowning them.",2000],
+ ["Piano Man","A","Assassinate a target with the fiber wire.",2000],
+ ["Straight Shot","A","Assassinate a target with a headshot.",2000],
+ ["Versatile Assassin","A","Complete Piano Man, Someone Could Hurt Themselves, Hold My Hair, Straight Shot and Tasteless, Traceless.",4000],
+ ["Behind Closed Doors","D","Enter Director Savalas' inner sanctum.",2000],
+ ["Sensitive Files","D","Obtain the Cronkite files.",1000],
+ ["Access Granted","D","Obtain the high-security keycard.",1000],
+ ["Discover Milton-Fitzpatrick","D","Reveal all undiscovered areas in the Milton-Fitzpatrick bank.",1000],
+ ["Where Did it Go?","D","Dump something into the ventilation.",1000],
+ ["Maintenance Man","D","Obtain the janitor's key.",1000],
+ ["The Applicant","D","Disguise yourself as the Job Applicant.",1000],
+ ["The IT Individual","D","Disguise yourself as IT.",1000],
+ ["Heavy Exfiltration","D","Escape using the armored car in the basement.",1000],
+ ["Peeping Tom","D","Be a creep. (Watch Mr. Thomas through the bathroom peephole.)",1000],
+ ["Seven Figures","D","Open an account in the bank.",1000],
+ ["Chameleon","D","Find and equip all disguises in the Milton-Fitzpatrick bank.",4000],
+ ["Executive Exfiltration","D","Escape using the director's exit.",1000],
+ ["Open Sesame!","D","Open a deposit box.",1000],
+ ["You're Hired!","D","Answer all questions correctly during your interview.",2000],
+ ["The Sweater","D","Disguise yourself as the Fired Banker.",1000],
+ ["Superintendent Exfiltration","D","Escape using the maintenance exit.",1000],
+ ["The Other Frank","D","[Redacted] Disguise yourself as the Bank Robber.",1000],
+ ["Mission Story – Hostile Termination","F","Complete the mission story \"Hostile Termination\".",2000],
+ ["Brute Force","F","Break open the vault button with a crowbar.",1000],
+ ["Mission Story – The Heist","F","Complete the mission story \"The Heist\".",2000],
+ ["You've Been Served","F","Throw the data core at someone and knock them out.",1000],
+ ["Where is My Stapler?","F","Get fired.",1000],
+ ["Mission Story – The Job Interview","F","One final test? (Added in HITMAN III.)",1000],
+ ["Whistleblower","F","Hand over the Cronkite files to the investigator.",1000],
+ ["Injury to Insult","F","Poison the drink of the recently unemployed banker.",1000],
+ ["Expediter 47","F","Reschedule a meeting.",1000],
+ ["Triple Core","F","Obtain the three backup data disks.",2000],
+ ["Mission Story – On and Off Again","F","Faulty network wiring. (Added in HITMAN III.)",1000],
+ ["Hard Core","F","Obtain the data core.",2000],
+ ["Ocean's 47","F","Open the vault door.",1000],
+ ["Have You Tried Turning It Off and On Again?","F","Make it so IT is allowed on the third floor.",1000],
+ ["Mission Story – The Exposé","F","Complete the mission story \"The Exposé\".",2000],
+ ["Insider Trading","F","Crash the stock market.",1000],
+ ["I'm Getting Too Old for This...","F","Ruin Frank's day.",1000],
+ ["Due You Even Care","F","[Redacted] Shoot the pigeon in the Teller Hall.",1000],
+ ["Breath of Bad Air","F","Poison the basement security room's ventilation.",1000],
+ ["Show Me the Money","F","[Redacted] Knock someone out with a goldbar.",1000],
+ ["The CEO","T","Assassinate Athena Savalas.",4000],
+ ["The Classics","TC","Complete Silent Assassin, SASO, Sniper Assassin and Suit Only.",4000],
+ ["Suit Only","TC","Assassinate the target and complete the mission, all in your suit.",4000],
+ ["Silent Assassin, Suit Only","TC","Only the target eliminated, no bodies found, not spotted, in your suit.",4000],
+ ["Silent Assassin","TC","Only the target eliminated, no bodies found, not spotted.",4000],
+ ["Sniper Assassin","TC","Assassinate the target with a sniper rifle, only the target, not spotted.",4000]
+];
+const CATS={A:["Assassination",11],D:["Discovery",18],F:["Feats",20],T:["Targets",1],TC:["The Classics",5]};
+const SYM={A:"ASN",D:"DSC",F:"FTS",T:"TGT",TC:"CLS"};
+const RUNS=[["1","The Applicant",12],["2","Hostile Termination",9],["3","The Heist",9],["4","The Exposé & Wi-Fi",6],["5","Chameleon & Gold",3],["6","The Classics",4]];
+const state=CH.map(()=>false);
+try{const saved=JSON.parse(localStorage.getItem('golden_handshake_state_v1')||'null');if(Array.isArray(saved))saved.forEach((v,i)=>{if(i<state.length)state[i]=!!v;});}catch(e){}
+function saveState(){try{localStorage.setItem('golden_handshake_state_v1',JSON.stringify(state));}catch(e){}reportProgress();}
+function reportProgress(){try{const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r['m16']={done:state.filter(Boolean).length,total:CH.length,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
+let stepDone;
+try{stepDone=JSON.parse(localStorage.getItem('golden_handshake_stepticks_v1')||'[]');}catch(e){stepDone=[];}
+function saveStepTicks(){try{localStorage.setItem('golden_handshake_stepticks_v1',JSON.stringify(stepDone));}catch(e){}}
+let filter="all";
+
+/* tracker cats */
+const catsEl=document.getElementById('cats');
+Object.entries(CATS).forEach(([k,[label,total]])=>{
+  const d=document.createElement('div');d.className='cat';
+  d.innerHTML=`<h3>${label}</h3><div class="n"><b data-n="${k}">0</b><span>/${total}</span></div><div class="cbar"><i data-b="${k}"></i></div>`;
+  catsEl.appendChild(d);
+});
+function counts(){const c={A:0,D:0,F:0,T:0,TC:0};CH.forEach((ch,i)=>{if(state[i])c[ch[1]]++;});return c;}
+function render(){
+  const c=counts(),done=state.filter(Boolean).length;
+  const xp=CH.reduce((s,ch,i)=>s+(state[i]?ch[3]:0),0);
+  document.getElementById('pct').textContent=(done/55*100).toFixed(1);
+  document.getElementById('frac').textContent=`${done} / 55`;
+  document.getElementById('xp').textContent=xp.toLocaleString();
+  document.getElementById('mainbar').style.width=(done/55*100)+'%';
+  Object.entries(CATS).forEach(([k,[,total]])=>{
+    document.querySelector(`[data-n="${k}"]`).textContent=c[k];
+    document.querySelector(`[data-b="${k}"]`).style.width=(c[k]/total*100)+'%';
+  });
+  const seg=Object.entries(CATS).map(([k,[,total]])=>{
+    const n=c[k],pc=(n/total*100).toFixed(0),cls=n===total?'u':(n===0?'d':''),ar=n===total?'▲':(n===0?'▼':'—');
+    return `<span><b>${SYM[k]}</b> ${n}/${total} <i class="${cls}">${ar} ${pc}%</i></span>`;
+  }).join('')+`<span><b>MFTZ</b> ${done}/55 · ${xp.toLocaleString()} XP</span>`;
+  document.getElementById('tick').innerHTML=seg+seg;
+  // per-run progress
+  RUNS.forEach(([id,,total])=>{
+    const el=document.querySelector('#run'+id);
+    const done=el?el.querySelectorAll('.tick[aria-pressed="true"]').length:0;
+    const pe=document.querySelector('.run-prog[data-run="'+id+'"] b');
+    if(pe)pe.textContent=done;
+  });
+}
+
+/* run nav buttons */
+const rn=document.getElementById('runnav');
+RUNS.forEach(([id,name,total])=>{
+  const b=document.createElement('button');
+  b.innerHTML=`<b>${id}</b> ${name} <span class="rc">${total}★</span>`;
+  b.onclick=()=>{const r=document.getElementById('run'+id);r.open=true;r.scrollIntoView({behavior:'smooth',block:'start'});};
+  rn.appendChild(b);
+});
+
+/* checklist */
+const FILTERS=[["all","All"],["A","Assassination"],["D","Discovery"],["F","Feats"],["T","Targets"],["TC","Classics"],["inc","Incomplete"]];
+const fEl=document.getElementById('filters');
+FILTERS.forEach(([k,label])=>{
+  const b=document.createElement('button');b.textContent=label;b.setAttribute('aria-pressed',k==='all');
+  b.onclick=()=>{filter=k;[...fEl.children].forEach(x=>x.setAttribute('aria-pressed','false'));b.setAttribute('aria-pressed','true');list();};
+  fEl.appendChild(b);
+});
+const listEl=document.getElementById('list');
+function list(){
+  listEl.innerHTML='';
+  CH.forEach((ch,i)=>{
+    if(filter!=='all'){if(filter==='inc'){if(state[i])return;}else if(ch[1]!==filter)return;}
+    const row=document.createElement('div');row.className='crow'+(state[i]?' done':'');
+    row.innerHTML=`<button class="tick" aria-pressed="${state[i]}" aria-label="Mark ${ch[0]} complete">✓</button>
+      <div class="cmeta"><div class="cname">${ch[0]}</div><div class="cdesc">${ch[2]}</div><span class="ctag">${CATS[ch[1]][0]}</span></div>
+      <div class="cxp">+${ch[3].toLocaleString()}</div>`;
+    row.querySelector('.tick').onclick=()=>{state[i]=!state[i];saveState();render();list();};
+    listEl.appendChild(row);
+  });
+  if(!listEl.children.length)listEl.innerHTML='<p style="color:var(--slip-2)">Nothing here. Every challenge in this filter is done.</p>';
+}
+
+/* run step ticks — don't toggle the <details> when clicking the checkbox */
+document.querySelectorAll('.step .tick').forEach((t,i)=>{
+  if(stepDone[i]){t.setAttribute('aria-pressed','true');t.closest('.step').classList.add('done');}
+  t.addEventListener('click',e=>{
+    e.stopPropagation();
+    const on=t.getAttribute('aria-pressed')==='true';
+    t.setAttribute('aria-pressed',!on);
+    t.closest('.step').classList.toggle('done',!on);
+    stepDone[i]=!on;
+    saveStepTicks();
+    render();
+  });
+});
+
+/* tabs */
+document.querySelectorAll('nav.tabs button').forEach(b=>{
+  b.onclick=()=>{
+    document.querySelectorAll('nav.tabs button').forEach(x=>x.setAttribute('aria-selected','false'));
+    b.setAttribute('aria-selected','true');
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+    document.getElementById('panel-'+b.dataset.tab).classList.add('on');
+  };
+});
+
+render();list();
+reportProgress();
+</script>
+<!-- step-progress-bridge -->
+<script>
+/* Reports route-step ticks into 'hitman-progress-registry' so the index can
+   show them beside the challenge counts. Counts what is on screen rather than
+   any guide-specific state, so one implementation serves every guide. */
+(function(){
+  var RID="m16", SEL=".step";
+  function isDone(s){
+    var c=s.classList;
+    if(c.contains('done')||c.contains('dn')) return true;
+    if(s.getAttribute('data-done')==='1'||s.getAttribute('aria-pressed')==='true') return true;
+    return !!s.querySelector('.done,.dn,[data-done="1"],[aria-pressed="true"]');
+  }
+  function tally(){
+    var steps=document.querySelectorAll(SEL);
+    if(!steps.length) return null;
+    var n=0;
+    for(var i=0;i<steps.length;i++) if(isDone(steps[i])) n++;
+    return {steps:n,stepTotal:steps.length};
+  }
+  function push(){
+    var t;
+    try{ t=tally(); }catch(err){ return; }
+    if(!t||!t.stepTotal) return;
+    try{
+      var r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');
+      var e=r[RID]||(r[RID]={});
+      /* the guide's own reportProgress() rewrites this entry wholesale, so
+         re-add the step counts whenever they go missing or stale */
+      if(e.steps===t.steps&&e.stepTotal===t.stepTotal) return;
+      e.steps=t.steps; e.stepTotal=t.stepTotal; e.updated=Date.now();
+      localStorage.setItem('hitman-progress-registry',JSON.stringify(r));
+    }catch(err){}
+  }
+  var pending=false;
+  function schedule(){
+    if(pending) return; pending=true;
+    setTimeout(function(){pending=false;push();},120);
+  }
+  try{
+    new MutationObserver(schedule).observe(document.body,
+      {subtree:true,childList:true,attributes:true,attributeFilter:['class','aria-pressed','data-done']});
+  }catch(err){}
+  window.addEventListener('load',schedule);
+  setTimeout(push,600);
+})();
+</script>
+<!-- /step-progress-bridge -->
+</body>
+</html>

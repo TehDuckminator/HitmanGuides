@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chasing a Ghost — Mumbai · Step-by-Step Guide v6</title>
+<style>
+:root{
+  --bg:#0e0e10;--surface:#17171a;--surface2:#202024;--border:#2b2b30;--border2:#3a3a42;
+  --text:#e9e9ec;--muted:#8b8b95;--faint:#5a5a63;
+  --gold:#c9a227;--green:#3fa85f;--blue:#4a8fc4;--purple:#8b6bd4;--red:#c94a4a;--amber:#d4883a;--teal:#2a9d8f;
+  --r:8px;--rl:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;font-size:14px;line-height:1.6}
+.page{max-width:960px;margin:0 auto;padding:24px 16px 90px}
+
+.hero{border-bottom:1px solid var(--border);padding-bottom:18px;margin-bottom:16px}
+.eyebrow{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+h1{font-size:27px;font-weight:700;color:#fff;letter-spacing:-.3px}
+.sub{font-size:13px;color:var(--muted);margin-top:5px}
+.pill{display:inline-block;background:var(--green);color:#000;font-size:10px;font-weight:800;padding:2px 8px;border-radius:99px;margin-left:8px;vertical-align:middle;letter-spacing:.04em}
+
+.method{background:#0c1a12;border:1px solid #17422b;border-radius:var(--rl);padding:13px 15px;margin-bottom:16px}
+.method h2{font-size:12px;font-weight:700;color:#6fd18f;margin-bottom:7px;text-transform:uppercase;letter-spacing:.06em}
+.method p{font-size:12px;color:#a9c9b6;line-height:1.6;margin-bottom:6px}
+.method p:last-child{margin-bottom:0}
+.method b{color:#d9f0e2}
+
+.stat-row{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:14px}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:10px 12px}
+.stat-l{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:3px}
+.stat-v{font-size:21px;font-weight:700}
+.stat-o{font-size:11px;color:var(--faint)}
+.pw{background:var(--surface);border-radius:99px;height:6px;margin-bottom:20px;overflow:hidden}
+.pb{height:6px;border-radius:99px;background:var(--green);transition:width .4s}
+
+.tabs{display:flex;gap:2px;border-bottom:1px solid var(--border);margin-bottom:18px;flex-wrap:wrap}
+.tab{background:none;border:none;padding:10px 15px;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
+.tab:hover{color:var(--text)}
+.tab.on{color:var(--gold);border-bottom-color:var(--gold)}
+.pane{display:none}.pane.on{display:block}
+
+.run{border:1px solid var(--border);border-radius:var(--rl);margin-bottom:13px;overflow:hidden}
+.run-hd{background:var(--surface);padding:13px 16px;cursor:pointer;display:flex;align-items:flex-start;gap:11px}
+.run-hd:hover{background:var(--surface2)}
+.run-n{width:27px;height:27px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;margin-top:1px}
+.run-i{flex:1;min-width:0}
+.run-t{font-size:14px;font-weight:600;color:#fff;margin-bottom:3px}
+.run-m{font-size:11px;color:var(--muted)}
+.chev{color:var(--faint);font-size:15px;flex-shrink:0;margin-top:4px;transition:transform .2s}
+.run.open .chev{transform:rotate(180deg)}
+.run-b{display:none}.run.open .run-b{display:block}
+
+.lo{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.lo-c{background:#12181a;padding:8px 14px}
+.lo-l{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:2px}
+.lo-v{font-size:12px;font-weight:500;color:#bcd}
+
+.sec{padding:7px 16px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--gold);background:#151006;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+
+.step{border-bottom:1px solid var(--border);padding:11px 14px 12px 12px}
+.step:last-child{border-bottom:none}
+.sr{display:flex;align-items:flex-start;gap:10px}
+.cb{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--border2);cursor:pointer;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;background:var(--surface)}
+.cb.done{background:var(--green);border-color:var(--green)}
+.cb.done::after{content:'✓';color:#000;font-size:11px;font-weight:800}
+.sc{flex:1;min-width:0}
+.st{font-size:13px;font-weight:600;color:#e4e4e8;margin-bottom:5px}
+.meta{display:flex;flex-direction:column;gap:3px;margin:5px 0 2px}
+.mrow{font-size:12px;color:#a8a8b2;line-height:1.5;display:flex;gap:7px}
+.mk{flex-shrink:0;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;width:62px;color:var(--faint);padding-top:1px}
+.mrow.go .mk{color:#79bde8}
+.mrow.dis .mk{color:#9b7de0}
+.mrow.item .mk{color:#e0a768}
+.mrow.npc .mk{color:#6fd18f}
+.mrow.act .mk{color:#d4c15a}
+.mrow b{color:#e4e4e8;font-weight:600}
+
+.badges{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.b{font-size:10px;font-weight:600;padding:2px 7px;border-radius:99px}
+.ba{background:#0c2c19;color:#5dba7d;border:1px solid #19502f}
+.bd{background:#0c1d2e;color:#5a9fd4;border:1px solid #1a3c5e}
+.bf{background:#1d0c2e;color:#9b7de0;border:1px solid #38195e}
+.bt{background:#281908;color:#d4883a;border:1px solid #4e310e}
+.bcl{background:#1b1b1b;color:#aaa;border:1px solid #343434}
+
+.warn{background:#280f00;border-left:3px solid var(--amber);border-radius:0 var(--r) var(--r) 0;padding:7px 10px;margin:8px 0 2px;font-size:11px;color:#eda372;line-height:1.55}
+.excl{background:#2a0c0c;border-left:3px solid var(--red);border-radius:0 var(--r) var(--r) 0;padding:7px 10px;margin:7px 0;font-size:11px;color:#e59090;line-height:1.55}
+.save{background:#0c1f0c;border-left:3px solid var(--green);border-radius:0 var(--r) var(--r) 0;padding:6px 10px;margin:6px 0;font-size:11px;color:#71c081}
+.valid{background:#0a1622;border:1px solid #16324c;border-radius:var(--r);padding:10px 12px;margin:10px 14px 12px}
+.valid h4{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#79bde8;margin-bottom:6px}
+.valid ul{list-style:none;font-size:11px;color:#9fb8cc;line-height:1.7}
+.valid li{padding-left:16px;position:relative}
+.valid li::before{content:'✓';position:absolute;left:0;color:#5dba7d;font-weight:700}
+
+.fr{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.fb{font-size:11px;padding:4px 11px;border-radius:99px;border:1px solid var(--border2);background:var(--surface);color:var(--muted);cursor:pointer}
+.fb:hover{border-color:var(--gold);color:var(--gold)}
+.fb.on{background:var(--gold);color:#000;border-color:var(--gold);font-weight:600}
+.cg{margin-bottom:16px}
+.ch{font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:var(--gold);padding:5px 0;border-bottom:1px solid var(--border);margin-bottom:4px;font-weight:700}
+.ci{display:flex;align-items:flex-start;gap:8px;padding:7px 6px;border-radius:6px;cursor:pointer}
+.ci:hover{background:var(--surface)}
+.ccb{width:15px;height:15px;border-radius:3px;border:1px solid var(--border2);flex-shrink:0;background:var(--surface);margin-top:2px;display:flex;align-items:center;justify-content:center}
+.ccb.done{background:var(--green);border-color:var(--green)}
+.ccb.done::after{content:'✓';color:#000;font-size:9px;font-weight:800}
+.cn{font-size:12px;flex:1;font-weight:600;color:#dcdce0}
+.cn.done{text-decoration:line-through;opacity:.45}
+.cd2{font-size:11px;color:var(--muted);display:block;margin-top:2px;line-height:1.5;font-weight:400}
+.rmap{font-size:10px;color:var(--teal);margin-top:3px;display:block;font-weight:600}
+
+.rg{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.rc{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:14px}
+.rc h3{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--gold);margin-bottom:8px}
+.rc p{font-size:12px;color:var(--muted);line-height:1.72}
+.rc b{color:var(--text)}
+
+@media(max-width:640px){.stat-row{grid-template-columns:repeat(3,1fr)}.rg{grid-template-columns:1fr}.lo{grid-template-columns:1fr}.mk{width:54px}}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="hero">
+  <div class="eyebrow">Hitman: World of Assassination · Mumbai</div>
+  <h1>Chasing a Ghost <span class="pill">v6 · STEP-BY-STEP</span></h1>
+  <div class="sub">80 challenges · 8 validated runs. Every step names where to go, the disguise, the item, the NPC, the action, and any missable warning.</div>
+</div>
+
+<div class="method">
+  <h2>How to read this</h2>
+  <p>Each step is laid out the same way — <b style="color:#79bde8">GO</b> (where), <b style="color:#9b7de0">DISGUISE</b>, <b style="color:#e0a768">ITEM</b>, <b style="color:#6fd18f">NPC</b>, <b style="color:#d4c15a">DO</b> (the action) — plus a warning line when something is missable. Challenge names and objectives come from the mission's own data file; the tactical geography (rooms, items, NPCs) is drawn from the standard Mumbai walkthrough. Anything genuinely random (the Maelstrom's face, alt-start unlocks) is called out rather than invented.</p>
+  <p><b>Coins matter:</b> phone booths and the cloth vendor need coins. Bring 3–4 in your loadout; more sit by shop cash registers and in the tailor shop.</p>
+</div>
+
+<div class="stat-row">
+  <div class="stat"><div class="stat-l">Progress</div><div class="stat-v" id="pct" style="color:var(--gold)">0%</div><div class="stat-o" id="ptxt">0 / 80</div></div>
+  <div class="stat"><div class="stat-l">Assass.</div><div class="stat-v" id="cA" style="color:var(--green)">0</div><div class="stat-o">/ 24</div></div>
+  <div class="stat"><div class="stat-l">Discovery</div><div class="stat-v" id="cD" style="color:var(--blue)">0</div><div class="stat-o">/ 15</div></div>
+  <div class="stat"><div class="stat-l">Feats</div><div class="stat-v" id="cF" style="color:var(--purple)">0</div><div class="stat-o">/ 33</div></div>
+  <div class="stat"><div class="stat-l">Tgt+Classic</div><div class="stat-v" id="cX" style="color:var(--amber)">0</div><div class="stat-o">/ 8</div></div>
+</div>
+<div class="pw"><div class="pb" id="prog" style="width:0%"></div></div>
+
+<div class="tabs">
+  <button class="tab on" onclick="T('runs',this)">Optimised runs</button>
+  <button class="tab" onclick="T('check',this)">All 80 challenges</button>
+  <button class="tab" onclick="T('ref',this)">Logic &amp; rules</button>
+</div>
+
+<div id="p-runs" class="pane on">
+
+<div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:12px 14px;margin-bottom:14px;font-size:12px;color:var(--muted);line-height:1.65">
+<b style="color:var(--text)">Four rules behind the routing.</b>
+(1) Challenges are <b style="color:var(--text)">permanent</b> — you never lose one by doing runs in order.
+(2) The <b style="color:var(--text)">Maelstrom's face is random each replay</b>, so any run that kills him identifies him first.
+(3) You can't kill one target two ways in a single run — <b style="color:var(--text)">save before the kill, reload per variant</b>.
+(4) Metas (<b style="color:var(--text)">Versatile Assassin, The Helping Hand, The Classics</b>) tick off cumulatively.
+</div>
+
+<!-- ══════════ RUN 1 ══════════ -->
+<div class="run" id="r1">
+  <div class="run-hd" onclick="R('r1')">
+    <div class="run-n" style="background:#0c2c19;color:#5dba7d">1</div>
+    <div class="run-i"><div class="run-t">The Kashmirian as your proxy — Broad Strokes + A Matter of Discipline</div>
+    <div class="run-m">He snipes Vanya &amp; Rangan for you · Proxy Killer · Artists at Work · Teamwork · The Foreman · The Artist</div></div>
+    <div class="chev">▼</div>
+  </div>
+  <div class="run-b">
+    <div class="lo">
+      <div class="lo-c"><div class="lo-l">Start</div><div class="lo-v">Main Street (default start)</div></div>
+      <div class="lo-c"><div class="lo-l">Bring</div><div class="lo-v">1 coin (to lure the security guard)</div></div>
+      <div class="lo-c"><div class="lo-l">Keep alive</div><div class="lo-v">The Kashmirian — do NOT subdue him until the very end</div></div>
+      <div class="lo-c"><div class="lo-l">Disguises taken en route</div><div class="lo-v">Local Security → Painter → Foreman</div></div>
+    </div>
+
+    <div class="sec">Set up the Kashmirian's shot on Rangan (Broad Strokes)</div>
+
+    <div class="step"><div class="sr"><div class="cb" onclick="S(this,'s101')"></div><div class="sc">
+      <div class="st">Reach the Kashmirian and adjust his rifle scope</div>
+      <div class="meta">
+        <div class="mrow go"><span class="mk">Go</span><span>The <b>Chawl</b> — up the road and right of the Main Street start; head upstairs to the <b>Sniper Spot</b> on the top floor.</span></div>
+        <div class="mrow npc"><span class="mk">NPC</span><span>The <b>Kashmirian</b> (a rival assassin) at his rifle — leave him alive.</span></div>
+        <div class="mrow act"><span class="mk">Do</span><span>Without disturbing him, look through his rifle scope and press the prompt to <b>adjust the scope's sharpness</b>. This makes his later shot on Rangan land.</span></div>
+      </div>
+      <div class="warn">⚠ Don't touch him yet. He must stay alive and unaware to make both shots.</div>
+      <div class="badges"><span class="b bf">Mission Story – Broad Strokes</span></div>
+    </div></div></div>
+
+    <div class="step"><div class="sr"><div class="cb" onclick="S(this,'s102')"></div><div class="sc">
+      <div class="st">Break into Rangan Tower and grab the security disguise + keycard</div>
+      <div class="meta">
+        <div class="mrow go"><span class="mk">Go</span><span>Rangan Tower — right of the guarded garden entrance, vault the <b>broken fence</b>, climb the Tower Garden to the entrance, then move along the front to the <b>Security Room</b> door.</span></div>
+        <div class="mrow item"><span class="mk">Item</span><span>1 coin; you'll pick up the <b>Luxury Apartment Keycard</b> the guard drops.</span></div>
+        <div class="mrow npc"><span class="mk">NPC</span><span>The <b>Local Security</b> guard by the Security Room.</span></div>
+        <div class="mrow act"><span class="mk">Do</span><span>Shoot the camera above the tower entrance first. Coin-lure the guard behind the boxes, subdue him, dump him in the dumpster, take his <b>disguise + keycard</b>. Use the keycard to enter the Security Room and destroy the camera recorder.</span></div>
+      </div>
+      <div class="badges"><span class="b bd">(Local Security disguise)</span></div>
+    </div></div></div>
+
+    <div class="step"><div class="sr"><div class="cb" onclick="S(this,'s103')"></div><div class="sc">
+      <div class="st">Plant the paint tube to become the Painter → The Artist</div>
+      <div class="meta">
+        <div class="mrow go"><span class="mk">Go</span><span>Out of the Security Room, directly left to the <b>staff canteen</b>; the <b>Tube of Paint</b> is under the stairs. Then up to the <b>Painter's Studio</b> (4th floor).</span></div>
+        <div class="mrow item"><span class="mk">Item</span><span><b>Tube of Paint</b>.</span></div>
+        <div class="mrow npc"><span class="mk">NPC</span><span>The <b>Portrait Painter</b> and a Bollywood Bodyguard in the studio.</span></div>
+        <div class="mrow act"><span class="mk">Do</span><span>Place the paint tube in the paint rack unseen. Then subdue the painter and bodyguard when they separate, hide them in the wardrobe, and take the <b>Painter Disguise</b>. Making the artist finish the portrait pops <b>The Artist</b>.</span></div>
+      </div>
+      <div class="badges"><span class="b bd">Become the Painter</span><span class="b bf">The Artist</span></div>
+    </div></div></div>
+
+    <div class="step"><div class="sr"><div class="cb" onclick="S(this,'s104')"></div><div class="sc">
+      <div class="st">Lure Rangan to the studio — the Kashmirian shoots him → Artists at Work</div>
+      <div class="meta">
+        <div class="mrow go"><span class="mk">Go</span><span><b>Dawood's office</b>, 5th floor, then walk back to the studio with him.</span></div>
+        <div class="mrow dis"><span class="mk">Disg.</span><span>Painter.</span></div>
+        <div class="mrow npc"><span class="mk">NPC</span><span><b>Dawood Rangan</b> (The Showman).</span></div>
+        <div class="mrow act"><span class="mk">Do</span><span>Start painting his portrait. The Kashmirian's bullet interrupts the pose and kills Rangan — this pops <b>Artists at Work</b>. Drag the body to the elevator shaft and drop it in so it's never found.</span></div>
+      </div>
+      <div class="badges"><span class="b bf">Artists at Work</span><span class="b bt">The Showman ✓ (by proxy)</span></div>
+    </div></div></div>
+
+    <div class="sec">Redirect the Kashmirian onto Vanya (A Matter of Discipline)</div>
+
+    <div class="step"><div class="sr"><div class="cb" onclick="S(this,'s105')"></div><div class="sc">
+      <div class="st">Re-check the scope, then take the Foreman's outfit</div>
+      <div class="meta">
+        <div class="mrow go"><span class="mk">Go</span><span>Back to the <b>Chawl</b>, into the Kashmirian's flat (southern part, 2nd floor — via balcony window or lockpick) and look through his rifle again; he's now aiming at Vanya. Then to the <b>Mumbai Laundry</b> (west of start) → <b>Foreman's Office</b>.</span></div>
+        <div class="mrow npc"><span class="mk">NPC</span><span>The <b>Foreman</b> (upstairs with a worker).</span></div>
+        <div class="mrow act"><span class="mk">Do</span><span>Turn on the office radio to split the pair, subdue the worker into the container, subdue the foreman, take the <b>Foreman outfit</b> → <b>Become the Foreman</b>.</span></div>
+      </div>
+      <div class="warn">⚠ If you lockpick the office door from the east, wait until the two nearby workers look away.</div>
+      <div class="badges"><span class="b bf">Mission Story – A Matter Of Discipline</span><span class="b bd">Become the Foreman</span></div>
+    </div></div></div>
+
+    <div class="step"><div class="sr"><div class="cb" onclick="S(this,'s106')"></div><div class="sc">
+      <div class="st">Attend the bridge meeting → The Foreman + Teamwork → Vanya is shot (Proxy Killer)</div>
+      <div class="meta">
+        <div class="mrow go"><span class="mk">Go</span><span>The laundry's <b>south-east exit</b>, then follow the guard to the <b>bridge</b>.</span></div>
+        <div class="mrow dis"><span class="mk">Disg.</span><span>Foreman.</span></div>
+        <div class="mrow npc"><span class="mk">NPC</span><span>The guard (tell him you're ready), then <b>Vanya Shah</b> (The Queen).</span></div>
+        <div class="mrow act"><span class="mk">Do</span><span>Getting the foreman to the bridge pops <b>The Foreman</b>. Approach Vanya; when she turns for her speech the Kashmirian shoots her — <b>Teamwork</b> pops, and with both targets down by his hand, <b>Proxy Killer</b> completes. (Do NOT push her yourself here.)</span></div>
+      </div>
+      <div class="badges"><span class="b bf">The Foreman</span><span class="b bf">Teamwork</span><span class="b ba">Proxy Killer</span><span class="b bt">The Queen ✓ (by proxy)</span></div>
+    </div></div></div>
+
+    <div class="sec">Payphone contract feats — save-branch (mutually exclusive pair)</div>
+
+    <div class="step"><div class="sr"><div class="cb" onclick="S(this,'s107')"></div><div class="sc">
+      <div class="st">Branch A — No, You Hang Up (Vanya first, then call Rangan)</div>
+      <div class="meta">
+        <div class="mrow go"><span class="mk">Go</span><span>A yellow <b>phone booth</b> (e.g. just west of the Chawl).</span></div>
+        <div class="mrow item"><span class="mk">Item</span><span>1 coin per call.</span></div>
+        <div class="mrow act"><span class="mk">Do</span><span>Complete the Kashmirian's contract on Vanya first, then use the phone to <b>call Dawood Rangan</b>.</span></div>
+      </div>
+      <div class="excl">MUTUALLY EXCLUSIVE with Call Her Maybe (reverse order). Only one order per attempt.</div>
+      <div class="save">💾 SAVE before the contracts so you can reload for Branch B.</div>
+      <div class="badges"><span class="b bf">No, You Hang Up</span></div>
+    </div></div></div>
+
+    <div class="step"><div class="sr"><div class="cb" onclick="S(this,'s108')"></div><div class="sc">
+      <div class="st">Branch B (reload) — Call Her Maybe (Rangan first, then call Vanya)</div>
+      <div class="meta">
+        <div class="mrow act"><span class="mk">Do</span><span>Reload the save; complete the contract on <b>Rangan</b> first, then <b>call Vanya</b>. Proxy Killer is still available on this branch too.</span></div>
+      </div>
+      <div class="badges"><span class="b bf">Call Her Maybe</span></div>
+    </div></div></div>
+
+    <div class="step"><div class="sr"><div class="cb" onclick="S(this,'s109')"></div><div class="sc">
+      <div class="st">Follow the Kashmirian to his Maelstrom call → The Kashmirian → The Helping Hand</div>
+      <div class="meta">
+        <div class="mrow go"><span class="mk">Go</span><span>Back to the <b>Chawl ground floor</b>; wait for the Kashmirian to leave his flat and follow him to the phone booth and toward the <b>Crows' side alley</b>.</span></div>
+        <div class="mrow npc"><span class="mk">NPC</span><span>The <b>Kashmirian</b> (blue suit, distinctive hat — he's not map-marked, so don't lose him).</span></div>
+        <div class="mrow act"><span class="mk">Do</span><span>He uses the phone to contact the Maelstrom — this pops <b>The Kashmirian</b>. With The Foreman + The Artist already done, <b>The Helping Hand</b> completes.</span></div>
+      </div>
+      <div class="warn">⚠ Move quickly after the bridge or he'll be gone. If The Kashmirian doesn't pop before you leave, it also completes during Run 7's impersonation — The Helping Hand will close then regardless.</div>
+      <div class="badges"><span class="b bf">The Kashmirian</span><span class="b bf">The Helping Hand</span></div>
+    </div></div></div>
+
+    <div class="valid"><h4>Run 1 validation</h4><ul>
+      <li>Scope adjusted before Rangan is lured; foreman taken before the bridge — both shots land in order.</li>
+      <li>Kashmirian kept alive the whole run, as all four "help the Kashmirian" challenges require.</li>
+      <li>Both targets die by proxy, so no solo Vanya/Rangan kill is attempted here (those are Runs 2 &amp; 4).</li>
+      <li>Only mutually-exclusive pair (No You Hang Up / Call Her Maybe) split by save/reload.</li>
+    </ul></div>
+  </div>
+</div>
+
+<!-- ══════════ RUN 2 ══════════ -->
+<div class="run" id="r2">
+  <div class="run-hd" onclick="R('r2')">
+    <div class="run-n" style="background:#281908;color:#d4883a">2</div>
+    <div class="run-i"><div class="run-t">The Queen — Vanya Shah's private deaths</div>
+    <div class="run-m">Non-kill sweep first, then save-branch Stand Still / Tea Time / Me Time / Free Bird / Hold My Hair</div></div>
+    <div class="chev">▼</div>
+  </div>
+  <div class="run-b">
+    <div class="lo">
+      <div class="lo-c"><div class="lo-l">Start</div><div class="lo-v">Main Street</div></div>
+      <div class="lo-c"><div class="lo-l">Bring</div><div class="lo-v">3+ coins (cloth vendor), Lethal Poison optional</div></div>
+      <div class="lo-c"><div class="lo-l">Best train-yard outfit</div><div class="lo-v">Queen's Bodyguard (from the bodyguards' wagon)</div></div>
+      <div class="lo-c"><div class="lo-l">Structure</div><div class="lo-v">Non-kill sweep → SAVE → 5 kill branches</div></div>
+    </div>
+
+    <div class="excl">Every kill below eliminates Vanya a different way — mutually exclusive. Finish all non-kill items, SAVE, then reload between each kill.</div>
+
+    <div class="sec">Non-kill Vanya challenges — before any kill</div>
+
+    <div class="step"><div class="sr"><div class="cb" onclick="S(this,'s201')"></div><div class="sc">
+      <div class="st">Read Vanya's diary — A Secret Grudge</div>
+      <div class="meta">
+        <div class="mrow go"><span class="mk">Go</span><span>The <b>train yard</b> (Vanya's quarters). Sneak in from the north, or the south by lockpicking a wagon/container door.</span></div>
+        <div class="mrow act"><span class="mk">Do</span><span>Find and read <b>Vanya Shah's diary</b> in her personal quarters while she's alive.</span></div>
+      </div>
+      <div class="badges"><span class="b bd">A Secret Grudge</span></div>
+    </div></div></div>
+
+    <div class="step"><div class="sr"><div class="cb" onclick="S(this,'s202')"></div><div class="sc">
+      <div class="st">Take the Tailor outfit + shop key (A Dress To Die For setup)</div>
+      <div class="meta">
+        <div class="mrow go"><span class="mk">Go</span><span>The <b>tailor shop</b> in the slums near the train yard; eavesdrop, then follow the tailor out to the cabin near the <b>beach/junkyard</b> where he stops by tall vegetation.</span></div>
+        <div class="mrow npc"><span class="mk">NPC</span><span>The <b>local Tailor</b>.</span></div>
+        <div class="mrow act"><span class="mk">Do</span><span>Distract him with a coin, subdue him when alone, take the <b>Tailor outfit + shop key</b> → <b>Become the Tailor</b>. Back at the shop's upper floor, read <b>Request to the Tailor</b> and grab the 2 coins by it.</span></div>
+      </div>
+      <div class="warn">⚠ A civilian passes the cabin periodically — wait for privacy before subduing.</div>
+      <div class="badges"><span class="b bd">Become the Tailor</span></div>
+    </div></div></div>
+
+    <div class="step"><div class="sr"><div class="cb" onclick="S(this,'s203')"></div><div class="sc">
+      <div class="st">Buy all three cloth samples — Big Spender + Make it Work</div>
+      <div class="meta">
+        <div class="mrow go"><span class="mk">Go</span><span>The <b>Textile District</b> next to the tailor shop; the trader's stall.</span></div>
+        <div class="mrow item"><span class="mk">Item</span><span>5 coins (3 from loadout + 2 from the tailor shop).</span></div>
+        <div class="mrow act"><span class="mk">Do</span><span>Buy all three cloths → <b>Big Spender</b>. Keep the <b>Cerulean (blue)</b> one — that's the correct sample for <b>Make it Work</b>.</span></div>
+      </div>
+      <div class="badges"><span class="b bf">Big Spender</span><span class="b bd">Make it Work</span></div>
+    </div></div></div>
+
+    <div class="step"><div class="sr"><div class="cb" onclick="S(this,'s204')"></div><div class="sc">
+      <div class="st">Find the train-yard hot water tank — Steamin'</div>
+      <div class="meta">
+        <div class="mrow go"><span class="mk">Go</span><span>Up to the <b>train-yard building roof</b>; the <b>water tank</b> is guarded by one guard who can see through disguises.</span></div>
+        <div class="mrow act"><span class="mk">Do</span><span>Locating the tank pops <b>Steamin'</b>. This same tank feeds the Me Time branch — note the guard now.</span></div>
+      </div>
+      <div class="badges"><span class="b bf">Steamin'</span></div>
+    </div></div></div>
+
+    <div class="save">💾 SAVE — everything above is banked. Reload this save before each kill branch.</div>
+
+    <div class="sec">Kill branches — reload between each</div>
+
+    <div class="step"><div class="sr"><div class="cb" onclick="S(this,'s205')"></div><div class="sc">
+      <div class="st">Branch A — Stand Still + A Dress To Die For (+ Straight Shot / Piano Man)</div>
+      <div class="meta">
+        <div class="mrow go"><span class="mk">Go</span><span>A servant near the <b>train-yard entrance</b>, then the <b>throne room</b>, then her <b>wagon</b>.</span></div>
+        <div class="mrow dis"><span class="mk">Disg.</span><span>Tailor.</span></div>
+        <div class="mrow item"><span class="mk">Item</span><span>Blue cloth; <b>Measuring Tape</b> from the wagon table.</span></div>
+        <div class="mrow npc"><span class="mk">NPC</span><span>Servant (lets you in after search), then <b>Vanya Shah</b>.</span></div>
+        <div class="mrow act"><span class="mk">Do</span><span>Remove all weapons first. Show Vanya the blue cloth → she invites you to the wagon. Take the measuring tape; when she turns and the servant looks away, <b>garrote her with the tape</b> → <b>Stand Still</b> + <b>A Dress To Die For</b>. Alternatively, when alone with her, a fiber-wire kill pops <b>Piano Man</b> and a headshot pops <b>Straight Shot</b>.</span></div>
+      </div>
+      <div class="warn">⚠ Strip prohibited items before the entrance search or you'll be flagged.</div>
+      <div class="badges"><span class="b ba">Stand Still</span><span class="b bf">Mission Story – A Dress To Die For</span><span class="b bt">The Queen</span></div>
+    </div></div></div>
+
+    <div class="step"><div class="sr"><div class="cb" onclick="S(this,'s206')"></div><div class="sc">
+      <div class="st">Branch B (reload) — Tea Time + Tasteless, Traceless</div>
+      <div class="meta">
+        <div class="mrow go"><span class="mk">Go</span><span>Vanya's wagon area; the <b>bathroom</b> by her wagon has a servant and a <b>lethal poison</b>. Then the <b>back of the train yard</b> where she takes tea.</span></div>
+        <div class="mrow dis"><span class="mk">Disg.</span><span>Shah's Servant (subdue the servant in the bathroom after luring him in).</span></div>
+        <div class="mrow item"><span class="mk">Item</span><span><b>Lethal poison</b> (bring it or take it from the bathroom).</span></div>
+        <div class="mrow act"><span class="mk">Do</span><span>Her personal servant taste-tests the tea first — invite the servant to drink, wait, THEN poison the cup and invite <b>Vanya</b>. Lethal poison → she dies on the spot, no suspicion. Pops <b>Tea Time</b> + <b>Tasteless, Traceless</b>.</span></div>
+      </div>
+      <div class="warn">⚠ Don't poison before the taster drinks, or the plot fails.</div>
+      <div class="badges"><span class="b ba">Tea Time</span><span class="b ba">Tasteless, Traceless</span><span class="b bt">The Queen</span></div>
+    </div></div></div>
+
+    <div class="step"><div class="sr"><div class="cb" onclick="S(this,'s207')"></div><div class="sc">
+      <div class="st">Branch C (reload) — Me Time (private pool accident)</div>
+      <div class="meta">
+        <div class="mrow go"><span class="mk">Go</span><span>The <b>private pool</b> at the back of the train yard; the <b>water tank</b> on the roof (from Steamin').</span></div>
+        <div class="mrow dis"><span class="mk">Disg.</span><span>Queen's Bodyguard.</span></div>
+        <div class="mrow item"><span class="mk">Item</span><span>A <b>wrench</b> (one is in the small roof cabin).</span></div>
+        <div class="mrow act"><span class="mk">Do</span><span>Deal with the tank guard, turn the <b>pressure valve</b> to restore the pool. Hide in the bushes by the pool; when Vanya enters to meditate, use the wrench on the <b>pressure lock</b>, back away — the pipes burst and kill her as an accident.</span></div>
+      </div>
+      <div class="badges"><span class="b ba">Me Time</span><span class="b bt">The Queen</span></div>
+    </div></div></div>
+
+    <div class="step"><div class="sr"><div class="cb" onclick="S(this,'s208')"></div><div class="sc">
+      <div class="st">Branch D (reload) — Free Bird + Someone Could Hurt Themselves</div>
+      <div class="meta">
+        <div class="mrow go"><span class="mk">Go</span><span>The train-yard <b>upper balconies</b>, above the walkway between the throne and the tea booth.</span></div>
+        <div class="mrow dis"><span class="mk">Disg.</span><span>Queen's Bodyguard.</span></div>
+        <div class="mrow act"><span class="mk">Do</span><span>Pick a <b>birdcage</b> hanging over that path. When Vanya walks beneath it, shoot the cage (silenced) so it drops on her → <b>Free Bird</b> + <b>Someone Could Hurt Themselves</b> (accident).</span></div>
+      </div>
+      <div class="warn">⚠ Easy to mistime — save right before the shot.</div>
+      <div class="badges"><span class="b ba">Free Bird</span><span class="b ba">Someone Could Hurt Themselves</span><span class="b bt">The Queen</span></div>
+    </div></div></div>
+
+    <div class="step"><div class="sr"><div class="cb" onclick="S(this,'s209')"></div><div class="sc">
+      <div class="st">Branch E (reload) — Hold My Hair (drown)</div>
+      <div class="meta">
+        <div class="mrow go"><span class="mk">Go</span><span>The small <b>water basin</b> on the side of the train yard, between the wagons (enter via the monitoring wagon by lockpicking its door).</span></div>
+        <div class="mrow npc"><span class="mk">NPC</span><span><b>Vanya Shah</b> (she comes here to wash her face).</span></div>
+        <div class="mrow act"><span class="mk">Do</span><span>Hide in the bushes; when she leans over the water, approach from behind and <b>drown her</b> → <b>Hold My Hair</b>. Hide the body in the bushes.</span></div>
+      </div>
+      <div class="badges"><span class="b ba">Hold My Hair</span><span class="b bt">The Queen</span></div>
+    </div></div></div>
+
+    <div class="step"><div class="sr"><div class="cb" onclick="S(this,'s210')"></div><div class="sc">
+      <div class="st">Exit by taxi — Let's Get the Tuk Out of Here</div>
+      <div class="meta">
+        <div class="mrow act"><span class="mk">Do</span><span>End this run at the <b>local taxi</b> exit. (The hideout exit is saved for Run 7 — you can only exit once per run.)</span></div>
+      </div>
+      <div class="badges"><span class="b bd">Let's Get the Tuk Out of Here</span></div>
+    </div></div></div>
+
+    <div class="valid"><h4>Run 2 validation</h4><ul>
+      <li>Diary, cloths, Tailor outfit, Steamin' all done before any kill — nothing locked out by her death.</li>
+      <li>Tailor + blue cloth in hand before Stand Still; poison + taster sequence correct for Tea Time.</li>
+      <li>Five mutually-exclusive kills split from one clean save.</li>
+      <li>One exit only (taxi); hideout exit deferred to Run 7.</li>
+    </ul></div>
+  </div>
+</div>
+
+<!-- ══════════ RUN 3 ══════════ -->
+<div class="run" id="r3">
+  <div class="run-hd" onclick="R('r3')">
+    <div class="run-n" style="background:#1d0c2e;color:#8b6bd4">3</div>
+    <div class="run-i"><div class="run-t">The Ghost — identify then eliminate the Maelstrom</div>
+    <div class="run-m">Get his photo FIRST · Flames Rekindled · Memoirs · flags · then save-branch Shave / Tea / Sign</div></div>
+    <div class="chev">▼</div>
+  </div>
+  <div class="run-b">
+    <div class="lo">
+      <div class="lo-c"><div class="lo-l">Start</div><div class="lo-v">Main Street</div></div>
+      <div class="lo-c"><div class="lo-l">Bring</div><div class="lo-v">Lethal poison (What's Your Flava?), a blunt throwable</div></div>
+      <div class="lo-c"><div class="lo-l">Disguises</div><div class="lo-v">Barber (from Sagar)</div></div>
+      <div class="lo-c"><div class="lo-l">Structure</div><div class="lo-v">Identify → non-kill sweep → SAVE → 3 kill branches</div></div>
+    </div>
+
+    <div class="warn">⚠ The Maelstrom's face is randomised every replay. Get his photo at the start of THIS run before any kill challenge can target him.</div>
+
+    <div class="step"><div class="sr"><div class="cb" onclick="S(this,'s301')"></div><div class="sc">
+      <div class="st">Get the Maelstrom's photo and scan him — The Man and the Legend</div>
+      <div class="meta">
+        <div class="mrow go"><span class="mk">Go</span><span>The <b>Food District</b>, south-east of start. Find the stairs and the <b>man on the phone</b> talking about the Maelstrom; the building on his right (enter via window).</span></div>
+        <div class="mrow npc"><span class="mk">NPC</span><span>The man on the phone (a Crow patrols here — stay in the crowd).</span></div>
+        <div class="mrow act"><span class="mk">Do</span><span>Turn on the <b>radio</b> inside, leave, and when the man follows the sound, subdue him. He drops <b>A Picture of Maelstrom</b>. Now approach the blue-marked candidates and hold until the scan bar fills to find the <b>Maelstrom</b> → <b>The Man and the Legend</b>.</span></div>
+      </div>
+      <div class="warn">⚠ On Master difficulty there are no candidate markers — the Maelstrom favours the alley by the channel and loiters near the closed barbershop.</div>
+      <div class="badges"><span class="b bf">The Man and the Legend</span></div>
+    </div></div></div>
+
+    <div class="step"><div class="sr"><div class="cb" onclick="S(this,'s302')"></div><div class="sc">
+      <div class="st">Flames Rekindled — set up the hilltop poisoning + raise the flag</div>
+      <div class="meta">
+        <div class="mrow go"><span class="mk">Go</span><span>The <b>Mumbai Hills</b> (Crows' territory). A house on the beach for a bandit outfit; the lone <b>woman's house</b> on the hill; then its roof.</span></div>
+        <div class="mrow dis"><span class="mk">Disg.</span><span>Crow/Bandit outfit (subdue any bandit).</span></div>
+        <div class="mrow item"><span class="mk">Item</span><span><b>Rat poison</b> (ground floor of the woman's house); read <b>A Letter from the Maelstrom</b> upstairs.</span></div>
+        <div class="mrow act"><span class="mk">Do</span><span>On the roof, <b>raise the flag</b> to summon the Maelstrom to the woman. Raising it by hand pops <b>Hoist the Flag</b>; shooting the flag mechanism from range (silenced) instead pops <b>Red Flag</b>. Then poison the left glass at the back table before he arrives.</span></div>
+      </div>
+      <div class="excl">Red Flag ("from a distance") and Hoist the Flag ("on the rooftop") use the same flag — SAVE before raising, do one method, reload, do the other.</div>
+      <div class="badges"><span class="b bf">Mission Story – Flames Rekindled</span><span class="b bd">Red Flag</span><span class="b bf">Hoist the Flag</span></div>
+    </div></div></div>
+
+    <div class="step"><div class="sr"><div class="cb" onclick="S(this,'s303')"></div><div class="sc">
+      <div class="st">Collect the Maelstrom's tapes — Memoirs</div>
+      <div class="meta">
+        <div class="mrow go"><span class="mk">Go</span><span>Around the slums/hills — the tapes are scattered; one points you toward the barbershop.</span></div>
+        <div class="mrow act"><span class="mk">Do</span><span>Find <b>all the Maelstrom's recorded tapes</b> → <b>Memoirs</b>. Do this before killing him in case a location closes.</span></div>
+      </div>
+      <div class="warn">⚠ The exact tape count/spots aren't in the mission data — use the in-game map and exploration to sweep them.</div>
+      <div class="badges"><span class="b bf">Memoirs</span></div>
+    </div></div></div>
+
+    <div class="save">💾 SAVE — Maelstrom identified, non-kill items done. Reload before each kill branch.</div>
+
+    <div class="sec">Kill branches — reload between each</div>
+
+    <div class="step"><div class="sr"><div class="cb" onclick="S(this,'s304')"></div><div class="sc">
+      <div class="st">Branch A — Barbershop Duette + A Close Shave + Become the Barber</div>
+      <div class="meta">
+        <div class="mrow go"><span class="mk">Go</span><span>The <b>barbershop</b> in the slums; enter the upper floor (open door or drop from the roof). The barber <b>Sagar</b> is upstairs with his wife.</span></div>
+        <div class="mrow item"><span class="mk">Item</span><span><b>Shop key</b> (on the table upstairs); <b>Barber Razor</b> (on the counter downstairs).</span></div>
+        <div class="mrow npc"><span class="mk">NPC</span><span>Sagar + his wife (both must be subdued — she can unmask you), then the <b>Maelstrom</b>.</span></div>
+        <div class="mrow act"><span class="mk">Do</span><span>Subdue both, take the <b>Barber outfit</b> → <b>Become the Barber</b>. Use the key on the ground-floor wall panel to open the shop → <b>A Close Shave</b>. At the stall, decline other customers, invite the Maelstrom in, and during the shave <b>slit his throat with the razor</b> → <b>Barbershop Duette</b>.</span></div>
+      </div>
+      <div class="warn">⚠ Don't pick the "Kill" option while shaving a decoy customer. If he leaves instantly, his guards are crowding the door — clear space or reload.</div>
+      <div class="badges"><span class="b ba">Barbershop Duette</span><span class="b bf">Mission Story – A Close Shave</span><span class="b bd">Become the Barber</span><span class="b bt">The Ghost</span></div>
+    </div></div></div>
+
+    <div class="step"><div class="sr"><div class="cb" onclick="S(this,'s305')"></div><div class="sc">
+      <div class="st">Branch B (reload) — What's Your Flava? (poison his favourite tea)</div>
+      <div class="meta">
+        <div class="mrow go"><span class="mk">Go</span><span>The hilltop table from Flames Rekindled where the Maelstrom meets the woman.</span></div>
+        <div class="mrow item"><span class="mk">Item</span><span><b>Lethal poison</b> (for a clean kill).</span></div>
+        <div class="mrow act"><span class="mk">Do</span><span>Raise the flag to summon him, then <b>poison his tea/glass</b> at the back table before he sits → <b>What's Your Flava?</b> The target is the Maelstrom himself.</span></div>
+      </div>
+      <div class="badges"><span class="b ba">What's Your Flava?</span><span class="b bt">The Ghost</span></div>
+    </div></div></div>
+
+    <div class="step"><div class="sr"><div class="cb" onclick="S(this,'s306')"></div><div class="sc">
+      <div class="st">Branch C (reload) — Waiting for a Sign (neon sign)</div>
+      <div class="meta">
+        <div class="mrow go"><span class="mk">Go</span><span>The <b>eastern slums</b>, which are full of hanging neon signs; the Maelstrom passes below them.</span></div>
+        <div class="mrow act"><span class="mk">Do</span><span>When the Maelstrom stands under a <b>neon sign</b>, shoot the sign so it drops on him → <b>Waiting for a Sign</b>.</span></div>
+      </div>
+      <div class="warn">⚠ The shot alarms the area — fire from inside a house or a rooftop, and save first (timing-sensitive).</div>
+      <div class="badges"><span class="b ba">Waiting for a Sign</span><span class="b bt">The Ghost</span></div>
+    </div></div></div>
+
+    <div class="valid"><h4>Run 3 validation</h4><ul>
+      <li>Photo obtained first, so every Maelstrom kill is now possible.</li>
+      <li>Memoirs + Flames Rekindled done before the kill; nothing locked out.</li>
+      <li>Three exclusive kills split by save/reload; flag pair handled with its own save/reload.</li>
+    </ul></div>
+  </div>
+</div>
+
+<!-- ══════════ RUN 4 ══════════ -->
+<div class="run" id="r4">
+  <div class="run-hd" onclick="R('r4')">
+    <div class="run-n" style="background:#0c1d2e;color:#4a8fc4">4</div>
+    <div class="run-i"><div class="run-t">The Showman — Dawood Rangan's deaths &amp; tower feats</div>
+    <div class="run-m">Non-kill tower feats first · then save-branch: Fan / Concrete-mole chain / Photo shoot</div></div>
+    <div class="chev">▼</div>
+  </div>
+  <div class="run-b">
+    <div class="lo">
+      <div class="lo-c"><div class="lo-l">Start</div><div class="lo-v">Main Street</div></div>
+      <div class="lo-c"><div class="lo-l">Bring</div><div class="lo-v">Silenced pistol (script + concrete kill), rat/lethal poison</div></div>
+      <div class="lo-c"><div class="lo-l">Access</div><div class="lo-v">Enter the tower via the adjacent construction site (side gate)</div></div>
+      <div class="lo-c"><div class="lo-l">Structure</div><div class="lo-v">Non-kill sweep → SAVE → 3 kill branches</div></div>
+    </div>
+
+    <div class="sec">Non-kill tower feats — before killing Rangan</div>
+
+    <div class="step"><div class="sr"><div class="cb" onclick="S(this,'s401')"></div><div class="sc">
+      <div class="st">Laptop, bodyguards, TV guard, brick KO</div>
+      <div class="meta">
+        <div class="mrow go"><span class="mk">Go</span><span><b>Rangan Tower</b> (via the construction site side gate) and the <b>construction site</b> itself.</span></div>
+        <div class="mrow item"><span class="mk">Item</span><span>A <b>brick</b> from the construction site.</span></div>
+        <div class="mrow npc"><span class="mk">NPC</span><span>Dawood's bodyguards; the top-floor <b>TV guard</b>; a construction worker.</span></div>
+        <div class="mrow act"><span class="mk">Do</span><span>Investigate <b>Rangan's private laptop</b> → A Dark Scheme. Eliminate four bodyguards → Boyz n Dawood. KO the top-floor guard watching TV → Show's Over. Brick-KO someone on the construction site → Hard Hat.</span></div>
+      </div>
+      <div class="badges"><span class="b bf">A Dark Scheme</span><span class="b bf">Boyz n Dawood</span><span class="b bf">Show's Over</span><span class="b bf">Hard Hat</span></div>
+    </div></div></div>
+
+    <div class="step"><div class="sr"><div class="cb" onclick="S(this,'s402')"></div><div class="sc">
+      <div class="st">Fan manual, missing script, 5 cameras</div>
+      <div class="meta">
+        <div class="mrow go"><span class="mk">Go</span><span>Inside the tower — the <b>film set</b> (level 4) and the <b>closed lift shaft</b> beside the studio.</span></div>
+        <div class="mrow item"><span class="mk">Item</span><span>The <b>Fan Manual</b> and the <b>Missing Script</b> (the script is stuck in the lift-shaft glass — shoot it down with a silenced pistol and climb down the pipe to grab it).</span></div>
+        <div class="mrow act"><span class="mk">Do</span><span>Find the fan manual → The Fan Manual. Recover the script → Not in the Script. Shoot 5 surveillance cameras across Mumbai → Privacy, Please.</span></div>
+      </div>
+      <div class="badges"><span class="b bf">The Fan Manual</span><span class="b bf">Not in the Script</span><span class="b bf">Privacy, Please</span></div>
+    </div></div></div>
+
+    <div class="save">💾 SAVE — all non-kill tower feats banked. Reload before each kill branch.</div>
+
+    <div class="sec">Kill branches — reload between each</div>
+
+    <div class="step"><div class="sr"><div class="cb" onclick="S(this,'s403')"></div><div class="sc">
+      <div class="st">Branch A — It was His Biggest Fan + Gone With The Wind</div>
+      <div class="meta">
+        <div class="mrow go"><span class="mk">Go</span><span>The <b>film set</b>, level 4; the make-up room's <b>bathroom</b> for a crew outfit.</span></div>
+        <div class="mrow dis"><span class="mk">Disg.</span><span>Bollywood crew (flood the bathroom, subdue whoever comes — wait for a man).</span></div>
+        <div class="mrow item"><span class="mk">Item</span><span>The recovered <b>script</b>; a <b>screwdriver</b> by the fan.</span></div>
+        <div class="mrow npc"><span class="mk">NPC</span><span>The <b>director</b> (headphones, pink cap); <b>Dawood Rangan</b>.</span></div>
+        <div class="mrow act"><span class="mk">Do</span><span>Hand the script to the director to start the scene. Sabotage the <b>industrial fan</b> with the screwdriver and switch it on (don't ramp yet). When Rangan is alone on set, <b>max the fan speed</b> to blow him off → It was His Biggest Fan + Gone With The Wind.</span></div>
+      </div>
+      <div class="warn">⚠ Wait until the actress leaves and Rangan stands alone, or the kill won't trigger cleanly.</div>
+      <div class="badges"><span class="b ba">It was His Biggest Fan</span><span class="b bf">Mission Story – Gone With The Wind</span><span class="b bt">The Showman</span></div>
+    </div></div></div>
+
+    <div class="step"><div class="sr"><div class="cb" onclick="S(this,'s404')"></div><div class="sc">
+      <div class="st">Branch B (reload) — Drop the Mike + A Mumbai Overcoat + Live to Mole Another Day</div>
+      <div class="meta">
+        <div class="mrow go"><span class="mk">Go</span><span>The <b>unfinished top floor</b> where Rangan interrogates the captured mole — position yourself on the floor <b>directly above him</b>.</span></div>
+        <div class="mrow item"><span class="mk">Item</span><span>A silenced pistol.</span></div>
+        <div class="mrow npc"><span class="mk">NPC</span><span><b>Dawood Rangan</b> (holding the mole by the throat over the wet concrete).</span></div>
+        <div class="mrow act"><span class="mk">Do</span><span>While he holds the mole at the edge, shoot Rangan from above so his body <b>falls into the wet concrete below</b>. This pops <b>A Mumbai Overcoat</b> and <b>Drop the Mike</b>; the freed mole runs off and, once far enough down the tower, <b>Live to Mole Another Day</b> completes.</span></div>
+      </div>
+      <div class="warn">⚠ Community-confirmed: you MUST be on the floor above — a same-floor shot won't pop Drop the Mike, and the body must land in the concrete.</div>
+      <div class="badges"><span class="b bf">Drop the Mike</span><span class="b bf">A Mumbai Overcoat</span><span class="b bf">Live to Mole Another Day</span><span class="b bt">The Showman</span></div>
+    </div></div></div>
+
+    <div class="step"><div class="sr"><div class="cb" onclick="S(this,'s405')"></div><div class="sc">
+      <div class="st">Branch C (reload) — Picture Perfect + Smashing, Baby! + Become a Denim Angel</div>
+      <div class="meta">
+        <div class="mrow go"><span class="mk">Go</span><span>An alley north of the central slums to find missing actor <b>Gregory Arthur</b>; then the tower <b>film set</b> (level 4). Grab rat poison on level 3 on the way.</span></div>
+        <div class="mrow dis"><span class="mk">Disg.</span><span>Lead Actor / <b>Denim Angel</b> (subdue Gregory when he's alone, e.g. vomiting into the canal).</span></div>
+        <div class="mrow item"><span class="mk">Item</span><span>Rat/lethal poison.</span></div>
+        <div class="mrow npc"><span class="mk">NPC</span><span><b>Dawood Rangan</b> at the shoot.</span></div>
+        <div class="mrow act"><span class="mk">Do</span><span>Strip weapons, pass the tower search, reach the set and announce yourself → <b>Smashing, Baby!</b> (starting the shoot) and <b>Become a Denim Angel</b>. Before/after the shoot, <b>poison Rangan's glass</b> when nobody's looking → completes Picture Perfect's kill.</span></div>
+      </div>
+      <div class="warn">⚠ Hide Gregory's body — a crow can spot it in the canal.</div>
+      <div class="badges"><span class="b bf">Mission Story – Picture Perfect</span><span class="b bf">Smashing, Baby!</span><span class="b bd">Become a Denim Angel</span><span class="b bt">The Showman</span></div>
+    </div></div></div>
+
+    <div class="valid"><h4>Run 4 validation</h4><ul>
+      <li>Laptop, bodyguards, TV guard, brick, manual, script, cameras all done before Rangan dies.</li>
+      <li>Script recovered before the fan branch that hands it to the director.</li>
+      <li>Three exclusive kills split by save/reload; the concrete/mole trio share one setup, so they're grouped.</li>
+      <li>Denim Angel disguise taken inside the same photo-shoot branch that needs it.</li>
+    </ul></div>
+  </div>
+</div>
+
+<!-- ══════════ RUN 5 ══════════ -->
+<div class="run" id="r5">
+  <div class="run-hd" onclick="R('r5')">
+    <div class="run-n" style="background:#0c2c19;color:#3fa85f">5</div>
+    <div class="run-i"><div class="run-t">Beach outlook sniper run</div>
+    <div class="run-m">Within Scope · Within a Broader Scope · Sniper Assassin · Straight Shot</div></div>
+    <div class="chev">▼</div>
+  </div>
+  <div class="run-b">
+    <div class="lo">
+      <div class="lo-c"><div class="lo-l">Start</div><div class="lo-v">Main Street</div></div>
+      <div class="lo-c"><div class="lo-l">Bring</div><div class="lo-v">A sniper rifle (silenced ideal) in the loadout case</div></div>
+      <div class="lo-c"><div class="lo-l">Position</div><div class="lo-v">Sniper tower at the house on the beach</div></div>
+      <div class="lo-c"><div class="lo-l">Prereq</div><div class="lo-v">Identify the Maelstrom first (random each replay)</div></div>
+    </div>
+
+    <div class="warn">⚠ Identify the Maelstrom at the start of this run too (Food District photo, per Run 3), or you can't recognise him through the scope.</div>
+
+    <div class="step"><div class="sr"><div class="cb" onclick="S(this,'s501')"></div><div class="sc">
+      <div class="st">Climb the beach sniper tower and take the first shot — Within Scope + Straight Shot</div>
+      <div class="meta">
+        <div class="mrow go"><span class="mk">Go</span><span>The <b>house on the beach</b> with the sniper tower; climb the ladder to the outlook post.</span></div>
+        <div class="mrow dis"><span class="mk">Disg.</span><span>Crow outfit optional (a few Crows patrol below).</span></div>
+        <div class="mrow item"><span class="mk">Item</span><span>Sniper rifle (take it out after reaching the ladder).</span></div>
+        <div class="mrow act"><span class="mk">Do</span><span>Turn toward the high-rise block; the easiest target is <b>Rangan</b> (visible on the stairs / behind the glass wall). Land a headshot → <b>Within Scope</b> + <b>Straight Shot</b>.</span></div>
+      </div>
+      <div class="warn">⚠ Unsilenced shots alarm the area — duck behind the tower wall after each; the Crows won't climb the ladder.</div>
+      <div class="badges"><span class="b ba">Within Scope</span><span class="b ba">Straight Shot</span></div>
+    </div></div></div>
+
+    <div class="step"><div class="sr"><div class="cb" onclick="S(this,'s502')"></div><div class="sc">
+      <div class="st">Snipe all three targets from the post — Within a Broader Scope + Sniper Assassin</div>
+      <div class="meta">
+        <div class="mrow act"><span class="mk">Do</span><span>From the same post, eliminate <b>all three targets</b> with the rifle. To also get <b>Sniper Assassin</b>, kill only the targets and don't get spotted. You may need to lure Vanya/Maelstrom into sightlines using the set-piece triggers, or shoot Vanya through a broken train-yard window.</span></div>
+      </div>
+      <div class="badges"><span class="b ba">Within a Broader Scope</span><span class="b bcl">Sniper Assassin</span><span class="b bt">All three targets</span></div>
+    </div></div></div>
+
+    <div class="valid"><h4>Run 5 validation</h4><ul>
+      <li>Maelstrom identified before any shot at him.</li>
+      <li>Within Scope is a subset of Within a Broader Scope — both complete, no conflict.</li>
+      <li>Kept clean (targets only, unspotted) so Sniper Assassin rides along toward The Classics.</li>
+    </ul></div>
+  </div>
+</div>
+
+<!-- ══════════ RUN 6 ══════════ -->
+<div class="run" id="r6">
+  <div class="run-hd" onclick="R('r6')">
+    <div class="run-n" style="background:#1b1b1b;color:#aaa">6</div>
+    <div class="run-i"><div class="run-t">Two-target set pieces + all-target electricity</div>
+    <div class="run-m">In Cahoots · The Suspension is Murder · Everybody on Board · Mumbai Blackout · Mumbai Electric</div></div>
+    <div class="chev">▼</div>
+  </div>
+  <div class="run-b">
+    <div class="lo">
+      <div class="lo-c"><div class="lo-l">Start</div><div class="lo-v">Main Street</div></div>
+      <div class="lo-c"><div class="lo-l">Bring</div><div class="lo-v">Silenced weapon; coins for the phone</div></div>
+      <div class="lo-c"><div class="lo-l">Prereq</div><div class="lo-v">Identify the Maelstrom first (needed for 3 of 4 branches)</div></div>
+      <div class="lo-c"><div class="lo-l">Structure</div><div class="lo-v">Identify → SAVE → 4 exclusive branches</div></div>
+    </div>
+
+    <div class="excl">All four branches kill a different target set — mutually exclusive. Identify the Maelstrom, SAVE, and reload for each.</div>
+
+    <div class="step"><div class="sr"><div class="cb" onclick="S(this,'s601')"></div><div class="sc">
+      <div class="st">Identify the Maelstrom, then SAVE (branch point)</div>
+      <div class="meta">
+        <div class="mrow act"><span class="mk">Do</span><span>Get his photo (Food District, per Run 3). Only In Cahoots (Vanya + Rangan) skips him; the other three need him identified.</span></div>
+      </div>
+      <div class="save">💾 SAVE here — this is the branch point.</div>
+    </div></div></div>
+
+    <div class="step"><div class="sr"><div class="cb" onclick="S(this,'s602')"></div><div class="sc">
+      <div class="st">Branch A — In Cahoots (Vanya + Rangan, maritime)</div>
+      <div class="meta">
+        <div class="mrow go"><span class="mk">Go</span><span><b>Construction site</b> for a brick → the <b>junkyard</b> building with the smoking chimney → the <b>house on the beach</b> meeting spot with the hanging boat.</span></div>
+        <div class="mrow item"><span class="mk">Item</span><span>A <b>brick</b>; a silenced weapon.</span></div>
+        <div class="mrow act"><span class="mk">Do</span><span>Drop the brick into the junkyard's <b>hot-substance furnace</b> (don't hit anyone — coin-distract). The smoke turns red and Vanya + Rangan head to the beach house. Line up on the <b>hanging boat</b>; when both stand beneath it, shoot an attachment so it drops on them → <b>In Cahoots</b>.</span></div>
+      </div>
+      <div class="badges"><span class="b ba">In Cahoots</span><span class="b bt">Queen + Showman</span></div>
+    </div></div></div>
+
+    <div class="step"><div class="sr"><div class="cb" onclick="S(this,'s603')"></div><div class="sc">
+      <div class="st">Branch B (reload) — The Suspension is Murder (Rangan + Maelstrom, crane)</div>
+      <div class="meta">
+        <div class="mrow go"><span class="mk">Go</span><span>The <b>Chawl sniper spot</b> to subdue the Kashmirian; his flat; then a <b>phone booth</b>; then the <b>construction-site container</b> with the crane panel, overlooking the <b>barge</b>.</span></div>
+        <div class="mrow item"><span class="mk">Item</span><span>The Kashmirian's <b>flat key + USB drive</b>; a coin; a local guard outfit helps.</span></div>
+        <div class="mrow npc"><span class="mk">NPC</span><span>The <b>Kashmirian</b> (subdue him — this run doesn't need him alive).</span></div>
+        <div class="mrow act"><span class="mk">Do</span><span>Read the USB on his laptop (the contracts), then <b>kill Vanya</b> by any method. Phone-call as the Kashmirian to tell <b>Rangan</b> she's dead → Rangan + Maelstrom meet at the barge. From the crane container, move the crane over them and <b>drop the concrete pipe</b> → <b>The Suspension is Murder</b>.</span></div>
+      </div>
+      <div class="badges"><span class="b ba">The Suspension is Murder</span><span class="b bt">Showman + Ghost</span></div>
+    </div></div></div>
+
+    <div class="step"><div class="sr"><div class="cb" onclick="S(this,'s604')"></div><div class="sc">
+      <div class="st">Branch C (reload) — Everybody on Board (Vanya + Maelstrom, train)</div>
+      <div class="meta">
+        <div class="mrow go"><span class="mk">Go</span><span>Subdue the <b>Kashmirian</b> at the Chawl and read his laptop USB. The <b>train-yard roof</b> for the lever; the <b>Container Area</b> south-east for the railroad switch; a <b>phone booth</b>.</span></div>
+        <div class="mrow item"><span class="mk">Item</span><span>The <b>lever</b> (roof corner; can't be concealed — drop it before climbing the pipe); a coin.</span></div>
+        <div class="mrow act"><span class="mk">Do</span><span><b>Kill Rangan</b> by any method, then phone-call as the Kashmirian to tell <b>Vanya</b> he's dead → Vanya + Maelstrom head to the train yard. Insert the lever in the <b>railroad switch</b>; when both stand on the tracks, hold the switch until the train arrives and derails into them → <b>Everybody on Board</b>.</span></div>
+      </div>
+      <div class="warn">⚠ Save at the switch — the train can take dozens of seconds and both targets must be on the tracks.</div>
+      <div class="badges"><span class="b ba">Everybody on Board</span><span class="b bt">Queen + Ghost</span></div>
+    </div></div></div>
+
+    <div class="step"><div class="sr"><div class="cb" onclick="S(this,'s605')"></div><div class="sc">
+      <div class="st">Branch D (reload) — Mumbai Blackout (all three, electricity) + Mumbai Electric</div>
+      <div class="meta">
+        <div class="mrow go"><span class="mk">Go</span><span>Rangan: tower <b>top construction floor</b> (extension leads + water tank). Vanya: her <b>private pool</b> re-activated. Maelstrom: an electrified spot near him.</span></div>
+        <div class="mrow item"><span class="mk">Item</span><span>A <b>Car Battery</b> (near the tower side entrance or the junkyard) for the pool.</span></div>
+        <div class="mrow act"><span class="mk">Do</span><span>Electrocute each target. For Rangan, hole the water tank to make a puddle and lure him onto it with the leads live. For Vanya, drop a car battery into her pool after she enters. Any one electrical kill pops <b>Mumbai Electric</b>; all three pop <b>Mumbai Blackout</b>.</span></div>
+      </div>
+      <div class="warn">⚠ Save before spilling water — a guard may notice the puddle; turn power off before dragging Rangan onto it.</div>
+      <div class="badges"><span class="b ba">Mumbai Blackout</span><span class="b ba">Mumbai Electric</span><span class="b bt">All three targets</span></div>
+    </div></div></div>
+
+    <div class="valid"><h4>Run 6 validation</h4><ul>
+      <li>Maelstrom identified before the three branches that involve him.</li>
+      <li>Four branches, four distinct target sets — correctly split by save/reload.</li>
+      <li>Mumbai Electric rides inside the Blackout branch (subset), not wasted on its own.</li>
+      <li>Each phone-lure branch kills the "other" target first, exactly as the contract requires.</li>
+    </ul></div>
+  </div>
+</div>
+
+<!-- ══════════ RUN 7 ══════════ -->
+<div class="run" id="r7">
+  <div class="run-hd" onclick="R('r7')">
+    <div class="run-n" style="background:#0c2622;color:#2a9d8f">7</div>
+    <div class="run-i"><div class="run-t">Impersonation, Holy Man, Chameleon tour &amp; cleanup</div>
+    <div class="run-m">Become Kashmirian/Holy Man/Metal Worker · The Cool Club · Bird of Prey · Taste of Your Own Cure · Chameleon · Discover Mumbai · Piano Man · Ex-Pirate · hideout exit</div></div>
+    <div class="chev">▼</div>
+  </div>
+  <div class="run-b">
+    <div class="lo">
+      <div class="lo-c"><div class="lo-l">Start</div><div class="lo-v">Main Street</div></div>
+      <div class="lo-c"><div class="lo-l">Bring</div><div class="lo-v">Sniper rifle (Taste of Your Own Cure), fiber wire (Piano Man)</div></div>
+      <div class="lo-c"><div class="lo-l">Kashmirian</div><div class="lo-v">SUBDUE/KILL allowed here (no proxy challenges this run)</div></div>
+      <div class="lo-c"><div class="lo-l">Exit</div><div class="lo-v">Hideout exit (Out of the Nest)</div></div>
+    </div>
+
+    <div class="excl">Run this AFTER Run 1 — it subdues/kills the Kashmirian, which would break the "help the Kashmirian" challenges, so those must already be banked.</div>
+
+    <div class="sec">Impersonate the Kashmirian</div>
+
+    <div class="step"><div class="sr"><div class="cb" onclick="S(this,'s701')"></div><div class="sc">
+      <div class="st">Become the Kashmirian and attend the Maelstrom meeting → The Cool Club</div>
+      <div class="meta">
+        <div class="mrow go"><span class="mk">Go</span><span>Follow the Broad-Strokes chain to the <b>Crows' side alley</b>; the Kashmirian stops by a <b>fuse box</b> there. Then the <b>Crows' hideout</b> (underground bunker).</span></div>
+        <div class="mrow dis"><span class="mk">Disg.</span><span><b>Kashmirian outfit</b> (interact with the fuse box, ambush him when he investigates, hide his body in the container).</span></div>
+        <div class="mrow npc"><span class="mk">NPC</span><span>The <b>Maelstrom</b> in the hideout's guarded room.</span></div>
+        <div class="mrow act"><span class="mk">Do</span><span>Strip all weapons/knives. Let the Crows search you at the alley and follow them down; a second search at the inner room. Attending the meeting as the Kashmirian pops <b>The Cool Club</b> → <b>Become the Kashmirian</b>. (If The Kashmirian feat didn't pop in Run 1, it completes here and closes The Helping Hand.)</span></div>
+      </div>
+      <div class="warn">⚠ You'll be searched twice — remove every prohibited item first or you'll be exposed underground.</div>
+      <div class="badges"><span class="b bd">Become the Kashmirian</span><span class="b bf">The Cool Club</span></div>
+    </div></div></div>
+
+    <div class="sec">Holy Man challenges</div>
+
+    <div class="step"><div class="sr"><div class="cb" onclick="S(this,'s702')"></div><div class="sc">
+      <div class="st">Become the Holy Man → Bird of Prey → Taste of Your Own Cure</div>
+      <div class="meta">
+        <div class="mrow dis"><span class="mk">Disg.</span><span><b>Holy Man</b> (find and subdue the Holy Man; his location is shown on the in-game map).</span></div>
+        <div class="mrow item"><span class="mk">Item</span><span>A <b>beak staff</b> (Bird of Prey); a <b>sniper rifle</b> (Taste of Your Own Cure).</span></div>
+        <div class="mrow npc"><span class="mk">NPC</span><span>Any target (Bird of Prey); the <b>Kashmirian</b> at his Sniper Spot (Taste of Your Own Cure).</span></div>
+        <div class="mrow act"><span class="mk">Do</span><span>As the Holy Man, kill a target with the <b>beak staff</b> → Bird of Prey. Then, from the <b>Studio in Rangan's apartment</b>, snipe the <b>Kashmirian</b> at his nest → Taste of Your Own Cure.</span></div>
+      </div>
+      <div class="warn">⚠ Sequencing: if you also want the Kashmirian disguise this run, take it (subdue him) BEFORE the sniper kill — or reload between the two, since you can't take a disguise from a body you've already sniped.</div>
+      <div class="badges"><span class="b bd">Become the Holy Man</span><span class="b ba">Bird of Prey</span><span class="b ba">Taste of Your Own Cure</span></div>
+    </div></div></div>
+
+    <div class="sec">Chameleon, exploration &amp; generic cleanup</div>
+
+    <div class="step"><div class="sr"><div class="cb" onclick="S(this,'s703')"></div><div class="sc">
+      <div class="st">Become a Metal Worker + finish Chameleon</div>
+      <div class="meta">
+        <div class="mrow dis"><span class="mk">Disg.</span><span><b>Metal Worker</b> (from the slums), plus every remaining outfit.</span></div>
+        <div class="mrow act"><span class="mk">Do</span><span>Take the Metal Worker outfit → Become a Metal Worker. Combined with the disguises from Runs 1–4 (Painter, Foreman, Tailor, Barber, Denim Angel, Holy Man, Kashmirian) plus every generic guard/servant/worker outfit, equip them all → <b>Chameleon</b>.</span></div>
+      </div>
+      <div class="warn">⚠ The full disguise count isn't in the mission data — use the in-game Chameleon counter to see which outfits you still need.</div>
+      <div class="badges"><span class="b bd">Become a Metal Worker</span><span class="b bd">Chameleon</span></div>
+    </div></div></div>
+
+    <div class="step"><div class="sr"><div class="cb" onclick="S(this,'s704')"></div><div class="sc">
+      <div class="st">Generic cleanup — Piano Man, Ex-Pirate, and any leftover Versatile kills</div>
+      <div class="meta">
+        <div class="mrow item"><span class="mk">Item</span><span><b>Fiber wire</b> (Piano Man); a <b>can of expired spaghetti</b> (found in the food areas) for Ex-Pirate.</span></div>
+        <div class="mrow act"><span class="mk">Do</span><span>Fiber-wire any target → Piano Man. KO a target with the <b>expired spaghetti can</b> → Ex-Pirate, Spa-Ghet-It?. With Someone Could Hurt Themselves (R2), Straight Shot (R5), Hold My Hair (R2) and Tasteless Traceless (R2) already banked, Piano Man completes <b>Versatile Assassin</b>.</span></div>
+      </div>
+      <div class="badges"><span class="b ba">Piano Man</span><span class="b bf">Ex-Pirate, Spa-Ghet-It?</span><span class="b ba">Versatile Assassin</span></div>
+    </div></div></div>
+
+    <div class="step"><div class="sr"><div class="cb" onclick="S(this,'s705')"></div><div class="sc">
+      <div class="st">Reveal all areas, then leave via the hideout — Discover Mumbai + Out of the Nest</div>
+      <div class="meta">
+        <div class="mrow act"><span class="mk">Do</span><span>This whole-map tour naturally reveals every area → <b>Discover Mumbai</b>. End the run at the <b>hideout exit</b> → <b>Out of the Nest</b> (the taxi exit was used in Run 2, so the two don't collide).</span></div>
+      </div>
+      <div class="badges"><span class="b bd">Discover Mumbai</span><span class="b bd">Out of the Nest</span></div>
+    </div></div></div>
+
+    <div class="valid"><h4>Run 7 validation</h4><ul>
+      <li>Ordered after Run 1, so subduing/killing the Kashmirian can't break the proxy challenges.</li>
+      <li>Kashmirian disguise taken before he's sniped (or reload between) — both obtainable.</li>
+      <li>Holy Man challenges grouped; Metal Worker taken before the Chameleon check.</li>
+      <li>Generic kills chosen to close Versatile Assassin cumulatively; hideout exit only.</li>
+    </ul></div>
+  </div>
+</div>
+
+<!-- ══════════ RUN 8 ══════════ -->
+<div class="run" id="r8">
+  <div class="run-hd" onclick="R('r8')">
+    <div class="run-n" style="background:#2a2205;color:#d4c15a">8</div>
+    <div class="run-i"><div class="run-t">The Classics — one clean run</div>
+    <div class="run-m">Silent Assassin · Silent Assassin, Suit Only · Suit Only · (Sniper Assassin from Run 5) → The Classics</div></div>
+    <div class="chev">▼</div>
+  </div>
+  <div class="run-b">
+    <div class="lo">
+      <div class="lo-c"><div class="lo-l">Start</div><div class="lo-v">Main Street</div></div>
+      <div class="lo-c"><div class="lo-l">Suit</div><div class="lo-v">Signature Suit — never change disguise</div></div>
+      <div class="lo-c"><div class="lo-l">Prereq</div><div class="lo-v">Identify the Maelstrom first</div></div>
+      <div class="lo-c"><div class="lo-l">Rules</div><div class="lo-v">Only the 3 targets die · no bodies found · never spotted</div></div>
+    </div>
+
+    <div class="step"><div class="sr"><div class="cb" onclick="S(this,'s801')"></div><div class="sc">
+      <div class="st">One clean, suit-only, no-witness run of all three targets</div>
+      <div class="meta">
+        <div class="mrow act"><span class="mk">Do</span><span>Identify the Maelstrom, then kill all three <b>in your suit</b> using accident/poison methods that leave no body found and never get you spotted. The cleanest options you already know: <b>Free Bird</b> or <b>Me Time</b> for Vanya (accidents), <b>What's Your Flava?</b> for the Maelstrom (poison), and a poison/accident for Rangan. This single run banks <b>Silent Assassin</b>, <b>Silent Assassin, Suit Only</b>, and <b>Suit Only</b> at once.</span></div>
+      </div>
+      <div class="warn">⚠ Accident and poison kills don't count as "bodies found," which is what keeps Silent Assassin intact — favour those and avoid subdued-body discovery.</div>
+      <div class="badges"><span class="b bcl">Silent Assassin</span><span class="b bcl">Silent Assassin, Suit Only</span><span class="b bcl">Suit Only</span><span class="b bcl">The Classics</span></div>
+    </div></div></div>
+
+    <div class="valid"><h4>Run 8 validation</h4><ul>
+      <li>Maelstrom identified before killing — required for a clean targets-only run.</li>
+      <li>Suit never changed → Suit Only and SASO both hold; SASO implies Silent Assassin + Suit Only.</li>
+      <li>Sniper Assassin (Run 5) is the fourth Classics part, so The Classics closes here.</li>
+    </ul></div>
+  </div>
+</div>
+
+</div>
+
+<!-- ══════════ CHECKLIST ══════════ -->
+<div id="p-check" class="pane">
+  <div style="font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.6">All 80 entries are transcribed verbatim from the mission's challenge data file. The green tag on each shows which run earns it.</div>
+  <div class="fr">
+    <button class="fb on" onclick="F('all',this)">All (80)</button>
+    <button class="fb" onclick="F('A',this)">Assassination (24)</button>
+    <button class="fb" onclick="F('D',this)">Discovery (15)</button>
+    <button class="fb" onclick="F('F',this)">Feats (33)</button>
+    <button class="fb" onclick="F('T',this)">Targets (3)</button>
+    <button class="fb" onclick="F('C',this)">Classic (5)</button>
+    <button class="fb" onclick="F('inc',this)">Incomplete</button>
+  </div>
+  <div id="cl"></div>
+</div>
+
+<!-- ══════════ LOGIC ══════════ -->
+<div id="p-ref" class="pane">
+  <div class="rg">
+    <div class="rc"><h3>Run map (all 80 placed)</h3>
+      <p><b>1</b> Kashmirian proxy · <b>2</b> Vanya solo deaths + taxi exit · <b>3</b> Maelstrom (identify → shave/tea/sign) + flags + Memoirs · <b>4</b> Rangan tower feats + fan/concrete/photo · <b>5</b> beach sniper · <b>6</b> set pieces + electricity · <b>7</b> impersonation/Holy Man/Chameleon/cleanup + hideout exit · <b>8</b> clean Classics.</p>
+    </div>
+    <div class="rc"><h3>Mutually exclusive — separated by design</h3>
+      <p><b>Within a run (save/reload):</b> Vanya's 5 solo deaths (R2); Maelstrom's 3 kills (R3); Rangan's 3 kills (R4); the 4 set pieces (R6); No You Hang Up vs Call Her Maybe (R1); Red Flag vs Hoist the Flag (R3, same flag).<br><br>
+      <b>Across runs:</b> Kashmirian alive (R1) vs subdued/killed (R7); taxi exit (R2) vs hideout exit (R7).</p>
+    </div>
+    <div class="rc"><h3>Hard prerequisites</h3>
+      <p><b>Maelstrom photo</b> (random each replay) before any run that kills him: R3, R5, R6, R8.<br>
+      <b>Tailor + blue cloth</b> before Stand Still. <b>Servant + taster sequence</b> before Tea Time.<br>
+      <b>Recovered script</b> before the fan kill. <b>Above-floor position</b> for Drop the Mike.<br>
+      <b>Kashmirian alive</b> for every "help the Kashmirian" challenge (R1 before R7).</p>
+    </div>
+    <div class="rc"><h3>Metas (cumulative)</h3>
+      <p><b>Versatile Assassin</b> = Piano Man + Someone Could Hurt Themselves + Hold My Hair + Straight Shot + Tasteless, Traceless (R2/R5/R7).<br><br>
+      <b>The Helping Hand</b> = The Foreman + The Artist + The Kashmirian (R1, or R7 for the last).<br><br>
+      <b>The Classics</b> = Silent Assassin + SASO + Sniper Assassin + Suit Only (R5 + R8).</p>
+    </div>
+    <div class="rc"><h3>Sourcing</h3>
+      <p><b>Verified from the game file:</b> every challenge name, category, and objective.</p>
+      <p style="margin-top:7px"><b>From the standard Mumbai walkthrough:</b> the room-by-room geography, item spots, and NPC roles in each step.</p>
+      <p style="margin-top:7px"><b>Not fabricated:</b> the Maelstrom's appearance and alt-start mastery unlocks are random/level-gated and are flagged rather than invented; the exact Memoirs tape count and full Chameleon disguise count aren't in the data, so those steps point you to the in-game map/counter.</p>
+    </div>
+    <div class="rc"><h3>Count</h3>
+      <p>80 = 24 Assassination + 15 Discovery + 33 Feats + 3 Targets + 5 Classic. Your brief's "24 / 15 / 33" is the first three categories; Targets + Classic complete the 80.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+const CL=[
+['Waiting for a Sign','A','Take out The Maelstrom with a neon sign.','Run 3'],
+['In Cahoots','A','Eliminate both Vanya Shah and Dawood Rangan using maritime trickery.','Run 6'],
+['Barbershop Duette','A','Disguise yourself as the Barber and give the Maelstrom a nice clean shave... Make sure you eliminate him.','Run 3'],
+["What's Your Flava?",'A','Poison the Maelstrom with his favorite tea.','Run 3'],
+['Tea Time','A','Poison Vanya Shah disguised as a Servant.','Run 2'],
+['Me Time','A','Eliminate Vanya Shah by tampering with her private pool.','Run 2'],
+['Mumbai Blackout','A','Eliminate all targets using electricity.','Run 6'],
+['It was His Biggest Fan','A','Tamper with the photo shoot stage and send Dawood Rangan flying.','Run 4'],
+['Proxy Killer','A','Help the Kashmirian take out both Vanya Shah and Dawood Rangan.','Run 1'],
+['Mumbai Electric','A','Eliminate a target using electricity.','Run 6'],
+['Free Bird','A','Drop a birdcage on Vanya Shah.','Run 2'],
+['Stand Still','A','Eliminate Vanya Shah, disguised as the Tailor, while taking her measurements.','Run 2'],
+['Everybody on Board','A','Derail the train so it makes an unexpected stop. Make sure that Vanya Shah and the Maelstrom are ready.','Run 6'],
+['Within a Broader Scope','A','Shoot and eliminate all three targets with a sniper rifle from the outlook post near the beach.','Run 5'],
+['The Suspension is Murder','A','Pull some strings and arrange a meeting between Dawood Rangan and The Maelstrom. Then pull a much larger and heavier string and let go...','Run 6'],
+['Within Scope','A','Shoot and eliminate any target with a sniper rifle from the outlook post near the beach.','Run 5'],
+['Bird of Prey','A','Eliminate a target with a beak staff while disguised as the Holy Man.','Run 7'],
+['Hold My Hair','A','Assassinate a target by drowning them.','Run 2'],
+['Piano Man','A','Assassinate a target with the fiber wire.','Run 7'],
+['Straight Shot','A','Assassinate a target with a headshot.','Run 5'],
+['Taste of Your Own Cure','A',"Eliminate the Kashmirian with a sniper rifle from the Studio in Dawood Rangan's apartment while disguised as the Holy Man.",'Run 7'],
+['Versatile Assassin','A','Complete: Piano Man / Someone Could Hurt Themselves / Hold My Hair / Straight Shot / Tasteless, Traceless.','cumulative'],
+['Tasteless, Traceless','A','Assassinate a target with lethal poison.','Run 2'],
+['Someone Could Hurt Themselves','A','Assassinate a target in an accident.','Run 2'],
+['A Secret Grudge','D',"Find and read Vanya Shah's diary.",'Run 2'],
+['Make it Work','D',"Acquire the correct cloth sample for Vanya Shah's dress.",'Run 2'],
+['Become the Foreman','D','Disguise yourself as the Mumbai Laundry Foreman.','Run 1'],
+["Let's Get the Tuk Out of Here",'D','Leave Mumbai using a local taxi.','Run 2'],
+['Chameleon','D','Find and equip all disguises in Mumbai.','Run 7'],
+['Become the Painter','D',"Disguise yourself as Dawood Rangan's Portrait Painter.",'Run 1'],
+['Red Flag','D','Raise the flag from a distance.','Run 3'],
+['Become the Tailor','D','Disguise yourself as the Local Tailor from the outskirts of the slums.','Run 2'],
+['Become the Holy Man','D','Disguise yourself as the Holy Man.','Run 7'],
+['Become the Kashmirian','D','Disguise yourself as the Kashmirian.','Run 7'],
+['Become the Barber','D','Disguise yourself as the Local Barber from the slums.','Run 3'],
+['Out of the Nest','D','Escape Mumbai using the exit in the hideout.','Run 7'],
+['Become a Metal Worker','D','Disguise yourself as a Metal Worker from the slums.','Run 7'],
+['Become a Denim Angel','D',"Disguise yourself as one of the Actors from Dawood Rangan's movie shoot.",'Run 4'],
+['Discover Mumbai','D','Reveal all undiscovered areas in Mumbai.','Run 7'],
+['Mission Story - Flames Rekindled','F',"A house under the gang's protection.",'Run 3'],
+['Artists at Work','F','Help the Kashmirian get a clear line of fire to Dawood Rangan.','Run 1'],
+['Mission Story - A Dress To Die For','F',"Infiltrate Vanya Shah's personal quarters as a Local Tailor.",'Run 2'],
+['Hoist the Flag','F','Raise the flag on one of the rooftops on the hill.','Run 3'],
+['Mission Story - Gone With The Wind','F','A missing script and an industrial fan.','Run 4'],
+['Hard Hat','F','Knock out someone in the Rangan Tower construction site with a brick.','Run 4'],
+['A Dark Scheme','F',"Investigate Dawood Rangan's private laptop.",'Run 4'],
+['No, You Hang Up','F',"Complete the Kashmirian's contract on Vanya Shah. Then call Dawood Rangan.",'Run 1'],
+['The Helping Hand','F','Complete "The Foreman", "The Artist" and "The Kashmirian."','Run 1'],
+["Show's Over",'F','Knock out the guard watching TV on the top floor in Rangan Tower.','Run 4'],
+['Memoirs','F','Find all the tapes recorded by the Maelstrom.','Run 3'],
+['Call Her Maybe','F',"Complete the Kashmirian's contract on Dawood Rangan. Then call Vanya Shah.",'Run 1'],
+['The Artist','F','Make the artist finish his painting of Dawood Rangan.','Run 1'],
+['A Mumbai Overcoat','F','Drop Dawood Rangan into wet concrete.','Run 4'],
+['Boyz n Dawood','F',"Eliminate four of Dawood's bodyguards.",'Run 4'],
+['The Cool Club','F','Attend a meeting with the Maelstrom disguised as the Kashmirian.','Run 7'],
+['The Kashmirian','F','Make The Kashmirian meet with The Maelstrom.','Run 1 / 7'],
+['Live to Mole Another Day','F','Save the mole captured by Dawood Rangan.','Run 4'],
+['Mission Story - Broad Strokes','F',"Help out a local assassin and infiltrate Dawood Rangan's penthouse as his Personal Portrait Painter.",'Run 1'],
+['Drop the Mike','F','Interrupt Dawood Rangan as he interrogates the mole.','Run 4'],
+['Teamwork','F','Help the Kashmirian get a clear line of fire to Vanya Shah.','Run 1'],
+['The Fan Manual','F','Find the industrial fan manual in Rangan Tower.','Run 4'],
+['Not in the Script','F','Find the missing manuscript in Rangan Tower.','Run 4'],
+['Mission Story - A Matter Of Discipline','F','Attend the meeting on the bridge as the laundry foreman.','Run 1'],
+['Mission Story - Picture Perfect','F','Get close to Dawood Rangan and infiltrate a photo shoot as the Lead Actor.','Run 4'],
+["Steamin'",'F','Locate the hot water tank on the roof of the train yard building.','Run 2'],
+['The Man and the Legend','F','Identify the Maelstrom.','Run 3'],
+['Mission Story - A Close Shave','F','Open the barbershop in the Mumbai slums.','Run 3'],
+['Smashing, Baby!','F','Start the photo shoot as the Lead Actor.','Run 4'],
+['The Foreman','F','Make the foreman attend the meeting with Vanya Shah on the bridge.','Run 1'],
+['Privacy, Please','F','Shoot and destroy 5 surveillance cameras in Mumbai.','Run 4'],
+['Ex-Pirate, Spa-Ghet-It?','F','Knock out a target with a can of expired spaghetti.','Run 7'],
+['Big Spender','F','Buy all three cloth samples from a vendor in the slums.','Run 2'],
+['The Ghost','T','Eliminate the Maelstrom.','Run 3'],
+['The Queen','T','Eliminate Vanya Shah.','Run 2'],
+['The Showman','T','Eliminate Dawood Rangan.','Run 4'],
+['Sniper Assassin','C','Assassinate your targets with a sniper rifle. Only eliminate the targets. Do not get spotted.','Run 5'],
+['Silent Assassin','C','Only eliminate the targets. No bodies found. Do not get spotted.','Run 8'],
+['The Classics','C','Complete: Silent Assassin / Silent Assassin, Suit Only / Sniper Assassin / Suit Only.','cumulative'],
+['Silent Assassin, Suit Only','C','Only eliminate the targets. No bodies found. Do not get spotted. Do it all in your suit.','Run 8'],
+['Suit Only','C','Assassinate the targets and complete the mission. Do it all in your suit.','Run 8'],
+];
+
+let done=new Set();
+try{const s=localStorage.getItem('mum_v6');if(s)done=new Set(JSON.parse(s));}catch(e){}
+function reportProgress(){try{const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r['m11']={done:[...done].filter(k=>k.startsWith('k')).length,total:CL.length,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
+function sv(){try{localStorage.setItem('mum_v6',JSON.stringify([...done]))}catch(e){}reportProgress();}
+
+function upd(){
+  const cnt=t=>CL.filter((c,i)=>c[1]===t&&done.has('k'+i)).length;
+  document.getElementById('cA').textContent=cnt('A');
+  document.getElementById('cD').textContent=cnt('D');
+  document.getElementById('cF').textContent=cnt('F');
+  document.getElementById('cX').textContent=cnt('T')+cnt('C');
+  const tot=[...done].filter(k=>k.startsWith('k')).length,mx=CL.length;
+  document.getElementById('pct').textContent=Math.round(tot/mx*100)+'%';
+  document.getElementById('ptxt').textContent=tot+' / '+mx;
+  document.getElementById('prog').style.width=(tot/mx*100)+'%';
+}
+function S(el,id){el.classList.toggle('done');el.classList.contains('done')?done.add(id):done.delete(id);sv();}
+function R(id){document.getElementById(id).classList.toggle('open');}
+function T(id,b){document.querySelectorAll('.pane').forEach(p=>p.classList.remove('on'));document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));document.getElementById('p-'+id).classList.add('on');b.classList.add('on');}
+
+const TN={A:'Assassination',D:'Discovery',F:'Feats',T:'Targets',C:'The Classics'};
+let f='all';
+function F(t,b){f=t;document.querySelectorAll('.fb').forEach(x=>x.classList.remove('on'));b.classList.add('on');RC();}
+function RC(){
+  const el=document.getElementById('cl');let g={A:[],D:[],F:[],T:[],C:[]};
+  CL.forEach((c,i)=>{const id='k'+i;const show=f==='all'||f===c[1]||(f==='inc'&&!done.has(id));if(show)g[c[1]].push([c,i]);});
+  let h='';
+  ['A','D','F','T','C'].forEach(t=>{
+    if(!g[t].length)return;
+    h+='<div class="cg"><div class="ch">'+TN[t]+' — '+g[t].length+'</div>';
+    g[t].forEach(([c,i])=>{
+      const id='k'+i,dn=done.has(id);
+      h+='<div class="ci" onclick="K(\''+id+'\')"><div class="ccb'+(dn?' done':'')+'"></div>'
+       +'<div class="cn'+(dn?' done':'')+'">'+c[0]
+       +'<span class="cd2">'+c[2]+'</span>'
+       +'<span class="rmap">▸ '+c[3]+'</span></div></div>';
+    });
+    h+='</div>';
+  });
+  el.innerHTML=h;
+}
+function K(id){done.has(id)?done.delete(id):done.add(id);sv();upd();RC();}
+RC();upd();
+/* challenges re-render from `done`, but route steps are static markup —
+   re-apply their ticks by hand after a reload */
+document.querySelectorAll('[onclick^="S(this,"]').forEach(el=>{
+  const m=el.getAttribute('onclick').match(/'([^']+)'/);
+  if(m&&done.has(m[1]))el.classList.add('done');
+});
+reportProgress();
+</script>
+<!-- step-progress-bridge -->
+<script>
+/* Reports route-step ticks into 'hitman-progress-registry' so the index can
+   show them beside the challenge counts. Counts what is on screen rather than
+   any guide-specific state, so one implementation serves every guide. */
+(function(){
+  var RID="m11", SEL=".step";
+  function isDone(s){
+    var c=s.classList;
+    if(c.contains('done')||c.contains('dn')) return true;
+    if(s.getAttribute('data-done')==='1'||s.getAttribute('aria-pressed')==='true') return true;
+    return !!s.querySelector('.done,.dn,[data-done="1"],[aria-pressed="true"]');
+  }
+  function tally(){
+    var steps=document.querySelectorAll(SEL);
+    if(!steps.length) return null;
+    var n=0;
+    for(var i=0;i<steps.length;i++) if(isDone(steps[i])) n++;
+    return {steps:n,stepTotal:steps.length};
+  }
+  function push(){
+    var t;
+    try{ t=tally(); }catch(err){ return; }
+    if(!t||!t.stepTotal) return;
+    try{
+      var r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');
+      var e=r[RID]||(r[RID]={});
+      /* the guide's own reportProgress() rewrites this entry wholesale, so
+         re-add the step counts whenever they go missing or stale */
+      if(e.steps===t.steps&&e.stepTotal===t.stepTotal) return;
+      e.steps=t.steps; e.stepTotal=t.stepTotal; e.updated=Date.now();
+      localStorage.setItem('hitman-progress-registry',JSON.stringify(r));
+    }catch(err){}
+  }
+  var pending=false;
+  function schedule(){
+    if(pending) return; pending=true;
+    setTimeout(function(){pending=false;push();},120);
+  }
+  try{
+    new MutationObserver(schedule).observe(document.body,
+      {subtree:true,childList:true,attributes:true,attributeFilter:['class','aria-pressed','data-done']});
+  }catch(err){}
+  window.addEventListener('load',schedule);
+  setTimeout(push,600);
+})();
+</script>
+<!-- /step-progress-bridge -->
+</body>
+</html>

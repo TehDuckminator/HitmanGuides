@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A House Built on Sand — Step Guide (35 Challenges)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#0d1420; --night-2:#141d2c; --panel:#182335; --panel-2:#1f2c41; --line:#2b3a52;
+  --lamp:#e8a33d; --lamp-dim:#a9762a; --tile:#2fa39a; --sand:#e9dec9; --muted:#8d9aaf;
+  --danger:#d9414a; --amber:#d98d2b; --violet:#8f7ad1; --radius:3px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:radial-gradient(1100px 600px at 78% -8%, rgba(232,163,61,.10), transparent 60%),
+             radial-gradient(900px 500px at 8% 105%, rgba(47,163,154,.08), transparent 60%), var(--night);
+  color:var(--sand); font-family:'Barlow',system-ui,sans-serif; font-size:15.5px; line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:.01em;margin:0}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 90px}
+
+header{border-bottom:1px solid var(--line);background:linear-gradient(180deg,rgba(232,163,61,.05),transparent)}
+.head-in{max-width:1080px;margin:0 auto;padding:24px 20px 20px;display:flex;gap:22px;align-items:flex-start;flex-wrap:wrap}
+.sign{width:66px;height:66px;flex:0 0 auto;display:grid;place-items:center;border:1px solid var(--lamp-dim);
+  border-radius:var(--radius);background:rgba(232,163,61,.06);font-family:'Barlow Condensed',sans-serif;
+  font-size:43px;line-height:1;font-weight:700;color:var(--lamp);text-shadow:0 0 14px rgba(232,163,61,.65);
+  animation:flick 5.5s infinite steps(1,end)}
+@keyframes flick{0%,42%,44%,47%,58%,100%{opacity:1}43%,46%,57%{opacity:.18}}
+@media (prefers-reduced-motion:reduce){.sign{animation:none}}
+.title-block{flex:1 1 380px;min-width:260px}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.19em;text-transform:uppercase;color:var(--lamp);margin-bottom:6px}
+h1{font-size:clamp(28px,5vw,44px);line-height:1.02;text-transform:uppercase}
+.sub{color:var(--muted);font-size:14px;margin-top:8px;max-width:64ch}
+
+.tracker{border-bottom:1px solid var(--line);background:var(--night-2)}
+.tracker-in{max-width:1080px;margin:0 auto;padding:16px 20px 18px}
+.bar-row{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:9px}
+.bar-row .big{font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:700;line-height:1;color:var(--lamp)}
+.bar-row .lab{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+.bar{height:8px;background:#101827;border:1px solid var(--line);border-radius:99px;overflow:hidden}
+.bar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--tile),var(--lamp));transition:width .35s ease}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.chip{border:1px solid var(--line);background:var(--panel);border-radius:99px;padding:5px 12px;font-size:12.5px;display:flex;gap:8px;align-items:center}
+.chip i{width:7px;height:7px;border-radius:99px;display:block}
+.chip b{font-family:'IBM Plex Mono',monospace;font-weight:500}
+.dot-a{background:var(--danger)}.dot-d{background:var(--tile)}.dot-f{background:var(--lamp)}
+.dot-t{background:var(--violet)}.dot-c{background:#7f8ba0}
+
+nav.tabs{display:flex;border-bottom:1px solid var(--line);max-width:1080px;margin:0 auto;padding:0 20px;flex-wrap:wrap}
+nav.tabs button{background:none;border:0;border-bottom:2px solid transparent;color:var(--muted);
+  font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:600;letter-spacing:.06em;
+  text-transform:uppercase;padding:13px 16px;cursor:pointer}
+nav.tabs button:hover{color:var(--sand)}
+nav.tabs button[aria-selected="true"]{color:var(--lamp);border-bottom-color:var(--lamp)}
+nav.tabs button:focus-visible,.runjump button:focus-visible,.more:focus-visible,.tick:focus-visible,.run-toggle:focus-visible,.filters button:focus-visible{outline:2px solid var(--tile);outline-offset:2px}
+.panel-tab[hidden]{display:none}
+
+.runjump{position:sticky;top:0;z-index:20;display:flex;gap:7px;flex-wrap:wrap;padding:12px 0 12px;
+  background:linear-gradient(180deg,var(--night) 72%,rgba(13,20,32,0));margin-bottom:4px}
+.runjump button{background:var(--panel);border:1px solid var(--line);color:var(--sand);border-radius:99px;
+  padding:6px 13px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.08em;cursor:pointer;white-space:nowrap}
+.runjump button:hover{border-color:var(--lamp);color:var(--lamp)}
+.runjump button.exp{background:var(--lamp);border-color:var(--lamp);color:#12161f}
+.runjump .allbtn{background:none;color:var(--muted)}
+
+.notice{border:1px solid var(--line);border-left:3px solid var(--lamp);background:var(--panel);padding:13px 16px;margin:18px 0;border-radius:var(--radius)}
+.notice h4{font-size:17px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px}
+.notice p{margin:6px 0 0;font-size:14px;color:#cbc2ae}
+.notice.warn{border-left-color:var(--danger)}
+.notice.pre{border-left-color:var(--tile)}
+
+.run{border:1px solid var(--line);background:var(--panel);border-radius:var(--radius);margin:14px 0;overflow:hidden;scroll-margin-top:64px}
+.run-toggle{width:100%;text-align:left;background:linear-gradient(180deg,var(--panel-2),var(--panel));border:0;
+  border-bottom:1px solid transparent;padding:15px 18px;cursor:pointer;color:var(--sand);display:flex;gap:14px;align-items:flex-start}
+.run.open .run-toggle{border-bottom-color:var(--line)}
+.caret{flex:0 0 auto;font-size:13px;color:var(--lamp);margin-top:6px;transition:transform .2s ease}
+.run.open .caret{transform:rotate(90deg)}
+.run-tag{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.17em;text-transform:uppercase;color:var(--tile)}
+.run-toggle h2{font-size:24px;margin-top:3px;text-transform:uppercase;line-height:1.1}
+.run-toggle p{margin:7px 0 0;color:#cbc2ae;font-size:14px;max-width:76ch}
+.run-prog{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-top:8px;letter-spacing:.05em}
+.run-body[hidden]{display:none}
+
+.loadout{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:1px;background:var(--line);border-bottom:1px solid var(--line)}
+.slot{background:var(--panel-2);padding:11px 14px}
+.slot .k{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.slot .v{font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:600;margin-top:3px;line-height:1.2}
+.slot .n{font-size:12.5px;color:var(--muted);margin-top:3px}
+.sec{padding:0 18px}
+.sec h3{font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--lamp);margin:20px 0 9px;font-family:'IBM Plex Mono',monospace;font-weight:500}
+
+.step{border:1px solid var(--line);border-radius:var(--radius);margin-bottom:9px;background:var(--night-2)}
+.step.done{border-color:rgba(47,163,154,.55);background:rgba(47,163,154,.07)}
+.step-top{display:flex;gap:11px;padding:11px 13px;align-items:flex-start}
+.tick{flex:0 0 auto;width:25px;height:25px;border:1px solid var(--line);background:#101827;border-radius:var(--radius);
+  color:var(--muted);cursor:pointer;font-size:14px;line-height:1;display:grid;place-items:center;margin-top:2px}
+.tick:hover{border-color:var(--tile);color:var(--tile)}
+.step.done .tick{background:var(--tile);border-color:var(--tile);color:#08131a}
+.step-body{flex:1;min-width:0}
+.stepnum{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--tile);letter-spacing:.1em}
+.step-body h4{font-size:18px;margin-top:1px}
+.step-body .sum{font-size:14px;color:#c4bcaa;margin-top:3px}
+.more{background:none;border:0;color:var(--tile);font-family:'IBM Plex Mono',monospace;font-size:11px;
+  letter-spacing:.12em;text-transform:uppercase;padding:8px 0 2px;cursor:pointer}
+.detail{border-top:1px solid var(--line);padding:11px 13px 13px;font-size:14px}
+.detail[hidden]{display:none}
+.fields{display:grid;grid-template-columns:auto 1fr;gap:5px 12px;align-items:baseline}
+.fk{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.fv{color:#d6cdba}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.badge{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.05em;padding:3px 8px;border-radius:99px;border:1px solid}
+.b-a{color:#ff8b91;border-color:rgba(217,65,74,.5);background:rgba(217,65,74,.12)}
+.b-d{color:#6fd6cd;border-color:rgba(47,163,154,.5);background:rgba(47,163,154,.12)}
+.b-f{color:#f0bf74;border-color:rgba(232,163,61,.5);background:rgba(232,163,61,.12)}
+.b-t{color:#b9a8ea;border-color:rgba(143,122,209,.5);background:rgba(143,122,209,.12)}
+.b-c{color:#c3cbd8;border-color:rgba(141,154,175,.5);background:rgba(141,154,175,.12)}
+.flag{display:block;margin-top:9px;padding:9px 11px;border-radius:var(--radius);font-size:13.5px;border:1px solid}
+.flag b{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;display:block;margin-bottom:3px}
+.f-warn{border-color:rgba(217,65,74,.55);background:rgba(217,65,74,.10);color:#f0b6b9}
+.f-warn b{color:#ff7b83}
+.f-save{border-color:rgba(217,141,43,.55);background:rgba(217,141,43,.10);color:#f0d3a8}
+.f-save b{color:var(--amber)}
+.f-unv{border-color:var(--line);background:#101827;color:var(--muted);border-style:dashed}
+.f-unv b{color:#a7b2c4}
+.run-foot{padding:2px 18px 18px}
+
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0 14px}
+.filters button{background:var(--panel);border:1px solid var(--line);color:var(--muted);border-radius:99px;
+  padding:6px 14px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--lamp);border-color:var(--lamp);color:#12161f}
+.clist{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.citem{display:flex;gap:12px;padding:11px 14px;border-bottom:1px solid var(--line);background:var(--panel);align-items:flex-start}
+.citem:last-child{border-bottom:0}
+.citem.done{background:rgba(47,163,154,.08)}
+.citem .nm{font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:600;line-height:1.15;display:block}
+.citem.done .nm{color:var(--tile);text-decoration:line-through;text-decoration-thickness:1px}
+.citem .cd{font-size:13.5px;color:#bcb3a2;margin-top:2px;display:block}
+.citem .meta{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--muted);margin-top:5px;letter-spacing:.05em;display:block}
+.tools{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.tools button{background:none;border:1px solid var(--line);color:var(--muted);padding:7px 14px;border-radius:var(--radius);
+  cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase}
+.tools button:hover{color:var(--sand);border-color:var(--tile)}
+
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top}
+th{background:var(--panel-2);font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);font-weight:500}
+td{background:var(--panel)}
+h2.sect{font-size:25px;text-transform:uppercase;margin:30px 0 6px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+h3.sub2{font-size:18px;letter-spacing:.06em;text-transform:uppercase;margin:26px 0 4px}
+p.lead{color:#c4bcaa;font-size:14.5px;max-width:80ch}
+ul.plain{max-width:82ch}
+ul.plain li{margin:6px 0}
+footer{border-top:1px solid var(--line);margin-top:44px;padding-top:16px;color:var(--muted);font-size:12.5px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="head-in">
+    <div class="sign" aria-hidden="true">F</div>
+    <div class="title-block">
+      <div class="eyebrow">HITMAN World of Assassination · Marrakesh · Summer Bonus Mission</div>
+      <h1>A House Built on Sand</h1>
+      <p class="sub">All 35 challenges in six runs, written as numbered steps. Challenge names, categories and unlock text come from the mission's own challenge data; routes and locations are cross-checked against at least two guides. Anything a source could not confirm is flagged where it appears.</p>
+    </div>
+  </div>
+</header>
+
+<section class="tracker" aria-label="Progress">
+  <div class="tracker-in">
+    <div class="bar-row">
+      <span class="big"><span id="doneCount">0</span>/35</span>
+      <span class="lab">challenges complete · <span id="pct">0</span>%</span>
+    </div>
+    <div class="bar"><i id="barFill"></i></div>
+    <div class="chips" id="chips"></div>
+  </div>
+</section>
+
+<nav class="tabs" role="tablist">
+  <button role="tab" id="tab-runs" aria-controls="p-runs" aria-selected="true">Runs</button>
+  <button role="tab" id="tab-list" aria-controls="p-list" aria-selected="false">Checklist</button>
+  <button role="tab" id="tab-ver" aria-controls="p-ver" aria-selected="false">Verification</button>
+</nav>
+
+<div class="wrap">
+
+<div class="panel-tab" id="p-runs" role="tabpanel" aria-labelledby="tab-runs">
+  <div class="runjump" id="runjump"></div>
+
+  <div class="notice pre">
+    <h4>Before you start — four facts that shape every run</h4>
+    <p><b>One starting location, no mastery gates.</b> This bonus mission has a single start point and no mastery track, so no loadout or start is locked behind a level. Sources name the start differently (Consulate Plaza / outside the city gates); all agree there is only one.</p>
+    <p><b>One Agency Pickup.</b> A single large stash on the rooftops, reached by the pipe near the side gates. Anything you want up high has to be sent there.</p>
+    <p><b>No security cameras.</b> The "destroy the evidence" clause on the Classics is free here, which is why No Evidence isn't a challenge on this map.</p>
+    <p><b>Seven disguises.</b> Bodyguard, Military Soldier, Fortune Teller, Waiter, Handyman, Food Vendor, Shopkeeper. That is the full set for Chameleon.</p>
+  </div>
+
+  <div class="notice warn">
+    <h4>Save-scumming is required here — and it is the main risk</h4>
+    <p>Each target can only die once per run, and this mission has eleven separate kill challenges. The plan below uses one save per run to farm several kills from one setup. That is unavoidable, but loading a save is also the most common reason a Hitman challenge silently fails to register. If something won't pop after two honest tries, restart the mission and go straight for it with no loads.</p>
+  </div>
+
+  <div id="runs"></div>
+</div>
+
+<div class="panel-tab" id="p-list" role="tabpanel" aria-labelledby="tab-list" hidden>
+  <h2 class="sect">All 35 challenges</h2>
+  <p class="lead">Names, categories and descriptions are taken verbatim from the mission's challenge data. Tick items here and the tracker and run cards update together.</p>
+  <div class="filters" id="filters"></div>
+  <div class="clist" id="clist"></div>
+  <div class="tools">
+    <button id="clearAll">Clear all ticks</button>
+    <button id="tickShown">Tick everything shown</button>
+  </div>
+</div>
+
+<div class="panel-tab" id="p-ver" role="tabpanel" aria-labelledby="tab-ver" hidden>
+  <h2 class="sect">Verification</h2>
+  <p class="lead">What changed after checking the guide against the mission's own challenge data, what two sources agreed on, and what still cannot be confirmed.</p>
+
+  <h3 class="sub2">Corrections made against the mission data</h3>
+  <table>
+    <tr><th>Was</th><th>Now</th></tr>
+    <tr><td><i>Master Assassin</i> listed as the Versatile set's capstone.</td><td><b>Versatile Assassin</b> — that is the name on this map. Requirement is unchanged: Piano Man, Someone Could Hurt Themselves, Hold My Hair, Straight Shot, Tasteless&nbsp;Traceless.</td></tr>
+    <tr><td><i>Mission Mastery</i> included as a Feat.</td><td><b>Removed.</b> It is not in the current challenge set for this mission. It existed in HITMAN 2 (where it was widely reported as bugged); it is gone now, and the four Mission Stories stand on their own.</td></tr>
+    <tr><td><i>Discover Marrakesh</i> missing entirely.</td><td><b>Added.</b> It is a Discovery challenge on this mission's list — but it cannot be completed here. See the pre-run note in Run 0.</td></tr>
+    <tr><td>Chameleon in a category of its own; 8 disguises.</td><td><b>A Feat, and 7 disguises.</b> Bodyguard, Military Soldier, Fortune Teller, Waiter, Handyman, Food Vendor, Shopkeeper.</td></tr>
+    <tr><td>Piano Man / Someone Could Hurt Themselves flagged as unverified.</td><td><b>Confirmed.</b> Piano Man is a fiber wire kill; Someone Could Hurt Themselves is an accident kill. Both now have a definite home in the route.</td></tr>
+    <tr><td>Sick bodyguard placed "north-west or north-east".</td><td><b>Upper-left (north-west) corner of the map</b>, two sources now agree. He is suffering from food poisoning with a colleague watching over him.</td></tr>
+    <tr><td>Discovery count 7.</td><td><b>8</b>, once Discover Marrakesh is included. Totals: 15 Assassination / 8 Discovery / 6 Feats / 2 Targets / 4 Classics = 35.</td></tr>
+  </table>
+
+  <h3 class="sub2">Run logic checks</h3>
+  <ul class="plain">
+    <li><b>Every challenge is assigned.</b> 35 of 35 appear in a run; Discover Marrakesh is assigned to Run 0 with an explanation of why it cannot be earned inside this mission.</li>
+    <li><b>Items before use.</b> Run 2 collects the wrench from the rooftop stash before the escort begins, not after. Run 4 collects the utility room key, screwdriver and both outfits before its save point. Run 6 collects the crowbar and truck key before the exit save.</li>
+    <li><b>Disguises before they are needed.</b> Bodyguard is taken before the rifle in Run 5, before the escort in Run 2. Waiter is taken before any VIP sabotage in Run 4.</li>
+    <li><b>NPCs preserved.</b> Run 4 never touches the handyman at the phone booth — he has to walk away on his own for Phony Call to work. Run 3 sends the fortune teller's customer away instead of killing her.</li>
+    <li><b>Targets stay alive until their challenges are done.</b> Waiting For the Man is never scheduled after a run that kills Mendola. The Future Foretold is isolated in Run 3 for the same reason.</li>
+    <li><b>Mutually exclusive kills separated.</b> License to Ill, Laughing Gas and Escort Service all resolve the same meeting, so Run 2 splits them across one save. Run 4 pairs one Mendola kill with one Kong kill per pass, so four kills take two passes instead of four.</li>
+    <li><b>Exits separated.</b> Only one exit can be used per run, so Truck Off, Break Out and Sneaking Away sit behind a single save at the end of Run 6.</li>
+    <li><b>Versatile spread.</b> Only two targets exist per run, so the five Versatile kills are split: poison and drowning in Run 1, fiber wire and headshot in Run 2, accident in Run 4.</li>
+    <li><b>No dead ends.</b> No step in any run removes an NPC, item or scripted event that a later step in the same run depends on.</li>
+  </ul>
+
+  <h3 class="sub2">Still unverified — insufficient evidence from available sources</h3>
+  <ul class="plain">
+    <li><b>XP values.</b> Only one is documented: Discover Marrakesh is +1000 XP. No other per-challenge value is claimed anywhere in this guide.</li>
+    <li><b>NPC names.</b> Only the two targets are named by the game. "Boyle", the bodyguard who wandered off carpet shopping, comes from one walkthrough's transcription of an overheard conversation. Every other NPC is described by role and position.</li>
+    <li><b>Whether drowning also counts as an accident.</b> It probably does, but no source confirms it for this mission, so Someone Could Hurt Themselves is assigned to the oil lamp explosion in Run 4, which is unambiguously an accident.</li>
+    <li><b>Electric Boogie's bug history.</b> One source states it was unobtainable at launch and fixed in the Season of Pride update on 6 May 2021. Single source.</li>
+    <li><b>Whether the meeting rooftop and the carpet shop rooftop are the same roof.</b> Guides describe the meeting as a rented rooftop patio next to the shisha café and place the carpet-shopping bodyguard on the carpet shop roof. Rooftop Rendezvous specifically names the carpet shop, so the guide sends you there deliberately rather than assuming the escort covers it.</li>
+    <li><b>Whether a wrench can be found on the map.</b> One guide marks a wrench near the café, but not precisely enough to direct you to it, so Run 2 smuggles one instead.</li>
+    <li><b>Re-equipping your suit for Chameleon.</b> One player reports the starting suit counting toward Chameleon. The seven listed disguises are the documented requirement; changing back at the end costs nothing.</li>
+  </ul>
+
+  <h3 class="sub2">Sources</h3>
+  <table>
+    <tr><th>Source</th><th>Used for</th></tr>
+    <tr><td>Mission challenge data (in-game export)</td><td>Challenge names, categories, counts, disguise list, verbatim unlock text.</td></tr>
+    <tr><td>Hitman Wiki</td><td>Discover Marrakesh scope and XP; Electric Boogie bug history; mission background.</td></tr>
+    <tr><td>NamuWiki (Hitman challenges, Marrakesh)</td><td>Suit-only route, rat poison location, oil lamp and reflection pool method, the one-way water control.</td></tr>
+    <tr><td>Gamepressure (AHBoS pages)</td><td>Disguise and item locations, Mendola's patrol, phone booth and snail stand setups.</td></tr>
+    <tr><td>Neoseeker walkthrough</td><td>Single start, single Agency Pickup, Versatile requirement list, crowbar location, the alley conversation.</td></tr>
+    <tr><td>Steam "WoA Redacted Challenges" guide</td><td>Verbatim methods for the two redacted challenges: Dropping the F-bomb and License to Ill; sick bodyguard position.</td></tr>
+    <tr><td>Steam threads / PSNProfiles</td><td>Truck key location, Chameleon disguise list, mission story count.</td></tr>
+  </table>
+</div>
+
+<footer>Rebuilt 28 July 2026 from the supplied mission challenge data. Ticks are saved for this browser only.</footer>
+</div>
+
+<script>
+/* ============ CHALLENGES (verbatim from mission data) ============ */
+const CH=[
+{id:'snail',n:'Snailed It!',c:'a',d:'Assassinate Matthieu Mendola by poisoning the snail samples.'},
+{id:'lic',n:'License To Ill',c:'a',d:'[REDACTED] — eliminate both targets by poisoning a shisha pipe.',r:1},
+{id:'cball',n:'Crystal Balls',c:'a',d:'Assassinate Matthieu Mendola with the crystal ball.'},
+{id:'gas',n:'Laughing Gas',c:'a',d:'Assassinate both Matthieu Mendola and Kong Tuo-Kwang with a gas lamp explosion.'},
+{id:'esc',n:'Escort Service',c:'a',d:'Assassinate Matthieu Mendola while disguised as a Bodyguard.'},
+{id:'fbomb',n:'Dropping the F-bomb',c:'a',d:'[REDACTED] — drop the neon Cafe sign on Matthieu Mendola.',r:1},
+{id:'boog',n:'Electric Boogie',c:'a',d:'Assassinate Kong Tuo-Kwang by electrocuting him in the reflection pool.'},
+{id:'pure',n:'Pure Chemistry',c:'a',d:'Assassinate Kong Tuo-Kwang with an oil lamp explosion.'},
+{id:'phony',n:'Phony Call',c:'a',d:'Assassinate Matthieu Mendola with a telephone.'},
+{id:'vers',n:'Versatile Assassin',c:'a',d:'Complete all the Versatile challenges in Marrakesh: Piano Man / Someone Could Hurt Themselves / Hold My Hair / Straight Shot / Tasteless, Traceless.'},
+{id:'shot',n:'Straight Shot',c:'a',d:'Assassinate a target with a headshot in Marrakesh.'},
+{id:'piano',n:'Piano Man',c:'a',d:'Assassinate a target with the fiber wire in Marrakesh.'},
+{id:'tast',n:'Tasteless, Traceless',c:'a',d:'Assassinate a target with lethal poison in Marrakesh.'},
+{id:'hurt',n:'Someone Could Hurt Themselves',c:'a',d:'Assassinate a target in an accident in Marrakesh.'},
+{id:'hair',n:'Hold My Hair',c:'a',d:'Assassinate a target by drowning them in Marrakesh.'},
+
+{id:'suitup',n:'Suit Up',c:'d',d:'Disguise yourself as a Bodyguard.'},
+{id:'roof',n:'Rooftop Rendezvous',c:'d',d:"Get to the carpet shop's rooftop."},
+{id:'party',n:'Party Crasher',c:'d',d:'Get the VIP invitation.'},
+{id:'seen',n:"Didn't See That Coming, Did You?",c:'d',d:'Disguise yourself as the Fortune Teller.'},
+{id:'disc',n:'Discover Marrakesh',c:'d',d:'Reveal all undiscovered areas in Marrakesh. (32) +1000 XP.'},
+{id:'sneak',n:'Sneaking Away',c:'d',d:'Escape through the door on the street.'},
+{id:'break',n:'Break Out',c:'d',d:'Escape through the door near the well.'},
+{id:'truck',n:'Truck Off',c:'d',d:'Escape in the truck.'},
+
+{id:'rent',n:'Mission Story — Rent Due',c:'f',d:'Enter the courtyard club as a VIP Guest.'},
+{id:'wait',n:'Mission Story — Waiting for the Man',c:'f',d:'Bring Matthieu Mendola to the meeting.'},
+{id:'fore',n:'Mission Story — The Future Foretold',c:'f',d:"Have someone read Matthieu Mendola's fortune."},
+{id:'shop',n:'Mission Story — Gone Shopping',c:'f',d:'Enter the Courtyard Club through the back door.'},
+{id:'real',n:'The Real Deal',c:'f',d:'Get the documents.'},
+{id:'cham',n:'Chameleon',c:'f',d:'Find and equip all disguises in Marrakesh.'},
+
+{id:'contr',n:'The Contractor',c:'t',d:'Assassinate Kong Tuo-Kwang.'},
+{id:'arch',n:'The Architect',c:'t',d:'Assassinate Matthieu Mendola.'},
+
+{id:'saso',n:'Silent Assassin, Suit Only',c:'c',d:'Complete the mission. Only eliminate the targets. No bodies found. Do not get spotted. Do it all in your suit.'},
+{id:'sa',n:'Silent Assassin',c:'c',d:'Complete the mission. Only eliminate the targets. No bodies found. Do not get spotted.'},
+{id:'snip',n:'Sniper Assassin',c:'c',d:'Complete the mission. Assassinate your targets with a sniper rifle. Only eliminate the targets. Do not get spotted.'},
+{id:'so',n:'Suit Only',c:'c',d:'Assassinate the targets and complete the mission. Do it all in your suit.'}
+];
+const CATS={a:{lab:'Assassination',dot:'dot-a',b:'b-a'},d:{lab:'Discovery',dot:'dot-d',b:'b-d'},
+ f:{lab:'Feats',dot:'dot-f',b:'b-f'},t:{lab:'Targets',dot:'dot-t',b:'b-t'},c:{lab:'The Classics',dot:'dot-c',b:'b-c'}};
+const NAME={}; CH.forEach(c=>NAME[c.id]=c);
+
+/* ============ RUNS ============ */
+const RUNS=[
+{
+ short:'Run 0', tag:'Run 0 · read only', title:'The one challenge you cannot do here',
+ goal:'Discover Marrakesh is on this mission’s challenge list but is impossible to complete inside it. Handle it in A Gilded Cage instead.',
+ load:null,
+ sections:[{h:'Before the six runs',steps:[
+  {t:'Earn Discover Marrakesh in A Gilded Cage',
+   s:'The challenge asks for all 32 Marrakesh areas. A House Built on Sand only opens part of the map, so the remaining areas have to be revealed in the daytime mission.',
+   where:'A Gilded Cage — the Swedish Consulate and the boarded-up school in particular. Neither is enterable in this mission.',
+   disguise:'Whatever gets you inside the consulate and school in that mission; the areas count regardless of what you are wearing.',
+   item:'None.',
+   npc:'None.',
+   act:'Walk every area of the daytime Marrakesh map until the counter reaches 32. Progress is shared, so it will tick off on this mission’s list too.',
+   warn:'Do not spend runs here hunting for it. Two sources agree it is listed on this mission by mistake and cannot be unlocked through normal play, because the consulate and school are inaccessible at night.',
+   badges:['disc']}
+ ]}]
+},
+{
+ short:'Run 1', tag:'Run 1 of 6', title:'Silent Assassin, Suit Only',
+ goal:'Poison Mendola at the snail stand and drown Kong in the VIP toilets, all in your suit. Banks three Classics, both Targets, two Versatile kills and both club-entry challenges.',
+ load:[
+  {k:'Start',v:'The only start',n:'No alternative exists and nothing is mastery-locked.'},
+  {k:'Suit',v:'Your starting suit',n:'Suit Only just checks you never changed out of it.'},
+  {k:'Concealed weapon',v:'Leave empty',n:'Nothing is fired this run.'},
+  {k:'Item 1',v:'Lethal Poison Vial',n:'The Mendola kill depends on it. Emetic will not do.'},
+  {k:'Item 2',v:'Coin',n:'For pulling a single NPC off a sightline.'},
+  {k:'Agency Pickup',v:'Skip it',n:'The rooftop stash is a detour this run does not need.'}
+ ],
+ sections:[
+ {h:'Set the trap for Mendola',steps:[
+  {t:'Watch Mendola’s loop for thirty seconds',
+   s:'He starts close to you and walks a fixed circuit. He refuses the snail sample on his first visit and eats it from the second visit onwards.',
+   where:'South side of the Shisha Café, then the snail meat stand standing on its own to the right of the café, then the spices stand, then back round the alleys.',
+   disguise:'None — stay in your suit all run.',
+   item:'None.',
+   npc:'Matthieu Mendola, one of the two targets.',
+   act:'Let him walk one lap while you set up. That first lap is your working window.',
+   warn:'Do not trail him closely. Following a target through a crowded souk is the usual way a suit-only run picks up its first Suspicious flag.'},
+
+  {t:'Cut the lights over the food stalls',
+   s:'A switch east of the snail stand kills the lighting across the eastern stall strip. Without it you cannot poison the dish unseen.',
+   where:'East of the snail stand, on the market side of the alley.',
+   disguise:'None.',
+   item:'None.',
+   npc:'Check the table in that alley first — if civilians are sitting there, wait for them to leave.',
+   act:'Flip the switch. The eastern stalls go dark.',
+   warn:'Do the lights before the generator, not after. The other way round means the vendor is already walking back while the area is still lit.'},
+
+  {t:'Sabotage the snail stand’s generator',
+   s:'The stand’s cooling fan runs off a generator across the courtyard. Break it and the vendor leaves his post to investigate.',
+   where:'Follow the wires from the stand’s cooling fan across the courtyard to the generator on the far side.',
+   disguise:'None.',
+   item:'None.',
+   npc:'The snail stand vendor — he must walk away, not be knocked out. A body would cost you Silent Assassin.',
+   act:'Sabotage the generator and move to the stand while he is gone.',
+   warn:'A thrown coin works as a shorter, tighter alternative if the generator is watched.'},
+
+  {t:'Poison the sample bowl with lethal poison',
+   s:'Dose the sample dish Mendola reaches for. He takes it on his next pass and dies on the spot.',
+   where:'The sample bowl on the front of the snail stand — not the stock behind the counter.',
+   disguise:'None.',
+   item:'Lethal Poison Vial from your loadout.',
+   npc:'Nobody should be in the alley when you do it.',
+   act:'Poison the bowl, then walk away and let him come to it. A poison death is not treated as suspicious, so the body being found does not break Silent Assassin.',
+   save:'Save the instant the poison is in the bowl. This is the one step with a real chance of a stray civilian clipping your animation and ending the suit-only attempt.',
+   badges:['snail','tast','arch']}
+ ]},
+ {h:'Into the VIP area for Kong',steps:[
+  {t:'Pick up rat poison by the generator',
+   s:'You need an emetic to move Kong to the toilets. There is rat poison right beside the area you have just been working in.',
+   where:'To the right of the front of the Shisha Café, at the generator. There is more in the café bathroom and up at the meeting point if you miss it.',
+   disguise:'None.',
+   item:'Emetic Rat Poison — pick it up here rather than spending a loadout slot.',
+   npc:'None.',
+   act:'Grab it on your way past. Picking items up is legal in a suit; using them on food is not, so choose your moment later.'},
+
+  {t:'Steal the VIP invitation over the low wall',
+   s:'An invitation sits on a table on the café’s southern terrace, behind the tables the waiters serve. The terrace looks sealed but the western wall is climbable.',
+   where:'Southern part of the Shisha Café. Approach from the west and vault the low wall.',
+   disguise:'None.',
+   item:'VIP invitation.',
+   npc:'The waiters serving that terrace — go while they are turned away.',
+   act:'Vault the wall, take the invitation, get back out.',
+   warn:'Two backups exist: pickpocket the tenement owner once he reaches the small backyard behind one of the shops, or take a spare from a side room inside the VIP area. Invitation holders are not frisked at the door, which is how weapons get inside on later runs.',
+   badges:['party']},
+
+  {t:'Walk in the front door as a guest',
+   s:'Present the invitation at the guarded VIP entrance. That is the Rent Due mission story finished, with no disguise needed.',
+   where:'The VIP entrance of the Courtyard Club, inside the Shisha Café.',
+   disguise:'None — this is why Rent Due belongs in the suit-only run.',
+   item:'VIP invitation.',
+   npc:'The bodyguards on the door. They only check for an invitation.',
+   act:'Walk in and stay in the guest areas. The staff room and the space behind the bar are still off limits in a suit.',
+   badges:['rent']},
+
+  {t:'Dose Kong’s shisha pipe with the rat poison',
+   s:'Kong circulates around the club and stops to smoke. Poison the pipe and he heads for the toilets holding his stomach.',
+   where:'The hookah in the room off the VIP courtyard next to the staff room, the one Kong uses.',
+   disguise:'None, but time it while nobody is watching — poisoning is illegal in a suit.',
+   item:'Emetic Rat Poison.',
+   npc:'Kong Tuo-Kwang. A waiter patrols this area on a short loop; wait him out.',
+   act:'Dose the pipe while Kong is elsewhere in the courtyard, then move to the toilets and wait.'},
+
+  {t:'Drown Kong at the toilet bowl',
+   s:'He walks himself to the bathroom. Drown him there while it is empty.',
+   where:'The VIP bathroom off the courtyard — the same room with the climbable pipe in the corner.',
+   disguise:'None.',
+   item:'None.',
+   npc:'Kong Tuo-Kwang, alone.',
+   act:'Drown him at the bowl. Drowning is an accident, so the body being discovered later does not break Silent Assassin — leave it where it is rather than risking a drag.',
+   warn:'If you would rather not wait, a second lethal poison vial in the pipe also keeps Silent Assassin — but you lose Hold My Hair, and Run 1 is the only sensible place to bank it.',
+   badges:['hair','contr']}
+ ]},
+ {h:'Documents and out',steps:[
+  {t:'Take the documents off Mendola and leave',
+   s:'The Hamilton-Lowe documents are on his body at the snail stand. Collect them and take the nearest exit.',
+   where:'The snail stand, where Mendola died. If a crowd is still gathered, wait — soldiers clear it.',
+   disguise:'None.',
+   item:'Hamilton-Lowe company documents.',
+   npc:'Mendola’s body.',
+   act:'Loot, then walk out. Leave the truck, the well door and the school door for Run 6 — each needs a key or crowbar you should not be carrying on a clean run.',
+   badges:['real','sa','so','saso']}
+ ]}]
+},
+{
+ short:'Run 2', tag:'Run 2 of 6', title:'Bodyguard and the rooftop meeting',
+ goal:'Take the carpet shop bodyguard for his disguise and the café key, run Gone Shopping and Waiting For the Man, then farm three different resolutions of the meeting off one save.',
+ load:[
+  {k:'Start',v:'The only start',n:''},
+  {k:'Suit',v:'Any',n:'Not a suit-only run.'},
+  {k:'Concealed weapon',v:'Suppressed pistol',n:'For the Kong headshot on the third pass.'},
+  {k:'Item 1',v:'Lockpick',n:'Opens the carpet shop door without waiting on the shopkeeper.'},
+  {k:'Item 2',v:'Lethal Poison Vial',n:'Goes into the shisha pipe at the meeting.'},
+  {k:'Agency Pickup',v:'Wrench',n:'For the gas lamp. Collected from the rooftop stash before the escort starts.'}
+ ],
+ sections:[
+ {h:'Flag the story, then gear up',steps:[
+  {t:'Overhear the two bodyguards in the alley',
+   s:'They complain that one of their own has wandered off carpet shopping — and that he is carrying the café staff-door key. Listening flags the Gone Shopping story so the game marks the objective.',
+   where:'The alley running between the flank of the shisha café and the Electronics Market.',
+   disguise:'None yet.',
+   item:'None.',
+   npc:'Two bodyguards. One walkthrough transcribes the missing guard’s name as "Boyle"; treat that as colour, not a landmark.',
+   act:'Stand close enough to hear the conversation out, then move on.',
+   warn:'The challenge itself only needs the back-door entry, but running the story from its first beat is the safer habit on this map.'},
+
+  {t:'Climb the pipe to the rooftop stash and take the wrench',
+   s:'Do this now, before the escort. Once Mendola is following you there is no time to detour.',
+   where:'The pipe at the back of the building by the side gates, then along the ledges to the first roof level. It is the only Agency Pickup in the mission.',
+   disguise:'None needed for the climb.',
+   item:'Wrench, from your Agency Pickup.',
+   npc:'None.',
+   act:'Collect the wrench and come back down toward the carpet shop.',
+   warn:'One guide marks a wrench somewhere near the café, but not precisely enough to rely on. Smuggling one removes the guesswork.'}
+ ]},
+ {h:'The disguise and the back door',steps:[
+  {t:'Take the carpet-shopping bodyguard on the shop roof',
+   s:'One stop gives you the bodyguard disguise, the café key and a Discovery challenge. He is alone up there.',
+   where:'The carpet shop in the western part of the map. Open the door with your lockpick, or slip past the shopkeeper when he turns — one of the shopkeepers also carries the shop key. Then climb to the roof.',
+   disguise:'Take his Bodyguard outfit. It is the only disguise that clears the whole map, VIP area and meeting rooftop included.',
+   item:'Shisha Café key, taken from him.',
+   npc:'The missing bodyguard, alone on the roof.',
+   act:'Subdue him, hide the body, take the key and the outfit.',
+   save:'Save here. Disguise plus key plus wrench is the state you will reload to twice.',
+   badges:['suitup','roof']},
+
+  {t:'Enter the club through the staff back door',
+   s:'Use the key on the staff entrance instead of the guarded VIP door. That completes Gone Shopping.',
+   where:'The café’s back door, off the small alley behind the staff room.',
+   disguise:'Bodyguard.',
+   item:'Shisha Café key. A second key sits behind the bar counter inside if you skipped the roof.',
+   npc:'None required.',
+   act:'Unlock the back door and step inside. Note the spare waiter outfit in the staff room locker and the screwdriver beside it — both are wanted in Runs 4 and 6.',
+   badges:['shop']}
+ ]},
+ {h:'Escort, then three ways to finish',steps:[
+  {t:'Walk Mendola to the meeting',
+   s:'In the bodyguard suit, approach Mendola on his patrol. He stops hunting for a phone and follows you to the rooftop rendezvous, where Kong comes to him.',
+   where:'Intercept him anywhere on his loop — the café’s south terrace, the snail stand, the spices stand or the alleys between. The meeting is on the rooftop patio by the shops next to the shisha café.',
+   disguise:'Bodyguard — required. He ignores you in anything else.',
+   item:'None.',
+   npc:'Matthieu Mendola, then Kong Tuo-Kwang once they are both up there.',
+   act:'Talk to him, lead him up, let the negotiation begin.',
+   warn:'This is the only way the two targets ever end up in the same place. Never schedule this after any run step that kills Mendola — that is why The Future Foretold lives in Run 3.',
+   badges:['wait']},
+
+  {t:'Save while they negotiate',
+   s:'The negotiation runs, then they sit down for a smoke break. That smoke break is the trigger for both double kills.',
+   where:'On the meeting rooftop, standing where a bodyguard is meant to stand.',
+   disguise:'Bodyguard.',
+   item:'None.',
+   npc:'Both targets, seated.',
+   act:'Save now. Everything below branches from this point.',
+   save:'One save, three passes. Do not try to combine passes — see the warning on the next step.'},
+
+  {t:'Pass A — poison the shisha pipe',
+   s:'Put lethal poison in the pipe during the negotiation. Both targets smoke it and die.',
+   where:'The shisha pipe at the meeting seating on the rooftop.',
+   disguise:'Bodyguard.',
+   item:'Lethal Poison Vial.',
+   npc:'Distract or wait out the guard standing near the seating before you dose it.',
+   act:'Poison the pipe, step back, let the smoke break happen. Both targets collapse. A poison death is non-suspicious, so this pass can still be Silent Assassin.',
+   warn:'Do not rig the pipe and the gas lamp in the same pass. If both traps are live it becomes ambiguous which one killed them and one of the two challenges will not register.',
+   badges:['lic','contr','arch','real']},
+
+  {t:'Pass B — reload and rig the gas lamp',
+   s:'Same setup, different trap. Use the wrench on the gas lamp beside the seating instead of touching the pipe.',
+   where:'The gas lamp next to the meeting seating.',
+   disguise:'Bodyguard.',
+   item:'Wrench.',
+   npc:'Both targets, during the smoke break.',
+   act:'Reload the save, open the lamp’s gas with the wrench, and clear the blast radius. The lamp ignites during the smoke break and takes both.',
+   badges:['gas','contr','arch']},
+
+  {t:'Pass C — reload and do it by hand',
+   s:'Escort him up again, then kill Mendola personally while still dressed as a bodyguard, and take Kong with a single headshot.',
+   where:'The meeting rooftop for Mendola; wherever Kong is for the second shot.',
+   disguise:'Bodyguard — Escort Service checks what you are wearing at the moment Mendola dies.',
+   item:'Fiber wire (always carried) for Mendola; suppressed pistol for Kong.',
+   npc:'Mendola alone on the roof; then Kong.',
+   act:'Fiber wire Mendola, then put one suppressed round in Kong’s head. Take the documents off Mendola and exit.',
+   warn:'Do not stand in front of Mendola with a weapon drawn for long — he gets suspicious even in the bodyguard disguise.',
+   badges:['esc','piano','shot']}
+ ]}]
+},
+{
+ short:'Run 3', tag:'Run 3 of 6', title:'The fortune teller’s tent',
+ goal:'Take the fortune teller’s place, clear his tent, and kill Mendola with the crystal ball. Short run, isolated because it ends Mendola’s patrol.',
+ load:[
+  {k:'Start',v:'The only start',n:''},
+  {k:'Suit',v:'Any',n:'You change clothes within the first minute.'},
+  {k:'Concealed weapon',v:'Suppressed pistol',n:'To finish Kong afterwards so the mission can end.'},
+  {k:'Item 1',v:'Coin',n:'For clearing the alley before the take-down.'},
+  {k:'Item 2',v:'Leave empty',n:''},
+  {k:'Agency Pickup',v:'Skip it',n:'Nothing here needs the roof.'}
+ ],
+ sections:[
+ {h:'Become the fortune teller',steps:[
+  {t:'Lure him out with the fuse box',
+   s:'Walking into his tent makes him suspicious. Sabotage the fuse box in the alley next door and he comes out to look at it.',
+   where:'His building is in the northern part of the map; the fuse box is in the alley immediately beside it.',
+   disguise:'None yet.',
+   item:'None.',
+   npc:'The fortune teller. A civilian also wanders this alley — clear him with a coin or wait.',
+   act:'Sabotage the box, wait for him to arrive, subdue him, stash the body in the container right there, then change.',
+   warn:'Check the alley is genuinely empty first. Being seen here is the usual way this run dies in its first two minutes.',
+   save:'Save once you are wearing the outfit and his body is in the container.',
+   badges:['seen']},
+
+  {t:'Send the customer away without killing her',
+   s:'A client is mid-reading when you sit down. Wait for the prompt and 47 answers her question; she leaves satisfied.',
+   where:'The reading table inside the tent.',
+   disguise:'Fortune Teller.',
+   item:'None.',
+   npc:'The fortune teller’s client — she asks whether to invest with Claus Hugo Strandberg, which dates this mission before A Gilded Cage.',
+   act:'Sit, wait for the dialogue prompt, answer it. No body, no risk.',
+   warn:'Killing her instead is visible from outside the tent unless you have already cranked the smoke.'},
+
+  {t:'Crank the smoke machine before he arrives',
+   s:'The tent has open sightlines and the crystal ball kill is a long, loud animation. The smoke is what makes it survivable.',
+   where:'The machine at the side of the reading table.',
+   disguise:'Fortune Teller.',
+   item:'None.',
+   npc:'None.',
+   act:'Interact with the machine and turn the smoke up. Do this before Mendola sits down, not while he is there.'},
+
+  {t:'Sit, wait, and use the crystal ball',
+   s:'Mendola comes in for a reading on his patrol. A few lines into the conversation the kill prompt appears.',
+   where:'The reading chair.',
+   disguise:'Fortune Teller.',
+   item:'The crystal ball on the table.',
+   npc:'Matthieu Mendola, seated opposite you.',
+   act:'Take the prompt. Afterwards, loot the documents off him and put the body in the container.',
+   warn:'If you are spotted anyway: run out to the right into the fuse box area, climb into the crate, wait out the search, change back to your suit and walk off.',
+   badges:['cball','fore','arch','real']}
+ ]},
+ {h:'Close the mission',steps:[
+  {t:'Finish Kong and leave',
+   s:'Kong is still unbothered in the VIP area. Any quiet kill ends the mission.',
+   where:'The Courtyard Club VIP area.',
+   disguise:'Fortune Teller has no access there — change or use the invitation route from Run 1.',
+   item:'Suppressed pistol, or emetic and a drowning if you want the practice.',
+   npc:'Kong Tuo-Kwang.',
+   act:'Kill him, then take any exit. Leave the three challenge exits for Run 6.',
+   badges:['contr']}
+ ]}]
+},
+{
+ short:'Run 4', tag:'Run 4 of 6', title:'Four accidents in two passes',
+ goal:'The four set-piece kills. Collect both outfits and the screwdriver, save once, then take one Mendola kill and one Kong kill per pass.',
+ load:[
+  {k:'Start',v:'The only start',n:''},
+  {k:'Suit',v:'Any',n:''},
+  {k:'Concealed weapon',v:'Suppressed pistol',n:'For the neon sign and, optionally, the pool light.'},
+  {k:'Item 1',v:'Lockpick',n:'Opens the café back door if you skip the key hunt.'},
+  {k:'Item 2',v:'Coin',n:''},
+  {k:'Agency Pickup',v:'Suppressed sniper rifle',n:'Optional. Dropping the sign from a rooftop avoids the street panic.'}
+ ],
+ sections:[
+ {h:'Gear up first — nothing here can be improvised later',steps:[
+  {t:'Take the utility room key beside the phone booth handyman',
+   s:'The key is lying next to him. He has to stay conscious — Phony Call depends on him walking away on his own later.',
+   where:'The alley next to the café, where a handyman is repairing the pay phone.',
+   disguise:'None yet.',
+   item:'Utility room key.',
+   npc:'The handyman at the phone booth. Do not attack him — it alerts the whole area and breaks the setup.',
+   act:'Pick the key up and leave him working.',
+   warn:'This is the single most important "do not touch" NPC in the mission.'},
+
+  {t:'Open the utility room for the handyman outfit and screwdriver',
+   s:'A small hidden door in the nearby alleys. Inside is an unattended handyman disguise and the screwdriver you need for the booth.',
+   where:'A well-hidden door in the alleys in the central part of the map.',
+   disguise:'You will be putting on the Handyman outfit here.',
+   item:'Utility room key (or a lockpick as backup); take the screwdriver too.',
+   npc:'None.',
+   act:'Unlock, take both, close the door behind you.'},
+
+  {t:'Take the spare waiter outfit from the café staff room',
+   s:'Both Kong kills need actions that are illegal in anything but a waiter’s uniform. There is an unused one in a locker.',
+   where:'The Shisha Café staff room, behind the back door.',
+   disguise:'You will be putting on the Waiter outfit.',
+   item:'The café key from the carpet shop bodyguard, or your lockpick on the back door.',
+   npc:'A second waiter patrols the VIP area on a short loop and can see through the disguise — keep track of him.',
+   act:'Take the outfit from the locker. No body needed.',
+   save:'Save now, with both outfits and the screwdriver in hand. Two passes branch from here.'}
+ ]},
+ {h:'Pass A — the sign and the oil lamp',steps:[
+  {t:'Drop the neon Cafe sign on Mendola',
+   s:'Mendola passes under the café’s neon sign on his loop and pauses there. Shoot the flickering letter loose while he is underneath.',
+   where:'Under the large neon Cafe sign at the southern part of the Shisha Café.',
+   disguise:'None required — but do not do it in a crowd if you care about the rest of the pass.',
+   item:'Suppressed pistol from the street, or the smuggled rifle from a nearby rooftop.',
+   npc:'Matthieu Mendola. Watch for civilians under the sign — they get crushed too.',
+   act:'Shoot the letter at the moment he stops beneath it. It looks far away but a pistol reaches it fine.',
+   warn:'One guide says he passes under it a few minutes after mission start; others describe him stopping there repeatedly on his loop. If you miss the first window, wait for his next lap rather than restarting.',
+   badges:['fbomb','arch']},
+
+  {t:'Gas Kong’s private room',
+   s:'Turn the oil lamp off, open the wall valve, and leave. Kong walks in, relights the lamp, and the room goes up.',
+   where:'Kong’s private room, immediately to the right of the Courtyard Club toilets.',
+   disguise:'Waiter — both actions are illegal in a suit and this room gets traffic.',
+   item:'None.',
+   npc:'Kong Tuo-Kwang, who returns to the room on his own.',
+   act:'Lamp off first, then the valve. Reversing the order fills the room while the flame is still live. Then get well clear of the blast.',
+   warn:'This is an unambiguous accident kill, which is why Someone Could Hurt Themselves is assigned here rather than to the drowning in Run 1.',
+   badges:['pure','hurt','contr']}
+ ]},
+ {h:'Pass B — reload, then the phone and the pool',steps:[
+  {t:'Send the handyman away and sabotage the phone booth',
+   s:'Mendola keeps hunting for a working phone. Every booth is broken except the one being repaired, and the handyman shoos him off. Pull the handyman elsewhere, then rig the booth.',
+   where:'Flip the signage switch in the alley where A Gilded Cage begins, at the market entrance. The booth itself is in the alley next to the café.',
+   disguise:'Handyman — flipping that switch is a legal action in this outfit.',
+   item:'Screwdriver, for the booth.',
+   npc:'The handyman leaves the booth to go and fix the sign. He may pass you on the way back — turn your back or take a different alley.',
+   act:'Flip the switch while Mendola is over at the food stands, walk back, sabotage the booth, then clear out. Mendola picks up the receiver and is electrocuted.',
+   warn:'If you are slow, the handyman returns first and dies on it instead. Not a mission failure, but the challenge will not count and you will be waiting for the body to be cleared.',
+   badges:['phony','arch']},
+
+  {t:'Flood the reflection pool and drop the star light',
+   s:'Raise the water level until the pool spills onto the grass. When Kong walks through it, release the star-shaped light into the water.',
+   where:'The water-level machine on the VIP bar counter. The pool is to the right of the entrance; Kong comes out of the room on that side.',
+   disguise:'Waiter — it makes using the machine legal.',
+   item:'A gun to shoot the fixture down, or nothing if you use the winch.',
+   npc:'Kong Tuo-Kwang, standing in the flooded grass at the pool edge.',
+   act:'Raise the water, wait for him to tread through it, then drop the light. The winch — reached by climbing the pipe in the VIP bathroom — is quieter than shooting it.',
+   warn:'The water-level control cannot be switched back off. Once you raise the pool, Silent Assassin is gone for that run, so never attempt this on a run you care about scoring.',
+   unv:'One source reports this challenge was unobtainable at launch and fixed in the Season of Pride update on 6 May 2021. If it refuses to pop, retry on a fresh run with no saves loaded.',
+   badges:['boog','contr','vers']}
+ ]}]
+},
+{
+ short:'Run 5', tag:'Run 5 of 6', title:'Sniper Assassin',
+ goal:'Smuggle a suppressed rifle to the rooftop stash and take both targets from elevation without being seen.',
+ load:[
+  {k:'Start',v:'The only start',n:''},
+  {k:'Suit',v:'Any',n:'Suit Only is not part of this run.'},
+  {k:'Concealed weapon',v:'Leave empty',n:''},
+  {k:'Item 1',v:'Coin',n:'For separating the two bodyguards in the north-west alley.'},
+  {k:'Item 2',v:'Lethal Poison Vial',n:'Fallback if a shot goes wrong.'},
+  {k:'Agency Pickup',v:'Suppressed sniper rifle',n:'Mandatory. No rifle spawns anywhere on this map.'}
+ ],
+ sections:[
+ {h:'Disguise first, weapon second',steps:[
+  {t:'Take the sick bodyguard in the north-west corner',
+   s:'Carrying a rifle in a suit gets you stopped. The bodyguard outfit lets you carry weapons openly and clears the whole map.',
+   where:'The upper-left corner of the map. A bodyguard there is suffering from food poisoning, with a colleague watching over him.',
+   disguise:'Take his Bodyguard outfit.',
+   item:'Coin, to turn the colleague away first — he sees through the disguise otherwise.',
+   npc:'The sick bodyguard and his colleague.',
+   act:'Coin the colleague aside, subdue the sick one, hide the body, change.',
+   warn:'If the alley is busy, the carpet shop roof bodyguard from Run 2 is the isolated alternative.',
+   badges:['suitup']},
+
+  {t:'Climb to the rooftop stash and collect the rifle',
+   s:'The one Agency Pickup in the mission sits on the first roof level.',
+   where:'Up the pipe at the back of the building by the side gates, then along the ledges.',
+   disguise:'Bodyguard.',
+   item:'Your suppressed sniper rifle.',
+   npc:'None.',
+   act:'Pick it up. There is also a crowbar in the rug market on this side of the map — worth taking now if you want to trim Run 6.'}
+ ]},
+ {h:'Two shots',steps:[
+  {t:'Shoot Kong from the rooftop overlooking the VIP area',
+   s:'Take him as he moves toward the shisha room, away from the clustered guests.',
+   where:'The rooftop vantage point that looks down into the café’s VIP area.',
+   disguise:'Bodyguard.',
+   item:'Suppressed sniper rifle.',
+   npc:'Kong Tuo-Kwang — wait until he is clear of other guests.',
+   act:'One suppressed shot. Sniper Assassin only forbids killing non-targets and being spotted; unlike Silent Assassin it does not require that bodies go undiscovered.',
+   badges:['contr']},
+
+  {t:'Shoot Mendola, then leave the rifle behind',
+   s:'Either take him from the second rooftop position on his patrol, or escort him up first and take both from one nest.',
+   where:'The second sniping roof, reachable from the carpet shop or by climbing from the stash roof.',
+   disguise:'Bodyguard.',
+   item:'Suppressed sniper rifle; documents from his body afterwards.',
+   npc:'Matthieu Mendola.',
+   act:'Take the shot, collect the documents, then drop the rifle before you head for the exit.',
+   warn:'Walking to an exit with a rifle in hand is the classic way to lose an otherwise finished run.',
+   badges:['arch','snip','real']}
+ ]}]
+},
+{
+ short:'Run 6', tag:'Run 6 of 6', title:'Chameleon and the three exits',
+ goal:'One wardrobe lap for all seven disguises, then a single save at the end to take all three challenge exits in turn.',
+ load:[
+  {k:'Start',v:'The only start',n:''},
+  {k:'Suit',v:'Your starting suit',n:'Change back into it at the end — one player reports it counting toward Chameleon, and it costs nothing.'},
+  {k:'Concealed weapon',v:'Suppressed pistol',n:'To close out both targets quickly.'},
+  {k:'Item 1',v:'Crowbar',n:'Two of the three exits need one. There is also one in the rug market.'},
+  {k:'Item 2',v:'Lockpick',n:'Carpet shop and utility room without hunting for keys.'},
+  {k:'Agency Pickup',v:'Skip it',n:'Nothing on this route needs the roof.'}
+ ],
+ sections:[
+ {h:'Seven disguises, one lap',steps:[
+  {t:'Shopkeeper — the spare in the trailer',
+   s:'An unused shopkeeper outfit sits inside the trailer near your start. No take-down needed.',
+   where:'The trailer close to the starting area.',
+   disguise:'Shopkeeper. It grants almost nothing here — take it purely for Chameleon.',
+   item:'None.',
+   npc:'None.',
+   act:'Open the container and change.'},
+
+  {t:'Military Soldier — the patrol toward the school',
+   s:'Soldiers walk the narrow street between the starting area and the boarded-up school. One of them is takeable.',
+   where:'The narrow street running from the start toward the school.',
+   disguise:'Military Soldier. Useless as access on this map; taken only for Chameleon.',
+   item:'None.',
+   npc:'A patrolling soldier — catch him at the far end of his loop where his partner cannot see.',
+   act:'Subdue, hide the body, change.'},
+
+  {t:'Food Vendor — the one who walks to the horizontal pipe',
+   s:'Most vendors stand in the open. The exception steps away to the horizontal pipe in the west, and that is where you take him.',
+   where:'The horizontal pipe in the western part of the map.',
+   disguise:'Food Vendor. It also lets you poison street food without suspicion, which is handy elsewhere.',
+   item:'None.',
+   npc:'The vendor who occasionally walks over to the pipe. Wait for him — do not take one from a stall.',
+   act:'Take him quietly at the pipe and stash the body.',
+   warn:'This is the fiddliest of the seven. If Chameleon is your last challenge, do this one first while the map is calm.'},
+
+  {t:'Bodyguard — the carpet shop roof',
+   s:'Same target as Run 2: alone on the roof, and he also carries the café key you want two steps from now.',
+   where:'Carpet shop, western part of the map. Lockpick the door or slip past the shopkeeper, then climb.',
+   disguise:'Bodyguard.',
+   item:'Shisha Café key from his body.',
+   npc:'The carpet-shopping bodyguard.',
+   act:'Subdue, hide, take the key and the outfit.'},
+
+  {t:'Handyman — the utility room',
+   s:'Key first, then the hidden door. The outfit inside is unattended.',
+   where:'Key is beside the handyman repairing the pay phone in the alley next to the café; the room is in the central alleys.',
+   disguise:'Handyman.',
+   item:'Utility room key, or your lockpick.',
+   npc:'The phone booth handyman — leave him alone, as always.',
+   act:'Take the key, open the room, change.'},
+
+  {t:'Waiter — the café staff room locker',
+   s:'You already have the café key from the carpet shop roof, so the back door is open to you.',
+   where:'The Shisha Café staff room, through the back door.',
+   disguise:'Waiter.',
+   item:'Shisha Café key, or crowbar / lockpick on the back door.',
+   npc:'The patrolling waiter in the VIP area sees through it — stay out of his loop.',
+   act:'Take the spare from the locker.'},
+
+  {t:'Fortune Teller — the fuse box lure',
+   s:'Last of the seven. Same method as Run 3: sabotage the fuse box, take him in the alley, stash him in the container.',
+   where:'His building in the north; fuse box in the alley beside it.',
+   disguise:'Fortune Teller.',
+   item:'None.',
+   npc:'The fortune teller. Clear the wandering civilian first.',
+   act:'Sabotage, wait, subdue, stash, change — then change back into your starting suit.',
+   badges:['cham']}
+ ]},
+ {h:'Finish the contract, then bank all three exits',steps:[
+  {t:'Kill both targets and take the documents',
+   s:'Exits only open once the objectives are done. Method does not matter here — use whatever you are most comfortable with.',
+   where:'Anywhere. The VIP area for Kong, his patrol for Mendola.',
+   disguise:'Whatever you finished the wardrobe lap in.',
+   item:'Suppressed pistol is fastest.',
+   npc:'Both targets.',
+   act:'Kill both, loot the documents off Mendola.',
+   badges:['contr','arch','real']},
+
+  {t:'Collect the crowbar and the truck key, then save',
+   s:'Both exit items live on opposite sides of the map. Get both in hand before saving, or you will reload with the wrong one.',
+   where:'Crowbar: the rug market — through the small tunnel on the right facing into the bazaar, then right through the stalls. Truck key: the outdoor table by the wall, to the right of the Courtyard Club toilets.',
+   disguise:'None specifically required.',
+   item:'Crowbar and truck key, both carried at once.',
+   npc:'None.',
+   act:'Pick both up, then position yourself somewhere central.',
+   save:'This is the important save of the whole guide. One exit per run, three exit challenges — this save is how you get all three.'},
+
+  {t:'Take each exit, reload, repeat',
+   s:'Truck, then the well door, then the street door by the school.',
+   where:'Truck Off: the truck. Break Out: the door beside the well, near the guard who has been throwing up. Sneaking Away: the door on the street near the abandoned school.',
+   disguise:'None required.',
+   item:'Truck key for the first; crowbar for the other two.',
+   npc:'None.',
+   act:'Exit, reload the save, exit again, reload, exit a third time. Let the last one finish properly rather than quitting out.',
+   badges:['truck','break','sneak']}
+ ]}]
+}
+];
+
+/* ============ state ============ */
+let done={}, stepDone={}, filter='all';
+function reportProgress(){try{const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r['b04']={done:CH.filter(c=>done[c.id]).length,total:CH.length,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
+async function load(){try{const a=localStorage.getItem('ahbos2');if(a){const o=JSON.parse(a);done=o.d||{};stepDone=o.s||{};}}catch(e){}}
+async function persist(){try{localStorage.setItem('ahbos2',JSON.stringify({d:done,s:stepDone}));}catch(e){}reportProgress();}
+
+/* ============ render ============ */
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+
+function renderTracker(){
+  const n=CH.filter(c=>done[c.id]).length,p=Math.round(n/CH.length*100);
+  doneCount.textContent=n; pct.textContent=p; barFill.style.width=p+'%';
+  chips.innerHTML=['a','d','f','t','c'].map(k=>{
+    const s=CH.filter(c=>c.c===k),d=s.filter(c=>done[c.id]).length;
+    return `<span class="chip"><i class="${CATS[k].dot}"></i>${CATS[k].lab} <b>${d}/${s.length}</b></span>`;
+  }).join('');
+  document.querySelectorAll('.run-prog').forEach(el=>{
+    const ids=JSON.parse(el.dataset.ids);
+    const d=ids.filter(i=>done[i]).length;
+    el.textContent=ids.length?`${d}/${ids.length} challenges in this run complete`:'';
+  });
+}
+
+function runIds(r){
+  const s=new Set();
+  r.sections.forEach(sec=>sec.steps.forEach(st=>(st.badges||[]).forEach(b=>s.add(b))));
+  return [...s];
+}
+
+function fieldRow(k,v){return v?`<span class="fk">${k}</span><span class="fv">${v}</span>`:'';}
+
+function renderRuns(){
+  runs.innerHTML=RUNS.map((r,ri)=>{
+    const ids=runIds(r);
+    const load=r.load?`<div class="loadout">${r.load.map(s=>
+      `<div class="slot"><div class="k">${esc(s.k)}</div><div class="v">${esc(s.v)}</div>${s.n?`<div class="n">${esc(s.n)}</div>`:''}</div>`).join('')}</div>`:'';
+    let num=0;
+    const secs=r.sections.map((sec,si)=>{
+      const steps=sec.steps.map((st,ti)=>{
+        num++;
+        const key=`r${ri}s${si}t${ti}`;
+        const badges=(st.badges||[]).length?`<div class="badges">${st.badges.map(id=>
+          `<span class="badge ${CATS[NAME[id].c].b}">${esc(NAME[id].n)}</span>`).join('')}</div>`:'';
+        const flags=(st.warn?`<span class="flag f-warn"><b>Warning</b>${esc(st.warn)}</span>`:'')
+                   +(st.save?`<span class="flag f-save"><b>Save here</b>${esc(st.save)}</span>`:'')
+                   +(st.unv?`<span class="flag f-unv"><b>Unverified</b>${esc(st.unv)}</span>`:'');
+        return `<div class="step${stepDone[key]?' done':''}">
+          <div class="step-top">
+            <button class="tick" data-step="${key}" aria-label="Mark step done">${stepDone[key]?'✓':''}</button>
+            <div class="step-body">
+              <div class="stepnum">STEP ${num}</div>
+              <h4>${esc(st.t)}</h4>
+              <div class="sum">${esc(st.s)}</div>${badges}
+              <button class="more" data-more="${key}" aria-expanded="false">Show detail</button>
+            </div>
+          </div>
+          <div class="detail" id="d-${key}" hidden><div class="fields">
+            ${fieldRow('Where',esc(st.where))}
+            ${fieldRow('Disguise',esc(st.disguise))}
+            ${fieldRow('Item',esc(st.item))}
+            ${fieldRow('NPC',esc(st.npc))}
+            ${fieldRow('Do',esc(st.act))}
+          </div>${flags}</div>
+        </div>`;
+      }).join('');
+      return `<div class="sec"><h3>${esc(sec.h)}</h3>${steps}</div>`;
+    }).join('');
+    return `<article class="run" id="run${ri}">
+      <button class="run-toggle" data-run="${ri}" aria-expanded="false">
+        <span class="caret">▶</span>
+        <span style="flex:1">
+          <span class="run-tag">${esc(r.tag)}</span>
+          <h2>${esc(r.title)}</h2>
+          <p>${esc(r.goal)}</p>
+          <div class="run-prog" data-ids='${JSON.stringify(ids)}'></div>
+        </span>
+      </button>
+      <div class="run-body" hidden>${load}${secs}<div class="run-foot"></div></div>
+    </article>`;
+  }).join('');
+  runjump.innerHTML=RUNS.map((r,i)=>`<button data-jump="${i}">${esc(r.short)}</button>`).join('')
+    +`<button class="allbtn" data-all="open">Expand all</button><button class="allbtn" data-all="close">Collapse all</button>`;
+}
+
+function renderFilters(){
+  filters.innerHTML=[['all','All'],['a','Assassination'],['d','Discovery'],['f','Feats'],['t','Targets'],['c','Classics'],['inc','Incomplete']]
+    .map(o=>`<button data-f="${o[0]}" aria-pressed="${filter===o[0]}">${o[1]}</button>`).join('');
+}
+function renderList(){
+  const shown=CH.filter(c=>filter==='all'?true:filter==='inc'?!done[c.id]:c.c===filter);
+  clist.innerHTML=shown.length?shown.map(c=>
+    `<label class="citem${done[c.id]?' done':''}">
+      <input type="checkbox" data-ch="${c.id}"${done[c.id]?' checked':''} style="margin-top:6px">
+      <span><span class="nm">${esc(c.n)}</span><span class="cd">${esc(c.d)}</span>
+      <span class="meta">${CATS[c.c].lab.toUpperCase()}${c.r?' · REDACTED IN GAME':''}</span></span>
+    </label>`).join('')
+    :`<div class="citem"><span><span class="nm">Nothing left here</span><span class="cd">Everything in this filter is ticked.</span></span></div>`;
+}
+
+function setRun(i,open){
+  const a=document.getElementById('run'+i);
+  a.classList.toggle('open',open);
+  a.querySelector('.run-body').hidden=!open;
+  a.querySelector('.run-toggle').setAttribute('aria-expanded',String(open));
+  const jb=runjump.querySelector(`[data-jump="${i}"]`); if(jb) jb.classList.toggle('exp',open);
+}
+
+document.addEventListener('click',e=>{
+  const tab=e.target.closest('nav.tabs button');
+  if(tab){document.querySelectorAll('nav.tabs button').forEach(b=>b.setAttribute('aria-selected',b===tab));
+    document.querySelectorAll('.panel-tab').forEach(p=>p.hidden=(p.id!==tab.getAttribute('aria-controls')));return;}
+
+  const jump=e.target.closest('[data-jump]');
+  if(jump){const i=+jump.dataset.jump;setRun(i,true);
+    document.getElementById('run'+i).scrollIntoView({behavior:'smooth',block:'start'});return;}
+
+  const all=e.target.closest('[data-all]');
+  if(all){const o=all.dataset.all==='open';RUNS.forEach((_,i)=>setRun(i,o));return;}
+
+  const rt=e.target.closest('[data-run]');
+  if(rt){const i=+rt.dataset.run;setRun(i,rt.getAttribute('aria-expanded')!=='true');return;}
+
+  const more=e.target.closest('[data-more]');
+  if(more){const d=document.getElementById('d-'+more.dataset.more),open=d.hidden;
+    d.hidden=!open;more.setAttribute('aria-expanded',String(open));
+    more.textContent=open?'Hide detail':'Show detail';return;}
+
+  const tick=e.target.closest('[data-step]');
+  if(tick){const k=tick.dataset.step;stepDone[k]=!stepDone[k];
+    tick.textContent=stepDone[k]?'✓':'';
+    tick.closest('.step').classList.toggle('done',!!stepDone[k]);persist();return;}
+
+  const f=e.target.closest('[data-f]');
+  if(f){filter=f.dataset.f;renderFilters();renderList();return;}
+  if(e.target.id==='clearAll'){done={};renderList();renderTracker();persist();return;}
+  if(e.target.id==='tickShown'){CH.forEach(c=>{
+      if(filter==='all'||(filter==='inc'&&!done[c.id])||c.c===filter) done[c.id]=true;});
+    renderList();renderTracker();persist();return;}
+});
+
+document.addEventListener('change',e=>{
+  const cb=e.target.closest('[data-ch]'); if(!cb)return;
+  if(cb.checked) done[cb.dataset.ch]=true; else delete done[cb.dataset.ch];
+  renderList();renderTracker();persist();
+});
+
+(async function(){await load();renderRuns();renderFilters();renderList();renderTracker();setRun(1,true);reportProgress();})();
+</script>
+<!-- step-progress-bridge -->
+<script>
+/* Reports route-step ticks into 'hitman-progress-registry' so the index can
+   show them beside the challenge counts. Counts what is on screen rather than
+   any guide-specific state, so one implementation serves every guide. */
+(function(){
+  var RID="b04", SEL=".step";
+  function isDone(s){
+    var c=s.classList;
+    if(c.contains('done')||c.contains('dn')) return true;
+    if(s.getAttribute('data-done')==='1'||s.getAttribute('aria-pressed')==='true') return true;
+    return !!s.querySelector('.done,.dn,[data-done="1"],[aria-pressed="true"]');
+  }
+  function tally(){
+    var steps=document.querySelectorAll(SEL);
+    if(!steps.length) return null;
+    var n=0;
+    for(var i=0;i<steps.length;i++) if(isDone(steps[i])) n++;
+    return {steps:n,stepTotal:steps.length};
+  }
+  function push(){
+    var t;
+    try{ t=tally(); }catch(err){ return; }
+    if(!t||!t.stepTotal) return;
+    try{
+      var r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');
+      var e=r[RID]||(r[RID]={});
+      /* the guide's own reportProgress() rewrites this entry wholesale, so
+         re-add the step counts whenever they go missing or stale */
+      if(e.steps===t.steps&&e.stepTotal===t.stepTotal) return;
+      e.steps=t.steps; e.stepTotal=t.stepTotal; e.updated=Date.now();
+      localStorage.setItem('hitman-progress-registry',JSON.stringify(r));
+    }catch(err){}
+  }
+  var pending=false;
+  function schedule(){
+    if(pending) return; pending=true;
+    setTimeout(function(){pending=false;push();},120);
+  }
+  try{
+    new MutationObserver(schedule).observe(document.body,
+      {subtree:true,childList:true,attributes:true,attributeFilter:['class','aria-pressed','data-done']});
+  }catch(err){}
+  window.addEventListener('load',schedule);
+  setTimeout(push,600);
+})();
+</script>
+<!-- /step-progress-bridge -->
+</body>
+</html>

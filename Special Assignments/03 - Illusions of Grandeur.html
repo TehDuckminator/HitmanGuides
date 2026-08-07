@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Illusions of Grandeur — Verified Step Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rozha+One&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0D0B14; --panel:#171525; --panel2:#1F1C31; --panel3:#282343;
+  --line:#332E4D; --line-soft:#262238;
+  --brass:#D9A93E; --saffron:#F0803C; --jade:#35B79A; --crimson:#D64550; --violet:#9B7BD4;
+  --text:#E9E5F2; --muted:#9A93B5; --dim:#6F6890; --r:10px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:
+    radial-gradient(1100px 520px at 78% -8%, rgba(155,123,212,.16), transparent 62%),
+    radial-gradient(900px 460px at 8% 4%, rgba(217,169,62,.10), transparent 60%),
+    var(--ink);
+  color:var(--text);font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 80px}
+a{color:var(--brass)}
+
+.mast{padding:44px 0 22px;border-bottom:1px solid var(--line-soft)}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--brass);margin:0 0 12px}
+h1{font-family:"Rozha One",Georgia,serif;font-weight:400;font-size:clamp(38px,7.5vw,68px);line-height:.98;letter-spacing:-.01em;margin:0 0 6px}
+.sub{color:var(--muted);margin:0;max-width:64ch}
+.mast-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.chip{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.06em;border:1px solid var(--line);border-radius:999px;padding:5px 11px;color:var(--muted);background:rgba(255,255,255,.02)}
+.chip b{color:var(--text);font-weight:600}
+
+.deck-block{margin:26px 0 8px}
+.deck{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:14px}
+.pip{width:26px;height:38px;border-radius:4px;border:1px solid var(--line);background:var(--panel);
+  transition:transform .28s ease,background .28s ease,border-color .28s ease,box-shadow .28s ease;
+  display:flex;align-items:center;justify-content:center;font-family:"IBM Plex Mono",monospace;font-size:10px;color:var(--dim)}
+.pip[data-done="1"]{background:linear-gradient(160deg,#E2B94D,#B98A26);border-color:#EBCB76;color:#2A1F06;transform:translateY(-4px) rotate(-3deg);box-shadow:0 6px 16px rgba(217,169,62,.28)}
+.bar{height:8px;border-radius:99px;background:var(--panel2);overflow:hidden;border:1px solid var(--line-soft)}
+.bar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--saffron),var(--brass));transition:width .4s ease}
+.bar-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;gap:12px;flex-wrap:wrap}
+.bar-row .big{font-family:"Rozha One",serif;font-size:30px;line-height:1}
+.bar-row .big small{font-size:14px;color:var(--muted);font-family:"IBM Plex Mono",monospace}
+
+.cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:18px 0 6px}
+.cat{border:1px solid var(--line-soft);border-radius:var(--r);background:var(--panel);padding:12px 14px}
+.cat .lbl{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.cat .num{font-family:"Rozha One",serif;font-size:26px;line-height:1.2;margin-top:2px}
+.cat .num em{font-style:normal;color:var(--dim);font-size:15px}
+.cat[data-c="assassination"]{border-left:3px solid var(--crimson)}
+.cat[data-c="targets"]{border-left:3px solid var(--saffron)}
+.cat[data-c="classic"]{border-left:3px solid var(--brass)}
+.cat[data-c="feats"]{border-left:3px solid var(--jade)}
+
+.tabs{display:flex;gap:2px;margin:28px 0 22px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.tab{appearance:none;background:none;border:0;border-bottom:2px solid transparent;color:var(--muted);
+  font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;padding:11px 14px;cursor:pointer}
+.tab:hover{color:var(--text)}
+.tab[aria-selected="true"]{color:var(--brass);border-bottom-color:var(--brass)}
+.tab:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
+.panel[hidden]{display:none}
+
+.notice{border:1px solid var(--line);border-left:3px solid var(--violet);background:var(--panel);border-radius:var(--r);padding:14px 16px;margin:0 0 20px}
+.notice h4{margin:0 0 6px;font-size:13px;letter-spacing:.06em;text-transform:uppercase;font-family:"IBM Plex Mono",monospace;color:var(--violet)}
+.notice p{margin:0 0 8px;color:var(--muted)}
+.notice p:last-child{margin-bottom:0}
+.notice.warn{border-left-color:var(--crimson)}
+.notice.warn h4{color:var(--crimson)}
+
+/* run nav */
+.runnav{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 22px;padding:14px;border:1px solid var(--line-soft);border-radius:12px;background:var(--panel)}
+.rbtn{appearance:none;cursor:pointer;text-align:left;flex:1 1 200px;background:var(--panel2);border:1px solid var(--line);
+  border-radius:9px;padding:10px 13px;color:var(--text);transition:border-color .18s ease,transform .18s ease}
+.rbtn:hover{border-color:var(--brass);transform:translateY(-1px)}
+.rbtn:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
+.rbtn .rn{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--saffron)}
+.rbtn .rt{font-weight:600;margin-top:2px}
+.rbtn .rc{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--dim);margin-top:2px}
+.navtools{display:flex;gap:8px;flex-wrap:wrap;width:100%;margin-top:2px}
+.mini{appearance:none;cursor:pointer;background:none;border:1px solid var(--line);border-radius:999px;color:var(--muted);
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;padding:5px 11px}
+.mini:hover{color:var(--text);border-color:var(--brass)}
+.mini:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
+
+/* collapsible run */
+details.run{border:1px solid var(--line-soft);border-radius:14px;background:var(--panel);margin:0 0 18px;overflow:hidden;scroll-margin-top:14px}
+details.run>summary{list-style:none;cursor:pointer;padding:18px 22px;background:linear-gradient(180deg,rgba(155,123,212,.07),transparent)}
+details.run>summary::-webkit-details-marker{display:none}
+details.run>summary::after{content:"▾ Collapse";float:right;font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+details.run:not([open])>summary::after{content:"▸ Expand"}
+details.run>summary:hover{background:linear-gradient(180deg,rgba(155,123,212,.13),transparent)}
+details.run>summary:focus-visible{outline:2px solid var(--violet);outline-offset:-2px}
+.run-no{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.2em;color:var(--saffron);text-transform:uppercase}
+details.run h2{font-family:"Rozha One",serif;font-weight:400;font-size:29px;line-height:1.1;margin:6px 0 8px;display:inline-block}
+.run-goal{margin:0;color:var(--muted);max-width:70ch}
+.run-count{margin-top:12px;display:flex;gap:6px;flex-wrap:wrap}
+.run-inner{border-top:1px solid var(--line-soft)}
+
+.loadout{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));border-bottom:1px solid var(--line-soft);background:var(--panel2)}
+.slot{padding:13px 18px;border-right:1px solid var(--line-soft)}
+.slot:last-child{border-right:0}
+.slot .k{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+.slot .v{margin-top:3px;font-weight:500}
+.slot .n{margin-top:3px;font-size:12.5px;color:var(--muted)}
+
+.sec{padding:4px 22px 16px}
+.sec>h3{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--brass);margin:20px 0 8px;padding-bottom:8px;border-bottom:1px dashed var(--line)}
+
+/* steps */
+.step{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--line-soft)}
+.step:last-child{border-bottom:0}
+.tick{flex:0 0 auto;width:26px;height:26px;margin-top:2px;border-radius:7px;border:1px solid var(--line);background:var(--panel2);
+  color:var(--dim);cursor:pointer;font-size:14px;line-height:1;display:flex;align-items:center;justify-content:center;transition:all .18s ease}
+.tick:hover{border-color:var(--brass);color:var(--brass)}
+.tick[aria-pressed="true"]{background:var(--jade);border-color:var(--jade);color:#08201B}
+.tick:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
+.step-body{flex:1 1 auto;min-width:0}
+.step-body[data-done="1"]{opacity:.6}
+.step-body[data-done="1"] .st{text-decoration:line-through;text-decoration-color:var(--dim)}
+.st{font-weight:600;margin:0}
+.st .num{font-family:"IBM Plex Mono",monospace;color:var(--saffron);font-size:12px;margin-right:7px}
+.req{display:flex;gap:6px;flex-wrap:wrap;margin:7px 0 0}
+.rq{font-family:"IBM Plex Mono",monospace;font-size:10.5px;padding:3px 9px;border-radius:5px;border:1px solid var(--line-soft);background:var(--panel2);color:var(--muted)}
+.rq b{color:var(--text);font-weight:600}
+.rq.none{opacity:.6}
+ul.pts{margin:8px 0 0;padding-left:18px}
+ul.pts li{margin-bottom:3px;color:#D6D0E6}
+ul.pts li.w{color:#FFC9CC}
+ul.pts li.w::marker{color:var(--crimson)}
+
+details.det{margin-top:9px;border:1px solid var(--line-soft);border-radius:8px;background:var(--panel2)}
+details.det>summary{cursor:pointer;list-style:none;padding:7px 12px;font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+details.det>summary::-webkit-details-marker{display:none}
+details.det>summary::before{content:"▸ ";color:var(--brass)}
+details.det[open]>summary::before{content:"▾ "}
+details.det>summary:hover{color:var(--text)}
+details.det>summary:focus-visible{outline:2px solid var(--violet);outline-offset:-2px}
+.det-in{padding:2px 14px 13px;border-top:1px solid var(--line-soft)}
+.det-in dt{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--saffron);margin-top:11px}
+.det-in dd{margin:3px 0 0;color:#CFC9E0}
+
+.badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
+.b{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.05em;padding:3px 9px;border-radius:999px;border:1px solid;white-space:nowrap}
+.b.assassination{color:#F09098;border-color:rgba(214,69,80,.5);background:rgba(214,69,80,.11)}
+.b.targets{color:#F5AE7E;border-color:rgba(240,128,60,.5);background:rgba(240,128,60,.11)}
+.b.classic{color:#EBCB76;border-color:rgba(217,169,62,.5);background:rgba(217,169,62,.11)}
+.b.feats{color:#79D6C2;border-color:rgba(53,183,154,.5);background:rgba(53,183,154,.11)}
+.b.warn{color:#FFD3D6;border-color:var(--crimson);background:rgba(214,69,80,.28);font-weight:600}
+.b.save{color:#2A1F06;border-color:#E2B94D;background:#E2B94D;font-weight:600}
+.b.unver{color:#C7BEE6;border-color:rgba(155,123,212,.55);background:rgba(155,123,212,.14)}
+.b[data-done="1"]::before{content:"✓ "}
+
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 18px}
+.f{appearance:none;background:var(--panel);border:1px solid var(--line);border-radius:999px;color:var(--muted);
+  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:7px 13px;cursor:pointer}
+.f:hover{color:var(--text);border-color:var(--brass)}
+.f[aria-pressed="true"]{background:var(--brass);border-color:var(--brass);color:#2A1F06;font-weight:600}
+.f:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
+.clist{border:1px solid var(--line-soft);border-radius:14px;overflow:hidden}
+.crow{display:flex;gap:13px;padding:14px 16px;border-bottom:1px solid var(--line-soft);background:var(--panel);align-items:flex-start}
+.crow:last-child{border-bottom:0}
+.crow[hidden]{display:none}
+.crow input{appearance:none;flex:0 0 auto;width:20px;height:20px;margin-top:3px;border-radius:5px;border:1px solid var(--line);background:var(--panel2);cursor:pointer;position:relative}
+.crow input:checked{background:var(--jade);border-color:var(--jade)}
+.crow input:checked::after{content:"✓";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#08201B;font-size:13px;font-weight:700}
+.crow input:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
+.cmain{flex:1 1 auto;min-width:0}
+.cname{font-weight:600;margin:0}
+.crow[data-done="1"] .cname{text-decoration:line-through;text-decoration-color:var(--dim)}
+.crow[data-done="1"]{opacity:.6}
+.cdesc{margin:2px 0 0;color:var(--muted);font-size:13.5px}
+.cmeta{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px;align-items:center}
+.xp{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--dim)}
+
+.vcard{border:1px solid var(--line-soft);border-radius:14px;background:var(--panel);padding:20px 22px;margin-bottom:18px}
+.vcard h3{font-family:"Rozha One",serif;font-weight:400;font-size:23px;margin:0 0 10px}
+.vcard h4{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--brass);margin:18px 0 6px}
+.vcard p,.vcard li{color:#CFC9E0}
+.vcard ul{margin:6px 0;padding-left:20px}
+.vcard li{margin-bottom:5px}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:8px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+th{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);font-weight:500}
+td.ok{color:var(--jade)}
+.foot{margin-top:36px;padding-top:18px;border-top:1px solid var(--line-soft);color:var(--dim);font-size:12.5px}
+
+@media (max-width:640px){
+  .slot{border-right:0;border-bottom:1px solid var(--line-soft)}
+  .sec{padding:4px 15px 14px}
+  details.run>summary{padding:16px}
+  .wrap{padding:0 14px 60px}
+  details.run>summary::after{float:none;display:block;margin-top:8px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="mast">
+  <p class="eyebrow">Mumbai · Special Assignment · World of Assassination</p>
+  <h1>Illusions of Grandeur</h1>
+  <p class="sub">One target, one chawl, sixteen challenges, zero disguises to collect. Basil Carnaby robs his own volunteers — so the fastest way into his private room is to volunteer. Three runs clear the mission.</p>
+  <div class="mast-meta">
+    <span class="chip">Target: <b>Basil Carnaby</b></span>
+    <span class="chip">Challenges: <b>16</b></span>
+    <span class="chip">Total XP: <b>47,000</b></span>
+    <span class="chip">Disguise challenges: <b>0</b></span>
+    <span class="chip">Discovery areas: <b>0</b></span>
+    <span class="chip">Mission Stories: <b>0</b></span>
+    <span class="chip">Start: <b>Outside Chawl</b></span>
+  </div>
+
+  <div class="deck-block">
+    <div class="bar-row">
+      <div class="big"><span id="doneN">0</span><small> / 16 challenges</small></div>
+      <div class="chip">XP banked: <b id="xpN">0</b> <span style="color:var(--dim)">of 14,000 confirmed-value XP</span></div>
+    </div>
+    <div class="bar"><i id="barFill"></i></div>
+    <div class="deck" id="deck" aria-hidden="true"></div>
+  </div>
+
+  <div class="cats" id="cats"></div>
+</header>
+
+<div class="tabs" role="tablist">
+  <button class="tab" role="tab" id="t-runs" aria-controls="p-runs" aria-selected="true">Optimized runs</button>
+  <button class="tab" role="tab" id="t-list" aria-controls="p-list" aria-selected="false">Challenge checklist</button>
+  <button class="tab" role="tab" id="t-ver" aria-controls="p-ver" aria-selected="false">Verification &amp; audit</button>
+</div>
+
+<section class="panel" id="p-runs" role="tabpanel" aria-labelledby="t-runs">
+
+  <div class="notice">
+    <h4>Read this once before your first run</h4>
+    <p><b>Basil is the only target on the map</b>, so no two elimination challenges can pop in one uninterrupted timeline. Every run below is built on <b>save → kill → challenge pops → reload → kill differently</b>. Unlocks are banked the instant they fire and survive a reload.</p>
+    <p><b>Do not play these on Master.</b> Master allows a single manual save, which breaks the reload loop. Use Casual or Professional.</p>
+    <p><b>Run 1 must come before Run 2.</b> Two challenges are meta-challenges that only fire once their components are all done: <i>Versatile Assassin</i> and <i>The Classics</i>. Both complete their final component in Run 2, but only if Run 1 was finished first.</p>
+    <p><b>There are no Mission Stories, no Discovery areas and no disguise challenges here</b> — the mission file lists 0 of each. Rangan Tower is sealed and empty, so Dawood Rangan and the Bollywood crew are not on the map.</p>
+  </div>
+
+  <div class="runnav" id="runnav"></div>
+  <div id="runs"></div>
+</section>
+
+<section class="panel" id="p-list" role="tabpanel" aria-labelledby="t-list" hidden>
+  <div class="filters" id="filters"></div>
+  <div class="clist" id="clist"></div>
+</section>
+
+<section class="panel" id="p-ver" role="tabpanel" aria-labelledby="t-ver" hidden>
+  <div class="vcard">
+    <h3>What changed after the mission file arrived</h3>
+    <p>The uploaded mission JSON is in-game challenge data and outranks every web source. It corrected two things in the previous draft, both of which had been flagged as uncertain rather than asserted:</p>
+    <ul>
+      <li><b>Hold My Hair is not in this mission.</b> The previous draft carried it on the strength of the Hitman Wiki's challenge category index. The mission file has no such challenge, and its version of <i>Versatile Assassin</i> requires only four components — Piano Man, Someone Could Hurt Themselves, Straight Shot, Tasteless Traceless — with no drowning entry. That is consistent: there is no documented drowning kill on Basil anywhere, and now there is no challenge asking for one. <b>Removed.</b></li>
+      <li><b>Versatile Assassin is in this mission.</b> The previous draft excluded it to keep Assassination at 9. The mission file lists it as one of the 9, and <i>No Evidence</i> — which the draft had in the Classics — is not present at all; the fifth Classic is the meta-challenge <b>The Classics</b>. <b>Both corrected.</b></li>
+    </ul>
+    <p>Everything else in the file matched: 16 total, 9 / 1 / 1 / 5, zero disguises, zero areas, areas shared with Chasing a Ghost.</p>
+
+    <h4>Count reconciliation against the mission file</h4>
+    <table>
+      <tr><th>Category</th><th>File count</th><th>Listed here</th><th>Status</th></tr>
+      <tr><td>Assassination</td><td>9</td><td>9</td><td class="ok">Matches</td></tr>
+      <tr><td>Feats</td><td>1</td><td>1</td><td class="ok">Matches</td></tr>
+      <tr><td>Targets</td><td>1</td><td>1</td><td class="ok">Matches</td></tr>
+      <tr><td>Classic</td><td>5</td><td>5</td><td class="ok">Matches</td></tr>
+      <tr><td><b>Total</b></td><td><b>16</b></td><td><b>16</b></td><td class="ok">Matches</td></tr>
+    </table>
+    <p style="margin-top:10px">Every challenge name and description in the checklist is copied verbatim from the mission file. No names were paraphrased or invented.</p>
+
+    <h4>Newly verified this pass</h4>
+    <ul>
+      <li><b>Starting location is "Outside Chawl"</b> — named by the Hitman Wiki walkthrough. That walkthrough also notes it is written for players with no Mumbai mastery unlocks, so other starts may exist at higher mastery; none are named in any source. <b>Additional starts and their mastery levels: UNVERIFIED.</b></li>
+      <li><b>Basil performs in front of Mumbai Central Square</b>, outside the chawl entrance (Hitman Wiki, Basil Carnaby page).</li>
+      <li><b>Basil sees through both the Local Security and the Bollywood Bodyguard disguises</b> (same page). This is why every run here stays in the suit.</li>
+      <li><b>Wrong Person to Ask mechanics:</b> volunteering makes Basil ask 47 for money; refusing to empty 47's pockets is what turns the chawl balcony into a trespassing zone (same page). This matches the mission file's description, "Make Basil ask you for money."</li>
+      <li><b>Vanya Shah and Wazir Kale are present as non-target NPCs</b>, and the Crow's Hideout and the whole Train Yard are open (same page). Killing either fails Silent Assassin.</li>
+      <li><b>Emetic Rat Poison</b> — one in a kitchen on level 2 of the Chawls, one in a building above the fabric vendor (Hitman Wiki, Emetic Rat Poison locations, listed for Chasing a Ghost / Illusions Of Grandeur jointly).</li>
+      <li><b>Barber Razor</b> — one in the bathroom on the third level of the Chawls, one on the second level (Hitman Wiki, Barber Razor locations, listed for both missions).</li>
+      <li><b>Karan Dhar, the Kashmirian,</b> is present in the Crow's Hideout in this mission (Hitman Wiki mission page).</li>
+    </ul>
+
+    <h4>Still UNVERIFIED — labelled, never guessed</h4>
+    <ul>
+      <li><b>Lethal Poison Pill Jar in the Kashmirian's Apartment.</b> The wiki lists it for <i>Chasing a Ghost</i> only. The chawl is shared between both missions and the mission file confirms shared areas, so it is very likely present — but it is not explicitly listed for this mission. <b>Bring your own lethal poison rather than relying on it.</b></li>
+      <li><b>The exact ledge used for the push kill.</b> Sources say to push Basil from behind on the chawl's upper level; the wiki refers to a chawl balcony. No source gives a precise railing.</li>
+      <li><b>Whether an oil-canister explosion registers Keep Calm and Explode.</b> The wiki recommends the canister as an easy Silent Assassin route because the blast counts as an accident. No source confirms an accident explosion satisfies the challenge wording. Fallback only.</li>
+      <li><b>Remote breaching charge entitlement.</b> NamuWiki ties it to HITMAN 2 Access Pass plus GOTY Legacy content and Sapienza mastery. Entitlements shifted when everything folded into World of Assassination — check your own loadout screen.</li>
+      <li><b>Exact electrocution item name.</b> HITMAN 2's Electrocution Phone was removed in HITMAN III; NamuWiki's current advice is a taser. Which specific electrocution item you own is build-dependent.</li>
+      <li><b>Per-challenge XP</b> beyond five confirmed values: The Illusionist 4,000; Versatile Assassin 4,000; Energetic Guy 2,000; Piano Man 2,000; Someone Could Hurt Themselves 2,000. The 47,000 mission total is confirmed. Unconfirmed values show as "XP unverified" rather than a made-up number.</li>
+      <li><b>NPC names beyond Basil Carnaby and Karan Dhar.</b> Basil's personal bodyguard is unnamed in every source; his outfit is the Bollywood Bodyguard disguise. Individual chawl guard patrol routes are undocumented, so steps describe positions, never invented names.</li>
+      <li><b>Save allowances on Casual and Professional.</b> Only the Master limit of one save is documented.</li>
+      <li><b>Patch additions.</b> No source records any challenge added to this mission after its 25 June 2019 release.</li>
+    </ul>
+
+    <h4>Confirmed bugs and scripting rules</h4>
+    <ul>
+      <li><b>Ordering rule (Hitman Wiki walkthrough):</b> let the private-room conversation run out and Basil dismisses 47, reverting the chawl to a trespassing zone. Kill him before it ends and you keep access — which is what makes the suit-only walk-out possible.</li>
+      <li><b>Suit access oversight (Hitman Wiki):</b> in the starting suit you are allowed inside the chawls, though guard checkpoints still count as trespassing if ignored. Present since HITMAN 2.</li>
+      <li><b>Explosive knockdown bug (Hitman Forum):</b> a charge placed on the ground in Basil's path only knocked him unconscious while killing bystanders. Do not stage the explosion in the open street.</li>
+      <li><b>Running-water alert (NamuWiki):</b> during the electrocution setup, the guard outside reacts to the sound of the running sink, so the taser must go into the puddle and fire immediately.</li>
+      <li><b>Target lockdown (Hitman Wiki):</b> once lockdown triggers Basil retreats either beneath the northern staircase on the bottom floor or upstairs to the Kashmirian's apartment.</li>
+    </ul>
+
+    <h4>Run-logic simulation results</h4>
+    <ul>
+      <li><b>Coverage:</b> all 16 challenges assigned, each to exactly one run. No duplicates, no orphans. Verified programmatically against the mission file.</li>
+      <li><b>Prerequisite order:</b> Versatile Assassin needs Piano Man, Someone Could Hurt Themselves and Tasteless Traceless (all Run 1) plus Straight Shot (Run 2). The Classics needs Silent Assassin, Suit Only and SASO (all Run 1) plus Sniper Assassin (Run 2). Both metas therefore fire in Run 2, and Run 1 is marked as a hard prerequisite in the run header.</li>
+      <li><b>Item availability:</b> every item used in a step is either in that run's loadout or picked up in an earlier step of the same run. No step reaches for something not yet obtained.</li>
+      <li><b>NPC availability:</b> no NPC needed later is removed earlier. Basil's bodyguard is pacified only after he is no longer needed. Basil himself is never killed before Wrong Person to Ask has fired, because that feat is banked during the conversation that precedes every kill branch.</li>
+      <li><b>Scripted events:</b> the volunteer script is re-triggered fresh by each reload. The one script that can break — the conversation timing out — is guarded by a save placed after the feat fires and before any kill.</li>
+      <li><b>Save points:</b> every reload point returns to a state where all subsequent objectives are still reachable. Run 3's save sits at mission start, before any action, so both of its branches are reachable from it.</li>
+      <li><b>Backtracking:</b> Runs 1 and 2 never leave the chawl. Run 3 branch B moves from the street to the third-floor window, one short climb. No run crosses the map.</li>
+      <li><b>Mutual exclusivity:</b> every elimination challenge is separated by an explicit reload, because a single target makes them all mutually exclusive by definition.</li>
+    </ul>
+  </div>
+</section>
+
+<p class="foot">Progress saves in this session. Not affiliated with IO Interactive. Challenge names and descriptions are taken from the supplied mission file; anything sources did not confirm is labelled rather than guessed.</p>
+</div>
+
+<script>
+/* ===================== DATA (names/descriptions verbatim from mission file) ===================== */
+const CATS=[
+ {id:"assassination",label:"Assassination",total:9},
+ {id:"feats",label:"Feats",total:1},
+ {id:"targets",label:"Targets",total:1},
+ {id:"classic",label:"Classic",total:5}
+];
+
+const CH=[
+ {id:"basilhunt",n:"Let's Have a Little Basil Hunt",c:"assassination",xp:null,d:"Assassinate Basil by pushing him to his death."},
+ {id:"piano",n:"Piano Man",c:"assassination",xp:2000,d:"Assassinate a target with the fiber wire."},
+ {id:"accident",n:"Someone Could Hurt Themselves",c:"assassination",xp:2000,d:"Assassinate a target in an accident."},
+ {id:"versatile",n:"Versatile Assassin",c:"assassination",xp:4000,d:"Complete the following Versatile challenges in Mumbai: Piano Man / Someone Could Hurt Themselves / Straight Shot / Tasteless, Traceless"},
+ {id:"energetic",n:"Energetic Guy",c:"assassination",xp:2000,d:"Assassinate Basil with electricity."},
+ {id:"tasteless",n:"Tasteless, Traceless",c:"assassination",xp:null,d:"Assassinate a target with lethal poison."},
+ {id:"earlgrey",n:"Better than Earl Grey",c:"assassination",xp:null,d:"Assassinate Basil with poison."},
+ {id:"straight",n:"Straight Shot",c:"assassination",xp:null,d:"Assassinate a target with a headshot."},
+ {id:"keepcalm",n:"Keep Calm and Explode",c:"assassination",xp:null,d:"Assassinate Basil with an explosion."},
+ {id:"wrongperson",n:"Wrong Person to Ask",c:"feats",xp:null,d:"Make Basil ask you for money."},
+ {id:"illusionist",n:"The Illusionist",c:"targets",xp:4000,d:"Assassinate Basil Carnaby."},
+ {id:"so",n:"Suit Only",c:"classic",xp:null,d:"Assassinate the target and complete the mission. Do it all in your suit."},
+ {id:"sniper",n:"Sniper Assassin",c:"classic",xp:null,d:"Complete \u201CIllusions Of Grandeur.\u201D Assassinate Basil Carnaby with a sniper rifle. Only eliminate the target. Do not get spotted."},
+ {id:"sa",n:"Silent Assassin",c:"classic",xp:null,d:"Complete \u201CIllusions Of Grandeur.\u201D Only eliminate the target. No bodies found. Do not get spotted."},
+ {id:"classics",n:"The Classics",c:"classic",xp:null,d:"Complete all the Classic challenges for \u201CIllusions Of Grandeur\u201D: Silent Assassin / Silent Assassin, Suit Only / Sniper Assassin / Suit Only"},
+ {id:"saso",n:"Silent Assassin, Suit Only",c:"classic",xp:null,d:"Complete \u201CIllusions Of Grandeur.\u201D Only eliminate the target. No bodies found. Do not get spotted. Do it all in your suit."}
+];
+
+const RUNS=[
+{
+ no:"Run 1", title:"The Volunteer",
+ goal:"The backbone run. Volunteer for Basil's mentalist act, bank the feat during his patter, then cycle three different kills off one save before finishing clean in your suit for all three Silent Assassin classics.",
+ pre:"None. Do this run first — Run 2's two meta-challenges depend on it.",
+ ch:["wrongperson","basilhunt","accident","piano","earlgrey","tasteless","illusionist","sa","so","saso"],
+ loadout:{
+  start:"Outside Chawl", startNote:"The only starting location named in any source. Confirmed by the Hitman Wiki walkthrough.",
+  suit:"Any suit — Signature Suit is fine", suitNote:"Suit Only means you never change clothes, so this run is locked to whatever you start in.",
+  items:[
+   {k:"Weapon", v:"ICA19 Silverballer (silenced)", n:"Emergency backup only. Never fire it where an NPC can hear or see."},
+   {k:"Item slot", v:"Empty", n:"Nothing needed. No frisking occurs on the way into the chawl."},
+   {k:"Gear 1", v:"Fiber Wire", n:"Required for Piano Man. Concealed, so it passes freely."},
+   {k:"Gear 2", v:"Lethal poison syringe", n:"Covers Better than Earl Grey and Tasteless, Traceless in one injection."},
+   {k:"Smuggled", v:"Coin", n:"Thrown lure for pulling the bodyguard out of position. Coins also exist on the map."}
+  ]
+ },
+ sections:[
+ {h:"Getting invited upstairs", steps:[
+  {t:"Join the crowd at Basil's street act",
+   where:"Straight ahead from the Outside Chawl start, at the chawl entrance on Mumbai Central Square.",
+   disguise:"None — your suit is correct here.",
+   item:"None.",
+   npc:"Basil Carnaby, performing to a gathered crowd.",
+   pts:["Walk forward into the crowd and wait. Basil comes out and calls for a volunteer.",
+        "Don't wander off first — if you miss the call you have to wait for the next cycle."],
+   det:{"Why the suit is the right call":"Basil sees through both the Local Security and the Bollywood Bodyguard disguises, so there is no outfit that gets you closer than the suit does.",
+        "Map note":"The Crow's Hideout and the whole Train Yard are open in this mission, but nothing in this run needs them."},
+   badges:[]},
+
+  {t:"Volunteer and let him start his patter",
+   where:"In front of Basil, at the act.",
+   disguise:"None.",
+   item:"None.",
+   npc:"Basil Carnaby, plus his personal bodyguard who joins from here on.",
+   pts:["Interact with Basil to step forward as the volunteer.",
+        "He walks 47 into the chawl and up to a private room on the top floor. The chawl is a trespassing zone in this mission — volunteering is your temporary permission slip."],
+   det:{"What is about to happen":"Basil attempts to rob 47 in the private room. That robbery attempt is the feat.",
+        "Bodyguard":"Unnamed in every source; wears the Bollywood Bodyguard disguise."},
+   badges:[]},
+
+  {t:"Let Basil ask 47 for money",
+   where:"The private room on the top floor of the chawl.",
+   disguise:"None.",
+   item:"None.",
+   npc:"Basil Carnaby.",
+   pts:["Close the door behind you, then simply stand and listen. Basil asks 47 to empty his pockets — the feat pops on the ask.",
+        "Do not let the conversation run all the way out. Refusing and stalling to the end makes Basil dismiss 47 and flips the chawl balcony back to trespassing."],
+   warn:"This is the only ordering rule in the mission that can cost you a challenge. Save the moment the feat pops.",
+   det:{"Source":"Hitman Wiki: volunteering makes Basil ask 47 for money; refusing to empty 47's pockets turns the chawl balcony into a trespassing zone. The mission file's wording is 'Make Basil ask you for money.'",
+        "If the window feels tight":"Once the feat is banked it is banked forever. On later branches you can kill Basil the instant you are alone, without waiting for the money line at all."},
+   badges:[{k:"feats",id:"wrongperson"}]},
+
+  {t:"Save here — this is your hub",
+   where:"Standing in the private room with Basil and the bodyguard, door shut.",
+   disguise:"None.",
+   item:"None.",
+   npc:"Basil and the bodyguard, both alive and unaware.",
+   pts:["Every kill below branches from this exact save. You will reload to it three times.",
+        "Play on Casual or Professional. Master allows one manual save and makes this impossible."],
+   det:{"Why the door matters":"The Hitman Wiki walkthrough is explicit about closing the door before acting — it contains the noise and blocks the sightline from the guards outside."},
+   badges:[{k:"save",t:"SAVE HERE — hub save, reload point for all three kills"}]}
+ ]},
+
+ {h:"Three kills off one save", steps:[
+  {t:"Kill A — push him off the balcony",
+   where:"The private room, then the balcony railing on the chawl's top floor.",
+   disguise:"None.",
+   item:"Coin (optional, for the lure).",
+   npc:"The bodyguard first, then Basil.",
+   pts:["Throw the coin to pull the bodyguard away, subdue him from behind and stash him at the top of the stairs.",
+        "Walk up behind Basil at the railing and push. Two challenges fire from the one shove — a push is an accident.",
+        "Accident deaths need no body hiding for Silent Assassin. The subdued bodyguard does."],
+   warn:"If Basil bolts for the door before you reach him, reload the hub save. He is running for a guard and the run ends when he gets there.",
+   det:{"Precise ledge":"Sources describe pushing Basil from behind on the chawl's upper level and refer to a chawl balcony. The exact railing is not documented at finer resolution — UNVERIFIED at that granularity.",
+        "Alternative":"You can subdue the bodyguard directly behind his back without the coin, but that alerts Basil immediately, so you must move fast."},
+   badges:[{k:"assassination",id:"basilhunt"},{k:"assassination",id:"accident"}]},
+
+  {t:"Reload the hub → Kill B — fiber wire",
+   where:"Back in the private room.",
+   disguise:"None.",
+   item:"Fiber Wire (loadout).",
+   npc:"The bodyguard, then Basil.",
+   pts:["Same lure and subdue on the bodyguard, then garrote Basil from behind.",
+        "A garrote leaves a body that will be found — stash him if you intend to finish this attempt rather than reload."],
+   det:{"Note":"The challenge accepts the fiber wire specifically; this is one of the recurring Versatile challenges, so it also counts toward Versatile Assassin."},
+   badges:[{k:"assassination",id:"piano"}]},
+
+  {t:"Reload the hub → Kill C — lethal syringe",
+   where:"Back in the private room.",
+   disguise:"None.",
+   item:"Lethal poison syringe (loadout).",
+   npc:"The bodyguard, then Basil.",
+   pts:["Lure and subdue the bodyguard, then inject Basil from behind.",
+        "One injection satisfies both poison challenges: Better than Earl Grey wants poison, Tasteless Traceless wants lethal poison."],
+   det:{"Map-sourced poison":"A Lethal Poison Pill Jar exists in the Kashmirian's Apartment, but the wiki lists it under Chasing a Ghost only — likely present here since the chawl is shared, but not confirmed. Bring your own syringe rather than gambling on it.",
+        "Body handling":"NamuWiki reports poison deaths behave like accidents for Silent Assassin here, so hiding is not strictly required — hide anyway if you are finishing this attempt."},
+   badges:[{k:"assassination",id:"earlgrey"},{k:"assassination",id:"tasteless"}]}
+ ]},
+
+ {h:"The clean finish", steps:[
+  {t:"Reload the hub → kill fast, tidy, and walk out",
+   where:"Private room, then out through the chawl and down the street to the nearest exit.",
+   disguise:"None — never change clothes or you forfeit Suit Only and SASO.",
+   item:"Coin (lure).",
+   npc:"The bodyguard, then Basil.",
+   pts:["Use the push again — it is an accident, so no body to hide and the fewest moving parts.",
+        "Stash the subdued bodyguard before you leave. Silent Assassin fails on any body found.",
+        "Kill Basil before the conversation ends and you keep legitimate chawl access, so you can simply stroll out.",
+        "Completing this attempt banks the target challenge plus all three Silent Assassin classics at once."],
+   warn:"Vanya Shah and Wazir Kale are on this map as non-target NPCs. Killing either fails Silent Assassin.",
+   det:{"If you stalled and lost access":"The wiki's fallback is to take the Bollywood Bodyguard disguise from the pacified guard and walk out — but that forfeits Suit Only and SASO for this attempt. Reload instead.",
+        "Alternative exit":"There is a pipe outside the railing on the upper level you can climb down, which is the route NamuWiki uses after dealing with Basil.",
+        "What does not pop yet":"The Classics will not fire here — it also needs Sniper Assassin, which is Run 2."},
+   badges:[{k:"targets",id:"illusionist"},{k:"classic",id:"sa"},{k:"classic",id:"so"},{k:"classic",id:"saso"},
+           {k:"warn",t:"Never change disguise during this attempt"}]}
+ ]}]
+},
+
+{
+ no:"Run 2", title:"Long Lens",
+ goal:"Smuggle a silenced rifle in a briefcase, subdue Basil rather than shooting him in the open, and take the headshot from the old sniper perch. One shot banks four challenges, two of them meta-challenges.",
+ pre:"Run 1 must be complete. Versatile Assassin and The Classics both fire here only because their other components were banked in Run 1.",
+ ch:["sniper","straight","versatile","classics"],
+ loadout:{
+  start:"Outside Chawl", startNote:"Same single start.",
+  suit:"Any suit", suitNote:"Staying suited also gives you a second shot at SASO as insurance.",
+  items:[
+   {k:"Weapon", v:"ICA19 Silverballer (silenced)", n:"Fallback for Straight Shot if the rifle plan collapses."},
+   {k:"Item slot", v:"Briefcase containing a silenced sniper rifle", n:"The briefcase is the delivery method. No frisking occurs on the way into the chawl, so it passes."},
+   {k:"Gear 1", v:"Coin", n:"Lure for the bodyguard."},
+   {k:"Gear 2", v:"Empty", n:"Nothing else required."},
+   {k:"Smuggled", v:"None", n:"UNVERIFIED whether this mission offers an Agency Pickup. Plan without one."}
+  ]
+ },
+ sections:[
+ {h:"Getting the rifle into the room", steps:[
+  {t:"Volunteer again, briefcase in hand",
+   where:"The crowd outside the chawl entrance, then up to the private room.",
+   disguise:"None.",
+   item:"Briefcase with the silenced sniper rifle.",
+   npc:"Basil Carnaby and his bodyguard.",
+   pts:["Identical opening to Run 1 — join the crowd, volunteer, follow him up.",
+        "Nobody searches the briefcase on the way in, which is the whole reason this route works."],
+   warn:"Do not shoot Basil during his street act. Sniper Assassin fails if you are spotted, and you cannot fire into his own audience unseen.",
+   det:{"Feat note":"Wrong Person to Ask is already banked from Run 1, so you can act as soon as you are alone — no need to wait for the money line."},
+   badges:[]},
+
+  {t:"Save, then clear the bodyguard",
+   where:"The private room, door closed.",
+   disguise:"None.",
+   item:"Coin.",
+   npc:"Basil's bodyguard.",
+   pts:["Throw the coin to pull the bodyguard aside, subdue him and stash him at the top of the stairs.",
+        "Save before you start moving bodies — if the shot goes wrong you want to return to a quiet room, not a lockdown."],
+   det:{"Sniper Assassin conditions":"Per the mission file: complete the mission, kill Basil with a sniper rifle, only eliminate the target, do not get spotted. Bodies found is not a listed fail condition for this challenge — but it is for Silent Assassin, so stash him anyway if you want both."},
+   badges:[{k:"save",t:"SAVE HERE — before moving any bodies"}]},
+
+  {t:"Subdue Basil before the rifle comes out",
+   where:"The private room.",
+   disguise:"None.",
+   item:"None — bare hands.",
+   npc:"Basil Carnaby.",
+   pts:["Knock Basil out rather than shooting him where he stands. Pulling a long gun in a small room with him conscious is how you get spotted.",
+        "Do not kill him here — he has to be alive for the sniper shot to count as the elimination."],
+   warn:"If you kill Basil with the subdual instead of pacifying him, Sniper Assassin cannot fire. Reload the save.",
+   det:{"Source":"NamuWiki's sniper route pacifies Basil first, drags him up, then finishes with the rifle."},
+   badges:[]}
+ ]},
+
+ {h:"The shot", steps:[
+  {t:"Drag him to the perch and put one round through his head",
+   where:"Up the stairs from the private room to the tower perch above the stairwell — the sniper nest the Kashmirian uses in Chasing a Ghost.",
+   disguise:"None.",
+   item:"Silenced sniper rifle, unpacked from the briefcase.",
+   npc:"Basil Carnaby, unconscious.",
+   pts:["Drag Basil up the stairs to the perch, then unpack the rifle and take a clean headshot.",
+        "One shot fires four challenges: the sniper kill, the headshot, and both meta-challenges completing behind them.",
+        "Exit down the pipe outside the railing, or back out through the chawl."],
+   det:{"Why four":"Sniper Assassin and Straight Shot fire directly. Straight Shot is the fourth and final component of Versatile Assassin — Piano Man, Someone Could Hurt Themselves and Tasteless Traceless came from Run 1. Sniper Assassin is the fourth component of The Classics — Silent Assassin, Suit Only and SASO came from Run 1.",
+        "If Run 1 was skipped":"Only Sniper Assassin and Straight Shot will fire. The two metas will sit incomplete until you go back and do Run 1.",
+        "Fallback for Straight Shot alone":"A silenced pistol headshot in the private room banks Straight Shot on its own, but Sniper Assassin then needs its own separate attempt."},
+   badges:[{k:"classic",id:"sniper"},{k:"assassination",id:"straight"},{k:"assassination",id:"versatile"},{k:"classic",id:"classics"},
+           {k:"warn",t:"Requires Run 1 completed first for both metas"}]}
+ ]}]
+},
+
+{
+ no:"Run 3", title:"Current and Blast",
+ goal:"The two remaining kills need different approaches to the same building, so they branch off one save taken at mission start: blow him up in his own room, then reload and electrocute him at his bathroom sink.",
+ pre:"None. Fully independent of Runs 1 and 2 — do it whenever.",
+ ch:["keepcalm","energetic"],
+ loadout:{
+  start:"Outside Chawl", startNote:"Same single start. Both branches begin here.",
+  suit:"Any suit", suitNote:"Neither branch requires a disguise, and Basil sees through the two he could plausibly be fooled by anyway.",
+  items:[
+   {k:"Weapon", v:"ICA19 Silverballer (silenced)", n:"Only needed for the oil-canister fallback — you shoot the canister from cover."},
+   {k:"Item slot", v:"Briefcase containing a remote breaching charge", n:"Silent explosive, so the kill stays quiet. UNVERIFIED entitlement — check your loadout screen."},
+   {k:"Gear 1", v:"Taser / electrocution device", n:"HITMAN 2's Electrocution Phone was removed in HITMAN III, so a taser is the current advice. Exact item is build-dependent."},
+   {k:"Gear 2", v:"Coin", n:"Noise lure for splitting Basil from his bodyguard in branch B."},
+   {k:"Smuggled", v:"None", n:"Not required."}
+  ]
+ },
+ sections:[
+ {h:"Setup — do this before anything else", steps:[
+  {t:"Unpack the briefcase, then immediately put the explosive back in",
+   where:"At the Outside Chawl start, out of sight before you approach the crowd.",
+   disguise:"None.",
+   item:"Briefcase and remote breaching charge.",
+   npc:"None.",
+   pts:["Doing it in that exact order lets you detonate the charge while it is still sealed inside the briefcase.",
+        "This makes the case a delivery device you can set down anywhere without suspicion."],
+   det:{"Source":"Hitman Wiki walkthrough: unpack the briefcase at the start of the mission and quickly put the explosive back in, which allows you to detonate it whilst it is still in the briefcase."},
+   badges:[]},
+
+  {t:"Save at mission start",
+   where:"Still at the start point, before you approach the act.",
+   disguise:"None.",
+   item:"None.",
+   npc:"None.",
+   pts:["Both branches below reload to this save. It sits before any action, so nothing is locked out from here."],
+   badges:[{k:"save",t:"SAVE HERE — branch point for both kills"}]}
+ ]},
+
+ {h:"Branch A — the explosion", steps:[
+  {t:"Volunteer, leave the case, close the door, detonate",
+   where:"The crowd outside, then the private room on the top floor.",
+   disguise:"None.",
+   item:"Briefcase with the charge inside.",
+   npc:"Basil Carnaby — leave the bodyguard alone this time.",
+   pts:["Follow the act up as normal. Do not pacify the bodyguard on this branch.",
+        "Drop the briefcase in the room, walk out, close the door behind you, then detonate.",
+        "The closed door is what contains the blast and keeps you out of it."],
+   warn:"Known bug: a charge placed on the ground in Basil's path out in the open only knocked him unconscious while killing bystanders. Stage this inside the room, never in the street.",
+   det:{"Source":"Hitman Wiki walkthrough for the method; Hitman Forum for the bug report.",
+        "Fallback — oil canister":"Bring an oil canister instead, set it where Basil stands and shoot it from cover with the silenced pistol where nobody can see you. The wiki recommends this as an easy Silent Assassin route because the blast counts as an accident — but no source confirms an accident explosion satisfies this challenge. Fallback only."},
+   badges:[{k:"assassination",id:"keepcalm"},{k:"unver",t:"Oil-canister fallback UNVERIFIED for this challenge"}]}
+ ]},
+
+ {h:"Branch B — the electrocution", steps:[
+  {t:"Reload to the start save, talk to Basil, then peel away",
+   where:"The act outside, then around to the third-floor window of Basil's room — next door to the Kashmirian's apartment.",
+   disguise:"None.",
+   item:"None yet.",
+   npc:"A civilian inside the room.",
+   pts:["Talk to Basil as usual, but the moment the street conversation ends, do not follow him. Climb to the third-floor room and go in through the window.",
+        "Subdue and hide the civilian inside before Basil arrives."],
+   det:{"Room identification":"NamuWiki places it as Basil's room on the third floor, immediately next to the Kashmirian's room — the same room that is a selectable start in the main Mumbai mission.",
+        "Useful nearby":"A Barber Razor sits in the bathroom on this third level, and another on the second level, if you want an improvised melee option."},
+   badges:[]},
+
+  {t:"Split Basil from his bodyguard, then wait",
+   where:"Inside the third-floor room.",
+   disguise:"None.",
+   item:"Coin.",
+   npc:"Basil's bodyguard.",
+   pts:["When Basil comes up, open the door and make a noise. The bodyguard comes to investigate — subdue him and hide him.",
+        "Then stay put. Do not follow Basil. Left alone, he walks into the room by himself after a short wait."],
+   warn:"Save before you make the noise. This is the fiddliest timing window in the mission.",
+   det:{"Source":"NamuWiki's electrocution route, which is explicit that you must not follow Basil at this point."},
+   badges:[{k:"save",t:"SAVE HERE — before the noise lure"}]},
+
+  {t:"Drown the floor, not the man",
+   where:"The bathroom inside the third-floor room.",
+   disguise:"None.",
+   item:"Taser / electrocution device.",
+   npc:"Basil Carnaby.",
+   pts:["Subdue Basil when he enters, drag him to the bathroom sink and turn the water on.",
+        "Place the taser in the standing water on the floor and trigger it immediately."],
+   warn:"The guard outside reacts to the sound of running water. If you use a remote trigger and hesitate, he investigates and the attempt is lost — place and fire in one motion.",
+   det:{"Source":"NamuWiki, which also notes this was trivial in HITMAN 2 with the Electrocution Phone before that item was removed.",
+        "XP":"Energetic Guy is one of the five challenges here with a confirmed value: +2,000 XP."},
+   badges:[{k:"assassination",id:"energetic"}]}
+ ]}]
+}
+];
+
+/* ===================== STATE ===================== */
+const KEY="iog-progress-v2";
+let state={ch:{},steps:{}}, memOnly=false;
+function reportProgress(){try{const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r['sa03']={done:CH.filter(c=>state.ch[c.id]).length,total:CH.length,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
+async function load(){try{const r=localStorage.getItem(KEY);if(r)state=Object.assign({ch:{},steps:{}},JSON.parse(r));}catch(e){memOnly=true;}}
+async function save(){if(memOnly)return;try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){memOnly=true;}reportProgress();}
+const byId=Object.fromEntries(CH.map(c=>[c.id,c]));
+const esc=s=>String(s).replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));
+
+/* ===================== RENDER ===================== */
+function buildDeck(){document.getElementById("deck").innerHTML=CH.map((c,i)=>`<span class="pip" data-ch="${c.id}" data-done="0">${String(i+1).padStart(2,"0")}</span>`).join("");}
+function buildCats(){document.getElementById("cats").innerHTML=CATS.map(c=>`<div class="cat" data-c="${c.id}"><div class="lbl">${c.label}</div><div class="num"><span data-count="${c.id}">0</span><em> / ${c.total}</em></div></div>`).join("");}
+function badgeHTML(b){
+ if(b.id){const c=byId[b.id];return `<span class="b ${c.c}" data-badge="${b.id}" data-done="0">${esc(c.n)}</span>`;}
+ return `<span class="b ${b.k}">${esc(b.t)}</span>`;
+}
+
+function buildNav(){
+ const nav=document.getElementById("runnav");
+ nav.innerHTML = RUNS.map((r,i)=>`<button class="rbtn" data-goto="${i}">
+   <div class="rn">${esc(r.no)}</div><div class="rt">${esc(r.title)}</div>
+   <div class="rc">${r.ch.length} challenge${r.ch.length>1?"s":""}</div></button>`).join("")
+ + `<div class="navtools"><button class="mini" data-all="open">Expand all runs</button><button class="mini" data-all="close">Collapse all runs</button></div>`;
+}
+
+function buildRuns(){
+ document.getElementById("runs").innerHTML = RUNS.map((r,ri)=>{
+  const chips=r.ch.map(id=>`<span class="b ${byId[id].c}" data-badge="${id}" data-done="0">${esc(byId[id].n)}</span>`).join("");
+  const slots=r.loadout.items.map(it=>`<div class="slot"><div class="k">${esc(it.k)}</div><div class="v">${esc(it.v)}</div><div class="n">${esc(it.n)}</div></div>`).join("");
+  let n=0;
+  const secs=r.sections.map((s,si)=>`<div><h3>${esc(s.h)}</h3>${s.steps.map((st,ti)=>{
+    n++;
+    const key=`r${ri}s${si}t${ti}`;
+    const req=[
+      st.disguise?`<span class="rq${/^none/i.test(st.disguise)?" none":""}">Disguise: <b>${esc(st.disguise)}</b></span>`:"",
+      st.item?`<span class="rq${/^none/i.test(st.item)?" none":""}">Item: <b>${esc(st.item)}</b></span>`:"",
+      st.npc?`<span class="rq${/^none/i.test(st.npc)?" none":""}">NPC: <b>${esc(st.npc)}</b></span>`:""
+    ].join("");
+    const pts=[st.where?`<li><b>Where:</b> ${esc(st.where)}</li>`:""]
+      .concat((st.pts||[]).map(p=>`<li>${esc(p)}</li>`))
+      .concat(st.warn?[`<li class="w"><b>Warning:</b> ${esc(st.warn)}</li>`]:[]).join("");
+    const dets=Object.entries(st.det||{}).map(([k,v])=>`<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("");
+    const bd=(st.badges||[]).map(badgeHTML).join("");
+    return `<div class="step">
+      <button class="tick" data-step="${key}" aria-pressed="false" aria-label="Mark step ${n} complete">✓</button>
+      <div class="step-body" data-body="${key}" data-done="0">
+        <p class="st"><span class="num">${String(n).padStart(2,"0")}</span>${esc(st.t)}</p>
+        ${req?`<div class="req">${req}</div>`:""}
+        <ul class="pts">${pts}</ul>
+        ${dets?`<details class="det"><summary>More detail &amp; fallbacks</summary><div class="det-in"><dl>${dets}</dl></div></details>`:""}
+        ${bd?`<div class="badges">${bd}</div>`:""}
+      </div></div>`;
+  }).join("")}</div>`).join("");
+
+  return `<details class="run" id="run-${ri}"${ri===0?" open":""}>
+    <summary>
+      <div class="run-no">${esc(r.no)} · ${r.ch.length} challenge${r.ch.length>1?"s":""}</div>
+      <h2>${esc(r.title)}</h2>
+      <p class="run-goal">${esc(r.goal)}</p>
+      <p class="run-goal" style="margin-top:6px;color:var(--dim);font-size:13px"><b style="color:var(--saffron)">Prerequisite:</b> ${esc(r.pre)}</p>
+      <div class="run-count">${chips}</div>
+    </summary>
+    <div class="run-inner">
+      <div class="loadout">
+        <div class="slot"><div class="k">Starting location</div><div class="v">${esc(r.loadout.start)}</div><div class="n">${esc(r.loadout.startNote)}</div></div>
+        <div class="slot"><div class="k">Suit</div><div class="v">${esc(r.loadout.suit)}</div><div class="n">${esc(r.loadout.suitNote)}</div></div>
+      </div>
+      <div class="loadout">${slots}</div>
+      <div class="sec">${secs}</div>
+    </div></details>`;
+ }).join("");
+}
+
+const FILTERS=[{id:"all",label:"All"},{id:"assassination",label:"Assassination"},{id:"feats",label:"Feats"},{id:"targets",label:"Targets"},{id:"classic",label:"Classic"},{id:"incomplete",label:"Incomplete"}];
+let activeFilter="all";
+function buildList(){
+ document.getElementById("filters").innerHTML=FILTERS.map(f=>`<button class="f" data-f="${f.id}" aria-pressed="${f.id===activeFilter}">${f.label}</button>`).join("");
+ document.getElementById("clist").innerHTML=CH.map(c=>{
+  const ri=RUNS.findIndex(r=>r.ch.includes(c.id));
+  const rl=ri>=0?`${RUNS[ri].no} — ${RUNS[ri].title}`:"Unassigned";
+  return `<label class="crow" data-cat="${c.c}" data-ch="${c.id}" data-done="0">
+    <input type="checkbox" data-check="${c.id}">
+    <div class="cmain">
+      <p class="cname">${esc(c.n)}</p>
+      <p class="cdesc">${esc(c.d)}</p>
+      <div class="cmeta">
+        <span class="b ${c.c}">${esc(CATS.find(x=>x.id===c.c).label)}</span>
+        <span class="b ${c.c}" style="opacity:.72">${esc(rl)}</span>
+        <span class="xp">${c.xp?`+${c.xp.toLocaleString()} XP (confirmed)`:"XP unverified"}</span>
+      </div></div></label>`;
+ }).join("");
+}
+
+function sync(){
+ let done=0,xp=0;const per=Object.fromEntries(CATS.map(c=>[c.id,0]));
+ CH.forEach(c=>{
+  const on=!!state.ch[c.id];
+  if(on){done++;per[c.c]++;if(c.xp)xp+=c.xp;}
+  document.querySelectorAll(`[data-badge="${c.id}"]`).forEach(b=>b.dataset.done=on?"1":"0");
+  const pip=document.querySelector(`.pip[data-ch="${c.id}"]`);if(pip)pip.dataset.done=on?"1":"0";
+  const row=document.querySelector(`.crow[data-ch="${c.id}"]`);
+  if(row){row.dataset.done=on?"1":"0";row.querySelector("input").checked=on;}
+ });
+ document.getElementById("doneN").textContent=done;
+ document.getElementById("xpN").textContent=xp.toLocaleString();
+ document.getElementById("barFill").style.width=(done/CH.length*100).toFixed(1)+"%";
+ CATS.forEach(c=>{document.querySelector(`[data-count="${c.id}"]`).textContent=per[c.id];});
+ Object.keys(state.steps).forEach(k=>{
+  const btn=document.querySelector(`[data-step="${k}"]`),body=document.querySelector(`[data-body="${k}"]`);
+  if(btn)btn.setAttribute("aria-pressed",state.steps[k]?"true":"false");
+  if(body)body.dataset.done=state.steps[k]?"1":"0";
+ });
+ applyFilter();
+}
+function applyFilter(){
+ document.querySelectorAll(".crow").forEach(row=>{
+  const c=row.dataset.cat,d=row.dataset.done==="1";
+  let show=true;
+  if(activeFilter==="incomplete")show=!d;
+  else if(activeFilter!=="all")show=(c===activeFilter);
+  row.hidden=!show;
+ });
+ document.querySelectorAll(".f").forEach(b=>b.setAttribute("aria-pressed",b.dataset.f===activeFilter));
+}
+
+document.addEventListener("click",e=>{
+ const tab=e.target.closest(".tab");
+ if(tab){document.querySelectorAll(".tab").forEach(t=>{const on=t===tab;t.setAttribute("aria-selected",on);document.getElementById(t.getAttribute("aria-controls")).hidden=!on;});return;}
+ const go=e.target.closest("[data-goto]");
+ if(go){const d=document.getElementById("run-"+go.dataset.goto);d.open=true;d.scrollIntoView({behavior:"smooth",block:"start"});return;}
+ const all=e.target.closest("[data-all]");
+ if(all){document.querySelectorAll("details.run").forEach(d=>d.open=(all.dataset.all==="open"));return;}
+ const tick=e.target.closest(".tick");
+ if(tick){state.steps[tick.dataset.step]=!state.steps[tick.dataset.step];save();sync();return;}
+ const f=e.target.closest(".f");
+ if(f){activeFilter=f.dataset.f;applyFilter();return;}
+});
+document.addEventListener("change",e=>{
+ const cb=e.target.closest("[data-check]");
+ if(cb){state.ch[cb.dataset.check]=cb.checked;save();sync();}
+});
+
+(async function(){buildDeck();buildCats();buildNav();buildRuns();buildList();await load();sync();reportProgress();})();
+</script>
+<!-- step-progress-bridge -->
+<script>
+/* Reports route-step ticks into 'hitman-progress-registry' so the index can
+   show them beside the challenge counts. Counts what is on screen rather than
+   any guide-specific state, so one implementation serves every guide. */
+(function(){
+  var RID="sa03", SEL=".step";
+  function isDone(s){
+    var c=s.classList;
+    if(c.contains('done')||c.contains('dn')) return true;
+    if(s.getAttribute('data-done')==='1'||s.getAttribute('aria-pressed')==='true') return true;
+    return !!s.querySelector('.done,.dn,[data-done="1"],[aria-pressed="true"]');
+  }
+  function tally(){
+    var steps=document.querySelectorAll(SEL);
+    if(!steps.length) return null;
+    var n=0;
+    for(var i=0;i<steps.length;i++) if(isDone(steps[i])) n++;
+    return {steps:n,stepTotal:steps.length};
+  }
+  function push(){
+    var t;
+    try{ t=tally(); }catch(err){ return; }
+    if(!t||!t.stepTotal) return;
+    try{
+      var r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');
+      var e=r[RID]||(r[RID]={});
+      /* the guide's own reportProgress() rewrites this entry wholesale, so
+         re-add the step counts whenever they go missing or stale */
+      if(e.steps===t.steps&&e.stepTotal===t.stepTotal) return;
+      e.steps=t.steps; e.stepTotal=t.stepTotal; e.updated=Date.now();
+      localStorage.setItem('hitman-progress-registry',JSON.stringify(r));
+    }catch(err){}
+  }
+  var pending=false;
+  function schedule(){
+    if(pending) return; pending=true;
+    setTimeout(function(){pending=false;push();},120);
+  }
+  try{
+    new MutationObserver(schedule).observe(document.body,
+      {subtree:true,childList:true,attributes:true,attributeFilter:['class','aria-pressed','data-done']});
+  }catch(err){}
+  window.addEventListener('load',schedule);
+  setTimeout(push,600);
+})();
+</script>
+<!-- /step-progress-bridge -->
+</body>
+</html>

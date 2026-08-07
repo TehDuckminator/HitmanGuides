@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Pen and the Sword — Hantu Port Range Card</title>
+<style>
+:root{
+  --ink:#070b10; --deck:#0e1620; --deck2:#131f2b; --line:#22323f;
+  --sodium:#f2a541; --sea:#4fbfa8; --hazard:#e2513c; --violet:#b49ae0;
+  --bone:#e8eef2; --mute:#8397a6;
+  --mono: ui-monospace,"SF Mono","Cascadia Mono","Roboto Mono",Menlo,Consolas,monospace;
+  --sans:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--ink);color:var(--bone);font-family:var(--sans);font-size:15px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  background-image:radial-gradient(1100px 500px at 78% -12%,rgba(242,165,65,.10),transparent 60%),
+                   radial-gradient(800px 420px at 8% 105%,rgba(79,191,168,.07),transparent 60%);
+  background-attachment:fixed}
+.wrap{max-width:1020px;margin:0 auto;padding:0 16px 90px}
+
+.mast{padding:32px 0 20px;border-bottom:1px solid var(--line)}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--sodium);margin:0 0 10px}
+h1{font-family:var(--mono);font-weight:700;font-size:clamp(27px,6.2vw,44px);line-height:1.02;margin:0;text-transform:uppercase}
+h1 span{display:block;color:var(--mute);font-size:.42em;letter-spacing:.22em;margin-top:12px;font-weight:400}
+.tagline{color:var(--mute);max-width:64ch;margin:14px 0 0}
+
+.banner{border:1px solid var(--sodium);border-left-width:4px;background:rgba(242,165,65,.07);padding:14px 16px;margin:22px 0;border-radius:3px}
+.banner.v{border-color:var(--violet);background:rgba(180,154,224,.07)}
+.banner h3{margin:0 0 6px;font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--sodium)}
+.banner.v h3{color:var(--violet)}
+.banner p{margin:0 0 8px;font-size:14px;color:#cdd8e0}
+.banner p:last-child{margin-bottom:0}
+
+.tracker{margin:26px 0 6px}
+.dial{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.ring{position:relative;width:104px;height:104px;flex:0 0 104px}
+.ring svg{transform:rotate(-90deg)}
+.ring .val{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--mono);line-height:1}
+.ring .val b{font-size:21px}
+.ring .val i{font-style:normal;font-size:10px;color:var(--mute);letter-spacing:.14em;margin-top:4px}
+.counters{display:flex;gap:10px;flex-wrap:wrap;flex:1 1 240px}
+.counter{border:1px solid var(--line);background:var(--deck);border-radius:3px;padding:10px 13px;min-width:112px;flex:1 1 112px}
+.counter b{display:block;font-family:var(--mono);font-size:19px}
+.counter span{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute)}
+.counter.assn b{color:var(--hazard)} .counter.feat b{color:var(--sea)} .counter.mult b{color:var(--sodium)}
+.reset{margin-top:14px;background:none;border:1px solid var(--line);color:var(--mute);font-family:var(--mono);
+  font-size:10px;letter-spacing:.16em;text-transform:uppercase;padding:7px 12px;border-radius:3px;cursor:pointer}
+.reset:hover{border-color:var(--hazard);color:var(--hazard)}
+
+.tabs{display:flex;border-bottom:1px solid var(--line);margin:26px 0 20px;overflow-x:auto}
+.tab{background:none;border:0;border-bottom:2px solid transparent;color:var(--mute);cursor:pointer;
+  font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;padding:12px 16px;white-space:nowrap}
+.tab[aria-selected="true"]{color:var(--sodium);border-bottom-color:var(--sodium)}
+.tab:focus-visible,.chk:focus-visible,.filter:focus-visible,.runjump:focus-visible,
+.run-head:focus-visible,.step-head:focus-visible,.expandall:focus-visible{outline:2px solid var(--sea);outline-offset:2px}
+
+/* run jump bar */
+.jumpbar{position:sticky;top:0;z-index:5;background:linear-gradient(var(--ink) 76%,rgba(7,11,16,0));
+  padding:10px 0 16px;margin-bottom:6px}
+.jumprow{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
+.runjump{background:var(--deck);border:1px solid var(--line);color:var(--mute);cursor:pointer;border-radius:3px;
+  font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:8px 11px;display:flex;gap:7px;align-items:center}
+.runjump:hover{border-color:var(--sodium);color:var(--sodium)}
+.runjump.full{border-color:var(--sea);color:var(--sea)}
+.runjump em{font-style:normal;opacity:.7}
+.expandall{background:none;border:1px dashed var(--line);color:var(--mute);cursor:pointer;border-radius:3px;
+  font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:8px 11px}
+
+/* run card */
+.run{border:1px solid var(--line);background:var(--deck);border-radius:4px;margin-bottom:16px;overflow:hidden;scroll-margin-top:80px}
+.run-head{width:100%;text-align:left;background:var(--deck2);border:0;border-bottom:1px solid transparent;
+  color:inherit;font:inherit;cursor:pointer;padding:16px 18px;display:block}
+.run.open .run-head{border-bottom-color:var(--line)}
+.run-tag{font-family:var(--mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--sodium)}
+.run-head h2{font-family:var(--mono);font-size:18px;margin:6px 0 8px;text-transform:uppercase}
+.run-goal{margin:0;color:#c3d0d9;font-size:14px}
+.run-meter{font-family:var(--mono);font-size:11px;color:var(--mute);margin-top:11px;letter-spacing:.08em}
+.run-meter b{color:var(--sea)}
+.run-body{display:none}
+.run.open .run-body{display:block}
+
+.kit{padding:16px 18px;border-bottom:1px solid var(--line);display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
+.kit-cell span{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);margin-bottom:3px}
+.kit-cell b{font-weight:600;font-size:14px}
+.kit-cell em{display:block;font-style:normal;font-size:12px;color:var(--mute);margin-top:2px}
+
+.sect{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--sea);padding:18px 18px 4px}
+
+.step{border-top:1px solid rgba(34,50,63,.6);display:flex;align-items:flex-start;gap:11px;padding:12px 18px}
+.step.done{background:rgba(79,191,168,.05)}
+.stepno{flex:0 0 auto;font-family:var(--mono);font-size:11px;color:var(--mute);padding-top:5px;min-width:24px}
+.chk{flex:0 0 22px;width:22px;height:22px;margin-top:2px;border:1px solid var(--line);border-radius:3px;
+  background:transparent;color:transparent;cursor:pointer;font-size:13px;line-height:1;padding:0}
+.chk[aria-pressed="true"]{background:var(--sea);border-color:var(--sea);color:var(--ink)}
+.step-body{flex:1 1 auto;min-width:0}
+.step-head{background:none;border:0;padding:0;text-align:left;color:inherit;cursor:pointer;width:100%;font:inherit}
+.step-head b{display:block;font-size:15px}
+.step.done .step-head b{text-decoration:line-through;color:var(--mute)}
+.step-head .more{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--sodium);margin-top:4px;display:inline-block}
+.step-detail{display:none;margin-top:10px}
+.step.open .step-detail{display:block}
+.step ul{margin:0 0 10px;padding-left:17px}
+.step li{font-size:14px;color:#c6d2db;margin-bottom:5px}
+.step li b{color:var(--bone)}
+.fields{border:1px solid var(--line);border-left:3px solid var(--sea);border-radius:3px;background:rgba(7,11,16,.55);padding:11px 13px;margin-bottom:10px}
+.fields dl{margin:0;display:grid;grid-template-columns:92px 1fr;gap:5px 12px}
+.fields dt{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);padding-top:2px}
+.fields dd{margin:0;font-size:14px;color:#c6d2db}
+.src{font-family:var(--mono);font-size:11px;color:var(--mute);margin:8px 0 0}
+
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.badge{font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;padding:3px 8px;border-radius:2px;border:1px solid}
+.b-assn{color:var(--hazard);border-color:rgba(226,81,60,.55);background:rgba(226,81,60,.10)}
+.b-feat{color:var(--sea);border-color:rgba(79,191,168,.5);background:rgba(79,191,168,.10)}
+.b-warn{color:#ff8f7a;border-color:var(--hazard);background:rgba(226,81,60,.18);font-weight:700}
+.b-save{color:var(--sodium);border-color:rgba(242,165,65,.6);background:rgba(242,165,65,.12);font-weight:700}
+.b-unver{color:#c9b6e8;border-color:#6f5a91;background:rgba(111,90,145,.18)}
+
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.filter{background:var(--deck);border:1px solid var(--line);color:var(--mute);cursor:pointer;border-radius:3px;
+  font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;padding:8px 12px}
+.filter[aria-pressed="true"]{border-color:var(--sodium);color:var(--sodium)}
+.row{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border:1px solid var(--line);border-radius:3px;background:var(--deck);margin-bottom:8px}
+.row.done{opacity:.55}
+.row-body{flex:1 1 auto;min-width:0}
+.row-body b{display:block;font-size:14px}
+.row.done .row-body b{text-decoration:line-through}
+.row-body p{margin:2px 0 0;font-size:13px;color:var(--mute)}
+.row-meta{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);margin-top:6px;display:flex;gap:10px;flex-wrap:wrap}
+.pill-assn{color:var(--hazard)} .pill-feat{color:var(--sea)}
+.redacted{color:var(--violet)}
+
+.audit table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0 20px}
+.audit th,.audit td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+.audit th{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);background:var(--deck2)}
+.audit h3{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--sodium);margin:26px 0 8px}
+.audit li{margin-bottom:7px;font-size:14px;color:#c6d2db}
+.ok{color:var(--sea);font-family:var(--mono);font-size:11px}
+.no{color:var(--hazard);font-family:var(--mono);font-size:11px}
+.part{color:var(--violet);font-family:var(--mono);font-size:11px}
+.hide{display:none}
+@media (max-width:560px){.kit{grid-template-columns:1fr}.fields dl{grid-template-columns:1fr;gap:2px}.fields dt{padding-top:6px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="mast">
+  <p class="eyebrow">Sniper Assassin · Hantu Port, Singapore · LOCATION_PARENT_SALTY</p>
+  <h1>The Pen<br>and the Sword<span>27 challenges · 13 assassination · 14 feats · 0 disguises · 0 areas</span></h1>
+  <p class="tagline">Seven runs, every challenge assigned exactly once, every step written from at least two sources. Challenge names and descriptions below are taken verbatim from your uploaded in-game data file.</p>
+</header>
+
+<section class="banner v">
+  <h3>What your uploaded file changed</h3>
+  <p>The official mission file confirms <b>challengeCount 27</b>, <b>disguiseCount 0</b>, <b>areaCount 0</b>, <b>areaGoal null</b> — 13 assassination and 14 feats. That settles it: there is no Chameleon, no Discovery category, no mission stories, no starting locations and no loadout on this map. The Hitman Wiki's prose claim of "28 challenges: 14 &amp; 14" is wrong.</p>
+  <p>It also resolved a rank conflict I had flagged: <b>"… And the Deep Blue Sea" reads "Interrupt <u>Captain</u> Re Thak"</b>, not Colonel. Re Thak is Captain throughout. And four challenges are genuinely <span class="redacted">[REDACTED]</span> in-game until completed — On the Waterfront, Ghost Ship, Codename Crane, No More Happy Hour. Their real objectives are shown below, sourced from completed-challenge text.</p>
+</section>
+
+<section class="banner">
+  <h3>One routing conflict found during run simulation</h3>
+  <p><b>Rock the Boat and Abandon Ship! cannot share a run.</b> Rock the Boat only counts bodyguards killed <i>after</i> the evacuation starts, so no bodyguard may die before the trigger. Abandon Ship! only counts main targets killed <i>while escaping</i>, so no main may die before the trigger. Something has to die to start the evacuation, and the documented triggers are exactly those two things — XboxAchievements describes killing the mains sloppily for one and killing a bodyguard sloppily for the other. No third trigger is documented, so they are split into Run 04 and Run 05. This is why the guide has seven runs, not six.</p>
+</section>
+
+<section class="tracker" aria-label="Progress">
+  <div class="dial">
+    <div class="ring">
+      <svg width="104" height="104" viewBox="0 0 104 104" aria-hidden="true">
+        <circle cx="52" cy="52" r="45" fill="none" stroke="#22323f" stroke-width="8"></circle>
+        <circle id="arc" cx="52" cy="52" r="45" fill="none" stroke="#f2a541" stroke-width="8" stroke-dasharray="282.7" stroke-dashoffset="282.7"></circle>
+      </svg>
+      <div class="val"><b id="ringNum">0/27</b><i>Cleared</i></div>
+    </div>
+    <div class="counters">
+      <div class="counter assn"><b id="cAssn">0/13</b><span>Assassination</span></div>
+      <div class="counter feat"><b id="cFeat">0/14</b><span>Feats</span></div>
+      <div class="counter mult"><b id="cMult">1.00×</b><span>Score multiplier</span></div>
+      <div class="counter"><b id="cRuns">0/7</b><span>Runs finished</span></div>
+    </div>
+  </div>
+  <button class="reset" id="resetBtn">Clear all progress</button>
+</section>
+
+<nav class="tabs" role="tablist">
+  <button class="tab" role="tab" id="tab-runs" aria-selected="true" aria-controls="panel-runs">Runs</button>
+  <button class="tab" role="tab" id="tab-list" aria-selected="false" aria-controls="panel-list">Checklist</button>
+  <button class="tab" role="tab" id="tab-audit" aria-selected="false" aria-controls="panel-audit">Verification &amp; audit</button>
+</nav>
+
+<div id="panel-runs" role="tabpanel" aria-labelledby="tab-runs">
+  <div class="jumpbar"><div class="jumprow" id="jumprow"></div></div>
+  <div id="runhost"></div>
+</div>
+
+<div id="panel-list" role="tabpanel" aria-labelledby="tab-list" class="hide">
+  <div class="filters" id="filters"></div>
+  <div id="rows"></div>
+</div>
+
+<div id="panel-audit" role="tabpanel" aria-labelledby="tab-audit" class="hide">
+  <div class="audit">
+    <h3>Source verification</h3>
+    <table>
+      <thead><tr><th>Fact</th><th>Sources</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>27 challenges = 13 assassination + 14 feats; 0 disguises; 0 areas</td><td>Uploaded in-game mission file; XboxAchievements "Pure Poetry"; PSNProfiles (both DLC guides)</td><td class="ok">VERIFIED ×3</td></tr>
+        <tr><td>Exact challenge names and descriptions</td><td>Uploaded in-game file (authoritative); Hitman Wiki table</td><td class="ok">VERIFIED — file used verbatim</td></tr>
+        <tr><td>Re Thak is a <b>Captain</b>, not Colonel</td><td>Uploaded file ("… And the Deep Blue Sea"); TV Tropes; Villains Wiki</td><td class="ok">RESOLVED — earlier wiki conflict closed</td></tr>
+        <tr><td>Codenames: Jin Noo "The Blade" (Colonel), Re Thak "Spider Lily" (Captain), Lhom Kwai "Dragon Eye" (Captain)</td><td>Hitman Wiki challenge pages; TV Tropes; Villains Wiki</td><td class="ok">VERIFIED ×3</td></tr>
+        <tr><td>18 targets: 3 mains + 15 bodyguards</td><td>PSNProfiles; Hitman Wiki ("Fifteen Bodyguards"); Rock the Boat wiki page ("all fifteen")</td><td class="ok">VERIFIED ×3</td></tr>
+        <tr><td>Crane meeting bay = <b>11</b>; Codename Crane drops = <b>4 then 7</b></td><td>Steam guide (cineas); XboxAchievements; NamuWiki</td><td class="ok">VERIFIED ×3</td></tr>
+        <tr><td>Rubber ducks = <b>10</b></td><td>XboxAchievements; multiple independent video guides titled "All 10 Rubber Ducks"</td><td class="ok">VERIFIED</td></tr>
+        <tr><td>Rats = <b>9</b></td><td>XboxAchievements; corroborated by the challenge name "Rat O'Nine Tails"</td><td class="part">LIKELY — one explicit source + name</td></tr>
+        <tr><td>Ship lights = 7</td><td>Steam guide only</td><td class="part">PARTIAL — single source; shoot until it pops</td></tr>
+        <tr><td>Alarm behaviour: Re Thak → cars at the cargo main entrance; Lhom Kwai → helipad chopper; Jin Noo → executes a hostage, mission fails</td><td>Hitman Wiki "Target Lockdown"; Villains Wiki (Jin Noo); Steam guide warns about both</td><td class="ok">VERIFIED ×3</td></tr>
+        <tr><td>Landlubber works on any target, not just Jin Noo</td><td>Uploaded file wording ("a target"); XboxAchievements ("wait until a guard is near")</td><td class="ok">VERIFIED — this removes a route dependency</td></tr>
+        <tr><td>Between the Devil… also pops during the Deadweight setup</td><td>XboxAchievements states it directly; the horn mechanic is the same in both</td><td class="part">LIKELY — kept in Run 01 as the safe assignment</td></tr>
+        <tr><td>XP per challenge</td><td>—</td><td class="no">UNVERIFIED — sources publish score multipliers only. Multipliers shown; they are not XP.</td></tr>
+        <tr><td>Mastery level per rifle upgrade / ammo unlock</td><td>—</td><td class="no">UNVERIFIED — confirmed only that Hantu Port upgrades apply to this mission alone</td></tr>
+        <tr><td>Mid-mission manual saves in Sniper Assassin</td><td>—</td><td class="no">UNVERIFIED — no source documents one. Every checkpoint here is a restart.</td></tr>
+        <tr><td>Challenges added or changed by later patches</td><td>—</td><td class="no">UNVERIFIED — no source found. Mission shipped 26 Mar 2019 with HITMAN 2 Expansion Pack 1.</td></tr>
+        <tr><td>Exact duck / rat / seagull coordinates</td><td>—</td><td class="no">UNVERIFIED — both text guides explicitly decline to describe them and point to video/image maps</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Known bugs and hard ordering rules</h3>
+    <ul>
+      <li><b>ORDERING RULE (verified).</b> If the alarm is raised while Jin Noo lives, he walks to the hostages and executes one — instant mission failure. Any alarm-based run kills him first.</li>
+      <li><b>ORDERING RULE (verified).</b> Deadweight needs undisturbed patrols. XboxAchievements: shoot nobody before the meeting.</li>
+      <li><b>ORDERING RULE (verified).</b> Rock the Boat requires zero bodyguard deaths before the evacuation; Abandon Ship! requires zero main-target deaths before it. Separate runs.</li>
+      <li><b>Death Raft may kill only one of the two.</b> Several Steam guide commenters report this. <span class="b-unver">UNVERIFIED — user reports only</span></li>
+      <li><b>Silent Assassin may not register.</b> The Steam guide author reports Hawkeye failing when Re Thak was the last kill, and passing when a bodyguard was last. <span class="b-unver">UNVERIFIED — single anecdote</span></li>
+      <li><b>Sniper mastery XP freeze (HITMAN 3 era).</b> A Hitman Forum thread reports Hantu Port mastery bars stalling and rifle unlocks not applying. Affects unlocks, not challenge completion. <span class="b-unver">UNVERIFIED — single report</span></li>
+    </ul>
+
+    <h3>Run simulation — what was checked, step by step</h3>
+    <ul>
+      <li><b>Coverage.</b> 12 + 5 + 5 + 2 + 1 + 1 + 1 = 27. No challenge appears twice; none is unassigned. Assassination assignments total 13, feats total 14.</li>
+      <li><b>Prerequisites.</b> No step needs an item, pickup or disguise, because the map has none — 47 has only the Druzhina 34 ICA from a fixed nest. The only "prerequisite" chains are scripted: the crane panel must be opened before any crane step (Runs 01 and 06), and the hostage container must close before the Deadweight meeting can be called.</li>
+      <li><b>NPCs still alive when needed.</b> Run 01 keeps Jin Noo and Re Thak alive to the end because both office interruptions need them. Run 03 was reordered so Landlubber uses a bodyguard rather than Jin Noo — the file's wording is "a target", so the old dependency on his office trip is gone, and the life-raft meeting is no longer at risk. Run 06 kills nobody until the drop. Run 07 keeps Re Thak alive through the whole escort.</li>
+      <li><b>Broken scripts.</b> Run 06 forbids all shooting at people so the meeting script survives. Run 07 requires Lhom Kwai to die <i>before</i> the escort begins, or Re Thak never inherits it.</li>
+      <li><b>Back-and-forth.</b> Each run is grouped by map zone and by the mission clock: crane and containers first (mission start), collectibles during the quiet middle, office events last. Run 03 follows the accident scripts in the order they occur so nothing is revisited.</li>
+      <li><b>Mutually exclusive pairs, all separated:</b> Clean Bill of Health ↔ Deadweight ↔ In the Spider's Web (three incompatible hostage states); Skullcracker ↔ all seven accident kills; Rock the Boat ↔ Abandon Ship!; Deadweight ↔ Death Raft / Landlubber / Boom Gate.</li>
+      <li><b>Nothing becomes permanently unobtainable</b>, because challenges bank the instant they register and every run is a fresh start. PSNProfiles notes you can quit a run as soon as a challenge shows completed.</li>
+    </ul>
+  </div>
+</div>
+
+</div>
+
+<script>
+/* ---------- challenges: names & descriptions verbatim from the uploaded in-game file ---------- */
+const CH = [
+ {id:'boomgate', n:"Don't Let the Boom Gate Hit You...", t:'assn', m:'1.10', d:'Eliminate Captain Re Thak with the boom gate.'},
+ {id:'cannon',   n:"Kissing the Gunner's Daughter", t:'assn', m:'1.10', d:'Eliminate and hide a target with a cannon.'},
+ {id:'raft',     n:'Death Raft', t:'assn', m:'1.09', d:'Eliminate two main targets with the same life raft.'},
+ {id:'skull',    n:'Skullcracker', t:'assn', m:'1.12', d:'Eliminate all the targets with headshots.'},
+ {id:'dead',     n:'Deadweight', t:'assn', m:'1.11', d:'Eliminate the three main targets with the cargo crane.'},
+ {id:'power',    n:'Unlimited Power!', t:'assn', m:'1.10', d:'Eliminate three targets by electrocution.'},
+ {id:'burn',     n:'Burning on the Dock of the Bay', t:'assn', m:'1.10', d:'Eliminate three targets with the same explosion.'},
+ {id:'rock',     n:'Rock the Boat', t:'assn', m:'1.10', d:'Eliminate all bodyguards after starting the evacuation.'},
+ {id:'davy',     n:"Davy Jones' Locker", t:'assn', m:'1.06', d:'Eliminate and hide five targets in water.'},
+ {id:'skel',     n:'Skeleton Crew', t:'assn', m:'1.08', d:'Eliminate and hide all bodyguards.'},
+ {id:'abandon',  n:'Abandon Ship!', t:'assn', m:'1.08', d:'Eliminate the three main targets while they are escaping.'},
+ {id:'dmtnt',    n:'Dead Men Tell No Tales', t:'assn', m:'1.10', d:'Eliminate and hide all main targets.'},
+ {id:'land',     n:'Landlubber', t:'assn', m:'1.08', d:'Eliminate a target with the car lift.'},
+
+ {id:'clean',    n:'Clean Bill of Health', t:'feat', m:'1.07', d:'Complete the mission without the hostages being moved.'},
+ {id:'eternity', n:'From Here To Eternity', t:'feat', m:'1.04', d:'Get the crane moving.'},
+ {id:'gulls',    n:'Seagulls Sing Your Hearts Away', t:'feat', m:'1.05', d:'Hit five flying seagulls.'},
+ {id:'devil',    n:'Between the Devil ...', t:'feat', m:'1.05', d:'Interrupt Colonel Jin Noo while he is in his office.'},
+ {id:'water',    n:'On the Waterfront', t:'feat', m:'1.05', d:'[REDACTED]', r:'Free the man locked in a shipping container — he turns out to be Carlton Smith.'},
+ {id:'deep',     n:'... And the Deep Blue Sea', t:'feat', m:'1.05', d:'Interrupt Captain Re Thak while she is in her office.'},
+ {id:'quack',    n:'Quack on the Trigger', t:'feat', m:'1.07', d:'Find all the rubber ducks.'},
+ {id:'wires',    n:'Electric Feel', t:'feat', m:'1.04', d:'Shoot six electrical wires.'},
+ {id:'ghost',    n:'Ghost Ship', t:'feat', m:'1.06', d:'[REDACTED]', r:'Shoot all the lights on the side and on the top of the cargo ship.'},
+ {id:'rats',     n:'Rat O’Nine Tails', t:'feat', m:'1.07', d:'Exterminate all the rats.'},
+ {id:'spider',   n:"In the Spider's Web", t:'feat', m:'1.06', d:'Find a way to make Captain Re Thak escort the hostages to their final destination.'},
+ {id:'contain',  n:'Self-Contained Research', t:'feat', m:'1.06', d:'Open five containers.'},
+ {id:'codename', n:'Codename Crane', t:'feat', m:'1.07', d:'[REDACTED]', r:'Drop the cargo crane load on the fourth and then the seventh bay.'},
+ {id:'beer',     n:'No More Happy Hour', t:'feat', m:'1.04', d:'[REDACTED]', r:"Deny someone's chance to drink beer — shoot the bottle by the car lift."}
+];
+
+const NEST = ['Position','Fixed overwatch nest','Sniper Assassin places 47 automatically — there is no start selection'];
+const RIFLE = ['Weapon','Druzhina 34 ICA','The map default. It is the only weapon 47 carries here.'];
+const NODISG = ['Disguise','None — on any step','Official file: disguiseCount 0. There are no disguises on this map.'];
+
+const RUNS = [
+{
+ tag:'Run 01 · Nobody has to die',
+ title:'The Quiet Sweep',
+ goal:'Twelve feats in one pass: crane, containers, collectibles and both office interruptions. Jin Noo and Re Thak must survive to the end of this run.',
+ kit:[NEST,RIFLE,NODISG,['Clock','~15 minutes','The Ldongs ship out at the end of the window']],
+ ids:['eternity','codename','contain','water','ghost','wires','quack','rats','gulls','beer','devil','deep'],
+ sections:[
+  {name:'Mission start — the crane', steps:[
+   {id:'r1s1', t:'Open the crane control box',
+    b:['<b>Where:</b> the blue gantry crane in the centre of the yard, straddling the numbered bays. The control box is on the crane leg facing your nest.',
+       '<b>Action:</b> shoot the panel cover off first — the buttons do not respond while it is closed. Underneath sit a left arrow, a right arrow, a down arrow and a red stop button.',
+       '<b>Warning:</b> if the panel will not open you are hitting the frame. Zoom in one more scope step and aim at the centre of the hatch.'],
+    f:{npc:'None involved.', item:'Rifle only. Any ammo type.', why:'Every other crane step in this run and in Run 06 depends on this panel being open.'},
+    badges:[['feat','From Here To Eternity']],
+    src:'Steam guide (cineas) + XboxAchievements, in agreement.'},
+   {id:'r1s2', t:'Drop the load on bay 4, then bay 7',
+    b:['<b>Where:</b> the roadway under the crane is painted with bay numbers 1–11, and a light on the crane shows the current bay, so you never judge perspective.',
+       '<b>Action:</b> shoot an arrow to travel, shoot the red stop button when the light is on <b>4</b>, then shoot the down arrow to slam the container down. Wait for it to rise, travel to <b>7</b>, stop, drop again.',
+       '<b>Warning:</b> order matters — 4 before 7. Check the drop zone is empty; crushing a guard here can start an alarm you do not want.'],
+    f:{npc:'None — keep NPCs out from under the load.', item:'Rifle only.', why:'Overshooting is recoverable: tap the opposite arrow and stop again, there is no move limit.'},
+    badges:[['feat','Codename Crane'],['warn','4 before 7']],
+    src:'Steam guide + XboxAchievements + NamuWiki all specify 4 then 7.'},
+  ]},
+  {name:'Containers', steps:[
+   {id:'r1s3', t:'Shoot five padlocks off containers',
+    b:['<b>Where:</b> locked containers sit beside the hostage stack, along the lowest terrace by the water, and in the group behind the garage.',
+       '<b>Action:</b> aim at the padlock itself, not the handle. The door swings open on a hit. Five containers total.',
+       '<b>Note:</b> the Carlton Smith container in the next step counts toward the five.'],
+    f:{npc:'A guard may wander over to investigate an opened door — harmless here.', item:'Rifle only.', why:'Doing this early also feeds the Carlton Smith step without extra travel.'},
+    badges:[['feat','Self-Contained Research']],
+    src:'Uploaded file wording + Steam guide + XboxAchievements.'},
+   {id:'r1s4', t:'Free Carlton Smith',
+    b:['<b>Where:</b> behind the garage, past the next blue crate, in the container group below — the northern part of the yard, well away from the Heavenly Guard.',
+       '<b>NPC:</b> Carlton Smith, locked in and stripped to his boxers. He celebrates, waves at the nest and runs off.',
+       '<b>Action:</b> shoot the padlock. The challenge fires on Diana\'s recognition line, not on the door opening.'],
+    f:{npc:'Carlton Smith — not a target, freeing him alerts nobody.', item:'Rifle only.', why:'If the door opens and nothing pops, that was a different container — keep working along the row.'},
+    badges:[['feat','On the Waterfront'],['unver','Description is [REDACTED] in-game until completed']],
+    src:'Hitman Wiki trivia + Steam guide + XboxAchievements.'},
+  ]},
+  {name:'Collectible sweep — quiet middle of the mission', steps:[
+   {id:'r1s5', t:'Shoot out the cargo ship lights',
+    b:['<b>Where:</b> along the ship\'s hull-side lamp strip and on top of the superstructure.',
+       '<b>Action:</b> work bow to stern so you do not lose count. The Steam guide counts seven.',
+       '<b>Warning:</b> the roof lamps are the ones people miss — sweep the superstructure again if it has not popped.'],
+    f:{npc:'None.', item:'Rifle only.', why:'Breaking lights is not described as alerting anyone in either walkthrough.'},
+    badges:[['feat','Ghost Ship'],['unver','Count of 7 from a single source']],
+    src:'Steam guide; uploaded file confirms the challenge exists but shows [REDACTED].'},
+   {id:'r1s6', t:'Shoot six electrical wires',
+    b:['<b>Where:</b> loose cables run along the ground across the yard, including the junction between the hostage container, Re Thak\'s phone-call building and the ship.',
+       '<b>Action:</b> shoot the cable itself; sparking confirms the hit. Six total.',
+       '<b>Warning:</b> a wire lying in a puddle electrocutes whoever is standing in it. Pick dry or unoccupied cables here — a kill risks an alarm that ends this run early.'],
+    f:{npc:'Avoid guards standing in the connected puddles.', item:'Rifle only.', why:'These are the same wires Run 03 uses deliberately for Unlimited Power!.'},
+    badges:[['feat','Electric Feel'],['warn','Do not electrocute anyone on this run']],
+    src:'Uploaded file wording + Steam guide.'},
+   {id:'r1s7', t:'Shoot all ten rubber ducks',
+    b:['<b>Where:</b> scattered map-wide — on crates, ledges and floating in the water. There are ten, in different colours.',
+       '<b>Action:</b> scope-sweep in a grid: waterline first, then crate tops, then rooflines.',
+       '<b>Warning:</b> exact positions are not reliably describable in text — both written guides deliberately point at a video or image map instead.'],
+    f:{npc:'None.', item:'Rifle only.', why:'Ducks do not despawn, so there is no timing pressure.'},
+    badges:[['feat','Quack on the Trigger'],['unver','Individual duck positions — insufficient evidence from available sources']],
+    src:'XboxAchievements (10 ducks) + multiple independent video guides titled "All 10 Rubber Ducks".'},
+   {id:'r1s8', t:'Exterminate the nine rats',
+    b:['<b>Where:</b> ground level, mostly around rubbish piles and the gaps between containers.',
+       '<b>Action:</b> nine rats, all moving constantly — lead the shot slightly.',
+       '<b>Note:</b> the count is corroborated by the challenge name itself.'],
+    f:{npc:'None.', item:'Rifle only.', why:'Rats scurry rather than sprint; take them when they pause at a wall.'},
+    badges:[['feat','Rat O’Nine Tails'],['unver','Exact rat positions — insufficient evidence from available sources']],
+    src:'XboxAchievements states nine; name "Rat O\'Nine Tails" corroborates.'},
+   {id:'r1s9', t:'Hit five seagulls in flight',
+    b:['<b>Where:</b> circling over the water and above the ship, continuously.',
+       '<b>Action:</b> track a bird through its arc and fire on the flatter part of the turn rather than the dive. Five hits.',
+       '<b>Note:</b> they keep coming, so you cannot run out of attempts.'],
+    f:{npc:'None.', item:'Rifle only.', why:'Hold breath to steady the scope if your mastery has unlocked it.'},
+    badges:[['feat','Seagulls Sing Your Hearts Away']],
+    src:'Uploaded file wording + Steam guide.'},
+   {id:'r1s10', t:'Smash the beer bottle in the garage',
+    b:['<b>Where:</b> inside the garage, immediately beside the car lift — the same lift Run 03 uses for Landlubber.',
+       '<b>Action:</b> shoot the bottle through the garage opening.',
+       '<b>Warning:</b> if a guard blocks the line, wait for him to walk his loop. Do not shoot him — two NPCs still need to be alive at the end of this run.'],
+    f:{npc:'A guard often stands in the garage doorway.', item:'Rifle only.', why:'Challenge is [REDACTED] in-game; the bottle is the objective.'},
+    badges:[['feat','No More Happy Hour'],['unver','Description is [REDACTED] in-game until completed']],
+    src:'Steam guide + Hitman Wiki revealed text.'},
+  ]},
+  {name:'Late mission — the two office interruptions', steps:[
+   {id:'r1s11', t:'Sound the ship horn on Jin Noo',
+    b:['<b>NPC:</b> Colonel Jin Noo "The Blade". Wait until he has actually entered his office on the dock side.',
+       '<b>Where:</b> the horn speaker is on the ship\'s funnel and is only partly visible from the nest.',
+       '<b>Action:</b> shoot the speaker to sound the horn. It may take a few triggers roughly five seconds apart before he reacts.',
+       '<b>Warning:</b> sounding it before he is inside does nothing for this challenge.'],
+    f:{npc:'Jin Noo must be alive and in the office.', item:'Rifle only.', why:'Same mechanic as the Deadweight gather in Run 06 — good practice for it.'},
+    badges:[['feat','Between the Devil ...']],
+    src:'Steam guide + Hitman Wiki; XboxAchievements notes it also pops during the Deadweight setup.'},
+   {id:'r1s12', t:'Cut Re Thak\'s phone call',
+    b:['<b>NPC:</b> Captain Re Thak "Spider Lily". She walks to her office in the dockside building to make a call.',
+       '<b>Where:</b> the antenna on that building\'s roof.',
+       '<b>Action:</b> one shot on the antenna kills the signal and she gives up and leaves.',
+       '<b>Warning:</b> she must already be on the call. Shooting it early does nothing.'],
+    f:{npc:'Re Thak must be alive and mid-call.', item:'Rifle only.', why:'Same antenna is used to help gather the targets in Run 06.'},
+    badges:[['feat','... And the Deep Blue Sea'],['save','Run 01 done — restart']],
+    src:'Steam guide + uploaded file wording (Captain, not Colonel).'},
+  ]}
+ ]
+},
+
+{
+ tag:'Run 02 · Silent Assassin run',
+ title:'Perfect Silence — headshots only, every body hidden',
+ goal:'Kill all eighteen targets with headshots, hide every one, drown five, and finish before the hostages are ever moved. This also earns the Silent Assassin rating.',
+ kit:[NEST,RIFLE,NODISG,['Ammo','Piercing for through-wall shots; shockwave to nudge bodies','Steam guide names piercing and explosive; a guide comment confirms shockwave pushes bodies into hiding spots']],
+ ids:['skull','dmtnt','skel','davy','clean'],
+ sections:[
+  {name:'Before you fire a shot', steps:[
+   {id:'r2s1', t:'Understand what this run forbids',
+    b:['<b>Rule:</b> Skullcracker requires every elimination to be a headshot, so nothing on this run may use the crane, raft, cannon, car lift, an explosion, a wire or the boom gate.',
+       '<b>Rule:</b> a target merely spotting a body voids Silent Assassin even without an alarm.',
+       '<b>Consequence:</b> all seven accident challenges live in Runs 03–06.'],
+    f:{npc:'—', item:'—', why:'The Steam guide independently recommends pairing Skullcracker with Skeleton Crew and Dead Men Tell No Tales, which is exactly this run.'},
+    badges:[['warn','MUTUALLY EXCLUSIVE with every accident-kill challenge']],
+    src:'Derived from the uploaded file wording; corroborated by Steam guide pairing advice.'},
+  ]},
+  {name:'The three commanders — before the escort begins', steps:[
+   {id:'r2s2', t:'Take Lhom Kwai first',
+    b:['<b>NPC:</b> Captain Lhom Kwai "Dragon Eye" — the one who normally escorts the Ldongs. Removing him first protects Clean Bill of Health.',
+       '<b>Where:</b> near the ship and the gangway. Killing him on or beside the gangway drops the body into the water, which hides it and counts toward the five drownings.',
+       '<b>Action:</b> headshot only.',
+       '<b>Warning:</b> if Diana announces the hostages have been moved, Clean Bill of Health is void for this run — restart.'],
+    f:{npc:'Lhom Kwai and his escorts.', item:'Rifle. Piercing if he steps behind cover.', why:'Water is the cheapest hiding place on the map and he is closest to it.'},
+    badges:[['feat','Clean Bill of Health'],['assn','Dead Men Tell No Tales'],['assn',"Davy Jones' Locker"],['warn','Kill him before the escort script starts']],
+    src:'Steam guide ("you can kill the three targets right from the start") + Hitman Wiki escort behaviour.'},
+   {id:'r2s3', t:'Take Jin Noo at the container',
+    b:['<b>NPC:</b> Colonel Jin Noo "The Blade", who starts beside a container stack with two guards behind him.',
+       '<b>Action:</b> wait for him to start walking, shoot the padlock off the container next to his start position. He goes to investigate, out of his guards\' line of sight.',
+       '<b>Result:</b> headshot him there and the body is immediately concealed, so the guards never find him.'],
+    f:{npc:'Jin Noo plus two escorting guards behind the container.', item:'Rifle only.', why:'This is the documented easy hide for the hardest of the three to conceal.'},
+    badges:[['assn','Dead Men Tell No Tales']],
+    src:'Steam guide comment (Devang), corroborated by the guide\'s own lure-and-hide method.'},
+   {id:'r2s4', t:'Take Re Thak on her patrol',
+    b:['<b>NPC:</b> Captain Re Thak "Spider Lily", who walks past a long line of containers and rubbish piles.',
+       '<b>Action:</b> shoot the ground near her to draw her beside a hiding spot — the nearest target is usually the one who investigates — then headshot her.',
+       '<b>Fallback:</b> if the body lands in the open, a shockwave or explosive round will shove it into cover.'],
+    f:{npc:'Re Thak; lure her escorts away first if they are watching.', item:'Rifle; shockwave rounds for body nudging.', why:'She passes more hiding places than either of the other two.'},
+    badges:[['assn','Dead Men Tell No Tales'],['save','All three mains hidden — good point to restart if anything slipped']],
+    src:'Steam guide + guide comments.'},
+  ]},
+  {name:'The fifteen bodyguards', steps:[
+   {id:'r2s5', t:'Clear and hide all fifteen',
+    b:['<b>Where to hide them:</b> rubbish piles, the water, open containers, and inside the garage — the roof guard drops through the skylight into a container below.',
+       '<b>Extra spot:</b> the truck loading doors. Shoot the button to open a door briefly; if the body does not slide in, reopen it and shoot the body through.',
+       '<b>Action:</b> headshots only, and check nobody is nearby or facing your victim before firing.',
+       '<b>Warning:</b> use piercing rounds for guards you cannot see cleanly rather than waiting in the open.'],
+    f:{npc:'All fifteen Heavenly Guard soldiers.', item:'Rifle; piercing rounds.', why:'Work outward from isolated guards toward paired ones.'},
+    badges:[['assn','Skeleton Crew'],['assn','Skullcracker']],
+    src:'Steam guide, which lists each hiding spot explicitly.'},
+   {id:'r2s6', t:'Make sure five of the eighteen went into water',
+    b:['<b>Where:</b> the dock edges and the ship\'s deck rail.',
+       '<b>Action:</b> take the headshot while the target stands between you and the water so the body falls in. Lhom Kwai from step 2 is already one of the five.',
+       '<b>Fallback:</b> a body that lands short can be pushed in with an explosive or shockwave round.'],
+    f:{npc:'Mains and bodyguards both count.', item:'Rifle; explosive/shockwave rounds.', why:'Fold this into the sweep rather than doing a separate pass.'},
+    badges:[['assn',"Davy Jones' Locker"],['unver','One report claims SA failed when Re Thak was killed last — cause unknown'],['save','Run 02 done — restart']],
+    src:'Steam guide + XboxAchievements ("earned with natural progression").'},
+  ]}
+ ]
+},
+
+{
+ tag:'Run 03 · Everything that is not a bullet',
+ title:'Accidents Only',
+ goal:'Five accident challenges in the order their scripts fire: cannon, electrocutions, explosion, car lift, life raft. Jin Noo is left alive but watched.',
+ kit:[NEST,RIFLE,NODISG,['Ammo','Explosive rounds as a backup for the blast challenge','Steam guide confirms explosive rounds exist']],
+ ids:['cannon','power','burn','land','raft'],
+ sections:[
+  {name:'First sixty seconds', steps:[
+   {id:'r3s1', t:'Fire the cannon into a guard',
+    b:['<b>Where:</b> the lowest terrace, in the container row nearest the water. One container holds a cannon; there is a hole in the ground just behind the firing line.',
+       '<b>Action:</b> shoot the lock to open it. A guard walks over to look. Wait until he has looked, turned back and is about to walk off, then shoot the cannon so the blast punches him into the hole.',
+       '<b>Warning:</b> the cannon fires <b>once per run</b> and does not reload. The body must end up in the hole — a kill in the open does not satisfy "and hide".'],
+    f:{npc:'The nearest patrolling bodyguard, drawn by the opened door.', item:'Rifle only.', why:'This goes first precisely because it is single-use and needs an undisturbed guard.'},
+    badges:[['assn',"Kissing the Gunner's Daughter"],['warn','One shot only — restart if the body lands in the open'],['save','Restart here if it misses']],
+    src:'Steam guide, which describes the single-use behaviour and the hole.'},
+   {id:'r3s2', t:'Electrocute three targets',
+    b:['<b>Where:</b> two kills on the left side of the harbour and one in the centre — the junction between the hostage container, Re Thak\'s phone-call building and the ship.',
+       '<b>Action:</b> at mission start shoot the water barrel on the left near the waterline to spread a puddle. Then take the centre outlet as a guard stands in it, then the left side using the barrel puddle and the outlet already sitting in standing water.',
+       '<b>Timing:</b> the whole sequence runs about a minute from mission start.',
+       '<b>Fallback:</b> if nobody steps into a puddle, shoot the ground nearby to draw a guard in — as long as he is not already suspicious.'],
+    f:{npc:'Any three targets; bodyguards count.', item:'Rifle only.', why:'The barrel must be shot before you need the second puddle, which is why it is the first action.'},
+    badges:[['assn','Unlimited Power!']],
+    src:'Steam guide, route described step by step.'},
+  ]},
+  {name:'Mid mission', steps:[
+   {id:'r3s3', t:'Drop the car lift on a bodyguard',
+    b:['<b>Where:</b> inside the garage. The lift\'s control panel is on the side of the lift structure.',
+       '<b>NPC:</b> any target counts — the in-game description says "a target", and XboxAchievements says simply to wait for a guard to be near.',
+       '<b>Action:</b> shoot the ground beneath the lift to lure him under it, then shoot the control panel.',
+       '<b>Why a guard, not Jin Noo:</b> using a bodyguard removes any dependency on Jin Noo\'s office trip, so it cannot clash with the life-raft timing later in this run.'],
+    f:{npc:'Nearest bodyguard to the garage.', item:'Rifle only.', why:'The Steam guide\'s version lures Jin Noo instead; that works but ties this step to his office script.'},
+    badges:[['assn','Landlubber']],
+    src:'Uploaded file wording + XboxAchievements (guard) + Steam guide (Jin Noo variant).'},
+   {id:'r3s4', t:'Drop the life raft on Re Thak and Lhom Kwai',
+    b:['<b>Where:</b> the foot of the stairs leading up to the cargo ship. The raft canister hangs from the ship directly above that spot.',
+       '<b>NPCs:</b> Lhom Kwai meets Re Thak there <b>before</b> he escorts the hostages onto the ship.',
+       '<b>Action:</b> wait until both stand under it, then shoot the canister.',
+       '<b>Warning:</b> several players report the raft killing only one of the two. If that happens, restart — there is no second raft.'],
+    f:{npc:'Re Thak and Lhom Kwai together.', item:'Rifle only.', why:'Miss the meeting and the pair separates for the rest of the mission.'},
+    badges:[['assn','Death Raft'],['warn','Reported bug: raft may only kill one'],['unver','Bug is user-reported only']],
+    src:'Steam guide + NamuWiki both describe the meeting; single-kill reports come from Steam comments.'},
+  ]},
+  {name:'Last', steps:[
+   {id:'r3s5', t:'Blow up three targets at once',
+    b:['<b>Where:</b> an explosive-filled container sits next to the containers where the hostages start.',
+       '<b>Action:</b> shoot the lock to open it, then shoot the contents while three targets are inside the blast radius. Bodyguards count.',
+       '<b>Why last:</b> this is the loudest action in the run. Doing it after the raft means Re Thak and Lhom Kwai are already dealt with.',
+       '<b>Warning:</b> if an evacuation starts while Jin Noo is alive he will execute a hostage and fail the mission. Headshot him the moment the alarm goes — challenges already earned stay earned.'],
+    f:{npc:'Any three targets clustered by the hostage containers.', item:'Rifle; explosive rounds as an alternative anywhere on the map.', why:'Guards cluster near the hostage containers early, so if you prefer the early window, take it and accept the alarm risk.'},
+    badges:[['assn','Burning on the Dock of the Bay'],['warn','Jin Noo must die immediately if the alarm rises'],['save','Run 03 done — restart']],
+    src:'Steam guide (container) + Hitman Wiki Target Lockdown (Jin Noo behaviour).'},
+  ]}
+ ]
+},
+
+{
+ tag:'Run 04 · Alarm run A',
+ title:'Abandon Ship — kill the commanders on the run',
+ goal:'Trigger the evacuation with a bodyguard, then kill all three commanders during the escape sequence, taking Re Thak with the boom gate.',
+ kit:[NEST,RIFLE,NODISG,['Ammo','Explosive for moving targets, piercing for cover','Steam guide names both for the evacuation sequence']],
+ ids:['abandon','boomgate'],
+ sections:[
+  {name:'Trigger', steps:[
+   {id:'r4s1', t:'Kill one bodyguard sloppily to start the evacuation',
+    b:['<b>Action:</b> shoot a bodyguard in plain view of others so the body is found and the evacuation begins.',
+       '<b>Why a bodyguard:</b> Abandon Ship! only counts mains killed <i>while escaping</i>, so no main may die before the trigger.',
+       '<b>Warning:</b> this permanently voids Rock the Boat for this run — that challenge is Run 05.'],
+    f:{npc:'Any isolated bodyguard.', item:'Rifle only.', why:'XboxAchievements gives exactly this method for Abandon Ship!.'},
+    badges:[['warn','MUTUALLY EXCLUSIVE with Rock the Boat']],
+    src:'XboxAchievements ("kill a bodyguard sloppily to trigger the evacuation") + Steam guide ordering note.'},
+   {id:'r4s2', t:'Drop Jin Noo immediately',
+    b:['<b>NPC:</b> Colonel Jin Noo. On evacuation he does not flee — he walks straight at the hostages to execute one, which fails the mission.',
+       '<b>Action:</b> have him scoped before you fire the trigger shot, then kill him first.',
+       '<b>Warning:</b> this is the single hardest ordering rule on the map. Everything else in the run can wait; he cannot.'],
+    f:{npc:'Jin Noo.', item:'Rifle; explosive round if he is moving fast.', why:'Whether his death counts as "escaping" is not stated by any source, but both walkthroughs kill him during the sequence and treat the challenge as satisfied.'},
+    badges:[['assn','Abandon Ship!'],['warn','CRITICAL: Jin Noo dies first or the mission fails'],['unver','Whether his kill counts as "escaping" is not explicitly documented']],
+    src:'Hitman Wiki Target Lockdown + Villains Wiki + Steam guide warning.'},
+  ]},
+  {name:'The two escape routes', steps:[
+   {id:'r4s3', t:'Catch Lhom Kwai before the chopper',
+    b:['<b>NPC:</b> Captain Lhom Kwai runs back to his helicopter on the cargo ship\'s helipad.',
+       '<b>Action:</b> take him on the open deck on the way up. He is the fastest escaper of the three.',
+       '<b>Warning:</b> the Steam guide flags him specifically as the one who gets away if you hesitate.'],
+    f:{npc:'Lhom Kwai.', item:'Rifle; explosive round for the moving shot.', why:'Second priority after Jin Noo, before Re Thak — she has the longer route.'},
+    badges:[['assn','Abandon Ship!']],
+    src:'Hitman Wiki Target Lockdown + Steam guide.'},
+   {id:'r4s4', t:'Drop the boom gate on Re Thak',
+    b:['<b>NPC:</b> Captain Re Thak flees toward the cargo main entrance and escapes by one of the cars parked there.',
+       '<b>Where:</b> the boom gate on that route. NamuWiki notes there are two barriers along the direction she runs.',
+       '<b>Action:</b> shoot the gate mechanism so the barrier swings down as she passes underneath.',
+       '<b>Tip:</b> practise the swing on the empty gate first to learn the delay, then repeat it live.'],
+    f:{npc:'Re Thak.', item:'Rifle only.', why:'This kill is both a boom-gate kill and a kill during escape, so it closes both challenges at once.'},
+    badges:[['assn',"Don't Let the Boom Gate Hit You..."],['assn','Abandon Ship!'],['save','Run 04 done — restart']],
+    src:'Steam guide + XboxAchievements (Re Thak runs to the car on the left) + NamuWiki.'},
+  ]}
+ ]
+},
+
+{
+ tag:'Run 05 · Alarm run B',
+ title:'Rock the Boat — all fifteen guards after the alarm',
+ goal:'Trigger the evacuation by killing a main target, then eliminate every one of the fifteen bodyguards before any of them escapes.',
+ kit:[NEST,RIFLE,NODISG,['Ammo','Piercing through walls, explosive for runners','Steam guide names both explicitly for this challenge']],
+ ids:['rock'],
+ sections:[
+  {name:'Trigger', steps:[
+   {id:'r5s1', t:'Kill Jin Noo sloppily — he is the trigger',
+    b:['<b>Action:</b> kill Colonel Jin Noo in plain view to start the evacuation.',
+       '<b>Why him:</b> the trigger cannot be a bodyguard, or Rock the Boat is void. Using Jin Noo also removes the hostage-execution failure risk in the same shot.',
+       '<b>Warning:</b> no bodyguard may die before this moment — not one.'],
+    f:{npc:'Jin Noo.', item:'Rifle only.', why:'XboxAchievements: kill the main targets sloppily to trigger the evacuation, then go to town.'},
+    badges:[['warn','MUTUALLY EXCLUSIVE with Abandon Ship!'],['warn','Zero bodyguard kills before this step']],
+    src:'XboxAchievements + Steam guide ("trigger the alarm before killing any of the guards").'},
+  ]},
+  {name:'The sweep', steps:[
+   {id:'r5s2', t:'Kill all fifteen bodyguards before any escapes',
+    b:['<b>Priority:</b> shoot the ones already running first — escapees are the usual reason this fails.',
+       '<b>Action:</b> use piercing rounds to reach guards behind walls and explosive rounds for awkward moving shots.',
+       '<b>Note:</b> bodies do not need hiding for this challenge, only the fifteen kills. Re Thak and Lhom Kwai may escape freely; they are irrelevant here.'],
+    f:{npc:'All fifteen Heavenly Guard soldiers.', item:'Rifle; piercing and explosive rounds.', why:'XboxAchievements calls this easier than it sounds provided nobody slips away.'},
+    badges:[['assn','Rock the Boat'],['save','Run 05 done — restart']],
+    src:'Steam guide + XboxAchievements + Hitman Wiki (Rock the Boat page confirms "all fifteen").'},
+  ]}
+ ]
+},
+
+{
+ tag:'Run 06 · One challenge, one run',
+ title:'Deadweight — three commanders under one container',
+ goal:'Gather all three commanders at the meeting point under the crane and drop the load on them. Widely called the hardest challenge on the map.',
+ kit:[NEST,RIFLE,NODISG,['Clock','Meeting opens around 7:10','XboxAchievements: wait until roughly 7:10 on the mission clock']],
+ ids:['dead'],
+ sections:[
+  {name:'Setup — first seconds', steps:[
+   {id:'r6s1', t:'Park the load over bay 11, then stop shooting',
+    b:['<b>Action:</b> shoot the crane panel cover open, shoot the right arrow, and shoot the red stop button when the light reaches <b>11</b>. Get it as exact as you can.',
+       '<b>Where:</b> bay 11 is the painted number that the three commanders gather on. The lit number confirms the position.',
+       '<b>Warning:</b> from this moment shoot no NPC at all. Disturbed patrols break the meeting script.'],
+    f:{npc:'None — deliberately.', item:'Rifle only.', why:'Overshoot is recoverable: tap the opposite arrow and stop again.'},
+    badges:[['warn','Shoot nobody for the rest of this run']],
+    src:'Steam guide + XboxAchievements + NamuWiki all specify bay 11.'},
+   {id:'r6s2', t:'Wait for the hostages to be sealed in',
+    b:['<b>NPC:</b> Lhom Kwai escorts the Ldongs into the container and the door closes. Diana calls it out.',
+       '<b>Timing:</b> around 7:10 on the mission clock. Do nothing at all until then.',
+       '<b>Warning:</b> this run requires the hostages to be moved, so it can never share a run with Clean Bill of Health.'],
+    f:{npc:'Lhom Kwai and the hostages.', item:'—', why:'The meeting script only becomes available after the container door shuts.'},
+    badges:[['warn','MUTUALLY EXCLUSIVE with Clean Bill of Health and In the Spider\'s Web']],
+    src:'Steam guide + XboxAchievements + NamuWiki agree on the trigger.'},
+  ]},
+  {name:'The gather and the drop', steps:[
+   {id:'r6s3', t:'Call the meeting with the horn',
+    b:['<b>Action (Steam version):</b> as Lhom Kwai is about to come down the last flight of stairs off the ship, shoot the antenna on Re Thak\'s building, then sound the ship horn about three times.',
+       '<b>Action (NamuWiki version):</b> once the container door closes, sound the horn three times; the three gather at bay 11.',
+       '<b>Warning:</b> with wrong timing they get bored and leave, and the meeting does not re-form. Restart.',
+       '<b>Bonus:</b> the horn also interrupts Jin Noo in his office, so Between the Devil ... can pop here too.'],
+    f:{npc:'All three commanders.', item:'Rifle only.', why:'The speaker is on the ship\'s funnel; the antenna is on the roof of Re Thak\'s dockside building.'},
+    badges:[['feat','Between the Devil ... may also pop here']],
+    src:'Steam guide + NamuWiki, consistent on horn ×3 and bay 11; XboxAchievements for the Between the Devil overlap.'},
+   {id:'r6s4', t:'Drop the container',
+    b:['<b>Action:</b> with all three inside the load footprint, shoot the down arrow once.',
+       '<b>Result:</b> the container crushes everyone underneath. Escorting guards caught in the drop zone die too, which is fine.',
+       '<b>Note:</b> whether this also credits Dead Men Tell No Tales is not confirmed by any source, so that challenge stays in Run 02.'],
+    f:{npc:'Jin Noo, Re Thak, Lhom Kwai.', item:'Rifle only.', why:'One shot on the down arrow is all that is needed.'},
+    badges:[['assn','Deadweight'],['unver','Deadweight crediting Dead Men Tell No Tales — insufficient evidence'],['save','Run 06 done — restart']],
+    src:'Steam guide + NamuWiki + XboxAchievements.'},
+  ]}
+ ]
+},
+
+{
+ tag:'Run 07 · One challenge, one run',
+ title:"In the Spider's Web — make Re Thak do the escorting",
+ goal:'Remove Lhom Kwai before the escort begins so that Re Thak inherits the job and walks the Ldongs to their final destination.',
+ kit:[NEST,RIFLE,NODISG,['Clock','Act well before the ~7 minute escort','Escort completes around the container-sealing moment']],
+ ids:['spider'],
+ sections:[
+  {name:'The swap', steps:[
+   {id:'r7s1', t:'Kill Lhom Kwai early',
+    b:['<b>NPC:</b> Captain Lhom Kwai "Dragon Eye" is normally the one who escorts the Ldongs.',
+       '<b>Action:</b> eliminate him anywhere on his pre-escort patrol. The challenge does not specify a method, so any kill works.',
+       '<b>Warning:</b> it must be before the escort would otherwise start, or Re Thak never inherits it.'],
+    f:{npc:'Lhom Kwai.', item:'Rifle only.', why:'Killing him late means the script has already assigned the escort.'},
+    badges:[['warn','MUTUALLY EXCLUSIVE with Clean Bill of Health and Deadweight']],
+    src:'Steam guide + uploaded file wording.'},
+   {id:'r7s2', t:'Let Re Thak walk them the whole way',
+    b:['<b>NPC:</b> Captain Re Thak picks up the escort. She must survive it.',
+       '<b>Action:</b> hold fire completely until she has delivered the Ldongs into the container.',
+       '<b>Warning:</b> killing her mid-escort voids the challenge. If she never picks it up, Lhom Kwai died too late — restart and kill him earlier.'],
+    f:{npc:'Re Thak and the hostages.', item:'—', why:'The challenge fires on escort completion, not on her starting it.'},
+    badges:[['feat',"In the Spider's Web"],['save','All 27 challenges complete']],
+    src:'Steam guide + uploaded file wording.'},
+  ]}
+ ]
+}
+];
+
+/* ---------------- state ---------------- */
+const state={ch:{},steps:{},open:{}};
+const KEY='hantu-port-v2';
+function reportProgress(){try{const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r['m15']={done:CH.filter(c=>state.ch[c.id]).length,total:CH.length,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
+async function load(){try{const r=localStorage.getItem(KEY);if(r){const p=JSON.parse(r);state.ch=p.ch||{};state.steps=p.steps||{};}}catch(e){}}
+async function save(){try{localStorage.setItem(KEY,JSON.stringify({ch:state.ch,steps:state.steps}));}catch(e){}reportProgress();}
+
+const byId=Object.fromEntries(CH.map(c=>[c.id,c]));
+const bcls=k=>k==='assn'?'b-assn':k==='feat'?'b-feat':k==='warn'?'b-warn':k==='save'?'b-save':'b-unver';
+const bpre=k=>k==='warn'?'⚠ ':k==='save'?'◆ ':'';
+
+function buildJump(){
+  document.getElementById('jumprow').innerHTML =
+    RUNS.map((r,i)=>`<button class="runjump" data-jump="${i}">Run 0${i+1} <em data-jc="${i}"></em></button>`).join('')
+    + `<button class="expandall" id="expandAll">Expand all</button>`;
+}
+
+function buildRuns(){
+  document.getElementById('runhost').innerHTML = RUNS.map((r,ri)=>{
+    const kit=r.kit.map(k=>`<div class="kit-cell"><span>${k[0]}</span><b>${k[1]}</b>${k[2]?`<em>${k[2]}</em>`:''}</div>`).join('');
+    let n=0;
+    const secs=r.sections.map(sec=>{
+      const steps=sec.steps.map(st=>{
+        n++;
+        const bl=st.b.map(x=>`<li>${x}</li>`).join('');
+        const bg=(st.badges||[]).map(x=>`<span class="badge ${bcls(x[0])}">${bpre(x[0])}${x[1]}</span>`).join('');
+        return `<div class="step" data-step="${st.id}">
+          <button class="chk" data-chkstep="${st.id}" aria-pressed="false" aria-label="Mark step done">✓</button>
+          <div class="stepno">${String(n).padStart(2,'0')}</div>
+          <div class="step-body">
+            <button class="step-head" data-toggle="${st.id}" aria-expanded="false">
+              <b>${st.t}</b><span class="more">Show step ▾</span>
+            </button>
+            <div class="step-detail">
+              <ul>${bl}</ul>
+              <div class="fields"><dl>
+                <dt>Disguise</dt><dd>None. This map has zero disguises.</dd>
+                <dt>Item</dt><dd>${st.f.item}</dd>
+                <dt>NPC</dt><dd>${st.f.npc}</dd>
+                <dt>Notes</dt><dd>${st.f.why}</dd>
+              </dl></div>
+              <div class="badges">${bg}</div>
+              <p class="src">Sources — ${st.src}</p>
+            </div>
+          </div>
+        </div>`;
+      }).join('');
+      return `<div class="sect">${sec.name}</div>${steps}`;
+    }).join('');
+    const chips=r.ids.map(id=>`<span class="badge ${byId[id].t==='assn'?'b-assn':'b-feat'}">${byId[id].n}</span>`).join('');
+    return `<article class="run" id="run${ri}" data-run="${ri}">
+      <button class="run-head" data-runtoggle="${ri}" aria-expanded="false">
+        <div class="run-tag">${r.tag}</div>
+        <h2>${r.title}</h2>
+        <p class="run-goal">${r.goal}</p>
+        <div class="badges" style="margin-top:11px">${chips}</div>
+        <div class="run-meter" data-meter="${ri}"></div>
+      </button>
+      <div class="run-body">
+        <div class="kit">${kit}</div>
+        ${secs}
+      </div>
+    </article>`;
+  }).join('');
+}
+
+function buildList(){
+  document.getElementById('filters').innerHTML =
+    [['all','All 27'],['assn','Assassination 13'],['feat','Feats 14'],['todo','Incomplete']]
+    .map((x,i)=>`<button class="filter" data-f="${x[0]}" aria-pressed="${i===0}">${x[1]}</button>`).join('');
+  drawRows('all');
+}
+const runOf=id=>{const i=RUNS.findIndex(r=>r.ids.includes(id));return i<0?'—':`Run 0${i+1}`;};
+function drawRows(f){
+  const host=document.getElementById('rows');
+  const list=CH.filter(c=>f==='all'?true:f==='todo'?!state.ch[c.id]:c.t===f);
+  host.innerHTML = list.length ? list.map(c=>`
+    <div class="row ${state.ch[c.id]?'done':''}">
+      <button class="chk" data-chkch="${c.id}" aria-pressed="${!!state.ch[c.id]}" aria-label="Mark complete">✓</button>
+      <div class="row-body"><b>${c.n}</b>
+        <p>${c.d==='[REDACTED]'?`<span class="redacted">[REDACTED] in-game</span> — ${c.r}`:c.d}</p>
+        <div class="row-meta">
+          <span class="pill-${c.t}">${c.t==='assn'?'Assassination':'Feat'}</span>
+          <span>×${c.m} multiplier</span><span>${runOf(c.id)}</span>
+        </div>
+      </div>
+    </div>`).join('')
+    : `<div class="row"><div class="row-body"><b>Nothing left here.</b><p>Every challenge in this filter is ticked off.</p></div></div>`;
+}
+
+function refresh(){
+  const done=CH.filter(c=>state.ch[c.id]).length;
+  document.getElementById('ringNum').textContent=done+'/27';
+  document.getElementById('cAssn').textContent=CH.filter(c=>c.t==='assn'&&state.ch[c.id]).length+'/13';
+  document.getElementById('cFeat').textContent=CH.filter(c=>c.t==='feat'&&state.ch[c.id]).length+'/14';
+  document.getElementById('cMult').textContent=CH.reduce((s,c)=>s+(state.ch[c.id]?parseFloat(c.m)-1:0),1).toFixed(2)+'×';
+  document.getElementById('cRuns').textContent=RUNS.filter(r=>r.ids.every(i=>state.ch[i])).length+'/7';
+  const C=2*Math.PI*45;
+  document.getElementById('arc').style.strokeDashoffset=String(C-C*(done/27));
+
+  RUNS.forEach((r,i)=>{
+    const d=r.ids.filter(id=>state.ch[id]).length;
+    const tot=r.sections.reduce((n,s)=>n+s.steps.length,0);
+    const sd=r.sections.reduce((n,s)=>n+s.steps.filter(st=>state.steps[st.id]).length,0);
+    const m=document.querySelector(`[data-meter="${i}"]`);
+    if(m) m.innerHTML=`Challenges <b>${d}/${r.ids.length}</b> · Steps ${sd}/${tot}`;
+    const j=document.querySelector(`[data-jc="${i}"]`);
+    if(j) j.textContent=`${d}/${r.ids.length}`;
+    const jb=document.querySelector(`[data-jump="${i}"]`);
+    if(jb) jb.classList.toggle('full', d===r.ids.length);
+  });
+  document.querySelectorAll('[data-step]').forEach(el=>{
+    const on=!!state.steps[el.dataset.step];
+    el.classList.toggle('done',on);
+    el.querySelector('[data-chkstep]').setAttribute('aria-pressed',on);
+  });
+}
+
+document.addEventListener('click', e=>{
+  const rt=e.target.closest('[data-runtoggle]');
+  if(rt){const a=rt.closest('.run');const o=a.classList.toggle('open');rt.setAttribute('aria-expanded',o);return;}
+
+  const st=e.target.closest('[data-toggle]');
+  if(st){const s=st.closest('.step');const o=s.classList.toggle('open');
+    st.setAttribute('aria-expanded',o);st.querySelector('.more').textContent=o?'Hide step ▴':'Show step ▾';return;}
+
+  const cs=e.target.closest('[data-chkstep]');
+  if(cs){const k=cs.dataset.chkstep;state.steps[k]=!state.steps[k];refresh();save();return;}
+
+  const cc=e.target.closest('[data-chkch]');
+  if(cc){const k=cc.dataset.chkch;state.ch[k]=!state.ch[k];
+    drawRows(document.querySelector('.filter[aria-pressed="true"]').dataset.f);refresh();save();return;}
+
+  const jp=e.target.closest('[data-jump]');
+  if(jp){const i=jp.dataset.jump;const a=document.getElementById('run'+i);
+    a.classList.add('open');a.querySelector('.run-head').setAttribute('aria-expanded',true);
+    a.scrollIntoView({behavior:'smooth',block:'start'});return;}
+
+  if(e.target.id==='expandAll'){
+    const anyClosed=[...document.querySelectorAll('.run')].some(a=>!a.classList.contains('open'));
+    document.querySelectorAll('.run').forEach(a=>{a.classList.toggle('open',anyClosed);
+      a.querySelector('.run-head').setAttribute('aria-expanded',anyClosed);});
+    e.target.textContent=anyClosed?'Collapse all':'Expand all';return;
+  }
+
+  const fl=e.target.closest('.filter');
+  if(fl){document.querySelectorAll('.filter').forEach(b=>b.setAttribute('aria-pressed',b===fl));drawRows(fl.dataset.f);return;}
+
+  const tb=e.target.closest('.tab');
+  if(tb){document.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-selected',t===tb));
+    const map={'tab-runs':'panel-runs','tab-list':'panel-list','tab-audit':'panel-audit'};
+    Object.entries(map).forEach(([t,p])=>document.getElementById(p).classList.toggle('hide',t!==tb.id));return;}
+
+  if(e.target.id==='resetBtn'){state.ch={};state.steps={};
+    document.querySelectorAll('.step').forEach(s=>s.classList.remove('done'));
+    drawRows(document.querySelector('.filter[aria-pressed="true"]').dataset.f);refresh();save();}
+});
+
+(async()=>{await load();buildJump();buildRuns();buildList();refresh();
+  document.getElementById('run0').classList.add('open');
+  document.querySelector('[data-runtoggle="0"]').setAttribute('aria-expanded',true);
+  reportProgress();})();
+</script>
+<!-- step-progress-bridge -->
+<script>
+/* Reports route-step ticks into 'hitman-progress-registry' so the index can
+   show them beside the challenge counts. Counts what is on screen rather than
+   any guide-specific state, so one implementation serves every guide. */
+(function(){
+  var RID="m15", SEL=".step";
+  function isDone(s){
+    var c=s.classList;
+    if(c.contains('done')||c.contains('dn')) return true;
+    if(s.getAttribute('data-done')==='1'||s.getAttribute('aria-pressed')==='true') return true;
+    return !!s.querySelector('.done,.dn,[data-done="1"],[aria-pressed="true"]');
+  }
+  function tally(){
+    var steps=document.querySelectorAll(SEL);
+    if(!steps.length) return null;
+    var n=0;
+    for(var i=0;i<steps.length;i++) if(isDone(steps[i])) n++;
+    return {steps:n,stepTotal:steps.length};
+  }
+  function push(){
+    var t;
+    try{ t=tally(); }catch(err){ return; }
+    if(!t||!t.stepTotal) return;
+    try{
+      var r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');
+      var e=r[RID]||(r[RID]={});
+      /* the guide's own reportProgress() rewrites this entry wholesale, so
+         re-add the step counts whenever they go missing or stale */
+      if(e.steps===t.steps&&e.stepTotal===t.stepTotal) return;
+      e.steps=t.steps; e.stepTotal=t.stepTotal; e.updated=Date.now();
+      localStorage.setItem('hitman-progress-registry',JSON.stringify(r));
+    }catch(err){}
+  }
+  var pending=false;
+  function schedule(){
+    if(pending) return; pending=true;
+    setTimeout(function(){pending=false;push();},120);
+  }
+  try{
+    new MutationObserver(schedule).observe(document.body,
+      {subtree:true,childList:true,attributes:true,attributeFilter:['class','aria-pressed','data-done']});
+  }catch(err){}
+  window.addEventListener('load',schedule);
+  setTimeout(push,600);
+})();
+</script>
+<!-- /step-progress-bridge -->
+</body>
+</html>

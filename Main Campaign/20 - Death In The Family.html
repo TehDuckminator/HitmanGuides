@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thornbridge Manor Case File — Death in the Family (Dartmoor)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,600;6..96,900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --slate:#161d1b;--slate-2:#1e2725;--slate-3:#28332f;
+  --parch:#e8e1cf;--parch-dim:#b9b2a0;
+  --oxblood:#8f2b2b;--oxblood-lt:#c25151;
+  --brass:#c9a349;--moss:#6f8f68;--ink:#0d1211;
+  --amber:#d99a2b;--warn:#c0392b;--r:3px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;
+  background:radial-gradient(1200px 700px at 15% -10%,#223029 0%,transparent 60%),var(--slate);
+  color:var(--parch);font-family:'Source Sans 3',system-ui,sans-serif;font-size:16px;line-height:1.6;}
+a{color:var(--brass)}
+.wrap{max-width:1140px;margin:0 auto;padding:0 20px 80px}
+
+header.mast{border-bottom:1px solid #3a4742;
+  background:linear-gradient(180deg,#101514 0%,rgba(16,21,20,0) 100%);padding:38px 0 26px;margin-bottom:24px;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--brass);margin:0 0 10px;}
+h1{font-family:'Bodoni Moda',serif;font-weight:900;font-size:clamp(2.1rem,6vw,4rem);
+  line-height:.95;margin:0 0 6px;letter-spacing:-.01em;}
+h1 em{font-style:italic;font-weight:400;color:var(--parch-dim);display:block;
+  font-size:.42em;letter-spacing:.02em;margin-top:12px}
+.mast-note{color:var(--parch-dim);max-width:64ch;font-size:.95rem;margin:14px 0 0}
+
+.tracker{border:1px solid #3a4742;border-radius:var(--r);
+  background:linear-gradient(180deg,#1c2523,#161d1b);padding:20px;margin-bottom:22px;
+  position:sticky;top:0;z-index:60;box-shadow:0 12px 30px rgba(0,0,0,.45);}
+.tracker-top{display:flex;flex-wrap:wrap;align-items:baseline;gap:14px;justify-content:space-between;margin-bottom:14px}
+.tracker-total{font-family:'Bodoni Moda',serif;font-size:2.4rem;line-height:1;font-weight:600}
+.tracker-total small{font-size:.9rem;color:var(--parch-dim);font-family:'JetBrains Mono',monospace;letter-spacing:.1em}
+.bar{height:10px;background:#0e1312;border:1px solid #3a4742;border-radius:99px;overflow:hidden}
+.bar>span{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--oxblood),var(--brass));transition:width .4s ease}
+.cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:10px;margin-top:16px}
+.cat{border:1px solid #3a4742;border-radius:var(--r);padding:9px 11px;background:#131a19}
+.cat b{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--parch-dim);margin-bottom:4px}
+.cat span{font-family:'Bodoni Moda',serif;font-size:1.35rem;font-weight:600}
+.cat span i{font-style:normal;color:var(--parch-dim);font-size:.75em}
+.reset{background:none;border:1px solid #4a5854;color:var(--parch-dim);
+  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  padding:7px 12px;border-radius:var(--r);cursor:pointer}
+.reset:hover{border-color:var(--oxblood-lt);color:var(--oxblood-lt)}
+
+nav.tabs{display:flex;gap:2px;border-bottom:1px solid #3a4742;margin-bottom:22px;flex-wrap:wrap}
+nav.tabs button{background:none;border:0;border-bottom:2px solid transparent;color:var(--parch-dim);
+  font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+  padding:13px 16px;cursor:pointer}
+nav.tabs button[aria-selected="true"]{color:var(--parch);border-bottom-color:var(--oxblood)}
+nav.tabs button:hover{color:var(--parch)}
+.panel{display:none}.panel.on{display:block}
+
+/* run selector */
+.run-nav{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
+.run-nav button{background:#131a19;border:1px solid #3a4742;color:var(--parch);
+  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  padding:9px 13px;border-radius:var(--r);cursor:pointer;text-align:left;line-height:1.35}
+.run-nav button b{color:var(--brass);display:block;font-size:10px;letter-spacing:.16em;margin-bottom:2px}
+.run-nav button:hover{border-color:var(--brass)}
+.run-nav button.active{border-color:var(--oxblood);background:#231416}
+
+/* run card */
+.run{border:1px solid #3a4742;border-radius:var(--r);background:#1a2220;margin-bottom:20px;overflow:hidden;scroll-margin-top:180px}
+.run-head{padding:20px 22px;background:linear-gradient(180deg,#212b28,#1a2220);cursor:pointer;
+  display:flex;gap:14px;align-items:flex-start}
+.run-head:hover{background:#242f2b}
+.run-chev{flex:0 0 auto;font-family:'JetBrains Mono',monospace;color:var(--brass);font-size:18px;
+  transition:transform .2s;margin-top:2px;user-select:none}
+.run[data-open="1"] .run-chev{transform:rotate(90deg)}
+.run-head-main{flex:1;min-width:0}
+.run-no{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;color:var(--brass);
+  text-transform:uppercase;display:block;margin-bottom:6px}
+.run-head h2{font-family:'Bodoni Moda',serif;font-size:1.55rem;font-weight:600;margin:0 0 7px}
+.run-head p{margin:0;color:var(--parch-dim);max-width:72ch;font-size:.95rem}
+.run-prog{flex:0 0 auto;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--parch-dim);
+  border:1px solid #3a4742;border-radius:99px;padding:3px 10px;margin-top:2px;white-space:nowrap}
+.run-body{display:none;border-top:1px solid #3a4742}
+.run[data-open="1"] .run-body{display:block}
+
+.loadout{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:1px;background:#3a4742;border-bottom:1px solid #3a4742}
+.lo{background:#151d1b;padding:12px 15px}
+.lo b{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--brass);margin-bottom:5px}
+.lo span{font-size:.9rem;display:block}
+.run-note{color:var(--parch-dim);padding:16px 22px 0;margin:0;font-size:.94rem}
+
+.sect{border-top:1px solid #232e2b;margin-top:16px}
+.sect-h{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--moss);padding:16px 22px 4px;margin:0}
+
+.step{border-top:1px solid #232e2b;margin:0 22px;padding:13px 0;display:flex;gap:13px;align-items:flex-start}
+.step:first-of-type{border-top:0}
+.tick{flex:0 0 auto;width:25px;height:25px;border:1px solid #4a5854;border-radius:50%;background:#0e1312;
+  cursor:pointer;color:transparent;font-size:13px;line-height:1;display:flex;align-items:center;justify-content:center;margin-top:2px;transition:.15s}
+.tick:hover{border-color:var(--brass)}
+.tick[data-done="1"]{background:var(--moss);border-color:var(--moss);color:var(--ink)}
+.step-body{flex:1;min-width:0}
+.step-head{cursor:pointer;display:flex;gap:8px;align-items:baseline}
+.step-head .schev{font-family:'JetBrains Mono',monospace;color:var(--parch-dim);font-size:12px;transition:transform .2s;flex:0 0 auto}
+.step[data-sopen="1"] .schev{transform:rotate(90deg)}
+.step-title{font-weight:700;font-size:1.01rem;margin:0}
+.step[data-done="1"] .step-title{text-decoration:line-through;color:var(--parch-dim)}
+.step-sum{margin:2px 0 0;color:var(--parch-dim);font-size:.93rem}
+.detail{display:none;margin-top:11px;border-left:2px solid var(--oxblood);padding-left:15px}
+.step[data-sopen="1"] .detail{display:block}
+.drow{display:flex;gap:10px;margin-bottom:6px;font-size:.92rem}
+.drow .k{flex:0 0 74px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--brass);padding-top:2px}
+.drow .v{flex:1;color:#d5cfbe}
+
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.b{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.09em;text-transform:uppercase;
+  padding:4px 8px;border-radius:2px;border:1px solid;white-space:nowrap}
+.b.ass{color:#e79aa0;border-color:#7a3b40;background:#2b1a1c}
+.b.dis{color:#9fc6e8;border-color:#37546b;background:#151f27}
+.b.fea{color:#d8c07e;border-color:#6b5a2c;background:#231f13}
+.b.cla{color:#c3a8e8;border-color:#5a4574;background:#1e1828}
+.b.tar{color:#f0b09a;border-color:#7d4a35;background:#291a14}
+.b.warn{color:#fff;border-color:var(--warn);background:var(--warn);font-weight:600}
+.b.save{color:#1a1206;border-color:var(--amber);background:var(--amber);font-weight:600}
+.b.unv{color:#cfcfcf;border-color:#666;background:#2a2a2a}
+
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.filters button{background:#131a19;border:1px solid #3a4742;color:var(--parch-dim);
+  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  padding:8px 13px;border-radius:var(--r);cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--oxblood);border-color:var(--oxblood);color:#fff}
+.clist{border:1px solid #3a4742;border-radius:var(--r);overflow:hidden}
+.crow{display:flex;gap:13px;align-items:flex-start;padding:13px 16px;border-bottom:1px solid #232e2b;background:#1a2220}
+.crow:last-child{border-bottom:0}
+.crow:nth-child(even){background:#171f1d}
+.crow-main{flex:1;min-width:0}
+.crow-name{font-weight:700;font-size:1rem;margin:0 0 2px;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.crow[data-done="1"] .crow-name{text-decoration:line-through;color:var(--parch-dim)}
+.crow-cond{margin:0;font-size:.9rem;color:var(--parch-dim)}
+.xp{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--brass);letter-spacing:.08em}
+.empty{padding:40px;text-align:center;color:var(--parch-dim)}
+
+.prose{max-width:80ch}
+.prose h2{font-family:'Bodoni Moda',serif;font-size:1.6rem;font-weight:600;margin:34px 0 10px}
+.prose h3{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--brass);margin:26px 0 8px}
+.prose li{margin-bottom:6px}
+.callout{border:1px solid var(--warn);background:#2a1512;border-radius:var(--r);padding:16px 18px;margin:18px 0}
+.callout.amberc{border-color:var(--amber);background:#241a09}
+.callout.neutral{border-color:#3a4742;background:#151d1b}
+.callout b{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:6px}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.92rem}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid #2f3b37;vertical-align:top}
+th{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--brass)}
+code{font-family:'JetBrains Mono',monospace;font-size:.85em;background:#0e1312;padding:2px 5px;border-radius:2px;color:var(--brass)}
+footer{border-top:1px solid #3a4742;margin-top:50px;padding-top:20px;color:var(--parch-dim);font-size:.86rem}
+@media (max-width:640px){
+  .tracker{position:static}
+  .step{margin:0 14px}.sect-h{padding-left:14px;padding-right:14px}
+  .run-head{padding:16px}.run-note{padding-left:16px;padding-right:16px}
+  .drow{flex-direction:column;gap:1px}.drow .k{flex-basis:auto}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="mast">
+  <p class="eyebrow">Thornbridge Manor · Devon · Case File 02</p>
+  <h1>Death in the Family<em>All 58 challenges, routed into seven runs</em></h1>
+  <p class="mast-note">A multi-run completion guide for Dartmoor in HITMAN World of Assassination, rebuilt against the mission's own challenge export. Every step lists where to go, what to wear, what to carry, who's involved and what to do. Uncertain claims are tagged, not guessed.</p>
+</header>
+
+<section class="tracker">
+  <div class="tracker-top">
+    <div class="tracker-total"><span id="tDone">0</span>/58 <small>CHALLENGES CLEARED</small></div>
+    <button class="reset" id="reset">Clear all progress</button>
+  </div>
+  <div class="bar"><span id="tBar"></span></div>
+  <div class="cats" id="cats"></div>
+</section>
+
+<nav class="tabs" role="tablist">
+  <button role="tab" aria-selected="true" data-panel="runs">Optimized runs</button>
+  <button role="tab" aria-selected="false" data-panel="check">Checklist</button>
+  <button role="tab" aria-selected="false" data-panel="ref">Reference</button>
+  <button role="tab" aria-selected="false" data-panel="audit">Verification &amp; audit</button>
+</nav>
+
+<div class="panel on" id="p-runs">
+  <div class="run-nav" id="runNav"></div>
+  <div id="runList"></div>
+</div>
+
+<div class="panel" id="p-check">
+  <div class="filters" id="filters"></div>
+  <div class="clist" id="clist"></div>
+</div>
+
+<div class="panel prose" id="p-ref"></div>
+<div class="panel prose" id="p-audit"></div>
+
+<footer>
+  Primary source: the mission's in-game challenge export (58 challenges). Corroborating sources: Hitman Wiki (<em>Death in the Family/Challenges</em>, <em>It's a Fhammerly Affair</em>, <em>Voyeurism</em>); PowerPyx Dartmoor challenge / area / shortcut / mission-story / SASO pages; DBLTAP mastery list; Gamepur; TheGamer; ScreenRant; a community Steam walkthrough. Progress lives only in this page and resets on reload.
+</footer>
+
+</div>
+<script>
+/* ============================================================
+   CHALLENGE MASTER LIST — 58 total (from in-game export)
+   cat: ass(12) | dis(19) | fea(21) | tar(1) | cla(5)
+   Descriptions are the official in-game text where the export
+   gave it; [REDACTED] entries use the community-documented method.
+   ============================================================ */
+const CH = [
+/* ASSASSINATION (12) */
+{id:'adf',cat:'ass',name:'Another Death in the Family',cond:'Let Emma poison Alexa herself (official text redacted in-game).',xp:'4,000'},
+{id:'ota',cat:'ass',name:'One for the Ages',cond:'Electrocute Alexa Carlisle during the photo shoot.',xp:''},
+{id:'amoose',cat:'ass',name:'I Find This Amoosing',cond:'Kill Alexa with the antler chandelier (official text redacted in-game).',xp:''},
+{id:'grave',cat:'ass',name:'Grave Mistake',cond:'Put Alexa Carlisle to rest — push her into the grave and bury her.',xp:''},
+{id:'kca',cat:'ass',name:'Keep Calm and Aim',cond:'Eliminate Alexa Carlisle with a sniper rifle from the roof of the mansion.',xp:''},
+{id:'sweet',cat:'ass',name:'Sweet Dreams',cond:'Eliminate Alexa Carlisle in her private room.',xp:''},
+{id:'versat',cat:'ass',name:'Versatile Assassin',cond:'Complete Piano Man, Someone Could Hurt Themselves, Hold My Hair, Straight Shot and Tasteless, Traceless.',xp:''},
+{id:'scht',cat:'ass',name:'Someone Could Hurt Themselves',cond:'Assassinate the target in an accident.',xp:''},
+{id:'hmh',cat:'ass',name:'Hold My Hair',cond:'Assassinate the target by drowning them.',xp:''},
+{id:'ssh',cat:'ass',name:'Straight Shot',cond:'Assassinate the target with a headshot.',xp:''},
+{id:'piano',cat:'ass',name:'Piano Man',cond:'Assassinate the target with the fiber wire.',xp:''},
+{id:'tt',cat:'ass',name:'Tasteless, Traceless',cond:'Assassinate the target with lethal poison.',xp:''},
+
+/* DISCOVERY (19) */
+{id:'tup',cat:'dis',name:'Tuppence',cond:'Obtain both Milton-Fitzpatrick bank tokens.',xp:''},
+{id:'hcl',cat:'dis',name:'House Cleaning',cond:'Find all clues in each location of interest in the Murder Mystery.',xp:''},
+{id:'bridge',cat:'dis',name:'The Bridge on the Thornbridge River',cond:'Escape Thornbridge Manor via the river bridge.',xp:''},
+{id:'magic',cat:'dis',name:'Magic is Real',cond:'Obtain a unicorn horn.',xp:''},
+{id:'keys',cat:'dis',name:'Thornbridge Manor Keys',cond:'Obtain one of each Thornbridge Manor Keys.',xp:''},
+{id:'scbal',cat:'dis',name:'Shortcut: Balcony Ladder',cond:"Unlock the ladder shortcut at Zachary's balcony.",xp:''},
+{id:'elem',cat:'dis',name:'Elementary, My Dear Diana',cond:'Disguise yourself as the Private Investigator.',xp:''},
+{id:'discov',cat:'dis',name:'Discover Dartmoor',cond:'Reveal all undiscovered Thornbridge Manor areas.',xp:''},
+{id:'cham',cat:'dis',name:'Chameleon',cond:'Find and equip all disguises in Thornbridge Manor.',xp:''},
+{id:'scmnt',cat:'dis',name:'Shortcut: Maintenance Ladder',cond:'Unlock the ladder shortcut to the maintenance balcony.',xp:''},
+{id:'dogsec',cat:'dis',name:'Dogs Secrets',cond:'Open the cane-operated bookshelf passage (official text redacted in-game).',xp:''},
+{id:'dlf',cat:'dis',name:"Don't Lose Focus",cond:'Disguise yourself as the Photographer.',xp:''},
+{id:'drtb',cat:'dis',name:"Don't Rock the Boat",cond:'Escape Thornbridge Manor via the boat.',xp:''},
+{id:'dags',cat:'dis',name:"D'ya Like Dags",cond:'Obtain the bulldog cane.',xp:''},
+{id:'jfp',cat:'dis',name:'Justice for a Prize',cond:'Disguise yourself as the Lawyer.',xp:''},
+{id:'lgh',cat:'dis',name:"Let's Go Hunting",cond:'Obtain a hunting rifle from the weapons locker.',xp:''},
+{id:'topg',cat:'dis',name:'Top Gear',cond:'Escape Thornbridge Manor via the motorcycle.',xp:''},
+{id:'boyd',cat:'dis',name:'Bring Out Your Dead',cond:'Disguise yourself as the Undertaker.',xp:''},
+{id:'lastr',cat:'dis',name:'Last Responder',cond:'Escape Thornbridge Manor via the hearse.',xp:''},
+
+/* FEATS (21) */
+{id:'ctc',cat:'fea',name:'Close to the Chest',cond:'Obtain the case file on Arthur Edwards.',xp:''},
+{id:'voy',cat:'fea',name:'Voyeurism',cond:'Take a photo of flirting employees.',xp:''},
+{id:'pund',cat:'fea',name:'Proud Undertaker',cond:'Have the undertaker present the grave for Alexa Carlisle.',xp:''},
+{id:'peep',cat:'fea',name:'Peeping 47',cond:'Spy on Alexa Carlisle.',xp:''},
+{id:'amoj',cat:'fea',name:'A Matter of Justice',cond:'Accuse Emma at the end of the investigation (official text redacted in-game).',xp:''},
+{id:'nais',cat:'fea',name:'Nothing as it Seems',cond:'Take a photo of Alexa Carlisle during the family meeting.',xp:''},
+{id:'elton',cat:'fea',name:'Elton Would be Proud',cond:'Pacify Edward Carlisle while he is playing piano.',xp:''},
+{id:'ms_adtr',cat:'fea',name:'Mission Story: A Day to Remember',cond:'Complete the mission story "A Day to Remember".',xp:''},
+{id:'shn',cat:'fea',name:'Second-Hand News',cond:'Pacify Gregory Carlisle with a newspaper.',xp:''},
+{id:'cueb',cat:'fea',name:'Cue Balled',cond:'Pacify Patrick Carlisle with a pool ball.',xp:''},
+{id:'ms_mmo',cat:'fea',name:'Mission Story: Means, Motive and Opportunity',cond:'Complete the mission story "Means, Motive and Opportunity".',xp:''},
+{id:'amog',cat:'fea',name:'A Matter of Guilt',cond:'Accuse Zachary at the end of the investigation (official text redacted in-game).',xp:''},
+{id:'ms_hfrp',cat:'fea',name:'Mission Story: Her Final Resting Place',cond:'Complete the mission story "Her Final Resting Place".',xp:''},
+{id:'dktm',cat:'fea',name:"Don't Kill the Messenger",cond:"Inspect the lawyer's computer.",xp:''},
+{id:'ding',cat:'fea',name:'Ding Ding Ding',cond:'Make Alexa Carlisle upset about the Bell.',xp:''},
+{id:'amol',cat:'fea',name:'A Matter of Loyalty',cond:'Accuse Mr. Fernsby at the end of the investigation (official text redacted in-game).',xp:''},
+{id:'sayc',cat:'fea',name:'Say Cheese',cond:'Have the photographer take a photo of the Carlisle family.',xp:''},
+{id:'apm',cat:'fea',name:'A Private Moment',cond:"Photograph Alexa beside Zachary's body (official text redacted in-game).",xp:''},
+{id:'raven',cat:'fea',name:'The Raven',cond:'Make the birds leave the graveyard.',xp:''},
+{id:'fham',cat:'fea',name:"It's a Fhammerly Affair",cond:'Pacify Edward, Emma, Gregory, Patrick and Rebecca Carlisle with a hammer. Unlocks the Claw Hammer.',xp:'2,000 (wiki)'},
+{id:'ivy',cat:'fea',name:'Poison Ivy',cond:'Brew lethal poison in the Greenhouse (official text redacted in-game).',xp:''},
+
+/* TARGETS (1) */
+{id:'elim',cat:'tar',name:'Eliminate Alexa Carlisle',cond:'Eliminate Alexa Carlisle by any means.',xp:''},
+
+/* THE CLASSICS (5) */
+{id:'suit',cat:'cla',name:'Suit Only',cond:"Assassinate the target and complete the mission in 47's suit.",xp:''},
+{id:'saso',cat:'cla',name:'Silent Assassin, Suit Only',cond:'Silent Assassin conditions, done entirely in the suit.',xp:''},
+{id:'classics',cat:'cla',name:'The Classics',cond:'Complete Silent Assassin, Silent Assassin Suit Only, Sniper Assassin and Suit Only.',xp:'~20,000 for the set (PowerPyx)'},
+{id:'sa',cat:'cla',name:'Silent Assassin',cond:'Only kill the target, no bodies found, never compromised, erase any camera evidence.',xp:''},
+{id:'sniper',cat:'cla',name:'Sniper Assassin',cond:'Assassinate the target with a sniper rifle without being spotted.',xp:''}
+];
+
+const CATNAME={ass:'Assassination',dis:'Discovery',fea:'Feats',tar:'Targets',cla:'The Classics'};
+const CATSHORT={ass:'ASS',dis:'DIS',fea:'FEAT',tar:'TGT',cla:'CLASSIC'};
+
+/* ============================================================
+   RUNS — step schema:
+   {t, s, where, disg, item, npc, act, warn, save, badges:[{c,t}]}
+   ============================================================ */
+const RUNS = [
+{
+ no:'Run 01', short:'Detective Round',
+ title:"The Detective's Round",
+ goal:'One long non-lethal sweep as the private investigator: solve the mystery, grab every disguise, key, token and item, open both shortcuts, and save-scum the accusation and exit feats.',
+ loadout:{start:'Main Road — default, no mastery',suit:"47's Signature Suit + gloves",
+   items:['Lockpick MK III (Dartmoor Mastery 2)','Camera','Coin','—']},
+ note:'This clears roughly half the mission. Nothing here kills the target, so play loose — but save at every amber marker, because the three accusations and the three exits are each mutually exclusive.',
+ sections:[
+ {h:'Entry & the investigation', steps:[
+  {t:'Take the Private Investigator disguise',
+   s:'Follow the investigator in and choke him out in the corridor past the Foyer.',
+   where:'From the Main Road start, right through the bushes, over the broken wall, in through the window beside the main entrance.',
+   disg:'Suit for now; you are about to get the PI outfit.',
+   item:'None.',
+   npc:'The private investigator, who walks the drive and stops in the corridor past the Foyer.',
+   act:'Subdue him while he pauses; stash him in the closet at the corridor end with the side doors shut.',
+   warn:'The PI disguise is allowed almost everywhere and is the backbone of this run. Do not skip it.',
+   save:1,
+   badges:[{c:'dis',t:'Elementary, My Dear Diana'},{c:'dis',t:'Chameleon 1/8'}]},
+  {t:'Meet Alexa, then follow Fernsby to Zachary\'s room',
+   s:'Speak to Alexa in the Foyer; the butler escorts you upstairs to the body.',
+   where:'Foyer (Floor 0), then up to Zachary\'s Bedroom (Floor 1, top-right).',
+   disg:'Private Investigator.',
+   item:'None.',
+   npc:'Alexa Carlisle, then Mr. Fernsby the butler.',
+   act:'Walking behind Fernsby passes the guard checkpoints without suspicion.',
+   badges:[]},
+  {t:'Clear all 17 investigation clues',
+   s:'Work the five clue rooms; camera-scan the marked items and read the rest.',
+   where:"Zachary's Bedroom (6), Emma & Gregory's Room (4), Rebecca's Room (2), Fernsby's Office (3), Greenhouse (2).",
+   disg:'Private Investigator.',
+   item:'Camera for scan clues; lockpick or the crowbar behind the Greenhouse for locked doors.',
+   npc:'None required.',
+   act:'Camera icons on the map mark scan clues. In Fernsby\'s Office also grab the master key; in the Greenhouse grab the boat key and the wrench off the fountain.',
+   warn:"In Emma & Gregory's Room, take the bulldog walking cane — two Discovery challenges and a whole secret area need it.",
+   badges:[{c:'dis',t:'House Cleaning'},{c:'dis',t:"D'ya Like Dags"},{c:'dis',t:'Thornbridge Manor Keys 1/5'}]},
+  {t:'Interview all five suspects',
+   s:'Talk to every family member marked with a green icon on Floor 0.',
+   where:'Patrick — Library; Gregory — Sitting Room; Edward — Dining Room piano; Rebecca — between Trophy Room and Sitting Room; Emma — drifts into the Sitting Room.',
+   disg:'Private Investigator.',
+   item:'None.',
+   npc:'Patrick, Gregory, Edward, Rebecca and Emma Carlisle.',
+   act:'Wait near Gregory for Emma to appear and complain at him. Keep talking to each until their icon clears.',
+   badges:[]}
+ ]},
+ {h:'Disguises, items & secret rooms', steps:[
+  {t:'Open the cane bookshelf in the upper Library',
+   s:'Put the bulldog cane into the floor socket to swing the hidden shelf open.',
+   where:'Upper floor of the Library (Floor 1), facing the west corner.',
+   disg:'Private Investigator.',
+   item:'The bulldog cane, held in your hands (not just carried).',
+   npc:'None.',
+   act:'Interact with the mysterious switch socket on the ground; the shelf opens into Secret Room (1). Grab Montgomery\'s letter inside.',
+   badges:[{c:'dis',t:'Dogs Secrets'},{c:'dis',t:'Discover — Secret Room (1)'}]},
+  {t:'Take the Lawyer outfit and read his computer',
+   s:'Subdue the lawyer, wear his outfit, inspect his PC, and note the book-switch here.',
+   where:'Small Office, north side of Floor 1.',
+   disg:'Private Investigator (to enter), then take the Lawyer disguise.',
+   item:'None.',
+   npc:'The lawyer, seated in the Small Office.',
+   act:'One visit covers three challenges plus the entrance to Secret Room (2) via the book.',
+   badges:[{c:'dis',t:'Justice for a Prize'},{c:'fea',t:"Don't Kill the Messenger"},{c:'dis',t:'Chameleon 2/8'}]},
+  {t:'Grab a hunting rifle from the weapons locker',
+   s:'Pick a rifle out of the Foyer locker to pop the challenge.',
+   where:'The gun locker between the Foyer and the Staff Room (Floor 0).',
+   disg:'Private Investigator.',
+   item:'None needed; you take the rifle itself.',
+   npc:'None.',
+   act:'Picking it up is enough — drop it again so you are not walking around armed.',
+   badges:[{c:'dis',t:"Let's Go Hunting"}]},
+  {t:'Complete the eight-disguise set',
+   s:'Collect the six outfits you still lack from their fixed spots.',
+   where:'Undertaker — graveyard; Photographer — garden fountain; Bodyguard — Floors 1–2; Mansion Staff — Floors 0–1; Mansion Guard — grounds; Gardener — garden.',
+   disg:'Whatever you are wearing; swap as you collect.',
+   item:'None.',
+   npc:'One NPC per outfit, subdued in an isolated spot.',
+   act:'Taking the Undertaker outfit here also banks Bring Out Your Dead. Taking the Photographer outfit banks Don\'t Lose Focus.',
+   warn:'Taking the Undertaker outfit is fine here, but Run 04 needs him UNHARMED for Proud Undertaker — that is a different run, no conflict.',
+   badges:[{c:'dis',t:'Chameleon 8/8'},{c:'dis',t:'Bring Out Your Dead'},{c:'dis',t:"Don't Lose Focus"}]},
+  {t:'Collect the last four keys and both bank tokens',
+   s:'Subdue Fernsby, Emma, Rebecca and Gregory; each drops a key, and Rebecca and Fernsby drop the two tokens.',
+   where:'Fernsby and Rebecca roam Floor 0; Emma and Gregory are reachable on Floor 0 during their loops.',
+   disg:'Private Investigator or a guard outfit.',
+   item:'None.',
+   npc:'Mr. Fernsby, Emma, Rebecca and Gregory Carlisle.',
+   act:'Pick up each dropped key, and both Milton-Fitzpatrick tokens from Rebecca and Fernsby. Hide the bodies.',
+   warn:'This alerts the house. It is not a stealth run, so reload if it gets messy — challenges you already popped stay banked.',
+   save:1,
+   badges:[{c:'dis',t:'Thornbridge Manor Keys 5/5'},{c:'dis',t:'Tuppence'}]}
+ ]},
+ {h:'The object-specific pacifies', steps:[
+  {t:'Pacify Edward at the piano',
+   s:'Knock out the pianist while he is playing.',
+   where:'Dining Room (Floor 0).',
+   disg:'Any that lets you approach; staff or PI is fine.',
+   item:'Any pacify method.',
+   npc:'Edward Carlisle at the piano.',
+   act:'He must be actively playing when he goes down.',
+   badges:[{c:'fea',t:'Elton Would be Proud'}]},
+  {t:'Pacify Gregory with the newspaper',
+   s:'Use the specific newspaper on Gregory.',
+   where:'Gregory sits on the Sitting Room couch; the newspaper is on the Library desk (Floor 0).',
+   disg:'Any.',
+   item:'The newspaper from the Floor 0 Library desk — this exact item is required.',
+   npc:'Gregory Carlisle.',
+   act:'Grab the newspaper, approach Gregory, subdue him with it.',
+   warn:'This will likely compromise you — guards are near and Gregory is family. Save first, pop it, reload.',
+   save:1,
+   badges:[{c:'fea',t:'Second-Hand News'}]},
+  {t:'Pacify Patrick with a pool ball',
+   s:'Throw a billiard ball at Patrick.',
+   where:'Library (Floor 0), the billiard table.',
+   disg:'Any.',
+   item:'A pool ball taken from a pocket of the billiard table.',
+   npc:'Patrick Carlisle, frequently in the Library.',
+   act:'Equip the ball, aim, throw at him to knock him out.',
+   badges:[{c:'fea',t:'Cue Balled'}]}
+ ]},
+ {h:'Photo & bell feats (Alexa alive)', steps:[
+  {t:'Photograph the flirting couple',
+   s:'Shoot a photo of the bodyguard and maid talking on Floor 1.',
+   where:'Floor 1 hallway near Emma & Gregory\'s Room. One reader-verified spot: the north-west room above the Floor 0 Library, against the west wall, shooting through the doorway.',
+   disg:'Any; stay out of their sight.',
+   item:'Camera.',
+   npc:'A bodyguard and a maid who flirt when unobserved.',
+   act:'If they see you they stop for a while, so stay hidden and wait.',
+   warn:'Reported buggy at launch and still fussy; photo challenges take a moment to register. Bug status in the current build is UNVERIFIED.',
+   badges:[{c:'fea',t:'Voyeurism'},{c:'unv',t:'Bug status unverified'}]},
+  {t:"Photograph Alexa beside Zachary's body",
+   s:'Catch Alexa when she visits Zachary\'s room to grieve.',
+   where:"Zachary's Room (Floor 1); wait inside Secret Room (3), entered via the book.",
+   disg:'Any; stay hidden.',
+   item:'Camera.',
+   npc:'Alexa Carlisle, on her patrol loop.',
+   act:'She sits in the chair by the body after several minutes — shoot through the doorway then.',
+   badges:[{c:'fea',t:'A Private Moment'},{c:'dis',t:'Discover — Secret Room (3)'}]},
+  {t:'Ring the Sitting Room bell at Alexa',
+   s:'Ring the bell while Alexa is in the room.',
+   where:'Right-hand side of the Sitting Room (Floor 0).',
+   disg:'Any.',
+   item:'None.',
+   npc:'Alexa Carlisle, who passes through on patrol.',
+   act:'Wait for her red outline to enter, then ring.',
+   badges:[{c:'fea',t:'Ding Ding Ding'}]}
+ ]},
+ {h:'Report, accuse, and the Floor-2 grabs', steps:[
+  {t:'Report to Fernsby and follow him to the Office',
+   s:'Finish the investigation and get escorted to Alexa.',
+   where:'Foyer, then Alexa\'s Office (Floor 2).',
+   disg:'Private Investigator.',
+   item:'None.',
+   npc:'Mr. Fernsby, then Alexa Carlisle.',
+   act:'The story completes on arrival. Following him is the safe way past the Floor 2 guards.',
+   badges:[{c:'fea',t:'Mission Story: Means, Motive and Opportunity'}]},
+  {t:'SAVE, then take all three accusations by reloading',
+   s:'One accusation per playthrough; each is its own feat.',
+   where:'The chair opposite Alexa in her Office.',
+   disg:'Private Investigator.',
+   item:'None.',
+   npc:'Alexa Carlisle.',
+   act:'Save, accuse Emma → Justice, reload; accuse Zachary → Guilt, reload; accuse Fernsby → Loyalty.',
+   warn:'These three are mutually exclusive. Accusing Emma also kills Another Death in the Family — but that is Run 02, so it is fine here.',
+   save:1,
+   badges:[{c:'fea',t:'A Matter of Justice'},{c:'fea',t:'A Matter of Guilt'},{c:'fea',t:'A Matter of Loyalty'}]},
+  {t:'Take the Arthur Edwards case file',
+   s:'Open the office safe and grab the file.',
+   where:'Behind the painting in Alexa\'s Office (Floor 2).',
+   disg:'Private Investigator.',
+   item:'None; code is 1975.',
+   npc:'Alexa (or do it yourself).',
+   act:'Ask for the case file as your reward and she opens the safe, or click the chair-armrest switch and enter 1975.',
+   badges:[{c:'fea',t:'Close to the Chest'}]},
+  {t:'Peep at Alexa and grab the unicorn horn',
+   s:'Use the Private Room secret passage for two challenges at once.',
+   where:'Alexa\'s Private Room (Floor 2, red-padded); button at the far end opens the passage.',
+   disg:'Private Investigator or bodyguard.',
+   item:'None.',
+   npc:'Alexa Carlisle, on her loop.',
+   act:'Wait in the passage (several minutes), use a peephole when she appears, and pick up the broken-off horn in here.',
+   badges:[{c:'fea',t:'Peeping 47'},{c:'dis',t:'Magic is Real'},{c:'dis',t:'Discover — Secret Room (L2)'}]}
+ ]},
+ {h:'Shortcuts, area sweep & the three exits', steps:[
+  {t:'Open both ladder shortcuts',
+   s:'Unlock the balcony and maintenance ladders from the inside.',
+   where:"Balcony Ladder — at Zachary's balcony (Floor 1). Maintenance Ladder — pipes behind the Trophy Room up to the third-floor rooftop.",
+   disg:'Any.',
+   item:'None.',
+   npc:'None.',
+   act:'Open both from the inside/top so they stay unlocked.',
+   warn:'Shortcuts only become permanent after you finish or restart the mission. Run 05 depends on the maintenance ladder being open, so do not skip it.',
+   badges:[{c:'dis',t:'Shortcut: Balcony Ladder'},{c:'dis',t:'Shortcut: Maintenance Ladder'}]},
+  {t:'Sweep any unvisited named areas',
+   s:'Mop up the last of the 22 areas by map-pin.',
+   where:'Floors 0–2; Floor 3 has none. The four secret rooms are the easy-to-miss ones.',
+   disg:'Private Investigator (allowed almost everywhere).',
+   item:'None.',
+   npc:'None.',
+   act:'Cycle every floor on the in-game map and look for the pin icon in the left-hand legend.',
+   badges:[{c:'dis',t:'Discover Dartmoor (22/22)'}]},
+  {t:'SAVE, then take all three exits by reloading',
+   s:'Three exits, one per playthrough.',
+   where:'Motorcycle at the Main Road start; speedboat behind the Greenhouse; river bridge on the far-right map edge.',
+   disg:'Any.',
+   item:'Boat key (from the Greenhouse) for the boat.',
+   npc:'None.',
+   act:'Save, exit by motorcycle → reload; boat → reload; bridge. The bridge may not show on the in-game map.',
+   warn:'One exit per playthrough. Killing Alexa before leaving also banks Eliminate Alexa Carlisle.',
+   save:1,
+   badges:[{c:'dis',t:'Top Gear'},{c:'dis',t:"Don't Rock the Boat"},{c:'dis',t:'The Bridge on the Thornbridge River'},{c:'tar',t:'Eliminate Alexa Carlisle'}]}
+ ]}
+ ]
+},
+
+{
+ no:'Run 02', short:'Let Emma Do It',
+ title:'Let Emma Do It',
+ goal:'Arm the greenhouse, point the blame away from Emma, and let the real murderer complete your contract.',
+ loadout:{start:'Main Road — default',suit:"47's Signature Suit",
+   items:['Lockpick MK III','Camera','Coin','Wrench (or use the fountain wrench in-mission)']},
+ note:'Short and mostly hands-off. Do not accuse Emma, and do not interfere once the meeting starts.',
+ sections:[
+ {h:'Setup', steps:[
+  {t:'Brew lethal poison in the Greenhouse',
+   s:'Repair the distillation kit and use it to make poison.',
+   where:'Greenhouse, west outer garden.',
+   disg:'Private Investigator or suit; break in with lockpick/crowbar.',
+   item:'Wrench (on the garden fountain) to repair the kit.',
+   npc:'None.',
+   act:'Fix the kit, then use the flower equipment to brew lethal poison.',
+   warn:'One guide states Another Death in the Family requires Poison Ivy — the kit must be working before you trigger the family meeting. Do this before reporting.',
+   badges:[{c:'fea',t:'Poison Ivy'}]},
+  {t:'Run the investigation and accuse Fernsby or Zachary',
+   s:'Do the clues and suspects, report, then name the butler or the dead man.',
+   where:'Same route as Run 01; report in Alexa\'s Office.',
+   disg:'Private Investigator.',
+   item:'None.',
+   npc:'The five suspects, then Alexa.',
+   act:'Accuse Fernsby or Zachary. This is said to hasten the meeting.',
+   warn:'Never accuse Emma — that removes the poisoner and kills this challenge.',
+   save:1,
+   badges:[{c:'fea',t:'A Matter of Loyalty / A Matter of Guilt'}]}
+ ]},
+ {h:'The wait', steps:[
+  {t:'Follow Alexa down and let Emma poison her',
+   s:'Alexa calls a family meeting; Emma brews and pours the poison; Alexa drinks and dies.',
+   where:'Sitting Room (Floor 0). One reader report says the Dining Room — track Alexa rather than committing.',
+   disg:'Any that blends in the room.',
+   item:'None.',
+   npc:'Emma Carlisle (the poisoner) and Alexa Carlisle.',
+   act:'It may not fire on her first loop; keep waiting. Do not touch the drink, Emma or Alexa.',
+   warn:'Any interference by 47 breaks the sequence. Someone Could Hurt Themselves does NOT pop here — Emma\'s kill is not a 47-caused accident.',
+   save:1,
+   badges:[{c:'ass',t:'Another Death in the Family'},{c:'tar',t:'Eliminate Alexa Carlisle'}]}
+ ]}
+ ]
+},
+
+{
+ no:'Run 03', short:'A Day to Remember',
+ title:'A Day to Remember',
+ goal:'Take the photographer\'s job, gather the family, and split the shoot into a clean portrait and an electric chair.',
+ loadout:{start:'Garden — Dartmoor Mastery 4 (Main Road also fine)',suit:"47's Signature Suit",
+   items:['Screwdriver (or take one from the Dining Room supply cupboard)','Lockpick MK III / in-mission crowbar','Camera','Coin']},
+ note:'Say Cheese and Nothing as it Seems need a harmless shoot; One for the Ages electrocutes her. Save before firing the shutter.',
+ sections:[
+ {h:'Becoming the photographer', steps:[
+  {t:'Take the Photographer disguise',
+   s:'Overhear the fountain conversation, then subdue the photographer.',
+   where:'The fountain in the garden behind the manor.',
+   disg:'Suit → take the Photographer outfit.',
+   item:'None; his camera comes with the role.',
+   npc:'The photographer and a maid; a guard faces his table.',
+   act:'Knock out the table-facing guard into the nearby crate first, or coin the photographer behind the bushes, then take him.',
+   badges:[{c:'dis',t:"Don't Lose Focus"},{c:'fea',t:'Mission Story: A Day to Remember — started'}]},
+  {t:'Fit a fuse and calibrate the camera',
+   s:'Power the flashes, then photograph the maid to summon the family.',
+   where:'Fuse box by the fountain; a fuse cell is on a crate between the Trophy Room and the Library.',
+   disg:'Photographer.',
+   item:'A fuse cell; a crowbar to open the garden fuse box.',
+   npc:'The maid by the chair.',
+   act:'Fit the fuse, photograph the maid; she texts the family down. They take a few minutes to gather.',
+   save:1,
+   badges:[{c:'fea',t:'Mission Story: A Day to Remember'}]}
+ ]},
+ {h:'Two endings, split by save', steps:[
+  {t:'ENDING A — the clean portrait',
+   s:'Leave the wiring alone; take the family photo, then photograph Alexa\'s speech.',
+   where:'The fountain shoot, then the Sitting Room a few minutes later.',
+   disg:'Photographer.',
+   item:'Camera.',
+   npc:'The whole Carlisle family, then Alexa.',
+   act:'Take the portrait for Say Cheese; then photograph Alexa during the family meeting/speech for Nothing as it Seems.',
+   warn:'Nothing as it Seems requires that you have harmed nobody — no electric trap, no bodies. Official text ties it to "the family meeting"; sources differ on which gathering, so also attempt it at the post-investigation meeting.',
+   badges:[{c:'fea',t:'Say Cheese'},{c:'fea',t:'Nothing as it Seems'},{c:'unv',t:'Which meeting: unverified'}]},
+  {t:'RELOAD — ENDING B — the electric chair',
+   s:'Wire the chair to the flooded floor and fire the shutter with Alexa seated.',
+   where:'The extension cord/socket behind the posing chair by the well, and the waterline on the left of the fountain.',
+   disg:'Photographer.',
+   item:'A screwdriver (small supply cupboard off the Dining Room — middle door then left) to expose the wiring.',
+   npc:'Alexa Carlisle in the chair.',
+   act:'Unscrew the socket, open the waterline to flood the ground, wait for Alexa to sit, then pull the camera trigger. She must be seated in that chair, in the water.',
+   warn:'This invalidates Nothing as it Seems in the same playthrough. Take Ending A first, then reload.',
+   badges:[{c:'ass',t:'One for the Ages'},{c:'ass',t:'Someone Could Hurt Themselves'},{c:'tar',t:'Eliminate Alexa Carlisle'}]}
+ ]}
+ ]
+},
+
+{
+ no:'Run 04', short:'Final Resting Place',
+ title:'Her Final Resting Place',
+ goal:'Clear the crows, run the graveyard scene two ways — respectful rifle, then the shovel — and drive off in a hearse.',
+ loadout:{start:'Main Road or Behind Mansion (Mastery 8)',suit:"47's Signature Suit",
+   items:['ICA Briefcase MK III (Dubai Mastery 7) holding a sniper rifle','ICA19 Shortballer silenced pistol (Dartmoor Mastery 5)','Coin','Lockpick MK III']},
+ note:'Grave Mistake and Keep Calm and Aim are two endings to one scene, and Proud Undertaker limits how you treat the Undertaker. Save the moment the nests are down.',
+ sections:[
+ {h:'The crows', steps:[
+  {t:'Shoot the three crow nests',
+   s:'Silently clear all three nests from the graveyard trees.',
+   where:'The graveyard on the outer edge of the map; hide in the bushes first.',
+   disg:'Suit or a grounds disguise.',
+   item:'A silenced pistol or the sniper from the briefcase.',
+   npc:'A jumpy gardener nearby; the Undertaker by the grave.',
+   act:'Shoot all three nests from cover so suspicion stays low.',
+   warn:'Do NOT harm or alert the Undertaker at any point — Proud Undertaker needs him unharmed and personally leading the arrangements.',
+   save:1,
+   badges:[{c:'fea',t:'The Raven'}]},
+  {t:'Let the Undertaker summon Alexa',
+   s:'With the nests gone and the Undertaker untouched, he calls Alexa over.',
+   where:'By the dug grave; the maid stands just outside the graveyard.',
+   disg:'Suit or grounds disguise.',
+   item:'None.',
+   npc:'The Undertaker, the maid, then Alexa.',
+   act:'Report to the maid if the story stalls; the Undertaker then presents the grave to Alexa.',
+   badges:[{c:'fea',t:'Mission Story: Her Final Resting Place'},{c:'fea',t:'Proud Undertaker'}]}
+ ]},
+ {h:'Two endings, split by save', steps:[
+  {t:'ENDING A — the rooftop shot',
+   s:'Snipe Alexa from the mansion roof as she stands at the grave.',
+   where:'Third-floor rooftop — via the open window off Alexa\'s Office staircase, or the maintenance ladder behind the Trophy Room.',
+   disg:'Suit is fine on the roof.',
+   item:'Sniper rifle from the ICA Briefcase.',
+   npc:'Alexa Carlisle at the graveside with the Undertaker.',
+   act:'Wait until she is at the grave with the Undertaker, then take the shot. A headshot also banks Straight Shot.',
+   badges:[{c:'ass',t:'Keep Calm and Aim'},{c:'ass',t:'Straight Shot'},{c:'tar',t:'Eliminate Alexa Carlisle'}]},
+  {t:'RELOAD — ENDING B — the grave',
+   s:'Follow Alexa, wait for the grave-edge moment, push and bury her.',
+   where:'At the lip of the open grave.',
+   disg:'The Undertaker outfit makes this far easier.',
+   item:'The shovel next to the grave.',
+   npc:'Alexa Carlisle, with the guard scripted to look away.',
+   act:'After ~90 seconds of following her she stands facing the grave; push from behind, then use the shovel to fill it in — both halves are required.',
+   warn:'Wearing the Undertaker outfit conflicts with Proud Undertaker in the same playthrough. Do Ending A with him intact, then reload for Ending B.',
+   save:1,
+   badges:[{c:'ass',t:'Grave Mistake'},{c:'ass',t:'Someone Could Hurt Themselves'},{c:'tar',t:'Eliminate Alexa Carlisle'}]},
+  {t:'Escape in the hearse',
+   s:'Take the hearse key and drive out.',
+   where:'The hearse is parked beside the manor.',
+   disg:'Any.',
+   item:'The hearse key.',
+   npc:'Possibly the Undertaker — see warning.',
+   act:'Check the box near the hearse by the north exit first (two guards nearby); use instinct to highlight the key.',
+   warn:'Sources conflict: one says the Undertaker carries the key, a reader report says it is on a box by the hearse. The box route preserves Proud Undertaker.',
+   badges:[{c:'dis',t:'Last Responder'},{c:'unv',t:'Key location conflicting'}]}
+ ]}
+ ]
+},
+
+{
+ no:'Run 05', short:'The Classics',
+ title:'The Classics',
+ goal:'One clean pass — in through the roof, out through the window, nobody sees you, and Alexa dies to a rifle round in a secret passage.',
+ loadout:{start:'Main Road — default',suit:"47's Signature Suit — no disguises at any point",
+   items:['ICA Briefcase MK III with any sniper rifle','Coin','—','Prereq: Maintenance Ladder already open (Run 01)']},
+ note:'This single run banks all five Classics together (~20,000 XP, about four mastery levels). Do not deviate; every extra room is another witness.',
+ sections:[
+ {h:'In through the roof', steps:[
+  {t:'Unbox the rifle and skirt to the back',
+   s:'Take the rifle out at the start, then loop left to behind the Trophy Room.',
+   where:'From Main Road: bushes right, over the wall, path left to the manor\'s back.',
+   disg:'Suit only.',
+   item:'Sniper rifle unboxed from the ICA Briefcase.',
+   npc:'Outdoor Mansion Guards — stay in the bushes.',
+   act:'Unbox before anyone can see you so you never unbox indoors.',
+   badges:[]},
+  {t:'Climb the maintenance ladder into the Office',
+   s:'Up the pipes to the roof, in through the office window, clear the one guard.',
+   where:'Pipes outside the Trophy Room entrance up to the third-floor rooftop, then Alexa\'s Office window.',
+   disg:'Suit only.',
+   item:'Coin.',
+   npc:'A single guard in the office.',
+   act:'Coin-distract, choke him non-lethally, box the body. Wait for any others to leave first.',
+   warn:'The maintenance ladder must already be unlocked from a finished earlier run. Non-lethal only — one extra kill loses Silent Assassin.',
+   save:1,
+   badges:[]},
+  {t:'Take the case file on the way past',
+   s:'Free challenge while you are in the office.',
+   where:'Behind the office painting.',
+   disg:'Suit only.',
+   item:'None; code 1975.',
+   npc:'None.',
+   act:'Chair-armrest switch, enter 1975, take the file.',
+   badges:[{c:'fea',t:'Close to the Chest'}]}
+ ]},
+ {h:'The wait and the shot', steps:[
+  {t:'Hide in the Private Room passage and peep',
+   s:'Enter the secret passage and use the peephole while you wait.',
+   where:'Alexa\'s Private Room (Floor 2); button at the far end opens the passage.',
+   disg:'Suit only.',
+   item:'None.',
+   npc:'Alexa, after five to ten minutes.',
+   act:'Use a peephole, and pick up the unicorn horn in the passage.',
+   badges:[{c:'fea',t:'Peeping 47'},{c:'dis',t:'Magic is Real'}]},
+  {t:'Choke her, drag her in, and snipe her',
+   s:'Take her down while she cries, pull her into the passage, headshot her.',
+   where:'The Private Room, then the secret passage.',
+   disg:'Suit only.',
+   item:'Sniper rifle.',
+   npc:'Alexa Carlisle (her bodyguard waits outside).',
+   act:'Wait for the pillow-crying moment, choke her, drag her into the passage, shut the door, and shoot from the corner furthest from the bodyguard. Hide her body in the box.',
+   warn:'This kill is in the passage, not the Private Room, so it does NOT count Sweet Dreams — that is a Run 06 job.',
+   save:1,
+   badges:[{c:'cla',t:'Sniper Assassin'},{c:'ass',t:'Straight Shot'},{c:'tar',t:'Eliminate Alexa Carlisle'}]},
+  {t:'Out the window and back the way you came',
+   s:'Leave through the Floor 2 window and retrace the route to the start exit.',
+   where:'Floor 2 hallway window, shimmy left to the Trophy Room balcony, slide the pipe, out through the gardens.',
+   disg:'Suit only.',
+   item:'None.',
+   npc:'None if you stay in cover.',
+   act:'Finish the mission to bank the whole Classics set at once.',
+   badges:[{c:'cla',t:'Silent Assassin'},{c:'cla',t:'Silent Assassin, Suit Only'},{c:'cla',t:'Suit Only'},{c:'cla',t:'The Classics'}]}
+ ]}
+ ]
+},
+
+{
+ no:'Run 06', short:'Kill Sampler',
+ title:'The Kill Sampler',
+ goal:'One save on Floor 2, six different kills on the same woman, and Versatile Assassin at the end.',
+ loadout:{start:"Zachary's Bedroom (Mastery 16) or Main Road",suit:"47's Signature Suit",
+   items:['Fiber Wire','ICA Pen Syringe Emetic (Chongqing Mastery 5) or Emetic Poison Vial','ICA19 Shortballer silenced pistol','Lethal Poison Vial (Berlin Mastery 10) or brew in the Greenhouse']},
+ note:'Every kill here is mutually exclusive. Make one save with Alexa alive and reachable on Floor 2, then reload after each.',
+ sections:[
+ {h:'The save point', steps:[
+  {t:'Reach Floor 2 as a bodyguard and save',
+   s:'Get a bodyguard outfit up to the Office floor and make your master save.',
+   where:'Bodyguards patrol Floors 1–2; take one in an isolated corridor.',
+   disg:'Bodyguard.',
+   item:'None yet.',
+   npc:'A bodyguard to subdue.',
+   act:'From Floor 2 the Office, Private Room and Bedroom are all a short walk from your save.',
+   save:1,
+   badges:[]}
+ ]},
+ {h:'Six kills, six reloads', steps:[
+  {t:'KILL 1 — the antler chandelier',
+   s:'Shoot the chandelier chain while Alexa stands beneath it.',
+   where:'Alexa\'s Office (Floor 2).',
+   disg:'Bodyguard.',
+   item:'Silenced pistol.',
+   npc:'Alexa, who walks under the chandelier on her loop.',
+   act:'Shoot the chain (not the antlers) when she is under it. Or drag her unconscious body under it, then shoot.',
+   badges:[{c:'ass',t:'I Find This Amoosing'},{c:'ass',t:'Someone Could Hurt Themselves'}]},
+  {t:'KILL 2 — the private room',
+   s:'Kill her inside the soundproofed Private Room.',
+   where:'The red-padded Private Room next to the Office (Floor 2).',
+   disg:'Bodyguard.',
+   item:'Any method.',
+   npc:'Alexa Carlisle.',
+   act:'Knock her out in the Office and drag her in, or wait for her to enter, then kill her there. The kill must happen inside the room.',
+   badges:[{c:'ass',t:'Sweet Dreams'}]},
+  {t:'KILL 3 — drowning in the toilet',
+   s:'Emetic-poison her, then drown her at the bowl.',
+   where:'Alexa\'s Bedroom and its bathroom (Floor 2).',
+   disg:'Bodyguard.',
+   item:'Emetic poison (syringe or in her tea).',
+   npc:'Alexa Carlisle.',
+   act:'Poison her tea or hit her with the emetic; when she is hunched over the toilet, drown her.',
+   badges:[{c:'ass',t:'Hold My Hair'}]},
+  {t:'KILL 4 — the fiber wire',
+   s:'Garrotte her while she is alone.',
+   where:'The Private Room or its passage, where no guard watches.',
+   disg:'Bodyguard.',
+   item:'Fiber Wire.',
+   npc:'Alexa Carlisle.',
+   act:'Approach from behind and strangle her.',
+   badges:[{c:'ass',t:'Piano Man'}]},
+  {t:'KILL 5 — lethal poison in a drink',
+   s:'Poison a beverage and wait.',
+   where:'Her tea in the Floor 2 Bedroom is easiest.',
+   disg:'Bodyguard.',
+   item:'Lethal poison (pill jar in the butler\'s office, or brew your own for Poison Ivy).',
+   npc:'Alexa Carlisle.',
+   act:'Dose the drink, wait for her to drink.',
+   badges:[{c:'ass',t:'Tasteless, Traceless'}]},
+  {t:'KILL 6 — a headshot',
+   s:'Any gun, one round to the head.',
+   where:'Anywhere on Floor 2.',
+   disg:'Bodyguard.',
+   item:'Any firearm.',
+   npc:'Alexa Carlisle.',
+   act:'Skip this if you already banked Straight Shot in Run 04 or 05.',
+   badges:[{c:'ass',t:'Straight Shot'},{c:'ass',t:'Versatile Assassin'}]}
+ ]}
+ ]
+},
+
+{
+ no:'Run 07', short:'Fhammerly Affair',
+ title:"It's a Fhammerly Affair",
+ goal:'Bludgeon the whole family with one specific hammer to unlock the Claw Hammer melee item.',
+ loadout:{start:'Main Road — default',suit:"47's Signature Suit",
+   items:['—','—','—','Hammer is picked up in-mission']},
+ note:'A dedicated short run, added in the Season of Envy update (Oct 2021). All five family members are on Floor 0 during the mystery, so this is one quick sweep with reloads if it gets loud.',
+ sections:[
+ {h:'The hammer', steps:[
+  {t:'Pick up the hammer',
+   s:'Grab the claw hammer near the entrance.',
+   where:'At the front of the mansion, near the security guards.',
+   disg:'Suit or a grounds disguise to approach the front.',
+   item:'The claw hammer itself.',
+   npc:'Security guards nearby — do not let them see you take it if you can help it.',
+   act:'Confirmed by two sources: the hammer is at the mansion front by the security guards.',
+   save:1,
+   badges:[]}
+ ]},
+ {h:'The family', steps:[
+  {t:'Pacify all five family members with the hammer',
+   s:'Melee or throw the hammer at Edward, Emma, Gregory, Patrick and Rebecca.',
+   where:'All five are on Floor 0 during the murder mystery — Patrick (Library), Gregory (Sitting Room), Edward (Dining Room piano), Rebecca (Trophy/Sitting), Emma (Sitting Room).',
+   disg:'Any that lets you get close.',
+   item:'The hammer — a melee hit or a thrown hit to the head both pacify.',
+   npc:'Edward, Emma, Gregory, Patrick and Rebecca Carlisle. Fernsby is NOT required.',
+   act:'Pacify all five with the hammer; the challenge pops on the fifth. Killing Alexa first (then looting her safe) makes the house easier to move through, per Gamepur.',
+   warn:'Only the hammer counts — a fiber wire or fist will not. This conflicts with Second-Hand News and Cue Balled in the same state, so this is its own run.',
+   badges:[{c:'fea',t:"It's a Fhammerly Affair"}]}
+ ]}
+ ]
+}
+];
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+const state={}; CH.forEach(c=>state[c.id]=false);
+try{const saved=JSON.parse(localStorage.getItem('dartmoor_state_v1')||'null');if(saved)Object.keys(saved).forEach(k=>{if(k in state)state[k]=!!saved[k];});}catch(e){}
+function reportProgress(){try{const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r['m20']={done:CH.filter(c=>state[c.id]).length,total:CH.length,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
+/* `state` only accepts known challenge ids on load, so route steps get their
+   own store rather than being silently dropped */
+const stepDone=new Set();
+try{const _s=JSON.parse(localStorage.getItem('dartmoor_state_v1:steps')||'[]');_s.forEach(k=>stepDone.add(k));}catch(e){}
+function saveState(){try{localStorage.setItem('dartmoor_state_v1',JSON.stringify(state));localStorage.setItem('dartmoor_state_v1:steps',JSON.stringify([...stepDone]));}catch(e){}reportProgress();}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+
+function refresh(){
+  const done=CH.filter(c=>state[c.id]).length;
+  document.getElementById('tDone').textContent=done;
+  document.getElementById('tBar').style.width=(done/CH.length*100)+'%';
+  ['ass','dis','fea','tar','cla'].forEach(()=>{});
+  document.getElementById('cats').innerHTML=['ass','dis','fea','tar','cla'].map(k=>{
+    const all=CH.filter(c=>c.cat===k),d=all.filter(c=>state[c.id]).length;
+    return `<div class="cat"><b>${CATNAME[k]}</b><span>${d}<i>/${all.length}</i></span></div>`;
+  }).join('');
+  document.querySelectorAll('.crow').forEach(r=>{
+    const on=state[r.dataset.id]; r.dataset.done=on?'1':'0';
+    const t=r.querySelector('.tick'); t.dataset.done=on?'1':'0'; t.textContent=on?'✓':'';
+  });
+}
+
+/* runs */
+function badgeHTML(b){return `<span class="b ${b.c}">${esc(b.t)}</span>`}
+function drow(k,v){return v?`<div class="drow"><div class="k">${k}</div><div class="v">${esc(v)}</div></div>`:''}
+function stepDetail(st){
+  let h='';
+  h+=drow('Where',st.where);
+  h+=drow('Disguise',st.disg);
+  h+=drow('Item',st.item);
+  h+=drow('NPC',st.npc);
+  h+=drow('Action',st.act);
+  h+=drow('Warning',st.warn);
+  let bs=[];
+  if(st.warn)bs.push('<span class="b warn">Warning</span>');
+  if(st.save)bs.push('<span class="b save">Save here</span>');
+  (st.badges||[]).forEach(b=>bs.push(badgeHTML(b)));
+  if(bs.length)h+=`<div class="badges">${bs.join('')}</div>`;
+  return h;
+}
+
+let sN=0;
+document.getElementById('runList').innerHTML=RUNS.map((r,ri)=>`
+<article class="run" id="run${ri}" data-open="${ri===0?'1':'0'}">
+  <div class="run-head" data-runtog="${ri}">
+    <span class="run-chev">▸</span>
+    <div class="run-head-main">
+      <span class="run-no">${esc(r.no)}</span>
+      <h2>${esc(r.title)}</h2>
+      <p>${esc(r.goal)}</p>
+    </div>
+  </div>
+  <div class="run-body">
+    <div class="loadout">
+      <div class="lo"><b>Start</b><span>${esc(r.loadout.start)}</span></div>
+      <div class="lo"><b>Suit</b><span>${esc(r.loadout.suit)}</span></div>
+      ${r.loadout.items.map((it,i)=>`<div class="lo"><b>Slot ${i+1}</b><span>${esc(it)}</span></div>`).join('')}
+    </div>
+    <p class="run-note">${esc(r.note)}</p>
+    ${r.sections.map(s=>`
+      <div class="sect">
+        <p class="sect-h">${esc(s.h)}</p>
+        ${s.steps.map(st=>{
+          const id='s'+(sN++);
+          return `<div class="step" id="${id}" data-sopen="0">
+            <button class="tick" data-step="${id}" aria-label="Mark step complete"></button>
+            <div class="step-body">
+              <div class="step-head" data-steptog="${id}">
+                <span class="schev">▸</span>
+                <div>
+                  <p class="step-title">${esc(st.t)}</p>
+                  <p class="step-sum">${esc(st.s)}</p>
+                </div>
+              </div>
+              <div class="detail">${stepDetail(st)}</div>
+            </div>
+          </div>`;
+        }).join('')}
+      </div>`).join('')}
+    <div style="height:16px"></div>
+  </div>
+</article>`).join('');
+
+/* run nav */
+document.getElementById('runNav').innerHTML=RUNS.map((r,ri)=>
+  `<button data-jump="${ri}"><b>${esc(r.no)}</b>${esc(r.short)}</button>`).join('');
+document.getElementById('runNav').addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b)return;
+  const ri=b.dataset.jump;
+  const run=document.getElementById('run'+ri);
+  run.dataset.open='1';
+  document.querySelectorAll('.run-nav button').forEach(x=>x.classList.toggle('active',x===b));
+  run.scrollIntoView({behavior:'smooth',block:'start'});
+});
+
+document.getElementById('runList').addEventListener('click',e=>{
+  const rt=e.target.closest('[data-runtog]');
+  if(rt){const run=document.getElementById('run'+rt.dataset.runtog);
+    run.dataset.open=run.dataset.open==='1'?'0':'1'; return}
+  const stt=e.target.closest('[data-steptog]');
+  if(stt){const step=document.getElementById(stt.dataset.steptog);
+    step.dataset.sopen=step.dataset.sopen==='1'?'0':'1'; return}
+  const t=e.target.closest('.tick');
+  if(t){const step=document.getElementById(t.dataset.step);
+    const on=step.dataset.done!=='1';
+    step.dataset.done=on?'1':'0'; t.dataset.done=on?'1':'0'; t.textContent=on?'✓':'';
+    on?stepDone.add(t.dataset.step):stepDone.delete(t.dataset.step); saveState()}
+});
+
+/* checklist */
+let filter='all';
+function drawList(){
+  const rows=CH.filter(c=>filter==='all'?true:filter==='inc'?!state[c.id]:c.cat===filter);
+  const el=document.getElementById('clist');
+  el.innerHTML=rows.length?rows.map(c=>`
+    <div class="crow" data-id="${c.id}" data-done="${state[c.id]?'1':'0'}">
+      <button class="tick" data-check="${c.id}" data-done="${state[c.id]?'1':'0'}" aria-label="Mark complete">${state[c.id]?'✓':''}</button>
+      <div class="crow-main">
+        <p class="crow-name">${esc(c.name)} <span class="b ${c.cat}">${CATSHORT[c.cat]}</span>${c.xp?`<span class="xp">${esc(c.xp)} XP</span>`:''}</p>
+        <p class="crow-cond">${esc(c.cond)}</p>
+      </div>
+    </div>`).join(''):`<div class="empty">Nothing left in this filter.</div>`;
+}
+document.getElementById('filters').innerHTML=
+  [['all','All (58)'],['ass','Assassination (12)'],['dis','Discovery (19)'],['fea','Feats (21)'],['tar','Targets (1)'],['cla','Classics (5)'],['inc','Incomplete']]
+  .map(([k,l])=>`<button data-f="${k}" aria-pressed="${k==='all'}">${l}</button>`).join('');
+document.getElementById('filters').addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b)return;
+  filter=b.dataset.f;
+  document.querySelectorAll('#filters button').forEach(x=>x.setAttribute('aria-pressed',x===b));
+  drawList();
+});
+document.getElementById('clist').addEventListener('click',e=>{
+  const t=e.target.closest('.tick'); if(!t)return;
+  state[t.dataset.check]=!state[t.dataset.check]; saveState(); drawList(); refresh();
+});
+document.getElementById('reset').addEventListener('click',()=>{
+  CH.forEach(c=>state[c.id]=false); stepDone.clear();
+  document.querySelectorAll('.step').forEach(s=>{s.dataset.done='0';
+    const t=s.querySelector('.tick'); t.dataset.done='0'; t.textContent=''});
+  saveState(); drawList(); refresh();
+});
+
+/* tabs */
+document.querySelectorAll('nav.tabs button').forEach(b=>{
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('nav.tabs button').forEach(x=>x.setAttribute('aria-selected',x===b));
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+    document.getElementById('p-'+b.dataset.panel).classList.add('on');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+/* re-apply saved step ticks now the runs are in the DOM */
+stepDone.forEach(id=>{
+  const step=document.getElementById(id); if(!step)return;
+  step.dataset.done='1';
+  const t=step.querySelector('.tick'); if(t){t.dataset.done='1'; t.textContent='✓';}
+});
+
+drawList(); refresh(); reportProgress();
+
+/* ============================================================ REFERENCE ============================================================ */
+document.getElementById('p-ref').innerHTML = `
+<h2>Starting locations &amp; mastery</h2>
+<div class="callout amberc"><b>Single source, internally inconsistent</b>
+This table comes from one guide (DBLTAP). It lists "Behind Mansion" as a start at both Rank 8 and 19, and "Main Road" as a Rank 18 unlock despite Main Road being the default start with no mastery. I could not reconcile this against a second source, so treat ranks as indicative and confirm in your mission-planning screen.</div>
+<table>
+<tr><th>Rank</th><th>Unlock</th><th>Type</th></tr>
+<tr><td>&mdash;</td><td>Main Road</td><td>Default start</td></tr>
+<tr><td>2</td><td>Lockpick MK III &middot; Deliveries</td><td>Tool &middot; Stash</td></tr>
+<tr><td>4</td><td>Garden</td><td>Start</td></tr>
+<tr><td>5</td><td>ICA19 Shortballer &middot; Greenhouse</td><td>Pistol &middot; Stash</td></tr>
+<tr><td>6</td><td>Staffroom</td><td>Start</td></tr>
+<tr><td>8</td><td>Behind Mansion</td><td>Start</td></tr>
+<tr><td>9</td><td>Graveyard</td><td>Pickup</td></tr>
+<tr><td>10</td><td>ICA Remote Audio Distraction MK III</td><td>Distraction</td></tr>
+<tr><td>11</td><td>Library</td><td>Start</td></tr>
+<tr><td>16</td><td>Zachary's Bedroom</td><td>Start</td></tr>
+<tr><td>18</td><td>Walking Cane &middot; Main Road</td><td>Melee &middot; Start (disputed)</td></tr>
+<tr><td>19</td><td>Behind Mansion</td><td>Start (duplicate &mdash; disputed)</td></tr>
+<tr><td>20</td><td>Classic Cut Long Coat Suit &middot; Bartoli Woodsman Hunting Rifle</td><td>Outfit &middot; Sniper</td></tr>
+</table>
+<p>Max Dartmoor mastery is 20; each level needs 6,000 XP. Level 20 unlocks the trophy/achievement <em>The Great Outdoors</em>, and roughly 85% of challenges is enough to reach it.</p>
+
+<h2>All 8 disguises (Chameleon)</h2>
+<table>
+<tr><th>Disguise</th><th>Where &amp; how</th></tr>
+<tr><td>Private Investigator</td><td>Floor 0 &mdash; spawns on the Main Road, walks into the manor. Choke him in the corridor past the Foyer. (Also banks Elementary, My Dear Diana.)</td></tr>
+<tr><td>Undertaker</td><td>Floor 0 &mdash; roams the graveyard by the grave. (Also banks Bring Out Your Dead.)</td></tr>
+<tr><td>Photographer</td><td>Floor 0 &mdash; at the garden fountain. (Also banks Don't Lose Focus.)</td></tr>
+<tr><td>Lawyer</td><td>Floor 1 &mdash; the Small Office, north side. (Also banks Justice for a Prize.)</td></tr>
+<tr><td>Bodyguard</td><td>Floors 1&ndash;2 &mdash; men in black suits.</td></tr>
+<tr><td>Mansion Staff</td><td>Floors 0&ndash;1 &mdash; white shirt, black waistcoat.</td></tr>
+<tr><td>Mansion Guard</td><td>Floor 0 &mdash; grounds patrol, jackets marked "Security".</td></tr>
+<tr><td>Gardener</td><td>Floor 0 &mdash; the garden.</td></tr>
+</table>
+
+<h2>All 22 areas (Discover Dartmoor)</h2>
+<h3>Level 0 &mdash; eleven</h3>
+<p>Graveyard &middot; Garden &middot; Greenhouse &middot; Foyer &middot; Library &middot; Trophy Room &middot; Sitting Room &middot; Dining Room &middot; Kitchen &middot; Staff Room &middot; Mr. Fernsby's Office (locked, holds the master key, needs forced entry).</p>
+<h3>Level 1 &mdash; seven</h3>
+<p>Emma &amp; Gregory's Room (locked) &middot; <strong>Secret Room (1)</strong> (needs the bulldog cane in the Library upper-floor socket, facing west) &middot; Rebecca's Room &middot; <strong>Secret Room (2)</strong> (from Rebecca's Room via the picture, or the Small Office via the book) &middot; Small Office &middot; Zachary's Room &middot; <strong>Secret Room (3)</strong> (from Zachary's Room via the book).</p>
+<h3>Level 2 &mdash; four</h3>
+<p>Alexa's Bedroom &middot; Alexa's Office &middot; Private Room &middot; <strong>Secret Room</strong> (from the Private Room).</p>
+<h3>Level 3</h3>
+<p>Nothing to discover; the rooftop does not count.</p>
+<div class="callout neutral"><b>Stuck at 21/22?</b>The four secret rooms are the usual culprits, and Secret Room (1) is unreachable without the cane. Cycle every floor on the in-game map and look for the pin icon in the left-hand legend.</div>
+
+<h2>Mission story order &amp; the one true rule</h2>
+<p>There is <strong>no "Hero of Dartmoor" challenge</strong> &mdash; the three Mission Story feats are independent. No source documents one story permanently breaking another; every conflict on this map is a player choice, not an engine bug. What matters is ordering <em>within</em> a run:</p>
+<ul>
+<li><strong>Means, Motive and Opportunity:</strong> repair the greenhouse kit <em>before</em> reporting, or Another Death in the Family will not set up.</li>
+<li><strong>Her Final Resting Place:</strong> clear the crow nests first; harming the Undertaker permanently voids Proud Undertaker.</li>
+<li><strong>A Day to Remember:</strong> fit the fuse and photograph the maid before the family will assemble.</li>
+</ul>
+<div class="callout"><b>The irreversible choice</b>Your one accusation per playthrough decides which of the three "A Matter of&hellip;" feats you get, and accusing Emma is the only choice that kills a challenge (Another Death in the Family). If you want that kill in the same run, accuse Fernsby or Zachary.</div>
+
+<h2>Mutually exclusive challenges</h2>
+<table>
+<tr><th>Group</th><th>Why they clash</th><th>Fix</th></tr>
+<tr><td>A Matter of Justice / Guilt / Loyalty</td><td>One accusation per playthrough.</td><td>Save, reload twice (Run 01).</td></tr>
+<tr><td>Another Death in the Family vs A Matter of Justice</td><td>Accusing Emma removes the poisoner.</td><td>Different runs (01 vs 02).</td></tr>
+<tr><td>One for the Ages vs Nothing as it Seems / Say Cheese</td><td>Electrocution vs a harmless shoot.</td><td>Save after calibrating; clean version first (Run 03).</td></tr>
+<tr><td>Grave Mistake vs Keep Calm and Aim</td><td>Two endings to one graveyard scene.</td><td>Save once nests are down (Run 04).</td></tr>
+<tr><td>Bring Out Your Dead vs Proud Undertaker</td><td>Taking his outfit means subduing him; Proud Undertaker needs him unharmed.</td><td>Outfit in Run 01, Proud Undertaker in Run 04.</td></tr>
+<tr><td>It's a Fhammerly Affair vs Second-Hand News / Cue Balled</td><td>Gregory and Patrick need specific items, not the hammer.</td><td>Hammer sweep is its own run (07).</td></tr>
+<tr><td>Sweet Dreams vs the SASO passage kill</td><td>Sweet Dreams needs the kill inside the Private Room; the SASO route kills in the passage.</td><td>Sweet Dreams is a Run 06 kill.</td></tr>
+<tr><td>Top Gear / Don't Rock the Boat / Bridge</td><td>One exit per playthrough.</td><td>Save, reload twice (Run 01).</td></tr>
+<tr><td>The six Run 06 kills</td><td>Alexa dies once.</td><td>One save on Floor 2, reload each.</td></tr>
+<tr><td>Silent Assassin, Suit Only vs everything</td><td>Any disguise, extra body or sighting ends it.</td><td>Its own clean run (05).</td></tr>
+</table>
+
+<h2>Known bugs &amp; fragile challenges</h2>
+<ul>
+<li><strong>Voyeurism</strong> &mdash; reported buggy at launch; later reports say it fires but only from specific vantage points, and photo challenges take a moment. If spotted, the couple stop flirting. <em>Current-build status: UNVERIFIED.</em></li>
+<li><strong>Another Death in the Family</strong> &mdash; may not fire on Alexa's first loop; this is described as normal, keep waiting.</li>
+<li><strong>Online only</strong> &mdash; challenges do not track offline. Check your connection before assuming a bug.</li>
+</ul>
+
+<h2>XP &amp; patch notes</h2>
+<div class="callout amberc"><b>Mostly unpublished</b>Per-challenge XP is not in the sources reached. Confirmed: <strong>Another Death in the Family</strong> = 4,000 XP; the full <strong>Classics</strong> set in one run &asymp; 20,000 XP; <strong>It's a Fhammerly Affair</strong> = 2,000 XP per the wiki (single source) and unlocks the Claw Hammer. <strong>It's a Fhammerly Affair was added in the Season of Envy update (October 2021)</strong>, alongside Berlin's "Who's Sniping the Sniper" &mdash; the only patch-added challenge among the 58. Everything else is left blank rather than estimated.</div>
+`;
+
+/* ============================================================ AUDIT ============================================================ */
+document.getElementById('p-audit').innerHTML = `
+<h2>Verification report</h2>
+<p>This version is rebuilt around the mission's own challenge export you supplied, which is the strongest source available and replaces the earlier web-guide counts.</p>
+
+<h3>Count reconciliation</h3>
+<p>The in-game export lists <strong>58</strong> challenges:</p>
+<table>
+<tr><th>Category</th><th>Count</th><th>Running total</th></tr>
+<tr><td>Assassination</td><td>12</td><td>12</td></tr>
+<tr><td>Discovery</td><td>19</td><td>31</td></tr>
+<tr><td>Feats</td><td>21</td><td>52</td></tr>
+<tr><td>Targets</td><td>1</td><td>53</td></tr>
+<tr><td>The Classics</td><td>5</td><td><strong>58</strong></td></tr>
+</table>
+<div class="callout"><b>Correction from the previous draft (59 &rarr; 58)</b>
+The earlier draft used web guides that predate the Season of Envy update. Two errors are now fixed against the export:
+<br>&bull; <strong>The two "Percival Passage" feats were removed.</strong> They belong to a separate escalation contract, not this mission's challenge list. PowerPyx counted them as mission feats (giving 22); the export does not (giving 21).
+<br>&bull; <strong>"It's a Fhammerly Affair" was added.</strong> It is in the export's feats and was missing from the older guides. Net feats: 21, net total 58.
+<br><br>If your in-game screen shows a different number, trust the game &mdash; category counts can shift with updates.</div>
+
+<h3>Descriptions corrected against the export</h3>
+<ul>
+<li><strong>Elementary, My Dear Diana</strong> = disguise as the PI (not a story auto-pop).</li>
+<li><strong>Don't Lose Focus</strong> = disguise as the Photographer.</li>
+<li><strong>Bring Out Your Dead</strong> = disguise as the Undertaker &mdash; which is why it is now in Run 01, not Run 04, to avoid clashing with Proud Undertaker.</li>
+<li><strong>D'ya Like Dags</strong> = obtain the bulldog cane. <strong>House Cleaning</strong> = find all clues.</li>
+<li><strong>Sweet Dreams</strong> = "in her private room" &mdash; so the SASO passage kill does not count it; it is a separate Run 06 kill.</li>
+<li><strong>Tuppence</strong> = Milton-Fitzpatrick bank tokens. <strong>Close to the Chest</strong> = the Arthur Edwards case file. <strong>Shortcut: Balcony Ladder</strong> = at Zachary's balcony.</li>
+<li><strong>Someone Could Hurt Themselves</strong> requires a 47-caused accident, so the earlier claim that it pops from Emma's poisoning in Run 02 was removed.</li>
+</ul>
+
+<h3>Run logic simulation</h3>
+<p>Each run was walked step by step against the checks you listed:</p>
+<ul>
+<li><strong>Items before use:</strong> the bulldog cane is taken during the clue sweep, before the Library socket; the wrench and boat key are taken in the Greenhouse in the same visit; the hammer is picked up before the family sweep in Run 07.</li>
+<li><strong>Disguises before need:</strong> the PI is the first action of Run 01; the Photographer and Undertaker are taken before their story steps in Runs 03 and 04.</li>
+<li><strong>NPCs not removed early:</strong> Alexa stays alive through every photo/bell/peep feat in Run 01 and is only killed at the exit branch. The Undertaker is left unharmed in Run 04 until after Proud Undertaker.</li>
+<li><strong>Save/reload safety:</strong> every branching feat (accusations, exits, the two ending pairs, the six kills) is preceded by a Save-here marker, and challenge progress persists across reloads.</li>
+<li><strong>Mutual exclusions separated:</strong> see the Reference table &mdash; each clashing pair is either on a reload branch or in a different run.</li>
+</ul>
+
+<h3>Route coverage &mdash; all 58 assigned</h3>
+<ul>
+<li><strong>Run 01</strong> (28): the investigation, all Discovery except Don't Lose Focus/Last Responder, both shortcuts, three accusations, three exits, three object-pacifies, Bring Out Your Dead, the photo/bell feats, case file, peep, horn.</li>
+<li><strong>Run 02</strong> (3): Another Death in the Family, Poison Ivy, target.</li>
+<li><strong>Run 03</strong> (5): A Day to Remember, Don't Lose Focus, Say Cheese, Nothing as it Seems, One for the Ages.</li>
+<li><strong>Run 04</strong> (6): Her Final Resting Place, The Raven, Proud Undertaker, Keep Calm and Aim, Grave Mistake, Last Responder.</li>
+<li><strong>Run 05</strong> (5+): all five Classics, plus free Close to the Chest / Peeping 47 / Magic is Real / Straight Shot.</li>
+<li><strong>Run 06</strong> (7): I Find This Amoosing, Sweet Dreams, Hold My Hair, Piano Man, Tasteless Traceless, Straight Shot, Versatile Assassin.</li>
+<li><strong>Run 07</strong> (1): It's a Fhammerly Affair.</li>
+</ul>
+<p>A handful of challenges intentionally recur across runs as free side-effects (Straight Shot, Someone Could Hurt Themselves, Close to the Chest, Peeping 47, Magic is Real). Tick each once.</p>
+
+<h3>Still flagged UNVERIFIED</h3>
+<ul>
+<li><strong>Mastery ranks for start locations</strong> &mdash; one source, internally contradictory.</li>
+<li><strong>Per-challenge XP</strong> &mdash; only three figures found (Another Death 4,000; Classics set ~20,000; Fhammerly 2,000 per wiki).</li>
+<li><strong>Last Responder hearse-key location</strong> &mdash; Undertaker's body vs a box by the hearse; the box route is recommended.</li>
+<li><strong>Nothing as it Seems meeting</strong> &mdash; the export says "the family meeting"; sources disagree whether that is the post-shoot gathering or the post-investigation meeting. Attempt both.</li>
+<li><strong>Another Death meeting room</strong> &mdash; Sitting Room vs Dining Room.</li>
+<li><strong>Voyeurism bug status</strong> in the current build.</li>
+<li><strong>Guard/staff NPC names</strong> &mdash; individual guards, maids and gardeners are not named in any source, so steps use positional description. Named characters used are only the confirmed ones: Alexa, Zachary, Emma, Gregory, Rebecca, Edward and Patrick Carlisle, plus Mr. Fernsby.</li>
+</ul>
+
+<h3>What I could not check</h3>
+<ul>
+<li><strong>hitman.fandom.com</strong> could not be fetched directly (access error); its content here is from search extracts, which is weaker than reading the pages in full.</li>
+<li><strong>Your live game.</strong> Every count is second-hand except the export you provided, which is why it is treated as primary.</li>
+</ul>
+
+<div class="callout neutral"><b>Confidence summary</b>
+The 58-count, the corrected descriptions and the run structure follow directly from the export and multi-source rules, and are high-confidence. The mastery ranks, XP figures and specific bug claims are the soft spots &mdash; confirm those on your own screen before planning a session around them.</div>
+`;
+
+</script>
+<!-- step-progress-bridge -->
+<script>
+/* Reports route-step ticks into 'hitman-progress-registry' so the index can
+   show them beside the challenge counts. Counts what is on screen rather than
+   any guide-specific state, so one implementation serves every guide. */
+(function(){
+  var RID="m20", SEL=".step";
+  function isDone(s){
+    var c=s.classList;
+    if(c.contains('done')||c.contains('dn')) return true;
+    if(s.getAttribute('data-done')==='1'||s.getAttribute('aria-pressed')==='true') return true;
+    return !!s.querySelector('.done,.dn,[data-done="1"],[aria-pressed="true"]');
+  }
+  function tally(){
+    var steps=document.querySelectorAll(SEL);
+    if(!steps.length) return null;
+    var n=0;
+    for(var i=0;i<steps.length;i++) if(isDone(steps[i])) n++;
+    return {steps:n,stepTotal:steps.length};
+  }
+  function push(){
+    var t;
+    try{ t=tally(); }catch(err){ return; }
+    if(!t||!t.stepTotal) return;
+    try{
+      var r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');
+      var e=r[RID]||(r[RID]={});
+      /* the guide's own reportProgress() rewrites this entry wholesale, so
+         re-add the step counts whenever they go missing or stale */
+      if(e.steps===t.steps&&e.stepTotal===t.stepTotal) return;
+      e.steps=t.steps; e.stepTotal=t.stepTotal; e.updated=Date.now();
+      localStorage.setItem('hitman-progress-registry',JSON.stringify(r));
+    }catch(err){}
+  }
+  var pending=false;
+  function schedule(){
+    if(pending) return; pending=true;
+    setTimeout(function(){pending=false;push();},120);
+  }
+  try{
+    new MutationObserver(schedule).observe(document.body,
+      {subtree:true,childList:true,attributes:true,attributeFilter:['class','aria-pressed','data-done']});
+  }catch(err){}
+  window.addEventListener('load',schedule);
+  setTimeout(push,600);
+})();
+</script>
+<!-- /step-progress-bridge -->
+</body>
+</html>

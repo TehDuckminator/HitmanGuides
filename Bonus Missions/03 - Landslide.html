@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LANDSLIDE — Sapienza Bonus Mission · Step-by-Step Challenge Guide</title>
+<style>
+:root{
+  --ink:#0d1b2a; --ink-2:#132a41; --stone:#efe7d8; --stone-dim:#c9bda6;
+  --oxblood:#7d1128; --oxblood-hi:#a8203c; --lemon:#e8b430; --sea:#2f7d8c;
+  --amber:#c8811a; --ok:#3f7d4f; --warn:#9e1b1b;
+  --line:rgba(239,231,216,.16);
+  --disp:"Bodoni MT",Didot,"Didot LT STD","Playfair Display",Georgia,"Times New Roman",serif;
+  --body:ui-sans-serif,-apple-system,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:
+    radial-gradient(1200px 600px at 12% -10%, #1b3a58 0%, transparent 60%),
+    radial-gradient(900px 500px at 105% 5%, #3a1220 0%, transparent 55%), var(--ink);
+  color:var(--stone);font-family:var(--body);line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px 80px}
+a{color:var(--lemon)}
+
+header.mast{padding:40px 0 16px;border-bottom:1px solid var(--line);margin-bottom:20px}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--stone-dim)}
+h1.title{font-family:var(--disp);font-weight:700;font-size:clamp(44px,11vw,116px);line-height:.84;margin:10px 0 6px;letter-spacing:-.02em;
+  background:linear-gradient(180deg,var(--stone) 40%,var(--stone-dim) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{font-family:var(--disp);font-style:italic;font-size:clamp(16px,2.4vw,21px);color:var(--stone-dim);margin:0 0 14px}
+.mastmeta{display:flex;flex-wrap:wrap;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+.mastmeta span{border:1px solid var(--line);padding:5px 9px;color:var(--stone-dim)}
+
+.tracker{border:1px solid var(--line);padding:18px;margin:20px 0 6px;background:linear-gradient(180deg,rgba(239,231,216,.05),rgba(239,231,216,.015))}
+.tracker h2{font-family:var(--mono);font-size:11px;letter-spacing:.28em;text-transform:uppercase;margin:0 0 14px;color:var(--stone-dim);font-weight:500}
+.ballotbar{position:relative;height:34px;border:1px solid var(--line);background:rgba(0,0,0,.28);overflow:hidden}
+.ballotfill{position:absolute;inset:0 auto 0 0;width:0%;background:repeating-linear-gradient(135deg,var(--oxblood) 0 12px,var(--oxblood-hi) 12px 24px);transition:width .45s cubic-bezier(.2,.7,.2,1)}
+.ballotlabel{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 12px;font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+.cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:10px;margin-top:14px}
+.cat{border:1px solid var(--line);padding:10px 12px;background:rgba(0,0,0,.2)}
+.cat .cn{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--stone-dim)}
+.cat .cv{font-family:var(--disp);font-size:30px;line-height:1.1;margin-top:2px}
+.cat .cv em{font-style:normal;color:var(--stone-dim);font-size:16px}
+.cat .cmini{height:3px;background:rgba(255,255,255,.09);margin-top:8px;overflow:hidden}
+.cat .cmini i{display:block;height:100%;width:0%;background:var(--lemon);transition:width .4s ease}
+
+nav.tabs{display:flex;gap:2px;margin:24px 0 18px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+nav.tabs button{background:none;border:0;border-bottom:2px solid transparent;color:var(--stone-dim);font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;padding:12px 14px;cursor:pointer}
+nav.tabs button[aria-selected="true"]{color:var(--stone);border-bottom-color:var(--oxblood-hi)}
+nav.tabs button:focus-visible,.runjump button:focus-visible,.filters button:focus-visible{outline:2px solid var(--lemon);outline-offset:2px}
+.panel[hidden]{display:none}
+
+/* run jump bar */
+.runjump{position:sticky;top:0;z-index:20;display:flex;flex-wrap:wrap;gap:6px;padding:10px 0 12px;margin-bottom:14px;
+  background:linear-gradient(180deg,var(--ink) 70%,rgba(13,27,42,.86));border-bottom:1px solid var(--line)}
+.runjump button{background:rgba(0,0,0,.35);border:1px solid var(--line);color:var(--stone-dim);font-family:var(--mono);
+  font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;padding:8px 11px;cursor:pointer;white-space:nowrap}
+.runjump button:hover{color:var(--stone);border-color:var(--lemon)}
+.runjump button.util{border-style:dashed}
+
+details.run{border:1px solid var(--line);margin:0 0 18px;background:rgba(0,0,0,.22);scroll-margin-top:70px}
+details.run>summary{cursor:pointer;list-style:none;padding:18px 20px;background:linear-gradient(180deg,rgba(125,17,40,.22),transparent)}
+details.run>summary::-webkit-details-marker{display:none}
+.runtag{font-family:var(--mono);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--lemon)}
+.runtag .chev{color:var(--stone-dim)}
+details.run>summary h3{font-family:var(--disp);font-size:clamp(23px,4vw,32px);margin:4px 0 6px;line-height:1.05}
+.goal{color:var(--stone-dim);margin:0;max-width:72ch;font-size:14.5px}
+.runbody{border-top:1px solid var(--line)}
+
+.loadout{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;padding:16px 20px;border-bottom:1px solid var(--line);background:rgba(239,231,216,.03)}
+.lo{border-left:2px solid var(--sea);padding-left:10px}
+.lo .lk{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--stone-dim)}
+.lo .lv{font-size:13.5px}
+.section-h{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--lemon);padding:16px 20px 4px;border-top:1px dashed var(--line)}
+
+details.step{border-top:1px solid rgba(239,231,216,.07)}
+details.step>summary{cursor:pointer;list-style:none;padding:11px 20px 11px 16px;display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:start}
+details.step>summary::-webkit-details-marker{display:none}
+.tick{width:24px;height:24px;margin-top:2px;border:1px solid var(--stone-dim);background:transparent;color:transparent;cursor:pointer;font-family:var(--disp);font-size:18px;line-height:1;padding:0}
+.tick[aria-pressed="true"]{color:var(--oxblood-hi);border-color:var(--oxblood-hi);background:rgba(168,32,60,.12)}
+.stepnum{font-family:var(--mono);font-size:10px;color:var(--lemon);letter-spacing:.14em}
+.steptitle{font-size:15.5px;font-weight:600;margin:1px 0 0}
+details.step.done .steptitle{opacity:.45;text-decoration:line-through}
+.badges{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.b{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;padding:3px 6px;border:1px solid}
+.b.ch{border-color:rgba(232,180,48,.5);color:var(--lemon);background:rgba(232,180,48,.08);cursor:pointer}
+.b.warn{border-color:rgba(158,27,27,.7);color:#ff9d9d;background:rgba(158,27,27,.25)}
+.b.save{border-color:rgba(200,129,26,.7);color:#ffcf87;background:rgba(200,129,26,.16)}
+.b.unv{border-color:rgba(201,189,166,.5);color:var(--stone-dim);background:rgba(201,189,166,.08)}
+.stepbody{padding:2px 20px 16px 56px}
+.sb{margin:0 0 5px;font-size:14px;display:grid;grid-template-columns:74px 1fr;gap:10px;align-items:start}
+.sb b{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--sea);padding-top:3px;font-weight:500}
+.sb.w b{color:#ff9d9d} .sb.s b{color:#ffcf87} .sb.u b{color:var(--stone-dim)}
+.validated{margin:14px 20px 18px;border-left:3px solid var(--ok);background:rgba(63,125,79,.09);padding:10px 14px;font-size:13px}
+.validated b{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;display:block;margin-bottom:4px;color:#9ede9e}
+
+.filters{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 16px}
+.filters button{background:rgba(0,0,0,.28);border:1px solid var(--line);color:var(--stone-dim);font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;padding:7px 11px;cursor:pointer}
+.filters button[aria-pressed="true"]{color:var(--ink);background:var(--lemon);border-color:var(--lemon);font-weight:700}
+.ch-row{display:grid;grid-template-columns:32px 1fr auto;gap:12px;align-items:start;padding:10px 12px;border:1px solid rgba(239,231,216,.08);margin-bottom:6px;background:rgba(0,0,0,.2)}
+.ch-row.done{background:rgba(63,125,79,.1);border-color:rgba(63,125,79,.35)}
+.ch-row.done .cname{opacity:.5;text-decoration:line-through}
+.cname{font-size:15px;margin:0}
+.cdesc{margin:2px 0 0;font-size:13px;color:var(--stone-dim)}
+.ctag{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--stone-dim);border:1px solid var(--line);padding:3px 6px;white-space:nowrap}
+
+.vblock{border:1px solid var(--line);padding:16px 18px;margin-bottom:16px;background:rgba(0,0,0,.22)}
+.vblock h3{font-family:var(--disp);font-size:22px;margin:0 0 8px}
+.vblock h4{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--lemon);margin:14px 0 4px}
+.vblock p,.vblock li{font-size:14px}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:8px}
+th,td{text-align:left;padding:7px 9px;border-bottom:1px solid rgba(239,231,216,.1);vertical-align:top}
+th{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--stone-dim);font-weight:500}
+footer.foot{margin-top:36px;padding-top:16px;border-top:1px solid var(--line);color:var(--stone-dim);font-size:13px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (max-width:640px){
+  .stepbody{padding-left:20px}
+  .sb{grid-template-columns:1fr;gap:0}
+  .sb b{padding-top:6px}
+  .loadout,.section-h,details.run>summary{padding-left:14px;padding-right:14px}
+  details.step>summary{padding-left:12px;padding-right:14px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="mast">
+  <div class="kicker">HITMAN · World of Assassination · Bonus Mission</div>
+  <h1 class="title">LANDSLIDE</h1>
+  <p class="sub">Sapienza, Italy — Festival del Paese. One target: Marco Abiatti.</p>
+  <div class="mastmeta">
+    <span>35 challenges — verified against mission data</span>
+    <span>6 runs</span>
+    <span>13 disguises</span>
+    <span>Client: Silvio Caruso</span>
+  </div>
+</header>
+
+<section class="tracker" aria-label="Progress tracker">
+  <h2>Vote count — challenges completed</h2>
+  <div class="ballotbar"><div class="ballotfill" id="fill"></div>
+    <div class="ballotlabel"><span id="pctText">0%</span><span id="totText">0 / 35</span></div>
+  </div>
+  <div class="cats" id="cats"></div>
+</section>
+
+<nav class="tabs" role="tablist">
+  <button role="tab" id="tab-runs" aria-controls="p-runs" aria-selected="true">Runs</button>
+  <button role="tab" id="tab-list" aria-controls="p-list" aria-selected="false">Checklist</button>
+  <button role="tab" id="tab-ref" aria-controls="p-ref" aria-selected="false">Disguises &amp; items</button>
+  <button role="tab" id="tab-ver" aria-controls="p-ver" aria-selected="false">Verification</button>
+</nav>
+
+<div class="panel" id="p-runs" role="tabpanel" aria-labelledby="tab-runs">
+  <div class="runjump" id="runjump"></div>
+  <div id="runlist"></div>
+</div>
+
+<div class="panel" id="p-list" role="tabpanel" aria-labelledby="tab-list" hidden>
+  <div class="filters" id="filters"></div>
+  <div id="checklist"></div>
+</div>
+
+<div class="panel" id="p-ref" role="tabpanel" aria-labelledby="tab-ref" hidden></div>
+<div class="panel" id="p-ver" role="tabpanel" aria-labelledby="tab-ver" hidden></div>
+
+<footer class="foot">
+  Challenge names, descriptions, categories and the 13-disguise list are taken from the mission data file you supplied, which matches the in-game list (35 challenges).
+  Route detail comes from the sources listed under Verification. Anything a source did not state is marked <span class="b unv">unverified</span> rather than filled in.
+  Progress is held in memory for this session only.
+</footer>
+</div>
+
+<script>
+/* ═══════════ CHALLENGES — verbatim from the supplied mission data ═══════════ */
+const CH=[
+ {id:'bang',cat:'A',n:'Going Out with a Bang',d:'Assassinate Marco Abiatti with the fireworks.',run:4},
+ {id:'crank',cat:'A',n:'Crank it to Eleven',d:'Assassinate Marco Abiatti with a speaker.',run:3},
+ {id:'clean',cat:'A',n:'Clean Slate',d:'Assassinate Marco Abiatti while hearing his confession.',run:1},
+ {id:'urine',cat:'A',n:'Urine for It',d:'Assassinate Marco Abiatti by electrocuting him while he is peeing.',run:6},
+ {id:'gig',cat:'A',n:'The Gig is Up',d:'Assassinate Marco Abiatti on stage by electrocution.',run:3},
+ {id:'vai',cat:'A',n:'Vai Con Dio',d:'Assassinate Marco Abiatti by impaling him on the church spire.',run:1},
+ {id:'magic',cat:'A',n:'How About a Magic Trick?',d:'[REDACTED in mission data] — the pen kill during the Bravuomo meeting.',run:5},
+ {id:'higher',cat:'A',n:'Higher Powers',d:'Assassinate Marco Abiatti with the church bell.',run:2},
+ {id:'chand',cat:'A',n:'47 Chandeliers',d:'Assassinate Marco Abiatti with the chandelier during the meeting with Salvatore Bravuomo.',run:5},
+ {id:'someone',cat:'A',n:'Someone Could Hurt Themselves',d:'Assassinate a target in an accident in Sapienza.',run:6},
+ {id:'taste',cat:'A',n:'Tasteless, Traceless',d:'Assassinate a target with lethal poison in Sapienza.',run:2},
+ {id:'versatile',cat:'A',n:'Versatile Assassin',d:'Complete all the Versatile challenges in Sapienza: Piano Man / Someone Could Hurt Themselves / Hold My Hair / Straight Shot / Tasteless, Traceless',run:6},
+ {id:'straight',cat:'A',n:'Straight Shot',d:'Assassinate a target with a headshot in Sapienza.',run:6},
+ {id:'hair',cat:'A',n:'Hold My Hair',d:'Assassinate a target by drowning them in Sapienza.',run:6},
+ {id:'piano',cat:'A',n:'Piano Man',d:'Assassinate a target with the fiber wire in Sapienza.',run:6},
+
+ {id:'object',cat:'D',n:'I Object!',d:'Disguise yourself as Salvatore Bravuomo.',run:5},
+ {id:'roadie',cat:'D',n:'No One Sees a Roadie',d:'Disguise yourself as Stage Crew.',run:3},
+ {id:'bigbro',cat:'D',n:'Big Brother',d:'Turn off the webcam.',run:6},
+ {id:'collar',cat:'D',n:'Changing Collar',d:'Disguise yourself as Father Francesco.',run:1},
+ {id:'unsafe',cat:'D',n:'Unsafe Distance',d:'Tamper with the fireworks.',run:4},
+ {id:'discover',cat:'D',n:'Discover Sapienza',d:'Reveal all undiscovered areas in Sapienza.',run:6},
+ {id:'arriv',cat:'D',n:'Arrivederci',d:'Escape in the speedboat.',run:1},
+ {id:'sunset',cat:'D',n:'Driving Into the Sunset',d:'Escape in the car.',run:4},
+
+ {id:'ms_abs',cat:'F',n:'Mission Story - No Absolution For The Wicked',d:'Abiatti knows the importance of the church, if you want things done, and wants to meet with the local priest, Father Francesco.',run:1},
+ {id:'ms_stage',cat:'F',n:'Mission Story - Stage Fried',d:'Get Marco Abiatti to go on stage.',run:3},
+ {id:'guardian',cat:'F',n:'Guardian Assassin',d:'Complete "Landslide." / Save Father Francesco from Marco Abiatti.',run:2},
+ {id:'ms_cheat',cat:'F',n:'Mission Story - Cheat Sheet',d:"Reschedule Marco Abiatti's meeting.",run:6},
+ {id:'ms_dyn',cat:'F',n:'Mission Story - Dynamite Smile',d:'Get Marco Abiatti to go to the pier.',run:4},
+ {id:'ms_law',cat:'F',n:'Mission Story - Above The Law',d:'Meet with Marco Abiatti as Salvatore Bravuomo.',run:5},
+ {id:'chameleon',cat:'F',n:'Chameleon',d:'Find and equip all disguises in Sapienza (13 in this mission).',run:6},
+
+ {id:'politician',cat:'T',n:'The Politician',d:'Assassinate Marco Abiatti.',run:1},
+
+ {id:'saso',cat:'C',n:'Silent Assassin, Suit Only',d:'Complete "Landslide." Only eliminate the target. No bodies found. Do not get spotted. Erase camera evidence. Do it all in your suit.',run:2},
+ {id:'sa',cat:'C',n:'Silent Assassin',d:'Complete "Landslide." Only eliminate the target. No bodies found. Do not get spotted. Erase camera evidence.',run:2},
+ {id:'sniper',cat:'C',n:'Sniper Assassin',d:'Complete "Landslide" on Professional difficulty. Assassinate your target with a sniper rifle. Only eliminate the target. Do not get spotted. Erase camera evidence.',run:2},
+ {id:'so',cat:'C',n:'Suit Only',d:'Assassinate the target and complete the mission. Do it all in your suit.',run:2}
+];
+const CATMETA={A:['Assassination',15],D:['Discovery',8],F:['Feats',7],T:['Targets',1],C:['The Classics',4]};
+
+/* ═══════════ RUNS ═══════════ */
+const RUNS=[
+{
+ id:'r1', tag:'Run 01', short:'01 · Church',
+ title:'The confession — priest route',
+ goal:'Wear the priest\u2019s cassock, hear Abiatti\u2019s confession, and take two different kills off one save. Ends with the speedboat exit.',
+ loadout:{start:'Fixed mission start (Landslide has no alternate starting locations — see Verification)',suit:'Signature Suit',
+   items:['Lockpick','ICA19 silenced pistol','Coin','Free slot — lethal poison vial as backup']},
+ sections:[{h:'Take the cassock',steps:[
+  {t:'Knock out Father Francesco and take his outfit',ch:['collar'],save:true,
+   go:'The Sapienza church. Father Francesco is hiding inside to avoid Abiatti — sources disagree on the floor: PSNProfiles says second floor, a Steam disguise guide says first floor. Sweep both; he is the only priest in the level.',
+   disg:'None needed to walk into the public part of the church.',
+   npc:'Father Francesco (unique NPC). One or two Church Staff work the nave.',
+   act:'Get him alone, subdue, hide the body in a nearby container, change into the priest outfit. Unlocks Changing Collar.',
+   warn:'This run cannot produce Guardian Assassin — the documented Guardian route leaves the real priest to hear the confession himself (Run 02).',
+   savetxt:'Save once you are in the cassock and the body is hidden.'},
+ ]},
+ {h:'Bring him in',steps:[
+  {t:'Play the church organ to summon Abiatti',ch:['ms_abs'],save:true,
+   go:'The organ on the church ground floor.',
+   disg:'Priest.',
+   npc:'A Church Staff member stands beside the organ — coin him toward the nave first. Marco Abiatti walks in angry about who is touching the organ, then agrees to confess.',
+   act:'Operate the organ, then wait at the confessional. When he confesses, Mission Story - No Absolution For The Wicked completes.',
+   warn:'Follow the story beats in order — skipping a marked beat is the documented cause of Landslide stories failing to register. He takes a while to walk over; do not wander off.',
+   savetxt:'Save the moment he starts walking to the church. This save is the fork for both kills below.'},
+ ]},
+ {h:'Two kills off that save',steps:[
+  {t:'Kill A — shoot him in the confessional (Clean Slate)',ch:['clean','politician'],
+   go:'Confessional, church ground floor.',
+   disg:'Priest.',
+   item:'ICA19 silenced pistol.',
+   npc:'Marco Abiatti, seated in the booth.',
+   act:'Once he is settled and talking, shoot him. A headshot here also counts toward Straight Shot. Then exit and finish the mission.',
+   warn:'Known bug (single source, HITMAN 2 era): Clean Slate sometimes refuses to unlock. Reported fix — restart the mission and run it without using save/load at all.'},
+  {t:'Kill B — load the save and push him off the tower (Vai Con Dio)',ch:['vai'],
+   go:'Top of the church bell tower. After the confession he walks up there with the priest.',
+   disg:'Priest.',
+   npc:'Marco Abiatti at the tower railing. He may pause 10–20 seconds before settling.',
+   act:'Push him over the railing once he leans on it. A scripted cutscene puts him on the spire.',
+   warn:'Only this scripted push lands on the spire — pushing any other NPC from that spot misses it. Do not try to substitute a shove elsewhere.'},
+  {t:'Escape by speedboat (Arrivederci)',ch:['arriv'],
+   go:'The small leaflet/exhibition booth directly in front of the church, then the harbour.',
+   item:'Speedboat key — on the floor of that booth (single source).',
+   act:'Pick up the key, walk to the boat, exit. Do this on the Vai Con Dio branch so the run banks the exit challenge too.',
+   unv:'The exact shelf/table in the booth is not documented — one source only says it is on the floor there.'}
+ ]}],
+ valid:'Cassock is taken before the organ is touched, so the confession beat is reachable. Both kills branch from one save, so neither locks out the other. Guardian Assassin is deliberately excluded and lives in Run 02. The speedboat key is collected before the exit, and the booth is 20 m from the church — no backtracking.'
+},
+{
+ id:'r2', tag:'Run 02', short:'02 · Classics',
+ title:'Organ and wine — all four Classics',
+ goal:'The suit-only route: Abiatti kills the priest, comes down and poisons himself. Three branches off one save also give the bell kill and the sniper/Guardian pairing.',
+ loadout:{start:'Fixed mission start',suit:'Signature Suit — never change clothes on the SASO branch',
+   items:['Lockpick','Lethal poison vial','Suppressed sniper rifle in a briefcase','Coin']},
+ sections:[{h:'Prep — do this before anything forks',steps:[
+  {t:'Clear the church side room',save:true,
+   go:'The left-hand door off the church nave — locked, use the lockpick.',
+   disg:'None. Suit only from here to the exit.',
+   npc:'A Church Staff member inside; a second works near the organ.',
+   act:'Subdue the one inside unseen and hide him in the container in the same room.',
+   warn:'Being seen subduing anyone kills Silent Assassin. Do this at mission start before the square fills up.',
+   savetxt:'Save here — this is the fork for all three branches.'},
+ ]},
+ {h:'Branch A — Silent Assassin, Suit Only',steps:[
+  {t:'Poison the wine, play the organ, walk to the exit',ch:['saso','sa','so','taste','politician'],
+   go:'Wine glass on the church ground floor, then the organ, then any exit.',
+   disg:'Suit only.',
+   item:'Lethal poison vial.',
+   npc:'Abiatti storms in, throws Father Francesco from the tower, comes back down and drinks the wine.',
+   act:'Poison the glass unobserved, play the organ, then leave and wait at the exit until he dies. Banks all three Classics plus Tasteless, Traceless.',
+   warn:'The priest\u2019s death is caused by Abiatti, not by you, and the documented SASO route accepts it. This branch is incompatible with Guardian Assassin. The wait is long — do not go back inside.'},
+ ]},
+ {h:'Branch B — Sniper Assassin + Guardian Assassin',steps:[
+  {t:'Load the save, play the organ, then set up in the ICA safehouse',ch:['sniper','guardian'],save:true,
+   go:'Organ first, then the ICA safehouse apartment overlooking the church tower. The clock tower is the documented alternative vantage point.',
+   disg:'Suit.',
+   item:'Suppressed sniper rifle from the briefcase.',
+   npc:'Two civilians occupy the safehouse window — lure and subdue them one at a time, unseen.',
+   act:'Shoot Abiatti on the tower BEFORE he throws Father Francesco, then walk to any exit. Guardian Assassin only registers on mission completion.',
+   warn:'An unsuppressed rifle loses Silent Assassin the moment you fire. Do not restart after the kill — you must complete the mission for Guardian Assassin to fire.',
+   savetxt:'Save with the rifle out and the window clear.'},
+ ]},
+ {h:'Branch C — the bell',steps:[
+  {t:'Load the save, fetch the crowbar, drop the bell (Higher Powers)',ch:['higher'],
+   go:'Crowbar first — one is documented in the toilets across from the mansion side of the square. Then the church bell tower.',
+   disg:'Suit, or Church Staff if you prefer cover for the tower.',
+   item:'Crowbar (a silenced pistol shot on the bell mounting is the documented alternative).',
+   npc:'Abiatti throws the priest, then walks down to the ground floor for the wine — that walk is your window.',
+   act:'Play the organ, wait by the bell, and release it as he passes underneath.',
+   warn:'Do not poison the wine on this branch or he dies of poison instead. Load the save from before Branch A\u2019s poisoning step.'}
+ ]}],
+ valid:'The save is placed before any poisoning, so Branch C is not spoiled by Branch A. Branch B needs the priest alive, so it is separated from A and C by a reload. The rifle is smuggled in the loadout rather than picked up on the map, so no route depends on a pickup that A or C might have disturbed. All three branches end at an exit, which both SASO and Guardian Assassin require.'
+},
+{
+ id:'r3', tag:'Run 03', short:'03 · Stage',
+ title:'Stage Fried — electrocution and the speaker',
+ goal:'One disguise, one mission story, two Assassination challenges split by a save at the moment he steps on stage.',
+ loadout:{start:'Fixed mission start',suit:'Signature Suit',
+   items:['Lockpick','ICA19 silenced pistol','Crowbar','Coin']},
+ sections:[{h:'Get on the crew',steps:[
+  {t:'Take a Stage Crew uniform',ch:['roadie'],
+   go:'By the stairs on the left side of the concert stage in the beach square (single source).',
+   disg:'None yet — you are taking one.',
+   npc:'Any lone Stage Crew member behind the staging; there is no scripted individual.',
+   act:'Isolate, subdue, hide the body, change. Unlocks No One Sees a Roadie and gives you the only outfit that makes the stage tampering possible.'},
+ ]},
+ {h:'Rig the stage',steps:[
+  {t:'Flood the stage and prime the electrics',ch:['ms_stage'],save:true,
+   go:'Behind the stage — the electrical system behind the water tank that forms the backdrop, then the valve on the stage side.',
+   disg:'Stage Crew — required.',
+   npc:'Crew work close to the valve and will call you out even in uniform.',
+   act:'Tamper with the electrics, release the water onto the stage, then lure Abiatti up. Mission Story - Stage Fried completes when he is on stage.',
+   warn:'Turning the valve is a suspicious action in every disguise — throw a coin or trigger a nearby device to pull eyes away first.',
+   savetxt:'Save the second he steps onto the wet stage.'},
+  {t:'Kill A — energise the stage (The Gig is Up)',ch:['gig','politician','someone'],
+   go:'The stage equipment.',
+   disg:'Stage Crew.',
+   npc:'Marco Abiatti, standing centre stage in the water.',
+   act:'Switch on the current while he is in the water. It is an accident kill, so it also counts toward Someone Could Hurt Themselves.',
+   warn:'He must still be standing in the water. If he steps off, reload rather than improvising.'},
+  {t:'Kill B — load the save and drop a speaker (Crank it to Eleven)',ch:['crank'],
+   go:'The speaker rig above the stage. A second speaker is documented on the caf\u00e9 second floor, and one can be shot from the ICA safehouse.',
+   disg:'Stage Crew for the crowbar method; any outfit for an unobserved shot.',
+   item:'Crowbar or silenced pistol.',
+   act:'Do not touch the valve on this branch. Drop the speaker on him as he walks on or off the stage.',
+   unv:'Sources describe the speaker differently — which rig is the scripted one is not pinned down. Try the stage speaker first, then the caf\u00e9 one.'}
+ ]}],
+ valid:'The crew uniform is taken before any tampering, which is what the tampering requires. The save sits after the story completes and before the kill, so the mission story is banked on both branches. Branch B avoids the valve entirely, so the stage state does not block the speaker drop.'
+},
+{
+ id:'r4', tag:'Run 04', short:'04 · Fireworks',
+ title:'Dynamite Smile — the pier photo session',
+ goal:'Sabotage, lure, detonate. Also picks up the Photographer disguise for Chameleon and the car exit.',
+ loadout:{start:'Fixed mission start',suit:'Signature Suit',
+   items:['Lockpick','Coin','ICA19 silenced pistol','Rat poison vial (for the car key) — or take an emetic']},
+ sections:[{h:'Sabotage first',steps:[
+  {t:'Take a Stage Crew uniform',
+   go:'Stairs on the left side of the stage, as in Run 03.',
+   act:'Subdue a lone crew member and change. You need it for the fireworks and the detonator table.'},
+  {t:'Tamper with the fireworks',ch:['unsafe'],
+   go:'The fireworks display near the pier.',
+   disg:'Stage Crew.',
+   act:'Sabotage the display. Unlocks Unsafe Distance (+1000 XP, confirmed).',
+   warn:'Do this before you lure him — the detonator is useless on an untampered display.'},
+  {t:'Pick up the Fireworks Remote Detonator',
+   go:'On a table just above the stage, beside the entrance to the Sanguine Shop (confirmed on the item\u2019s wiki page).',
+   disg:'Stage Crew.',
+   item:'Fireworks Remote Detonator — this is the trigger for the kill.',
+   act:'Take it before talking to Abiatti so you are not running back through the square later.'},
+ ]},
+ {h:'Lure and detonate',steps:[
+  {t:'Talk to Abiatti and follow him to the pier',ch:['ms_dyn'],save:true,
+   go:'Abiatti at the rally, then the Sapienza pier.',
+   disg:'The Photographer disguise is acquired through this mission story (single source); the walkthrough route reaches this beat in the Stage Crew uniform.',
+   npc:'Marco Abiatti — vain, and expects a camera on him.',
+   act:'Follow the story cues to set up the photo session. Mission Story - Dynamite Smile completes when he heads to the pier.',
+   savetxt:'Save once he is posing on the pier.'},
+  {t:'Back off, then detonate (Going Out with a Bang)',ch:['bang','politician'],
+   go:'Anywhere with line of sight and real distance from the pier.',
+   item:'Fireworks Remote Detonator.',
+   act:'Start the photos, walk away, then trigger the fireworks while he poses.',
+   warn:'Standing near the pier kills 47 as well, and bystanders in the blast break Silent Assassin. Get clear before you press it.'},
+  {t:'Escape by car (Driving Into the Sunset)',ch:['sunset'],
+   go:'Market stalls in the square in front of the mansion, then the car.',
+   item:'Car key — carried by the owner of the eastern stall. Rat poison is documented in the room directly above the ICA safehouse.',
+   npc:'The stall owner is the only named-risk NPC there; the shoppers around him are unnamed.',
+   act:'Poison his bottle, follow him to the toilet, take the key, drive out.',
+   unv:'Whether the key can also be pickpocketed is not documented — the poison route is the sourced one.'}
+ ]}],
+ valid:'Fireworks are sabotaged and the detonator is in hand before Abiatti is lured, so nothing is missing at the kill. The car key is collected after the kill on the way out, and the stalls sit between the pier and the exit — no backtracking. The Photographer disguise arrives through this story, which is why this run precedes the Chameleon sweep.'
+},
+{
+ id:'r5', tag:'Run 05', short:'05 · Lawyer',
+ title:'Above the Law — pen and chandelier',
+ goal:'The Salvatore Bravuomo chain. One disguise buys the mission story, the signature pen kill and the chandelier kill.',
+ loadout:{start:'Fixed mission start',suit:'Signature Suit',
+   items:['Lockpick','Crowbar','Coin','Free slot — keep it empty, you get frisked']},
+ sections:[{h:'Become the lawyer',steps:[
+  {t:'Eavesdrop on the bodyguards by the ICA safehouse',
+   go:'The street outside the apartment block that holds the ICA safehouse.',
+   disg:'None — public street.',
+   npc:'Two of Abiatti\u2019s bodyguards, talking about finding a lawyer called Salvatore Bravuomo.',
+   act:'Listen to the whole conversation. It starts the story and marks his hiding place.'},
+  {t:'Get into the locked toilet cubicle',ch:['object'],save:true,
+   go:'The market/public toilets — the ones by the stairwell to the ice cream shop.',
+   disg:'Suit.',
+   item:'The cubicle key is carried by the police/security officer nearby; a lockpick or crowbar also opens it.',
+   npc:'Salvatore Bravuomo hides inside. Two civilians use the same bathroom and Abiatti\u2019s bodyguards search it.',
+   act:'Clear the room, open the cubicle, subdue Bravuomo, hide him and change. Unlocks I Object!',
+   warn:'Forcing the door with a crowbar is suspicious to the guard and the two men at the mirror — taking the key is cleaner. If a guard walks in, close the door and wait rather than running.',
+   savetxt:'Save once you are in Bravuomo\u2019s suit and both bodies are hidden.'},
+  {t:'Stash your weapons before the meeting',
+   go:'A container in the same bathroom.',
+   act:'Dump everything. You are body-searched on the way in to Abiatti.',
+   warn:'This is the single most common way this run fails — the frisk blows the disguise before you reach the desk.'},
+ ]},
+ {h:'The meeting',steps:[
+  {t:'Report to the bodyguards at the tower entrance',ch:['ms_law'],save:true,
+   go:'The main square tower entrance.',
+   disg:'Salvatore Bravuomo.',
+   npc:'Two bodyguards on the door; they escort you in and Abiatti sets off for the meeting.',
+   act:'Present yourself. Mission Story - Above The Law completes at the meeting.',
+   savetxt:'Save as soon as the escort starts — this is the fork between the pen and the chandelier.'},
+  {t:'Kill A — the pen (How About a Magic Trick?)',ch:['magic','politician'],
+   go:'The meeting office inside the tower.',
+   disg:'Bravuomo.',
+   npc:'Abiatti dismisses his guards, then turns his back and leans on the desk.',
+   act:'When his back is turned, get behind him and smash his head down onto the pen on the desk.'},
+  {t:'Kill B — load the save and drop the chandelier (47 Chandeliers)',ch:['chand'],
+   go:'The clock tower security room holds the winch device — and a crowbar.',
+   disg:'Security for the security room.',
+   item:'Crowbar, or a silenced pistol shot on the line, or a remote breaching charge on the winch.',
+   npc:'Abiatti walking to the meeting he has just agreed to.',
+   act:'Trigger the meeting as Bravuomo, then go to the winch instead of the office and release the chandelier as he passes beneath it.',
+   warn:'Ordering rule: the walk only happens once Bravuomo has been found. Skip the lawyer chain and there is no walk and no kill.'}
+ ]}],
+ valid:'The eavesdrop precedes the bathroom, which is what marks the cubicle. Weapons are stashed before the frisk. Both kills branch from a save taken after the mission story registers, so the story is banked either way, and the chandelier branch still has the meeting scripted because the lawyer chain is completed first.'
+},
+{
+ id:'r6', tag:'Run 06', short:'06 · Sweep',
+ title:'Cheat Sheet, the Versatile set and the wardrobe',
+ goal:'The long run. Collect the remaining disguises, reschedule his meeting to strand him alone behind the church, then farm the Versatile kills off one save.',
+ loadout:{start:'Fixed mission start',suit:'Signature Suit',
+   items:['Lockpick','Coin','ICA19 silenced pistol','Lethal poison vial — equip the fibre wire if it is not in your default kit']},
+ sections:[{h:'Wardrobe sweep — 12 of the 13',steps:[
+  {t:'Church and sewer cluster (5 outfits)',ch:['chameleon'],save:true,
+   go:'Priest — hiding in the church. Church Staff — the morgue. Gardener — the sewer entrance near the morgue. Red Plumber and Green Plumber — the sewers under the church.',
+   act:'Subdue and change into each one. Red and green plumber count as two separate disguises.',
+   warn:'The plumbers are the classic reason Chameleon will not pop. Do not skip either.',
+   savetxt:'Save after each cluster — a single alert late in this run wastes the whole sweep.'},
+  {t:'Square and market cluster (5 outfits)',ch:['chameleon'],
+   go:'Security — the police officer in the market toilets. Salvatore Bravuomo — the locked cubicle in the same bathroom. Bodyguard — the assistant\u2019s apartment. Bohemian — the hippie\u2019s apartment. Kitchen Assistant — the butcher shop below 47\u2019s apartment.',
+   act:'Same routine. The Security officer carries the cubicle key, so take him first and Bravuomo becomes trivial.',
+   unv:'These locations come from one Steam disguise guide. They match the 13 names in the mission data exactly, but the individual rooms are single-sourced.'},
+  {t:'Beach square cluster (2 outfits)',ch:['chameleon'],
+   go:'Stage Crew — by the stairs on the left of the stage. Waiter — the bar next to the stage.',
+   act:'Take both. With the Photographer from Run 04 this completes all 13 and unlocks Chameleon.',
+   warn:'The Photographer is only obtainable by following the Dynamite Smile story, so Run 04 must be done first — or run that story here instead of Cheat Sheet.',
+   unv:'Chameleon progress is normally cumulative across runs in WoA. If your build is not tracking it across sessions, collect all 13 in a single visit.'}
+ ]},
+ {h:'Cheat Sheet',steps:[
+  {t:'Eavesdrop by the white van at the church ramp',
+   go:'The white van beside the ramp leading up to the church and morgue.',
+   npc:'Two civilians discussing the rally camera and the earpiece Abiatti wears.',
+   act:'Listen to the whole thing. It points you at whoever is feeding him his information.'},
+  {t:'Turn off the webcam (Big Brother)',ch:['bigbro'],
+   go:'The webcam covering the rally, on the same chain — the wiki describes it as the camera Abiatti uses to play man of the people.',
+   act:'Switch it off. +1000 XP, confirmed.',
+   unv:'The exact room the webcam sits in is not documented by any source consulted. It is grouped with Cheat Sheet and Urine for It in published walkthroughs, so sweep the rally-facing camera on that chain.'},
+  {t:'Reschedule the meeting and take the screwdriver',ch:['ms_cheat'],save:true,
+   go:'The assistant\u2019s room with the planner.',
+   disg:'Whatever is legal for that room — Bodyguard or Security is safest, and you have both from the sweep.',
+   item:'A screwdriver is documented in the same room — take it now, you need it outside.',
+   act:'Change his meeting with Giovannitti\u2019s people. Mission Story - Cheat Sheet completes; he now detours to the graveyard behind the church alone.',
+   savetxt:'Save here. This is the hub for every kill below.'}
+ ]},
+ {h:'The Versatile set — one save, four reloads',steps:[
+  {t:'Kill A — rig the floodlight (Urine for It)',ch:['urine','someone','politician'],
+   go:'The graveyard behind the church: generator, extension cord, floodlight.',
+   disg:'Gardener or Church Staff both fit this area.',
+   item:'Screwdriver (a silenced pistol shot on the cord is the alternative).',
+   npc:'Abiatti arrives alone on his rescheduled detour and relieves himself.',
+   act:'Generator OFF, open the extension cord with the screwdriver, generator ON, then wait. He electrocutes himself — an accident, so this also banks Someone Could Hurt Themselves.',
+   warn:'Order is fixed: the cord must be tampered with while the power is off, or the interaction is not lethal.'},
+  {t:'Kill B — headshot (Straight Shot)',ch:['straight'],
+   go:'Same graveyard spot; he is completely alone there.',
+   item:'Any firearm — silenced keeps the run quiet.',
+   act:'Load the save, let him walk out, headshot him. The mission-data wording is specifically a headshot, not just a pistol kill.'},
+  {t:'Kill C — fibre wire (Piano Man)',ch:['piano'],
+   go:'Same spot, from behind.',
+   item:'Fibre wire.',
+   act:'Load the save and garotte him on the detour.'},
+  {t:'Kill D — lethal poison (Tasteless, Traceless)',ch:['taste'],
+   go:'Same spot.',
+   item:'Lethal poison vial or a lethal syringe.',
+   act:'Only needed if Run 02\u2019s poisoned wine did not bank it. A lethal syringe on the isolated detour is the quickest version.'},
+  {t:'Kill E — drowning (Hold My Hair)',ch:['hair','versatile'],
+   go:'Not in Landslide. This challenge reads "in Sapienza" and is shared with World of Tomorrow — the documented drowning is Francesca De Santis in the main mission.',
+   disg:'Golf coach (Roberto Vargas) in World of Tomorrow.',
+   item:'Emetic poison for her champagne.',
+   act:'Poison her champagne, call her to her room with Vargas\u2019 phone, then drown her in the toilet while she vomits. Completing the fifth Versatile challenge unlocks Versatile Assassin (+4000 XP).',
+   warn:'No source consulted documents a drowning spot for Abiatti himself in Landslide. Do this one in World of Tomorrow rather than hunting for a toilet he never uses.'},
+  {t:'Reveal the map (Discover Sapienza)',ch:['discover'],
+   go:'Sapienza generally — and mostly World of Tomorrow.',
+   act:'Walk every named area until the map has no undiscovered zones left.',
+   unv:'Your mission data lists zero areas for Landslide and says areas are shared with World of Tomorrow. Reading that literally, the discoverable zones live in the main mission, where the mansion, lab and ruins are all open — so finish this there. That is an inference from the data file, not a sourced statement.'}
+ ]}],
+ valid:'Disguises are collected before the Cheat Sheet chain, so every restricted room on the chain is already accessible. The screwdriver is taken in the same room as the reschedule, so the graveyard rig needs no second trip. The save sits after the story registers, so all five kill branches keep the mission story. The Photographer dependency on Run 04 is called out rather than assumed. Hold My Hair and Discover Sapienza are the two items that cannot be completed inside Landslide, and both are flagged in place.'
+}];
+
+/* ═══════════ STATE + RENDER ═══════════ */
+const state={done:new Set(),steps:new Set(),filter:'All'};
+try{const saved=JSON.parse(localStorage.getItem('landslide_done_v1')||'[]');saved.forEach(id=>state.done.add(id));}catch(e){}
+try{const _s=JSON.parse(localStorage.getItem('landslide_done_v1:steps'));if(Array.isArray(_s))_s.forEach(k=>state.steps.add(k));}catch(e){}
+function reportProgress(){try{const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r['b03']={done:state.done.size,total:CH.length,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
+function saveDone(){try{localStorage.setItem('landslide_done_v1',JSON.stringify([...state.done]));localStorage.setItem('landslide_done_v1:steps',JSON.stringify([...state.steps]));}catch(e){}reportProgress();}
+const byId=Object.fromEntries(CH.map(c=>[c.id,c]));
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function updateTracker(){
+  const total=CH.length,done=CH.filter(c=>state.done.has(c.id)).length,pct=Math.round(done/total*100);
+  fill.style.width=pct+'%';pctText.textContent=pct+'% of the vote';totText.textContent=done+' / '+total;
+  cats.innerHTML=Object.entries(CATMETA).map(([k,[name,n]])=>{
+    const d=CH.filter(c=>c.cat===k&&state.done.has(c.id)).length;
+    return '<div class="cat"><div class="cn">'+name+'</div><div class="cv">'+d+' <em>/ '+n+'</em></div><div class="cmini"><i style="width:'+(d/n*100)+'%"></i></div></div>';
+  }).join('');
+}
+function toggleCh(id){state.done.has(id)?state.done.delete(id):state.done.add(id);saveDone();renderChecklist();updateTracker();syncBadges();}
+function syncBadges(){document.querySelectorAll('[data-ch]').forEach(el=>{
+  const on=state.done.has(el.dataset.ch);el.style.opacity=on?'.45':'';el.style.textDecoration=on?'line-through':'';});}
+function badgeHTML(s){
+  let h='';
+  (s.ch||[]).forEach(id=>{const c=byId[id];if(c)h+='<span class="b ch" data-ch="'+id+'">'+esc(c.n)+'</span>';});
+  if(s.warn)h+='<span class="b warn">&#9888; Warning</span>';
+  if(s.save)h+='<span class="b save">&#9670; Save here</span>';
+  if(s.unv)h+='<span class="b unv">Unverified detail</span>';
+  return h?'<div class="badges">'+h+'</div>':'';
+}
+function row(cls,label,txt){return txt?'<p class="sb '+cls+'"><b>'+label+'</b><span>'+esc(txt)+'</span></p>':'';}
+function stepHTML(s,key,num){
+  const on=state.steps.has(key);
+  return '<details class="step'+(on?' done':'')+'" data-step="'+key+'"><summary>'+
+    '<button class="tick" aria-pressed="'+on+'" aria-label="Mark step done">&#10005;</button>'+
+    '<span><span class="stepnum">STEP '+num+'</span><p class="steptitle">'+esc(s.t)+'</p>'+badgeHTML(s)+'</span>'+
+    '</summary><div class="stepbody">'+
+    row('','Where',s.go)+row('','Disguise',s.disg)+row('','Item',s.item)+row('','NPC',s.npc)+row('','Do',s.act)+
+    row('w','Warning',s.warn)+row('s','Save',s.savetxt)+row('u','Unverified',s.unv)+
+    '</div></details>';
+}
+function renderRuns(){
+  runjump.innerHTML=RUNS.map(r=>'<button data-go="'+r.id+'">'+esc(r.short)+'</button>').join('')+
+    '<button class="util" data-all="open">Expand all</button><button class="util" data-all="close">Collapse all</button>';
+  let n=0;
+  runlist.innerHTML=RUNS.map((r,ri)=>{
+    const lo='<div class="loadout">'+
+      '<div class="lo"><div class="lk">Start</div><div class="lv">'+esc(r.loadout.start)+'</div></div>'+
+      '<div class="lo"><div class="lk">Suit</div><div class="lv">'+esc(r.loadout.suit)+'</div></div>'+
+      r.loadout.items.map((it,i)=>'<div class="lo"><div class="lk">Slot '+(i+1)+'</div><div class="lv">'+esc(it)+'</div></div>').join('')+'</div>';
+    let sn=0;
+    const secs=r.sections.map((sec,si)=>'<div class="section-h">'+esc(sec.h)+'</div>'+
+      sec.steps.map((st,sti)=>stepHTML(st,ri+'-'+si+'-'+sti,++sn)).join('')).join('');
+    return '<details class="run" id="'+r.id+'"'+(ri===0?' open':'')+'><summary>'+
+      '<div class="runtag">'+esc(r.tag)+' <span class="chev">— click to open/close</span></div>'+
+      '<h3>'+esc(r.title)+'</h3><p class="goal">'+esc(r.goal)+'</p></summary>'+
+      '<div class="runbody">'+lo+secs+
+      '<div class="validated"><b>Run logic check</b>'+esc(r.valid)+'</div></div></details>';
+  }).join('');
+
+  runlist.querySelectorAll('.tick').forEach(btn=>btn.addEventListener('click',e=>{
+    e.preventDefault();e.stopPropagation();
+    const d=btn.closest('.step'),key=d.dataset.step;
+    state.steps.has(key)?state.steps.delete(key):state.steps.add(key);saveDone();
+    const on=state.steps.has(key);btn.setAttribute('aria-pressed',on);d.classList.toggle('done',on);
+  }));
+  runlist.querySelectorAll('.b.ch').forEach(b=>b.addEventListener('click',e=>{
+    e.preventDefault();e.stopPropagation();toggleCh(b.dataset.ch);}));
+  runjump.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
+    if(b.dataset.all){document.querySelectorAll('details.run').forEach(d=>d.open=b.dataset.all==='open');return;}
+    const d=document.getElementById(b.dataset.go);d.open=true;d.scrollIntoView({behavior:'smooth',block:'start'});
+  }));
+}
+function renderChecklist(){
+  const map={'Assassination':'A','Discovery':'D','Feats':'F','Targets':'T','The Classics':'C'},F=state.filter;
+  const rows=CH.filter(c=>F==='All'?true:F==='Incomplete'?!state.done.has(c.id):c.cat===map[F]);
+  checklist.innerHTML=rows.map(c=>{
+    const on=state.done.has(c.id);
+    return '<div class="ch-row'+(on?' done':'')+'" data-id="'+c.id+'">'+
+      '<button class="tick" aria-pressed="'+on+'" aria-label="Mark challenge done">&#10005;</button>'+
+      '<div><p class="cname">'+esc(c.n)+'</p><p class="cdesc">'+esc(c.d)+'</p></div>'+
+      '<div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end">'+
+      '<span class="ctag">Run 0'+c.run+'</span><span class="ctag">'+CATMETA[c.cat][0]+'</span></div></div>';
+  }).join('')||'<p style="color:var(--stone-dim)">Nothing left in this filter.</p>';
+  checklist.querySelectorAll('.tick').forEach(b=>b.addEventListener('click',()=>toggleCh(b.closest('.ch-row').dataset.id)));
+}
+function renderFilters(){
+  const opts=['All','Assassination','Discovery','Feats','Targets','The Classics','Incomplete'];
+  filters.innerHTML=opts.map(o=>'<button aria-pressed="'+(state.filter===o)+'" data-f="'+o+'">'+o+'</button>').join('');
+  filters.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{state.filter=b.dataset.f;renderFilters();renderChecklist();}));
+}
+
+/* ═══════════ REFERENCE ═══════════ */
+const DIS=[
+ ['Bodyguard',"The assistant's apartment",'Weapons not questioned'],
+ ['Security','The police officer in the market toilets','Carries the cubicle key'],
+ ['Bohemian',"The hippie's apartment",'Commonly the missing 13th'],
+ ['Salvatore Bravuomo','Locked cubicle, market bathrooms','Unique — required for Above the Law'],
+ ['Photographer','Obtained by following the Dynamite Smile mission story','Run 04 dependency'],
+ ['Green Plumber','Sewers under the church','Counts separately from red'],
+ ['Red Plumber','Sewers under the church','Counts separately from green'],
+ ['Priest','Hiding inside the church — Father Francesco','Unique — required for No Absolution'],
+ ['Waiter','The bar next to the stage','—'],
+ ['Church Staff','The morgue','—'],
+ ['Gardener','The sewer entrance near the morgue','—'],
+ ['Kitchen Assistant',"The butcher shop below 47's apartment",'—'],
+ ['Stage Crew','By the stairs on the left side of the stage','Required for Stage Fried']
+];
+const ITEMS=[
+ ['Fireworks Remote Detonator','Table just above the stage, beside the Sanguine Shop entrance','Confirmed — wiki item page'],
+ ['Speedboat key','Floor of the leaflet booth in front of the church','Single source'],
+ ['Car key','Carried by the owner of the eastern market stall','Single source'],
+ ['Rat poison','Room directly above the ICA safehouse','Single source'],
+ ['Screwdriver','The room where you reschedule the meeting (Cheat Sheet)','Single source'],
+ ['Crowbar','Clock tower security room; another in the toilets opposite the mansion side','Single source'],
+ ['Cubicle key','On the police/security officer by the market toilets','Two sources'],
+ ['Modern Sedative Syringe','Dropped by a civilian in a brown suit who circulates between the pier, the rally and the photo area','Single source — optional curiosity']
+];
+document.getElementById('p-ref').innerHTML=
+ '<div class="vblock"><h3>Chameleon — all 13 disguises</h3>'+
+ '<p style="color:var(--stone-dim);margin:0">The 13 names come from your mission data file. The locations come from a Steam disguise guide whose Landslide list matches those 13 names one-for-one — an independent match on the set, single-sourced on the rooms.</p>'+
+ '<table><tr><th>Disguise</th><th>Where</th><th>Note</th></tr>'+
+ DIS.map(d=>'<tr><td><strong>'+esc(d[0])+'</strong></td><td>'+esc(d[1])+'</td><td>'+esc(d[2])+'</td></tr>').join('')+'</table></div>'+
+ '<div class="vblock"><h3>Item locations</h3><table><tr><th>Item</th><th>Where</th><th>Confidence</th></tr>'+
+ ITEMS.map(d=>'<tr><td><strong>'+esc(d[0])+'</strong></td><td>'+esc(d[1])+'</td><td>'+esc(d[2])+'</td></tr>').join('')+'</table></div>'+
+ '<div class="vblock"><h3>Mission stories — one per run</h3>'+
+ '<p>There is a single target, so each story is a different route to the same man. Published guides state plainly that each opportunity needs its own playthrough. The run order here is chosen so each story also banks the most kills:</p>'+
+ '<ol><li><strong>No Absolution For The Wicked</strong> — Run 01 (priest branch) and Run 02 (wine branch)</li>'+
+ '<li><strong>Stage Fried</strong> — Run 03</li><li><strong>Dynamite Smile</strong> — Run 04</li>'+
+ '<li><strong>Above The Law</strong> — Run 05</li><li><strong>Cheat Sheet</strong> — Run 06</li></ol>'+
+ '<p>The rule every source repeats: follow a story\u2019s marked beats in order. Jumping ahead is the documented cause of a story never registering.</p></div>'+
+ '<div class="vblock"><h3>Mutually exclusive — kept in separate runs or saves</h3><table>'+
+ '<tr><th>Pair</th><th>Conflict</th></tr>'+
+ '<tr><td>Guardian Assassin &#10005; Higher Powers</td><td>Higher Powers uses the branch where Abiatti throws Father Francesco off the tower. Guardian Assassin needs him to survive. Separated by a reload in Run 02.</td></tr>'+
+ '<tr><td>Guardian Assassin &#10005; Runs 01, 03–06</td><td>Run 01 puts you in the priest\u2019s clothes; the other runs never reach the tower scene. The documented Guardian route is the Run 02 sniper branch.</td></tr>'+
+ '<tr><td>Tasteless, Traceless &#10005; Higher Powers</td><td>Poisoned wine kills him before the bell can. Run 02\u2019s save is placed before the poisoning for exactly this reason.</td></tr>'+
+ '<tr><td>The Gig is Up &#10005; Crank it to Eleven</td><td>Both need him at the stage; the valve is only rigged on one branch. Split by the Run 03 save.</td></tr>'+
+ '<tr><td>Suit Only &#10005; every disguise challenge</td><td>Chameleon, Changing Collar, I Object! and No One Sees a Roadie all require changing clothes. Run 02 stays in the suit throughout.</td></tr>'+
+ '<tr><td>All five mission stories</td><td>One target — one story per run past the opening beats.</td></tr></table></div>';
+
+/* ═══════════ VERIFICATION ═══════════ */
+document.getElementById('p-ver').innerHTML=
+ '<div class="vblock"><h3>What changed after your mission data file</h3>'+
+ '<p>The file you supplied is in-game data and outranks every web source. It resolved the discrepancies the previous version carried, and four corrections were made:</p>'+
+ '<table><tr><th>Item</th><th>Previous guide</th><th>Corrected</th></tr>'+
+ '<tr><td>Total</td><td>35 reconstructed from a wiki count of 34</td><td><strong>35 confirmed</strong>: 15 Assassination / 8 Discovery / 7 Feats / 1 Target / 4 Classics</td></tr>'+
+ '<tr><td>Chameleon</td><td>Listed under Discovery</td><td>It is a <strong>Feat</strong></td></tr>'+
+ '<tr><td>Mission Mastery</td><td>Included, flagged uncertain</td><td><strong>Does not exist</strong> in this build — removed. The wiki note about it being retired in HITMAN III was correct.</td></tr>'+
+ '<tr><td>Discover Sapienza</td><td>Missing entirely</td><td>Added — it is the eighth Discovery challenge</td></tr>'+
+ '<tr><td>Straight Shot</td><td>"Silenced pistol kill"</td><td><strong>Headshot</strong>, per the data wording</td></tr>'+
+ '<tr><td>Ciao Bella / No Evidence</td><td>Listed as legacy unknowns</td><td><strong>Not present</strong> — removed entirely</td></tr></table></div>'+
+
+ '<div class="vblock"><h3>Still unverified — check these against your own game</h3>'+
+ '<h4>Starting locations</h4><p>No source lists any alternate start or mastery-gated start for Landslide, and the mission has no "start in X" Discovery challenges of the kind the main Sapienza mission has. Every loadout says "fixed mission start". If your Mission Planning screen offers alternatives, the loadouts still work — none of the routes depend on where you spawn.</p>'+
+ '<h4>Where the priest hides</h4><p>PSNProfiles says second floor of the church; a Steam disguise guide says first floor. Sweep both — he is the only priest in the level.</p>'+
+ '<h4>The webcam (Big Brother)</h4><p>The challenge page confirms the action and the XP but no source gives the room. It is grouped with Cheat Sheet and Urine for It in published walkthroughs, so it sits on that chain near the rally camera.</p>'+
+ '<h4>Which speaker (Crank it to Eleven)</h4><p>Sources describe the stage speaker, a caf\u00e9 second-floor speaker and one shootable from the ICA safehouse. Which is the scripted one is not pinned down.</p>'+
+ '<h4>Hold My Hair and Discover Sapienza</h4><p>Both are worded "in Sapienza" and are shared with World of Tomorrow. No source documents a drowning spot for Abiatti in Landslide, and your data file lists zero areas for Landslide with areas shared with World of Tomorrow. The guide routes both to the main mission. The area-sharing conclusion is an inference from your data file, not a sourced claim.</p>'+
+ '<h4>Chameleon accumulation</h4><p>Disguise-collection progress is normally cumulative across runs, which is why the Photographer can come from Run 04 and the rest from Run 06. If your build resets it, do all 13 in one visit.</p>'+
+ '<h4>XP</h4><p>Only four figures are confirmed and shown: Big Brother +1000, Unsafe Distance +1000, each mission story +1000 (HITMAN 2 / III), Versatile Assassin +4000. No other per-challenge XP was found, so none is stated.</p>'+
+ '<h4>Named NPCs</h4><p>Confirmed: Marco Abiatti, Father Francesco, Salvatore Bravuomo, Silvio Caruso (client, not on the map). Also named on the wiki with no location anywhere: Calliope Costa, Monia Bellini, Dr. Docciaborsa, Prof. Antonio. No route touches them.</p>'+
+ '<h4>Patches</h4><p>No Landslide-specific challenge was found to have been added post-launch. The two 2024–2025 Sapienza additions (Sapienza Sports Club, Bend It Like 47) belong to World of Tomorrow and are not in your Landslide data.</p></div>'+
+
+ '<div class="vblock"><h3>Known bugs and ordering rules</h3><table><tr><th>Issue</th><th>Detail</th><th>Confidence</th></tr>'+
+ '<tr><td>Clean Slate will not unlock</td><td>Reported in the HITMAN 2 era. Documented workaround: restart and complete without using save/load at all.</td><td>Single source</td></tr>'+
+ '<tr><td>Mission story never registers</td><td>Caused by skipping or jumping ahead of a marked beat.</td><td>Two sources</td></tr>'+
+ '<tr><td>Stage valve is suspicious in uniform</td><td>Turning it is flagged even in Stage Crew clothes. Distract first.</td><td>Single source</td></tr>'+
+ '<tr><td>Vai Con Dio push is scripted</td><td>Only the Abiatti sequence lands on the spire; any other NPC pushed from there misses it.</td><td>Wiki challenge page</td></tr>'+
+ '<tr><td>Body search at the Bravuomo meeting</td><td>You are frisked on the way in — stash all weapons first.</td><td>Two sources</td></tr>'+
+ '<tr><td>Guardian Assassin fires late</td><td>It requires mission completion, not just the kill. Do not restart after saving the priest.</td><td>Two sources</td></tr></table></div>'+
+
+ '<div class="vblock"><h3>Sources</h3><ul>'+
+ '<li><strong>Your mission data file</strong> — challenge names, descriptions, categories, counts, 13 disguises (authoritative)</li>'+
+ '<li>Hitman Wiki — Landslide, Vai Con Dio, Cheat Sheet, Above the Law, Big Brother, Unsafe Distance, Fireworks Remote Detonator, Versatile Assassin, Mission Story pages, Marco Abiatti</li>'+
+ '<li>Steam guide "HITMAN 2 | Chameleon | All Disguises" — Landslide disguise locations</li>'+
+ '<li>NamuWiki, Hitman/Challenges/Sapienza (machine-translated) — route detail, counted as one source</li>'+
+ '<li>PSNProfiles and PlayStationTrophies.org — Landslide trophy guides, mission story list</li>'+
+ '<li>XboxAchievements — Your Vote Counts (pen, spire and fireworks kill descriptions)</li>'+
+ '<li>Steam Community discussions — Chameleon disguise reports, bonus-mission difficulty behaviour</li></ul>'+
+ '<p style="color:var(--stone-dim)">Direct fetches of hitman.fandom.com are blocked by bot protection, so wiki content was read through search extracts. That is why several route details are marked single-source rather than double-confirmed.</p></div>';
+
+const fill=document.getElementById('fill'),pctText=document.getElementById('pctText'),totText=document.getElementById('totText'),
+      cats=document.getElementById('cats'),runjump=document.getElementById('runjump'),runlist=document.getElementById('runlist'),
+      checklist=document.getElementById('checklist'),filters=document.getElementById('filters');
+document.querySelectorAll('nav.tabs button').forEach(btn=>btn.addEventListener('click',()=>{
+  document.querySelectorAll('nav.tabs button').forEach(b=>b.setAttribute('aria-selected',b===btn));
+  document.querySelectorAll('.panel').forEach(p=>p.hidden=p.id!==btn.getAttribute('aria-controls'));
+}));
+renderRuns();renderFilters();renderChecklist();updateTracker();
+reportProgress();
+</script>
+<!-- step-progress-bridge -->
+<script>
+/* Reports route-step ticks into 'hitman-progress-registry' so the index can
+   show them beside the challenge counts. Counts what is on screen rather than
+   any guide-specific state, so one implementation serves every guide. */
+(function(){
+  var RID="b03", SEL=".step";
+  function isDone(s){
+    var c=s.classList;
+    if(c.contains('done')||c.contains('dn')) return true;
+    if(s.getAttribute('data-done')==='1'||s.getAttribute('aria-pressed')==='true') return true;
+    return !!s.querySelector('.done,.dn,[data-done="1"],[aria-pressed="true"]');
+  }
+  function tally(){
+    var steps=document.querySelectorAll(SEL);
+    if(!steps.length) return null;
+    var n=0;
+    for(var i=0;i<steps.length;i++) if(isDone(steps[i])) n++;
+    return {steps:n,stepTotal:steps.length};
+  }
+  function push(){
+    var t;
+    try{ t=tally(); }catch(err){ return; }
+    if(!t||!t.stepTotal) return;
+    try{
+      var r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');
+      var e=r[RID]||(r[RID]={});
+      /* the guide's own reportProgress() rewrites this entry wholesale, so
+         re-add the step counts whenever they go missing or stale */
+      if(e.steps===t.steps&&e.stepTotal===t.stepTotal) return;
+      e.steps=t.steps; e.stepTotal=t.stepTotal; e.updated=Date.now();
+      localStorage.setItem('hitman-progress-registry',JSON.stringify(r));
+    }catch(err){}
+  }
+  var pending=false;
+  function schedule(){
+    if(pending) return; pending=true;
+    setTimeout(function(){pending=false;push();},120);
+  }
+  try{
+    new MutationObserver(schedule).observe(document.body,
+      {subtree:true,childList:true,attributes:true,attributeFilter:['class','aria-pressed','data-done']});
+  }catch(err){}
+  window.addEventListener('load',schedule);
+  setTimeout(push,600);
+})();
+</script>
+<!-- /step-progress-bridge -->
+</body>
+</html>

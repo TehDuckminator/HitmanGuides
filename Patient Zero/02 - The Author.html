@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Author — Step Guide · Sapienza · Patient Zero</title>
+<style>
+:root{
+  --ink:#0c1020; --ink2:#121829; --panel:#18203a; --line:#2b3557;
+  --bone:#e9e4d6; --dim:#8b90a8; --bone-dim:#9d9887;
+  --candle:#d9a24b; --moon:#7fb2c8; --blood:#c05149; --leaf:#77a06e; --violet:#9a86c4;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:radial-gradient(1100px 620px at 78% -12%,rgba(217,162,75,.10),transparent 62%),
+             radial-gradient(900px 520px at 8% 4%,rgba(127,178,200,.08),transparent 60%),var(--ink);
+  color:var(--bone);font-family:"Inter","Segoe UI",system-ui,-apple-system,sans-serif;
+  font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1060px;margin:0 auto;padding:0 20px 96px}
+h1,h2,.serif{font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;font-weight:400}
+.mono{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace}
+
+/* masthead */
+.mast{padding:48px 0 26px;border-bottom:1px solid var(--line)}
+.eyebrow{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--candle);margin:0 0 14px}
+h1{font-size:clamp(36px,7vw,64px);line-height:1.02;margin:0;letter-spacing:-.015em}
+h1 em{font-style:italic;color:var(--candle)}
+.sub{color:var(--dim);max-width:64ch;margin:14px 0 0}
+.factstrip{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.fact{border:1px solid var(--line);border-radius:2px;padding:7px 12px;font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:11.5px;color:var(--bone-dim);background:rgba(255,255,255,.015)}
+.fact b{color:var(--bone);font-weight:600}
+
+/* chips */
+.chip{display:inline-flex;align-items:center;font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;padding:2px 7px;border-radius:2px;border:1px solid;white-space:nowrap;vertical-align:middle}
+.c-game{color:var(--candle);border-color:rgba(217,162,75,.5);background:rgba(217,162,75,.1)}
+.c-2src{color:var(--leaf);border-color:rgba(119,160,110,.45);background:rgba(119,160,110,.09)}
+.c-1src{color:var(--moon);border-color:rgba(127,178,200,.4);background:rgba(127,178,200,.08)}
+.c-unv{color:var(--blood);border-color:rgba(192,81,73,.5);background:rgba(192,81,73,.1)}
+
+/* notice */
+.notice{border:1px solid rgba(192,81,73,.42);border-left:3px solid var(--blood);background:rgba(192,81,73,.07);border-radius:2px;padding:20px 22px;margin:30px 0 0}
+.notice h3{margin:0 0 12px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;color:var(--blood)}
+.notice ul{margin:0;padding-left:18px}
+.notice li{margin-bottom:9px;color:var(--bone-dim)}
+.notice li b{color:var(--bone)}
+.notice li:last-child{margin-bottom:0}
+
+/* tracker */
+.tracker{margin:30px 0 0;border:1px solid var(--line);border-radius:3px;background:linear-gradient(180deg,var(--panel),var(--ink2));padding:24px}
+.tracker-top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.tl{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+.tc{font-family:"Iowan Old Style",Palatino,Georgia,serif;font-size:42px;line-height:1;margin-top:6px}
+.tc span.sm{color:var(--dim);font-size:21px}
+.bar{height:6px;background:rgba(255,255,255,.06);border-radius:99px;margin:20px 0 22px;overflow:hidden}
+.bar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--candle),var(--moon));transition:width .4s ease}
+.cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.cat{border:1px solid var(--line);border-radius:2px;padding:12px 14px;background:rgba(0,0,0,.18)}
+.cat .n{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:7px}
+.cat .v{font-family:"Iowan Old Style",Palatino,Georgia,serif;font-size:24px;line-height:1}
+.cat .v u{text-decoration:none;color:var(--dim);font-size:14px}
+.catbar{height:3px;background:rgba(255,255,255,.07);margin-top:9px;border-radius:99px;overflow:hidden}
+.catbar>i{display:block;height:100%;width:0;background:var(--candle);transition:width .35s ease}
+
+/* tabs */
+.tabs{display:flex;gap:2px;margin:34px 0 22px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.tab{appearance:none;background:none;border:0;border-bottom:2px solid transparent;color:var(--dim);cursor:pointer;padding:11px 16px;font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase}
+.tab:hover{color:var(--bone)}
+.tab[aria-selected="true"]{color:var(--candle);border-bottom-color:var(--candle)}
+.tab:focus-visible,.runjump:focus-visible,.tick:focus-visible,.filt:focus-visible,.runhead:focus-visible,.stephead:focus-visible{outline:2px solid var(--moon);outline-offset:2px}
+.view[hidden]{display:none}
+
+/* run nav */
+.runnav{position:sticky;top:0;z-index:20;background:rgba(12,16,32,.94);backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:3px;padding:12px 14px;margin-bottom:22px}
+.runnav .lbl{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin-bottom:9px}
+.runbtns{display:flex;flex-wrap:wrap;gap:7px}
+.runjump{appearance:none;cursor:pointer;background:rgba(0,0,0,.3);border:1px solid var(--line);color:var(--bone-dim);border-radius:2px;padding:8px 12px;font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;text-align:left}
+.runjump:hover{border-color:var(--candle);color:var(--bone)}
+.runjump b{color:var(--candle);font-weight:600}
+.runjump.full{border-color:rgba(119,160,110,.5);color:var(--leaf)}
+.navtools{display:flex;gap:7px;margin-top:10px;flex-wrap:wrap}
+.navtools button{appearance:none;cursor:pointer;background:none;border:1px solid var(--line);color:var(--dim);border-radius:2px;padding:6px 11px;font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase}
+.navtools button:hover{color:var(--bone);border-color:var(--bone-dim)}
+
+/* run */
+.run{border:1px solid var(--line);border-radius:3px;background:var(--ink2);margin-bottom:16px;overflow:hidden;scroll-margin-top:110px}
+.runhead{width:100%;text-align:left;appearance:none;cursor:pointer;background:linear-gradient(180deg,var(--panel),transparent);border:0;border-bottom:1px solid transparent;padding:20px 22px;display:flex;gap:16px;align-items:flex-start;color:inherit}
+.run.open .runhead{border-bottom-color:var(--line)}
+.caret{flex-shrink:0;margin-top:6px;color:var(--candle);font-size:11px;transition:transform .2s ease}
+.run.open .caret{transform:rotate(90deg)}
+.runhead .rn{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--candle)}
+.runhead h2{font-size:25px;margin:7px 0 7px;line-height:1.15}
+.runhead p{margin:0;color:var(--bone-dim);font-size:13.5px;max-width:68ch}
+.runbody{padding:20px 22px 24px;display:none}
+.run.open .runbody{display:block}
+
+.loadout{border:1px solid var(--line);border-radius:2px;background:rgba(0,0,0,.22);padding:16px 18px;margin-bottom:22px}
+.loadout h4{margin:0 0 13px;font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--moon)}
+.lo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.lo-item .k{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:4px}
+.lo-item .v{font-size:13.5px}
+.slots{margin-top:15px;border-top:1px solid var(--line);padding-top:13px}
+.slot{display:flex;gap:12px;padding:4px 0;font-size:13.5px;align-items:baseline}
+.slot b{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:10px;color:var(--candle);letter-spacing:.1em;min-width:64px;flex-shrink:0}
+
+.sect{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--candle);margin:26px 0 11px;padding-bottom:7px;border-bottom:1px solid var(--line)}
+
+/* step */
+.step{border:1px solid var(--line);border-radius:2px;margin-bottom:9px;background:var(--panel);overflow:hidden}
+.step.done{border-color:rgba(119,160,110,.45);background:rgba(119,160,110,.05)}
+.step-row{display:flex;gap:12px;padding:13px 15px;align-items:flex-start}
+.tick{appearance:none;flex-shrink:0;width:22px;height:22px;margin-top:2px;border:1px solid var(--line);border-radius:2px;background:rgba(0,0,0,.3);color:transparent;cursor:pointer;font-size:13px;line-height:1;display:flex;align-items:center;justify-content:center;transition:.15s}
+.tick:hover{border-color:var(--candle)}
+.step.done .tick{background:var(--leaf);border-color:var(--leaf);color:var(--ink)}
+.stephead{flex:1;min-width:0;appearance:none;background:none;border:0;padding:0;text-align:left;cursor:pointer;color:inherit;display:flex;gap:11px;align-items:flex-start}
+.stepnum{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:11px;color:var(--candle);flex-shrink:0;margin-top:2px;min-width:22px}
+.step-title{font-weight:650;font-size:14.5px;margin:0}
+.step-lead{margin:3px 0 0;color:var(--bone-dim);font-size:13.5px}
+.stepcaret{flex-shrink:0;color:var(--dim);font-size:10px;margin-top:4px;transition:transform .2s ease}
+.step.open .stepcaret{transform:rotate(90deg)}
+.stepbody{display:none;padding:0 15px 16px 61px}
+.step.open .stepbody{display:block}
+.fl{margin:0;padding:0;list-style:none}
+.fl li{display:flex;gap:11px;padding:6px 0;border-top:1px solid rgba(43,53,87,.55);font-size:13.5px;color:var(--bone-dim)}
+.fl li:first-child{border-top:0}
+.fl li b{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--dim);min-width:76px;flex-shrink:0;padding-top:3px}
+.fl li.warn b{color:var(--blood)}
+.fl li.warn{color:#e0b3af}
+.fl li strong{color:var(--bone);font-weight:600}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.badge{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;padding:4px 8px;border-radius:2px;border:1px solid}
+.b-pop{color:var(--leaf);border-color:rgba(119,160,110,.45);background:rgba(119,160,110,.1)}
+.b-warn{color:var(--blood);border-color:rgba(192,81,73,.5);background:rgba(192,81,73,.11)}
+.b-save{color:var(--candle);border-color:rgba(217,162,75,.45);background:rgba(217,162,75,.1)}
+.b-excl{color:var(--violet);border-color:rgba(154,134,196,.45);background:rgba(154,134,196,.1)}
+
+/* checklist */
+.filters{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:20px}
+.filt{appearance:none;background:rgba(0,0,0,.25);border:1px solid var(--line);color:var(--dim);border-radius:2px;padding:7px 13px;cursor:pointer;font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:10px;letter-spacing:.13em;text-transform:uppercase}
+.filt:hover{color:var(--bone);border-color:var(--bone-dim)}
+.filt[aria-pressed="true"]{background:var(--candle);border-color:var(--candle);color:#1a1206}
+.ch{display:flex;gap:13px;padding:14px 15px;border:1px solid var(--line);border-radius:2px;margin-bottom:8px;background:var(--panel);align-items:flex-start}
+.ch.done{border-color:rgba(119,160,110,.45);background:rgba(119,160,110,.05)}
+.ch-name{font-weight:650;font-size:14.5px;margin:0 0 4px;display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+.ch.done .ch-name{color:var(--bone-dim);text-decoration:line-through;text-decoration-color:rgba(119,160,110,.6)}
+.ch-cond{margin:0;color:var(--bone-dim);font-size:13.5px}
+.ch-meta{margin-top:9px;display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:2px;border:1px solid var(--line);color:var(--dim)}
+.tag.t-run{color:var(--moon);border-color:rgba(127,178,200,.35)}
+
+/* blocks */
+.block{border:1px solid var(--line);border-radius:3px;background:var(--ink2);padding:22px;margin-bottom:18px}
+.block h3{margin:0 0 13px;font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--candle)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);color:var(--dim);font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:400}
+td{padding:9px 10px;border-bottom:1px solid rgba(43,53,87,.5);color:var(--bone-dim);vertical-align:top}
+td b{color:var(--bone)}
+.block ul{margin:0;padding-left:18px}
+.block ul li{margin-bottom:8px;color:var(--bone-dim)}
+.block ul li b{color:var(--bone)}
+footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);color:var(--dim);font-size:12.5px}
+@media (max-width:640px){.stepbody{padding-left:15px}.fl li{flex-direction:column;gap:2px}.fl li b{min-width:0}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="mast">
+  <p class="eyebrow">Patient Zero · Mission 2 · Sapienza, Italy</p>
+  <h1>The <em>Author</em></h1>
+  <p class="sub">Step-format route for every challenge in the mission. Built against your extracted mission data file, cross-checked against the Hitman Wiki and community guides. Every step names the place, the disguise, the item, the NPC and the action — and every unverified detail is labelled as such instead of filled in.</p>
+  <div class="factstrip">
+    <div class="fact">Targets · <b>Craig Black</b> + <b>Brother Akram</b></div>
+    <div class="fact">Objective 3 · <b>Retrieve the virus sample</b></div>
+    <div class="fact">Challenges · <b>19</b></div>
+    <div class="fact">Disguises · <b>15</b></div>
+    <div class="fact">Mission stories · <b>None</b></div>
+    <div class="fact">Runs · <b>6</b></div>
+  </div>
+</header>
+
+<section class="notice">
+  <h3>Corrections your data file forced</h3>
+  <ul>
+    <li><b>"No Evidence" is not a challenge in this mission.</b> <span class="chip c-game">Game data</span> The Classics here are exactly four: Sniper Assassin, Silent Assassin, Silent Assassin Suit Only, Suit Only. Camera evidence still matters — it is a <em>condition inside</em> Silent Assassin and Sniper Assassin ("if you are detected by cameras, erase or destroy the evidence"), not a separate challenge.</li>
+    <li><b>One slot is contested and both candidates are routed.</b> Your data file lists <b>Discover Sapienza</b> under Discovery and does not list <b>True Fan</b>. The wiki lists True Fan as an Author assassination challenge and does not count Discover Sapienza — and True Fan is independently confirmed as the unlock condition for the Super Fan suit. Both fit the 19 total only if the other is excluded. <span class="chip c-unv">Unresolved</span> Both are tracked below so you cannot miss whichever one your game actually shows.</li>
+    <li><b>Five assassination challenges are Sapienza-wide, not mission-specific.</b> <span class="chip c-game">Game data</span> Piano Man, Straight Shot, Tasteless Traceless, Hold My Hair and Someone Could Hurt Themselves all read "…in Sapienza", and Versatile Assassin completes that set. If you already earned them in World of Tomorrow, Landslide or The Icon, they are already done here. The same applies to Chameleon ("find and equip all disguises in Sapienza") and Discover Sapienza.</li>
+    <li><b>Discover Sapienza cannot be progressed in this mission.</b> <span class="chip c-game">Game data</span> The file records zero areas for The Author, with areas shared with World of Tomorrow. Reveal the map in World of Tomorrow; it will read as complete here.</li>
+    <li><b>No Mission Stories exist in The Author.</b> <span class="chip c-2src">2 sources</span> There is no story order to protect and no "Hero of Sapienza" challenge. What does need protecting is the <em>bell script</em> — see the warning in Run 3.</li>
+    <li><b>Starting locations and mastery gates: unverified.</b> <span class="chip c-unv">Unverified</span> No source confirms alternate starts or a mastery ladder for this mission. There is exactly <b>one agency pickup</b> — the sewers under the church. <span class="chip c-1src">1 source</span></li>
+  </ul>
+</section>
+
+<section class="tracker">
+  <div class="tracker-top">
+    <div>
+      <div class="tl">Challenges completed</div>
+      <div class="tc"><span id="tDone">0</span><span class="sm"> / <span id="tTot">20</span></span></div>
+    </div>
+    <div class="tl" id="tPct">0% complete</div>
+  </div>
+  <div class="bar"><i id="tBar"></i></div>
+  <div class="cats" id="cats"></div>
+</section>
+
+<div class="tabs" role="tablist">
+  <button class="tab" role="tab" aria-selected="true" data-view="runs">Runs</button>
+  <button class="tab" role="tab" aria-selected="false" data-view="list">Checklist</button>
+  <button class="tab" role="tab" aria-selected="false" data-view="ref">Disguises &amp; map facts</button>
+  <button class="tab" role="tab" aria-selected="false" data-view="ver">Validation</button>
+</div>
+
+<div class="view" id="view-runs">
+  <nav class="runnav">
+    <div class="lbl">Jump to run</div>
+    <div class="runbtns" id="runbtns"></div>
+    <div class="navtools">
+      <button id="expandAll">Expand all</button>
+      <button id="collapseAll">Collapse all</button>
+    </div>
+  </nav>
+  <div id="runlist"></div>
+</div>
+<div class="view" id="view-list" hidden>
+  <div class="filters" id="filters"></div>
+  <div id="checklist"></div>
+</div>
+<div class="view" id="view-ref" hidden></div>
+<div class="view" id="view-ver" hidden></div>
+
+<footer>Sources: your extracted mission data file (authoritative for names, counts and disguises); Hitman Wiki pages for The Author, James King, Mike Vogt, Super Fan outfit and suit, Brother Akram outfit, Craig Black outfit, and individual challenge pages; a Steam Community redacted-challenges guide; a contemporary Patient Zero walkthrough; Steam threads for bug confirmation only. Progress is saved in this browser and persists across reloads.</footer>
+</div>
+
+<script>
+/* ===================== CHALLENGES ===================== */
+const CH=[
+ {id:'purify',n:'Purify the Spirits',t:'Assassination',c:'Drown both targets as the Ghostly Fan.',src:'game',run:2},
+ {id:'boom',n:'Boom Beats Blah',t:'Assassination',c:'Eliminate Craig Black in an explosion while he is reading. Complete the mission.',src:'game',run:6},
+ {id:'pen',n:'The Pen is Mightier than the Sword',t:'Assassination',c:'Redacted in game. Eliminate Craig Black by impaling him on a pen.',src:'2src',run:6},
+ {id:'grave',n:'The Gravedigger',t:'Assassination',c:'Eliminate Craig Black in the crypt. Bury Craig Black in the graveyard.',src:'game',run:4},
+ {id:'versatile',n:'Versatile Assassin',t:'Assassination',c:'Complete Piano Man, Someone Could Hurt Themselves, Hold My Hair, Straight Shot and Tasteless, Traceless.',src:'game',run:3},
+ {id:'tasteless',n:'Tasteless, Traceless',t:'Assassination',c:'Assassinate a target with lethal poison in Sapienza.',src:'game',run:3},
+ {id:'hair',n:'Hold My Hair',t:'Assassination',c:'Assassinate a target by drowning them in Sapienza.',src:'game',run:2},
+ {id:'hurt',n:'Someone Could Hurt Themselves',t:'Assassination',c:'Assassinate a target in an accident in Sapienza.',src:'game',run:3},
+ {id:'piano',n:'Piano Man',t:'Assassination',c:'Assassinate a target with the fiber wire in Sapienza.',src:'game',run:1},
+ {id:'straight',n:'Straight Shot',t:'Assassination',c:'Assassinate a target with a headshot in Sapienza.',src:'game',run:1},
+ {id:'truefan',n:'True Fan',t:'Assassination',c:'Eliminate Craig Black disguised as the Super Fan. Unlocks the Super Fan suit.',src:'contested',run:2},
+ {id:'ear',n:'…Will be the Last to Reach Your Dying Ear',t:'Discovery',c:'Become Craig Black and attend the meeting.',src:'game',run:4},
+ {id:'foot',n:'And the Footsteps You Hear…',t:'Discovery',c:'Become Brother Akram and attend the meeting.',src:'game',run:3},
+ {id:'discover',n:'Discover Sapienza',t:'Discovery',c:'Reveal all undiscovered areas in Sapienza. Areas are shared with World of Tomorrow.',src:'contested',run:0},
+ {id:'papers',n:'Papers, Please?',t:'Feats',c:'Get an invitation to the reading from the critic Mike Vogt.',src:'game',run:1},
+ {id:'cham',n:'Chameleon',t:'Feats',c:'Find and equip all disguises in Sapienza. This mission holds 15.',src:'game',run:5},
+ {id:'sniper',n:'Sniper Assassin',t:'The Classics',c:'Assassinate your targets with a sniper rifle. Only eliminate the targets. Do not get spotted. Erase or destroy camera evidence.',src:'game',run:5},
+ {id:'sa',n:'Silent Assassin',t:'The Classics',c:'Only eliminate the targets. No bodies found. Do not get spotted. Erase or destroy camera evidence.',src:'game',run:1},
+ {id:'saso',n:'Silent Assassin, Suit Only',t:'The Classics',c:'All Silent Assassin conditions, done entirely in your suit.',src:'game',run:1},
+ {id:'so',n:'Suit Only',t:'The Classics',c:'Assassinate the targets and complete the mission entirely in your suit.',src:'game',run:1}
+];
+const CATS=['Assassination','Discovery','Feats','The Classics'];
+
+/* ===================== RUNS ===================== */
+const RUNS=[
+{
+ no:1,title:'Suit, wire, silence',
+ goal:'The three Suit Only classics plus the invitation feat, in one pass with no disguise at any point. Hardest run in the guide — do it first while the map is quiet in your head.',
+ load:{start:'Default mission start <span class="chip c-unv">only start confirmed</span>',suit:'Any true suit. Not a suit-styled disguise.',pickup:'Sewers under the church — the only agency pickup <span class="chip c-1src">1 source</span>',
+ slots:[['Slot 1','Fiber Wire — for Piano Man'],['Slot 2','Emetic Poison Vial — to isolate Mike Vogt'],['Slot 3','Silenced pistol (ICA Silverballer) — for Straight Shot'],['Slot 4','Lockpick']]},
+ sections:[
+ {name:'The invitation',steps:[
+  {t:'Poison Mike Vogt\'s drink in the café',
+   lead:'Vogt is the literature critic who holds an invitation and refuses to use it. Dose his drink so he leaves the room on his own.',
+   f:[['Where','The Sapienzese restaurant and café on Level 2. He is the only patron left — the waiters are cleaning up around him and the waitress wants him gone. <span class="chip c-2src">2 sources</span>'],
+      ['Disguise','None. Your suit is fine in the café.'],
+      ['Item','Emetic Poison Vial. A video guide for this exact feat lists the emetic vial as the only packed item. <span class="chip c-1src">1 source</span>'],
+      ['NPC','<strong>Mike Vogt</strong>, seen talking to <strong>Leah Livingston</strong>. Diana identifies him for you when you approach. <span class="chip c-2src">2 sources</span>'],
+      ['Action','Dose his drink while unobserved, then back off and wait for him to stand up.'],
+      ['warn','Do not kill him — a non-target kill fails Silent Assassin. He must be <strong>subdued</strong>, because the invitation only drops when he is knocked out or killed. <span class="chip c-2src">2 sources</span>']],
+   b:[['b-save','Save here — before you dose the drink']]},
+  {t:'Subdue him where he goes to be sick and take the invitation',
+   lead:'Follow him out, drop him out of sight, hide the body, pick up the invitation he drops.',
+   f:[['Where','Wherever the emetic sends him. <span class="chip c-unv">The exact destination is unverified</span> — track him with Instinct rather than pre-committing to a room.'],
+      ['Disguise','None.'],
+      ['Item','None needed for the subdue. Lockpick only if the room he picks is locked.'],
+      ['NPC','Mike Vogt, now alone.'],
+      ['Action','Subdue, drag into a container, collect the dropped invitation.'],
+      ['warn','A discovered body fails Silent Assassin. Container him — do not just tuck him behind a corner.']],
+   b:[['b-pop','Papers, Please?']]}
+ ]},
+ {name:'Cameras',steps:[
+  {t:'Destroy the camera server before either kill',
+   lead:'Silent Assassin here explicitly forgives camera detection only if you erase or destroy the recording. Do it up front so a late mistake cannot cost the run.',
+   f:[['Where','The room that was Rocco\'s apartment in World of Tomorrow — above the butcher\'s shop, in the building opposite the town hall. <span class="chip c-2src">2 sources</span>'],
+      ['Disguise','None. Note for other runs: the <strong>Bodyguard</strong> uniform counts as trespassing in this specific room. <span class="chip c-2src">2 sources</span>'],
+      ['Item','Lockpick if the approach door is locked.'],
+      ['NPC','Someone is asleep on the bed in that room. <span class="chip c-2src">2 sources</span> Do not wake them.'],
+      ['Action','Destroy or wipe the recorder, then leave the way you came.'],
+      ['warn','Order rule: server first, kills second. Coming back through a searching map is how suit-only runs die.']],
+   b:[['b-save','Save here — server down, nobody dead yet']]}
+ ]},
+ {name:'The targets',steps:[
+  {t:'Fiber-wire Craig Black once the bell moves him',
+   lead:'Black sits behind a bodyguard and a room full of guests. Use the bell to change his state instead of trying to reach him at the reading.',
+   f:[['Where','Church interior during the reading; the graveyard after the bell.'],
+      ['Disguise','None — Suit Only. Expect the church interior to read as restricted without an invitation.'],
+      ['Item','Fiber Wire.'],
+      ['NPC','<strong>Craig Black</strong>, plus his bodyguard, who reacts to any attack on him at the signing table. <span class="chip c-1src">1 source</span>'],
+      ['Action','Ring the church bell to start the midnight meeting early, then take Black on his transit line while he is away from the reading crowd. Body into a container.'],
+      ['warn','After the meeting Black enters a "target is leaving the area" state and will exfiltrate if you stall. <span class="chip c-1src">1 source</span> <span class="chip c-unv">A specific frame-by-frame isolation window is unverified</span> — the bell is the sourced lever, the exact second is not.']],
+   b:[['b-pop','Piano Man'],['b-save','Save here — before you commit']]},
+  {t:'Silenced headshot on Brother Akram in his apartment',
+   lead:'Akram waits in his own apartment near the beach until the bell. Take him indoors, before the meeting puts him in the open.',
+   f:[['Where','Brother Akram\'s apartment, in the houses close to the beach. Bodyguards stand on the door. <span class="chip c-2src">2 sources</span>'],
+      ['Disguise','None.'],
+      ['Item','Silenced pistol.'],
+      ['NPC','<strong>Brother Akram</strong>. He carries the virus sample until the handover. <span class="chip c-2src">2 sources</span>'],
+      ['Action','Get inside past the door guards, one silenced headshot, container the body, take the sample off him.'],
+      ['warn','<span class="chip c-unv">The interior layout and guard positions are unverified.</span> If the room is overlooked, a thrown coin pulls a single watcher without alerting the pair.']],
+   b:[['b-pop','Straight Shot']]},
+  {t:'Exit with the sample',
+   lead:'Confirm all three classics on the score screen before moving on.',
+   f:[['Where','Any exit.'],['Disguise','Still your starting suit — check you never swapped.'],['Item','Virus sample in inventory.'],['NPC','None.'],
+      ['Action','Leave, then read the score screen. Silent Assassin, Suit Only and Silent Assassin Suit Only should all register together.'],
+      ['warn','If Silent Assassin fails, the score screen names the reason. Camera detection with an intact server is the most common cause in this mission.']],
+   b:[['b-pop','Silent Assassin'],['b-pop','Suit Only'],['b-pop','Silent Assassin, Suit Only']]}
+ ]}]
+},
+{
+ no:2,title:'The Ghostly Fan',
+ goal:'Drown both targets while wearing the Super Fan. One run, three challenges, and the Super Fan suit unlock rides along with it.',
+ load:{start:'Default mission start',suit:'Irrelevant — you change almost immediately',pickup:'Sewers under the church — send the Emetic Poison Syringe here',
+ slots:[['Slot 1','Emetic Poison Vial — for Craig Black\'s water bottle'],['Slot 2','Lockpick'],['Slot 3','Coin'],['Pickup','Emetic Poison Syringe — the second dose, for Akram']]},
+ sections:[
+ {name:'Become the fan',steps:[
+  {t:'Take James King in the sewers',
+   lead:'The Super Fan waits in the crypt and walks into the sewers to take phone calls. Catch him on a call, out of everyone\'s sight.',
+   f:[['Where','The crypt under Sapienza Church; he periodically walks into the sewers to take a call. Enter via the beachside sewer entrance and wait for him to come from the direction of the crypt. <span class="chip c-2src">2 sources</span>'],
+      ['Disguise','None yet.'],
+      ['Item','None. Collect your syringe from the sewer stash on the same trip.'],
+      ['NPC','<strong>James King</strong>, the Super Fan / "Ghostly Fan". He does not react to 47 trespassing in the crypt, and he is <strong>not an enforcer against his own disguise</strong>. <span class="chip c-2src">2 sources</span>'],
+      ['Action','Subdue him during the call, hide the body in the nearby dumpster, take the outfit. He also drops <strong>an invitation to the reading</strong>. <span class="chip c-2src">2 sources</span>'],
+      ['warn','King\'s invitation is <em>not</em> the one Papers, Please? wants — that challenge names Mike Vogt specifically. <span class="chip c-game">Game data</span>']],
+   b:[['b-save','Save here — disguise on, syringe in hand']]},
+  {t:'Know what the disguise can and cannot reach',
+   lead:'Read this before you plan the second drowning. The Super Fan is locked out of the one place the meeting happens.',
+   f:[['Where','Super Fan grants access to <strong>all parts of the church and the sewers</strong>, but <strong>not the church grounds or graveyard</strong>. <span class="chip c-2src">2 sources</span>'],
+      ['Disguise','Super Fan (the mission disguise). The Super Fan <em>suit</em> unlocked later is cosmetic only — it does not open the crypt or back rooms and does not count for Purify the Spirits or Chameleon. <span class="chip c-1src">1 source</span>'],
+      ['Item','None.'],['NPC','None.'],
+      ['Action','Plan both drownings inside the church, crypt or sewers. Nothing in this run happens in the graveyard.'],
+      ['warn','This is the reason Purify the Spirits is fiddly: the midnight meeting is in the graveyard, which this disguise cannot enter.']],
+   b:[['b-warn','Do not route this run through the graveyard']]}
+ ]},
+ {name:'Craig Black',steps:[
+  {t:'Emetic the water bottle on the altar, then drown him',
+   lead:'Dose the bottle in the gap after his first passage, wait for him to come back and drink, then follow him and drown him.',
+   f:[['Where','The reading position inside the church. The bottle sits on the "altar" where Black reads. <span class="chip c-1src">1 source</span>'],
+      ['Disguise','Super Fan — it gets you upstairs into the church and into the reading. <span class="chip c-1src">1 source</span>'],
+      ['Item','Emetic Poison Vial.'],
+      ['NPC','Craig Black. Guests get upset when the bottle is tampered with but do not escalate to alarm. <span class="chip c-1src">1 source</span>'],
+      ['Action','Dose after he steps away, hide nearby, let him resume and drink, follow at distance, drown him at the basin he uses.'],
+      ['warn','<strong>Emetic only.</strong> Lethal poison kills him standing and permanently voids Purify the Spirits for the run. <span class="chip c-unv">His exact vomit destination is unverified</span> — follow with Instinct.']],
+   b:[['b-pop','True Fan'],['b-pop','Hold My Hair'],['b-warn','Lethal poison here voids the whole run']]},
+  {t:'Alternative — pull him into the crypt with the photoshoot',
+   lead:'If the bottle route keeps failing, there is a scripted way to bring Black underground to you, alone.',
+   f:[['Where','The crypt. The <strong>screwdriver</strong> sits in the small section in front of the door leading from the crypt up into the church. <span class="chip c-1src">1 source</span>'],
+      ['Disguise','Super Fan. Wearing King\'s outfit is what lures Black to the photoshoot. <span class="chip c-2src">2 sources</span>'],
+      ['Item','Screwdriver.'],
+      ['NPC','Craig Black comes down for a photoshoot with the Super Fan and asks him about a plot point afterwards. <span class="chip c-2src">2 sources</span>'],
+      ['Action','Repair the broken crypt lamp with the screwdriver — the photoshoot will not happen until the light works — then wait as the Super Fan.'],
+      ['warn','One walkthrough says a technician-type disguise is needed to repair the lamp <em>unnoticed</em>, while the Super Fan outfit page describes repairing it as the Super Fan. <span class="chip c-unv">Which is correct in the current build is unverified.</span> There is no "technician" in the disguise list — the nearest candidates are SFX Crew and Church Staff.']],
+   b:[['b-save','Save before repairing the lamp']]}
+ ]},
+ {name:'Brother Akram',steps:[
+  {t:'Second emetic dose on Akram, then drown him — still as the Super Fan',
+   lead:'Same disguise, same method. Do not change clothes between the two kills.',
+   f:[['Where','Akram\'s apartment near the beach, or wherever the emetic sends him. He goes to the graveyard only for the meeting — which this disguise cannot follow him into.'],
+      ['Disguise','Super Fan, unchanged. Purify the Spirits requires <strong>both</strong> drownings performed in it. <span class="chip c-2src">2 sources</span>'],
+      ['Item','Emetic Poison Syringe from the sewer stash.'],
+      ['NPC','Brother Akram, with bodyguards on his apartment door. <span class="chip c-2src">2 sources</span>'],
+      ['Action','Reach him before the bell, dose him, follow him to water, drown him. Take the virus sample off the body.'],
+      ['warn','<span class="chip c-unv">Whether the Super Fan outfit is trespassing inside Akram\'s apartment is unverified</span> — the wiki documents its church, crypt and sewer access and its graveyard exclusion, and says nothing about his apartment. Approach expecting it may be hostile and use the coin to move the door guards.']],
+   b:[['b-pop','Purify the Spirits'],['b-warn','No outfit change between the two drownings'],['b-excl','Cannot share a run with Tasteless, Traceless — poison kills the target the drowning needs']]}
+ ]}]
+},
+{
+ no:3,title:'Wearing the cult',
+ goal:'Attend the midnight meeting as Brother Akram, then use the follow-window it creates to finish the last two shared kill methods and close out Versatile Assassin.',
+ load:{start:'Default mission start',suit:'Any',pickup:'Sewers under the church',
+ slots:[['Slot 1','Lethal Poison Syringe — works on a target who is already down'],['Slot 2','Lockpick'],['Slot 3','Coin'],['Slot 4','Free']]},
+ sections:[
+ {name:'Order of operations',steps:[
+  {t:'Read the ordering rule before you touch anything',
+   lead:'Both remaining kill methods have to land after the meeting, because a dead target cancels the meeting outright.',
+   f:[['Where','Applies to the whole run.'],['Disguise','n/a'],['Item','n/a'],['NPC','Both targets.'],
+      ['Action','Sequence is fixed: take Akram\'s outfit → ring the bell → attend the meeting → then kill. Nothing dies before the meeting.'],
+      ['warn','Killing Craig Black before the meeting makes And the Footsteps You Hear… unobtainable for the run. Killing Akram before you take his outfit obviously does the same.']],
+   b:[['b-warn','No kills before the meeting']]}
+ ]},
+ {name:'Become Akram',steps:[
+  {t:'Subdue Brother Akram in his apartment and take the outfit',
+   lead:'He waits at home until the bell. Drop him there and leave him retrievable — you come back for him.',
+   f:[['Where','Brother Akram\'s apartment in the houses close to the beach, bodyguards on the door. <span class="chip c-2src">2 sources</span>'],
+      ['Disguise','None required to get in, but expect the door guards to block a suit. Coin them off the door.'],
+      ['Item','Lockpick, Coin.'],
+      ['NPC','Brother Akram. He is carrying the virus sample. <span class="chip c-2src">2 sources</span>'],
+      ['Action','<strong>Subdue, do not kill.</strong> Take the outfit. Stash him somewhere you can find again — he is your Tasteless, Traceless kill later.'],
+      ['warn','Akram\'s outfit opens his apartment, the graveyard, and most of the church — but <strong>not the crypt</strong>. <span class="chip c-2src">2 sources</span> Do not plan any crypt work in this run.']],
+   b:[['b-save','Save here — outfit on, Akram stashed']]},
+  {t:'Ring the church bell — ring it, do not break it',
+   lead:'The bell is what starts the meeting. It is also the single most breakable thing in the mission.',
+   f:[['Where','The bell control is downstairs toward the crypt, through the door to the left of the guard watching the crypt entrance — the room that held the priest\'s outfit in World of Tomorrow. <span class="chip c-1src">1 source</span> The bell itself is at the top of the church tower.'],
+      ['Disguise','Brother Akram gets you around the church, but <strong>not into the crypt area</strong>, so the control room may read as trespassing. Shooting the bell from outside is the alternative.'],
+      ['Item','A firearm, if you are ringing it by shot.'],
+      ['NPC','A guard watches the crypt entrance and covers that door. <span class="chip c-1src">1 source</span>'],
+      ['Action','Activate the bell, or put a single shot into it to ring it. <span class="chip c-2src">2 sources</span>'],
+      ['warn','<strong>If the bell is destroyed before it is rung, the meeting never occurs.</strong> <span class="chip c-1src">1 source</span> That permanently kills And the Footsteps You Hear…, …Will be the Last to Reach Your Dying Ear and the graveyard sniper setup. One shot only — then stop shooting.']],
+   b:[['b-warn','Destroying the bell permanently breaks the meeting script'],['b-save','Save here — bell rung, meeting inbound']]},
+  {t:'Attend the meeting in the graveyard as Akram',
+   lead:'The challenge fires on attendance. What happens next is a usable tactic, not a failure.',
+   f:[['Where','The graveyard beside the church.'],
+      ['Disguise','Brother Akram — it grants graveyard access. <span class="chip c-2src">2 sources</span>'],
+      ['Item','None.'],
+      ['NPC','Craig Black arrives with his bodyguard.'],
+      ['Action','Meet Black. <strong>Black and his bodyguard will follow you</strong> before realising you are not Akram — use that window to walk them to a secluded spot. <span class="chip c-2src">2 sources</span>'],
+      ['warn','Once the meeting is over Black enters the "target is leaving the area" state and will exfiltrate if left alone. <span class="chip c-1src">1 source</span> Do not wander.']],
+   b:[['b-pop','And the Footsteps You Hear…'],['b-excl','Mutually exclusive with …Will be the Last to Reach Your Dying Ear — you can only be one person at one meeting']]}
+ ]},
+ {name:'The last two methods',steps:[
+  {t:'Accident-kill Craig Black at the spot you led him to',
+   lead:'Use the follow-window to park him next to an accident prop, then trigger it.',
+   f:[['Where','Wherever you led him during the follow-window — pick the destination before you meet him.'],
+      ['Disguise','Brother Akram, until your cover breaks.'],
+      ['Item','None, if the prop is environmental.'],
+      ['NPC','Craig Black, plus the bodyguard who followed him. Separate them or accept the witness.'],
+      ['Action','Trigger the accident while Black is beside or beneath the prop.'],
+      ['warn','<span class="chip c-unv">Which accident props are live in the night-time Author layout is unverified.</span> Use Instinct — the accident prompt only appears on objects the game will actually score. I am not naming a chandelier or a gas canister I cannot source.']],
+   b:[['b-pop','Someone Could Hurt Themselves']]},
+  {t:'Lethal-poison Akram where you stashed him',
+   lead:'Go back for the unconscious target and finish him with the syringe.',
+   f:[['Where','Wherever you stashed Akram in step 2 — this is why the stash spot mattered.'],
+      ['Disguise','Still his own outfit, which grants you access to his apartment. <span class="chip c-2src">2 sources</span>'],
+      ['Item','Lethal Poison Syringe.'],
+      ['NPC','Brother Akram, unconscious. Take the virus sample off him.'],
+      ['Action','Inject him, collect the sample, exit.'],
+      ['warn','<span class="chip c-unv">Whether a syringe kill on an already-unconscious target registers as a lethal-poison assassination is unverified.</span> Safe fallback: Tasteless, Traceless reads "…in Sapienza" <span class="chip c-game">game data</span>, so you can bank it in World of Tomorrow instead and it will show as complete here.']],
+   b:[['b-pop','Tasteless, Traceless'],['b-pop','Versatile Assassin'],['b-warn','Versatile only fires once Piano Man, Straight Shot and Hold My Hair are already banked from Runs 1–2']]}
+ ]}]
+},
+{
+ no:4,title:'Becoming the author',
+ goal:'Wear Craig Black to the meeting, take the virus sample handed to you, then move his body to the crypt and bury him. Two challenges that fit together because one needs him unconscious and the other needs him dead in a named room.',
+ load:{start:'Default mission start',suit:'Any',pickup:'Sewers under the church',
+ slots:[['Slot 1','Lockpick'],['Slot 2','Coin'],['Slot 3','Silenced pistol'],['Slot 4','Free']]},
+ sections:[
+ {name:'Take his place',steps:[
+  {t:'Subdue Craig Black and take his outfit',
+   lead:'He must end this step unconscious, not dead — you still need him for the meeting and then for the crypt.',
+   f:[['Where','The church during the reading; pull him away from the signing position first.'],
+      ['Disguise','Anything that holds inside the church. An invitation gets a suited 47 in; note that arriving as <strong>Salvatore Bravuomo</strong> with an invitation is refused — the door guard says the name is not on the guest list. <span class="chip c-2src">2 sources</span>'],
+      ['Item','Coin to pull the bodyguard, Lockpick for side rooms.'],
+      ['NPC','Craig Black and his bodyguard, who reacts to any attack at the signing table. <span class="chip c-1src">1 source</span>'],
+      ['Action','Isolate, subdue, take the outfit, stash the body <strong>near the crypt stairs</strong> — that is where he is going next.'],
+      ['warn','<strong>Subdue only.</strong> A dead Black means no meeting and no …Will be the Last to Reach Your Dying Ear. <span class="chip c-unv">A specific isolation route is unverified.</span>']],
+   b:[['b-save','Save here — Black down, outfit on'],['b-warn','Killing him here voids the run']]},
+  {t:'Ring the bell, then meet Akram as Craig Black',
+   lead:'The meeting hands you the third objective for free.',
+   f:[['Where','Bell first, then the graveyard.'],
+      ['Disguise','Craig Black — grants access to the church <strong>and the graveyard</strong>, and lets you walk freely inside Akram\'s apartment, though the door bodyguards still will not let you in. <span class="chip c-2src">2 sources</span>'],
+      ['Item','None.'],
+      ['NPC','Brother Akram.'],
+      ['Action','Meet him as Black. <strong>Akram hands over the virus sample and heads back to his apartment.</strong> <span class="chip c-2src">2 sources</span> Objective three is now done, and Akram is on a predictable walk home.'],
+      ['warn','Same bell rule as Run 3: ring it, never destroy it, or the meeting never happens. <span class="chip c-1src">1 source</span>']],
+   b:[['b-pop','…Will be the Last to Reach Your Dying Ear'],['b-excl','Mutually exclusive with And the Footsteps You Hear…']]}
+ ]},
+ {name:'The burial',steps:[
+  {t:'Carry Black to the crypt and kill him there',
+   lead:'The kill has to happen in the crypt. Not near it, not on the way to it.',
+   f:[['Where','The crypt under the church. A guard watches the crypt entrance. <span class="chip c-1src">1 source</span>'],
+      ['Disguise','Craig Black. <span class="chip c-unv">Whether his outfit clears the crypt guard is unverified</span> — Akram\'s outfit explicitly does not, and Super Fan explicitly does.'],
+      ['Item','None.'],
+      ['NPC','Craig Black, unconscious, retrieved from your stash.'],
+      ['Action','Carry him down, kill him inside the crypt.'],
+      ['warn','<strong>Do not drag him to the grave alive or unconscious.</strong> Players report he "suicides" at the graveside instead of the challenge registering. Kill in the crypt first, drag the corpse second. <span class="chip c-1src">1 source, bug thread</span>']],
+   b:[['b-save','Save here — before you start moving the body'],['b-warn','Critical order: kill in crypt, THEN drag']]},
+  {t:'Drag the body out and bury him',
+   lead:'The second half of the challenge is a separate action on the corpse.',
+   f:[['Where','The graveyard beside the church, at the plot that shows a burial prompt.'],
+      ['Disguise','Craig Black grants graveyard access. <span class="chip c-2src">2 sources</span>'],
+      ['Item','None.'],['NPC','None, if the graveyard is clear after the meeting.'],
+      ['Action','Drag the corpse to the grave and bury it. Then deal with Akram, who is walking back to his apartment.'],
+      ['warn','<span class="chip c-unv">Which specific plot registers the burial is unverified</span> — it is the one that shows the prompt when you approach dragging a corpse.']],
+   b:[['b-pop','The Gravedigger']]}
+ ]}]
+},
+{
+ no:5,title:'Bell tower and wardrobe',
+ goal:'Two things that need a free hand and no scoring pressure: every target taken by rifle from the tower, and every disguise in the mission collected. Sniper Assassin must be its own attempt — the disguise sweep can be a second, sloppier one.',
+ load:{start:'Default mission start',suit:'Any',pickup:'Sewers under the church — the only way to get a rifle onto this map',
+ slots:[['Slot 1','Lockpick'],['Slot 2','Coin'],['Slot 3','Free'],['Pickup','Silenced sniper rifle']]},
+ sections:[
+ {name:'Sniper Assassin',steps:[
+  {t:'Collect the rifle from the sewer stash',
+   lead:'One pickup exists in this mission, and it is underground. Everything about this run flows from that.',
+   f:[['Where','The sewers under the church, reached from the beachside entrance. The network also exits by the graveyard, with a side door onto the staircase behind the morgue. <span class="chip c-1src">1 source</span>'],
+      ['Disguise','None needed underground.'],
+      ['Item','Silenced sniper rifle, ordered to the stash.'],
+      ['NPC','James King may be down here on a phone call — leave him alone, a non-target kill fails Sniper Assassin.'],
+      ['Action','Collect the rifle and move underground toward the church tower.'],
+      ['warn','A sniper rifle is illegal for anyone but a guard. <span class="chip c-1src">1 source</span> Take a silenced one — a contemporary run that brought an unsilenced Lancer here explicitly regretted it. <span class="chip c-1src">1 source</span>']],
+   b:[['b-save','Save here — rifle collected, nobody alerted']]},
+  {t:'Set up in the church bell tower',
+   lead:'The tower is the only workable nest on this map, and it puts you next to the bell.',
+   f:[['Where','Top of the church bell tower — described as the only adequate sniper\'s nest on the map, and the same nest used for the daytime Sapienza mission. <span class="chip c-2src">2 sources</span>'],
+      ['Disguise','<span class="chip c-unv">The climb route and which disguise clears it are unverified</span> for the night layout.'],
+      ['Item','Rifle, holstered until you are in position.'],['NPC','None confirmed at the top.'],
+      ['Action','Get up, get prone, check your line to the graveyard before you touch the bell.'],
+      ['warn','Sniper Assassin fails on being spotted, so clear the approach with coins rather than shooting your way up.']],
+   b:[]},
+  {t:'Ring the bell, then take both targets at the handover',
+   lead:'The graveyard meeting is the only moment both targets stand still, outdoors, at a known point.',
+   f:[['Where','Graveyard, from the tower.'],['Disguise','n/a'],['Item','Rifle.'],
+      ['NPC','Craig Black and Brother Akram. Akram carries the sample until he hands it over.'],
+      ['Action','One shot to ring the bell → wait for both to converge → take Akram first, then Black. Descend, take the sample from Akram\'s body, exit.'],
+      ['warn','<strong>One shot on the bell.</strong> Destroying it before it rings means the meeting never occurs and this setup is dead for the session. <span class="chip c-1src">1 source</span> After the meeting Black starts leaving the area — do not dawdle between the two shots.']],
+   b:[['b-pop','Sniper Assassin'],['b-warn','Both targets must die to the rifle — no accidents, no explosions, no melee'],['b-excl','Cannot share a run with any disguise-kill or explosion challenge']]}
+ ]},
+ {name:'Chameleon — separate attempt',steps:[
+  {t:'Sweep the map for all fifteen disguises',
+   lead:'No stealth requirement at all. Play it loud, and check the counter on the challenge tile as you go.',
+   f:[['Where','Church, crypt, sewers, café, Akram\'s apartment and the mansion side of the map.'],
+      ['Disguise','All of them — the full list with what is and is not sourced is on the "Disguises & map facts" tab.'],
+      ['Item','Lockpick.'],['NPC','Various.'],
+      ['Action','Find and equip each one. The mission holds 15. <span class="chip c-game">Game data</span>'],
+      ['warn','The challenge text is <strong>Sapienza-wide</strong>, not mission-specific <span class="chip c-game">game data</span> — disguises you already banked in other Sapienza missions count, and the Super Fan <em>suit</em> does not count as the Super Fan <em>disguise</em>. <span class="chip c-1src">1 source</span>']],
+   b:[['b-pop','Chameleon']]}
+ ]}]
+},
+{
+ no:6,title:'Two loud endings',
+ goal:'One save point, two incompatible kills on the same man. Pen him at the signing table, reload, then blow him up mid-reading.',
+ load:{start:'Default mission start',suit:'Any',pickup:'Sewers under the church — send the remote explosive here',
+ slots:[['Slot 1','Remote explosive (Remote CX Demo Block or equivalent)'],['Slot 2','Lockpick'],['Slot 3','Coin'],['Slot 4','Second explosive as a backup charge']]},
+ sections:[
+ {name:'Set the save',steps:[
+  {t:'Get inside the church and save before Black finishes reading',
+   lead:'Everything in this run branches from one save taken while Black is still at the lectern.',
+   f:[['Where','Church interior, during the reading.'],
+      ['Disguise','Any that holds inside the reading. The Super Fan works and is the easiest to obtain. <span class="chip c-1src">1 source</span>'],
+      ['Item','Explosive, still unplanted.'],['NPC','Craig Black, reading; his bodyguard nearby.'],
+      ['Action','Position yourself with line of sight to both the lectern and the signing table, then save.'],
+      ['warn','Take the save while he is <em>still reading</em>. Boom Beats Blah needs that exact state and you cannot rewind into it.']],
+   b:[['b-save','Save here — this save feeds both kills']]}
+ ]},
+ {name:'Kill one — the pen',steps:[
+  {t:'Grab the pen and take him at the signing table',
+   lead:'Wait for the reading to end and the signing to start, then step in behind him.',
+   f:[['Where','Inside the church, on the right-hand side of the spot where Black interacts with his fans. That area is restricted. <span class="chip c-2src">2 sources</span>'],
+      ['Disguise','One that survives the restricted area behind the reading. Super Fan covers all parts of the church. <span class="chip c-1src">1 source</span>'],
+      ['Item','The pen, picked up on site.'],
+      ['NPC','Craig Black, signing; his bodyguard watching.'],
+      ['Action','Black must have <strong>finished reading and moved to the copies his fans laid out</strong>. Stand directly behind him and use the pen. <span class="chip c-1src">1 source</span>'],
+      ['warn','The bodyguard spots you and one walkthrough found no reliable way to distract him without also pulling Black off the signing spot. <span class="chip c-1src">1 source</span> Plan to run — the challenge scores the kill, not a clean exit.']],
+   b:[['b-pop','The Pen is Mightier than the Sword'],['b-excl','Cannot coexist with Boom Beats Blah, The Gravedigger or Purify the Spirits — one Craig Black per session']]}
+ ]},
+ {name:'Kill two — the explosion',steps:[
+  {t:'Reload, plant the charge, detonate while he reads',
+   lead:'Load the save, place the explosive at the reading position, withdraw, and fire it while he is mid-passage.',
+   f:[['Where','At or beside the lectern — the same altar area that holds his water bottle. <span class="chip c-1src">1 source</span>'],
+      ['Disguise','Whatever you were wearing at the save.'],
+      ['Item','Remote explosive.'],['NPC','Craig Black, reading.'],
+      ['Action','Plant, withdraw out of blast range, detonate <strong>while he is reading</strong>, then finish Akram, take the sample and exit.'],
+      ['warn','<strong>The mission must be completed</strong> — the challenge is "eliminate Craig Black in an explosion while he is reading / complete the mission". <span class="chip c-game">Game data</span> The kill alone scores nothing. <span class="chip c-unv">A confirmed placement surface is unverified</span>; the pen\'s location is documented, the charge\'s is not.']],
+   b:[['b-pop','Boom Beats Blah'],['b-warn','Detonating after he moves to the signing table does not count']]}
+ ]}]
+}];
+
+/* ===================== REFERENCE ===================== */
+const DISGUISES=[
+ ['Super Fan','James King. In the crypt under the church; walks into the sewers to take phone calls. Subdue him there. Grants all of the church, crypt and sewers — but not the graveyard.','2src'],
+ ['Brother Akram','Target. His apartment in the houses near the beach, bodyguards on the door. Grants his apartment, the graveyard and most of the church except the crypt.','2src'],
+ ['Craig Black','Target. At the reading in the church. Grants the church and the graveyard, and free movement inside Akram\'s apartment once past the door.','2src'],
+ ['Bodyguard','Craig Black\'s security detail. Counts as trespassing in the camera-server room.','2src'],
+ ['Salvatore Bravuomo','Present in the mission. An invitation does not help — the church door guard says the name is not on the guest list.','1src'],
+ ['Church Staff','Location unverified.','unv'],
+ ['SFX Crew','Location unverified. A candidate for the technician-type outfit one walkthrough recommends for repairing the crypt lamp.','unv'],
+ ['Waiter','Location unverified.','unv'],
+ ['Kitchen Assistant','Location unverified.','unv'],
+ ['Mansion Chef','Location unverified.','unv'],
+ ['Housekeeper','Location unverified.','unv'],
+ ['Gardener','Location unverified.','unv'],
+ ['Red Plumber','Location unverified.','unv'],
+ ['Green Plumber','Location unverified.','unv'],
+ ['Bohemian','Location unverified.','unv']
+];
+
+const MAPFACTS=[
+ ['Agency pickup','Exactly one, in the sewers under the church. Every rifle, syringe and explosive in this guide is routed through it.','1src'],
+ ['Sewer network','Entrance by the beach; exits by the graveyard; a side door partway along opens onto a staircase behind the morgue. A brick sits near the entrance.','1src'],
+ ['Camera server','In the room that was Rocco\'s apartment in World of Tomorrow — above the butcher\'s shop, opposite the town hall. Someone is asleep on the bed.','2src'],
+ ['The pen','Inside the church, right-hand side of where Black meets his fans. Restricted area.','2src'],
+ ['The screwdriver','In the small section in front of the door leading from the crypt up into the church. Needed to repair the crypt lamp.','1src'],
+ ['Bell control','Downstairs toward the crypt, through the door left of the guard watching the crypt entrance — the old priest\'s-outfit room.','1src'],
+ ['Sniper nest','Top of the church bell tower — the only adequate one on the map.','2src'],
+ ['Bell script','Activating or shooting the bell starts the meeting. Destroying the bell before it rings means the meeting never occurs.','1src'],
+ ['Post-meeting state','Once the meeting ends, Craig Black enters "target is leaving the area" and will exfiltrate.','1src'],
+ ['Areas','The data file records no areas unique to The Author; areas are shared with World of Tomorrow.','game']
+];
+
+/* ===================== STATE ===================== */
+const done=new Set(); const stepsDone=new Set(); let filter='All';
+const SKEY='the_author_done_v1:steps';
+try{const saved=JSON.parse(localStorage.getItem('the_author_done_v1')||'[]');saved.forEach(id=>done.add(id));}catch(e){}
+/* ticked route steps - previously kept in memory only and lost on reload */
+try{const s=JSON.parse(localStorage.getItem(SKEY));if(Array.isArray(s))s.forEach(k=>stepsDone.add(k));}catch(e){}
+function reportProgress(){try{const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r['pz02']={done:done.size,total:CH.length,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
+function saveDone(){try{localStorage.setItem('the_author_done_v1',JSON.stringify([...done]));localStorage.setItem(SKEY,JSON.stringify([...stepsDone]));}catch(e){}reportProgress();}
+const srcChip=s=>s==='game'?'<span class="chip c-game">Game data</span>'
+ :s==='2src'?'<span class="chip c-2src">2 sources</span>'
+ :s==='contested'?'<span class="chip c-unv">Contested slot</span>'
+ :s==='1src'?'<span class="chip c-1src">1 source</span>':'<span class="chip c-unv">Unverified</span>';
+
+/* ===================== RENDER ===================== */
+function renderTracker(){
+ document.getElementById('tDone').textContent=done.size;
+ document.getElementById('tTot').textContent=CH.length;
+ const pct=(done.size/CH.length)*100;
+ document.getElementById('tBar').style.width=pct+'%';
+ document.getElementById('tPct').textContent=Math.round(pct)+'% complete';
+ document.getElementById('cats').innerHTML=CATS.map(c=>{
+  const all=CH.filter(x=>x.t===c), d=all.filter(x=>done.has(x.id)).length;
+  return `<div class="cat"><div class="n">${c}</div><div class="v">${d}<u> / ${all.length}</u></div>
+   <div class="catbar"><i style="width:${all.length?(d/all.length)*100:0}%"></i></div></div>`;
+ }).join('');
+ document.querySelectorAll('.runjump').forEach(b=>{
+  const rn=+b.dataset.jump;
+  const ids=CH.filter(c=>c.run===rn).map(c=>c.id);
+  b.classList.toggle('full', ids.length>0 && ids.every(i=>done.has(i)));
+ });
+}
+
+function renderRuns(){
+ document.getElementById('runbtns').innerHTML=RUNS.map(r=>
+  `<button class="runjump" data-jump="${r.no}"><b>Run ${r.no}</b> · ${r.title}</button>`).join('');
+
+ document.getElementById('runlist').innerHTML=RUNS.map(r=>{
+  let n=0;
+  return `<article class="run" id="run${r.no}">
+   <button class="runhead" data-runtoggle aria-expanded="false">
+     <span class="caret">▶</span>
+     <span>
+       <span class="rn">Run ${r.no} of ${RUNS.length}</span>
+       <h2 class="serif">${r.title}</h2>
+       <p>${r.goal}</p>
+     </span>
+   </button>
+   <div class="runbody">
+    <div class="loadout"><h4>Loadout</h4>
+     <div class="lo-grid">
+      <div class="lo-item"><div class="k">Starting location</div><div class="v">${r.load.start}</div></div>
+      <div class="lo-item"><div class="k">Suit</div><div class="v">${r.load.suit}</div></div>
+      <div class="lo-item"><div class="k">Agency pickup</div><div class="v">${r.load.pickup}</div></div>
+     </div>
+     <div class="slots">${r.load.slots.map(s=>`<div class="slot"><b>${s[0]}</b><span>${s[1]}</span></div>`).join('')}</div>
+    </div>
+    ${r.sections.map(sec=>`<div class="sect">${sec.name}</div>`+sec.steps.map(st=>{
+      n++; const key=r.no+'|'+st.t; const on=stepsDone.has(key);
+      const labels={where:'Where',disguise:'Disguise',item:'Item',npc:'NPC',action:'Action',warn:'Warning'};
+      return `<div class="step ${on?'done':''}">
+        <div class="step-row">
+          <button class="tick" data-tick="${encodeURIComponent(key)}" aria-pressed="${on}" aria-label="Mark step done">✓</button>
+          <button class="stephead" data-steptoggle aria-expanded="false">
+            <span class="stepnum">${String(n).padStart(2,'0')}</span>
+            <span style="flex:1;min-width:0">
+              <span class="step-title">${st.t}</span>
+              <p class="step-lead">${st.lead}</p>
+            </span>
+            <span class="stepcaret">▶</span>
+          </button>
+        </div>
+        <div class="stepbody">
+          <ul class="fl">${st.f.map(x=>{
+            const isWarn=x[0]==='warn';
+            return `<li class="${isWarn?'warn':''}"><b>${isWarn?'Warning':x[0]}</b><span>${x[1]}</span></li>`;
+          }).join('')}</ul>
+          ${st.b.length?`<div class="badges">${st.b.map(b=>`<span class="badge ${b[0]}">${b[0]==='b-pop'?'Pops: ':''}${b[1]}</span>`).join('')}</div>`:''}
+        </div>
+      </div>`;
+     }).join('')).join('')}
+   </div></article>`;
+ }).join('');
+}
+
+function renderFilters(){
+ document.getElementById('filters').innerHTML=['All',...CATS,'Incomplete'].map(o=>
+  `<button class="filt" data-filter="${o}" aria-pressed="${filter===o}">${o}</button>`).join('');
+}
+function renderList(){
+ const rows=CH.filter(c=>filter==='All'?true:filter==='Incomplete'?!done.has(c.id):c.t===filter);
+ document.getElementById('checklist').innerHTML=rows.length?rows.map(c=>`
+  <div class="ch ${done.has(c.id)?'done':''}">
+   <button class="tick" data-ch="${c.id}" aria-pressed="${done.has(c.id)}" aria-label="Mark ${c.n} done">✓</button>
+   <div style="flex:1;min-width:0">
+    <p class="ch-name">${c.n} ${srcChip(c.src)}</p>
+    <p class="ch-cond">${c.c}</p>
+    <div class="ch-meta"><span class="tag">${c.t}</span>
+    <span class="tag t-run">${c.run===0?'Do it in World of Tomorrow':'Run '+c.run}</span></div>
+   </div></div>`).join('')
+  :`<p style="color:var(--dim)">Nothing left under this filter.</p>`;
+ renderFilters();
+}
+
+function renderRef(){
+ document.getElementById('view-ref').innerHTML=`
+ <div class="block"><h3>All 15 disguises</h3>
+  <p style="margin:0 0 14px;color:var(--bone-dim);font-size:13.5px">Names come straight from your mission data file, so the roster is exact. Locations are only given where a source confirms them — the rest say so.</p>
+  <table><tr><th>Disguise</th><th>Where / what it opens</th><th>Confidence</th></tr>
+  ${DISGUISES.map(d=>`<tr><td><b>${d[0]}</b></td><td>${d[1]}</td><td>${srcChip(d[2])}</td></tr>`).join('')}</table></div>
+ <div class="block"><h3>Fixed map facts</h3>
+  <table><tr><th>Thing</th><th>Detail</th><th>Confidence</th></tr>
+  ${MAPFACTS.map(d=>`<tr><td><b>${d[0]}</b></td><td>${d[1]}</td><td>${srcChip(d[2])}</td></tr>`).join('')}</table></div>
+ <div class="block"><h3>Named NPCs</h3>
+  <table><tr><th>NPC</th><th>Role</th></tr>
+  <tr><td><b>Craig Black</b></td><td>Target. Author of the Cassandra Snow series, hosting an invitation-only late-night reading in the church.</td></tr>
+  <tr><td><b>Brother Akram</b></td><td>Target. Cult member carrying the viral weapon to the midnight handover.</td></tr>
+  <tr><td><b>James King</b></td><td>The Super Fan / "Ghostly Fan". Crypt and sewers. Drops an invitation when subdued. Not an enforcer against his own disguise.</td></tr>
+  <tr><td><b>Mike Vogt</b></td><td>Literature critic, in the café on Level 2 with Leah Livingston. Holds an invitation he refuses to use. Required for Papers, Please?</td></tr>
+  <tr><td><b>Catherine Lang</b></td><td>Craig Black's manager. Hosts the reading and investigates Akram's background during the break.</td></tr>
+  <tr><td><b>Salvatore Bravuomo</b></td><td>Disguise source. His name is not on the church guest list.</td></tr>
+  <tr><td><b>Jeff</b></td><td>Liberation defector. Not tied to any challenge in this mission's list.</td></tr>
+  </table></div>`;
+}
+
+function renderVer(){
+ document.getElementById('view-ver').innerHTML=`
+ <div class="block"><h3>Count reconciliation</h3>
+  <table><tr><th>Category</th><th>Your data file</th><th>Wiki mission page</th><th>Tracked here</th></tr>
+   <tr><td>Assassination</td><td>10</td><td>11</td><td>11 <span style="color:var(--dim)">(file's 10 + True Fan)</span></td></tr>
+   <tr><td>Discovery</td><td>3</td><td>2</td><td>3 <span style="color:var(--dim)">(incl. Discover Sapienza)</span></td></tr>
+   <tr><td>Feats</td><td>2</td><td>2</td><td>2</td></tr>
+   <tr><td>The Classics</td><td>4</td><td>4</td><td>4</td></tr>
+   <tr><td><b>Total</b></td><td><b>19</b></td><td><b>19</b></td><td><b>20 candidates for 19 slots</b></td></tr></table>
+  <p style="margin-top:14px;color:var(--bone-dim);font-size:13.5px">Both sources say 19, and they disagree by exactly one swap: the file has <b>Discover Sapienza</b> and no True Fan; the wiki has <b>True Fan</b> and no Discover Sapienza. True Fan is independently corroborated as the unlock condition for the Super Fan suit, so it is real. Discover Sapienza is corroborated by a player reporting it tracking inside a Patient Zero mission, so it is real too. I cannot determine which one your build counts, so both are tracked. Your in-game challenge screen settles it in five seconds.</p></div>
+
+ <div class="block"><h3>Run-by-run logic check</h3>
+  <table><tr><th>Run</th><th>Prerequisite chain</th><th>Result</th></tr>
+  <tr><td><b>1</b></td><td>Emetic packed before the café → invitation taken before the church → server destroyed before either kill → bell rung before Black moves → both targets containered before exit.</td><td><b>Valid.</b> Nothing needed later is consumed earlier.</td></tr>
+  <tr><td><b>2</b></td><td>Syringe ordered before entering the sewers → King subdued before the church → emetic on Black before the reading resumes → second dose on Akram before the bell.</td><td><b>Valid, with one open question:</b> the Super Fan's access inside Akram's apartment is undocumented. Flagged in the step.</td></tr>
+  <tr><td><b>3</b></td><td>Akram subdued (not killed) before the bell → bell rung (not destroyed) → meeting attended → only then any kill → Akram's body still where you left it.</td><td><b>Valid.</b> The no-kills-before-the-meeting rule is stated as its own step.</td></tr>
+  <tr><td><b>4</b></td><td>Black subdued (not killed) → outfit taken → body stashed near crypt stairs → bell rung → meeting attended → body retrieved → killed in crypt → dragged and buried.</td><td><b>Valid.</b> The stash location is chosen in step 1 to serve step 3, so there is no backtrack across the map.</td></tr>
+  <tr><td><b>5</b></td><td>Rifle ordered → collected underground → tower reached unspotted → bell rung with one shot → both targets shot at the handover. Chameleon runs as a separate attempt.</td><td><b>Valid.</b> Sniper Assassin is not stacked with anything that would break "only eliminate the targets".</td></tr>
+  <tr><td><b>6</b></td><td>Explosive ordered → church entered → save taken <i>while Black is reading</i> → pen kill → reload → charge planted → detonated mid-reading → mission completed.</td><td><b>Valid.</b> The save is taken before the state either kill depends on.</td></tr></table></div>
+
+ <div class="block"><h3>Mutually exclusive sets</h3>
+  <table><tr><th>Set</th><th>Why</th></tr>
+  <tr><td>Pen · Crypt kill · Drowning as the fan · Explosion while reading</td><td>Four kill methods, one Craig Black per session.</td></tr>
+  <tr><td>And the Footsteps You Hear… · …Will be the Last to Reach Your Dying Ear</td><td>One meeting, one impersonation.</td></tr>
+  <tr><td>Sniper Assassin · everything else</td><td>Requires both targets killed by rifle and no spotting.</td></tr>
+  <tr><td>Silent Assassin Suit Only · every "as [disguise]" challenge</td><td>Suit Only forbids the disguise those challenges require.</td></tr>
+  <tr><td>Purify the Spirits · Tasteless, Traceless</td><td>Poison kills the target the drowning needs.</td></tr></table></div>
+
+ <div class="block"><h3>Script-breakers — the things that cannot be undone</h3>
+  <ul>
+   <li><b>Destroying the bell before ringing it.</b> The meeting then never occurs, killing both Discovery challenges and the sniper setup for that session. <span class="chip c-1src">1 source</span></li>
+   <li><b>Dragging Craig Black to the grave before killing him.</b> He "suicides" at the graveside and The Gravedigger does not register. Kill in the crypt first. <span class="chip c-1src">1 source, bug thread</span></li>
+   <li><b>Killing either target before the meeting</b> in Runs 3, 4 or 5. No meeting, no attendance challenge, no handover.</li>
+   <li><b>Detonating Boom Beats Blah and then quitting.</b> The mission must be completed for the challenge to score. <span class="chip c-game">Game data</span></li>
+   <li><b>Wearing the Super Fan <i>suit</i> instead of the disguise.</b> It does not count for Purify the Spirits or Chameleon and does not open the crypt. <span class="chip c-1src">1 source</span></li>
+  </ul></div>
+
+ <div class="block"><h3>Still unverified — deliberately not filled in</h3>
+  <ul>
+   <li><b>Starting locations and mastery unlock levels.</b> No source confirms any.</li>
+   <li><b>XP per challenge.</b> The wiki gives 45,000 for the mission and three per-challenge values that conflict with the file's category split; no per-challenge XP is shown here rather than showing numbers I cannot stand behind.</li>
+   <li><b>NPC patrol routes and timings.</b> Positions are sourced; minute-by-minute routes are not.</li>
+   <li><b>Accident props.</b> None named — I could not confirm which are live in the night layout.</li>
+   <li><b>Ten of the fifteen disguise locations.</b> Names are exact from the data file; locations for Church Staff, SFX Crew, Waiter, Kitchen Assistant, Mansion Chef, Housekeeper, Gardener, Red Plumber, Green Plumber and Bohemian are not sourced.</li>
+   <li><b>Which outfit repairs the crypt lamp unnoticed.</b> Two sources imply different answers.</li>
+   <li><b>Whether a lethal syringe on an unconscious target scores Tasteless, Traceless.</b> Fallback given in the step.</li>
+   <li><b>Patch numbers.</b> Boom Beats Blah is sourced to "the spring update on 11 May" with no year; Chameleon and Versatile Assassin were added to the Patient Zero missions in an unnamed later update.</li>
+  </ul></div>`;
+}
+
+/* ===================== EVENTS ===================== */
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{
+ document.querySelectorAll('.tab').forEach(x=>x.setAttribute('aria-selected','false'));
+ b.setAttribute('aria-selected','true');
+ ['runs','list','ref','ver'].forEach(v=>document.getElementById('view-'+v).hidden=(v!==b.dataset.view));
+}));
+
+document.addEventListener('click',e=>{
+ const rt=e.target.closest('[data-runtoggle]');
+ if(rt){const run=rt.closest('.run');const o=run.classList.toggle('open');rt.setAttribute('aria-expanded',o);return;}
+ const st=e.target.closest('[data-steptoggle]');
+ if(st){const s=st.closest('.step');const o=s.classList.toggle('open');st.setAttribute('aria-expanded',o);return;}
+ const jump=e.target.closest('[data-jump]');
+ if(jump){
+  const run=document.getElementById('run'+jump.dataset.jump);
+  run.classList.add('open');
+  run.querySelector('.runhead').setAttribute('aria-expanded','true');
+  run.scrollIntoView({behavior:'smooth',block:'start'});return;
+ }
+ const tick=e.target.closest('[data-tick]');
+ if(tick){
+  const k=decodeURIComponent(tick.dataset.tick);
+  stepsDone.has(k)?stepsDone.delete(k):stepsDone.add(k);
+  tick.closest('.step').classList.toggle('done',stepsDone.has(k));
+  tick.setAttribute('aria-pressed',stepsDone.has(k));saveDone();return;
+ }
+ const ch=e.target.closest('[data-ch]');
+ if(ch){const id=ch.dataset.ch;done.has(id)?done.delete(id):done.add(id);saveDone();renderList();renderTracker();return;}
+ const f=e.target.closest('[data-filter]');
+ if(f){filter=f.dataset.filter;renderList();}
+});
+
+document.getElementById('expandAll').addEventListener('click',()=>{
+ document.querySelectorAll('.run').forEach(r=>{r.classList.add('open');r.querySelector('.runhead').setAttribute('aria-expanded','true');});
+});
+document.getElementById('collapseAll').addEventListener('click',()=>{
+ document.querySelectorAll('.run').forEach(r=>{r.classList.remove('open');r.querySelector('.runhead').setAttribute('aria-expanded','false');});
+});
+
+renderRuns();renderList();renderRef();renderVer();renderTracker();
+document.querySelector('#run1').classList.add('open');
+document.querySelector('#run1 .runhead').setAttribute('aria-expanded','true');
+reportProgress();
+</script>
+<!-- step-progress-bridge -->
+<script>
+/* Reports route-step ticks into 'hitman-progress-registry' so the index can
+   show them beside the challenge counts. Counts what is on screen rather than
+   any guide-specific state, so one implementation serves every guide. */
+(function(){
+  var RID="pz02", SEL=".step";
+  function isDone(s){
+    var c=s.classList;
+    if(c.contains('done')||c.contains('dn')) return true;
+    if(s.getAttribute('data-done')==='1'||s.getAttribute('aria-pressed')==='true') return true;
+    return !!s.querySelector('.done,.dn,[data-done="1"],[aria-pressed="true"]');
+  }
+  function tally(){
+    var steps=document.querySelectorAll(SEL);
+    if(!steps.length) return null;
+    var n=0;
+    for(var i=0;i<steps.length;i++) if(isDone(steps[i])) n++;
+    return {steps:n,stepTotal:steps.length};
+  }
+  function push(){
+    var t;
+    try{ t=tally(); }catch(err){ return; }
+    if(!t||!t.stepTotal) return;
+    try{
+      var r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');
+      var e=r[RID]||(r[RID]={});
+      /* the guide's own reportProgress() rewrites this entry wholesale, so
+         re-add the step counts whenever they go missing or stale */
+      if(e.steps===t.steps&&e.stepTotal===t.stepTotal) return;
+      e.steps=t.steps; e.stepTotal=t.stepTotal; e.updated=Date.now();
+      localStorage.setItem('hitman-progress-registry',JSON.stringify(r));
+    }catch(err){}
+  }
+  var pending=false;
+  function schedule(){
+    if(pending) return; pending=true;
+    setTimeout(function(){pending=false;push();},120);
+  }
+  try{
+    new MutationObserver(schedule).observe(document.body,
+      {subtree:true,childList:true,attributes:true,attributeFilter:['class','aria-pressed','data-done']});
+  }catch(err){}
+  window.addEventListener('load',schedule);
+  setTimeout(push,600);
+})();
+</script>
+<!-- /step-progress-bridge -->
+</body>
+</html>

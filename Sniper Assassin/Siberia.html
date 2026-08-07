@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Perm-14 — Crime and Punishment Challenge Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#070C0F; --panel:#0F1A21; --panel2:#152530; --line:#223946;
+  --frost:#DDE9EE; --mute:#7F97A3; --ice:#8FC7DD; --rust:#C86A31;
+  --blood:#B23B36; --moss:#83A85C; --gold:#D9A441;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:radial-gradient(1100px 600px at 50% -10%, #16303D 0%, transparent 60%), var(--ink);
+  color:var(--frost); font-family:"IBM Plex Sans",system-ui,sans-serif;
+  font-size:15px; line-height:1.55; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 18px 80px}
+
+header{padding:32px 0 18px;border-bottom:1px solid var(--line)}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--ice);margin:0 0 10px}
+h1{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:clamp(38px,8vw,66px);
+  line-height:.92;text-transform:uppercase;margin:0 0 6px}
+h1 span{color:var(--ice)}
+.sub{color:var(--mute);max-width:64ch;margin:0}
+
+.notice{margin:20px 0 0;border:1px solid var(--rust);border-left-width:4px;
+  background:rgba(200,106,49,.09);padding:14px 16px;border-radius:3px}
+.notice h3{font-family:"Barlow Condensed",sans-serif;text-transform:uppercase;
+  letter-spacing:.08em;font-size:17px;margin:0 0 6px;color:var(--rust)}
+.notice p{margin:0 0 8px}
+.notice ul{margin:6px 0 0;padding-left:18px}
+.notice li{margin-bottom:4px}
+.notice :last-child{margin-bottom:0}
+
+.tracker{display:grid;grid-template-columns:150px 1fr;gap:26px;align-items:center;
+  background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:22px;margin:24px 0}
+.reticle{position:relative;width:150px;height:150px}
+.reticle svg{transform:rotate(-90deg);display:block}
+.reticle .core{position:absolute;inset:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center}
+.reticle .pct{font-family:"Barlow Condensed",sans-serif;font-size:42px;font-weight:700;line-height:1}
+.reticle .of{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--mute);letter-spacing:.1em}
+.cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px}
+.cat{border:1px solid var(--line);border-radius:3px;padding:12px 14px;background:var(--panel2)}
+.cat .label{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--mute)}
+.cat .num{font-family:"Barlow Condensed",sans-serif;font-size:30px;font-weight:700;line-height:1.1}
+.cat .num small{font-size:16px;color:var(--mute);font-weight:400}
+.bar{height:4px;background:#0A1318;border-radius:2px;margin-top:8px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--ice);transition:width .35s ease}
+.cat.feat .bar i{background:var(--gold)}
+.cat.assn .bar i{background:var(--blood)}
+.cat.stp .bar i{background:var(--moss)}
+
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:20px;flex-wrap:wrap}
+.tab{background:none;border:0;border-bottom:2px solid transparent;color:var(--mute);
+  font-family:"Barlow Condensed",sans-serif;text-transform:uppercase;letter-spacing:.1em;
+  font-size:17px;padding:10px 16px;cursor:pointer}
+.tab[aria-selected="true"]{color:var(--frost);border-bottom-color:var(--ice)}
+.tab:focus-visible,.runjump:focus-visible,.tick:focus-visible,.filter:focus-visible,
+.runtoggle:focus-visible,.steptoggle:focus-visible,.navutil:focus-visible{outline:2px solid var(--ice);outline-offset:2px}
+.pane[hidden]{display:none}
+
+.runnav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px;align-items:stretch}
+.runjump{background:var(--panel2);border:1px solid var(--line);color:var(--frost);
+  border-radius:3px;padding:9px 14px;cursor:pointer;text-align:left;
+  font-family:"Barlow Condensed",sans-serif;text-transform:uppercase;letter-spacing:.06em;font-size:15px}
+.runjump b{color:var(--ice);font-family:"IBM Plex Mono",monospace;font-size:11px;
+  letter-spacing:.14em;display:block;font-weight:500}
+.runjump.full{border-color:var(--moss)}
+.runjump:hover{border-color:var(--ice)}
+.navutil{background:none;border:1px solid var(--line);color:var(--mute);border-radius:3px;
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.12em;
+  text-transform:uppercase;padding:9px 12px;cursor:pointer}
+.navutil:hover{color:var(--frost);border-color:var(--frost)}
+
+.run{border:1px solid var(--line);border-radius:4px;background:var(--panel);
+  margin-bottom:20px;overflow:hidden;scroll-margin-top:14px}
+.runtoggle{width:100%;text-align:left;background:var(--panel2);border:0;
+  border-bottom:1px solid var(--line);padding:18px 22px;cursor:pointer;color:var(--frost);
+  display:flex;gap:14px;align-items:flex-start;font-family:inherit}
+.runtoggle .chev{font-size:13px;color:var(--ice);margin-top:6px;flex:0 0 auto}
+.runtoggle .rt{flex:1;min-width:0}
+.run-idx{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.2em;
+  color:var(--ice);text-transform:uppercase}
+.runtoggle h2{font-family:"Barlow Condensed",sans-serif;text-transform:uppercase;font-weight:700;
+  font-size:clamp(22px,4.2vw,31px);line-height:1;margin:5px 0 7px}
+.runtoggle p{margin:0;color:var(--mute);font-size:14px;max-width:72ch}
+.runcount{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--mute);
+  border:1px solid var(--line);border-radius:2px;padding:4px 8px;flex:0 0 auto;margin-top:2px}
+.runbody[hidden]{display:none}
+
+.loadout{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));
+  border-bottom:1px solid var(--line)}
+.slot{padding:13px 18px;border-right:1px solid var(--line)}
+.slot:last-child{border-right:0}
+.slot .k{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--mute);display:block;margin-bottom:3px}
+.slot .v{font-weight:500;font-size:14px}
+.slot .v em{color:var(--mute);font-style:normal;font-size:12.5px;display:block}
+
+.sect{font-family:"Barlow Condensed",sans-serif;text-transform:uppercase;letter-spacing:.14em;
+  font-size:14px;color:var(--ice);padding:16px 22px 2px;border-top:1px solid var(--line)}
+
+.step{border-top:1px solid rgba(34,57,70,.55)}
+.step-head{display:flex;gap:10px;align-items:flex-start;padding:12px 22px}
+.tick{flex:0 0 auto;width:24px;height:24px;border:1px solid var(--line);border-radius:3px;
+  background:#0A1318;color:transparent;cursor:pointer;font-size:14px;line-height:1;
+  display:flex;align-items:center;justify-content:center;margin-top:3px}
+.tick[aria-pressed="true"]{background:var(--moss);border-color:var(--moss);color:#08110A}
+.steptoggle{flex:1;min-width:0;background:none;border:0;color:var(--frost);text-align:left;
+  cursor:pointer;padding:0;display:flex;gap:10px;align-items:flex-start;font-family:inherit;font-size:15px}
+.stepno{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ice);
+  margin-top:4px;flex:0 0 auto;letter-spacing:.04em}
+.stepttl{font-weight:600;margin:2px 0 0}
+.stepchev{color:var(--mute);font-size:12px;margin-top:5px;flex:0 0 auto}
+.step.done .stepttl{text-decoration:line-through;color:var(--mute)}
+
+.stepbody{padding:0 22px 16px 66px}
+.stepbody[hidden]{display:none}
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;
+  border:1px solid var(--line);border-radius:3px;background:#0B141A;padding:10px 12px;margin-bottom:11px}
+.meta div span{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ice);display:block}
+.meta div p{margin:1px 0 0;font-size:13.5px}
+.acts{margin:0;padding-left:18px}
+.acts li{margin-bottom:5px;font-size:14.5px}
+.warn{margin:10px 0 0;padding:9px 12px;border-left:3px solid var(--rust);
+  background:rgba(200,106,49,.09);font-size:13.5px}
+.commit{margin:8px 0 0;padding:9px 12px;border-left:3px solid var(--gold);
+  background:rgba(217,164,65,.08);font-size:13.5px}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:11px}
+.badge{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.1em;
+  text-transform:uppercase;padding:4px 8px;border-radius:2px;border:1px solid}
+.b-ch{border-color:var(--blood);color:#F0AFAC;background:rgba(178,59,54,.14)}
+.b-ft{border-color:var(--gold);color:#F2D291;background:rgba(217,164,65,.12)}
+.b-unv{border-color:var(--mute);color:var(--mute);background:rgba(127,151,163,.08)}
+
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.filter{background:var(--panel2);border:1px solid var(--line);color:var(--mute);
+  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.12em;
+  text-transform:uppercase;padding:7px 13px;border-radius:2px;cursor:pointer}
+.filter[aria-pressed="true"]{color:var(--ink);background:var(--ice);border-color:var(--ice)}
+.crow{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;
+  border:1px solid var(--line);border-radius:3px;background:var(--panel);margin-bottom:8px}
+.crow.done{opacity:.55}
+.cname{font-weight:600}
+.cname .type{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.14em;
+  text-transform:uppercase;margin-left:8px;padding:2px 6px;border-radius:2px;vertical-align:2px}
+.type.assn{background:rgba(178,59,54,.2);color:#F0AFAC}
+.type.feat{background:rgba(217,164,65,.16);color:#F2D291}
+.cdesc{color:var(--mute);font-size:14px;margin-top:2px}
+.cwhere{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--ice);
+  letter-spacing:.08em;margin-top:5px}
+
+.srcbox{border:1px solid var(--line);background:var(--panel);border-radius:4px;
+  padding:20px 22px;margin-bottom:18px}
+.srcbox h3{font-family:"Barlow Condensed",sans-serif;text-transform:uppercase;
+  letter-spacing:.1em;font-size:20px;margin:0 0 10px}
+.srcbox ul,.srcbox ol{padding-left:18px;margin:0}
+.srcbox li{margin-bottom:7px}
+code{font-family:"IBM Plex Mono",monospace;font-size:12.5px;background:#0A1318;padding:1px 5px;border-radius:2px}
+.reset{background:none;border:1px solid var(--line);color:var(--mute);border-radius:3px;
+  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.12em;
+  text-transform:uppercase;padding:8px 14px;cursor:pointer;margin-top:14px}
+.reset:hover{color:var(--frost);border-color:var(--frost)}
+
+@media (max-width:640px){
+  .tracker{grid-template-columns:1fr;justify-items:center}
+  .cats{width:100%}
+  .slot{border-right:0;border-bottom:1px solid var(--line)}
+  .stepbody{padding-left:22px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <p class="eyebrow">Sniper Assassin · Perm-14, Siberia · 27 challenges · 6 runs</p>
+  <h1>Crime and <span>Punishment</span></h1>
+  <p class="sub">Every challenge in step format, in an order that actually works. Names and descriptions are taken verbatim from the mission's own data file.</p>
+
+  <div class="notice">
+    <h3>What this mission has, and what it doesn't</h3>
+    <p>Your mission file reports <code>disguiseCount: 0</code> and <code>areaCount: 0</code>. That confirms what the map implies: this is a <strong>Sniper Assassin</strong> mission and 47 never leaves the perch.</p>
+    <ul>
+      <li><strong>Disguise on every step: none.</strong> No disguises exist, so there is no Chameleon challenge.</li>
+      <li><strong>Item on every step: the Druzhina 34 ICA Arctic.</strong> There is no inventory and no loadout slots — only the rifle and its ammo types.</li>
+      <li><strong>No Mission Stories and no Discovery areas.</strong> The 27 split 13 Assassination / 14 Feats.</li>
+      <li><strong>No mid-mission saving.</strong> Sniper Assassin has no manual or quick save, so save-scumming between challenges is impossible. Anything that must be done before an irreversible moment is flagged in a gold <em>point of no return</em> box.</li>
+    </ul>
+  </div>
+</header>
+
+<section class="tracker" aria-label="Progress">
+  <div class="reticle">
+    <svg width="150" height="150" viewBox="0 0 150 150" aria-hidden="true">
+      <circle cx="75" cy="75" r="62" fill="none" stroke="#152530" stroke-width="7"/>
+      <circle id="ring" cx="75" cy="75" r="62" fill="none" stroke="#8FC7DD" stroke-width="7"
+              stroke-dasharray="389.6" stroke-dashoffset="389.6"/>
+      <line x1="75" y1="4" x2="75" y2="20" stroke="#223946" stroke-width="2"/>
+      <line x1="75" y1="130" x2="75" y2="146" stroke="#223946" stroke-width="2"/>
+      <line x1="4" y1="75" x2="20" y2="75" stroke="#223946" stroke-width="2"/>
+      <line x1="130" y1="75" x2="146" y2="75" stroke="#223946" stroke-width="2"/>
+    </svg>
+    <div class="core">
+      <div class="pct" id="pctTotal">0%</div>
+      <div class="of"><span id="numTotal">0</span>/27 CHALLENGES</div>
+    </div>
+  </div>
+  <div class="cats">
+    <div class="cat assn"><div class="label">Assassination</div>
+      <div class="num"><span id="numAssn">0</span><small>/13</small></div>
+      <div class="bar"><i id="barAssn"></i></div></div>
+    <div class="cat feat"><div class="label">Feats</div>
+      <div class="num"><span id="numFeat">0</span><small>/14</small></div>
+      <div class="bar"><i id="barFeat"></i></div></div>
+    <div class="cat stp"><div class="label">Route steps done</div>
+      <div class="num"><span id="numStep">0</span><small>/<span id="stepTotal">0</span></small></div>
+      <div class="bar"><i id="barStep"></i></div></div>
+  </div>
+</section>
+
+<div class="tabs" role="tablist">
+  <button class="tab" role="tab" id="tab-runs" aria-selected="true" aria-controls="pane-runs">Runs</button>
+  <button class="tab" role="tab" id="tab-list" aria-selected="false" aria-controls="pane-list">Checklist</button>
+  <button class="tab" role="tab" id="tab-val" aria-selected="false" aria-controls="pane-val">Validation &amp; sources</button>
+</div>
+
+<div class="pane" id="pane-runs" role="tabpanel" aria-labelledby="tab-runs">
+  <nav class="runnav" id="runnav" aria-label="Jump to run"></nav>
+  <div id="runsBody"></div>
+</div>
+
+<div class="pane" id="pane-list" role="tabpanel" aria-labelledby="tab-list" hidden>
+  <div class="filters" id="filters">
+    <button class="filter" data-f="all" aria-pressed="true">All (27)</button>
+    <button class="filter" data-f="assn" aria-pressed="false">Assassination (13)</button>
+    <button class="filter" data-f="feat" aria-pressed="false">Feats (14)</button>
+    <button class="filter" data-f="todo" aria-pressed="false">Incomplete</button>
+  </div>
+  <div id="listBody"></div>
+  <button class="reset" id="resetAll">Reset all progress</button>
+</div>
+
+<div class="pane" id="pane-val" role="tabpanel" aria-labelledby="tab-val" hidden>
+  <div class="srcbox">
+    <h3>Count audit</h3>
+    <ul>
+      <li>Mission file: <code>challengeCount: 27</code> — 13 assassination, 14 feats. Independently matched by the Hitman Wiki and PSNProfiles.</li>
+      <li>This guide lists 13 + 14 = <strong>27</strong>, each assigned to exactly one run. No duplicates, none omitted.</li>
+      <li>Run totals: 6 + 7 + 5 + 4 + 2 + 3 = <strong>27</strong>.</li>
+      <li>Names and descriptions are copied from your file, including the exact "Shoot 10 <em>small</em> lamps" wording for Black Site.</li>
+    </ul>
+  </div>
+  <div class="srcbox">
+    <h3>Mutually exclusive pairs, and where they were split</h3>
+    <ul>
+      <li><strong>Prison Food vs Shocking Violence.</strong> The battery assault on the prisoner is the <em>first</em> thing in Khabko's routine; the meal comes later. Killing him at the assault means he never eats. Shocking Violence sits in Run 3, Prison Food in Run 4.</li>
+      <li><strong>Collapse of the Union vs This is Fine, Foam Party, Shocking Violence.</strong> The star drop needs both targets alive and walking out of the main building together, so any earlier target kill makes it impossible. The star is isolated in Run 6.</li>
+      <li><strong>Pink Mist vs Hold Your Fire.</strong> Direct opposites — all headshots versus no shots at people. Runs 5 and 6.</li>
+      <li><strong>Pink Mist vs every accident challenge.</strong> Accidents, fire, falling lamps and icicles are not headshots, so Run 5 is headshots only.</li>
+      <li><strong>Black Site vs Pink Mist / Hidden Tiger.</strong> A dropped lamp kills by accident. Lamps go in Run 1, where no kill rules apply.</li>
+      <li><strong>Tiger Hunter vs Hidden Tiger.</strong> Tiger Hunter needs the evacuation running, which sends the Tigers out on randomised escape paths. Controlled body placement is not realistic at the same time, so Tiger Hunter pairs only with Pink Mist in Run 5 and Hidden Tiger sits in the calm Run 4.</li>
+    </ul>
+  </div>
+  <div class="srcbox">
+    <h3>Run-by-run logic check</h3>
+    <ol>
+      <li><strong>Run 1</strong> — no kills required, so nothing can be locked out. Quiet collectibles are ordered before the gasoline-tank shot, which is the only loud action and the one that spawns rats 3–6. Passes.</li>
+      <li><strong>Run 2</strong> — flag → clothes → four building fires → riot spread → both targets inside → padlock (fire kill + fifth building) → Tiger into crowd → main gate last. The main gate is deliberately last because opening it early routes the crowd out of the prison and because the crowd is needed for Fusil for Everyone. Passes.</li>
+      <li><strong>Run 3</strong> — water valve must precede the battery shot, and both must precede everything else because the assault happens in the opening seconds. Reznikov is killed last so the earlier icicle and carried-extinguisher challenges are already banked. Passes.</li>
+      <li><strong>Run 4</strong> — poison first (routine timer), toilets second (the guard routine fires within seconds of the start), then snow piles and Tigers, which have no deadline. Khabko is not killed at the battery, so nothing conflicts. Passes.</li>
+      <li><strong>Run 5</strong> — the target headshots are the evacuation trigger, so they must come first by definition. Nothing else is attempted. Passes.</li>
+      <li><strong>Run 6</strong> — the star needs both targets alive and meeting, so it precedes all environmental kills; fires and explosions would reroute the pair. Passes.</li>
+    </ol>
+  </div>
+  <div class="srcbox">
+    <h3>Marked UNVERIFIED — stated as uncertain, never as fact</h3>
+    <ul>
+      <li><strong>Per-challenge XP.</strong> Sniper Assassin challenges feed a score multiplier rather than mastery XP; all 27 take it from x1.00 to x3.00, and Silent Assassin doubles the result. Individual values: <em>UNVERIFIED — insufficient evidence from available sources.</em></li>
+      <li><strong>Guard names and patrol names.</strong> The only named characters confirmed are Vitaly Reznikov, Roman Khabko, and handlers Knight and Stone. The 15 Siberian Tigers and the prison guards are unnamed. One source names the hidden marksman in locker 137 as Carlton Smith — single-source, therefore <em>UNVERIFIED</em>. Guards are described by position throughout.</li>
+      <li><strong>Mastery levels 1–19.</strong> Confirmed: Siberia mastery runs to 20, and level 20 unlocks the Druzhina 34 ICA Arctic for normal sandbox missions, without the special ammo. Which upgrade lands on which level: <em>UNVERIFIED</em>.</li>
+      <li><strong>The Instigator fallback</strong> in Run 2 comes from one Steam commenter. Listed as plan B only.</li>
+      <li><strong>Prison Food via the warden's wine.</strong> One commenter reports only the kitchen food pops the feat. Run 4 uses the kitchen either way.</li>
+      <li><strong>Collectible positions</strong> (10 ducks, 8 crows, 5 bottles, 6 rats) come from a single detailed illustrated Steam guide; only the totals are confirmed by a second source. Steps carrying single-source detail are badged.</li>
+    </ul>
+  </div>
+  <div class="srcbox">
+    <h3>Not part of the 27 — these are trophies</h3>
+    <ul>
+      <li><strong>Capital Punishment</strong> — complete all 27 challenges.</li>
+      <li><strong>Never Knew What Hit Them</strong> — finish as Silent Assassin.</li>
+      <li><strong>In a League of Their Own</strong> — score above 1,000,000.</li>
+      <li><strong>Fragile Alliance</strong> — make Khabko kill Reznikov, then have him try to flee alone.</li>
+      <li><strong>Second Shooter</strong> — shoot open locker 137 in the main building's upper-floor left room to reveal a hidden marksman who fires on targets once the alarm goes.</li>
+    </ul>
+  </div>
+  <div class="srcbox">
+    <h3>Version notes</h3>
+    <ul>
+      <li>Released <strong>30 July 2019</strong> with HITMAN 2 Expansion Pack 2. All 27 challenges shipped with the mission; no later additions found.</li>
+      <li>Requires the World of Assassination Deluxe Edition / Deluxe Pack, or the HITMAN 3 Access Pass: HITMAN 2 Expansion.</li>
+      <li>HITMAN III <strong>update 3.11</strong> fixed an ammo-switching bug involving the rifle's Wall-Piercing and Shockwave ammo.</li>
+    </ul>
+  </div>
+</div>
+
+</div>
+
+<script>
+const CH = {
+  pink:{n:"Pink Mist",t:"assn",d:"Eliminate all targets with headshots.",r:5},
+  hold:{n:"Hold Your Fire",t:"assn",d:"Eliminate all targets without shooting them.",r:6},
+  foam:{n:"Foam Party",t:"assn",d:"Eliminate Vitaly Reznikov with an exploding fire extinguisher.",r:3},
+  wish:{n:"Wish Upon a Star",t:"assn",d:"Eliminate any target by dropping the Soviet star on them.",r:6},
+  boog:{n:"Electric Boogaloo",t:"assn",d:"Eliminate three targets by electrocution.",r:3},
+  fine:{n:"This is Fine",t:"assn",d:"Cause a fire that eliminates both Vitaly Reznikov and Roman Khabko.",r:2},
+  coll:{n:"Collapse of the Union",t:"assn",d:"Eliminate Vitaly Reznikov and Roman Khabko by dropping the Soviet star on them.",r:6},
+  froth:{n:"Frothy Blanket",t:"assn",d:"Eliminate any target with an exploding fire extinguisher while they are carrying it.",r:3},
+  tigerh:{n:"Tiger Hunter",t:"assn",d:"Eliminate all of the Siberian Tigers after starting the evacuation.",r:5},
+  hidden:{n:"Hidden Tiger",t:"assn",d:"Eliminate and hide all members of the Siberian Tigers.",r:4},
+  shank:{n:"Shanked",t:"assn",d:"Eliminate any target with an icicle.",r:3},
+  cut:{n:"In the Cut",t:"assn",d:"Hide the bodies of both Roman Khabko and Vitaly Reznikov.",r:2},
+  shock:{n:"Shocking Violence",t:"assn",d:"Eliminate Roman Khabko with a car battery.",r:3},
+
+  nazd:{n:"Na Zdorovje",t:"feat",d:"Destroy all five bottles of alcohol.",r:1},
+  lull:{n:"Lullaby of Birdland",t:"feat",d:"Hit all 10 rubber ducks.",r:1},
+  food:{n:"Prison Food",t:"feat",d:"Poison Roman Khabko.",r:4},
+  snitch:{n:"Snitches Get Stitches",t:"feat",d:"Eliminate all 6 rats.",r:1},
+  fusil:{n:"Fusil for Everyone",t:"feat",d:"Hide a Siberian Tiger in the rioting crowd.",r:2},
+  cold:{n:"Cold War",t:"feat",d:"Hide five bodies in snow piles.",r:4},
+  porc:{n:"Porcelain King",t:"feat",d:"Hide three bodies in worker camp toilets.",r:4},
+  esc:{n:"The Great Escape",t:"feat",d:"Cause a large prison escape.",r:2},
+  inst:{n:"Instigator",t:"feat",d:"Spread the riot to every part of the prison.",r:2},
+  burn:{n:"Burning Down the House",t:"feat",d:"Set all five prison buildings on fire.",r:2},
+  pants:{n:"Where Are My Pants?",t:"feat",d:"Destroy Roman Khabko's clothes.",r:1},
+  flag:{n:"False Flag",t:"feat",d:"Lower the flag to trigger Roman Khabko's release.",r:2},
+  crows:{n:"A Feat for Crows",t:"feat",d:"Shoot all 8 crows.",r:1},
+  lamps:{n:"Black Site",t:"feat",d:"Shoot 10 small lamps.",r:1}
+};
+
+const RIFLE = "Druzhina 34 ICA Arctic (the only weapon — no loadout slots exist)";
+
+const RUNS = [
+{
+  id:1, short:"Scavenger", title:"The Scavenger Pass",
+  goal:"Clear every static collectible plus the two sabotage feats. Nothing here needs a kill, so a missed shot costs you nothing and you learn the map for free.",
+  load:[
+    ["Perch","Fixed ridge above Perm-14","You never move. Zoom and instinct are your only navigation."],
+    ["Disguise","None","No disguises exist in this mission."],
+    ["Weapon",RIFLE,""],
+    ["Ammo","Standard","Wall-Piercing / Shockwave toggle in-mission (X and Z on keyboard)."]
+  ],
+  sections:[
+   {name:"Quiet collectibles — before anything explodes", steps:[
+    {t:"Shoot the ten rubber ducks",
+     where:"Left-most building, the main building with the Soviet star, the red-lettered building by the main gate, the lower-left yard, and the factory chimney",
+     item:"Rifle at zoom level 2 or higher", npc:"None — no duck alerts anyone",
+     acts:[
+      "Left-most building: black duck on top of its fuse box, blue duck on the shelf in its top-right window.",
+      "Lower-left yard where Khabko trains: white duck in a trash can, and yellow duck inside the burning barrel behind the prisoner in section 2.",
+      "Main building: yellow duck on the desk in the upper-left window, green duck in the roof window, purple duck on a chair behind the front doors — shoot the doors open first to see it.",
+      "Red-lettered building by the main gate: blue duck under the desk in the right window of its left side, white duck on its chimney. Last: red duck on the big factory chimney with the red light."
+     ],
+     warn:"Ducks are small. At low magnification hits read as misses — zoom one more level before assuming the challenge is broken.",
+     pops:["lull"], unv:true},
+
+    {t:"Shoot the eight crows",
+     where:"All on high metalwork — radio tower, light post, central tower, silo, chimneys, pylon, antenna, main gate sign",
+     item:"Rifle", npc:"None",
+     acts:[
+      "Left side: one on the radio tower beside the light, one on the light post between the toilet block and the kitchen window where the cook works.",
+      "Centre: one on top of the big tower with the bluish light, one on the first silo right of the main building, one on the chimney with the painting on it.",
+      "Right side: one on the big electrical pylon, one on the antenna of the red-lettered building, one on top of the main gate sign."
+     ],
+     warn:"Finish the crows before the gasoline-tank shot two steps below — explosions can scatter birds.",
+     pops:["crows"], unv:true},
+
+    {t:"Break the five bottles",
+     where:"Lower-left yard, central guard tower, warden's office, the painted building, section 5",
+     item:"Rifle", npc:"None",
+     acts:[
+      "Vodka beside the fire barrel in the lower-left yard where Khabko trains.",
+      "Vodka in the left window of the central guard tower below the main building.",
+      "Wine in the warden's office — the top-right window of the main building.",
+      "Beer in the top-right window of the building with the painting on it, and vodka on the table in section 5."
+     ],
+     warn:"The warden's wine doubles as the sedative bottle in the alternative This is Fine setup. Shattering it here is harmless, but never do it during Run 2 if you plan the sedative variant.",
+     pops:["nazd"], unv:true}
+   ]},
+   {name:"Loud odds and ends — save for last", steps:[
+    {t:"Flush out and shoot the six rats",
+     where:"Kitchen building on the left, the padlock beside the main building, and the parked gasoline truck",
+     item:"Rifle", npc:"The prison cook, working behind the kitchen window",
+     acts:[
+      "Rat 1 sits on a barrel just outside the kitchen building — take it now.",
+      "Rat 2 is inside the kitchen and only appears when food is on the counter and the cook has stepped away. Wait for his serving cycle rather than restarting.",
+      "Now shoot the gasoline canisters in the middle window of the building left of the main building. Seconds later rat 3 appears near the shootable padlock by the main building.",
+      "Rats 4, 5 and 6 appear under the gasoline truck at its front, side and rear — check all three angles."
+     ],
+     commit:"Detonating the gasoline is loud and starts a fire. Ducks, crows and bottles must already be done.",
+     pops:["snitch"], unv:true},
+
+    {t:"Shoot ten small lamps",
+     where:"Perimeter posts, catwalk undersides, tower bases and above building doorways",
+     item:"Rifle", npc:"Any guard standing under a lamp — check the ground before firing",
+     acts:[
+      "Any ten small lamps count; there is no fixed required set. The catwalk lamps along the lower perimeter are the densest cluster.",
+      "Look underneath each lamp first — a falling lamp kills a guard standing beneath it."
+     ],
+     warn:"Never attempt Black Site during Run 5 (Pink Mist) or Run 4 (Hidden Tiger). A lamp kill is an accident, not a headshot, and voids Pink Mist.",
+     pops:["lamps"]},
+
+    {t:"Destroy Khabko's clothes",
+     where:"Left-most building, ground floor, on a desk — and/or the upper floor of the building beside the main gate",
+     item:"Rifle", npc:"Roman Khabko, who collects this outfit during his release routine",
+     acts:[
+      "Shoot the release outfit on the ground-floor desk of the left-most building.",
+      "A second set is reported on the upper floor of the building beside the main gate — if you can see both, destroy both.",
+      "You do not need to lower the flag first; the feat pops on destruction alone."
+     ],
+     warn:"Remember the side effect: with the clothes gone Khabko skips part of his dressing routine and reaches the main building faster. Runs 2 and 6 both rely on this.",
+     pops:["pants"]}
+   ]}
+  ]
+},
+{
+  id:2, short:"Riot & fire", title:"Riot, Fire, Two Cooked Targets",
+  goal:"Burn all five buildings, push the riot into every zone, and kill both targets with the same fire. The order is the entire difficulty: fires first, riot spread second, main gate last.",
+  load:[
+    ["Perch","Fixed ridge above Perm-14",""],
+    ["Disguise","None",""],
+    ["Weapon",RIFLE,""],
+    ["Ammo","Standard, Shockwave in reserve","Shockwave nudges a body without adding a kill — used in the crowd step."]
+  ],
+  sections:[
+   {name:"Start the clock", steps:[
+    {t:"Lower the flag to trigger the release",
+     where:"Flagpole on the roof of the main building — the one with the Soviet star on its face",
+     item:"Rifle", npc:"Roman Khabko, currently training in the lower-left yard",
+     acts:[
+      "Shoot the winch mechanism at the base of the flagpole, not the flag itself.",
+      "The flag descends, Khabko stops training and begins his release routine toward the main building."
+     ],
+     warn:"Do this first. Starting fires before the flag reroutes guards and Khabko's walk can stall.",
+     pops:["flag"]},
+
+    {t:"Destroy his clothes to shorten the walk",
+     where:"Left-most building, ground floor, on a desk",
+     item:"Rifle", npc:"Roman Khabko",
+     acts:[
+      "Shoot the outfit on the desk so Khabko skips the collection leg of his route and reaches the meeting sooner.",
+      "Worth doing even though the feat is already ticked from Run 1 — it removes minutes of waiting while you juggle fires."
+     ],
+     pops:["pants"]}
+   ]},
+   {name:"Set four buildings alight", steps:[
+    {t:"Burn the west, south and east buildings and the watchtower",
+     where:"Four separate ignition points around the outer ring of the prison",
+     item:"Rifle", npc:"None required",
+     acts:[
+      "West / left-most building: shoot the gasoline canisters in the middle window of its second floor, or the red door-control panel to the left of gate 1 to let rioters in.",
+      "South / lower building: shoot the explosives stacked outside it, or the explosives on the truck parked to its right.",
+      "East building: shoot the red door control behind gate 5 to open it and let the fire in.",
+      "Watchtower: shoot the padlock on the watchtower door to the right of gate 1."
+     ],
+     warn:"Do NOT open the main gate yet. Opening it early routes the crowd out of the prison instead of into the fifth building, and you lose Burning Down the House and Instigator together.",
+     pops:["burn"]},
+
+    {t:"Spread the riot gate by gate",
+     where:"Every perimeter gate control panel, plus the main administrative building",
+     item:"Rifle", npc:"The rioting prisoner crowd",
+     acts:[
+      "Each perimeter gate has a control panel, most plainly visible. Shoot one, let the crowd flood fully through, then shoot the next.",
+      "Feed them one zone at a time — opening several at once makes the crowd stream past a zone without the riot state registering there.",
+      "The commonly missed zone is the main administrative building. Check it before assuming the challenge is bugged."
+     ],
+     warn:"Fallback, single-source and UNVERIFIED: don't pre-open the gate behind the admin building; open every gate except the main one; skip the box in the far bottom-right; shoot the central tower padlock; lead the riot to the fence on the left; let the prisoners set the building alight themselves; then hit the main gate release once they are back there.",
+     pops:["inst"], unv:true}
+   ]},
+   {name:"The kill, then the escape", steps:[
+    {t:"Wait for both targets to be inside the central building",
+     where:"Central security building, mid-map",
+     item:"Rifle, instinct on", npc:"Vitaly Reznikov and Roman Khabko, meeting for the bribe handover",
+     acts:[
+      "Hold fire. Watch both red icons in instinct until both are fully inside the central building's footprint.",
+      "Prisoners must already be rioting next to that building — if the adjacent yard is calm, open one more gate on that side first."
+     ],
+     commit:"Nothing after the next shot can be undone, and there is no save. Confirm both icons are inside before firing.",
+     pops:[]},
+
+    {t:"Shoot the padlock to burn them alive",
+     where:"The door at the base of the central security building",
+     item:"Rifle", npc:"Both targets, inside",
+     acts:[
+      "Shoot the padlock on the door, not the door. Rioters pour in and the building catches.",
+      "The fire kills both targets — This is Fine — and consumes their bodies, which is In the Cut.",
+      "This is also the fifth and final building for Burning Down the House.",
+      "Alternative if the timing keeps failing: sedate both targets with the wine in the warden's office (top-right window of the main building) first, then let the fire reach them at your own pace."
+     ],
+     warn:"If only one target is inside you get one death, no challenge, and no way back. Restart rather than improvising.",
+     pops:["fine","cut","burn"]},
+
+    {t:"Drop a Siberian Tiger into the crowd",
+     where:"A catwalk directly above a mass of rioting prisoners",
+     item:"Rifle; Shockwave ammo as backup", npc:"A Siberian Tiger standing against the catwalk railing",
+     acts:[
+      "Pick a Tiger pressed up against the railing — one standing back from it falls onto the walkway instead of over it.",
+      "Headshot him so the body tips over and is swallowed by the crowd, which counts as hidden.",
+      "If the body lands on the walkway, switch to Shockwave and push it over the edge.",
+      "Do this once only. Repeatedly dropping bodies into the crowd lets guards trace your firing position and triggers a search."
+     ],
+     pops:["fusil"]},
+
+    {t:"Open the main gate last",
+     where:"The gate at the lowest part of the map — the one with two pairs of water tanks and electrical sockets on its catwalk",
+     item:"Rifle, instinct on", npc:"The prisoner crowd",
+     acts:[
+      "Look through the doorway of the building next to that gate. In instinct the release panel reads as a yellow object inside — shoot it.",
+      "Prisoners stream out of the prison. That is The Great Escape.",
+      "This is also the step that reportedly completes Instigator for players who had everything else done."
+     ],
+     warn:"Absolutely last. Once the crowd leaves the map you cannot hide bodies in it, so Fusil for Everyone must already be green.",
+     pops:["esc"]}
+   ]}
+  ]
+},
+{
+  id:3, short:"Accidents", title:"Battery, Ice and Foam",
+  goal:"Kill Khabko with the car battery and Reznikov with a fire extinguisher, picking up the electrocution, icicle and carried-extinguisher challenges in between. Five challenges, no bullets in anyone.",
+  load:[
+    ["Perch","Fixed ridge above Perm-14",""],
+    ["Disguise","None",""],
+    ["Weapon",RIFLE,""],
+    ["Do not attempt here","Prison Food, Collapse of the Union","Both need Khabko alive past the battery assault."]
+  ],
+  sections:[
+   {name:"The opening ten seconds", steps:[
+    {t:"Open the water valve before the assault begins",
+     where:"Lower-left yard, slightly left of where Khabko trains, next to the barrack",
+     item:"Rifle", npc:"Roman Khabko and the prisoner he is about to beat",
+     acts:[
+      "Shoot the faucet open immediately at mission start. Water pools across the ground where Khabko will stand.",
+      "The battery assault is the very first thing in Khabko's routine — if you are still hunting for the valve when it ends, the run is already dead."
+     ],
+     commit:"There is no save. Miss this window and restart rather than continuing.",
+     pops:[]},
+
+    {t:"Shoot the car battery for a triple electrocution",
+     where:"The wet ground in the lower-left yard, immediately after the beating",
+     item:"Rifle", npc:"Roman Khabko plus the two guards who stand with him afterwards",
+     acts:[
+      "After the beating Khabko stands still in the pool with two other guards. Aim at the car battery on the ground, not at Khabko.",
+      "The current travels through the water and kills all three at once: Khabko by electrocution is Shocking Violence, three bodies is Electric Boogaloo.",
+      "If only Khabko dies, top up elsewhere — shoot a catwalk water tank to flood the walkway, then shoot the cable or plug socket beside it while a guard stands in the water."
+     ],
+     warn:"This is an accident kill, so it does not panic the prison. Putting a bullet into a red target is what starts the evacuation — save that for Run 5.",
+     pops:["shock","boog"]}
+   ]},
+   {name:"Ice and extinguishers", steps:[
+    {t:"Drop an icicle on a guard",
+     where:"The eaves outside the left-most building",
+     item:"Rifle", npc:"Any of the 17 targets — a Siberian Tiger is fine, no need to risk a primary",
+     acts:[
+      "Wait until a guard stops directly beneath the overhang. Do not shoot at a walking guard.",
+      "Shoot the icicle, not the man. It falls and impales him.",
+      "The left-most building's icicle is recommended because it sits out of other guards' sight, so the death is unlikely to be witnessed."
+     ],
+     pops:["shank"]},
+
+    {t:"Explode an extinguisher in a guard's hands",
+     where:"Roof of the upper-right building",
+     item:"Rifle", npc:"Two guards who arrive carrying fire extinguishers",
+     acts:[
+      "Open the gates in the upper-right part of the prison to set that building alight.",
+      "Two guards come onto the roof carrying extinguishers, giving you two chances in one window.",
+      "Shoot the red tank while it is still in a guard's hands. If he sets it down first, the shot no longer counts for this challenge."
+     ],
+     pops:["froth"]},
+
+    {t:"Kill Reznikov with a loose extinguisher",
+     where:"Just outside the main building on its left side, or beside the burning lower building",
+     item:"Rifle", npc:"Vitaly Reznikov",
+     acts:[
+      "Option A: an extinguisher sits just outside the main building on its left side, on Reznikov's patrol.",
+      "Option B: set the lower building on fire and he walks over to investigate — several loose extinguishers are on the ground there.",
+      "Wait until he is standing within about a body's width of the tank, then shoot the tank."
+     ],
+     commit:"Reznikov's death effectively ends the run. Shanked and Frothy Blanket must already be green.",
+     pops:["foam"]}
+   ]}
+  ]
+},
+{
+  id:4, short:"Poison & bodies", title:"Poison, Toilets and Snow",
+  goal:"Poison Khabko, then spend a calm run hiding bodies — three in toilets, five in snow piles, and all fifteen Tigers somewhere out of sight.",
+  load:[
+    ["Perch","Fixed ridge above Perm-14",""],
+    ["Disguise","None",""],
+    ["Weapon",RIFLE,""],
+    ["Ammo","Standard for kills, Shockwave for pushing bodies","Shockwave repositions a corpse without adding a kill."]
+  ],
+  sections:[
+   {name:"Poison first — it runs on a routine timer", steps:[
+    {t:"Poison the kitchen food",
+     where:"From Khabko's barrack, follow the courtyard up to the last barrack — there is a window with a cook working behind it",
+     item:"Rifle", npc:"The prison cook; Roman Khabko eats later in his routine",
+     acts:[
+      "Shoot the container of emetic poison near the cook so it contaminates the food. Prison Food pops on the poisoning.",
+      "Do not kill Khabko at the battery assault this run — he has to survive long enough to eat.",
+      "He eats, becomes sick, and walks to a toilet to vomit, which sets up the next step."
+     ],
+     warn:"Some guides suggest the sedative in the warden's office instead. One commenter reports that route does not pop the feat and only the kitchen food works — UNVERIFIED, so use the kitchen.",
+     pops:["food"], unv:true},
+
+    {t:"Fill the three worker camp toilets",
+     where:"Two outhouses just above and just below Khabko's barrack, and one in the bottom-right of the map",
+     item:"Rifle; Shockwave as backup", npc:"Guards on a routine that sends them there within seconds of mission start, plus optionally Khabko himself",
+     acts:[
+      "A guard routine sends men to the two toilets near Khabko's barrack in the opening seconds — shoot them while they are inside.",
+      "The third toilet is on a patrol route in the bottom-right. If you don't want to wait, fire a shot near it to draw a guard closer, then push him in with the kill shot.",
+      "The poisoned Khabko heading to a toilet to vomit is a free third body if you are short.",
+      "If a body lands beside the outhouse instead of inside, push it in with Shockwave ammo."
+     ],
+     pops:["porc"]}
+   ]},
+   {name:"Bury the rest", steps:[
+    {t:"Put five bodies in snow piles",
+     where:"Piles ring the lower map border, the central zone, the lower-right rest spot, the helipad greeting spot, and the ground below all three watchtowers",
+     item:"Rifle; Shockwave for short landings", npc:"Several guards stop next to piles unprompted",
+     acts:[
+      "The guard patrolling the lower map border passes several piles, and one guard urinates in front of a pile in the central zone.",
+      "A guard on the lower-right takes a break in front of a pile beside a burning bin; the guard who greets the arriving pilot stands in front of a pile until the pilot lands — the longest reliable standstill on the map.",
+      "All three watchtower guards can be shot over their railing into a pile below. The tower shared with a civilian is fiddly: lure the civilian to the right first, then draw the guard toward the back of the tower.",
+      "Body lands short? Switch to Shockwave and push it in with a second shot."
+     ],
+     pops:["cold"]},
+
+    {t:"Eliminate and hide all fifteen Siberian Tigers",
+     where:"Across the whole prison — snow piles, the three toilets, and the roof edges of the upper buildings",
+     item:"Rifle; Shockwave for repositioning", npc:"All 15 Tigers (orange in instinct). The two red icons are targets, not Tigers",
+     acts:[
+      "Snow piles are the workhorse — the five from Cold War count toward this too, and there are plenty more.",
+      "The three toilet bodies also count as hidden, so plan the same corpses for both challenges.",
+      "For Tigers on the upper buildings, shoot them so they fall over the roof edge and out of sight.",
+      "Short of spots? Spread the riot with gate control panels and drop the remainder into the crowd. This conflicts with nothing else here, provided you leave the kitchen and Khabko's route alone."
+     ],
+     warn:"Count as you go — fifteen is easy to lose track of and there is no save to reload if you finish one short. Also avoid dropping lamps on anyone; that is Run 1's business.",
+     pops:["hidden"]}
+   ]}
+  ]
+},
+{
+  id:5, short:"Evacuation", title:"Evacuation Sweep",
+  goal:"Headshot both targets on sight to trigger the evacuation, then headshot all fifteen Tigers as they run for the exits. Two challenges that want the same thing: everyone dead, every kill a headshot.",
+  load:[
+    ["Perch","Fixed ridge above Perm-14",""],
+    ["Disguise","None",""],
+    ["Weapon",RIFLE,""],
+    ["Ammo","Standard only","No accidents, no falling objects, no fire — a non-headshot kill voids Pink Mist."]
+  ],
+  sections:[
+   {name:"Trigger, then chase", steps:[
+    {t:"Headshot both red targets immediately",
+     where:"Khabko in the lower-left yard, Reznikov on his patrol around the main building",
+     item:"Rifle", npc:"Vitaly Reznikov and Roman Khabko — both red in instinct",
+     acts:[
+      "Shoot both primary targets straight away, both as headshots. This is what starts the evacuation.",
+      "Take whichever has the cleaner line first; the second shot only needs to land before he reaches cover."
+     ],
+     commit:"The evacuation cannot be undone or paused. From here it is a shooting gallery on a timer.",
+     pops:[]},
+
+    {t:"Cover the three exits and headshot all fifteen Tigers",
+     where:"The snowmobiles to the right of the back building; further right in the distance on foot; and the front / lower-right prison gate",
+     item:"Rifle", npc:"All 15 Siberian Tigers (orange in instinct)",
+     acts:[
+      "Escape order and route are randomised each attempt, so watch instinct rather than memorising a path.",
+      "The snowmobile park to the right of the back building is the busiest exit — anchor there and sweep out to the other two.",
+      "All 15 must die by headshot for Pink Mist and all 15 must die after the evacuation started for Tiger Hunter. The same shots satisfy both.",
+      "Expect several attempts. Even guide authors describe this one as partly down to luck."
+     ],
+     warn:"Do not hide bodies, drop lamps, start fires or use accidents in this run — any of them voids Pink Mist. Body hiding belongs to Run 4.",
+     pops:["pink","tigerh"]}
+   ]}
+  ]
+},
+{
+  id:6, short:"The star", title:"The Star, and Not One Bullet in Anyone",
+  goal:"Drop the Soviet star on both targets as they leave the meeting, then kill the remaining fifteen Tigers with the environment alone. Three challenges, and the star is a one-shot resource.",
+  load:[
+    ["Perch","Fixed ridge above Perm-14",""],
+    ["Disguise","None",""],
+    ["Weapon",RIFLE,"Every shot goes into an object. Never into a person."],
+    ["Incompatible with","Pink Mist","Headshots and no-shooting are direct opposites — never combine Runs 5 and 6."]
+  ],
+  sections:[
+   {name:"Set up the meeting", steps:[
+    {t:"Lower the flag and destroy the clothes",
+     where:"Flagpole base on the main building roof; outfit on the ground-floor desk of the left-most building",
+     item:"Rifle", npc:"Roman Khabko",
+     acts:[
+      "Shoot the flagpole winch to start Khabko's release. You can also wait for it on its own timer, but this is faster.",
+      "Shoot his outfit so he skips the dressing leg and reaches the main building sooner.",
+      "Both shots hit objects, not people, so neither threatens Hold Your Fire."
+     ],
+     warn:"Do not start any fires or explosions yet. They reroute NPCs and can stop the targets ever meeting under the star.",
+     pops:["flag"]},
+
+    {t:"Drop the Soviet star on both targets",
+     where:"The large Soviet star mounted on the face of the main building, above the door",
+     item:"Rifle", npc:"Vitaly Reznikov and Roman Khabko, walking out together after their greeting",
+     acts:[
+      "Wait for the meet-and-greet to finish and the pair to step out of the building together.",
+      "Fire when they are one step outside the doorway — not while still under the lintel, and not once they have separated.",
+      "Aim at the star's mounting. It tears loose and crushes both: Collapse of the Union, with Wish Upon a Star popping from the same event.",
+      "Catch only one and Wish Upon a Star still pops, but Collapse of the Union does not, and there is no second star. Restart."
+     ],
+     commit:"One star, one chance, no save. This is the make-or-break moment of the run.",
+     pops:["coll","wish"]}
+   ]},
+   {name:"The other fifteen, environment only", steps:[
+    {t:"Kill all fifteen Tigers without shooting them",
+     where:"Across the prison — buildings, loose extinguishers, explosive barrels, catwalk water tanks, electrical boxes, lamps and icicles",
+     item:"Rifle, aimed at objects only", npc:"All 15 Siberian Tigers",
+     acts:[
+      "Set a building alight while guards are inside; shoot loose fire extinguishers next to guards; shoot explosive barrels and the petrol stacks beside the buildings.",
+      "Shoot a catwalk water tank to flood it, then shoot the cable or plug socket beside it while a guard stands in the water.",
+      "Shoot an electrical box next to a lamp, shoot a lamp with a guard directly underneath, or shoot an icicle above a stationary guard.",
+      "The star already covered both primaries, so you need exactly 15 environmental kills after it. Count them."
+     ],
+     warn:"Hold Your Fire counts all seventeen. If you put a bullet into either primary at any point, the challenge is already lost — restart rather than finishing.",
+     pops:["hold"]}
+   ]}
+  ]
+}
+];
+
+const done={}, stepDone={}, stepOpen={}, runOpen={};
+try{Object.assign(done,JSON.parse(localStorage.getItem('siberia_done_v1')||'{}'));}catch(e){}
+try{Object.assign(stepDone,JSON.parse(localStorage.getItem('siberia_done_v1:steps')||'{}'));}catch(e){}
+function reportProgress(){try{const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r['m17']={done:Object.keys(CH).filter(k=>done[k]).length,total:Object.keys(CH).length,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
+function saveDone(){try{localStorage.setItem('siberia_done_v1',JSON.stringify(done));localStorage.setItem('siberia_done_v1:steps',JSON.stringify(stepDone));}catch(e){}reportProgress();}
+let filter="all";
+const $=s=>document.querySelector(s);
+const badge=(c,t)=>`<span class="badge ${c}">${t}</span>`;
+const runChallenges=id=>Object.keys(CH).filter(k=>CH[k].r===id);
+
+function renderNav(){
+  let nav=RUNS.map(r=>{
+    const ks=runChallenges(r.id), got=ks.filter(k=>done[k]).length;
+    return `<button class="runjump ${got===ks.length?"full":""}" data-jump="${r.id}">
+      <b>Run ${r.id} · ${got}/${ks.length}</b>${r.short}</button>`;
+  }).join("");
+  nav+=`<button class="navutil" id="expandAll">Expand all</button>
+        <button class="navutil" id="collapseAll">Collapse all</button>`;
+  $("#runnav").innerHTML=nav;
+}
+
+function renderRuns(){
+  renderNav();
+  let html="", n=0;
+  RUNS.forEach(r=>{
+    const ks=runChallenges(r.id), got=ks.filter(k=>done[k]).length;
+    const open=!!runOpen[r.id];
+    html+=`<article class="run" id="run${r.id}">
+      <button class="runtoggle" data-run="${r.id}" aria-expanded="${open}">
+        <span class="chev">${open?"▾":"▸"}</span>
+        <span class="rt"><span class="run-idx">Run ${r.id} of 6</span>
+          <h2>${r.title}</h2><p>${r.goal}</p></span>
+        <span class="runcount">${got}/${ks.length}</span>
+      </button>
+      <div class="runbody"${open?"":" hidden"}>
+        <div class="loadout">`+
+        r.load.map(([k,v,e])=>`<div class="slot"><span class="k">${k}</span>
+          <span class="v">${v}${e?`<em>${e}</em>`:""}</span></div>`).join("")+`</div>`;
+
+    r.sections.forEach(sec=>{
+      html+=`<div class="sect">${sec.name}</div>`;
+      sec.steps.forEach(st=>{
+        const id="s"+(++n), o=!!stepOpen[id];
+        const bd=(st.pops||[]).map(k=>badge(CH[k].t==="assn"?"b-ch":"b-ft",CH[k].n)).join("");
+        html+=`<div class="step${stepDone[id]?" done":""}" id="${id}">
+          <div class="step-head">
+            <button class="tick" data-step="${id}" aria-pressed="${!!stepDone[id]}" aria-label="Mark step done">✓</button>
+            <button class="steptoggle" data-open="${id}" aria-expanded="${o}" aria-controls="${id}-b">
+              <span class="stepno">${String(n).padStart(2,"0")}</span>
+              <span style="flex:1"><span class="stepttl">${st.t}</span></span>
+              <span class="stepchev">${o?"▾":"▸"}</span>
+            </button>
+          </div>
+          <div class="stepbody" id="${id}-b"${o?"":" hidden"}>
+            <div class="meta">
+              <div><span>Where</span><p>${st.where}</p></div>
+              <div><span>Disguise</span><p>None</p></div>
+              <div><span>Item</span><p>${st.item}</p></div>
+              <div><span>NPC</span><p>${st.npc}</p></div>
+            </div>
+            <ul class="acts">${st.acts.map(a=>`<li>${a}</li>`).join("")}</ul>
+            ${st.commit?`<p class="commit"><strong>Point of no return —</strong> ${st.commit}</p>`:""}
+            ${st.warn?`<p class="warn"><strong>Warning —</strong> ${st.warn}</p>`:""}
+            <div class="badges">${bd}${st.unv?badge("b-unv","Single-source detail"):""}</div>
+          </div></div>`;
+      });
+    });
+    html+=`</div></article>`;
+  });
+  $("#runsBody").innerHTML=html;
+  $("#stepTotal").textContent=n;
+}
+
+function renderList(){
+  const rows=Object.keys(CH).filter(k=>{
+    if(filter==="all")return true;
+    if(filter==="todo")return !done[k];
+    return CH[k].t===filter;
+  }).map(k=>{
+    const c=CH[k];
+    return `<div class="crow${done[k]?" done":""}">
+      <button class="tick" data-ch="${k}" aria-pressed="${!!done[k]}" aria-label="Mark ${c.n} complete">✓</button>
+      <div><div class="cname">${c.n}<span class="type ${c.t}">${c.t==="assn"?"Assassination":"Feat"}</span></div>
+      <div class="cdesc">${c.d}</div>
+      <div class="cwhere">Run ${c.r} — ${RUNS[c.r-1].title}</div></div></div>`;
+  }).join("");
+  $("#listBody").innerHTML=rows||`<p style="color:var(--mute)">Nothing left in this filter. All clear.</p>`;
+}
+
+function updateStats(){
+  const ks=Object.keys(CH);
+  const a=ks.filter(k=>CH[k].t==="assn"&&done[k]).length;
+  const f=ks.filter(k=>CH[k].t==="feat"&&done[k]).length;
+  const tot=a+f;
+  const steps=Object.values(stepDone).filter(Boolean).length;
+  const stepTot=+$("#stepTotal").textContent||1;
+  $("#numAssn").textContent=a; $("#numFeat").textContent=f;
+  $("#numTotal").textContent=tot; $("#numStep").textContent=steps;
+  $("#pctTotal").textContent=Math.round(tot/27*100)+"%";
+  $("#barAssn").style.width=(a/13*100)+"%";
+  $("#barFeat").style.width=(f/14*100)+"%";
+  $("#barStep").style.width=(steps/stepTot*100)+"%";
+  $("#ring").setAttribute("stroke-dashoffset",389.6-(389.6*tot/27));
+}
+
+document.addEventListener("click",e=>{
+  const jump=e.target.closest("[data-jump]");
+  if(jump){
+    const id=+jump.dataset.jump; runOpen[id]=true;
+    renderRuns(); updateStats();
+    document.getElementById("run"+id).scrollIntoView({behavior:"smooth",block:"start"});
+    return;
+  }
+  if(e.target.id==="expandAll"||e.target.id==="collapseAll"){
+    const v=e.target.id==="expandAll";
+    RUNS.forEach(r=>runOpen[r.id]=v);
+    renderRuns(); updateStats(); return;
+  }
+  const rt=e.target.closest("[data-run]");
+  if(rt){ const id=+rt.dataset.run; runOpen[id]=!runOpen[id]; renderRuns(); updateStats(); return; }
+
+  const so=e.target.closest("[data-open]");
+  if(so){
+    const id=so.dataset.open;
+    stepOpen[id]=!stepOpen[id];
+    document.getElementById(id+"-b").hidden=!stepOpen[id];
+    so.setAttribute("aria-expanded",String(stepOpen[id]));
+    so.querySelector(".stepchev").textContent=stepOpen[id]?"▾":"▸";
+    return;
+  }
+  const tk=e.target.closest("[data-step]");
+  if(tk){
+    const id=tk.dataset.step;
+    stepDone[id]=!stepDone[id];saveDone();
+    tk.setAttribute("aria-pressed",String(stepDone[id]));
+    document.getElementById(id).classList.toggle("done",stepDone[id]);
+    updateStats(); return;
+  }
+  const cb=e.target.closest("[data-ch]");
+  if(cb){ done[cb.dataset.ch]=!done[cb.dataset.ch]; saveDone(); renderList(); renderNav(); updateStats(); return; }
+
+  const fb=e.target.closest(".filter");
+  if(fb){
+    filter=fb.dataset.f;
+    document.querySelectorAll(".filter").forEach(b=>b.setAttribute("aria-pressed",String(b===fb)));
+    renderList(); return;
+  }
+  const tab=e.target.closest(".tab");
+  if(tab){
+    document.querySelectorAll(".tab").forEach(t=>{
+      const on=t===tab;
+      t.setAttribute("aria-selected",String(on));
+      document.getElementById(t.getAttribute("aria-controls")).hidden=!on;
+    });
+    return;
+  }
+  if(e.target.id==="resetAll"){
+    Object.keys(done).forEach(k=>delete done[k]);
+    Object.keys(stepDone).forEach(k=>delete stepDone[k]);
+    Object.keys(stepOpen).forEach(k=>delete stepOpen[k]);
+    saveDone();
+    renderRuns(); renderList(); updateStats();
+  }
+});
+
+RUNS.forEach(r=>runOpen[r.id]=(r.id===1));
+renderRuns(); renderList(); updateStats();
+reportProgress();
+</script>
+<!-- step-progress-bridge -->
+<script>
+/* Reports route-step ticks into 'hitman-progress-registry' so the index can
+   show them beside the challenge counts. Counts what is on screen rather than
+   any guide-specific state, so one implementation serves every guide. */
+(function(){
+  var RID="m17", SEL=".step";
+  function isDone(s){
+    var c=s.classList;
+    if(c.contains('done')||c.contains('dn')) return true;
+    if(s.getAttribute('data-done')==='1'||s.getAttribute('aria-pressed')==='true') return true;
+    return !!s.querySelector('.done,.dn,[data-done="1"],[aria-pressed="true"]');
+  }
+  function tally(){
+    var steps=document.querySelectorAll(SEL);
+    if(!steps.length) return null;
+    var n=0;
+    for(var i=0;i<steps.length;i++) if(isDone(steps[i])) n++;
+    return {steps:n,stepTotal:steps.length};
+  }
+  function push(){
+    var t;
+    try{ t=tally(); }catch(err){ return; }
+    if(!t||!t.stepTotal) return;
+    try{
+      var r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');
+      var e=r[RID]||(r[RID]={});
+      /* the guide's own reportProgress() rewrites this entry wholesale, so
+         re-add the step counts whenever they go missing or stale */
+      if(e.steps===t.steps&&e.stepTotal===t.stepTotal) return;
+      e.steps=t.steps; e.stepTotal=t.stepTotal; e.updated=Date.now();
+      localStorage.setItem('hitman-progress-registry',JSON.stringify(r));
+    }catch(err){}
+  }
+  var pending=false;
+  function schedule(){
+    if(pending) return; pending=true;
+    setTimeout(function(){pending=false;push();},120);
+  }
+  try{
+    new MutationObserver(schedule).observe(document.body,
+      {subtree:true,childList:true,attributes:true,attributeFilter:['class','aria-pressed','data-done']});
+  }catch(err){}
+  window.addEventListener('load',schedule);
+  setTimeout(push,600);
+})();
+</script>
+<!-- /step-progress-bridge -->
+</body>
+</html>

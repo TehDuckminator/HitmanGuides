@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A Bitter Pill — Step Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0C1416; --panel:#131F21; --panel-2:#182A2C;
+  --line:#263B3D; --line-soft:#1E3032;
+  --text:#DAE6E3; --dim:#7C918D;
+  --amber:#E8A33D; --teal:#4DBBA2; --rx:#D9584F; --violet:#9A8BD0; --slate:#6F9AA8;
+  --r:3px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--ink);color:var(--text);font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:"Barlow Condensed","Arial Narrow",sans-serif;font-weight:600;margin:0;letter-spacing:.04em}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px 90px}
+[hidden]{display:none !important}
+:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{transition:none !important}}
+
+header{border-bottom:1px solid var(--line);background:linear-gradient(180deg,#0F1B1D,#0C1416)}
+.hdr{max-width:1120px;margin:0 auto;padding:24px 20px 20px}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--amber)}
+h1{font-size:clamp(32px,6vw,56px);line-height:.95;text-transform:uppercase;margin:6px 0 4px}
+h1 .thin{font-weight:400;color:var(--dim)}
+.sub{color:var(--dim);font-size:14px;max-width:74ch;margin:0}
+.facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.fact{font-family:"IBM Plex Mono",monospace;font-size:11px;padding:5px 9px;border:1px solid var(--line);border-radius:var(--r);color:var(--dim);background:var(--panel)}
+.fact b{color:var(--text);font-weight:500}
+
+.tracker{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);margin-top:20px;padding:16px}
+.trk-top{display:flex;flex-wrap:wrap;gap:18px;align-items:flex-end;justify-content:space-between}
+.big{font-family:"Barlow Condensed",sans-serif;font-size:50px;line-height:.85;font-weight:700}
+.big small{font-size:20px;color:var(--dim);font-weight:400}
+.lbl{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+.xp{font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--amber)}
+.cap{margin-top:14px;height:14px;border:1px solid var(--line);border-radius:999px;background:#0B1213;overflow:hidden}
+.cap i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--amber));transition:width .3s ease}
+.cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:9px;margin-top:14px}
+.cat{border:1px solid var(--line-soft);border-radius:var(--r);padding:9px 11px;background:var(--panel-2)}
+.cat .nm{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+.cat .vl{font-family:"Barlow Condensed",sans-serif;font-size:25px;font-weight:600;line-height:1.1}
+.cat .bar{height:3px;background:#0B1213;margin-top:5px;border-radius:2px;overflow:hidden}
+.cat .bar i{display:block;height:100%;width:0;transition:width .3s ease}
+.reset{margin-top:12px;background:none;border:1px solid var(--line);color:var(--dim);font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding:6px 12px;border-radius:var(--r);cursor:pointer}
+.reset:hover{color:var(--text);border-color:var(--dim)}
+
+nav.tabs{display:flex;gap:2px;margin:24px 0 18px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+nav.tabs button{background:none;border:none;border-bottom:2px solid transparent;color:var(--dim);font-family:"Barlow Condensed",sans-serif;font-size:18px;letter-spacing:.08em;text-transform:uppercase;padding:10px 16px;cursor:pointer}
+nav.tabs button:hover{color:var(--text)}
+nav.tabs button[aria-selected="true"]{color:var(--amber);border-bottom-color:var(--amber)}
+
+.runbar{position:sticky;top:0;z-index:20;background:rgba(12,20,22,.94);backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:var(--r);padding:10px;margin-bottom:18px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.runbar .jump{background:var(--panel-2);border:1px solid var(--line);color:var(--text);font-family:"Barlow Condensed",sans-serif;font-size:16px;letter-spacing:.05em;text-transform:uppercase;padding:7px 13px;border-radius:var(--r);cursor:pointer;display:flex;gap:7px;align-items:center}
+.runbar .jump:hover{border-color:var(--amber);color:var(--amber)}
+.runbar .jump .pill{font-family:"IBM Plex Mono",monospace;font-size:9.5px;color:var(--dim)}
+.runbar .jump.complete{border-color:var(--teal);color:var(--teal)}
+.runbar .spacer{flex:1;min-width:8px}
+.runbar .util{background:none;border:1px solid var(--line);color:var(--dim);font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;padding:7px 10px;border-radius:var(--r);cursor:pointer}
+.runbar .util:hover{color:var(--text)}
+
+.notice{border:1px solid var(--line);border-left:3px solid var(--slate);background:var(--panel);padding:13px 15px;border-radius:var(--r);margin-bottom:16px}
+.notice.warn{border-left-color:var(--rx)}
+.notice h4{font-size:17px;text-transform:uppercase;margin-bottom:4px}
+.notice p{margin:6px 0 0;font-size:14px;color:var(--dim)}
+.notice p b{color:var(--text);font-weight:500}
+
+.run{border:1px solid var(--line);border-radius:var(--r);background:var(--panel);margin-bottom:14px;overflow:hidden;scroll-margin-top:72px}
+.run-head{width:100%;text-align:left;background:var(--panel-2);border:none;border-bottom:1px solid transparent;padding:15px 17px;cursor:pointer;display:flex;gap:14px;align-items:flex-start;color:inherit;font:inherit}
+.run.open .run-head{border-bottom-color:var(--line-soft)}
+.run-head:hover{background:#1C3032}
+.chev{flex:none;font-family:"IBM Plex Mono",monospace;color:var(--amber);font-size:13px;margin-top:5px;transition:transform .2s ease}
+.run.open .chev{transform:rotate(90deg)}
+.run-head .meta{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.16em;color:var(--amber);text-transform:uppercase}
+.run-head h2{font-size:27px;text-transform:uppercase;margin:2px 0 5px}
+.run-head p{margin:0;color:var(--dim);font-size:14px;max-width:80ch}
+.run-prog{flex:none;text-align:right;font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--dim);margin-top:4px}
+.run-body{padding:17px}
+
+.rx{border:1px solid var(--line);border-radius:var(--r);background:#0F1A1B;margin-bottom:18px}
+.rx-top{display:flex;justify-content:space-between;align-items:center;padding:9px 14px;border-bottom:1px dashed var(--line)}
+.rx-top .tag{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--amber)}
+.rx-top .lot{font-family:"IBM Plex Mono",monospace;font-size:10px;color:var(--dim)}
+.rx-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
+.rx-cell{padding:11px 14px;border-right:1px solid var(--line-soft);border-top:1px solid var(--line-soft)}
+.rx-cell:last-child{border-right:none}
+.rx-cell .k{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim)}
+.rx-cell .v{font-family:"Barlow Condensed",sans-serif;font-size:19px;font-weight:500;line-height:1.25;margin-top:2px}
+.rx-cell .n{font-size:12px;color:var(--dim);margin-top:2px;line-height:1.45}
+
+.sec{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--teal);margin:20px 0 9px;padding-bottom:6px;border-bottom:1px solid var(--line-soft)}
+
+.step{border:1px solid var(--line-soft);border-radius:var(--r);margin-bottom:7px;background:var(--panel-2)}
+.step.done{border-color:#2E4F45;background:#14231F}
+.step-head{display:flex;gap:11px;align-items:flex-start;padding:11px 13px}
+.tick{flex:none;width:24px;height:24px;border:1px solid var(--line);border-radius:var(--r);background:none;color:transparent;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;margin-top:2px}
+.tick:hover{border-color:var(--teal)}
+.step.done .tick,.chal.done .tick{background:var(--teal);border-color:var(--teal);color:#0C1416}
+.step-open{flex:1;min-width:0;text-align:left;background:none;border:none;color:inherit;font:inherit;cursor:pointer;padding:0;display:flex;gap:10px;align-items:flex-start}
+.stepno{flex:none;font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--amber);margin-top:5px}
+.step-txt h4{font-size:17.5px;margin-bottom:1px}
+.step.done .step-txt h4{text-decoration:line-through;color:var(--dim)}
+.step-txt p{margin:0;font-size:14px;color:var(--dim)}
+.chev2{flex:none;font-family:"IBM Plex Mono",monospace;color:var(--dim);font-size:12px;margin-top:5px;transition:transform .2s ease}
+.step.expanded .chev2{transform:rotate(90deg);color:var(--amber)}
+.detail{padding:12px 13px 13px 48px;border-top:1px solid var(--line-soft)}
+ul.f{list-style:none;margin:0;padding:0}
+ul.f li{display:flex;gap:9px;margin-bottom:7px;font-size:14px;align-items:flex-start}
+ul.f li:last-child{margin-bottom:0}
+.ftag{flex:none;font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);border:1px solid var(--line);border-radius:2px;padding:2px 6px;margin-top:2px;min-width:74px;text-align:center}
+.ftag.warnt{color:var(--rx);border-color:rgba(217,88,79,.55)}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:11px}
+.badge{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;padding:4px 8px;border-radius:999px;border:1px solid;white-space:nowrap}
+.b-A{color:var(--rx);border-color:rgba(217,88,79,.5);background:rgba(217,88,79,.09)}
+.b-D{color:var(--slate);border-color:rgba(111,154,168,.5);background:rgba(111,154,168,.09)}
+.b-F{color:var(--amber);border-color:rgba(232,163,61,.5);background:rgba(232,163,61,.09)}
+.b-T{color:var(--violet);border-color:rgba(154,139,208,.5);background:rgba(154,139,208,.09)}
+.b-C{color:var(--teal);border-color:rgba(77,187,162,.5);background:rgba(77,187,162,.09)}
+.b-warn{color:#fff;border-color:var(--rx);background:var(--rx);font-weight:600}
+.b-save{color:#0C1416;border-color:var(--amber);background:var(--amber);font-weight:600}
+.b-unv{color:var(--dim);border-color:var(--line);background:transparent}
+
+.filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.filters button{background:var(--panel);border:1px solid var(--line);color:var(--dim);font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding:7px 12px;border-radius:var(--r);cursor:pointer}
+.filters button:hover{color:var(--text)}
+.filters button.on{background:var(--amber);border-color:var(--amber);color:#0C1416;font-weight:600}
+.chal{display:flex;gap:11px;align-items:flex-start;border:1px solid var(--line-soft);border-radius:var(--r);background:var(--panel);padding:11px 13px;margin-bottom:6px}
+.chal.done{background:#14231F;border-color:#2E4F45}
+.chal h4{font-size:19px}
+.chal.done h4{text-decoration:line-through;color:var(--dim)}
+.chal .cond{font-size:13.5px;color:var(--dim);margin:2px 0 0}
+.chal .m{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;align-items:center}
+.xpv{font-family:"IBM Plex Mono",monospace;font-size:10px;color:var(--amber)}
+.runtag{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);border:1px solid var(--line);padding:3px 7px;border-radius:999px}
+
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:10px 0 22px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+th{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);border-bottom-color:var(--line)}
+td.num,th.num{font-family:"IBM Plex Mono",monospace}
+.ok{color:var(--teal)}
+h3.blk{font-size:23px;text-transform:uppercase;margin:26px 0 6px}
+h3.blk:first-child{margin-top:0}
+.lede{color:var(--dim);font-size:14px;margin:0 0 12px;max-width:84ch}
+ul.plain{padding-left:18px;margin:8px 0 18px}
+ul.plain li{margin-bottom:8px;font-size:14px}
+.src{border:1px solid var(--line-soft);border-radius:var(--r);padding:11px 13px;margin-bottom:7px;background:var(--panel)}
+.src .p{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber)}
+.src .t{font-size:14px;margin-top:2px}
+.src .u{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--dim);word-break:break-all}
+
+@media (max-width:640px){
+  .detail{padding-left:13px}
+  .rx-cell{border-right:none}
+  .ftag{min-width:64px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hdr">
+    <div class="eyebrow">Special Assignment · Whittleton Creek, Vermont</div>
+    <h1>A Bitter&nbsp;Pill <span class="thin">/ 21</span></h1>
+    <p class="sub">Step by step, five runs, every challenge covered. Verified against your in-game export, the Hitman Wiki mission and walkthrough pages, the nine individual challenge pages, and two community route guides. Anything a source could not confirm is labelled, not guessed.</p>
+    <div class="facts">
+      <span class="fact"><b>21</b> challenges</span>
+      <span class="fact"><b>53,000</b> XP</span>
+      <span class="fact"><b>1</b> target · Galen Vholes</span>
+      <span class="fact"><b>0</b> mission stories</span>
+      <span class="fact"><b>0</b> Chameleon disguises</span>
+      <span class="fact"><b>0</b> discovery areas</span>
+    </div>
+    <div class="tracker">
+      <div class="trk-top">
+        <div><div class="lbl">Challenges complete</div><div class="big"><span id="tDone">0</span><small>/21</small></div></div>
+        <div style="text-align:right"><div class="lbl">XP earned</div><div class="xp"><span id="tXp">0</span> / 53,000</div></div>
+      </div>
+      <div class="cap"><i id="tFill"></i></div>
+      <div class="cats" id="tCats"></div>
+      <button class="reset" id="btnReset">Clear all progress</button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <nav class="tabs" role="tablist">
+    <button role="tab" id="tab-runs" aria-selected="true" aria-controls="p-runs">Runs</button>
+    <button role="tab" id="tab-check" aria-selected="false" aria-controls="p-check">Checklist</button>
+    <button role="tab" id="tab-verify" aria-selected="false" aria-controls="p-verify">Verification</button>
+  </nav>
+
+  <section id="p-runs" role="tabpanel" aria-labelledby="tab-runs">
+    <div class="runbar" id="runbar"></div>
+
+    <div class="notice warn">
+      <h4>Three things this mission does not have</h4>
+      <p><b>No Mission Stories.</b> Confirmed by the wiki and by your export. There is no story order to protect and no "complete all stories" challenge. Guides that list mission stories here are describing <i>Another Life</i>, the main Whittleton Creek mission.</p>
+      <p><b>No Chameleon and no discovery areas.</b> Your export reports <span class="xpv">disguiseCount: 0</span> and <span class="xpv">areaCount: 0</span>, with areas shared from Another Life. There is no disguise set to collect and no map to sweep.</p>
+      <p><b>Eight kill methods, one target.</b> Every kill challenge is mutually exclusive within a single life, so Runs 4 and 5 branch off one save each. Run the runs in order — Versatile Assassin in Run 5 needs challenges banked in Runs 1 and 4.</p>
+    </div>
+
+    <div id="runs"></div>
+  </section>
+
+  <section id="p-check" role="tabpanel" aria-labelledby="tab-check" hidden>
+    <p class="lede">All 21 challenges. Unlock text is quoted from your in-game export; XP values come from the wiki, which your export does not carry.</p>
+    <div class="filters" id="filters"></div>
+    <div id="checklist"></div>
+  </section>
+
+  <section id="p-verify" role="tabpanel" aria-labelledby="tab-verify" hidden>
+    <h3 class="blk">Count audit</h3>
+    <p class="lede">Your export, the wiki challenge table, and this guide counted independently.</p>
+    <table><thead><tr><th>Category</th><th class="num">Your export</th><th class="num">Wiki table</th><th class="num">This guide</th><th class="num">XP</th><th>Match</th></tr></thead>
+    <tbody id="auditRows"></tbody><tfoot id="auditFoot"></tfoot></table>
+
+    <h3 class="blk">Corrections since the previous version</h3>
+    <ul class="plain">
+      <li><b>Someone Could Hurt Themselves moved off the mailbox bomb.</b> A planted remote explosive registers as an explosion kill, and no source confirms it also counts as an accident. It now sits on the electrocution in Run 4, which is unambiguously an accident, with the fire kill in the same run as a second chance.</li>
+      <li><b>Flammable Snake Oil now has a real method.</b> The challenge page gives it: shoot the red barrel to start an oil leak, clear Vholes' personal guard, then coin-lure him into the puddle during his outdoor phone call and shoot the oil. The previous "carry his body to the barrel" was an assumption and is gone.</li>
+      <li><b>Letterboxed and Big Bang Theory now have their trigger.</b> Both pages say the same thing: place the item, wait for Vholes to answer the door once the sheriff rings it, detonate as he approaches the mailbox. Previously flagged unverified; now confirmed twice.</li>
+      <li><b>I Am the Law now has a specific NPC and moment.</b> The challenge page names the single outdoor deputy who examines the garden fence once the police begin protecting the house. Body goes in the nearby bush.</li>
+      <li><b>Cellar Door no longer requires the aide pacifications.</b> The challenge fires on the shutdown itself. Pacifying the two investigating aides only matters if you need the alarm to stay down, which nothing else in Run 3 does — so Run 3 skips it and leaves the basement immediately, which also keeps bodies away from the treehouse sequence.</li>
+      <li><b>Run 3 reordered into a single loop.</b> Previously the treehouse came first "for safety". Cellar Door's own page says to move fast before the deputies enter the building, and I Am the Law needs the deputies to have deployed — so basement first, treehouse while the police arrive, then the fence deputy, then the mailbox. No backtracking.</li>
+    </ul>
+
+    <h3 class="blk">Run logic simulation</h3>
+    <table><thead><tr><th>Check</th><th>Result</th></tr></thead><tbody>
+      <tr><td>Every challenge assigned to exactly one run</td><td class="ok">Pass — 21 assigned, 0 duplicated, 0 orphaned</td></tr>
+      <tr><td>No step needs an item or disguise obtained later</td><td class="ok">Pass — sniper before the shot (R1), mailman before the office (R2), keycard before the vault (R3), oil leak and guard cleared before the phone call (R4), all three poisons in the loadout before the save (R5)</td></tr>
+      <tr><td>No NPC removed who is needed later in the same run</td><td class="ok">Pass — Run 3 leaves both gardeners and Sheriff Masterson untouched, because the treehouse needs the gardeners unpacified and the mailbox needs the sheriff's doorbell</td></tr>
+      <tr><td>No scripted event broken by ordering</td><td class="ok">Pass — treehouse before any pacification near the garden; mailbox lure before the target dies; Prescription only after the aide-and-sheriff conversation ends</td></tr>
+      <tr><td>Save points do not break later objectives</td><td class="ok">Pass — every save is taken before a branch, never mid-script. Reload risk flagged inline on each affected step</td></tr>
+      <tr><td>Mutually exclusive kills separated</td><td class="ok">Pass — 8 kill methods: 1 in R1, 1 in R2, 1 in R3, 2 in R4 off one save, 3 in R5 off one save</td></tr>
+      <tr><td>Target not killed before related challenges complete</td><td class="ok">Pass — R3 kills Vholes only on its final step, after treehouse, alarm, uniform and lure are all banked</td></tr>
+      <tr><td>Route efficiency, no backtracking</td><td class="ok">Pass — R3 is one lap: left fence → basement → ground-floor front room → basement vault → garden treehouse → garden fence → front mailbox</td></tr>
+      <tr><td>Run order dependency</td><td class="ok">Pass — Versatile Assassin needs Straight Shot (R1) and Someone Could Hurt Themselves (R4), so it is scheduled last in R5</td></tr>
+      <tr><td>Every challenge in a run is achievable in that run</td><td class="ok">Pass — no run assigns two kill challenges to the same life</td></tr>
+    </tbody></table>
+
+    <h3 class="blk">Still unverified</h3>
+    <p class="lede">Each has a confirmed fallback in the route. None is load-bearing.</p>
+    <ul class="plain" id="unverified"></ul>
+
+    <h3 class="blk">Source conflicts, unresolved</h3>
+    <ul class="plain">
+      <li><b>Which fence you vault.</b> The wiki walkthrough says vault the fence on the <i>left</i> side of the house and drop to the basement. The Steam speedrun route says jump the fence on the <i>right</i> to reach the gardeners. Both reach the same rear garden; each run uses the wording of the source it came from.</li>
+      <li><b>How the alarm is disabled.</b> The in-game intelligence entry says the lasergrid is disabled by tripping the main breaker in the basement. The walkthrough and the Cellar Door page both describe the keycard-locked vault instead. Both are in the basement. The route uses the vault because two sources describe it step by step.</li>
+      <li><b>Challenge count listed as 23.</b> The wiki's category page cross-lists Ectoplasmic and No Evidence, both cut in HITMAN III, plus Cloud Nine and Welcome to Business Class, which belong to Another Life. Your export and the wiki mission table both say 21.</li>
+      <li><b>Challenge text wording.</b> Your export's Silent Assassin and Sniper Assassin entries omit the "erase or destroy camera evidence" clause that the wiki table includes. The checklist quotes your export, since that is the in-game text.</li>
+    </ul>
+
+    <h3 class="blk">Sources</h3>
+    <div class="src"><div class="p">Priority 0 — your file</div><div class="t">04 - A Bitter Pill.json — in-game challenge export. 21 challenges, disguiseCount 0, areaCount 0, areaGoal null, areas shared with Another Life</div><div class="u">user upload</div></div>
+    <div class="src"><div class="p">Priority 1 — Hitman Wiki</div><div class="t">A Bitter Pill — challenge table with XP, intelligence entries, target lockdown behaviour, Whittleton Creek mastery table</div><div class="u">hitman.fandom.com/wiki/A_Bitter_Pill</div></div>
+    <div class="src"><div class="p">Priority 1 — Hitman Wiki</div><div class="t">A Bitter Pill/Walkthrough — guard composition, keycard location, pipe to the upstairs bathroom, vacuum distraction, Sheriff Masterson's routine</div><div class="u">hitman.fandom.com/wiki/A_Bitter_Pill/Walkthrough</div></div>
+    <div class="src"><div class="p">Priority 1 — Hitman Wiki</div><div class="t">Challenge pages: Prescription, Second Opinion, Shocking Health Benefits, Flammable Snake Oil, Big Bang Theory, Letterboxed, Cellar Door, Treehouse Stalker, I Am the Law</div><div class="u">hitman.fandom.com/wiki/[challenge]</div></div>
+    <div class="src"><div class="p">Priority 1 — Hitman Wiki</div><div class="t">Dale Anderson; Galen Vholes; HITMAN 2 Side Characters — mailman start position and disguise access, Sheriff Masterson's unique outfit and consultation</div><div class="u">hitman.fandom.com/wiki/Dale_Anderson</div></div>
+    <div class="src"><div class="p">Priority 5 — Steam</div><div class="t">"A Bitter Pill easy Master TEXT suit only silent assassin with sniper" by Waaabafet! — the Run 1 route</div><div class="u">steamcommunity.com/sharedfiles/filedetails/?id=2599074709</div></div>
+    <div class="src"><div class="p">Priority 5 — Steam</div><div class="t">"Whittleton Creek Challanges" by Nindreaus — item locations for the four scripted Vholes kills</div><div class="u">steamcommunity.com/sharedfiles/filedetails/?id=3439527051</div></div>
+    <div class="src"><div class="p">Priority 6 — Steam discussion</div><div class="t">"Challenges might not unlock if you use saves" — community bug reports, used only for the reload warnings</div><div class="u">steamcommunity.com/app/863550/discussions/0/1742227264197736136</div></div>
+
+    <h3 class="blk">Not sourceable</h3>
+    <ul class="plain">
+      <li><b>NPC names.</b> Only Galen Vholes, Sheriff Masterson, Dale Anderson and Helen West are named anywhere. The two gardeners, the four police deputies and Vholes' two plainclothes aides are unnamed in every source consulted, so they are identified by post and patrol instead.</li>
+      <li><b>Patch history.</b> No challenge in the current 21 is recorded as added by a patch. Ectoplasmic and No Evidence were cut in HITMAN III, with no patch number given.</li>
+    </ul>
+  </section>
+</div>
+
+<script>
+const CATS={A:{n:"Assassination",c:"var(--rx)"},D:{n:"Discovery",c:"var(--slate)"},F:{n:"Feats",c:"var(--amber)"},T:{n:"Targets",c:"var(--violet)"},C:{n:"The Classics",c:"var(--teal)"}};
+const ORDER=["A","D","F","T","C"];
+
+const CH=[
+ {id:"shb",n:"Shocking Health Benefits",c:"A",xp:2000,run:4,cond:"Eliminate Galen Vholes by electrifying a puddle of Atlantide. / Ignore the science."},
+ {id:"ss",n:"Straight Shot",c:"A",xp:1000,run:1,cond:"Assassinate a target with a headshot."},
+ {id:"hmh",n:"Hold My Hair",c:"A",xp:1000,run:5,cond:"Assassinate a target by drowning them."},
+ {id:"scht",n:"Someone Could Hurt Themselves",c:"A",xp:1000,run:4,cond:"Assassinate a target in an accident."},
+ {id:"pre",n:"Prescription",c:"A",xp:4000,run:2,cond:"Eliminate Galen Vholes with a pen."},
+ {id:"tt",n:"Tasteless, Traceless",c:"A",xp:1000,run:5,cond:"Assassinate a target with lethal poison."},
+ {id:"va",n:"Versatile Assassin",c:"A",xp:4000,run:5,cond:"Complete the following Versatile challenges in Whittleton Creek: Piano Man / Someone Could Hurt Themselves / Hold My Hair / Straight Shot / Tasteless, Traceless"},
+ {id:"fso",n:"Flammable Snake Oil",c:"A",xp:2000,run:4,cond:"Eliminate Galen Vholes by setting him on fire."},
+ {id:"pm",n:"Piano Man",c:"A",xp:1000,run:5,cond:"Assassinate a target with the fiber wire."},
+ {id:"bbt",n:"Big Bang Theory",c:"A",xp:2000,run:3,cond:"Eliminate Galen Vholes in an explosion."},
+ {id:"so",n:"Second Opinion",c:"D",xp:2000,run:2,cond:"As the mailman, meet with Galen Vholes for a consultation."},
+ {id:"ths",n:"Treehouse Stalker",c:"D",xp:2000,run:3,cond:"Observe Galen Vholes from the treehouse in his garden."},
+ {id:"cd",n:"Cellar Door",c:"F",xp:2000,run:3,cond:"Disable Galen Vhole's security system."},
+ {id:"iatl",n:"I Am the Law",c:"F",xp:2000,run:3,cond:"Disguise yourself as a Police Officer."},
+ {id:"lb",n:"Letterboxed",c:"F",xp:2000,run:3,cond:"Lure Galen Vholes to his mailbox by placing an item inside."},
+ {id:"quack",n:"The Quack",c:"T",xp:4000,run:1,cond:"Eliminate Galen Vholes."},
+ {id:"suit",n:"Suit Only",c:"C",xp:4000,run:1,cond:"Eliminate the target and complete the mission. / Do it all in your suit."},
+ {id:"clas",n:"The Classics",c:"C",xp:4000,run:1,cond:"Complete all the Classic challenges for \"A Bitter Pill.\" / Silent Assassin / Silent Assassin, Suit Only / Sniper Assassin / Suit Only"},
+ {id:"saso",n:"Silent Assassin, Suit Only",c:"C",xp:4000,run:1,cond:"Complete \"A Bitter Pill.\" / Only eliminate the target. / No bodies found. / Do not get spotted. / Do it all in your suit."},
+ {id:"sa",n:"Silent Assassin",c:"C",xp:4000,run:1,cond:"Complete \"A Bitter Pill.\" / Only eliminate the target. / No bodies found. / Do not get spotted."},
+ {id:"snip",n:"Sniper Assassin",c:"C",xp:4000,run:1,cond:"Complete \"A Bitter Pill.\" / Eliminate the target with a sniper rifle. / Only eliminate the target. / Do not get spotted."}
+];
+
+const UNVERIFIED=[
+ "<b>Which starting locations A Bitter Pill actually offers.</b> Whittleton Creek's mastery track unlocks six starts, but no source confirms which the Special Assignment exposes. Only the default bus stop is confirmed in use, by a second-source route. Every run here uses it — available at Mastery 1, and the only start that begins in your own suit, which Run 1 requires.",
+ "<b>Which bathroom Vholes walks to after emetic poison.</b> The house has a downstairs bathroom with a sink and an upstairs bathroom, both confirmed, but no source says which he uses. Run 5 gives the coin-on-the-toilet lure as the method that does not depend on knowing.",
+ "<b>Whether Vholes drinks from the office water cooler.</b> The walkthrough confirms Sheriff Masterson comes to that office for water; nothing confirms Vholes does. Run 5 leads with a syringe and never routes poison through the cooler.",
+ "<b>A propane flask inside Vholes' house.</b> A community guide places one in the Schmidt kitchen during Another Life, and Vholes occupies the Schmidt house, but nothing confirms it is still there. Run 3 uses a remote explosive, confirmed by two pages.",
+ "<b>The garden tractor as an explosion source.</b> One community guide suggests dragging Vholes to his garden tractor. No second source confirms it and no page describes the setup, so it is not in the route.",
+ "<b>That a popped challenge survives a reload.</b> Universally relied on by the community and by every multi-challenge route, but never documented officially. A Steam thread separately reports the opposite failure: challenges that stop registering after a save is loaded.",
+ "<b>Leaving bodies unhidden in Run 1.</b> The Steam route claims nobody checks the garden or living room inside its time window, so Silent Assassin survives. Single source, and a speed bet. The safe version is in that step's fallback line."
+];
+
+const RUNS=[
+{
+ id:1,title:"Fast Hands, Clean Sheet",
+ goal:"All four Classics plus the target and the headshot in one sub-six-minute suit-only run, finished before the police ever get inside the house.",
+ load:{start:"Whittleton Creek (bus stop)",startNote:"Mastery 1. The default arrival by bus — the only start confirmed in use, and the only one that begins in your suit.",
+  suit:"Signature Suit",suitNote:"Do not pick up a single disguise. Suit Only and SASO both die the moment you change.",
+  slots:[
+   {k:"Weapon",v:"Empty",n:"Nothing concealed needed — the rifle rides in the briefcase."},
+   {k:"Item 1",v:"Lockpick",n:"Back door on the way in, basement doors on the way out."},
+   {k:"Item 2",v:"Coin",n:"Backup distraction if the vacuum has already been switched off."},
+   {k:"Briefcase",v:"Sieger 300 Ghost",n:"Suppressed bolt-action. Any suppressed sniper works. Unsuppressed means you must pacify the deputy before firing."}]},
+ secs:[
+ {n:"Approach — the first ninety seconds",steps:[
+  {t:"Sprint down the street to Vholes' house",s:"Do not explore. Run straight from the bus stop to the property on the far side of the road.",
+   f:[["Where","From the bus-stop start, straight down the road to the house opposite — the one with a lasergrid alarm across the front and four police deputies standing outside."],
+      ["Disguise","None. Your suit, for the whole run."],
+      ["Do","Run. The entire premise is arriving before Vholes ever answers his front door — once he does, the deputies come inside and the house fills up."],
+      ["Warning","If you are spotted on the street, restart. Silent Assassin has no recovery this early.",1]],b:[]},
+  {t:"Vault the fence and briefcase both gardeners",s:"Jump the fence on the right side of the house into the rear garden and knock both gardeners out with a thrown briefcase.",
+   f:[["Where","Rear garden of the property, over the right-hand fence."],
+      ["NPC","Two gardeners working the garden. A police deputy also wanders the backyard near the basement door — stay out of his arc rather than engaging him."],
+      ["Item","Your briefcase. Throw it at the back of each head, then pick it back up — the sniper is inside it."],
+      ["Warning","The source route leaves both bodies where they fall, claiming nobody checks the garden in this window. That is a single-source speed bet. Safe version: drag them into the garden bushes before moving on.",1]],
+   b:[{c:"unv",t:"Unhidden bodies — single source"}]},
+  {t:"Lockpick the back door, briefcase the aide inside",s:"Pick the rear door and take out the plainclothes aide sweeping or sitting in the living room, then collect the briefcase again.",
+   f:[["Where","Rear door of the house, into the ground-floor living room."],
+      ["Item","Lockpick for the door, briefcase for the pacification."],
+      ["NPC","One of Vholes' plainclothes assistants — undercover armed guards, not staff, and they react to anything that looks like a threat. He is alone in the room this early."],
+      ["Do","Throw, retrieve the briefcase, and go straight up the stairs. Do not stop to hide him."]],b:[]}
+ ]},
+ {n:"The shot",steps:[
+  {t:"Save the moment you reach the landing",s:"This is the branch point — Vholes leaves his room by one of three exits and each needs a different response.",
+   f:[["Where","Top of the stairs, upstairs landing."],
+      ["Do","Use your one save here. It turns three coin flips into three attempts."],
+      ["Warning","Loading a save has been reported to stop challenges registering. If something fails to pop after a reload, restart the mission clean rather than reloading again.",1]],
+   b:[{c:"save",t:"Save here"},{c:"warn",t:"Reload can break challenge scripting"}]},
+  {t:"Switch on the vacuum to pull the deputy",s:"The vacuum cleaner sits on the left of the stairs. Turning it on sends one of the posted deputies over to shut it off.",
+   f:[["Where","Left-hand side of the upstairs landing."],
+      ["NPC","Two police deputies are posted at the top of the stairs; the noise pulls one away."],
+      ["Do","Switch it on, get into position while he walks, and do not fire until he is committed to it."],
+      ["Alternative","A thrown coin does the same job if the vacuum is already off or the deputy has drifted."],
+      ["Warning","If your sniper is not suppressed, pacify the deputy first or the shot will be heard.",1]],b:[]},
+  {t:"Headshot Vholes wherever he exits",s:"He leaves by the window, the right door or the left door. Take a headshot in every case — one shot pays three challenges.",
+   f:[["Where","Upstairs, from the landing. Window: shoot him there and then, then pacify the deputy at the vacuum. Right door: hide behind it as it opens and shoot him stepping through. Left door: briefcase the deputy first, then shoot."],
+      ["NPC","Galen Vholes. He only needs to be in your line and unaware — no specific action required."],
+      ["Do","The headshot registers Straight Shot, the sniper rifle registers Sniper Assassin, the kill registers The Quack."],
+      ["Warning","If he moves oddly, reload the landing save rather than chasing him around the floor.",1]],
+   b:[{c:"T",t:"The Quack +4000"},{c:"A",t:"Straight Shot +1000"},{c:"C",t:"Sniper Assassin +4000"}]},
+  {t:"Walk out the front door and exit",s:"Nobody conscious is left inside. Leave by the front or the basement, then take the bus or the bridge.",
+   f:[["Where","Front door, or the basement — lockpick the basement door then the exit door to stay off the street."],
+      ["Do","Exit at the bus stop or the bridge. Silent Assassin, Suit Only and Sniper Assassin resolve at the exit, and The Classics fires as the fourth Classic lands."],
+      ["Warning","You were fast enough that Vholes never opened the front door, so the four deputies outside never came in. If you were slow and they did, restart — hiding four bodies costs the run.",1]],
+   b:[{c:"C",t:"Silent Assassin +4000"},{c:"C",t:"SA, Suit Only +4000"},{c:"C",t:"Suit Only +4000"},{c:"C",t:"The Classics +4000"}]}
+ ]}]
+},
+{
+ id:2,title:"The House Call",
+ goal:"Become the mailman, take a consultation from a man with no medical qualifications, and put his own pen through his eye. Both challenges land in one life — no reload needed.",
+ load:{start:"Whittleton Creek (bus stop)",startNote:"Mastery 1. Dale Anderson starts his round just off this location, so no other start is worth taking.",
+  suit:"Signature Suit",suitNote:"You swap into the mailman uniform inside the first two minutes.",
+  slots:[
+   {k:"Weapon",v:"Sedative syringe or tranquilizer",n:"Optional. A sedated Dale keeps a Silent Assassin rating intact if you want one on this run."},
+   {k:"Item 1",v:"Lockpick",n:"Opens the West Property front door so Dale's body goes in the living room closet."},
+   {k:"Item 2",v:"Coin",n:"For moving anyone loitering outside the office."},
+   {k:"Briefcase",v:"Empty",n:"The pen is already in the consultation room. Bring nothing."}]},
+ secs:[
+ {n:"Becoming Dale Anderson",steps:[
+  {t:"Find the mailman down and right of the start",s:"Dale Anderson begins in the same spot he does in Another Life — to the right and down the street from the default start.",
+   f:[["Where","Right and down the street from the bus stop."],
+      ["NPC","Dale Anderson, the neighbourhood mailman. The mission's intelligence entry confirms Vholes has an appointment with him today and will see him once his round is done."],
+      ["Do","Follow him. Do not take him here — you want him at one specific door."],
+      ["Disguise","None yet. Dale is not hostile to a man in a suit."]],b:[]},
+  {t:"Take him at the West Property front door",s:"Follow Dale until he walks up to the West Property front door, then subdue him there and take the uniform.",
+   f:[["Where","The West Property front door — Helen West's house. The one point on his round where he is reliably isolated at a door you can open."],
+      ["Item","Tranquilizer to sedate him, or lockpick the door first and drag him into the living room closet."],
+      ["Do","Take the mailman uniform. It grants access to Vholes' property everywhere except the basement — all this run needs."],
+      ["Warning","A body found here costs Silent Assassin. Neither of Run 2's challenges requires that rating, so a plain subdue is fine if you are not chasing it.",1]],
+   b:[{c:"save",t:"Save here — before entering the property"}]}
+ ]},
+ {n:"The consultation",steps:[
+  {t:"Talk to the aide, but only after the sheriff finishes",s:"Go to Vholes' office and interact with his aide once they have finished their conversation with Sheriff Masterson.",
+   f:[["Where","Vholes' office. Walk in the front as the mailman — the uniform covers the whole property bar the basement."],
+      ["NPC","One plainclothes aide spends most of the mission seated on the office couch. Sheriff Masterson comes in regularly for water and takes his own consultation with Vholes at some point."],
+      ["Do","Wait out the aide-and-sheriff dialogue, then interact with the aide to book the appointment."],
+      ["Warning","Interrupting mid-conversation will not start it. If the prompt does not appear, step out of the room and back in once he is idle.",1]],b:[]},
+  {t:"Sit down in the consultation room",s:"Move upstairs to the consultation room and take the chair. Second Opinion pops on the meeting itself, before any violence.",
+   f:[["Where","Consultation room, upstairs."],
+      ["Disguise","Mailman, and only the mailman. No other outfit starts this sequence."],
+      ["Do","Sit and listen. Vholes pitches four litres of de-mineralised saltwater as a treatment for Dale's chronic illness; 47 points out that is just water, and Vholes talks around it."],
+      ["Warning","Save once seated — the kill prompt is on a timer and you may want a retry.",1]],
+   b:[{c:"D",t:"Second Opinion +2000"},{c:"save",t:"Save here"}]},
+  {t:"Wait for the pen prompt, then take it",s:"Stay in the chair through the whole pitch until the kill prompt appears, then drive the pen through his eye.",
+   f:[["Where","Still seated, consultation room."],
+      ["Item","The pen is already in the office on the second floor. You do not bring one."],
+      ["NPC","Galen Vholes, seated opposite you, mid-consultation."],
+      ["Do","Take the prompt. This is a unique animation, not the standard pen kill used elsewhere in the trilogy."],
+      ["Warning","Do not stand up early. The prompt only appears once he has finished his offer.",1]],
+   b:[{c:"A",t:"Prescription +4000"}]}
+ ]}]
+},
+{
+ id:3,title:"One Loop, Five Challenges",
+ goal:"Sweep every non-kill challenge in a single lap of the property — basement, treehouse, uniform, mailbox — and finish by blowing Vholes up at his own letterbox.",
+ load:{start:"Whittleton Creek (bus stop)",startNote:"Mastery 1.",
+  suit:"Signature Suit",suitNote:"You finish this run in a deputy's uniform. That costs nothing — no Classic challenge is scheduled here.",
+  slots:[
+   {k:"Weapon",v:"Suppressed pistol",n:"Quiet repositioning. Not strictly required."},
+   {k:"Item 1",v:"Lockpick",n:"Basement and interior doors."},
+   {k:"Item 2",v:"Coin",n:"Distractions, and a valid mailbox item on its own if you only want Letterboxed."},
+   {k:"Briefcase",v:"Remote explosive",n:"Remote CX Demo Block Mk II (WC Mastery 13) or Remote Explosive Rubber Duck Mk II (WC Mastery 20). Bring none and remote explosives can be found in Cassidy's gun room."}]},
+ secs:[
+ {n:"Ordering rule — read before you move",steps:[
+  {t:"Leave both gardeners and the sheriff alone all run",s:"Treehouse Stalker breaks if Vholes notices a gardener's body, and the mailbox lure needs Sheriff Masterson alive and on his route.",
+   f:[["NPC","The two gardeners on Vholes' property and Sheriff Masterson. None of them is touched in this run."],
+      ["Do","Nothing yet — this is the constraint the run is built around. Basement work and the deputy takedown are fine, because neither involves a gardener."],
+      ["Warning","If target lockdown triggers at any point, Vholes retreats downstairs and stands outside the basement vault. He will not come to the window and he will not come to the mailbox, which ends the run.",1]],
+   b:[{c:"warn",t:"No gardener pacifications this run"}]}
+ ]},
+ {n:"The basement",steps:[
+  {t:"Vault the left fence and drop to the basement door",s:"Walk past the deputies out front, vault the fence on the left side of the house and drop to the basement entrance.",
+   f:[["Where","Left-side fence, then down to the basement door at the rear of the property."],
+      ["Disguise","Suit. The gardener disguise is permitted in the backyard, but taking it means pacifying a gardener, which is banned this run."],
+      ["NPC","One police deputy wanders the backyard near the basement door. Time your drop against his patrol."],
+      ["Warning","Cellar Door is easier before the deputies enter the building, so move quickly through this section.",1]],b:[]},
+  {t:"Take the vault keycard from the ground-floor front room",s:"Go up from the basement to the front room. The keycard sits on a table beside an aide who is cleaning with his back turned.",
+   f:[["Where","Front room, ground floor. The table next to the cleaning aide."],
+      ["Item","Vault keycard — grants access to the security room in Vholes' basement."],
+      ["NPC","One of Vholes' plainclothes aides, cleaning. His back stays turned for a long window."],
+      ["Alternative","Skip the keycard entirely by hacking the vault door's keycard reader instead."],
+      ["Warning","If he turns, back into the hall and wait a cycle. Do not subdue him — a body here starts the aide investigation early.",1]],b:[]},
+  {t:"Open the vault and shut the security system down",s:"Return to the basement, unlock the vault with the keycard and disable the system inside. Cellar Door pops on the shutdown.",
+   f:[["Where","The vault inside the basement."],
+      ["Do","Disable the system. This kills the lasergrid protecting the house from Vholes' many detractors."],
+      ["Alternative","Both aides will come down to re-enable it and can be pacified and dumped in the nearby container — but nothing left in this run needs the alarm to stay off, so skip that and leave immediately."],
+      ["Warning","Sources disagree on the mechanism: the in-game intel says trip the main breaker, the walkthrough and challenge page say the vault console. Both are in the basement.",1]],
+   b:[{c:"F",t:"Cellar Door +2000"},{c:"unv",t:"Breaker vs vault — sources differ"}]}
+ ]},
+ {n:"Treehouse and uniform",steps:[
+  {t:"Climb the treehouse and hold the camera on Vholes",s:"Leave the basement into the garden and get up into the treehouse. Wait for Vholes to look out of his window and centre the camera on him.",
+   f:[["Where","The treehouse in Vholes' garden — the old Schmidt property, the same treehouse used for the sniper challenges in Another Life."],
+      ["NPC","Galen Vholes, at his upstairs window. He appears on a loop; stay put and wait rather than repositioning."],
+      ["Do","Centre the camera on him and hold it. The challenge fires on the observation itself."],
+      ["Warning","If he stops appearing at the window, reload and do the treehouse before the basement instead.",1]],
+   b:[{c:"D",t:"Treehouse Stalker +2000"},{c:"save",t:"Save here"}]},
+  {t:"Take the outdoor deputy at the garden fence",s:"Once the police begin protecting the house, one deputy walks over to examine the garden fence. Subdue him there and take the uniform.",
+   f:[["Where","At the garden fence, on Vholes' property."],
+      ["NPC","The single outdoor police deputy, at the moment he stops to examine the fence — that is when he is isolated."],
+      ["Do","Subdue him, drag the body into the nearby bush, and put the uniform on. I Am the Law fires on wearing it."],
+      ["Alternative","Sheriff Masterson's unique outfit also counts — but he is needed alive for the mailbox, so use a deputy."],
+      ["Warning","Hide the body in the bush. Vholes noticing a corpse can trigger lockdown, which kills the mailbox lure.",1]],
+   b:[{c:"F",t:"I Am the Law +2000"}]}
+ ]},
+ {n:"The mailbox",steps:[
+  {t:"Put the remote explosive in the front mailbox",s:"Place your explosive inside the mailbox at the street side of Vholes' property, then back off to a spot with line of sight.",
+   f:[["Where","The mailbox outside Vholes' home, street side."],
+      ["Item","Any remotely detonated explosive. For Letterboxed alone almost any object works — a plain coin is enough."],
+      ["Do","Place it, then get clear of the blast radius while keeping the mailbox in view."],
+      ["Warning","Save before placing. If lockdown has already triggered he will never come out.",1]],
+   b:[{c:"save",t:"Save here"}]},
+  {t:"Wait for the sheriff's doorbell, then detonate",s:"Sheriff Masterson rings the door, Vholes answers, then walks out to the mailbox. Detonate as he reaches it.",
+   f:[["Where","From cover with line of sight on the mailbox."],
+      ["NPC","Sheriff Masterson rings the bell; Galen Vholes answers and comes out. He must be at or reaching into the mailbox when you fire."],
+      ["Do","Detonate manually so you control the timing. Letterboxed fires on the lure, Big Bang Theory on the kill."],
+      ["Warning","Do not use a proximity trigger — you lose control of the moment and may catch the sheriff instead.",1]],
+   b:[{c:"F",t:"Letterboxed +2000"},{c:"A",t:"Big Bang Theory +2000"}]}
+ ]}]
+},
+{
+ id:4,title:"Two Accidents, One Doctor",
+ goal:"One save, two accident kills — burn him in an oil puddle during his outdoor phone call, then reload and electrocute him in a puddle of his own miracle water.",
+ load:{start:"Whittleton Creek (bus stop)",startNote:"Mastery 1.",
+  suit:"Signature Suit",suitNote:"No rating requirements here. A gardener disguise for the backyard is fine if it eases the approach.",
+  slots:[
+   {k:"Weapon",v:"Suppressed pistol",n:"Needed three times: the oil barrel, the water cooler, the floor socket."},
+   {k:"Item 1",v:"Lockpick",n:"Back door and basement."},
+   {k:"Item 2",v:"Coin",n:"Lures Vholes into the oil puddle, and pulls the extra occupant out of the consultation room."},
+   {k:"Briefcase",v:"Empty",n:"Both kill setups are already on the map."}]},
+ secs:[
+ {n:"Shared setup — do both before you save",steps:[
+  {t:"Shoot the red oil barrel in the garden",s:"Vault into the rear garden and put a suppressed round into the red barrel to start an oil leak on the ground.",
+   f:[["Where","The red oil barrel in Vholes' garden, near the back of the house."],
+      ["Item","Suppressed pistol."],
+      ["Do","Shoot the barrel once. It leaks and forms a puddle — this is the fire trap, and it must exist before Vholes comes outside."],
+      ["Warning","Suppressed only. An unsuppressed shot in the garden brings the backyard deputy over.",1]],b:[]},
+  {t:"Overflow the downstairs bathroom sink to pull his guard",s:"Vholes' personal guard has to be gone before the phone call. Overflowing the sink brings him in to deal with it.",
+   f:[["Where","The downstairs bathroom, ground floor. Enter the house through the back door."],
+      ["Item","Lockpick for the door. Nothing needed for the sink."],
+      ["NPC","Vholes' personal guard — the plainclothes aide who shadows him."],
+      ["Do","Run the tap until it overflows, hide, and pacify him when he comes to investigate. Stash the body in the room."]],b:[]},
+  {t:"Save now — both kills branch from here",s:"With the oil leaking and the guard down, this single save serves both accidents.",
+   f:[["Do","Save. Branch A is the fire, taken with Vholes alive. Branch B is the electrocution, taken with Vholes pacified. They cannot coexist in one life."],
+      ["Warning","Watch each challenge notification actually appear on screen before you reload. If one does not fire, restart the mission for that method rather than reloading again.",1]],
+   b:[{c:"save",t:"Save here"},{c:"warn",t:"Confirm each pop before reloading"}]}
+ ]},
+ {n:"Branch A — fire",steps:[
+  {t:"Coin him into the oil puddle during his phone call",s:"Vholes steps out the back of the house to take a call. Throw a coin into the puddle to walk him into it, then shoot the oil.",
+   f:[["Where","Behind the house at the oil puddle. Watch from cover in the garden."],
+      ["NPC","Galen Vholes, alive and on his phone — which is why his personal guard had to go first."],
+      ["Item","Coin to lure, suppressed pistol to ignite."],
+      ["Do","Throw the coin into the puddle as he comes out, wait until he is standing in the oil, then shoot the puddle."],
+      ["Warning","Do not shoot early. If he is beside the puddle rather than in it, the fire will not take him.",1]],
+   b:[{c:"A",t:"Flammable Snake Oil +2000"},{c:"A",t:"Someone Could Hurt Themselves +1000"}]}
+ ]},
+ {n:"Branch B — electrocution",steps:[
+  {t:"Reload, then isolate and pacify Vholes upstairs",s:"Load the save, go up to the consultation room, clear the second occupant and knock Vholes out.",
+   f:[["Where","Consultation room, second floor. The pipe on the left exterior wall into the upstairs bathroom is the quietest way up if the stairs are busy."],
+      ["NPC","Vholes is rarely alone here. Enter fast and subdue whoever is with him first — the challenge page confirms you can do this and still hold a Silent Assassin rating afterwards."],
+      ["Alternative","A coin thrown into the hallway pulls the extra occupant out instead of needing a pacification."],
+      ["Warning","Sheriff Masterson's water trips are the usual interruption. Wait for him to leave before committing.",1]],b:[]},
+  {t:"Drag him to the cooler, shoot the cooler then the socket",s:"Position his body next to the water cooler by one of the room's doors, then shoot the cooler to spill Atlantide and the socket to electrify it.",
+   f:[["Where","The water cooler beside one of the consultation room's doors, and the power socket on the floor next to it."],
+      ["Item","Suppressed pistol, two shots."],
+      ["Do","Drag Vholes' unconscious body against the cooler. Shoot the cooler first to make the puddle, then the socket. He is electrocuted where he lies."],
+      ["Warning","Stand outside the puddle before you shoot the socket. The challenge text's joke about ignoring the science is because pure water does not conduct — the game disagrees.",1]],
+   b:[{c:"A",t:"Shocking Health Benefits +2000"}]}
+ ]}]
+},
+{
+ id:5,title:"The Versatile Assassin",
+ goal:"The last three kill methods off one save — poison, drowning, fiber wire — completing the five-part Versatile Assassin meta. Run this after Runs 1 and 4.",
+ load:{start:"Whittleton Creek (bus stop)",startNote:"Mastery 1.",
+  suit:"Signature Suit",suitNote:"No rating requirements. Take whatever disguise gets you upstairs fastest.",
+  slots:[
+   {k:"Weapon",v:"Fiber wire",n:"Required for Piano Man. Nothing substitutes, and there is none to find on this map."},
+   {k:"Item 1",v:"Lethal poison syringe",n:"Or Lethal Pills, unlocked at Whittleton Creek Mastery 7. The syringe does not depend on his drinking habits."},
+   {k:"Item 2",v:"Emetic syringe or Emetic Pills",n:"Sends him to a bathroom for the drowning."},
+   {k:"Briefcase",v:"Empty",n:"—"}]},
+ secs:[
+ {n:"One save, three kills",steps:[
+  {t:"Reach the consultation room, isolate him, and save",s:"Same approach as Run 4 — back door or the exterior pipe — then clear the room around Vholes and save before committing.",
+   f:[["Where","Consultation room, second floor. Enter via the back door and stairs, or the pipe on the left exterior wall into the upstairs bathroom."],
+      ["NPC","Clear the second occupant, and check Sheriff Masterson is not mid-water-run."],
+      ["Do","Save once. All three remaining methods branch from this exact position — that is what turns three runs into one."],
+      ["Warning","Verify each challenge notification on screen before every reload.",1]],
+   b:[{c:"save",t:"Save here — all three kills branch from this point"},{c:"warn",t:"Verify each pop before reloading"}]},
+  {t:"Kill 1 — lethal poison",s:"Stick Vholes with the lethal syringe while he is alone and nobody has line of sight.",
+   f:[["Where","Consultation room, behind or beside him."],
+      ["Item","Lethal poison syringe. Poison syringes count as lethal poison for this challenge."],
+      ["Do","Inject and step away. He collapses. Reload afterwards."],
+      ["Warning","Do not route this through the office water cooler. The walkthrough only confirms Sheriff Masterson drinks there, so you risk killing the sheriff instead of the target.",1]],
+   b:[{c:"A",t:"Tasteless, Traceless +1000"},{c:"unv",t:"Cooler route unconfirmed for Vholes"}]},
+  {t:"Kill 2 — drowning",s:"Reload, hit him with emetic instead, and drown him at the toilet he walks to.",
+   f:[["Where","A bathroom in the house — one downstairs off the ground floor, one upstairs reached by the exterior pipe. No source says which he uses, so follow him."],
+      ["Item","Emetic syringe or pills."],
+      ["Do","He only needs to be standing at and facing the toilet — he does not have to be actively vomiting. Take the drown prompt from behind."],
+      ["Alternative","Place a coin on the toilet and throw a second coin to draw him into the room. Approaching the placed coin is enough to open the prompt, with no emetic needed."],
+      ["Warning","Clear the deputy who patrols between the stairs and the upstairs bathroom first, or he will walk in on you.",1]],
+   b:[{c:"A",t:"Hold My Hair +1000"},{c:"unv",t:"Which bathroom he uses is undocumented"}]},
+  {t:"Kill 3 — fiber wire, and the meta lands",s:"Reload once more, get behind an isolated Vholes and use the wire. This completes the fifth of five sub-challenges.",
+   f:[["Where","Consultation room, directly behind him and out of the aide's and the sheriff's sightlines."],
+      ["Item","Fiber wire from your loadout."],
+      ["Do","Approach from behind and garrotte him. Piano Man fires, and Versatile Assassin fires on top of it."],
+      ["Warning","Versatile Assassin needs Piano Man, Someone Could Hurt Themselves, Hold My Hair, Straight Shot and Tasteless, Traceless. Straight Shot came from Run 1 and Someone Could Hurt Themselves from Run 4 — if either is missing, the meta will not pop.",1]],
+   b:[{c:"A",t:"Piano Man +1000"},{c:"A",t:"Versatile Assassin +4000"}]}
+ ]}]
+}
+];
+
+const S={done:new Set(),steps:new Set(),ex:new Set(),open:new Set([1]),filter:"all"};
+try{const saved=JSON.parse(localStorage.getItem('bitter_pill_done_v1')||'[]');saved.forEach(id=>S.done.add(id));}catch(e){}
+try{const _s=JSON.parse(localStorage.getItem('bitter_pill_done_v1:steps'));if(Array.isArray(_s))_s.forEach(k=>S.steps.add(k));}catch(e){}
+function reportProgress(){try{const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r['sa04']={done:S.done.size,total:CH.length,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
+function saveDone(){try{localStorage.setItem('bitter_pill_done_v1',JSON.stringify([...S.done]));localStorage.setItem('bitter_pill_done_v1:steps',JSON.stringify([...S.steps]));}catch(e){}reportProgress();}
+const TOTXP=CH.reduce((a,c)=>a+c.xp,0);
+const $=id=>document.getElementById(id);
+
+function runStats(id){const l=CH.filter(c=>c.run===id);return{n:l.length,d:l.filter(c=>S.done.has(c.id)).length,xp:l.reduce((a,c)=>a+c.xp,0)};}
+
+function renderRunbar(){
+  $("runbar").innerHTML=RUNS.map(r=>{const st=runStats(r.id);
+    return `<button class="jump ${st.d===st.n?"complete":""}" data-jump="${r.id}">Run ${r.id}<span class="pill">${st.d}/${st.n}</span></button>`;
+  }).join("")+`<span class="spacer"></span><button class="util" data-all="open">Expand all</button><button class="util" data-all="close">Collapse all</button>`;
+}
+function renderTracker(){
+  const dn=S.done.size,xp=CH.filter(c=>S.done.has(c.id)).reduce((a,c)=>a+c.xp,0);
+  $("tDone").textContent=dn; $("tXp").textContent=xp.toLocaleString();
+  $("tFill").style.width=(dn/CH.length*100)+"%";
+  $("tCats").innerHTML=ORDER.map(k=>{
+    const all=CH.filter(c=>c.c===k),d=all.filter(c=>S.done.has(c.id)).length;
+    return `<div class="cat"><div class="nm">${CATS[k].n}</div><div class="vl">${d}<span style="color:var(--dim);font-size:16px">/${all.length}</span></div><div class="bar"><i style="width:${d/all.length*100}%;background:${CATS[k].c}"></i></div></div>`;
+  }).join("");
+  renderRunbar();
+}
+function badge(b){const pre=b.c==="warn"?"⚠ ":b.c==="save"?"◆ ":b.c==="unv"?"unverified — ":"";return `<span class="badge b-${b.c}">${pre}${b.t}</span>`;}
+
+function renderRuns(){
+  $("runs").innerHTML=RUNS.map((r,ri)=>{
+    const st=runStats(r.id),open=S.open.has(r.id);let no=0;
+    const body=r.secs.map((sec,si)=>`<div class="sec">${sec.n}</div>`+sec.steps.map((sp,ti)=>{
+      no++;
+      const key=`${ri}-${si}-${ti}`,dn=S.steps.has(key),ex=S.ex.has(key);
+      const bul=sp.f.map(f=>`<li><span class="ftag ${f[2]?"warnt":""}">${f[0]}</span><span>${f[1]}</span></li>`).join("");
+      const bd=sp.b.length?`<div class="badges">${sp.b.map(badge).join("")}</div>`:"";
+      return `<div class="step ${dn?"done":""} ${ex?"expanded":""}">
+        <div class="step-head">
+          <button class="tick" data-tick="${key}" aria-label="Mark step complete">✓</button>
+          <button class="step-open" data-ex="${key}" aria-expanded="${ex}">
+            <span class="stepno">${String(no).padStart(2,"0")}</span>
+            <span class="step-txt" style="flex:1;min-width:0"><h4>${sp.t}</h4><p>${sp.s}</p></span>
+            <span class="chev2">▶</span>
+          </button>
+        </div>
+        <div class="detail" ${ex?"":"hidden"}><ul class="f">${bul}</ul>${bd}</div>
+      </div>`;
+    }).join("")).join("");
+    return `<article class="run ${open?"open":""}" id="run-${r.id}">
+      <button class="run-head" data-run="${r.id}" aria-expanded="${open}">
+        <span class="chev">▶</span>
+        <span style="flex:1;min-width:0">
+          <span class="meta">Run ${String(r.id).padStart(2,"0")} · ${st.n} challenges · ${st.xp.toLocaleString()} XP</span>
+          <h2>${r.title}</h2><p>${r.goal}</p>
+        </span>
+        <span class="run-prog">${st.d}/${st.n}</span>
+      </button>
+      <div class="run-body" ${open?"":"hidden"}>
+        <div class="rx">
+          <div class="rx-top"><span class="tag">Loadout</span><span class="lot">RUN-${String(r.id).padStart(2,"0")} · WHITTLETON CREEK</span></div>
+          <div class="rx-grid">
+            <div class="rx-cell"><div class="k">Starting location</div><div class="v">${r.load.start}</div><div class="n">${r.load.startNote}</div></div>
+            <div class="rx-cell"><div class="k">Suit</div><div class="v">${r.load.suit}</div><div class="n">${r.load.suitNote}</div></div>
+            ${r.load.slots.map(s=>`<div class="rx-cell"><div class="k">${s.k}</div><div class="v">${s.v}</div><div class="n">${s.n}</div></div>`).join("")}
+          </div>
+        </div>${body}
+      </div></article>`;
+  }).join("");
+}
+
+const FILTERS=[{k:"all",l:"All"},{k:"A",l:"Assassination"},{k:"D",l:"Discovery"},{k:"F",l:"Feats"},{k:"T",l:"Targets"},{k:"C",l:"The Classics"},{k:"inc",l:"Incomplete"}];
+function renderChecklist(){
+  $("filters").innerHTML=FILTERS.map(f=>{
+    const n=f.k==="all"?CH.length:f.k==="inc"?CH.filter(c=>!S.done.has(c.id)).length:CH.filter(c=>c.c===f.k).length;
+    return `<button data-filter="${f.k}" class="${S.filter===f.k?"on":""}">${f.l} · ${n}</button>`;
+  }).join("");
+  const list=CH.filter(c=>S.filter==="all"?true:S.filter==="inc"?!S.done.has(c.id):c.c===S.filter);
+  $("checklist").innerHTML=list.length?list.map(c=>`<div class="chal ${S.done.has(c.id)?"done":""}">
+    <button class="tick" data-chal="${c.id}" aria-label="Mark challenge complete">✓</button>
+    <div style="flex:1;min-width:0"><h4>${c.n}</h4><p class="cond">${c.cond}</p>
+    <div class="m"><span class="badge b-${c.c}">${CATS[c.c].n}</span><span class="xpv">+${c.xp.toLocaleString()} XP</span><span class="runtag">Run ${String(c.run).padStart(2,"0")}</span></div></div></div>`).join("")
+    :`<div class="notice"><h4>Nothing left here</h4><p>Every challenge in this filter is ticked off.</p></div>`;
+}
+
+function renderAudit(){
+  const off={A:10,D:2,F:3,T:1,C:5};
+  $("auditRows").innerHTML=ORDER.map(k=>{
+    const l=CH.filter(c=>c.c===k),xp=l.reduce((a,c)=>a+c.xp,0),m=l.length===off[k];
+    return `<tr><td>${CATS[k].n}</td><td class="num">${off[k]}</td><td class="num">${off[k]}</td><td class="num">${l.length}</td><td class="num">${xp.toLocaleString()}</td><td class="${m?"ok":""}">${m?"Match":"MISMATCH"}</td></tr>`;
+  }).join("");
+  const ok=CH.length===21&&TOTXP===53000;
+  $("auditFoot").innerHTML=`<tr><th>Total</th><th class="num">21</th><th class="num">21</th><th class="num">${CH.length}</th><th class="num">${TOTXP.toLocaleString()}</th><th class="${ok?"ok":""}">${ok?"Match — 21 challenges, 53,000 XP":"MISMATCH"}</th></tr>`;
+  $("unverified").innerHTML=UNVERIFIED.map(u=>`<li>${u}</li>`).join("");
+}
+
+document.addEventListener("click",e=>{
+  const j=e.target.closest("[data-jump]");
+  if(j){const id=+j.dataset.jump;S.open.add(id);renderRuns();
+    document.getElementById("run-"+id).scrollIntoView({behavior:"smooth",block:"start"});return;}
+  const al=e.target.closest("[data-all]");
+  if(al){if(al.dataset.all==="open")RUNS.forEach(r=>S.open.add(r.id));else S.open.clear();renderRuns();return;}
+  const rh=e.target.closest("[data-run]");
+  if(rh){const id=+rh.dataset.run;S.open.has(id)?S.open.delete(id):S.open.add(id);renderRuns();return;}
+  const tk=e.target.closest("[data-tick]");
+  if(tk){const k=tk.dataset.tick;S.steps.has(k)?S.steps.delete(k):S.steps.add(k);saveDone();
+    tk.closest(".step").classList.toggle("done",S.steps.has(k));return;}
+  const ex=e.target.closest("[data-ex]");
+  if(ex){const k=ex.dataset.ex,step=ex.closest(".step"),d=step.querySelector(".detail"),now=!S.ex.has(k);
+    now?S.ex.add(k):S.ex.delete(k);
+    d.toggleAttribute("hidden",!now);step.classList.toggle("expanded",now);ex.setAttribute("aria-expanded",String(now));return;}
+  const ch=e.target.closest("[data-chal]");
+  if(ch){const id=ch.dataset.chal;S.done.has(id)?S.done.delete(id):S.done.add(id);saveDone();renderTracker();renderChecklist();return;}
+  const f=e.target.closest("[data-filter]");
+  if(f){S.filter=f.dataset.filter;renderChecklist();return;}
+});
+
+$("btnReset").addEventListener("click",()=>{S.done.clear();S.steps.clear();S.ex.clear();saveDone();renderTracker();renderChecklist();renderRuns();});
+
+document.querySelectorAll("nav.tabs button").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll("nav.tabs button").forEach(x=>x.setAttribute("aria-selected",String(x===b)));
+  ["p-runs","p-check","p-verify"].forEach(id=>document.getElementById(id).hidden=(id!==b.getAttribute("aria-controls")));
+}));
+
+renderTracker();renderRuns();renderChecklist();renderAudit();
+reportProgress();
+</script>
+<!-- step-progress-bridge -->
+<script>
+/* Reports route-step ticks into 'hitman-progress-registry' so the index can
+   show them beside the challenge counts. Counts what is on screen rather than
+   any guide-specific state, so one implementation serves every guide. */
+(function(){
+  var RID="sa04", SEL=".step";
+  function isDone(s){
+    var c=s.classList;
+    if(c.contains('done')||c.contains('dn')) return true;
+    if(s.getAttribute('data-done')==='1'||s.getAttribute('aria-pressed')==='true') return true;
+    return !!s.querySelector('.done,.dn,[data-done="1"],[aria-pressed="true"]');
+  }
+  function tally(){
+    var steps=document.querySelectorAll(SEL);
+    if(!steps.length) return null;
+    var n=0;
+    for(var i=0;i<steps.length;i++) if(isDone(steps[i])) n++;
+    return {steps:n,stepTotal:steps.length};
+  }
+  function push(){
+    var t;
+    try{ t=tally(); }catch(err){ return; }
+    if(!t||!t.stepTotal) return;
+    try{
+      var r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');
+      var e=r[RID]||(r[RID]={});
+      /* the guide's own reportProgress() rewrites this entry wholesale, so
+         re-add the step counts whenever they go missing or stale */
+      if(e.steps===t.steps&&e.stepTotal===t.stepTotal) return;
+      e.steps=t.steps; e.stepTotal=t.stepTotal; e.updated=Date.now();
+      localStorage.setItem('hitman-progress-registry',JSON.stringify(r));
+    }catch(err){}
+  }
+  var pending=false;
+  function schedule(){
+    if(pending) return; pending=true;
+    setTimeout(function(){pending=false;push();},120);
+  }
+  try{
+    new MutationObserver(schedule).observe(document.body,
+      {subtree:true,childList:true,attributes:true,attributeFilter:['class','aria-pressed','data-done']});
+  }catch(err){}
+  window.addEventListener('load',schedule);
+  setTimeout(push,600);
+})();
+</script>
+<!-- /step-progress-bridge -->
+</body>
+</html>

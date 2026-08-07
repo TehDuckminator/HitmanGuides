@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Finish Line — Challenge Dossier (Manifest-Verified)</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+--bg:#0e0e10;--bg2:#17171a;--bg3:#202024;--bd:#2c2c31;--bd2:#3a3a41;
+--tx:#d6cfc0;--tx2:#8b8474;--tx3:#5c564c;--wh:#f2ebda;
+--gold:#c9a84c;--goldd:#6f5a22;
+--red:#c8353a;--redd:#3d1013;
+--blue:#3d8ec8;--blued:#0e2438;
+--green:#3aab5e;--greend:#0d2c1c;
+--amber:#d4a820;--amberd:#332608;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font-family:'Inter',sans-serif;font-size:14px;line-height:1.6}
+.hd{position:relative;background:var(--bg2);border-bottom:1px solid var(--goldd);padding:26px 30px 20px;overflow:hidden}
+.hd::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(255,255,255,.012) 2px,rgba(255,255,255,.012) 4px);pointer-events:none}
+.hd::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.hdin{position:relative;max-width:1080px;margin:0 auto;display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.24em;color:var(--gold);text-transform:uppercase;margin-bottom:6px;opacity:.85}
+.ttl{font-family:'Oswald',sans-serif;font-size:36px;font-weight:700;color:var(--wh);letter-spacing:.02em;line-height:1;text-transform:uppercase;margin-bottom:5px}
+.sub{font-size:13px;color:var(--tx2);font-weight:300}
+.stamp{font-family:'Oswald',sans-serif;font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--green);border:2px solid var(--green);padding:5px 11px;transform:rotate(-4deg);opacity:.8;white-space:nowrap}
+.note{background:var(--greend);border-bottom:1px solid rgba(58,171,94,.3);padding:13px 30px}
+.notein{max-width:1080px;margin:0 auto;display:flex;gap:12px;align-items:flex-start}
+.note-ic{color:#5ccc80;font-size:15px;flex-shrink:0;line-height:1.4}
+.note-tx{font-size:12.5px;color:#a7cbb2;line-height:1.6}
+.note-tx b{color:#c8e6d0}
+.prog{background:var(--bg2);border-bottom:1px solid var(--bd);padding:13px 30px}
+.progin{max-width:1080px;margin:0 auto;display:flex;align-items:center;gap:18px}
+.pl{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--tx2);letter-spacing:.1em;white-space:nowrap}
+.pbar{flex:1;height:4px;background:var(--bg3);border-radius:2px;overflow:hidden;min-width:60px}
+.pfill{height:100%;background:linear-gradient(90deg,var(--goldd),var(--gold));border-radius:2px;transition:width .4s}
+.pcount{font-family:'Oswald',sans-serif;font-size:17px;font-weight:600;color:var(--gold);white-space:nowrap}
+.wrap{max-width:1080px;margin:0 auto;padding:26px 30px;display:grid;grid-template-columns:210px 1fr;gap:26px;align-items:start}
+.side{position:sticky;top:18px}
+.sblk{margin-bottom:22px}
+.slbl{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--tx3);margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--bd)}
+.nb{display:flex;align-items:center;justify-content:space-between;width:100%;background:none;border:none;padding:8px 11px;border-radius:4px;cursor:pointer;color:var(--tx2);font-family:'Inter',sans-serif;font-size:13px;text-align:left;transition:.15s;margin-bottom:2px}
+.nb:hover{background:var(--bg3);color:var(--tx)}
+.nb.on{background:var(--bg3);color:var(--wh);border-left:2px solid var(--gold);padding-left:9px}
+.nbc{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--tx3)}
+.nb.on .nbc{color:var(--gold)}
+.cwrap{margin-bottom:3px}
+.crow{display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:4px;cursor:pointer;transition:.12s}
+.crow:hover{background:var(--bg3)}
+.cdot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.cnm{font-size:12px;flex:1;color:var(--tx2)}
+.cfr{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--tx3)}
+.cmb{height:2px;background:var(--bd);border-radius:1px;overflow:hidden;margin:0 8px 6px}
+.cmf{height:100%;border-radius:1px;transition:width .4s}
+.rst{display:block;width:100%;background:none;border:1px solid var(--bd2);color:var(--tx3);font-size:11px;padding:7px;border-radius:4px;cursor:pointer;transition:.15s;font-family:'Inter',sans-serif}
+.rst:hover{border-color:var(--red);color:#e8686c}
+.pan{display:none}.pan.on{display:block}
+.legend{background:var(--bg2);border:1px solid var(--bd);border-radius:6px;padding:13px 16px;margin-bottom:18px}
+.lgt{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--tx3);margin-bottom:9px}
+.lgr{display:flex;gap:9px;align-items:flex-start;margin-bottom:7px;font-size:12px;color:var(--tx2);line-height:1.5}
+.lgr:last-child{margin-bottom:0}
+.cf{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.06em;padding:2px 6px;border-radius:3px;border:1px solid;text-transform:uppercase;white-space:nowrap;flex-shrink:0;font-weight:500}
+.cf-m{background:var(--greend);border-color:rgba(58,171,94,.45);color:#5ccc80}
+.cf-g{background:var(--amberd);border-color:rgba(212,168,32,.45);color:#e8c84a}
+.cf-r{background:var(--blued);border-color:rgba(61,142,200,.45);color:#6abaee}
+.rl{display:flex;flex-direction:column;gap:10px}
+.rc{background:var(--bg2);border:1px solid var(--bd);border-radius:6px;overflow:hidden;transition:border-color .15s}
+.rc:hover{border-color:var(--bd2)}
+.rc.ex{border-color:var(--goldd)}
+.rh{display:flex;align-items:center;gap:13px;padding:14px 17px;cursor:pointer;user-select:none}
+.rn{font-family:'Oswald',sans-serif;font-size:21px;font-weight:700;color:var(--goldd);width:26px;flex-shrink:0;line-height:1}
+.rc.ex .rn{color:var(--gold)}
+.ri{flex:1;min-width:0}
+.rnm{font-family:'Oswald',sans-serif;font-size:15.5px;font-weight:600;color:var(--wh);text-transform:uppercase;letter-spacing:.04em;line-height:1.25;margin-bottom:3px}
+.rmr{display:flex;align-items:center;gap:11px;flex-wrap:wrap}
+.rmi{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--tx2)}
+.rpb{width:70px;height:3px;background:var(--bg3);border-radius:2px;overflow:hidden}
+.rpf{height:100%;background:var(--gold);border-radius:2px;transition:width .3s}
+.rsc{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--tx3);white-space:nowrap}
+.rch{color:var(--tx3);font-size:13px;transition:transform .2s;flex-shrink:0}
+.rc.ex .rch{transform:rotate(90deg)}
+.rb{display:none;border-top:1px solid var(--bd)}
+.rc.ex .rb{display:block}
+.warn{display:flex;gap:9px;padding:11px 17px;background:var(--redd);border-bottom:1px solid rgba(200,53,58,.3);font-size:12px;color:#e0b5b7;line-height:1.55}
+.warn-ic{color:#e8686c;flex-shrink:0}
+.warn b{color:#f2d0d2}
+.lo{display:flex;gap:10px;padding:13px 17px;background:rgba(201,168,76,.04);border-bottom:1px solid var(--bd);align-items:flex-start}
+.lol{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;white-space:nowrap;margin-top:2px}
+.loi{display:flex;flex-wrap:wrap;gap:5px}
+.lot{background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.25);color:var(--tx2);font-size:11px;padding:2px 8px;border-radius:3px}
+.stl{padding:2px 0 6px}
+.st{display:flex;gap:11px;padding:10px 17px;cursor:pointer;transition:background .1s;border-bottom:1px solid rgba(44,44,49,.5);align-items:flex-start}
+.st:last-child{border-bottom:none}
+.st:hover{background:rgba(255,255,255,.02)}
+.st.dn{opacity:.4}
+.stn{width:21px;height:21px;border-radius:50%;background:var(--bg3);border:1px solid var(--bd2);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--tx3);flex-shrink:0;margin-top:1px}
+.st.dn .stn{background:var(--greend);border-color:var(--green);color:var(--green)}
+.stc{flex:1;min-width:0}
+.stt{font-size:13px;font-weight:500;color:var(--wh);margin-bottom:2px;display:flex;gap:7px;align-items:center;flex-wrap:wrap}
+.st.dn .stt{color:var(--tx2)}
+.std{font-size:12px;color:var(--tx2);line-height:1.55}
+.sv{display:inline-flex;align-items:center;gap:4px;background:rgba(212,168,32,.1);border:1px solid rgba(212,168,32,.3);color:var(--amber);font-size:10px;font-family:'JetBrains Mono',monospace;padding:2px 7px;border-radius:3px;margin-top:5px;letter-spacing:.05em}
+.unlocks{margin-top:6px;display:flex;flex-wrap:wrap;gap:4px}
+.ul{font-size:10px;font-family:'JetBrains Mono',monospace;background:var(--bg3);border:1px solid var(--bd2);color:var(--tx2);padding:1px 6px;border-radius:3px}
+.sec{margin-bottom:26px}
+.sh{display:flex;align-items:center;gap:11px;margin-bottom:10px;padding-bottom:9px;border-bottom:1px solid var(--bd);flex-wrap:wrap}
+.st2{font-family:'Oswald',sans-serif;font-size:15px;font-weight:600;text-transform:uppercase;letter-spacing:.08em}
+.sb{font-family:'JetBrains Mono',monospace;font-size:10px;padding:2px 8px;border-radius:3px}
+.sp{margin-left:auto;display:flex;align-items:center;gap:8px}
+.spb{width:56px;height:3px;background:var(--bg3);border-radius:2px;overflow:hidden}
+.spf{height:100%;border-radius:2px;transition:width .3s}
+.spt{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--tx3)}
+.chl{display:flex;flex-direction:column;gap:3px}
+.ch{display:flex;gap:10px;padding:9px 12px;background:var(--bg2);border:1px solid var(--bd);border-radius:4px;cursor:pointer;transition:.1s;align-items:flex-start}
+.ch:hover{border-color:var(--bd2);background:var(--bg3)}
+.ch.dn{opacity:.35}
+.cb{width:15px;height:15px;border-radius:3px;border:1.5px solid var(--bd2);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:10px;transition:.1s}
+.ch.dn .cb{background:var(--greend);border-color:var(--green);color:var(--green)}
+.ct{flex:1;min-width:0}
+.cnm2{font-size:13px;font-weight:500;color:var(--wh);margin-bottom:1px;display:flex;gap:7px;align-items:center;flex-wrap:wrap}
+.ch.dn .cnm2{color:var(--tx2)}
+.cd2{font-size:11.5px;color:var(--tx2);line-height:1.5}
+.hint{font-size:11px;color:var(--tx3);line-height:1.5;margin-top:3px;padding-left:9px;border-left:2px solid var(--bd2)}
+.tg{font-size:9px;padding:2px 6px;border-radius:3px;border:1px solid;font-family:'JetBrains Mono',monospace;letter-spacing:.05em;white-space:nowrap;flex-shrink:0;margin-top:2px;text-transform:uppercase}
+.ms{background:rgba(139,107,184,.12);border-color:rgba(139,107,184,.4);color:#b298d6}
+.conf{background:var(--amberd);border:1px solid rgba(212,168,32,.3);border-radius:6px;padding:12px 15px;margin-bottom:16px;font-size:12px;color:#d9c384;line-height:1.6}
+.conf b{color:#e8c84a}
+.tagA{background:var(--redd);border-color:rgba(200,53,58,.4);color:#e8686c}
+.tagD{background:var(--blued);border-color:rgba(61,142,200,.4);color:#6abaee}
+.tagF{background:var(--greend);border-color:rgba(58,171,94,.4);color:#5ccc80}
+.tagT{background:rgba(200,53,58,.08);border-color:rgba(200,53,58,.35);color:#e07575}
+.tagC{background:var(--amberd);border-color:rgba(212,168,32,.4);color:#e8c84a}
+.dotA{background:#c8353a}.dotD{background:#3d8ec8}.dotF{background:#3aab5e}.dotT{background:#c85050}.dotC{background:#d4a820}
+.clA{color:#e8686c}.clD{color:#6abaee}.clF{color:#5ccc80}.clT{color:#e07575}.clC{color:#e8c84a}
+.flA{background:#c8353a}.flD{background:#3d8ec8}.flF{background:#3aab5e}.flT{background:#c85050}.flC{background:#d4a820}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:3px}
+@media(max-width:720px){.wrap{grid-template-columns:1fr;padding:16px}.side{position:static}.hd,.note,.prog{padding-left:16px;padding-right:16px}.ttl{font-size:26px}.stamp{display:none}}
+</style>
+</head>
+<body>
+<header class="hd">
+  <div class="hdin">
+    <div>
+      <div class="eyebrow">ICA Dossier · Miami, Florida · Mission 02</div>
+      <div class="ttl">The Finish Line</div>
+      <div class="sub">Built from the game's own challenge manifest · 78 challenges</div>
+    </div>
+    <div class="stamp">Manifest-Sourced</div>
+  </div>
+</header>
+<div class="note">
+  <div class="notein">
+    <span class="note-ic">✓</span>
+    <div class="note-tx"><b>Source of truth.</b> Every challenge name, description, and category on this page is taken verbatim from the uploaded game manifest — the authoritative list. Names and categories carry the <b>MANIFEST</b> tier. Where the manifest description is marked [REDACTED] or is a joke, any method note is a lower-tier <b>GUIDE</b> hint from earlier two-source research and is labelled as such. Nothing is invented; unconfirmed method details say so.</div>
+  </div>
+</div>
+<div class="prog">
+  <div class="progin">
+    <span class="pl">Challenges completed</span>
+    <div class="pbar"><div class="pfill" id="pf" style="width:0%"></div></div>
+    <span class="pcount" id="pc">0 / 78</span>
+  </div>
+</div>
+<div class="wrap">
+  <aside class="side">
+    <div class="sblk">
+      <div class="slbl">View</div>
+      <button class="nb on" id="b-r" onclick="tab('r')"><span>Optimized Runs</span><span class="nbc">6</span></button>
+      <button class="nb" id="b-c" onclick="tab('c')"><span>Challenge Roster</span><span class="nbc">78</span></button>
+      <button class="nb" id="b-a" onclick="tab('a')"><span>Audit &amp; Notes</span><span class="nbc">i</span></button>
+    </div>
+    <div class="sblk"><div class="slbl">By Category</div><div id="cats"></div></div>
+    <button class="rst" onclick="wipe()">⟳ Reset progress</button>
+  </aside>
+  <main>
+    <div class="pan on" id="p-r"><div class="rl" id="runs"></div></div>
+    <div class="pan" id="p-c">
+      <div class="legend">
+        <div class="lgt">Source tiers</div>
+        <div class="lgr"><span class="cf cf-m">Manifest</span><span>Name, description and category are verbatim from the game file.</span></div>
+        <div class="lgr"><span class="cf cf-r">Redacted</span><span>Manifest lists the challenge but hides its description. Name/category still authoritative.</span></div>
+        <div class="lgr"><span class="cf cf-g">Guide hint</span><span>A method note from earlier two-source research, added only to help. Provisional.</span></div>
+      </div>
+      <div id="chs"></div>
+    </div>
+    <div class="pan" id="p-a"><div id="audit"></div></div>
+  </main>
+</div>
+<script>
+const CL={A:"Assassination",D:"Discovery",F:"Feats",T:"Targets",C:"The Classics"};
+const CT={A:"Assassin",D:"Discover",F:"Feat",T:"Target",C:"Classic"};
+const COUNTS={A:29,D:21,F:21,T:2,C:5};
+
+// name/desc/cat = verbatim manifest. redacted:true where manifest hid desc.
+// hint = lower-tier guide note (optional). ms:true = Mission Story feat.
+const CH=[
+// ASSASSINATION (29) — manifest order
+{c:"A",n:"Wheel of Misfortune",d:"Assassinate Sierra Knox by sabotaging her tires at the pit stop.",hint:"As a Kowoon racing mechanic, use the technical post by the garage gate and choose the wheel option."},
+{c:"A",n:"The Man and the Sea",d:"Assassinate Robert Knox with the fish trophy."},
+{c:"A",n:"Don't Drive and Drink",d:"Assassinate Sierra Knox by putting lethal poison in the trophy.",hint:"Sierra must win the race to reach the trophy."},
+{c:"A",n:"Vitamin Overdose",d:"Make the medic assassinate Sierra Knox."},
+{c:"A",n:"The Tree Falls on the Apple",d:"Assassinate Robert and Sierra Knox with one well-timed push."},
+{c:"A",n:"Paranoid Android",d:"Assassinate Robert Knox using the android."},
+{c:"A",n:"Days of Thunder",d:"Assassinate Sierra Knox by blowing her car up during the race.",hint:"Bomb comes from the security-booth evidence safe (see What's In This Thing)."},
+{c:"A",n:"Ocular Administration",d:"Assassinate Robert Knox by poisoning his eye drops."},
+{c:"A",n:"Hot Shot",d:"",redacted:true,hint:"Earlier research: Sierra ignites via the octane booster used in the chili drink game. Method unconfirmed by the manifest."},
+{c:"A",n:"Explosive Liaisons",d:"",redacted:true,hint:"Earlier research: Robert detonates the planted car bomb himself. Method unconfirmed by the manifest."},
+{c:"A",n:"Better Burn Up than Fade Away",d:"Assassinate Sierra Knox using the podium pyrotechnics.",hint:"Sierra must win the race. Pairs with the Mission Story - The Triumph valve tamper."},
+{c:"A",n:"Moving Target",d:"Assassinate Sierra Knox by sniping her car during the race.",hint:"Sniper smuggling unlocks at Miami Mastery 10."},
+{c:"A",n:"Under the Sea",d:"Assassinate Robert Knox with the shark in the aquarium."},
+{c:"A",n:"The Message",d:"Don't push Robert Knox, because he's close to the edge. He might lose his head.",hint:"Manifest text is a joke; it does not state the exact method."},
+{c:"A",n:"Pink Menace",d:"Assassinate Sierra Knox by pushing her down the elevator shaft during the blackmail meeting, disguised as the Blackmailer."},
+{c:"A",n:"The Florida Diet",d:"Assassinate Robert Knox by serving him poisoned food at the Florida Man's food stand."},
+{c:"A",n:"External Combustion Engine",d:"Assassinate Robert Knox with an explosion from the Kronstadt demo vehicle."},
+{c:"A",n:"Doctor 47",d:"Assassinate Sierra Knox by poisoning the IV drip, disguised as a Medic."},
+{c:"A",n:"Tasteless, Traceless",d:"Assassinate a target with lethal poison.",hint:"Lethal poison is in the Emergency Bay dressing room, north behind the garages."},
+{c:"A",n:"Shafted",d:"",redacted:true,hint:"Earlier research: push someone down the out-of-order elevator shaft in the south-east of the Kronstadt building."},
+{c:"A",n:"Someone Could Hurt Themselves",d:"Assassinate a target in an accident."},
+{c:"A",n:"Hold My Hair",d:"Assassinate a target by drowning them."},
+{c:"A",n:"Straight Shot",d:"Assassinate a target with a headshot."},
+{c:"A",n:"Piano Man",d:"Assassinate a target with the fiber wire.",hint:"Not default equipment — select the fiber wire in planning."},
+{c:"A",n:"Versatile Assassin",d:"Complete these Versatile challenges in Miami: Piano Man / Someone Could Hurt Themselves / Hold My Hair / Straight Shot / Tasteless, Traceless."},
+{c:"A",n:"Bigger Fish",d:"Eliminate Florida Man with the bigger fish."},
+{c:"A",n:"Fish Slapping Dance",d:"Slap someone into the ocean with a fish."},
+{c:"A",n:"Shredding the Evidence",d:"Eliminate a target with the wood chipper."},
+{c:"A",n:"Thorough Demonstration",d:"Make the Android eliminate someone other than Robert Knox.",hint:"McInnis's ID is on the desk in the room adjacent to the android lab; show it to the android in the demo room."},
+// DISCOVERY (21)
+{c:"D",n:"Blackmail",d:"Find the blackmail documents.",hint:"In the van in the parking lot. Taking them from the van ends the blackmailer's storyline — grab them on a run where you are not doing Pretty in Pink."},
+{c:"D",n:"The Sewer Beyond",d:"Exfiltrate through the sewers.",hint:"Hatch by the Hotel in the north. Crowbar required in loadout."},
+{c:"D",n:"Very Important Person",d:"Get a VIP pass.",hint:"From the scalper in the tribune alley — tank top, glasses. Lure to the bathroom with a running tap and knock him out."},
+{c:"D",n:"One Kilo Brick",d:"Get a brick of cocaine.",hint:"Hit Hector Delgado (with the Sheik on the Thwack paddock upper floor) to make him drop it."},
+{c:"D",n:"You Got a Fast Car",d:"",redacted:true,hint:"Earlier research: sit in the car at the Kronstadt expo, ground floor."},
+{c:"D",n:"Chameleon",d:"Find and equip all disguises in Miami."},
+{c:"D",n:"Day at the Aquarium",d:"Find the Kronstadt bayside center keycard.",hint:"Nearly every Kronstadt building employee carries one."},
+{c:"D",n:"The Military Man",d:"Disguise yourself as Ted Mendez."},
+{c:"D",n:"Frutti di Mare",d:"Find all aquatic weapons in Miami.",hint:"At the Kronstadt aquarium: aquarium 6 = starfish, aquarium 7 = fish. Pick up both."},
+{c:"D",n:"Tintamarresque",d:"",redacted:true,hint:"Earlier research: pose at the photo stand by the pier."},
+{c:"D",n:"The Rival",d:"Disguise yourself as Moses Lee.",hint:"Green suit, hat, glasses. He wins by default and stays near the Kowoon garage after the podium."},
+{c:"D",n:"Backdoor Engineering",d:"Get the event crew key.",hint:"Carried by many crew across the map — guards, marshals, cleaners."},
+{c:"D",n:"Free Fishie",d:"Release a fish back into the ocean.",hint:"Fish from aquarium 7 or the VIP lounge kitchen."},
+{c:"D",n:"Slice of Vice",d:"Sail away on the speedboat.",hint:"Motorboat keys from the wooden rental booth by the northwest pier."},
+{c:"D",n:"Sheikh Zanzibar, I Presume?",d:"Disguise yourself as the Sheikh.",hint:"VIP zone of the Thwack paddock, upper floor."},
+{c:"D",n:"The Flamingo",d:"Disguise yourself as the Mascot.",hint:"Part of Mission Story - Pretty In Pink."},
+{c:"D",n:"What's In This Thing",d:"Open the evidence locker.",hint:"Security booth right of the main festival alley entrance. Combination post-it is on the office desk; safe is at the end of the corridor."},
+{c:"D",n:"Mr. Tambourine Man",d:"",redacted:true,hint:"Earlier research: take the street musician's outfit in the undercrossing left of the default start, then play the drums."},
+{c:"D",n:"Discover Miami",d:"Reveal all undiscovered areas in Miami."},
+{c:"D",n:"Coconut Balls",d:"Disguise yourself as Florida Man.",hint:"Part of Mission Story - The Munchies."},
+{c:"D",n:"Dolphin (localized name)",d:"",redacted:true,hint:"Manifest stores this as UI_PEACOCK_CHALLENGES_MIAMI_DOLPHIN_NAME with a redacted description — a real 21st Discovery challenge whose display name did not resolve in the file. This is the entry that explains why your game shows Discovery 21 while the wiki said 20."},
+// FEATS (21) — includes the 8 Mission Stories
+{c:"F",n:"Mission Story - Intravenous",d:"Sierra Knox is due for an intravenous revitalization treatment at the emergency area. Interesting, 47.",ms:true},
+{c:"F",n:"Mission Story - The Munchies",d:"Robert Knox's favorite street food vendor has a stand at the race. Sounds promising.",ms:true},
+{c:"F",n:"Sympathy for the Bird",d:"Save the mascot from being eliminated by Sierra Knox.",hint:"Give the mascot his keys in the parking lot so the meeting happens, then intervene at the Hotel. No kill needed."},
+{c:"F",n:"Mission Story - A Perfect Machine",d:"Become a Kronstadt Mechanic and perform the Pitstop.",ms:true},
+{c:"F",n:"The Odd One Out",d:"Disqualify Moses Lee.",hint:"Makes Sierra win, which enables the podium kills."},
+{c:"F",n:"Communication Breakdown",d:"Sabotage the satellite dish.",hint:"Dongle from Robert's office in the top-floor suite; hack the laptop by the antenna on the opposite balcony."},
+{c:"F",n:"Mission Story - Turbo Charged",d:"A prototype Kronstadt race car. If anything happens to it, Knox will likely come running.",ms:true},
+{c:"F",n:"Last Words",d:"",redacted:true,hint:"Earlier research: set up the blackmail meeting, then stay hidden (the shaft works) and listen to the whole conversation."},
+{c:"F",n:"The Thunder Thief",d:"Celebrate victory on the podium disguised as Moses Lee.",hint:"Moses wins by default — no need to disqualify Sierra."},
+{c:"F",n:"47 on the Scoville Scale",d:"Drink the chili shot.",hint:"At the VIP party above the garages, as Moses Lee. Make sure it is not poisoned."},
+{c:"F",n:"Déjà Due",d:"",redacted:true,hint:"Earlier research: from the northern crossing over the track, by the scoreboard, scope the Kronstadt building and shoot the pigeon."},
+{c:"F",n:"Potty Training",d:"Make the patient leave the doctor's office without eliminating him.",hint:"Turn the tap so he can give a urine sample. Part of Vitamin Overdose."},
+{c:"F",n:"Sweet Victory",d:"",redacted:true,hint:"Earlier research: as a Kowoon racing mechanic, use the garage-gate technical post and choose the sugar-in-fuel option."},
+{c:"F",n:"Mission Story - The New Army",d:"Infiltrate the Android showroom as Ted Mendez.",ms:true},
+{c:"F",n:"Mission Story - Pretty In Pink",d:"Impersonate Sierra's blackmailer and meet up with her at the hotel.",ms:true},
+{c:"F",n:"Milky Way",d:"Make sure Sierra Knox drinks the chili shot.",hint:"Win the drink game and leave the shot unpoisoned — she runs to the kitchen for milk."},
+{c:"F",n:"Mission Story - The Triumph",d:"Tamper with the gas pressure relief valve.",ms:true},
+{c:"F",n:"Arms Dealer",d:"Pacify a Kronstadt researcher using an android arm.",hint:"Arm and researchers are on the Kronstadt building upper floor."},
+{c:"F",n:"Tanked",d:"",redacted:true,hint:"Earlier research: coin into an aquarium; shoot the tank as a guard reaches in. Not all tanks break."},
+{c:"F",n:"Red Flag",d:"Cause the race to be aborted due to too many crashes.",hint:"Combines with Moving Target — keep shooting drivers."},
+{c:"F",n:"Sleeping with the Fishes",d:"Dump a body into an aquarium."},
+// TARGETS (2)
+{c:"T",n:"The Inventor",d:"Assassinate Robert Knox."},
+{c:"T",n:"The Daredevil",d:"Assassinate Sierra Knox."},
+// CLASSICS (5)
+{c:"C",n:"Silent Assassin, Suit Only",d:"Complete the mission. Only eliminate the targets. No bodies found. Do not get spotted. Do it all in your suit."},
+{c:"C",n:"Sniper Assassin",d:"Complete the mission. Assassinate your targets with a sniper rifle. Only eliminate the targets. Do not get spotted."},
+{c:"C",n:"Silent Assassin",d:"Complete the mission. Only eliminate the targets. No bodies found. Do not get spotted."},
+{c:"C",n:"Suit Only",d:"Assassinate the targets and complete the mission. Do it all in your suit."},
+{c:"C",n:"The Classics",d:"Complete all Classic challenges: Silent Assassin / Silent Assassin, Suit Only / Sniper Assassin / Suit Only."}
+];
+
+// RUNS — each step maps to real manifest challenges (by exact name) via `u`
+const RUNS=[
+{id:1,nm:"Run 1 — The Classics & sniper",loc:"Default start",su:"47's Suit — never change",
+it:["Sniper rifle (smuggled — Miami Mastery 10)","Coins"],
+warn:"Sniper Assassin requires <b>both</b> targets killed by rifle without being spotted. If a camera catches you, No Evidence is not a separate challenge here — but staying unspotted is required for Silent Assassin and Sniper Assassin.",
+st:[
+{t:"Take the northern crossing by the scoreboard",d:"Confirmed sniping vantage; also the Déjà Due spot.",cf:"g",u:[]},
+{t:"Snipe Sierra's car during the race",d:"Destroys the car and eliminates her.",cf:"m",u:["Moving Target","The Daredevil"]},
+{t:"Optional — shoot more drivers to abort the race",d:"Enough crashes trigger Red Flag. Skip on a clean Silent Assassin attempt.",cf:"m",u:["Red Flag"],sv:1},
+{t:"Shoot the pigeon on the Kronstadt building",d:"Visible through the scope from the scoreboard.",cf:"g",u:["Déjà Due"]},
+{t:"Eliminate Robert with the rifle",d:"Both targets must die by sniper for Sniper Assassin. Scout his exposed position with Instinct — exact spot not stated by the manifest.",cf:"g",u:["The Inventor"]},
+{t:"Exit unspotted",d:"Completes Silent Assassin, Suit Only, SASO, Sniper Assassin and the umbrella The Classics.",cf:"m",u:["Silent Assassin","Suit Only","Silent Assassin, Suit Only","Sniper Assassin","The Classics"]}
+]},
+{id:2,nm:"Run 2 — Pretty In Pink (mascot line)",loc:"Default start",su:"47's Suit → Mascot",
+it:["Coins"],
+warn:"<b>Route conflict.</b> Taking the blackmail documents from the van ends this storyline. Do the mascot line here and collect <b>Blackmail</b> on a different run (or via the story itself).",
+st:[
+{t:"Give the mascot his keys in the parking lot",d:"This makes the blackmail meeting happen — required for Sympathy for the Bird and Last Words.",cf:"g",u:[]},
+{t:"Take the Mascot outfit",d:"Manifest: disguise as the Mascot.",cf:"m",u:["The Flamingo"],sv:1},
+{t:"Run the meeting — Mission Story - Pretty In Pink",d:"Impersonate the blackmailer and meet Sierra at the hotel.",cf:"m",u:["Mission Story - Pretty In Pink"]},
+{t:"Pink Menace — push Sierra down the shaft",d:"As the Blackmailer, during the meeting.",cf:"m",u:["Pink Menace","The Daredevil"],sv:1},
+{t:"Reload — Last Words",d:"Same setup; stay hidden and hear the whole conversation to its end.",cf:"g",u:["Last Words"]},
+{t:"Reload — Sympathy for the Bird",d:"Intervene so Sierra does not eliminate the mascot. No kill required.",cf:"m",u:["Sympathy for the Bird"]}
+]},
+{id:3,nm:"Run 3 — Kronstadt building",loc:"Default start",su:"Kronstadt disguise",
+it:["Coins","Silenced pistol"],
+warn:"Robert (The Inventor) has several kill routes clustered here; use reloads. Only some aquariums break — 6 and 7 are confirmed.",
+st:[
+{t:"Get a Bayside Center keycard",d:"Nearly every Kronstadt employee has one.",cf:"m",u:["Day at the Aquarium"]},
+{t:"Upper floor — Arms Dealer",d:"Pacify a Kronstadt researcher with the android arm.",cf:"m",u:["Arms Dealer"]},
+{t:"Mission Story - The New Army (as Ted Mendez)",d:"Infiltrate the android showroom. Take Ted's outfit (also completes The Military Man).",cf:"m",u:["Mission Story - The New Army","The Military Man"]},
+{t:"Thorough Demonstration",d:"Show McInnis's ID to the android so it eliminates him, not Robert.",cf:"m",u:["Thorough Demonstration"],sv:1},
+{t:"Paranoid Android — android kills Robert",d:"Manifest: assassinate Robert using the android.",cf:"m",u:["Paranoid Android","The Inventor"]},
+{t:"Frutti di Mare — aquariums 6 & 7",d:"Starfish from 6, fish from 7. Pick up both.",cf:"g",u:["Frutti di Mare"]},
+{t:"Tanked, then Sleeping with the Fishes",d:"Coin into a tank, shoot as a guard reaches in; then dump a body into an aquarium.",cf:"m",u:["Tanked","Sleeping with the Fishes"],sv:1},
+{t:"Shafted",d:"Push someone down the south-east elevator shaft.",cf:"g",u:["Shafted"]},
+{t:"Communication Breakdown — sabotage the dish",d:"Dongle from Robert's office, hack the antenna laptop opposite. Sets up The Message / The Tree Falls on the Apple.",cf:"m",u:["Communication Breakdown"]},
+{t:"You Got a Fast Car",d:"Sit in the car at the ground-floor expo.",cf:"g",u:["You Got a Fast Car"]},
+{t:"Mission Story - Turbo Charged",d:"Tamper with the prototype so Knox comes running; leads to External Combustion Engine.",cf:"m",u:["Mission Story - Turbo Charged","External Combustion Engine"]},
+{t:"Ocular Administration",d:"Poison Robert's eye drops.",cf:"m",u:["Ocular Administration"]}
+]},
+{id:4,nm:"Run 4 — The Triumph & VIP party",loc:"Default start",su:"Race marshal → Moses Lee",
+it:["Coins"],
+warn:"Moses Lee <b>wins by default</b>. Disqualifying Moses (The Odd One Out) flips the win to Sierra, which is what enables Better Burn Up and Don't Drive and Drink.",
+st:[
+{t:"The Thunder Thief — take the podium as Moses",d:"Don't interfere; take Moses's outfit (also completes The Rival), then celebrate on the podium.",cf:"m",u:["The Thunder Thief","The Rival"],sv:1},
+{t:"47 on the Scoville Scale",d:"As Moses, drink the chili shot. Ensure it is unpoisoned.",cf:"m",u:["47 on the Scoville Scale"]},
+{t:"Reload — Milky Way",d:"Win the game and leave the shot unpoisoned; Sierra drinks it and runs for milk.",cf:"m",u:["Milky Way"],sv:1},
+{t:"Reload — Hold My Hair",d:"Manifest method is drowning the target. Set this up at the party and drown Sierra.",cf:"m",u:["Hold My Hair"]},
+{t:"Sweet Victory",d:"As a Kowoon mechanic, add sugar to the fuel at the garage-gate post.",cf:"g",u:["Sweet Victory"]},
+{t:"Reload — The Odd One Out + The Triumph",d:"Disqualify Moses so Sierra wins, then tamper with the gas pressure relief valve.",cf:"m",u:["The Odd One Out","Mission Story - The Triumph"]},
+{t:"Better Burn Up / Don't Drive and Drink",d:"With Sierra winning: podium pyrotechnics, or lethal poison in the trophy.",cf:"m",u:["Better Burn Up than Fade Away","Don't Drive and Drink"]}
+]},
+{id:5,nm:"Run 5 — The safe, the bomb & the medic",loc:"Default start",su:"47's Suit → Kowoon mechanic / Medic",
+it:["Coins"],
+warn:"The bomb also fits <b>Moses Lee's</b> car, removing him and handing Sierra the win — an alternate route into the podium kills.",
+st:[
+{t:"What's In This Thing — open the evidence safe",d:"Security booth right of the main alley entrance; combo post-it on the office desk. Take the bomb.",cf:"m",u:["What's In This Thing"],sv:1},
+{t:"Mission Story - A Perfect Machine (the Pitstop)",d:"Become a Kronstadt mechanic and perform the pitstop.",cf:"m",u:["Mission Story - A Perfect Machine"]},
+{t:"Wheel of Misfortune",d:"Sabotage Sierra's tires at the pit stop.",cf:"m",u:["Wheel of Misfortune"]},
+{t:"Days of Thunder — bomb in Sierra's car",d:"Install the bomb and detonate during the race.",cf:"m",u:["Days of Thunder"],sv:1},
+{t:"Reload — Explosive Liaisons",d:"Let Robert trigger the bomb himself.",cf:"g",u:["Explosive Liaisons"]},
+{t:"Mission Story - Intravenous → Doctor 47 / Vitamin Overdose",d:"At the emergency area: as a Medic poison the IV drip yourself (Doctor 47), or make the medic do it (Vitamin Overdose). Turn the tap for the patient to also get Potty Training.",cf:"m",u:["Mission Story - Intravenous","Doctor 47","Vitamin Overdose","Potty Training"]}
+]},
+{id:6,nm:"Run 6 — Munchies, fish & exploration",loc:"Default start",su:"47's Suit → various",
+it:["Crowbar (sewer exit)","Fiber wire","Coins"],
+warn:"Escapes are mutually exclusive per run — motorboat and sewer each need their own attempt.",
+st:[
+{t:"Very Important Person",d:"Lure the tank-top scalper to the bathroom with a running tap; take the VIP pass.",cf:"g",u:["Very Important Person"]},
+{t:"Backdoor Engineering",d:"Take an event crew key off any crew member.",cf:"m",u:["Backdoor Engineering"]},
+{t:"Mr. Tambourine Man",d:"Take the musician's outfit in the undercrossing; play the drums.",cf:"g",u:["Mr. Tambourine Man"]},
+{t:"Tintamarresque",d:"Pose at the photo stand by the pier.",cf:"g",u:["Tintamarresque"]},
+{t:"Thwack paddock — Sheik & cocaine",d:"Take the Sheik's outfit in the VIP zone and hit Delgado for the cocaine brick.",cf:"m",u:["Sheikh Zanzibar, I Presume?","One Kilo Brick"],sv:1},
+{t:"Mission Story - The Munchies → The Florida Diet + Bigger Fish",d:"Take the Florida Man outfit (Coconut Balls), serve Robert poisoned food (The Florida Diet), and eliminate Florida Man with the bigger fish (Bigger Fish).",cf:"m",u:["Mission Story - The Munchies","Coconut Balls","The Florida Diet","Bigger Fish"]},
+{t:"Free Fishie & Fish Slapping Dance",d:"With a fish from aquarium 7 or the VIP kitchen: slap someone off the pier into the ocean, then release a fish into the sea.",cf:"m",u:["Free Fishie","Fish Slapping Dance"],sv:1},
+{t:"Shredding the Evidence",d:"Eliminate a target with the wood chipper.",cf:"m",u:["Shredding the Evidence"]},
+{t:"The Man and the Sea / Under the Sea (Robert)",d:"Aquarium kills: the fish trophy, or the shark.",cf:"m",u:["The Man and the Sea","Under the Sea"]},
+{t:"The Tree Falls on the Apple",d:"One well-timed push eliminates both Knoxes.",cf:"m",u:["The Tree Falls on the Apple"]},
+{t:"Exit — Slice of Vice, or reload for The Sewer Beyond",d:"Motorboat from the northwest pier, or the Hotel-area sewer hatch (crowbar).",cf:"m",u:["Slice of Vice","The Sewer Beyond"]}
+]}
+];
+
+// Versatile bundle + Chameleon + Discover Miami + Straight Shot/Someone/Piano/Tasteless/Hot Shot noted below runs
+const LEFTOVER_NOTE = "Chameleon, Discover Miami, and the Dolphin discovery are collected passively across all six runs. Versatile Assassin auto-completes once Piano Man, Someone Could Hurt Themselves, Hold My Hair, Straight Shot and Tasteless, Traceless are each done — spread those single-target methods across your reloads.";
+
+let S={ch:{},st:{},ex:{}};
+try{const d=JSON.parse(localStorage.getItem('miami_v6')||'{}');S.ch=d.ch||{};S.st=d.st||{};S.ex=d.ex||{}}catch(e){}
+function reportProgress(){try{const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r['m09']={done:done(),total:CH.length,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
+function sv(){try{localStorage.setItem('miami_v6',JSON.stringify(S))}catch(e){}reportProgress();}
+
+function nameIndex(nm){return CH.findIndex(x=>x.n===nm)}
+function done(){return CH.filter((_,i)=>S.ch[i]).length}
+function catDone(c){return CH.filter((x,i)=>x.c===c&&S.ch[i]).length}
+
+function tab(t){['r','c','a'].forEach(k=>{
+document.getElementById('p-'+k).classList.toggle('on',k===t);
+document.getElementById('b-'+k).classList.toggle('on',k===t)})}
+
+function upTop(){const d=done(),t=CH.length,p=Math.round(d/t*100);
+document.getElementById('pf').style.width=p+'%';document.getElementById('pc').textContent=d+' / '+t}
+function upCats(){['A','D','F','T','C'].forEach(c=>{
+const dn=catDone(c),tot=COUNTS[c];
+const f=document.querySelector('[data-cf="'+c+'"]'),r=document.querySelector('[data-cr="'+c+'"]');
+if(f)f.style.width=Math.round(dn/tot*100)+'%';if(r)r.textContent=dn+'/'+tot})}
+
+function tCh(i){S.ch[i]=!S.ch[i];sv();
+const el=document.querySelector('[data-k="'+i+'"]');
+if(el){el.classList.toggle('dn',!!S.ch[i]);el.querySelector('.cb').innerHTML=S.ch[i]?'✓':''}
+upTop();upCats();syncRunSteps()}
+
+function tSt(r,i){const k='r'+r+'_'+i;S.st[k]=!S.st[k];sv();
+// mark mapped challenges done when a step is checked
+const run=RUNS.find(x=>x.id===r),step=run.st[i];
+if(step.u){step.u.forEach(nm=>{const ci=nameIndex(nm);if(ci>=0)S.ch[ci]=!!S.st[k]})}
+sv();build()}
+
+function syncRunSteps(){/* re-render handled by build on challenge toggle from roster */}
+
+function tRun(r){S.ex[r]=!S.ex[r];sv();
+const el=document.querySelector('[data-r="'+r+'"]');if(el)el.classList.toggle('ex',!!S.ex[r])}
+function wipe(){if(!confirm('Reset all progress?'))return;S={ch:{},st:{},ex:{}};sv();build()}
+
+const PILL={m:'<span class="cf cf-m">Manifest</span>',g:'<span class="cf cf-g">Guide hint</span>',r:'<span class="cf cf-r">Redacted</span>'};
+
+function build(){
+document.getElementById('runs').innerHTML=RUNS.map(r=>{
+const dn=r.st.filter((_,i)=>S.st['r'+r.id+'_'+i]).length,t=r.st.length;
+const steps=r.st.map((s,i)=>{
+const k='r'+r.id+'_'+i,d=!!S.st[k];
+const ul=(s.u&&s.u.length)?'<div class="unlocks">'+s.u.map(n=>'<span class="ul">'+n+'</span>').join('')+'</div>':'';
+return '<div class="st'+(d?' dn':'')+'" data-s="'+k+'" onclick="tSt('+r.id+','+i+')">'+
+'<div class="stn">'+(d?'✓':(i+1))+'</div><div class="stc">'+
+'<div class="stt">'+s.t+' '+PILL[s.cf]+'</div><div class="std">'+s.d+'</div>'+ul+
+(s.sv?'<div class="sv">◈ Hard save here</div>':'')+'</div></div>'}).join('');
+return '<div class="rc'+(S.ex[r.id]?' ex':'')+'" data-r="'+r.id+'">'+
+'<div class="rh" onclick="tRun('+r.id+')"><div class="rn">'+String(r.id).padStart(2,'0')+'</div>'+
+'<div class="ri"><div class="rnm">'+r.nm+'</div><div class="rmr">'+
+'<span class="rmi">◈ '+r.loc+'</span><span class="rmi">◈ '+r.su+'</span>'+
+'<div class="rpb"><div class="rpf" style="width:'+Math.round(dn/t*100)+'%"></div></div>'+
+'<span class="rsc">'+dn+'/'+t+'</span></div></div><span class="rch">▶</span></div>'+
+'<div class="rb">'+
+(r.warn?'<div class="warn"><span class="warn-ic">⚠</span><span>'+r.warn+'</span></div>':'')+
+'<div class="lo"><span class="lol">Loadout</span><div class="loi">'+r.it.map(i=>'<span class="lot">'+i+'</span>').join('')+'</div></div>'+
+'<div class="stl">'+steps+'</div></div></div>'}).join('');
+
+document.getElementById('chs').innerHTML=['A','D','F','T','C'].map(c=>{
+const items=CH.map((x,gi)=>({x,gi})).filter(o=>o.x.c===c);
+const dn=catDone(c),tot=COUNTS[c];
+const rows=items.map(o=>{
+const d=!!S.ch[o.gi];
+const isRed=o.x.redacted;
+const msTag=o.x.ms?'<span class="tg ms">Mission Story</span>':'';
+const tierPill=isRed?PILL.r:PILL.m;
+const desc=isRed?'<span style="color:var(--tx3)">[Description redacted in manifest]</span>':o.x.d;
+const hint=o.x.hint?'<div class="hint">'+(o.x.hint)+'</div>':'';
+return '<div class="ch'+(d?' dn':'')+'" data-k="'+o.gi+'" onclick="tCh('+o.gi+')">'+
+'<div class="cb">'+(d?'✓':'')+'</div><div class="ct">'+
+'<div class="cnm2">'+o.x.n+' '+tierPill+msTag+'</div>'+
+'<div class="cd2">'+desc+'</div>'+hint+
+'</div><span class="tg tag'+c+'">'+CT[c]+'</span></div>'}).join('');
+return '<div class="sec"><div class="sh"><span class="st2 cl'+c+'">'+CL[c]+'</span>'+
+'<span class="sb tag'+c+'">'+tot+' in game</span>'+
+'<div class="sp"><div class="spb"><div class="spf fl'+c+'" data-cf="'+c+'" style="width:'+Math.round(dn/tot*100)+'%"></div></div>'+
+'<span class="spt" data-cr="'+c+'">'+dn+'/'+tot+'</span></div></div>'+
+'<div class="chl">'+rows+'</div></div>'}).join('');
+
+document.getElementById('cats').innerHTML=['A','D','F','T','C'].map(c=>{
+const dn=catDone(c),tot=COUNTS[c];
+return '<div class="cwrap"><div class="crow" onclick="tab(\'c\')">'+
+'<div class="cdot dot'+c+'"></div><span class="cnm">'+CL[c]+'</span>'+
+'<span class="cfr" data-cr="'+c+'">'+dn+'/'+tot+'</span></div>'+
+'<div class="cmb"><div class="cmf fl'+c+'" data-cf="'+c+'" style="width:'+Math.round(dn/tot*100)+'%"></div></div></div>'}).join('');
+
+const redCount=CH.filter(x=>x.redacted).length;
+const msCount=CH.filter(x=>x.ms).length;
+document.getElementById('audit').innerHTML=
+'<div class="conf"><b>Counts reconcile exactly with the manifest.</b> 29 Assassination + 21 Discovery + 21 Feats + 2 Targets + 5 Classics = <b>78</b>, matching the file\'s challengeCount. Every name and category on this page is verbatim from the manifest.</div>'+
+'<div class="sec"><div class="sh"><span class="st2 clF">Corrections this manifest forced</span></div>'+
+'<div class="cd2" style="line-height:1.9">'+
+'<b>Hold My Hair</b> is <b>drowning</b>, not a fiber-wire kill — every earlier build had this wrong.<br>'+
+'<b>Bigger Fish</b> targets <b>Florida Man</b>, not Robert Knox.<br>'+
+'<b>Shafted</b> and <b>Thorough Demonstration</b> are <b>Assassination</b>, not Feats.<br>'+
+'<b>You Got a Fast Car</b> is <b>Discovery</b>; <b>Communication Breakdown</b> is a <b>Feat</b>; <b>Tintamarresque</b>, <b>Mr. Tambourine Man</b> and <b>Free Fishie</b> are <b>Discovery</b>.<br>'+
+'<b>The Daredevil</b> is the <b>Sierra Knox target challenge</b> — an earlier build invented a "flamingo rooftop escape" for it. Retracted.<br>'+
+'<b>Shredding the Evidence</b> is real (wood chipper) — it had been wrongly removed as unverifiable.<br>'+
+'The <b>21st Discovery</b> is a redacted dolphin challenge, resolving the earlier 20-vs-21 conflict in favour of your game.<br>'+
+'<b>Doctor 47 / Vitamin Overdose</b> use a <b>Medic</b> disguise and the emergency-area IV, tied to Mission Story - Intravenous.'+
+'</div></div>'+
+'<div class="sec"><div class="sh"><span class="st2 clC">Reading the tiers</span></div>'+
+'<div class="cd2" style="line-height:1.8">'+
+'<b>'+(CH.length-redCount)+'</b> challenges carry full manifest descriptions. <b>'+redCount+'</b> are manifest-listed but description-redacted; their names and categories are still authoritative, and any method shown is a labelled Guide hint from earlier two-source research. <b>'+msCount+'</b> Feats are Mission Stories (tagged). '+LEFTOVER_NOTE+
+'</div></div>'+
+'<div class="sec"><div class="sh"><span class="st2 clD">Still not fully pinned down</span></div>'+
+'<div class="cd2" style="line-height:1.8">The manifest gives objectives, not walkthroughs, so exact positions for a few kills (e.g. Robert\'s sniper exposure for Sniper Assassin, the precise timing window for The Tree Falls on the Apple) are Guide-tier and worth verifying in-game. These are flagged rather than asserted.</div></div>';
+
+upTop();upCats()}
+build();
+reportProgress();
+</script>
+<!-- step-progress-bridge -->
+<script>
+/* Reports route-step ticks into 'hitman-progress-registry' so the index can
+   show them beside the challenge counts. Counts what is on screen rather than
+   any guide-specific state, so one implementation serves every guide. */
+(function(){
+  var RID="m09", SEL=".st";
+  function isDone(s){
+    var c=s.classList;
+    if(c.contains('done')||c.contains('dn')) return true;
+    if(s.getAttribute('data-done')==='1'||s.getAttribute('aria-pressed')==='true') return true;
+    return !!s.querySelector('.done,.dn,[data-done="1"],[aria-pressed="true"]');
+  }
+  function tally(){
+    var steps=document.querySelectorAll(SEL);
+    if(!steps.length) return null;
+    var n=0;
+    for(var i=0;i<steps.length;i++) if(isDone(steps[i])) n++;
+    return {steps:n,stepTotal:steps.length};
+  }
+  function push(){
+    var t;
+    try{ t=tally(); }catch(err){ return; }
+    if(!t||!t.stepTotal) return;
+    try{
+      var r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');
+      var e=r[RID]||(r[RID]={});
+      /* the guide's own reportProgress() rewrites this entry wholesale, so
+         re-add the step counts whenever they go missing or stale */
+      if(e.steps===t.steps&&e.stepTotal===t.stepTotal) return;
+      e.steps=t.steps; e.stepTotal=t.stepTotal; e.updated=Date.now();
+      localStorage.setItem('hitman-progress-registry',JSON.stringify(r));
+    }catch(err){}
+  }
+  var pending=false;
+  function schedule(){
+    if(pending) return; pending=true;
+    setTimeout(function(){pending=false;push();},120);
+  }
+  try{
+    new MutationObserver(schedule).observe(document.body,
+      {subtree:true,childList:true,attributes:true,attributeFilter:['class','aria-pressed','data-done']});
+  }catch(err){}
+  window.addEventListener('load',schedule);
+  setTimeout(push,600);
+})();
+</script>
+<!-- /step-progress-bridge -->
+</body>
+</html>

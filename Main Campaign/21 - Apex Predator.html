@@ -1,0 +1,1048 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Apex Predator — Berlin Challenge Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --concrete:#0B0C0E; --panel:#14161A; --panel2:#1B1E24; --line:#2A2F37;
+  --ink:#E7E9EC; --ink-dim:#9AA1AC; --bird:#E4FF3D; --uv:#FF2D78;
+  --save:#FFB020; --done:#3FD68C;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--concrete);color:var(--ink);
+  font-family:'Archivo',system-ui,-apple-system,'Segoe UI',sans-serif;
+  font-size:15px;line-height:1.55;
+  background-image:repeating-linear-gradient(0deg,rgba(255,255,255,.014) 0 1px,transparent 1px 4px);
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 18px 90px}
+
+header.top{border-bottom:1px solid var(--line);background:linear-gradient(180deg,#101216,#0B0C0E);padding:34px 0 24px;margin-bottom:22px}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--bird);margin:0 0 10px}
+h1{font-family:'Archivo Black',sans-serif;font-size:clamp(30px,7vw,58px);line-height:.94;margin:0 0 8px;letter-spacing:-.02em;text-transform:uppercase}
+h1 .sub{display:block;color:var(--ink-dim);font-size:.35em;letter-spacing:.14em;margin-top:12px;font-family:'IBM Plex Mono',monospace;text-transform:uppercase}
+.bird{width:32px;height:32px;vertical-align:-4px;margin-right:10px}
+
+.tracker{border:1px solid var(--line);background:var(--panel);padding:18px;margin-top:20px}
+.bartext{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ink-dim);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.bartext b{color:var(--bird)}
+.bar{height:10px;background:#0A0B0D;border:1px solid var(--line);overflow:hidden;margin:12px 0 4px}
+.bar i{display:block;height:100%;background:var(--bird);width:0;transition:width .3s}
+.cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:10px;margin-top:16px}
+.cat{border:1px solid var(--line);background:var(--panel2);padding:10px 12px}
+.cat .n{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-dim)}
+.cat .v{font-family:'Archivo Black',sans-serif;font-size:22px;margin-top:2px}
+.cat .v small{font-size:13px;color:var(--ink-dim);font-family:'IBM Plex Mono',monospace;font-weight:400}
+.cat .mini{height:4px;background:#0A0B0D;margin-top:7px}
+.cat .mini i{display:block;height:100%;background:var(--bird);width:0;transition:width .3s}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.actions button{background:transparent;border:1px solid var(--line);color:var(--ink-dim);font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:6px 10px;cursor:pointer}
+.actions button:hover{border-color:var(--uv);color:var(--uv)}
+
+nav.tabs{display:flex;border:1px solid var(--line);border-top:0;margin-bottom:18px;flex-wrap:wrap}
+nav.tabs button{flex:1 1 auto;background:var(--panel);color:var(--ink-dim);border:0;border-right:1px solid var(--line);padding:12px 14px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;min-width:120px}
+nav.tabs button:last-child{border-right:0}
+nav.tabs button[aria-selected="true"]{background:var(--bird);color:#0B0C0E;font-weight:600}
+nav.tabs button:focus-visible{outline:2px solid var(--uv);outline-offset:-2px}
+
+.runjump{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.runjump button{flex:1 1 150px;text-align:left;background:var(--panel);border:1px solid var(--line);color:var(--ink);padding:10px 12px;cursor:pointer;min-width:140px}
+.runjump button:hover{border-color:var(--bird)}
+.runjump .rj-no{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;color:var(--bird);text-transform:uppercase;display:block}
+.runjump .rj-t{font-weight:700;font-size:13px;margin-top:3px;display:block}
+
+h2{font-family:'Archivo Black',sans-serif;text-transform:uppercase;font-size:19px;margin:30px 0 12px}
+h3{font-weight:700;font-size:15px;margin:24px 0 10px;text-transform:uppercase;letter-spacing:.04em;color:var(--bird)}
+p{margin:0 0 12px}
+.note{border-left:2px solid var(--uv);background:#1A1216;padding:12px 14px;margin:0 0 16px;font-size:14px}
+.note.ok{border-color:var(--bird);background:#161A10}
+.note b{color:var(--bird)}
+code{font-family:'IBM Plex Mono',monospace;font-size:.9em;background:#0A0B0D;padding:1px 5px;border:1px solid var(--line)}
+
+.run{border:1px solid var(--line);background:var(--panel);margin-bottom:18px}
+.runhead{width:100%;text-align:left;background:var(--panel2);border:0;border-bottom:1px solid var(--line);padding:16px 18px;cursor:pointer;color:var(--ink);display:flex;align-items:center;gap:12px}
+.runhead:focus-visible{outline:2px solid var(--bird);outline-offset:-2px}
+.runhead .caret{font-family:'IBM Plex Mono',monospace;color:var(--bird);flex:0 0 auto;transition:transform .2s}
+.run.closed .runhead .caret{transform:rotate(-90deg)}
+.runhead .rh-main{flex:1 1 auto;min-width:0}
+.runhead .rh-no{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.18em;color:var(--bird);text-transform:uppercase}
+.runhead h4{font-family:'Archivo Black',sans-serif;font-size:20px;text-transform:uppercase;margin:5px 0 0;line-height:1.05}
+.runhead .rh-prog{flex:0 0 auto;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-dim)}
+.runhead .rh-prog b{color:var(--done)}
+.run.closed .runbody{display:none}
+.goalline{padding:14px 18px;border-bottom:1px solid var(--line);color:var(--ink-dim);font-size:14px}
+
+.loadout{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;background:var(--line);border-bottom:1px solid var(--line)}
+.lo{background:var(--panel);padding:11px 14px}
+.lo .k{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-dim);margin-bottom:3px}
+.lo .v{font-size:14px;font-weight:600}
+.lo .v em{display:block;font-style:normal;font-weight:400;font-size:12px;color:var(--bird);margin-top:2px}
+.runnote{padding:14px 18px 0}
+.section-head{padding:16px 18px 4px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--bird);border-top:1px solid var(--line)}
+
+.step{border-top:1px solid var(--line);display:flex}
+.section-head + .step{border-top:0}
+.stepchk{flex:0 0 44px;border-right:1px solid var(--line);background:#101216;display:flex;align-items:flex-start;justify-content:center;padding-top:15px}
+.stepchk button{width:22px;height:22px;border:1px solid var(--line);background:#0A0B0D;cursor:pointer;color:transparent;font-size:13px;line-height:1;padding:0}
+.stepchk button[aria-pressed="true"]{background:var(--done);border-color:var(--done);color:#08120C;font-weight:700}
+.stepchk button:focus-visible{outline:2px solid var(--bird);outline-offset:2px}
+.stepbox{flex:1 1 auto;min-width:0}
+.stepbox > summary{list-style:none;cursor:pointer;padding:13px 18px}
+.stepbox > summary::-webkit-details-marker{display:none}
+.stepbox > summary .t{font-weight:700;font-size:15px;display:block}
+.stepbox > summary .t::before{content:"▸";color:var(--bird);font-size:11px;margin-right:8px;display:inline-block}
+.stepbox[open] > summary .t::before{content:"▾"}
+.stepbox > summary .s{color:var(--ink-dim);font-size:14px;display:block;margin:3px 0 0 19px}
+.step.done .stepbox > summary .t{text-decoration:line-through;color:var(--ink-dim)}
+.fields{padding:2px 18px 15px 37px}
+.fields dl{margin:0;display:grid;grid-template-columns:88px 1fr;gap:2px 12px}
+.fields dt{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-dim);padding-top:2px}
+.fields dd{margin:0;font-size:14px}
+.fields dd.warn{color:var(--uv)}
+.badges{margin-top:12px;display:flex;flex-wrap:wrap;gap:6px}
+.badge{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:3px 7px;border:1px solid;border-radius:2px}
+.b-ch{color:var(--bird);border-color:#4E5A16;background:#191D0C}
+.b-warn{color:var(--uv);border-color:#63122F;background:#1D0C13}
+.b-save{color:var(--save);border-color:#5C4109;background:#1C1508}
+.b-unv{color:#9AA1AC;border-color:var(--line);background:#141619}
+.conflicts{padding:4px 18px 18px}
+.conflicts .ch{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--uv);margin:14px 0 6px}
+.conflicts p{color:var(--ink-dim);font-size:14px;margin:0}
+
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.filters button{background:var(--panel);border:1px solid var(--line);color:var(--ink-dim);font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:7px 11px;cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--bird);color:#0B0C0E;border-color:var(--bird);font-weight:600}
+.chal{display:flex;gap:12px;border:1px solid var(--line);border-bottom:0;background:var(--panel);padding:11px 14px;align-items:flex-start}
+.chal:last-child{border-bottom:1px solid var(--line)}
+.chal input{margin:3px 0 0;width:16px;height:16px;accent-color:var(--done);flex:0 0 auto;cursor:pointer}
+.chal .cmain{flex:1 1 auto;min-width:0}
+.chal .cn{font-weight:700;font-size:14px}
+.chal.done .cn{text-decoration:line-through;color:var(--ink-dim)}
+.chal .cd{color:var(--ink-dim);font-size:13px}
+.chal .meta{flex:0 0 auto;text-align:right;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink-dim)}
+.chal .meta .xp{color:var(--bird);display:block}
+.chal .meta .run{display:block;margin-top:2px}
+
+table{width:100%;border-collapse:collapse;font-size:14px;margin:0 0 18px}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:var(--panel2);font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-dim);font-weight:500}
+td{background:var(--panel)}
+.hidden{display:none}
+footer.foot{border-top:1px solid var(--line);margin-top:40px;padding-top:18px;font-size:13px;color:var(--ink-dim)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (max-width:600px){
+  .fields dl{grid-template-columns:1fr}
+  .fields dt{padding-top:8px}
+  .chal .meta{display:none}
+  .runhead .rh-prog{display:none}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <p class="eyebrow">HITMAN World of Assassination · Mission 3 · Berlin, Germany</p>
+    <h1>
+      <svg class="bird" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 14c4 1 7-1 9-4 1-1.5 2-3 4-3 2.5 0 4 1.5 4 3.5 0 4-3.5 8-9 8-4 0-7-2-8-4.5z" fill="#E4FF3D"/><circle cx="17.5" cy="9.5" r="1" fill="#0B0C0E"/></svg>Apex Predator
+      <span class="sub">Step-by-step completion guide · 6 optimised runs</span>
+    </h1>
+
+    <div class="tracker">
+      <div class="bartext">
+        <span>Mission challenges</span>
+        <span><b id="tDone">0</b> / 58 complete · <span id="tXp">0</span> XP · <span id="tCross">Explosions Run Loose (cross-mission) not yet done</span></span>
+      </div>
+      <div class="bar"><i id="tBar"></i></div>
+      <div class="cats" id="cats"></div>
+      <div class="actions">
+        <button id="btnReset" type="button">Reset progress</button>
+        <button id="btnOpenRuns" type="button">Open all runs</button>
+        <button id="btnOpenSteps" type="button">Open all step details</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <nav class="tabs" role="tablist">
+    <button role="tab" id="tab-runs" aria-selected="true" data-panel="runs">Optimised runs</button>
+    <button role="tab" id="tab-list" aria-selected="false" data-panel="list">Checklist</button>
+    <button role="tab" id="tab-ref" aria-selected="false" data-panel="ref">Map reference</button>
+    <button role="tab" id="tab-ver" aria-selected="false" data-panel="ver">Verification</button>
+  </nav>
+
+  <!-- ========== RUNS ========== -->
+  <section id="panel-runs">
+    <div class="note ok">
+      <b>Count check first.</b> Your uploaded mission file lists <b>58</b> challenges (14 Assassination · 15 Discovery · 13 Feats · 11 Targets · 5 Classics). The Hitman Wiki's "59" adds one cross-mission Codename 47 challenge, <b>Explosions Run Loose</b>, tracked globally rather than inside Apex Predator. It is included below in Run 6 and flagged, but counted separately.
+    </div>
+    <div class="note ok">
+      <b>Berlin has no Mission Stories.</b> The wiki states this outright. So there is no story order to protect, no "Hero of Berlin" challenge, and no story-vs-story script conflict. Everything here is opportunity-driven.
+    </div>
+    <div class="note">
+      <b>The rule that governs every run.</b> The instant your <b>fifth</b> ICA agent dies, the survivors lose target status and flee north/west. Any challenge needing a specific agent alive must be done <b>before</b> kill five. Save before that kill, every time. Challenge progress banks across reloads while you are <b>online</b> — do a challenge, reload, do the next, then finish the mission.
+    </div>
+
+    <div class="runjump" id="runjump"></div>
+    <div id="runs"></div>
+  </section>
+
+  <!-- ========== CHECKLIST ========== -->
+  <section id="panel-list" class="hidden">
+    <h2>All challenges</h2>
+    <div class="filters" id="filters"></div>
+    <div id="chalList"></div>
+  </section>
+
+  <!-- ========== REFERENCE ========== -->
+  <section id="panel-ref" class="hidden">
+    <h2>Starting locations &amp; mastery</h2>
+    <p style="color:var(--ink-dim)">From the Hitman Wiki mastery table. Runs 1 and 2 need Mastery 8; Run 3 needs Mastery 18. If you are below those, grind Runs 4/5/6 first — they carry no stealth pressure and level you up fast.</p>
+    <table>
+      <thead><tr><th>Mastery</th><th>Start</th><th>You start as</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Bus Stop</td><td>Suit. Default opening with the Olivia / earpiece objectives. <b>Only start that keeps agents unmarked on later runs — avoid for challenge runs.</b></td></tr>
+        <tr><td>3</td><td>Club Entrance</td><td>Suit, on the guest list, first in queue. <b>Required for Rave On.</b></td></tr>
+        <tr><td>6</td><td>Projection Bar</td><td>Bartender disguise, Level −1.</td></tr>
+        <tr><td>8</td><td>Radio Tower</td><td>Suit, foot of the tower on Level 4. <b>Used by both sniper and SASO runs.</b></td></tr>
+        <tr><td>11</td><td>Chill Out</td><td>Club Crew disguise, outdoor chill-out area.</td></tr>
+        <tr><td>16</td><td>DJ Booth</td><td>DJ disguise, already in the booth on Level −2.</td></tr>
+        <tr><td>18</td><td>Biker Hangout</td><td>Biker disguise, inside the clubhouse. <b>Required in practice for T-47.</b></td></tr>
+      </tbody>
+    </table>
+    <div class="note"><b>Start-issued disguises may not tick Chameleon directly.</b> Reported behaviour: an outfit you spawn in only registers after you swap out and back into it. Re-equip every start-issued outfit from an NPC to be safe. <span class="badge b-unv">Community-reported</span></div>
+
+    <h2>Chameleon — all 10 disguises</h2>
+    <p style="color:var(--ink-dim)">Names taken from your uploaded mission file.</p>
+    <table>
+      <thead><tr><th>Disguise</th><th>Where to take it</th><th>Own challenge</th></tr></thead>
+      <tbody>
+        <tr><td>Club Security</td><td>Green jackets, all over the club and the compound</td><td>—</td></tr>
+        <tr><td>Club Crew</td><td>Black hoods, all over inside and out</td><td>—</td></tr>
+        <tr><td>Technician</td><td>Grey outfit marked TECH; mostly backstage, Levels −1 / −2</td><td>—</td></tr>
+        <tr><td>Bartender</td><td>Juice bars outside the club, Level 0</td><td>—</td></tr>
+        <tr><td>Biker</td><td>Biker Hangout, and inside the club on −1 / −2</td><td>—</td></tr>
+        <tr><td>Dealer</td><td>Drug Dealer, Basement Bar, Level −2; distinctive hat</td><td>The Candy Man</td></tr>
+        <tr><td>DJ</td><td>One of three DJs at the booth, Level −2</td><td>The Party Starter</td></tr>
+        <tr><td>Florida Man</td><td>Roams Level −2 through the Basement Bar; zebra trousers</td><td>Der Ami</td></tr>
+        <tr><td>Delivery Guy</td><td>Red jacket, alone in the corner between Juice Bar and biker club, Level 0</td><td>The Wurst Disguise</td></tr>
+        <tr><td>Rolf Hirschmüller</td><td>Club owner, Hirschmüller's Office, Level −2</td><td>The Club Owner</td></tr>
+      </tbody>
+    </table>
+
+    <h2>The ten ICA agents</h2>
+    <p style="color:var(--ink-dim)">First playthrough: agents are unmarked. Walk up to one — he speaks into his earpiece, 47 names him, he flips to target. From playthrough two they are marked red (except from the Bus Stop start). Do one throwaway run before attempting this page.</p>
+    <table>
+      <thead><tr><th>Agent</th><th>Level</th><th>Home area</th></tr></thead>
+      <tbody>
+        <tr><td>Thames</td><td>0</td><td>Back Entrance, by the crane</td></tr>
+        <tr><td>Green</td><td>2</td><td>Patrols the club roof</td></tr>
+        <tr><td>Swan</td><td>0</td><td>Between Juice Bar and Chill Out</td></tr>
+        <tr><td>Rhodes</td><td>1</td><td>Grow House (biker building)</td></tr>
+        <tr><td>Tremaine</td><td>2</td><td>Sniper Nest, beside a mounted rifle</td></tr>
+        <tr><td>Banner</td><td>−1</td><td>Stationary on the walkway above the dance floor</td></tr>
+        <tr><td>Montgomery</td><td>−1</td><td>Perimeter circuit around the club</td></tr>
+        <tr><td>Chamberlin</td><td>−2</td><td>Near Hirschmüller's Office; only agent crossing the dance floor</td></tr>
+        <tr><td>Lowenthal</td><td>0</td><td>Roams the biker clubhouse and garage</td></tr>
+        <tr><td>Davenport</td><td>0</td><td>Near the Club Entrance</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Discover Berlin — all 22 areas</h2>
+    <p style="color:var(--ink-dim)">Exact area names from your mission file.</p>
+    <table>
+      <thead><tr><th>Level</th><th>Areas</th></tr></thead>
+      <tbody>
+        <tr><td>−2</td><td>Hirschmüller's Office · DJ Booth · Dance Floor · Boiler Room · Basement Bar</td></tr>
+        <tr><td>−1</td><td>Pipe Room · Projection Bar</td></tr>
+        <tr><td>0</td><td>Club · Club Entrance · Wardrobe · Water Channels · Chill Out · Red Toilet · Back Entrance · Drug Packaging · Biker Hangout · Garage · Juice Bar</td></tr>
+        <tr><td>1</td><td>Grow House</td></tr>
+        <tr><td>2</td><td>Sniper Nest</td></tr>
+        <tr><td>3</td><td>Overpass</td></tr>
+        <tr><td>4</td><td>Radio Tower (gated — key or crowbar)</td></tr>
+      </tbody>
+    </table>
+    <p style="color:var(--ink-dim)"><b>Easiest to miss:</b> Radio Tower (L4, gated), Overpass (L3), Pipe Room (−1 far left), Boiler Room (−2, right of dance floor), Drug Packaging (0, narrow biker room), the back of Juice Bar (0, ticket-gated), Water Channels (0, outside the main grounds).</p>
+
+    <h2>The three shortcuts</h2>
+    <table>
+      <thead><tr><th>Shortcut</th><th>How to open</th></tr></thead>
+      <tbody>
+        <tr><td>Entrance Backdoor</td><td>Level 0, behind the guest-entrance section. Unbar from the inside.</td></tr>
+        <tr><td>Biker Basement Door</td><td>Level 0, through the biker clubhouse.</td></tr>
+        <tr><td>Skylight Ladder</td><td>Ladder is on Level 1, but reach the release from the Level 2 roof — drop through the skylight and kick it down.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ========== VERIFICATION ========== -->
+  <section id="panel-ver" class="hidden">
+    <h2>Verification</h2>
+    <p>Challenge names, types and descriptions are taken from your uploaded mission file and cross-checked against the Hitman Wiki. Routes, item and area locations came from PowerPyx (Berlin challenges, undiscovered areas, shortcuts, SASO walkthrough). Bird count checked against Gamepressure, GamerRant, GoSuNoob and PSNProfiles. Where sources disagree it is flagged in place.</p>
+
+    <h3>Count audit</h3>
+    <table>
+      <thead><tr><th>Category</th><th>File</th><th>Listed</th><th>Assigned to a run</th></tr></thead>
+      <tbody>
+        <tr><td>Assassination</td><td>14</td><td id="a-Assassination">–</td><td>14</td></tr>
+        <tr><td>Discovery</td><td>15</td><td id="a-Discovery">–</td><td>15</td></tr>
+        <tr><td>Feats</td><td>13</td><td id="a-Feats">–</td><td>13</td></tr>
+        <tr><td>Targets</td><td>11</td><td id="a-Targets">–</td><td>11</td></tr>
+        <tr><td>The Classics</td><td>5</td><td id="a-The Classics">–</td><td>5</td></tr>
+        <tr><td><b>Mission total</b></td><td><b>58</b></td><td id="a-total"><b>–</b></td><td><b>58</b></td></tr>
+        <tr><td>Codename 47 (cross-mission)</td><td>not in file</td><td>1</td><td>1 (Run 6, flagged)</td></tr>
+        <tr><td><b>Wiki total</b></td><td><b>59</b></td><td><b>59</b></td><td><b>59</b></td></tr>
+      </tbody>
+    </table>
+    <p style="color:var(--ink-dim)">Run distribution of the 58: 9 + 6 + 13 + 19 + 11 = 58. Explosions Run Loose is the 59th, in Run 6. No challenge is duplicated or unassigned.</p>
+
+    <h3>Run-logic simulation results</h3>
+    <table>
+      <thead><tr><th>Check</th><th>Result</th></tr></thead>
+      <tbody>
+        <tr><td>Every run completable start to finish</td><td>Pass — each ends at a valid exit after ≥5 kills.</td></tr>
+        <tr><td>No step needs an item/disguise/NPC missed earlier</td><td>Pass — motorcycle key, shotgun, crowbar, ticket, coconut, cocaine brick and every disguise are picked up before first use in their run.</td></tr>
+        <tr><td>Targets not killed before related challenges done</td><td>Pass — the fifth-kill flee rule is respected; set-piece agents are handled before kill five.</td></tr>
+        <tr><td>Mutually exclusive challenges separated</td><td>Pass — see the conflicts panel inside each run.</td></tr>
+        <tr><td>Save/reload points don't break later objectives</td><td>Pass — saves are placed before one-shot events (crane cargo, light-show climax, Tremaine's body).</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Conflicts found and resolved</h3>
+    <table>
+      <thead><tr><th>Item</th><th>Conflict</th><th>Verdict</th></tr></thead>
+      <tbody>
+        <tr><td>Montgomery: How the Turntables vs There was a Fire Fight!</td><td>The light show <b>kills</b> Montgomery; the office confrontation needs him <b>alive</b> to be summoned. One agent, two incompatible uses.</td><td><b>Split by reload inside Run 5.</b> Do the confrontation from one save, the light show from another.</td></tr>
+        <tr><td>Concrete Ornithology count</td><td>Wiki description text says "12". Six other sources say <b>7</b> yellow birds.</td><td><b>7.</b> The wiki line appears copied from another challenge. Majority followed.</td></tr>
+        <tr><td>The Golden Ticket location</td><td>PowerPyx: Hirschmüller's Office. Wiki intel + Neoseeker: changing-room lockers (locker key on the bar counter, or force it).</td><td><span class="badge b-unv">Sources conflict</span> Check the changing-room lockers first, office second.</td></tr>
+        <tr><td>Scooter vs motorcycle exit</td><td>The Wurst Getaway (scooter) and Full Throttle (motorcycle) are one exit each — one mission cannot use both.</td><td>Scooter in Run 4, motorcycle in Run 3.</td></tr>
+        <tr><td>Two Tremaine assassination challenges</td><td>Who's Sniping the Sniper? (rifle headshot) and The 47th Trick (his own mounted rifle) both consume Tremaine.</td><td>Split by reload in Run 2. Whether both can pop from one mounted-rifle headshot is untested — flagged in the step.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Marked UNVERIFIED</h3>
+    <ul style="color:var(--ink-dim);font-size:14px;line-height:1.7">
+      <li><b>Non-agent NPC names.</b> No source names any guard, bartender, biker or DJ. Only the ten agents and the club owner are named; everyone else is described by role and clothing. Nothing was invented.</li>
+      <li><b>One mounted-rifle headshot popping both Tremaine challenges.</b> Plausible, unconfirmed. Save first, test, reload.</li>
+      <li><b>Explosions Run Loose prerequisite</b> ("Traditions of the Trade" first). Single source (wiki).</li>
+      <li><b>Discover Berlin tracker desync.</b> PowerPyx reader reports of the achievement unlocking at 22/22 while the challenge counter stuck at 20 (one report: 15). Community reports only.</li>
+      <li><b>Numeric patrol timings.</b> Sources describe loops qualitatively. No second-by-second timing was invented.</li>
+    </ul>
+
+    <h3>Sources</h3>
+    <ul style="color:var(--ink-dim);font-size:14px;line-height:1.7">
+      <li>Your uploaded mission file — challenge list, types, descriptions, 10 disguises, 22 areas</li>
+      <li>Hitman Wiki — Apex Predator mission page: XP, mastery, intel, target-lockdown behaviour, T-pose bug</li>
+      <li>PowerPyx — Berlin challenges, undiscovered areas, all shortcuts, SASO walkthrough</li>
+      <li>Gamepressure, GamerRant, GoSuNoob, PSNProfiles, GamerTweak — bird count; Neoseeker, SegmentNext, TheGamer — corroboration</li>
+    </ul>
+  </section>
+
+  <footer class="foot">Progress is saved in this browser and persists across reloads. Data verified July 2026 against the sources above.</footer>
+</div>
+
+<script>
+/* ===================== CHALLENGE DATA ===================== */
+const CH = [
+ {id:'a1',n:"Who's Sniping the Sniper?",t:'Assassination',d:"Eliminate Agent Tremaine with a sniper rifle headshot.",xp:2000,run:2},
+ {id:'a2',n:"Crane Trauma",t:'Assassination',d:"Eliminate Agent Thames by setting up a crane accident.",xp:2000,run:5},
+ {id:'a3',n:"How the Turntables",t:'Assassination',d:"Eliminate Agent Montgomery and Agent Banner in the light show grand finale.",xp:4000,run:5},
+ {id:'a4',n:"Drive It Home",t:'Assassination',d:"Eliminate ICA agents as they evacuate the area.",xp:4000,run:3},
+ {id:'a5',n:"Rule of Threes",t:'Assassination',d:"Eliminate 3 agents from the radio tower using a sniper rifle.",xp:4000,run:2},
+ {id:'a6',n:"The 47th Trick in the Book",t:'Assassination',d:"Eliminate Agent Tremaine with his own rifle.",xp:2000,run:2},
+ {id:'a7',n:"Versatile Assassin",t:'Assassination',d:"Complete Piano Man, Someone Could Hurt Themselves, Hold My Hair, Straight Shot and Tasteless, Traceless.",xp:4000,run:5},
+ {id:'a8',n:"Suck a Bag of Bricks",t:'Assassination',d:"Eliminate a target with a bag of bricks.",xp:1000,run:3},
+ {id:'a9',n:"Waaagh!",t:'Assassination',d:"Eliminate a target with the scrap sword.",xp:2000,run:3},
+ {id:'a10',n:"Straight Shot",t:'Assassination',d:"Assassinate a target with a headshot.",xp:2000,run:2},
+ {id:'a11',n:"Tasteless, Traceless",t:'Assassination',d:"Assassinate a target with lethal poison.",xp:2000,run:5},
+ {id:'a12',n:"Someone Could Hurt Themselves",t:'Assassination',d:"Assassinate a target in an accident.",xp:2000,run:1},
+ {id:'a13',n:"Hold My Hair",t:'Assassination',d:"Assassinate a target by drowning them.",xp:2000,run:5},
+ {id:'a14',n:"Piano Man",t:'Assassination',d:"Assassinate a target with the fiber wire.",xp:2000,run:5},
+
+ {id:'d1',n:"The Golden Ticket",t:'Discovery',d:"Obtain a juice bar ticket.",xp:1000,run:4},
+ {id:'d2',n:"The Wurst Getaway",t:'Discovery',d:"Exfiltrate on the scooter.",xp:2000,run:4},
+ {id:'d3',n:"Shortcut: Entrance Backdoor",t:'Discovery',d:"Unlock the door shortcut at the entrance.",xp:1000,run:4},
+ {id:'d4',n:"Scavenger",t:'Discovery',d:"Obtain the scrap sword.",xp:2000,run:3},
+ {id:'d5',n:"The Candy Man",t:'Discovery',d:"Disguise yourself as the Dealer.",xp:2000,run:4},
+ {id:'d6',n:"Discover Berlin",t:'Discovery',d:"Reveal all 22 undiscovered areas in Berlin.",xp:2000,run:4},
+ {id:'d7',n:"Full Throttle",t:'Discovery',d:"Exfiltrate on the motorcycle.",xp:2000,run:3},
+ {id:'d8',n:"Chameleon",t:'Discovery',d:"Find and equip all 10 disguises in Berlin.",xp:4000,run:4},
+ {id:'d9',n:"Shortcut: Biker Basement Door",t:'Discovery',d:"Unlock the door shortcut at the biker basement.",xp:1000,run:4},
+ {id:'d10',n:"The Party Starter",t:'Discovery',d:"Disguise yourself as a DJ.",xp:2000,run:4},
+ {id:'d11',n:"Shortcut: Skylight Ladder",t:'Discovery',d:"Unlock the ladder shortcut at the skylight.",xp:1000,run:4},
+ {id:'d12',n:"Der Ami",t:'Discovery',d:"Disguise yourself as Florida Man.",xp:1000,run:4},
+ {id:'d13',n:"The Wurst Disguise",t:'Discovery',d:"Disguise yourself as the Delivery Guy.",xp:1000,run:4},
+ {id:'d14',n:"The Club Owner",t:'Discovery',d:"Disguise yourself as Rolf Hirschmüller.",xp:2000,run:4},
+ {id:'d15',n:"Devil's Dandruff",t:'Discovery',d:"Get a brick of cocaine.",xp:1000,run:3},
+
+ {id:'f1',n:"The Wurst Delivery",t:'Feats',d:"Deliver food to the bikers.",xp:1000,run:4},
+ {id:'f2',n:"Rave On",t:'Feats',d:"Use the Club Entrance start, become the DJ, trigger the climax and make the crowd go wild.",xp:2000,run:6,extra:"Added in Patch 3.70 (28 Sep 2021). Unlocks the Rave On Suit."},
+ {id:'f3',n:"Whiteout",t:'Feats',d:"Envelop Agent Chamberlin in a cloud of cocaine.",xp:2000,run:5},
+ {id:'f4',n:"T-47",t:'Feats',d:"As a Biker, complete the mission using only a shotgun. Exfiltrate on the motorcycle.",xp:4000,run:3},
+ {id:'f5',n:"Paging Dr. Greenthumb",t:'Feats',d:"Fumigate Agent Rhodes in the growhouse.",xp:2000,run:5},
+ {id:'f6',n:"There was a Fire Fight!",t:'Feats',d:"Confront Agent Montgomery.",xp:4000,run:5},
+ {id:'f7',n:"Herr Ziegler Plus One",t:'Feats',d:"Get on the guest list.",xp:1000,run:4},
+ {id:'f8',n:"Juiced Up",t:'Feats',d:"Serve juice to Agent Swan.",xp:2000,run:5},
+ {id:'f9',n:"Sweet Dreams",t:'Feats',d:"Pacify the drug dealer with a brick of cocaine.",xp:2000,run:4},
+ {id:'f10',n:"Spree Party",t:'Feats',d:"Dump someone into the canals.",xp:1000,run:4},
+ {id:'f11',n:"Concrete Ornithology",t:'Feats',d:"Redacted. Photograph all 7 yellow bird graffiti.",xp:4000,run:4},
+ {id:'f12',n:"Trophy Au Naturel",t:'Feats',d:"Redacted. Photograph the half-naked raver.",xp:1000,run:4},
+ {id:'f13',n:"Coconut Ball Surprise",t:'Feats',d:"Redacted. Pacify Florida Man with a coconut.",xp:4000,run:4},
+
+ {id:'t1',n:"The Veteran",t:'Targets',d:"Eliminate Agent Rhodes.",xp:2000,run:1},
+ {id:'t2',n:"The Swan Song",t:'Targets',d:"Eliminate Agent Swan.",xp:2000,run:1},
+ {id:'t3',n:"The Wall",t:'Targets',d:"Eliminate Agent Banner.",xp:2000,run:3},
+ {id:'t4',n:"The Sniper",t:'Targets',d:"Eliminate Agent Tremaine.",xp:2000,run:1},
+ {id:'t5',n:"Clean House",t:'Targets',d:"Eliminate all ICA Agents.",xp:4000,run:3},
+ {id:'t6',n:"The Scout",t:'Targets',d:"Eliminate Agent Green.",xp:2000,run:1},
+ {id:'t7',n:"The Professional",t:'Targets',d:"Eliminate Agent Thames.",xp:2000,run:1},
+ {id:'t8',n:"The Joker",t:'Targets',d:"Eliminate Agent Chamberlin.",xp:2000,run:3},
+ {id:'t9',n:"The Leader",t:'Targets',d:"Eliminate Agent Montgomery.",xp:2000,run:3},
+ {id:'t10',n:"The Englishman",t:'Targets',d:"Eliminate Agent Lowenthal.",xp:2000,run:3},
+ {id:'t11',n:"The Rookie",t:'Targets',d:"Eliminate Agent Davenport.",xp:2000,run:3},
+
+ {id:'c1',n:"Silent Assassin",t:'The Classics',d:"Complete the mission, only kill targets, no bodies found, not compromised, erase any camera evidence.",xp:4000,run:1},
+ {id:'c2',n:"Suit Only",t:'The Classics',d:"Assassinate the targets and complete the mission entirely in your suit.",xp:4000,run:1},
+ {id:'c3',n:"Sniper Assassin",t:'The Classics',d:"Complete the mission killing targets with a sniper rifle, only kill targets, not spotted.",xp:4000,run:2},
+ {id:'c4',n:"Silent Assassin, Suit Only",t:'The Classics',d:"All Silent Assassin conditions, done in your suit.",xp:4000,run:1},
+ {id:'c5',n:"The Classics",t:'The Classics',d:"Complete Silent Assassin, Silent Assassin Suit Only, Sniper Assassin and Suit Only.",xp:4000,run:2},
+
+ {id:'x1',n:"Explosions Run Loose",t:'Codename 47',d:"Complete Traditions of the Trade, then eliminate 5 ICA agents with explosives in a single Berlin session.",xp:4000,run:6,cross:true,extra:"Cross-mission challenge — not part of the mission's 58. Prerequisite sourced from the wiki only."}
+];
+
+/* ===================== RUN DATA (step format) ===================== */
+/* field keys: go, disg (disguise), item, npc, act (do), warn[], badges[[kind,text]] */
+const N='None';
+const RUNS=[
+{
+ no:1,title:"The long way round",tag:"Silent Assassin · Suit Only · SASO · 5 Targets",
+ goal:"One clean suit-only sweep of the outer compound and biker building that banks all three stealth Classics plus five Target challenges in a single uninterrupted attempt.",
+ loadout:{loc:"Radio Tower",loce:"Mastery 8",suit:"47's Signature Suit",i1:"ICA19 Silverballer (silenced)",i2:"Coin",i3:"Lockpick Mk III",i4:"Smuggled item: none"},
+ note:"This is the reference run. Below Mastery 8? Do Runs 4/5/6 first — they level you well past 8 with no stealth risk. Route is PowerPyx's Berlin SASO walkthrough.",
+ sections:[
+  {h:"Setup",steps:[
+   {t:"Turn on the Silent Assassin HUD and save",s:"Options → Gameplay → HUD → Silent Assassin HUD, then save at mission start.",
+    go:"Pause menu, before you move.",disg:"Suit.",item:N,npc:N,
+    act:"Enable the HUD (two green pistol icons appear bottom-left) and make a manual save. If either icon turns red mid-run, reload this save.",
+    badges:[["save","SAVE — at mission start"]]},
+   {t:"Do a throwaway identification run first",s:"On your first Berlin play the agents are unmarked; one disposable run to any exit marks all ten for later.",
+    go:"Anywhere — this is a discard run.",disg:"Any.",item:N,npc:"All ten agents.",
+    act:"Approach agents to identify them, reach any exit, then restart. From run two they show red markers.",
+    warn:["Never use the Bus Stop start for challenge runs — it keeps agents unmarked even later."]}
+  ]},
+  {h:"West flank — Agent Thames (1/5)",steps:[
+   {t:"Go left around the club and grab the crowbar",s:"Take the left path, climb the wall behind the two road guards, and pick up the crowbar behind the long red structure.",
+    go:"From the tower, around the LEFT side of the club — not inside, not right toward the queue. Climb the wall behind the two guards on the road into the strip behind the club.",
+    disg:"Suit.",item:"Crowbar — on the ground behind the long red metal structure on the left of that strip. The source flags it as needed later; carry it as insurance.",npc:N,
+    act:"Slip past the two enemies in this area and pocket the crowbar.",
+    warn:["Never walk past the entrance crowd with a visible weapon — that breaks Silent Assassin at the very end (see exit step)."]},
+   {t:"Coin-lure Thames into the bushes and hide him",s:"Throw a coin into the dead-end bushes, take Thames when he investigates, drag him in.",
+    go:"The far dead end of the strip, by the crane.",disg:"Suit.",item:"Coin.",npc:"Agent Thames — patrols to the end of this strip.",
+    act:"Throw the coin deep into the bushes (not open ground). When he walks in alone, choke or fibre-wire him and drag the body into the bushes.",
+    warn:["If the coin pulls the wrong NPC, reload — it costs seconds this early."],
+    badges:[["ch","The Professional (1/5)"],["save","SAVE — body hidden"]]}
+  ]},
+  {h:"Roof — Agent Green (2/5)",steps:[
+   {t:"Climb the containers to the roof",s:"Through the fence hole, up the blue container opposite the biker club, to the roof ladder.",
+    go:"Cut through the bushes toward the Biker Hangout, take the hole in the fence to avoid two guards, climb the blue container behind the parked car opposite the biker club, keep going to the top of the ladder.",
+    disg:"Suit.",item:N,npc:"Two roof patrollers — one is Agent Green.",
+    act:"Top out on the ladder and hold there."},
+   {t:"Fusebox the escort, then take Green",s:"Pull the non-target guard with the fusebox, wait for Green to face away, eliminate him.",
+    go:"Roof, off the ladder.",disg:"Suit.",item:N,npc:"Agent Green + one escort guard.",
+    act:"Trigger the fusebox on the left to pull the escort. With Green's back turned and the escort occupied, take him out.",
+    warn:["A silenced headshot also works but adds noise risk from the second guard — the fusebox lure is cleaner."],
+    badges:[["ch","The Scout (2/5)"],["save","SAVE — before climbing down"]]}
+  ]},
+  {h:"Party area — Agent Swan (3/5)",steps:[
+   {t:"Cross to the Juice Bar area and kill Swan by accident",s:"Shoot the propane tank when he stops beside it, or the lights as he passes under — a found accident body keeps Silent Assassin.",
+    go:"Climb back down and hop the wall into the party area (Juice Bar on the map).",disg:"Suit.",
+    item:"Silenced ICA19 for the accident shot; Coin for the porta-potty variant.",npc:"Agent Swan — loops between Juice Bar and Chill Out.",
+    act:"From cover where no NPC sees your muzzle, shoot the red propane tank while he stands next to it, OR shoot the light rig as he walks under it. Someone Could Hurt Themselves pops here.",
+    warn:["An accident that kills any non-target voids Silent Assassin — clear civilians from the blast/rig first.","Alt: lure him to the porta-potties with a coin, take him from behind, stash the body in the box beside them."],
+    badges:[["ch","The Swan Song (3/5)"],["ch","Someone Could Hurt Themselves"],["save","SAVE — immediately after"]]}
+  ]},
+  {h:"Biker building — Rhodes (4/5) and Tremaine (5/5)",steps:[
+   {t:"Climb into the biker club on Level 1",s:"Up the red graffiti container in the yard where the red-jacketed delivery guy stands.",
+    go:"The red graffiti container in the corner yard with the Delivery Guy.",disg:"Suit.",item:N,
+    npc:"Delivery Guy stands here — do not touch him; he must stay put for Run 4 and a body here risks discovery.",
+    act:"Climb in and move along the outer walkways."},
+   {t:"Sprinkler-lure Rhodes and hide him",s:"Turn on the sprinkler outside the Grow House as he passes, take him, turn it back off.",
+    go:"Grow House, Level 1.",disg:"Suit.",item:N,npc:"Agent Rhodes — walks the Grow House.",
+    act:"Activate the large yellow Sprinkler Unit just outside the Grow House while Rhodes is inside near the door. Step aside, take him as he investigates, drag the body behind the unit, then switch the unit off.",
+    warn:["Leaving the sprinkler running keeps drawing NPCs to your body stash.","Alt: throw a coin at the Grow House exit instead."],
+    badges:[["ch","The Veteran (4/5)"],["save","SAVE — before going up"]]},
+   {t:"Clear the nest and take Tremaine last",s:"Subdue the two guards, then eliminate Tremaine at the mounted rifle.",
+    go:"Sniper Nest, Level 2 of the biker clubhouse.",disg:"Suit.",item:N,npc:"Agent Tremaine + two guards.",
+    act:"Subdue both guards first and tuck them out of the doorway sightline, then eliminate Tremaine. He is your fifth kill, so this must be last.",
+    warn:["Kill five and the survivors stop being targets and flee — that is why Tremaine goes last."],
+    badges:[["ch","The Sniper (5/5)"]]}
+  ]},
+  {h:"Exit",steps:[
+   {t:"Dump every visible weapon, then leave on the bicycle",s:"Drop anything on 47's back — including the crowbar — before the entrance crowd, and exfiltrate.",
+    go:"Backtrack to the bicycle near the disco entrance.",disg:"Suit.",item:"Drop all visible weapons first.",npc:N,
+    act:"Ditch shouldered weapons before passing the queue, then exit on the bicycle. Silent Assassin, Suit Only and Silent Assassin Suit Only all fire on the summary.",
+    warn:["A visible weapon near the entrance crowd is the usual run-killer.","Don't take the motorcycle/scooter here — those exits belong to Runs 3 and 4."],
+    badges:[["ch","Silent Assassin"],["ch","Suit Only"],["ch","Silent Assassin, Suit Only"]]}
+  ]}
+ ],
+ conflicts:"Cannot share a run with anything needing a disguise (breaks Suit Only) or any found non-target body/knockout (breaks Silent Assassin). The fifth kill must be Tremaine, or the survivors flee. Sniper Assassin is split into Run 2 because Swan's propane accident has to become a rifle shot."
+},
+{
+ no:2,title:"Everything through a scope",tag:"Sniper Assassin · The Classics · both Tremaine kills",
+ goal:"A rifle-only run from the radio tower that closes the last two Classics and both Tremaine assassination challenges, using reloads to try each Tremaine method separately.",
+ loadout:{loc:"Radio Tower",loce:"Mastery 8",suit:"47's Signature Suit",i1:"ICA Briefcase Mk III containing a silenced sniper rifle",i2:"Coin",i3:"Lockpick Mk III",i4:"Smuggled item: none"},
+ note:"The briefcase is how a sniper rifle reaches the map. Assemble it up the tower before doing anything else.",
+ sections:[
+  {h:"The tower",steps:[
+   {t:"Climb up and assemble the rifle",s:"Open the briefcase on the tower platform and build the rifle before you look at anyone.",
+    go:"Radio Tower, Level 4 — starting here bypasses the gate that normally needs a key or crowbar.",disg:"Suit.",item:"ICA Briefcase Mk III → silenced sniper rifle.",npc:N,
+    act:"Assemble the rifle on the platform and save.",
+    warn:["Sniper Assassin carries the same camera clause as Silent Assassin — erase or destroy any footage of you before exiting."],
+    badges:[["save","SAVE — rifle up, nothing fired"]]},
+   {t:"Take three agents from the tower for Rule of Threes",s:"Three rifle kills without leaving the platform; make one a headshot for Straight Shot.",
+    go:"Stay on the tower platform.",disg:"Suit.",item:"Silenced sniper rifle.",npc:"Exposed patrollers — e.g. Green on the club roof and the Level 0 outdoor agents.",
+    act:"Kill three agents with the rifle, all from the tower, each while alone and unobserved. Make at least one a headshot.",
+    warn:["Moving to a rooftop between shots breaks the 'from the radio tower' condition.","A body dropping in another NPC's view voids the run even though the rifle is silent — reload if spotted."],
+    badges:[["ch","Rule of Threes"],["ch","Straight Shot"],["save","SAVE — after the third kill"]]}
+  ]},
+  {h:"Tremaine, twice",steps:[
+   {t:"Save, then rifle-headshot Tremaine",s:"A sniper headshot on Tremaine for Who's Sniping the Sniper? (also unlocks the Jaeger 7 Covert 2021).",
+    go:"You may need to come off the tower for the angle into the Sniper Nest — fine, once Rule of Threes has already fired.",disg:"Suit.",item:"Silenced sniper rifle.",npc:"Agent Tremaine — Sniper Nest, Level 2.",
+    act:"Save first, then put a rifle round through his head. A body shot gives The Sniper but not this challenge.",
+    warn:["Don't spend one of your three tower kills on Tremaine or you can't get it back without a reload."],
+    badges:[["ch","Who's Sniping the Sniper?"],["save","SAVE — before touching Tremaine"]]},
+   {t:"Reload and kill him with his own mounted rifle",s:"Load back, reach the nest, use the rifle mounted beside him.",
+    go:"Sniper Nest, Level 2.",disg:"Suit.",item:"Tremaine's own mounted sniper rifle.",npc:"Agent Tremaine + two nest guards.",
+    act:"Subdue the two guards, take the mounted rifle and shoot Tremaine with it for The 47th Trick in the Book.",
+    warn:["Untested: his mounted weapon is a sniper rifle, so a headshot with it may pop Who's Sniping the Sniper? too. Try from the pre-Tremaine save; if only one fires, reload and do them separately."],
+    badges:[["ch","The 47th Trick in the Book"],["unv","UNVERIFIED — one kill popping both"]]}
+  ]},
+  {h:"Bank the Classics",steps:[
+   {t:"Finish a clean five-kill rifle run and exit",s:"Reload to intact Sniper Assassin, take all five targets with the silenced rifle, stay unseen, exit.",
+    go:"Either take all five from the tower and Level 2 rooftops, or follow the Run 1 route replacing every choke/accident with a rifle shot.",disg:"Suit.",item:"Silenced sniper rifle.",npc:"Five agents.",
+    act:"Kill five with the rifle only, unspotted, cameras erased, then exit. With Run 1's three stealth Classics already banked, Sniper Assassin firing here also completes The Classics.",
+    warn:["On the Run 1 route, shoot Swan at the porta-potties — an explosion is not a rifle kill and won't count."],
+    badges:[["ch","Sniper Assassin"],["ch","The Classics"]]}
+  ]}
+ ],
+ conflicts:"The two Tremaine challenges consume one agent via two incompatible methods — split by reload. Swan's propane accident is incompatible with Sniper Assassin (an explosion isn't a rifle kill)."
+},
+{
+ no:3,title:"Shotgun and a stolen bike",tag:"T-47 · Clean House · Drive It Home · 6 Targets · pickups",
+ goal:"A loud biker run that kills all ten agents with one shotgun and rides out on the motorcycle, then uses reloads for the scrap sword, the brick drop and the cocaine.",
+ loadout:{loc:"Biker Hangout",loce:"Mastery 18",suit:"Biker (issued by the start)",i1:"Nothing — T-47 uses the map's own shotgun",i2:"Coin",i3:"Lockpick Mk III",i4:"Smuggled item: none"},
+ note:"T-47 is the map's tightest constraint: biker disguise, shotgun only, motorcycle exit. Everything else here happens on reloads around it.",
+ sections:[
+  {h:"Arm up (before any kills)",steps:[
+   {t:"Take the motorcycle key first",s:"Grab 'Jokke's Hog' from the Biker Hangout while the map is still calm.",
+    go:"Biker Hangout, Level 0 — the bar/pool-table seating room.",disg:"Biker.",item:"Motorcycle Key ('Jokke's Hog') on a small table in the sitting area.",npc:N,
+    act:"Pocket the key now so you're not crossing a corpse-filled compound for it later.",
+    badges:[["save","SAVE — key in hand, nobody dead"]]},
+   {t:"Take the shotgun from the gun case",s:"The only weapon you may use until you exit.",
+    go:"Level 1 of the biker building, gun case behind the Grow House.",disg:"Biker.",item:"Shotgun (map pickup).",npc:N,
+    act:"Take the shotgun. Stay in the biker outfit and use nothing else to kill until you leave.",
+    warn:["A single non-shotgun kill (fibre wire, accident, thrown object, second gun) can void T-47.","Berlin lets guard-type disguises carry long guns openly, so walking with the shotgun won't blow you."]}
+  ]},
+  {h:"Clear the map",steps:[
+   {t:"Work biker building → outdoors → club, by proximity",s:"Take agents in a tight loop so you never backtrack far.",
+    go:"Order: Tremaine (Sniper Nest L2) → Rhodes (Grow House L1) → Lowenthal (biker clubhouse/garage L0) → Thames (Back Entrance) → Davenport (Club Entrance) → Swan (Juice Bar↔Chill Out) → Green (club roof L2) → Banner (walkway L−1) → Montgomery (perimeter L−1) → Chamberlin (near office L−2).",
+    disg:"Biker.",item:"Shotgun.",npc:"All ten agents.",
+    act:"Shotgun each agent at range through doorways — they're armed and fight back. Each named agent pops his Target challenge on death.",
+    warn:["Watch the counter — everything before kill five is calm."],
+    badges:[["ch","The Wall"],["ch","The Joker"],["ch","The Leader"],["ch","The Englishman"],["ch","The Rookie"],["save","SAVE — exactly four agents dead"]]},
+   {t:"Kill five, then hunt the runners",s:"After kill five the survivors flee; shoot one mid-evacuation for Drive It Home, then finish the rest for Clean House.",
+    go:"Ambush the north and west roads; on foot the Back Entrance strip and the Club outdoor area funnel escapers.",disg:"Biker.",item:"Shotgun.",npc:"The five surviving agents.",
+    act:"Make your fifth kill, then shoot a fleeing agent (that satisfies Drive It Home), and gun down the remaining runners for Clean House.",
+    warn:["Runners lose red markers — spot them as the only people running against the crowd.","Once they clear the map boundary, Clean House is unreachable this attempt — reload to the four-kill save if you lose one."],
+    badges:[["ch","Drive It Home"],["ch","Clean House"]]},
+   {t:"Ride out on the motorcycle",s:"Exit via the garage; T-47 and Full Throttle both fire.",
+    go:"Garage, Level 0 of the biker building.",disg:"Biker.",item:"Motorcycle Key from step one.",npc:N,
+    act:"Leave on the motorcycle. Full Throttle needs only the motorcycle exit; T-47 additionally needs the biker outfit and shotgun-only play all mission.",
+    warn:["T-47 didn't fire? Almost always a stray non-shotgun kill or a disguise change — reload the four-kill save and finish strictly."],
+    badges:[["ch","T-47"],["ch","Full Throttle"]]}
+  ]},
+  {h:"Reload pickups",steps:[
+   {t:"Reload, then take the scrap sword",s:"Between the fuel tanks by the canal — pickup fires Scavenger.",
+    go:"Level 0, between the Juice Bar and the canal, in the gap between the large fuel tanks.",disg:"Biker (safe to carry the sword).",item:"Scrap Sword.",npc:N,
+    act:"Load the pre-shooting save and pick it up. Scavenger fires on pickup.",
+    warn:["Most disguises won't tolerate an openly carried scrap sword — the biker outfit is why this lives on this run."],
+    badges:[["ch","Scavenger"]]},
+   {t:"Kill an agent with the scrap sword",s:"Any agent, melee, unobserved — voids T-47, so do it after T-47 is banked.",
+    go:"Wherever an agent is isolated — Lowenthal in the biker clubhouse is convenient.",disg:"Biker.",item:"Scrap Sword.",npc:"Any agent (Lowenthal suggested).",
+    act:"Take one agent with the sword for Waaagh!.",
+    warn:["A sword kill voids T-47 — only on a reload after T-47 has fired."],
+    badges:[["ch","Waaagh!"]]},
+   {t:"Pick up a cocaine brick",s:"From the Drug Packaging table — pickup fires Devil's Dandruff.",
+    go:"Drug Packaging, the narrow room inside the biker club, Level 0.",disg:"Biker.",item:"Cocaine Brick.",npc:N,
+    act:"Grab a brick. Devil's Dandruff fires on pickup. (Same brick is used for Whiteout and Sweet Dreams elsewhere.)",
+    badges:[["ch","Devil's Dandruff"]]},
+   {t:"Drop the bag of bricks on an agent",s:"Knock one out, drag under the hanging bag, cut it loose — accident kill.",
+    go:"Bag hangs on Level 2 of the biker building (yellow outline in Instinct); the drop lands on Level 1.",disg:"Biker.",item:"Bag of bricks (rig).",npc:"Any agent.",
+    act:"Subdue an agent, drag the body directly under the bag, go up and release it.",
+    warn:["Alt (no dragging): an agent walks to a cup of water by a doorway with a brick bag above it — clear that roof of guards first, release as he stops at the cup.","He must be stationary under the bag or he walks out from the drop."],
+    badges:[["ch","Suck a Bag of Bricks"],["save","SAVE — before rigging the drop"]]}
+  ]}
+ ],
+ conflicts:"Reload-separable: Waaagh! and Suck a Bag of Bricks both void T-47 (neither is a shotgun kill). Scavenger and Devil's Dandruff are pickup-only and safe inside the T-47 attempt if the items are never used. Drive It Home needs the evacuation started; Clean House needs every runner caught before it ends — compatible only with the ambush pre-positioned."
+},
+{
+ no:4,title:"Wardrobe, tourism and petty theft",tag:"Chameleon · Discover Berlin · all photos · shortcuts · scooter",
+ goal:"The long safe run: no stealth rating, no kill requirement until exit. Walk the whole map, wear all ten outfits, open all three shortcuts, take both photo sets, grab every named item.",
+ loadout:{loc:"Club Entrance",loce:"Mastery 3",suit:"47's Signature Suit",i1:"Camera (47's own — no slot)",i2:"Lockpick Mk III",i3:"Crowbar or Coin",i4:"Smuggled item: none"},
+ note:"Nothing here cares about being spotted. Subdue freely and treat it as a mapping run — 19 challenges in one sitting, and the fastest mastery XP on the page.",
+ sections:[
+  {h:"Outside the front door",steps:[
+   {t:"Get on the guest list (Herr Ziegler Plus One)",s:"Find the man's pills in his green bike basket, return them, he walks you in.",
+    go:"Right of the main entrance; the green bicycle leans on the large fence just before the trespassing line.",disg:"Suit.",item:"The 'medicine' pills from the bike basket.",npc:"Man in flared trousers on the phone about his missing pills.",
+    act:"Let him finish the call, take the pills from the basket, return them; he adds you as his plus one.",
+    warn:["Interrupting the phone call can leave him in the wrong state — wait it out."],
+    badges:[["ch","Herr Ziegler Plus One"]]},
+   {t:"Photograph all 7 yellow birds",s:"Seven graffiti around the outside; the counter ticks after each good shot.",
+    go:"Start at the white van beyond the queue and work round; later ones are on the freight containers past the security outpost (a stack on top of the container), the wall right of the stack, under the long staircase above, then two in the roof room by the overpass and one high-left through that doorway.",
+    disg:"Suit.",item:"Camera.",npc:N,
+    act:"Photograph each of the 7 birds. The camera zooms — you needn't be close. Best done late once the map is open.",
+    warn:["Seven, not twelve — the wiki's '12' text is wrong here.","Also unlocks Bird Art, which pops on the summary screen."],
+    badges:[["ch","Concrete Ornithology"],["unv","UNVERIFIED — wiki says 12; 7 used"]]},
+   {t:"Open the Entrance Backdoor shortcut",s:"Reach the barred door from inside and unbar it.",
+    go:"Level 0, set back behind the guest-entrance section.",disg:"Suit.",item:N,npc:N,
+    act:"Get into the entrance interior, walk to the door and unbar it. Stays open on all future playthroughs.",
+    badges:[["ch","Shortcut: Entrance Backdoor"]]}
+  ]},
+  {h:"Outdoor compound",steps:[
+   {t:"Take the Delivery Guy's outfit and scooter key",s:"Subdue the lone red-jacket, take his disguise and the key he drops.",
+    go:"Level 0, corner yard between the Juice Bar and the biker club.",disg:"→ becomes Delivery Guy.",item:"Scooter Key (drops from him).",npc:"Delivery Guy — alone in the corner, bright red jacket.",
+    act:"Isolate and subdue him, take the outfit (fires The Wurst Disguise) and the scooter key (keep it for the exit).",
+    badges:[["ch","The Wurst Disguise"]]},
+   {t:"Deliver the food to the hungry biker",s:"Ring the bell, take food off the scooter, hand it over; challenge fires when he sits to eat.",
+    go:"The scooter near the clubhouse entrance.",disg:"Delivery Guy.",item:"Food from the scooter.",npc:"A hungry biker waiting on a delivery.",
+    act:"Ring the doorbell, collect the food, hand it over, and wait until he actually sits and eats.",
+    warn:["It fires on him sitting to eat, not on handover — don't walk off early."],
+    badges:[["ch","The Wurst Delivery"]]},
+   {t:"Dump a body in the water channels",s:"Throw anyone into the canal.",
+    go:"Water Channels, right side of the compound, outside the main grounds.",disg:"Any.",item:N,npc:"Anyone (a subdued civilian is fine).",
+    act:"Drop a body into the canal for Spree Party. Also ticks the Water Channels area for Discover Berlin.",
+    badges:[["ch","Spree Party"]]},
+   {t:"Open the Radio Tower and Overpass for Discover Berlin",s:"Unlock the tower gate, cross the overpass, then sweep the other easy-miss areas.",
+    go:"Radio Tower gate on Level 4 (key or crowbar), then the Overpass on Level 3.",disg:"Any.",item:"Radio Tower Key or Crowbar for the gate.",npc:N,
+    act:"Reveal all 22 areas. The commonly missed ones: Radio Tower (L4), Overpass (L3), Pipe Room (−1), Boiler Room (−2), Drug Packaging (0), back of Juice Bar (0, needs the ticket), Water Channels (0).",
+    warn:["Reported bug: Followed the Trails can unlock at 22/22 while the Discover Berlin counter sticks at 20 (one report: 15). A fresh full sweep is the only reported fix."],
+    badges:[["ch","Discover Berlin"]]}
+  ]},
+  {h:"Juice bar — ticket and coconut",steps:[
+   {t:"Get the juice bar ticket",s:"Check the changing-room lockers first, Hirschmüller's Office second.",
+    go:"Changing-room lockers (locker key on the bar counter, or force the locker). Fallback: Hirschmüller's Office, L−2.",disg:"Any that walks the area.",item:"Locker key (bar counter) / Lockpick / Crowbar.",npc:N,
+    act:"Obtain the ticket (fires The Golden Ticket). Show it to the guards at the back of the Juice Bar — enter at the back by the canals.",
+    warn:["Sources conflict on location — lockers (two sources) vs office (one). Check lockers first."],
+    badges:[["ch","The Golden Ticket"],["unv","UNVERIFIED — lockers vs office"]]},
+   {t:"Take a Bartender outfit and grab a coconut",s:"Change into a bartender, then pick up a coconut behind the ticketed juice bar for later.",
+    go:"Juice bar stations, Level 0 (staff in pink); the coconut is in the gated area the ticket unlocks.",disg:"→ Bartender.",item:"Coconut.",npc:"A pink-clad bartender.",
+    act:"Subdue a bartender and change (needed for Chameleon), then pocket the coconut for Florida Man in the club.",
+    warn:["A second coconut sits in the Basement Bar area (L−2) if you forget this one."]}
+  ]},
+  {h:"Into the club",steps:[
+   {t:"Collect Club Security, Club Crew, Technician and Biker outfits",s:"The four Chameleon disguises with no challenge of their own.",
+    go:"Security (green) and Crew (black hoods) are everywhere; Technician (grey, TECH on the back) is backstage on −1/−2; Biker is in the Biker Hangout or on bikers inside the club.",disg:"→ each in turn.",item:N,npc:"NPCs wearing each outfit.",
+    act:"Subdue and wear each. These four plus the six challenge-linked disguises complete Chameleon.",
+    warn:["Technician is the most commonly missed disguise — it's why Chameleon often sits at 9/10."]},
+   {t:"Open the Biker Basement Door and Skylight Ladder",s:"Basement door from inside the clubhouse; skylight from the Level 2 roof.",
+    go:"Biker Basement Door via the biker clubhouse (L0). Skylight Ladder hangs on L1 but is released from the L2 roof.",disg:"Any.",item:N,npc:N,
+    act:"Unbar the basement door. For the skylight, go up to the roof (L2), drop through the skylight and kick the ladder down.",
+    warn:["Approaching the skylight from Level 1 only shows a locked shortcut — you must come from the roof."],
+    badges:[["ch","Shortcut: Biker Basement Door"],["ch","Shortcut: Skylight Ladder"]]},
+   {t:"Take a DJ outfit (The Party Starter)",s:"Subdue one of the three DJs at the booth.",
+    go:"DJ Booth, Level −2, in front of the dance floor.",disg:"→ DJ.",item:N,npc:"Three DJs — the spare near the booth is easiest.",
+    act:"Pacify a DJ and wear the outfit. (You'll want this again for Runs 5 and 6.)",
+    badges:[["ch","The Party Starter"]]},
+   {t:"Photograph the half-naked raver",s:"He dances on the level above the dance floor near the Projection Bar.",
+    go:"Above the dance floor, by the Projection Bar (L−1) — reachable from the stairs; look up.",disg:"Any.",item:"Camera.",npc:"The half-naked raver.",
+    act:"Take his picture for Trophy Au Naturel.",
+    badges:[["ch","Trophy Au Naturel"]]},
+   {t:"Grab a brick, knock out the Dealer with it, then wear him",s:"Brick knockout FIRST (Sweet Dreams), disguise SECOND (The Candy Man).",
+    go:"Brick from Drug Packaging (L0 biker club); Dealer at the Basement Bar, L−2.",disg:"→ Dealer (after the knockout).",item:"Cocaine Brick.",npc:"The Drug Dealer — distinctive hat, clear silhouette in Instinct.",
+    act:"Bring a cocaine brick, smack the dealer unconscious with it (Sweet Dreams), then take his outfit (The Candy Man).",
+    warn:["Order matters: brick knockout first. Subduing him any other way loses Sweet Dreams."],
+    badges:[["ch","Sweet Dreams"],["ch","The Candy Man"]]},
+   {t:"Coconut Florida Man, then wear him",s:"Coconut FIRST (Coconut Ball Surprise), disguise SECOND (Der Ami).",
+    go:"Florida Man roams Level −2 through the Basement Bar; drifts down the stairs from the Projection Bar area.",disg:"→ Florida Man (after the throw).",item:"Coconut (from the juice bar).",npc:"Florida Man — zebra trousers, clear Instinct silhouette.",
+    act:"Throw the coconut at his head to pacify him (Coconut Ball Surprise), then take the outfit (Der Ami).",
+    warn:["Order matters: coconut first, disguise second.","Lost him? Walk the Projection Bar stairs — he comes down them slowly."],
+    badges:[["ch","Coconut Ball Surprise"],["ch","Der Ami"]]},
+   {t:"Take Rolf Hirschmüller's outfit — Chameleon completes",s:"The tenth disguise.",
+    go:"Hirschmüller's Office, top-right of Level −2.",disg:"→ Rolf Hirschmüller.",item:N,npc:"Rolf Hirschmüller, club owner.",
+    act:"Subdue him and change (The Club Owner). With all ten worn, Chameleon fires. He drops his phonebook — the item Run 5 needs.",
+    warn:["If Chameleon reads 9/10 it's almost always the Technician.","If you'll also do There was a Fire Fight! (Run 5), practise taking this outfit without killing any guard."],
+    badges:[["ch","The Club Owner"],["ch","Chameleon"]]}
+  ]},
+  {h:"Exit",steps:[
+   {t:"Leave on the scooter (The Wurst Getaway)",s:"Kill any five agents to enable exit, then ride the scooter.",
+    go:"Scooter parked between the Back Entrance and the Biker Hangout, Level 0.",disg:"Any.",item:"Scooter Key from the Delivery Guy.",npc:"Any five agents.",
+    act:"Eliminate five agents by any means (no stealth/weapon limits here), then exfiltrate on the scooter.",
+    warn:["Scooter here, motorcycle in Run 3 — one exit each, so they don't share a run."],
+    badges:[["ch","The Wurst Getaway"]]}
+  ]}
+ ],
+ conflicts:"The Wurst Getaway (scooter) and Full Throttle (motorcycle) are one exit each — split across Runs 4 and 3. Sweet Dreams and Coconut Ball Surprise each need their pacify method before the disguise is taken; taking the outfit first is how people lose them. Nothing else here conflicts."
+},
+{
+ no:5,title:"Accidents, poison and one bad meeting",tag:"Versatile Assassin · set-piece kills",
+ goal:"A save-scum run through Berlin's scripted kills: the juice, the crane, the light show, the sprinkler, the fan and the office confrontation. Save before every set piece.",
+ loadout:{loc:"Chill Out",loce:"Mastery 11",suit:"Club Crew (issued by the start)",i1:"Fiber Wire",i2:"Lethal Poison Vial (Mastery 10)",i3:"Emetic Rat Poison",i4:"Smuggled: Screwdriver (Chill-Out Staff Trailer briefcase, Mastery 12)"},
+ note:"Most of these depend on one NPC standing in one spot. Save before each, and reload rather than improvise — every set piece is cheap to retry.",
+ sections:[
+  {h:"The juice, three ways (Agent Swan)",steps:[
+   {t:"Set up the juice bar and serve Swan clean",s:"Take the bar, serve Swan an unpoisoned drink for Juiced Up.",
+    go:"Juice Bar, Level 0.",disg:"Bartender (dismiss/subdue the pink staff).",item:"A drink (no poison yet).",npc:"Agent Swan — loops Juice Bar ↔ Chill Out.",
+    act:"When Swan is near, offer him a plain drink. Juiced Up fires (it doesn't need poison). Bank it, then reload for the poisoned versions.",
+    badges:[["ch","Juiced Up"],["save","SAVE — before you touch the drink"]]},
+   {t:"Reload: lethal-poison the drink",s:"Poison it, serve, he dies drinking it.",
+    go:"Juice Bar.",disg:"Bartender.",item:"Lethal Poison Vial.",npc:"Agent Swan.",
+    act:"Load back, add the lethal vial, serve. Tasteless, Traceless fires when he drinks. Counts as an agent kill — watch the counter.",
+    warn:["A lethal syringe won't do — the challenge wants poison via the drink."],
+    badges:[["ch","Tasteless, Traceless"]]},
+   {t:"Reload: emetic-poison and drown him",s:"Emetic drink, follow him to the toilet, drown him.",
+    go:"Juice Bar → nearest toilets.",disg:"Bartender.",item:"Emetic Rat Poison.",npc:"Agent Swan.",
+    act:"Load back, use emetic instead, follow him (don't overtake) and drown him at the bowl for Hold My Hair. Drowning is an accident, so it may also pop Someone Could Hurt Themselves.",
+    warn:["Alt target: Lowenthal (always hungry) — poison his food and follow him to the bathroom for the same result."],
+    badges:[["ch","Hold My Hair"],["save","SAVE after"]]}
+  ]},
+  {h:"The crane (Agent Thames)",steps:[
+   {t:"Fuse the crane console",s:"Put a fuse in the console, climb the ladder to the controls.",
+    go:"Back Entrance, Level 0.",disg:"Any that walks the strip.",item:"Fuse Cell — yellow dumpster between Back Entrance and Biker Hangout, near two guards.",npc:N,
+    act:"Take the fuse (wait for the two guards to face away), insert it in the console under the crane, then climb the ladder behind the crane for control.",
+    badges:[["save","SAVE — fuse in, on the ladder"]]},
+   {t:"Drop the cargo on Thames",s:"Release when he walks through the crane's lit patch.",
+    go:"Crane controls.",disg:"Any.",item:N,npc:"Agent Thames — patrols in front of the crane.",
+    act:"The spotlight shows the impact area. Release the cargo as Thames enters the lit patch. Crane Trauma fires (plus Someone Could Hurt Themselves if not already done).",
+    warn:["The cargo is one-shot — reload rather than improvise if you miss."],
+    badges:[["ch","Crane Trauma"],["ch","Someone Could Hurt Themselves"]]}
+  ]},
+  {h:"The light show (Montgomery + Banner)",steps:[
+   {t:"Short-circuit the light tree FIRST",s:"Sabotage the rig beside Banner's walkway before touching the booth.",
+    go:"Level −1, next to the walkway above the dance floor where Banner stands.",disg:"Any that reaches it.",item:"Screwdriver (smuggled, or found on the map).",npc:"Agent Banner is on the walkway here.",
+    act:"Use the screwdriver on the Light Tree Installation. The map's technician notes confirm a faulty regulator makes the climax lethal.",
+    warn:["Sabotage BEFORE taking the booth — triggering an un-sabotaged rig is just a light show."]},
+   {t:"Take the booth, wait for Montgomery to join Banner, overload",s:"Fire the rig only when both are on the walkway.",
+    go:"DJ Booth, Level −2 (take a DJ outfit near the booth), targeting the L−1 walkway.",disg:"DJ.",item:N,npc:"Banner (stationary) + Montgomery (perimeter loop brings him to the walkway).",
+    act:"Take over the decks, wait until Montgomery's circuit puts him beside Banner, then choose HYPE UP → OVERLOAD CLIMAX. Both die in the finale.",
+    warn:["Only one died? You triggered early/late — reload to the desk save.","T-pose bug: if the evacuation order fires while Montgomery is in a scripted state, agents can T-pose. Keep kills under five until this is done."],
+    badges:[["ch","How the Turntables"],["ch","The Wall"],["ch","The Leader"],["save","SAVE — at the desk, before HYPE UP"]]}
+  ]},
+  {h:"Grow house and dance floor",steps:[
+   {t:"Fumigate Rhodes",s:"Load insecticide into the sprinkler, run it while he's inside.",
+    go:"Outside the Grow House, Level 1.",disg:"Any that walks the biker building.",item:"Insecticide — on a shelf near the yellow Sprinkler Unit.",npc:"Agent Rhodes — inside the Grow House.",
+    act:"Put the insecticide into the Sprinkler Unit and switch it on while Rhodes is in the room. Paging Dr. Greenthumb fires. (This loads the unit — different from Run 1's noise-lure use.)",
+    badges:[["ch","Paging Dr. Greenthumb"],["save","SAVE"]]},
+   {t:"Blow cocaine over Chamberlin",s:"Lure him to the fan, throw the brick into the blades.",
+    go:"End of the dance floor, left of the DJ Booth, Level −2 (fan shows yellow in Instinct).",disg:"Any.",item:"Cocaine Brick (Drug Packaging, L0) + a coin to lure.",npc:"Agent Chamberlin — the only agent who crosses the dance floor.",
+    act:"Throw a coin to bring him into the fan's airflow, then throw the cocaine brick into the fan. Whiteout fires (non-lethal).",
+    badges:[["ch","Whiteout"],["save","SAVE — before the coin"]]}
+  ]},
+  {h:"The office confrontation (Montgomery — reload first)",steps:[
+   {t:"Reload to a save where Montgomery is ALIVE",s:"The light show killed him — this challenge needs him alive, so load an earlier save.",
+    go:"Any hub save from before the light show.",disg:"Working toward Rolf Hirschmüller.",item:N,npc:"Agent Montgomery must be alive.",
+    act:"There was a Fire Fight! and How the Turntables both consume Montgomery — do them from separate saves.",
+    warn:["This is the one hard split in Run 5: never expect both Montgomery challenges from the same save."],
+    badges:[["save","SAVE — Montgomery alive"]]},
+   {t:"Take Hirschmüller WITHOUT killing any guard",s:"Get his disguise cleanly and take his phonebook.",
+    go:"Hirschmüller's Office, Level −2.",disg:"→ Rolf Hirschmüller.",item:"His phonebook (drops with him).",npc:"Rolf Hirschmüller.",
+    act:"Subdue him — no guard deaths anywhere — take the outfit and phonebook.",
+    warn:["Killing ANY guard before this voids There was a Fire Fight!. Subduing is fine."],
+    badges:[["save","SAVE — disguise + phonebook secured"]]},
+   {t:"Call the agents in, sit, then flip the desk",s:"Intercom them, wait for arrival, kick the desk over and kill them.",
+    go:"Hirschmüller's Office, Level −2.",disg:"Rolf Hirschmüller.",item:"Phonebook (to use the intercom).",npc:"Agent Montgomery and the other summoned agents.",
+    act:"Use the office intercom, sit at the desk, wait until they've all filed in and settled, then kick the desk over as cover and open fire. There was a Fire Fight! and The Leader fire.",
+    warn:["Don't flip early — you'll fight stragglers in the doorway.","Keep total kills under five until the meeting resolves (T-pose bug)."],
+    badges:[["ch","There was a Fire Fight!"]]}
+  ]},
+  {h:"Close out Versatile",steps:[
+   {t:"Fibre-wire an agent and confirm the set",s:"Piano Man (fibre wire) plus a headshot completes Versatile Assassin.",
+    go:"Anywhere an agent is isolated.",disg:"Any.",item:"Fiber Wire.",npc:"Any agent.",
+    act:"Garrotte one agent from behind for Piano Man. With Straight Shot, Someone Could Hurt Themselves, Hold My Hair and Tasteless Traceless already done, Versatile Assassin fires. Exit anywhere.",
+    warn:["Straight Shot is already banked if you did the sniper runs."],
+    badges:[["ch","Piano Man"],["ch","Versatile Assassin"]]}
+  ]}
+ ],
+ conflicts:"Hard split: How the Turntables kills Montgomery, There was a Fire Fight! needs him alive — separate saves. The three juice outcomes all use one Swan (reload between). Crane and light show both want the counter under five, so don't hit the fifth kill until they're done."
+},
+{
+ no:6,title:"One last party",tag:"Rave On · Explosions Run Loose (cross-mission)",
+ goal:"Two odd-ones-out with hard prerequisites: one demands a specific start, the other demands a different mission be finished first. They share a start, so pair them.",
+ loadout:{loc:"Club Entrance",loce:"Mastery 3 — mandatory for Rave On",suit:"47's Signature Suit",i1:"ICA Remote Explosive Mk III (Mastery 5)",i2:"Remote Semtex Demo Block Mk III",i3:"Remote Explosive Devil Rubber Duck (Mastery 20)",i4:"Smuggled: Propane Flask or a second explosive"},
+ note:"Do Rave On first, exit, then reload the same loadout for the explosives attempt — sabotage/explosions ruin the crowd-pleasing climax.",
+ sections:[
+  {h:"Rave On",steps:[
+   {t:"Start at the Club Entrance — no substitutes",s:"The challenge names this exact start; any other fails it.",
+    go:"Club Entrance start (Mastery 3), on the guest list in your suit.",disg:"Suit → DJ.",item:N,npc:N,
+    act:"Begin from the Club Entrance start. Rave On is a three-part condition: this start, become the DJ, trigger the climax.",
+    warn:["Any other starting location fails Rave On outright.","Added in Patch 3.70 (28 Sep 2021); unlocks the Rave On Suit, which does NOT count for Chameleon."],
+    badges:[["save","SAVE — mission start"]]},
+   {t:"Become the DJ and trigger the (non-lethal) climax",s:"Take the decks and run the climax so the crowd goes wild — do NOT sabotage the rig.",
+    go:"DJ Booth, Level −2.",disg:"DJ (from a booth DJ).",item:N,npc:"Three booth DJs; dismiss the one at the desk.",
+    act:"Take over the decks and trigger the climax light show. The crowd goes wild and Rave On fires.",
+    warn:["Do NOT short-circuit the light tree — that's the Run 5 setup and turns the climax lethal, which is the wrong outcome here."],
+    badges:[["ch","Rave On"]]}
+  ]},
+  {h:"Explosions Run Loose (cross-mission)",steps:[
+   {t:"Confirm the prerequisite",s:"Listed as needing Traditions of the Trade completed first.",
+    go:"Check your challenge tracker before starting.",disg:"Any.",item:N,npc:N,
+    act:"Ensure 'Traditions of the Trade' is done, or this won't register.",
+    warn:["Prerequisite confirmed by one source only (wiki). If it won't track, this is the first thing to check.","This is the 59th challenge — cross-mission, not part of the mission's 58."],
+    badges:[["unv","UNVERIFIED — single-source prerequisite"]]},
+   {t:"Kill five agents with explosives in one session",s:"Every one of the five must be an explosive kill, all in a single attempt.",
+    go:"Pick predictable agents: Banner (walkway), Tremaine (nest), Rhodes (grow house), Thames (crane), Davenport (entrance).",disg:"Any.",item:"Carried remote explosives + propane flasks / map explosives.",npc:"Five agents.",
+    act:"Pre-place devices on five agents while unobserved, then detonate. Set all five up before you start detonating — the fifth kill triggers the evacuation at the same moment.",
+    warn:["All five must be explosive kills in one session — don't rely on reload-stacking.","Explosives end any stealth rating, so run this dedicated, never on a Silent Assassin attempt."],
+    badges:[["ch","Explosions Run Loose"],["save","SAVE — before the first detonation"]]}
+  ]}
+ ],
+ conflicts:"Rave On and Explosions share a start but not an attempt — sabotage/explosions ruin the climax. Do Rave On, exit, reload for the explosives. Neither is compatible with any Classics challenge."
+}
+];
+
+/* ===================== STATE + RENDER ===================== */
+const TYPES=['Assassination','Discovery','Feats','Targets','The Classics','Codename 47'];
+const done=new Set(), stepDone=new Set();
+try{const saved=JSON.parse(localStorage.getItem('apex_predator_done_v1')||'[]');saved.forEach(id=>done.add(id));}catch(e){}
+try{const _s=JSON.parse(localStorage.getItem('apex_predator_done_v1:steps'));if(Array.isArray(_s))_s.forEach(k=>stepDone.add(k));}catch(e){}
+function reportProgress(){try{const mission=CH.filter(c=>!c.cross);const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r['m21']={done:mission.filter(c=>done.has(c.id)).length,total:mission.length,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
+function saveDone(){try{localStorage.setItem('apex_predator_done_v1',JSON.stringify([...done]));localStorage.setItem('apex_predator_done_v1:steps',JSON.stringify([...stepDone]));}catch(e){}reportProgress();}
+
+const catsEl=document.getElementById('cats');
+['Assassination','Discovery','Feats','Targets','The Classics'].forEach(t=>{
+  const total=CH.filter(c=>c.t===t&&!c.cross).length;
+  const d=document.createElement('div');d.className='cat';
+  d.innerHTML=`<div class="n">${t}</div><div class="v"><span data-cat-v="${t}">0</span><small>/${total}</small></div><div class="mini"><i data-cat-b="${t}"></i></div>`;
+  catsEl.appendChild(d);
+});
+
+function refresh(){
+  const mission=CH.filter(c=>!c.cross);
+  const n=mission.filter(c=>done.has(c.id)).length;
+  const xp=CH.filter(c=>done.has(c.id)).reduce((s,c)=>s+c.xp,0);
+  document.getElementById('tDone').textContent=n;
+  document.getElementById('tXp').textContent=xp.toLocaleString();
+  document.getElementById('tBar').style.width=(n/mission.length*100)+'%';
+  document.getElementById('tCross').textContent = done.has('x1')
+    ? 'Explosions Run Loose (cross-mission) done' : 'Explosions Run Loose (cross-mission) not yet done';
+  ['Assassination','Discovery','Feats','Targets','The Classics'].forEach(t=>{
+    const list=CH.filter(c=>c.t===t&&!c.cross);
+    const k=list.filter(c=>done.has(c.id)).length;
+    document.querySelector(`[data-cat-v="${t}"]`).textContent=k;
+    document.querySelector(`[data-cat-b="${t}"]`).style.width=(k/list.length*100)+'%';
+  });
+  // per-run progress
+  RUNS.forEach(r=>{
+    const list=CH.filter(c=>c.run===r.no);
+    const k=list.filter(c=>done.has(c.id)).length;
+    const el=document.querySelector(`[data-runprog="${r.no}"]`);
+    if(el) el.innerHTML=`<b>${k}</b>/${list.length}`;
+  });
+}
+
+const field=(dt,dd,cls)=> dd&&dd!=='' ? `<dt>${dt}</dt><dd class="${cls||''}">${dd}</dd>` : '';
+
+const runsEl=document.getElementById('runs');
+const jumpEl=document.getElementById('runjump');
+RUNS.forEach(r=>{
+  // jump button
+  const jb=document.createElement('button');jb.type='button';
+  jb.innerHTML=`<span class="rj-no">Run ${r.no}</span><span class="rj-t">${r.title}</span>`;
+  jb.onclick=()=>{const art=document.getElementById('run'+r.no);art.classList.remove('closed');art.scrollIntoView({behavior:'smooth',block:'start'});};
+  jumpEl.appendChild(jb);
+
+  const art=document.createElement('article');art.className='run';art.id='run'+r.no;
+  let html=`<button class="runhead" type="button" data-toggle="${r.no}">
+    <span class="caret">▾</span>
+    <span class="rh-main"><span class="rh-no">Run ${r.no} · ${r.tag}</span><h4>${r.title}</h4></span>
+    <span class="rh-prog" data-runprog="${r.no}">0/0</span>
+  </button>
+  <div class="runbody">
+    <div class="goalline">${r.goal}</div>
+    <div class="loadout">
+      <div class="lo"><div class="k">Start</div><div class="v">${r.loadout.loc}<em>${r.loadout.loce}</em></div></div>
+      <div class="lo"><div class="k">Suit</div><div class="v">${r.loadout.suit}</div></div>
+      <div class="lo"><div class="k">Slot 1</div><div class="v">${r.loadout.i1}</div></div>
+      <div class="lo"><div class="k">Slot 2</div><div class="v">${r.loadout.i2}</div></div>
+      <div class="lo"><div class="k">Slot 3</div><div class="v">${r.loadout.i3}</div></div>
+      <div class="lo"><div class="k">Slot 4</div><div class="v">${r.loadout.i4}</div></div>
+    </div>`;
+  if(r.note) html+=`<div class="runnote"><div class="note ok" style="margin-bottom:0">${r.note}</div></div>`;
+  r.sections.forEach(s=>{
+    html+=`<div class="section-head">${s.h}</div>`;
+    s.steps.forEach((st,i)=>{
+      const sid=`r${r.no}_${s.h.length}_${i}_${st.t.length}`;
+      let warnHtml='';
+      (st.warn||[]).forEach(w=> warnHtml+=`<dt>Watch</dt><dd class="warn">${w}</dd>`);
+      const fields=
+        field('Go',st.go)+
+        field('Disguise',st.disg)+
+        field('Item',st.item)+
+        field('NPC',st.npc)+
+        field('Do',st.act)+
+        warnHtml;
+      const badges=(st.badges||[]).map(([k,t])=>{
+        const cls=k==='ch'?'b-ch':k==='warn'?'b-warn':k==='save'?'b-save':'b-unv';
+        return `<span class="badge ${cls}">${t}</span>`;}).join('');
+      html+=`<div class="step" data-step="${sid}">
+        <div class="stepchk"><button type="button" aria-pressed="false" data-step-btn="${sid}" aria-label="Mark step complete">✓</button></div>
+        <details class="stepbox">
+          <summary><span class="t">${st.t}</span><span class="s">${st.s}</span></summary>
+          <div class="fields"><dl>${fields}</dl>${badges?`<div class="badges">${badges}</div>`:''}</div>
+        </details>
+      </div>`;
+    });
+  });
+  html+=`<div class="conflicts"><div class="ch">Conflicts &amp; exclusions</div><p>${r.conflicts}</p></div></div>`;
+  art.innerHTML=html;
+  runsEl.appendChild(art);
+});
+
+/* the runs are built above, so re-apply saved step ticks now */
+stepDone.forEach(id=>{
+  const row=document.querySelector(`[data-step="${id}"]`); if(!row)return;
+  row.classList.add('done');
+  const b=document.querySelector(`[data-step-btn="${id}"]`);
+  if(b)b.setAttribute('aria-pressed','true');
+});
+
+// run collapse
+runsEl.addEventListener('click',e=>{
+  const h=e.target.closest('[data-toggle]');
+  if(h){ document.getElementById('run'+h.dataset.toggle).classList.toggle('closed'); return; }
+  const b=e.target.closest('[data-step-btn]');
+  if(b){
+    const id=b.dataset.stepBtn, row=document.querySelector(`[data-step="${id}"]`);
+    if(stepDone.has(id)){stepDone.delete(id);b.setAttribute('aria-pressed','false');row.classList.remove('done');}
+    else{stepDone.add(id);b.setAttribute('aria-pressed','true');row.classList.add('done');}
+    saveDone();
+  }
+});
+
+/* checklist */
+const FILTERS=['All','Assassination','Discovery','Feats','Targets','The Classics','Codename 47','Incomplete'];
+let filter='All';
+const fEl=document.getElementById('filters');
+FILTERS.forEach(f=>{
+  const b=document.createElement('button');b.type='button';b.textContent=f;b.setAttribute('aria-pressed',f===filter);
+  b.onclick=()=>{filter=f;[...fEl.children].forEach(c=>c.setAttribute('aria-pressed',c.textContent===f));drawList();};
+  fEl.appendChild(b);
+});
+const listEl=document.getElementById('chalList');
+function drawList(){
+  listEl.innerHTML='';
+  CH.filter(c=>{
+    if(filter==='All')return true;
+    if(filter==='Incomplete')return !done.has(c.id);
+    return c.t===filter;
+  }).forEach(c=>{
+    const row=document.createElement('label');row.className='chal'+(done.has(c.id)?' done':'');
+    row.innerHTML=`<input type="checkbox" ${done.has(c.id)?'checked':''} data-ch="${c.id}">
+      <span class="cmain"><span class="cn">${c.n}</span>${c.cross?' <span class="badge b-unv">cross-mission</span>':''}<br><span class="cd">${c.d}${c.extra?' <i style="color:var(--bird)">'+c.extra+'</i>':''}</span></span>
+      <span class="meta"><span class="xp">+${c.xp.toLocaleString()} XP</span><span class="run">Run ${c.run} · ${c.t}</span></span>`;
+    listEl.appendChild(row);
+  });
+}
+listEl.addEventListener('change',e=>{
+  const cb=e.target.closest('[data-ch]');if(!cb)return;
+  cb.checked?done.add(cb.dataset.ch):done.delete(cb.dataset.ch);
+  saveDone();refresh();drawList();
+});
+drawList();
+refresh();
+reportProgress();
+
+/* tabs */
+document.querySelectorAll('nav.tabs button').forEach(b=>{
+  b.onclick=()=>{
+    document.querySelectorAll('nav.tabs button').forEach(x=>x.setAttribute('aria-selected','false'));
+    b.setAttribute('aria-selected','true');
+    ['runs','list','ref','ver'].forEach(p=>document.getElementById('panel-'+p).classList.toggle('hidden',p!==b.dataset.panel));
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+});
+
+/* actions */
+document.getElementById('btnReset').onclick=()=>{
+  done.clear();stepDone.clear();
+  document.querySelectorAll('[data-step-btn]').forEach(b=>b.setAttribute('aria-pressed','false'));
+  document.querySelectorAll('.step').forEach(s=>s.classList.remove('done'));
+  saveDone();refresh();drawList();
+};
+let runsOpen=true;
+document.getElementById('btnOpenRuns').onclick=(e)=>{
+  runsOpen=!runsOpen;
+  document.querySelectorAll('.run').forEach(a=>a.classList.toggle('closed',!runsOpen));
+  e.target.textContent=runsOpen?'Collapse all runs':'Open all runs';
+};
+let stepsOpen=false;
+document.getElementById('btnOpenSteps').onclick=(e)=>{
+  stepsOpen=!stepsOpen;
+  document.querySelectorAll('.stepbox').forEach(d=>d.open=stepsOpen);
+  e.target.textContent=stepsOpen?'Collapse all step details':'Open all step details';
+};
+
+/* audit numbers */
+['Assassination','Discovery','Feats','Targets','The Classics'].forEach(t=>{
+  const el=document.getElementById('a-'+t);if(el)el.textContent=CH.filter(c=>c.t===t&&!c.cross).length;
+});
+document.getElementById('a-total').innerHTML='<b>'+CH.filter(c=>!c.cross).length+'</b>';
+
+refresh();
+</script>
+<!-- step-progress-bridge -->
+<script>
+/* Reports route-step ticks into 'hitman-progress-registry' so the index can
+   show them beside the challenge counts. Counts what is on screen rather than
+   any guide-specific state, so one implementation serves every guide. */
+(function(){
+  var RID="m21", SEL=".step";
+  function isDone(s){
+    var c=s.classList;
+    if(c.contains('done')||c.contains('dn')) return true;
+    if(s.getAttribute('data-done')==='1'||s.getAttribute('aria-pressed')==='true') return true;
+    return !!s.querySelector('.done,.dn,[data-done="1"],[aria-pressed="true"]');
+  }
+  function tally(){
+    var steps=document.querySelectorAll(SEL);
+    if(!steps.length) return null;
+    var n=0;
+    for(var i=0;i<steps.length;i++) if(isDone(steps[i])) n++;
+    return {steps:n,stepTotal:steps.length};
+  }
+  function push(){
+    var t;
+    try{ t=tally(); }catch(err){ return; }
+    if(!t||!t.stepTotal) return;
+    try{
+      var r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');
+      var e=r[RID]||(r[RID]={});
+      /* the guide's own reportProgress() rewrites this entry wholesale, so
+         re-add the step counts whenever they go missing or stale */
+      if(e.steps===t.steps&&e.stepTotal===t.stepTotal) return;
+      e.steps=t.steps; e.stepTotal=t.stepTotal; e.updated=Date.now();
+      localStorage.setItem('hitman-progress-registry',JSON.stringify(r));
+    }catch(err){}
+  }
+  var pending=false;
+  function schedule(){
+    if(pending) return; pending=true;
+    setTimeout(function(){pending=false;push();},120);
+  }
+  try{
+    new MutationObserver(schedule).observe(document.body,
+      {subtree:true,childList:true,attributes:true,attributeFilter:['class','aria-pressed','data-done']});
+  }catch(err){}
+  window.addEventListener('load',schedule);
+  setTimeout(push,600);
+})();
+</script>
+<!-- /step-progress-bridge -->
+</body>
+</html>

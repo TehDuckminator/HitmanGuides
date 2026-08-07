@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Embrace of the Serpent — Verified Challenge Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,600;0,800;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --canopy:#0d1512; --canopy-2:#141f1a; --bone:#e8e3d3; --bone-dim:#a5a190;
+  --jade:#5fbf8f; --amber:#e0a53c; --rust:#c9503f; --violet:#8a7fc4; --sky:#63a8c4;
+  --line:rgba(232,227,211,.14); --r:3px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--canopy);color:var(--bone);font-family:"Bitter",Georgia,serif;font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1060px;margin:0 auto;padding:0 20px 80px}
+.mono{font-family:"IBM Plex Mono",monospace}
+
+/* masthead */
+.mast{border-bottom:1px solid var(--line);padding:36px 0 24px;margin-bottom:24px}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--jade);margin:0 0 12px}
+h1{font-size:clamp(29px,6vw,50px);line-height:1.02;margin:0 0 14px;font-weight:800;letter-spacing:-.02em}
+h1 em{font-style:italic;font-weight:400;color:var(--bone-dim)}
+.facts{font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--bone-dim);margin:0}
+.facts b{color:var(--bone);font-weight:500}
+
+/* tracker */
+.tracker{border:1px solid var(--line);border-radius:var(--r);background:var(--canopy-2);padding:18px 20px;margin-bottom:24px}
+.tracker-top{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:12px}
+.tracker-top h2{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--bone-dim);margin:0}
+.tally{font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--bone-dim)}
+.tally b{color:var(--jade);font-size:22px;font-weight:600}
+.bar{height:7px;background:rgba(232,227,211,.09);border-radius:99px;overflow:hidden;margin-bottom:16px}
+.bar span{display:block;height:100%;width:0;background:var(--jade);transition:width .35s ease}
+.cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.cat{border:1px solid var(--line);border-radius:var(--r);padding:9px 11px;background:rgba(0,0,0,.2)}
+.cat .n{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--bone-dim);display:block;margin-bottom:3px}
+.cat .v{font-family:"IBM Plex Mono",monospace;font-size:17px;font-weight:600}
+.cat .mb{height:3px;background:rgba(232,227,211,.1);margin-top:7px;border-radius:99px;overflow:hidden}
+.cat .mb i{display:block;height:100%;width:0;transition:width .3s ease}
+
+/* tabs */
+.tabs{display:flex;gap:2px;border-bottom:1px solid var(--line);margin-bottom:22px;flex-wrap:wrap}
+.tab{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;background:none;border:none;border-bottom:2px solid transparent;color:var(--bone-dim);padding:11px 15px;cursor:pointer}
+.tab:hover{color:var(--bone)}
+.tab[aria-selected="true"]{color:var(--jade);border-bottom-color:var(--jade)}
+.panel[hidden]{display:none}
+
+/* run nav */
+.runnav{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:20px;position:sticky;top:0;background:var(--canopy);padding:12px 0;z-index:20;border-bottom:1px solid var(--line)}
+.runnav button{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;background:rgba(0,0,0,.25);border:1px solid var(--line);color:var(--bone-dim);padding:8px 13px;border-radius:99px;cursor:pointer;transition:.15s}
+.runnav button:hover{color:var(--bone);border-color:var(--bone-dim)}
+.runnav button.hot{color:var(--canopy);background:var(--amber);border-color:var(--amber);font-weight:600}
+.runnav .util{margin-left:auto}
+
+/* runs */
+.run{border:1px solid var(--line);border-radius:var(--r);margin-bottom:14px;background:var(--canopy-2);overflow:hidden;scroll-margin-top:70px}
+.run.open{border-color:rgba(224,165,60,.4)}
+.run-head{width:100%;text-align:left;background:none;border:none;color:inherit;font:inherit;padding:18px 20px;cursor:pointer;display:flex;gap:14px;align-items:flex-start}
+.run-head:hover{background:rgba(255,255,255,.02)}
+.chev{flex:0 0 auto;font-family:"IBM Plex Mono",monospace;color:var(--amber);font-size:14px;margin-top:3px;transition:transform .2s}
+.run.open .chev{transform:rotate(90deg)}
+.run-head .rh{flex:1;min-width:0}
+.run-no{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.2em;color:var(--amber);text-transform:uppercase}
+.run-head h3{margin:5px 0 6px;font-size:21px;font-weight:800;letter-spacing:-.01em}
+.run-head p{margin:0;color:var(--bone-dim);font-size:13.5px;max-width:72ch}
+.run-prog{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--bone-dim);white-space:nowrap;margin-top:4px}
+.run-body[hidden]{display:none}
+
+.loadout{padding:16px 20px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(0,0,0,.22)}
+.loadout h4{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--bone-dim);margin:0 0 10px}
+.lo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px 20px;font-family:"IBM Plex Mono",monospace;font-size:12.5px}
+.lo-grid div span{display:block;color:var(--bone-dim);font-size:10px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:2px}
+.lo-note{margin:12px 0 0;font-size:12.5px;color:var(--bone-dim)}
+
+.sect{padding:4px 20px 18px}
+.sect > h4{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--jade);margin:20px 0 10px;padding-bottom:6px;border-bottom:1px dashed var(--line)}
+.step{border:1px solid var(--line);border-radius:var(--r);margin-bottom:9px;background:rgba(0,0,0,.16)}
+.step.done{border-color:rgba(95,191,143,.5);background:rgba(95,191,143,.06)}
+.step-top{display:flex;gap:11px;padding:12px 14px;align-items:flex-start}
+.tick{flex:0 0 auto;width:22px;height:22px;border:1px solid var(--line);border-radius:var(--r);background:none;cursor:pointer;color:transparent;font-size:13px;line-height:1;margin-top:2px}
+.tick:hover{border-color:var(--jade)}
+.done .tick{background:var(--jade);border-color:var(--jade);color:var(--canopy)}
+.step-body{flex:1;min-width:0}
+.step-title{font-weight:600;font-size:15px;margin:0 0 6px}
+.step-title .num{font-family:"IBM Plex Mono",monospace;color:var(--bone-dim);font-size:12px;margin-right:7px}
+.bul{margin:0;padding:0;list-style:none;font-size:13.5px}
+.bul li{position:relative;padding-left:14px;margin-bottom:3px}
+.bul li:before{content:"›";position:absolute;left:0;color:var(--jade)}
+.bul k{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--bone-dim);margin-right:6px}
+.badges{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px}
+.badge{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;padding:3px 7px;border-radius:2px;border:1px solid;display:inline-block}
+.b-chal{color:var(--jade);border-color:rgba(95,191,143,.45);background:rgba(95,191,143,.08)}
+.b-warn{color:var(--rust);border-color:rgba(201,80,63,.55);background:rgba(201,80,63,.1)}
+.b-save{color:var(--amber);border-color:rgba(224,165,60,.5);background:rgba(224,165,60,.1)}
+.b-unv{color:var(--violet);border-color:rgba(138,127,196,.5);background:rgba(138,127,196,.1)}
+.b-src{color:var(--sky);border-color:rgba(99,168,196,.45);background:rgba(99,168,196,.08)}
+.more{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;background:none;border:none;color:var(--bone-dim);cursor:pointer;padding:0 14px 11px 47px}
+.more:hover{color:var(--jade)}
+.detail{padding:0 14px 13px 47px;font-size:13.5px}
+.detail[hidden]{display:none}
+.detail dt{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--bone-dim);margin-top:11px}
+.detail dd{margin:3px 0 0}
+.detail dl{margin:0}
+.flag{border-left:2px solid var(--rust);padding-left:10px;color:#f0b6ac;margin-top:11px}
+.flag.amber{border-color:var(--amber);color:#f0d29a}
+.flag.unv{border-color:var(--violet);color:#c9c1ea}
+
+/* checklist */
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.filters button{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;background:none;border:1px solid var(--line);color:var(--bone-dim);padding:6px 12px;border-radius:99px;cursor:pointer}
+.filters button:hover{color:var(--bone);border-color:var(--bone-dim)}
+.filters button.on{color:var(--canopy);background:var(--jade);border-color:var(--jade)}
+.chal{display:flex;gap:11px;padding:12px 14px;border:1px solid var(--line);border-radius:var(--r);margin-bottom:8px;background:var(--canopy-2)}
+.chal.done{border-color:rgba(95,191,143,.5);background:rgba(95,191,143,.06)}
+.chal-main{flex:1;min-width:0}
+.chal-name{font-weight:600;margin:0}
+.chal.done .chal-name{text-decoration:line-through;color:var(--bone-dim)}
+.chal-cond{margin:2px 0 0;font-size:13px;color:var(--bone-dim)}
+.chal-meta{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}
+
+/* audit */
+.audit h3{font-size:19px;margin:26px 0 10px}
+.audit h3:first-child{margin-top:0}
+.audit ul{padding-left:20px;margin:0 0 14px}
+.audit li{margin-bottom:6px}
+table.src{font-family:"IBM Plex Mono",monospace;font-size:12px;border-collapse:collapse;width:100%}
+table.src th,table.src td{border-bottom:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+table.src th{color:var(--bone-dim);font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:500}
+.pass{color:var(--jade)}.fail{color:var(--rust)}.part{color:var(--amber)}
+footer{margin-top:36px;padding-top:18px;border-top:1px solid var(--line);font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--bone-dim)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (max-width:600px){.more,.detail{padding-left:14px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="mast">
+  <p class="eyebrow">Special Assignment · Santa Fortuna, Colombia · World of Assassination</p>
+  <h1>Embrace of the Serpent <em>— challenge run planner</em></h1>
+  <p class="facts">
+    <b>Target:</b> Blair Reddington (&ldquo;The Poacher&rdquo;) &nbsp;·&nbsp; <b>Objectives:</b> Eliminate Blair Reddington · Retrieve Reddington's Black Book<br>
+    <b>Challenges:</b> 18 — 9 Assassination · 3 Feats · 1 Targets · 5 The Classics &nbsp;·&nbsp; <b>Mission XP:</b> 43,000 total<br>
+    <b>Mission Stories:</b> none exist in this mission &nbsp;·&nbsp; <b>Chameleon / Discovery:</b> neither category exists here<br>
+    <b>Released:</b> 25 June 2019 (Expansion Pass, Special Assignments Pack 1) &nbsp;·&nbsp; <b>Runs needed:</b> 4
+  </p>
+</header>
+
+<section class="tracker">
+  <div class="tracker-top">
+    <h2>Progress</h2>
+    <p class="tally"><b id="tDone">0</b> / 18 challenges complete</p>
+  </div>
+  <div class="bar"><span id="tBar"></span></div>
+  <div class="cats" id="cats"></div>
+</section>
+
+<div class="tabs" role="tablist">
+  <button class="tab" role="tab" aria-selected="true" data-panel="runs">Optimized runs</button>
+  <button class="tab" role="tab" aria-selected="false" data-panel="checklist">Checklist</button>
+  <button class="tab" role="tab" aria-selected="false" data-panel="audit">Audit &amp; sources</button>
+</div>
+
+<div class="panel" id="p-runs">
+  <div class="runnav" id="runnav"></div>
+  <div id="runList"></div>
+</div>
+
+<div class="panel" id="p-checklist" hidden>
+  <div class="filters" id="filters"></div>
+  <div id="chalList"></div>
+</div>
+
+<div class="panel audit" id="p-audit" hidden>
+  <h3>Verification result</h3>
+  <p>The 18 challenge names and unlock conditions now come from the official in-game challenge data you supplied, so the challenge list itself is <b>fully verified</b>. Route detail is verified where two sources agree and marked <span class="badge b-unv">Unverified</span> or <span class="badge b-src">Single source</span> where they don't. Nothing has been invented to fill a gap.</p>
+
+  <table class="src">
+    <thead><tr><th>Check</th><th>Result</th><th>Evidence</th></tr></thead>
+    <tbody>
+      <tr><td>Total count (18)</td><td class="pass">Pass</td><td>In-game challenge data (uploaded) + Hitman Wiki mission article</td></tr>
+      <tr><td>Category split 9/3/1/5</td><td class="pass">Pass</td><td>In-game data + Hitman Wiki</td></tr>
+      <tr><td>All 18 names &amp; conditions</td><td class="pass">Pass</td><td>In-game data; 5 cross-checked against individual Hitman Wiki challenge articles</td></tr>
+      <tr><td>Mission total XP (43,000)</td><td class="pass">Pass</td><td>Hitman Wiki mission article</td></tr>
+      <tr><td>Per-challenge XP</td><td class="fail">Unverified</td><td>No source breaks the 43,000 down. Not guessed.</td></tr>
+      <tr><td>No Mission Stories</td><td class="pass">Pass</td><td>Hitman Wiki states plainly there are none; in-game data has no mission-story category</td></tr>
+      <tr><td>No Discovery / no Chameleon</td><td class="pass">Pass</td><td>In-game data: disguiseCount 0, areaCount 0, no discovery category</td></tr>
+      <tr><td>No redacted challenges</td><td class="pass">Pass</td><td>Shameless, "HITMAN 2 Redacted Challenges Guide" (Steam) lists this mission as having none</td></tr>
+      <tr><td>No Evidence is absent from The Classics</td><td class="pass">Pass</td><td>In-game data lists SA / SASO / Sniper Assassin / Suit Only / The Classics. RARusk's GameFAQs guide confirms No Evidence was removed from The Classics set.</td></tr>
+      <tr><td>Black Book location</td><td class="pass">Pass</td><td>Hitman Wiki "Black Book" article + NamuWiki route + Steam SA/SO thread</td></tr>
+      <tr><td>Taita is at the village bar in this mission</td><td class="pass">Pass</td><td>Hitman Wiki "Taita" article + NamuWiki</td></tr>
+      <tr><td>Jungle gate key is on the gate guard</td><td class="pass">Pass</td><td>NamuWiki challenge notes + NamuWiki SASO route (same page, two independent write-ups)</td></tr>
+      <tr><td>Alerting Reddington relocates him</td><td class="pass">Pass</td><td>Hitman Wiki mission article</td></tr>
+      <tr><td>Starting locations</td><td class="part">Single source</td><td>NamuWiki names a pier start and a drug-processing-facility start. No second source found.</td></tr>
+      <tr><td>Mastery unlock levels for start points</td><td class="fail">Unverified</td><td>No source lists them for this Special Assignment. Not guessed.</td></tr>
+      <tr><td>Named NPCs</td><td class="part">Partial</td><td>Only Taita and Blair Reddington are named anywhere. His escort is documented only as Delgado's Mansion Guards. No guard has a published name — so this guide describes guards by post, never by invented name.</td></tr>
+      <tr><td>Coconut / snake-trap exact positions</td><td class="part">Single source</td><td>NamuWiki only. Positions given as described there, flagged in each step.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Run-logic validation (simulated step by step)</h3>
+  <ul>
+    <li><b>Every challenge is assigned.</b> 18 of 18 appear in a run. No duplicates: each kill-method challenge sits in exactly one save branch.</li>
+    <li><b>Prerequisites precede use.</b> The gate key is taken before the gate is opened; the shaman outfit is taken before the blessing; the cook outfit and poison are held before the stew is spiked; the sniper rifle is smuggled in at planning, not found on site.</li>
+    <li><b>Nothing needed later is destroyed earlier.</b> Run 2 blesses Reddington before poisoning him, because a dead target can't be blessed. Run 1 saves <em>before</em> the first kill, so every later kill branch still has a live target.</li>
+    <li><b>Mutually exclusive challenges are separated.</b> Reddington is the only target, so only one kill method registers per save state. The six kill-method challenges are split across reload branches, never stacked.</li>
+    <li><b>Suit-only conflicts are isolated.</b> Run 3 (SASO) takes no disguise at all, so it is kept away from Run 2, which requires two disguises.</li>
+    <li><b>Save points don't break objectives.</b> Every recommended save is taken while the target is alive, the Black Book is either in hand or still on its table, and no alarm is active — so every branch loaded from it can still finish the mission.</li>
+    <li><b>No backtracking.</b> Runs 1 and 2 both end at the Shaman's Hut clearing rather than crossing the map twice; Run 3 and Run 4 are single-direction infiltrations.</li>
+  </ul>
+
+  <h3>Corrections to the original brief</h3>
+  <ul>
+    <li><b>No Mission Stories</b> exist here, so there is no mandatory story order, no "Hero of" challenge, and no story-script conflicts to route around.</li>
+    <li><b>No Discovery category and no Chameleon challenge</b> — the in-game data shows zero tracked disguises and zero tracked areas. Disguises still exist and are still used; they just aren't challenge-tracked.</li>
+    <li><b>No Evidence is not part of The Classics here.</b> It was removed from the set. Do not plan a camera-erasure run.</li>
+    <li><b>Versatile Assassin is a Colombia-wide challenge</b>, not an Embrace-only one. Its five components can be completed in Three-Headed Serpent instead, in any mix.</li>
+  </ul>
+
+  <h3>Known conflicts and bugs</h3>
+  <ul>
+    <li><b>Briefing error, not a bug:</b> Diana says Reddington carries the Black Book at all times. He does not — it is on a table in the Shaman's Hut. Confirmed as a scripting/VO error by the Hitman Wiki.</li>
+    <li><b>Picking up the Black Book is an illegal action in every disguise</b>, including the shaman and guard outfits. There is no disguise that makes it safe; it must be done unobserved.</li>
+    <li><b>Alerting Reddington relocates him</b> to the truck outside the forest or into the Shaman's Hut. The hut variant puts his escort on top of the Black Book. This is the single most important ordering rule in the mission.</li>
+    <li><b>Master difficulty allows only one manual save.</b> The save-and-reload runs below are designed for Casual. No Classics challenge in this mission is difficulty-tiered in World of Assassination, so playing Casual costs you nothing.</li>
+    <li>No mission-specific bug reports were found for Embrace of the Serpent in any source consulted. Reddit and Steam threads about this mission complain about difficulty, not broken scripting.</li>
+  </ul>
+
+  <h3>Sources</h3>
+  <ul>
+    <li><b>In-game challenge data</b> (uploaded by you) — authoritative for names, conditions, counts.</li>
+    <li><b>Hitman Wiki</b> — mission article, Black Book, Taita, Shaman outfit, and five individual challenge articles. The mission article and challenge index return HTTP&nbsp;402 to direct fetches; only search summaries were readable.</li>
+    <li><b>NamuWiki</b>, Hitman 2 / challenges / Santa Fortuna — the only source found with a full Embrace of the Serpent route write-up (SASO, Sniper Assassin, and per-challenge notes). Machine-translated from Korean; treated as single-source and flagged as such in each step.</li>
+    <li><b>Steam Community</b> — Shameless's redacted-challenge guide; the SA/SO on Master discussion thread; Kunovega on The Classics requirements.</li>
+    <li><b>GameFAQs</b> — RARusk's HITMAN 2 guide, for Classics composition, save/challenge-unlock mechanics, and the removed-challenge list.</li>
+  </ul>
+</div>
+
+<footer>
+  Progress is saved in this browser and persists across reloads.<br>
+  Compiled 1 August 2026 against the uploaded in-game challenge list. Unverified detail is labelled, never filled in.
+</footer>
+</div>
+
+<script>
+/* ---------------- challenges (verbatim from in-game data) ---------------- */
+const CH=[
+ {id:'a1',cat:'Assassination',name:"Tasteless, Traceless",cond:"Assassinate a target with lethal poison.",run:2},
+ {id:'a2',cat:'Assassination',name:"Perhaps a Little Too Spicy",cond:"Eliminate Blair Reddington by poisoning his stew.",run:2},
+ {id:'a3',cat:'Assassination',name:"My Anaconda Don't Want None",cond:"Eliminate Blair Reddington with an explosion from a snake trap.",run:1},
+ {id:'a4',cat:'Assassination',name:"Someone Could Hurt Themselves",cond:"Assassinate a target in an accident.",run:1},
+ {id:'a5',cat:'Assassination',name:"Versatile Assassin",cond:"Complete these Versatile challenges in Colombia: Piano Man / Someone Could Hurt Themselves / Hold My Hair / Straight Shot / Tasteless, Traceless.",run:2},
+ {id:'a6',cat:'Assassination',name:"Hold My Hair",cond:"Assassinate a target by drowning them.",run:1},
+ {id:'a7',cat:'Assassination',name:"Piano Man",cond:"Assassinate a target with the fiber wire.",run:1},
+ {id:'a8',cat:'Assassination',name:"I've Got a Deadly Bunch of Coconuts",cond:"Assassinate Blair Reddington by dropping coconuts on him.",run:1},
+ {id:'a9',cat:'Assassination',name:"Straight Shot",cond:"Assassinate a target with a headshot.",run:1},
+ {id:'f1',cat:'Feats',name:"What a Sham!",cond:"Bless Blair Reddington's hunt.",run:2},
+ {id:'f2',cat:'Feats',name:"Authentic Spa Day",cond:"Dump someone in the sacred pool.",run:1},
+ {id:'f3',cat:'Feats',name:"Have You Checked Your Pockets?",cond:"Find the key to the gate in the jungle.",run:1},
+ {id:'t1',cat:'Targets',name:"The Poacher",cond:"Eliminate Blair Reddington.",run:1},
+ {id:'c1',cat:'The Classics',name:"Silent Assassin",cond:'Complete "Embrace Of The Serpent." Only eliminate the target. No bodies found.',run:3},
+ {id:'c2',cat:'The Classics',name:"Silent Assassin, Suit Only",cond:'Complete "Embrace Of The Serpent." Only eliminate the target. No bodies found. Do not get spotted. Do it all in your suit.',run:3},
+ {id:'c3',cat:'The Classics',name:"Suit Only",cond:"Assassinate the target and complete the mission. Do it all in your suit.",run:3},
+ {id:'c4',cat:'The Classics',name:"Sniper Assassin",cond:'Complete "Embrace Of The Serpent." Assassinate Blair Reddington with a sniper rifle. Only eliminate the target. Do not get spotted.',run:4},
+ {id:'c5',cat:'The Classics',name:"The Classics",cond:'Complete all the Classic challenges for "Embrace Of The Serpent": Silent Assassin / Silent Assassin, Suit Only / Sniper Assassin / Suit Only.',run:4}
+];
+const CAT_COLOR={'Assassination':'var(--rust)','Feats':'var(--amber)','Targets':'var(--violet)','The Classics':'var(--jade)'};
+
+/* ---------------- runs ---------------- */
+const RUNS=[
+{
+ id:'r1', tag:'Run 1', title:'Jungle kill carousel',
+ goal:"One trip into the jungle, one save, then five different ways to kill Reddington off that same save. Clears 8 challenges including the target challenge.",
+ diff:'Casual — you need unlimited manual saves. No Classics challenge here is difficulty-tiered, so nothing is lost.',
+ loadout:{
+   start:'Default insertion (the pier / village side). Mastery level: UNVERIFIED — no source lists start-point unlocks for this Special Assignment.',
+   suit:"Any — this run cannot get Silent Assassin or Suit Only anyway",
+   items:['Remote explosive (for the snake trap)','Fiber wire','Silenced pistol','Coins ×3, plus a lockpick if you have a slot']
+ },
+ note:'Every kill below is mutually exclusive with the others. They only all count because you reload the same save between each one — challenges unlock the moment they fire, with no need to finish the mission (confirmed in RARusk\'s GameFAQs guide).',
+ sections:[
+ {h:'Getting into the jungle',steps:[
+  {t:'Take the jungle gate key off the gate guard',
+   b:[['Where','The iron gate on the jungle path leading to the Shaman\'s Hut clearing.'],
+      ['Disguise','None needed — approach through the brush off the path.'],
+      ['NPC','The single guard posted directly in front of the iron gate. He carries the key; nobody else does.'],
+      ['Action','Lure him off his post with a thrown coin, subdue him from behind in the bushes, take the Jungle Gate Key from his body, hide him in the undergrowth, then unlock the gate.']],
+   badges:[['chal','Have You Checked Your Pockets?'],['src','NamuWiki only'],['save','Save after the gate is open']],
+   d:{'Why first':'The gate is the only route into the Shaman\'s Hut clearing where the Black Book, the sacred pool, the coconuts and the stew pot all sit. Everything else in this run is behind it.',
+      'Alternative':'You can also shoot the guard away from his post with a distraction and pick the key up, but subduing is quieter and the key drops either way.',
+      'Unverified':'The gate guard has no published name. This guide never invents one.'}},
+  {t:'Retrieve the Black Book before anything else',
+   b:[['Where','Inside the Shaman\'s Hut, sitting on a wooden table.'],
+      ['Disguise','None helps — picking the book up is an illegal action in every disguise, so what matters is that nobody is watching.'],
+      ['NPC','Guards inside the hut: one moves around the interior, one is asleep near the book.'],
+      ['Action','Time your entry to the moving guard, subdue the awake one, take the Black Book from the table beside the sleeping guard.']],
+   badges:[['warn','Do this before any kill — an alerted Reddington can be escorted INTO this hut'],['save','Save with the book in hand']],
+   d:{'Why the order matters':'If Reddington is alerted, his guards escort him either to the truck outside the forest or into the Shaman\'s Hut. The hut variant parks his escort on top of the Black Book. Take it while the map is calm.',
+      'Briefing error':'Diana says the target carries the book at all times. He does not. The Hitman Wiki records this as an error in the briefing.',
+      'Note':'This save is the branch point for the whole run. Every kill below loads from here.'}}
+ ]},
+ {h:'Free challenge — costs you nothing',steps:[
+  {t:'Dump a guard in the sacred pool',
+   b:[['Where','The small sacred pool beside the bathroom area of the Shaman\'s Hut.'],
+      ['NPC','Any NPC at all — the challenge says "someone", not the target. Use a guard you already subdued.'],
+      ['Action','Carry an unconscious body to the pool and drop it in, or push a live NPC in from behind.'],
+      ['Warning','Spend this on a guard, not on Reddington — you need Reddington alive for the five kill branches below.']],
+   badges:[['chal','Authentic Spa Day'],['src','NamuWiki only']],
+   d:{'Why a guard':'Authentic Spa Day accepts anyone, so using the target on it would waste a kill branch that could have been a different challenge.',
+      'Unverified':'Whether Reddington\'s own patrol brings him past the pool is not confirmed by any source.'}}
+ ]},
+ {h:'Kill branch A — reload the save between each one',steps:[
+  {t:'Branch A1 · Drop the coconuts on him',
+   b:[['Where','The coconut bundle resting on the jungle idol near the Shaman\'s Hut.'],
+      ['Item','A silenced pistol to shoot the bundle down; coins to park him underneath.'],
+      ['Action','Place or throw a coin directly under the bundle, wait for Reddington to walk over and bend for it, then shoot the bundle so it lands on his head.'],
+      ['Result','Registers as an accident, so it also clears the generic accident challenge and the target challenge in the same shot.']],
+   badges:[['chal',"I've Got a Deadly Bunch of Coconuts"],['chal','Someone Could Hurt Themselves'],['chal','The Poacher'],['src','Idol position: NamuWiki only']],
+   d:{'Alternative':'If his route won\'t bring him under the bundle, subdue his escort first so he wanders more freely, then re-lure with a coin.',
+      'Then':'Reload the save from the Black Book step and move to branch A2.'}},
+  {t:'Branch A2 · Blow the snake trap',
+   b:[['Where','Any of the snake traps scattered through the stretch of jungle Reddington patrols.'],
+      ['Item','A remote explosive from your loadout.'],
+      ['Action','Plant the explosive in a trap while unobserved, back off into cover, and detonate only once Reddington is standing over it inspecting it.'],
+      ['Warning','Detonating early wastes the charge and alerts the map, which relocates him to the truck or the hut.']],
+   badges:[['chal',"My Anaconda Don't Want None"],['warn','Detonate only when he is on top of the trap'],['src','Trap positions: NamuWiki only']],
+   d:{'Note':'Treat this as separate from the accident challenge — a planted remote explosive is not classified the same way as a falling-object accident, so do not rely on it for Someone Could Hurt Themselves.',
+      'Then':'Reload and move to branch A3.'}},
+  {t:'Branch A3 · Fiber wire',
+   b:[['Where','Anywhere on his jungle patrol where his escort is not looking.'],
+      ['Item','Fiber wire.'],
+      ['NPC','His escort is made up of Delgado Mansion Guards — subdue or lure them away first.'],
+      ['Action','Clear or distract the escort, approach Reddington from directly behind, and garrote him. You start dragging automatically when it finishes.']],
+   badges:[['chal','Piano Man'],['chal','counts toward Versatile Assassin'],['unv','Isolation method unverified']],
+   d:{'Unverified':'No source documents a scripted moment where Reddington is reliably alone. Clearing his escort by hand is the dependable approach; anything more specific would be a guess.',
+      'Then':'Reload and move to branch A4.'}},
+  {t:'Branch A4 · Headshot',
+   b:[['Where','Same jungle stretch; any angle with a clear line to his head.'],
+      ['Item','Silenced pistol.'],
+      ['Action','Put a single round in his head. Nothing else is required — the challenge only asks for a headshot kill on a target.'],
+      ['Note','If you would rather bank this one in Run 4, a sniper headshot satisfies it too.']],
+   badges:[['chal','Straight Shot'],['chal','counts toward Versatile Assassin']],
+   d:{'Then':'Reload and move to the final branch.'}},
+  {t:'Branch A5 · Drown him, then leave',
+   b:[['Where','The sacred pool by the Shaman\'s Hut — the confirmed body of water in this area.'],
+      ['Action','Subdue Reddington, carry him to the pool, and drown him in it.'],
+      ['Why last','This branch is the messiest — it needs his escort cleared and a body carried across the clearing — so run it when you no longer need the save.'],
+      ['Then','Escape to finish. Do not reload after this one.']],
+   badges:[['chal','Hold My Hair'],['chal','counts toward Versatile Assassin'],['unv','Whether he reaches the pool unaided is unverified']],
+   d:{'Unverified':'The sacred pool is confirmed as the water feature next to the Shaman\'s Hut bathroom. Whether Reddington can be lured there alive is not documented anywhere — subduing and carrying is the method that does not depend on unverified scripting.',
+      'Run 1 tally':'Have You Checked Your Pockets?, Authentic Spa Day, Coconuts, Someone Could Hurt Themselves, My Anaconda, Piano Man, Straight Shot, Hold My Hair, The Poacher.'}}
+ ]}]
+},
+{
+ id:'r2', tag:'Run 2', title:'Shaman and cook',
+ goal:"Steal Taita's robes to bless the hunt, then switch to the cook's outfit and put lethal poison in Reddington's stew. Closes out the Assassination category.",
+ diff:'Casual.',
+ loadout:{
+   start:'Default insertion (the pier / village side) — you need the village bar first. Mastery level: UNVERIFIED.',
+   suit:'Any — this run uses two disguises, so it can never be a Suit Only run',
+   items:['Lethal poison vial','Rat poison is findable on site, but bring emetic poison as backup','Silenced pistol','Coins ×3']
+ },
+ note:'Blessing must happen before poisoning. A dead target cannot bless anything, and there is no way to reverse the order.',
+ sections:[
+ {h:'Becoming Taita',steps:[
+  {t:'Take the shaman disguise at the village bar',
+   b:[['Where','The village bar. In this mission Taita sits in the bar, not at his hut — his own compound is off-limits here.'],
+      ['NPC','Taita, the local shaman.'],
+      ['Action','Get behind the bar as staff and drop rat poison into Taita\'s drink. He leaves for the toilet, you follow, subdue him out of sight and take the robes.'],
+      ['Warning','In the shaman outfit villagers will stop, stare and follow you around town. That is normal, not a detection state — but it makes quiet work in the village harder, so leave for the jungle promptly.']],
+   badges:[['src','Bar location: Hitman Wiki + NamuWiki'],['save','Save once you are wearing the robes']],
+   d:{'Alternative':'Any method that gets him alone works — the poisoned-drink route is simply the one documented as reliable. Emetic poison does the same job as rat poison here.',
+      'Note':'The shaman outfit is a genuine master-key disguise in Santa Fortuna, which is why it is worth the detour.'}},
+  {t:'Bless Reddington\'s hunt',
+   b:[['Where','Out at Reddington\'s position in the jungle, past the iron gate.'],
+      ['Disguise','Shaman — the interaction does not appear in anything else.'],
+      ['NPC','Blair Reddington. He is superstitious and wants the land blessed before he hunts the Cloud Serpent, which is why the option exists at all.'],
+      ['Action','Walk up to him as the shaman and take the blessing dialogue.']],
+   badges:[['chal','What a Sham!'],['warn','Bless BEFORE you poison — you cannot bless a corpse'],['save','Save after the blessing fires']],
+   d:{'If you skipped Run 1':'You still need the jungle gate key from the gate guard to get out here. See Run 1, step 1.',
+      'Unverified':'Whether the blessing alters his subsequent patrol route is not documented in any source. Save immediately after it fires so you can re-plan if his movement changes.'}}
+ ]},
+ {h:'The stew',steps:[
+  {t:'Take the cook\'s outfit at the pot',
+   b:[['Where','The cooking pot in the clearing, on the route toward the Shaman\'s Hut.'],
+      ['NPC','The cook working the stew pot.'],
+      ['Action','Get the cook alone, subdue him, take his outfit and hide the body.'],
+      ['Why bother','In the cook\'s clothes, tampering with the pot reads as normal work rather than an illegal action, so you can poison it in the open.']],
+   badges:[['src','NamuWiki only'],['save','Save with the cook outfit on and the poison in hand']],
+   d:{'Alternative':'You can poison the pot in any outfit if nobody is watching, but the timing window is much tighter and a single witness costs you the attempt.'}},
+  {t:'Poison the stew with lethal poison',
+   b:[['Where','The stew pot.'],
+      ['Item','A lethal poison vial. Emetic will not register this challenge — it must be lethal.'],
+      ['Action','Spike the pot, step back, and wait. Reddington comes over and is offered the stew.'],
+      ['Result','Three challenges land together: the stew kill, the generic lethal-poison kill, and the target challenge if you did not already have it.']],
+   badges:[['chal','Perhaps a Little Too Spicy'],['chal','Tasteless, Traceless'],['chal','The Poacher'],['chal','Versatile Assassin completes here'],['warn','Lethal poison only']],
+   d:{'Versatile Assassin':'Tasteless, Traceless is the fifth and final component, assuming Run 1 delivered Piano Man, Someone Could Hurt Themselves, Hold My Hair and Straight Shot. If you already completed some of those five in Three-Headed Serpent, this challenge may have fired earlier — it is a Colombia-wide challenge, not an Embrace-only one.',
+      'Then':'Retrieve the Black Book if you have not, and escape.'}}
+ ]}]
+},
+{
+ id:'r3', tag:'Run 3', title:'Silent Assassin, Suit Only',
+ goal:"The hard run. No disguise, no bodies found, nobody sees you — get the Black Book out of the hut and kill Reddington with a rigged puddle. Clears three of the five Classics.",
+ diff:'Any. In World of Assassination these Classics are no longer difficulty-tiered, so Casual counts the same as Master.',
+ loadout:{
+   start:'Pier start. Mastery level: UNVERIFIED.',
+   suit:"47's signature suit — mandatory. Any disguise voids Suit Only and SASO.",
+   items:['Nothing is required — the documented route uses only items found on the map','Optional: coins for luring','Optional: a lockpick','Leave slots empty if you want the cleanest run']
+ },
+ note:'This route is documented on NamuWiki only. Treated as single-source and flagged accordingly — it is the sole full written SASO route found anywhere.',
+ sections:[
+ {h:'Kit up on the way in',steps:[
+  {t:'Take the wrench and the car battery from the mechanic',
+   b:[['Where','The spot near the start where a mechanic is servicing a car.'],
+      ['Items','A wrench and a car battery. Both are on the ground at the vehicle.'],
+      ['Why','The wrench is your silent knockout tool for the hut; the battery is your kill method.'],
+      ['Action','Pick both up without being seen taking them.']],
+   badges:[['src','NamuWiki only'],['warn','Do not skip the wrench — it is what gets you into the hut quietly']],
+   d:{'Note':'A blunt object knockout is quieter than a bare-handed subdue, which is why the wrench matters so much on a no-witness run.'}},
+  {t:'Cross the bridge and vault the railing',
+   b:[['Where','The bridge on the way to the jungle. There is a railing you can climb over.'],
+      ['Action','Go over the railing, then move slowly through the brush, staying crouched and watching the soldiers\' sightlines.'],
+      ['Warning','Every sighting on this run is fatal to SASO. Move in the bushes, not on the path.']],
+   badges:[['src','NamuWiki only']],
+   d:{}},
+  {t:'Rig the wet ground with the battery',
+   b:[['Where','The patch of wet ground you reach after the railing.'],
+      ['Item','The car battery.'],
+      ['Action','Throw the battery into the water at an angle so it lands in the puddle and electrifies it. Reddington\'s route takes him through it.'],
+      ['Result','Electrocution counts as an accident, so the body being discovered later does not cost you Silent Assassin.']],
+   badges:[['chal','Silent Assassin'],['chal','Silent Assassin, Suit Only'],['chal','Suit Only'],['chal','The Poacher'],['src','NamuWiki only'],['save','Save before you throw']],
+   d:{'Why an accident':'Accident kills do not break Silent Assassin when the body is found, which is exactly what you need on a run where you cannot afford to hide the target.',
+      'Alternative':'If the throw lands badly, reload rather than improvising — a second attempt costs seconds, a spotting costs the run.'}}
+ ]},
+ {h:'The hut',steps:[
+  {t:'Clear the path and open the gate',
+   b:[['Where','Up the cliff climb toward the Shaman\'s Hut clearing.'],
+      ['NPC','Two patrolling soldiers on the way up, then the guard on the iron gate.'],
+      ['Action','Knock out both patrollers with the wrench and hide them in the bushes. Lure the gate guard off his post, knock him out, hide him, take the Jungle Gate Key and unlock the gate.'],
+      ['Warning','Hide every body. "No bodies found" is a Silent Assassin requirement, and bushes count as concealment here.']],
+   badges:[['chal','Have You Checked Your Pockets?'],['warn','Hide all three bodies'],['src','NamuWiki only'],['save','Save once the gate is open']],
+   d:{'Note':'If you already cleared Have You Checked Your Pockets? in Run 1 it simply will not re-fire; the key is still required to open the gate.'}},
+  {t:'Collect throwables inside the fence',
+   b:[['Where','Move counter-clockwise around the inside of the fence line.'],
+      ['Items','Two apricots on the loop, then a crowbar and two apples near the cabin.'],
+      ['Why','These are your distraction stock for the hut entry and, more importantly, for the exit — you leave the way you came in and need lures in reserve.']],
+   badges:[['src','NamuWiki only']],
+   d:{'Note':'Coins from your loadout serve the same purpose; the map pickups just mean you do not have to spend them.'}},
+  {t:'Enter the hut and take the Black Book',
+   b:[['Where','Inside the Shaman\'s Hut.'],
+      ['Item','The wrench, for the knockout.'],
+      ['NPC','One guard patrols inside constantly, one guard is asleep next to the book.'],
+      ['Action','Time the door to the moving guard, wrench the awake guard from behind, hide him, then take the Black Book from beside the sleeping guard.'],
+      ['Warning','Opening the door at the wrong moment puts you directly in the patrolling guard\'s view. Watch a full cycle before you commit.']],
+   badges:[['warn','Illegal pickup in every disguise — nobody may see it'],['save','Save before opening the hut door']],
+   d:{'Exit':'Retrace your entry route in reverse, spending the apricots, apples, coins, wrench and crowbar as lures on the way out. Then escape to bank Silent Assassin, Silent Assassin Suit Only and Suit Only — all three require the mission to actually be completed.'}}
+ ]}]
+},
+{
+ id:'r4', tag:'Run 4', title:'Sniper Assassin',
+ goal:"Smuggle a silenced rifle in, take the shot from the jungle, then walk out with a borrowed uniform and the Black Book. Finishing this fires the Classics capstone.",
+ diff:'Any. Not difficulty-tiered in World of Assassination.',
+ loadout:{
+   start:'The drug-processing facility start. Mastery level: UNVERIFIED.',
+   suit:'Any — Sniper Assassin does not require Suit Only',
+   items:['Agency Pickup: a silenced sniper rifle, placed at the drug facility','Silenced pistol','Coins ×3','Lockpick']
+ },
+ note:'Sniper Assassin forbids being spotted at all, including by Reddington himself before the shot lands. Bodies being found does not fail it, which is why the disguise grab afterwards is safe.',
+ sections:[
+ {h:'Set up the shot',steps:[
+  {t:'Collect the smuggled rifle and move out',
+   b:[['Where','The Agency Pickup at your drug-facility starting point.'],
+      ['Item','Silenced sniper rifle, carried in its briefcase.'],
+      ['Action','Take the case and head toward Reddington\'s jungle position.'],
+      ['Warning','There is an Enforcer on the route who will see through you — stay in the bushes rather than walking the open path.']],
+   badges:[['src','NamuWiki only'],['warn','Enforcer on the approach']],
+   d:{'Note':'A briefcase keeps the rifle legal to carry. An unsilenced rifle will alert the area on the shot and cost you the no-spotting requirement.'}},
+  {t:'Clear the stairs and take the shot',
+   b:[['Where','Up the stairs on the approach, at the overlook onto Reddington\'s patrol.'],
+      ['NPC','Two patrolling soldiers on the stairs.'],
+      ['Action','Subdue both and hide them in the bushes, unpack the rifle, and shoot Reddington in the head.'],
+      ['Result','A headshot here also clears Straight Shot if Run 1 did not already.']],
+   badges:[['chal','Sniper Assassin'],['chal','Straight Shot'],['chal','The Poacher'],['src','NamuWiki only'],['save','Save before firing']],
+   d:{'Requirement':'Do not get spotted at all. Being seen by the target and then killing him still counts as a failure for this challenge.',
+      'Alternative':'If the shot is heard, wait out the search from cover rather than running — the run survives a search, not a sighting.'}}
+ ]},
+ {h:'Book and exit',steps:[
+  {t:'Wait out the search, then borrow a uniform',
+   b:[['Where','In cover near the stairs.'],
+      ['NPC','The bodyguards and soldiers who sweep the area after the shot.'],
+      ['Action','Stay hidden until the search ends, then take the outfit off one of the soldiers you already subdued.'],
+      ['Note','Changing clothes is fine here — only Suit Only runs forbid it, and this is not one.']],
+   badges:[['src','NamuWiki only']],
+   d:{}},
+  {t:'Take the gate and the Black Book, then escape',
+   b:[['Where','The iron gate, then the Shaman\'s Hut.'],
+      ['Item','The rifle briefcase doubles as a throwing weapon.'],
+      ['NPC','The gate guard with the key; then the hut guards.'],
+      ['Action','Throw-stun the gate guard with the briefcase, hide him, take the Jungle Gate Key, open the gate, then retrieve the Black Book from the hut table while watching for the enforcers inside. Escape to complete.'],
+      ['Result','Completing this run with Silent Assassin, SASO and Suit Only already banked fires the Classics capstone.']],
+   badges:[['chal','Sniper Assassin'],['chal','The Classics'],['warn','Book pickup stays illegal even in the soldier uniform'],['src','NamuWiki only']],
+   d:{'Capstone':'The Classics requires Silent Assassin, Silent Assassin Suit Only, Sniper Assassin and Suit Only. Run 3 delivers the first three of those; this run delivers the fourth and the capstone fires on completion.',
+      'Order note':'If you would rather not fight the hut under a post-shot alert state, take the Black Book before the shot instead — the route works either way and the book is only guarded, not timed.'}}
+ ]}]
+}];
+
+/* ---------------- state ---------------- */
+const KEY='embrace_serpent_done_v1', SKEY=KEY+':steps', OKEY=KEY+':open';
+const done=new Set(), stepsDone=new Set(), openRuns=new Set();
+function loadSet(k,set,fallback){
+  try{const v=JSON.parse(localStorage.getItem(k));if(Array.isArray(v)){v.forEach(x=>set.add(x));return;}}catch(e){}
+  if(fallback)fallback.forEach(x=>set.add(x));
+}
+loadSet(KEY,done);             /* ticked challenges */
+loadSet(SKEY,stepsDone);       /* ticked route steps */
+loadSet(OKEY,openRuns,['r1']); /* which runs are expanded */
+function reportProgress(){try{const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r['sa02']={done:done.size,total:CH.length,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
+/* one writer for all three sets - every toggle below calls this */
+function persist(){
+  try{
+    localStorage.setItem(KEY,JSON.stringify([...done]));
+    localStorage.setItem(SKEY,JSON.stringify([...stepsDone]));
+    localStorage.setItem(OKEY,JSON.stringify([...openRuns]));
+  }catch(e){}
+  reportProgress();
+}
+const saveDone=persist;
+let filter='All';
+
+/* ---------------- tracker ---------------- */
+function renderTracker(){
+  const cats=['Assassination','Feats','Targets','The Classics'];
+  document.getElementById('cats').innerHTML=cats.map(c=>{
+    const all=CH.filter(x=>x.cat===c), d=all.filter(x=>done.has(x.id)).length;
+    return `<div class="cat"><span class="n">${c}</span>
+      <span class="v">${d}<span style="color:var(--bone-dim);font-size:13px">/${all.length}</span></span>
+      <div class="mb"><i style="width:${Math.round(d/all.length*100)}%;background:${CAT_COLOR[c]}"></i></div></div>`;
+  }).join('');
+  document.getElementById('tDone').textContent=done.size;
+  document.getElementById('tBar').style.width=(done.size/CH.length*100)+'%';
+}
+
+/* ---------------- run nav ---------------- */
+function renderNav(){
+  document.getElementById('runnav').innerHTML=
+    RUNS.map(r=>`<button data-jump="${r.id}">${r.tag} · ${r.title}</button>`).join('')+
+    `<span class="util"><button data-all="open">Expand all</button> <button data-all="close">Collapse all</button></span>`;
+}
+
+/* ---------------- runs ---------------- */
+function badgeHTML(b){
+  const cls={chal:'b-chal',warn:'b-warn',save:'b-save',unv:'b-unv',src:'b-src'}[b[0]];
+  const pre={warn:'⚠ ',save:'◆ ',unv:'? ',src:'✎ ',chal:''}[b[0]];
+  return `<span class="badge ${cls}">${pre}${b[1]}</span>`;
+}
+function renderRuns(){
+  document.getElementById('runList').innerHTML=RUNS.map((r,ri)=>{
+    const open=openRuns.has(r.id);
+    let n=0;
+    const total=r.sections.reduce((a,s)=>a+s.steps.length,0);
+    const doneCount=r.sections.reduce((a,s,si)=>a+s.steps.filter((_,ti)=>stepsDone.has(`${r.id}-${si}-${ti}`)).length,0);
+    return `<article class="run ${open?'open':''}" id="${r.id}">
+      <button class="run-head" data-toggle="${r.id}" aria-expanded="${open}">
+        <span class="chev">▶</span>
+        <span class="rh">
+          <span class="run-no">${r.tag} · ${r.diff.split('.')[0]}</span>
+          <h3>${r.title}</h3>
+          <p>${r.goal}</p>
+        </span>
+        <span class="run-prog">${doneCount}/${total} steps</span>
+      </button>
+      <div class="run-body" ${open?'':'hidden'}>
+        <div class="loadout">
+          <h4>Loadout</h4>
+          <div class="lo-grid">
+            <div><span>Starting location</span>${r.loadout.start}</div>
+            <div><span>Difficulty</span>${r.diff}</div>
+            <div><span>Suit</span>${r.loadout.suit}</div>
+            ${r.loadout.items.map((it,i)=>`<div><span>Slot ${i+1}</span>${it}</div>`).join('')}
+          </div>
+          ${r.note?`<p class="lo-note">${r.note}</p>`:''}
+        </div>
+        <div class="sect">
+          ${r.sections.map((sec,si)=>`<h4>${sec.h}</h4>`+sec.steps.map((st,ti)=>{
+            const key=`${r.id}-${si}-${ti}`; n++;
+            const hasD=st.d&&Object.keys(st.d).length;
+            return `<div class="step ${stepsDone.has(key)?'done':''}" id="s-${key}">
+              <div class="step-top">
+                <button class="tick" data-step="${key}" aria-label="Mark step complete">✓</button>
+                <div class="step-body">
+                  <p class="step-title"><span class="num">${String(n).padStart(2,'0')}</span>${st.t}</p>
+                  <ul class="bul">${st.b.map(x=>`<li><k>${x[0]}</k>${x[1]}</li>`).join('')}</ul>
+                  <div class="badges">${st.badges.map(badgeHTML).join('')}</div>
+                </div>
+              </div>
+              ${hasD?`<button class="more" data-more="${key}" aria-expanded="false">+ Notes</button>
+              <div class="detail" id="d-${key}" hidden><dl>${Object.entries(st.d).map(([k,v])=>{
+                const c=k==='Unverified'?'flag unv':(/^(Why the order|Ordering|Order note|Requirement|Warning|Why first)/.test(k)?'flag amber':'');
+                return c?`<div class="${c}"><dt style="margin-top:0">${k}</dt><dd>${v}</dd></div>`:`<dt>${k}</dt><dd>${v}</dd>`;
+              }).join('')}</dl></div>`:''}
+            </div>`;
+          }).join('')).join('')}
+        </div>
+      </div>
+    </article>`;
+  }).join('');
+}
+
+/* ---------------- checklist ---------------- */
+function renderFilters(){
+  const opts=['All','Assassination','Feats','Targets','The Classics','Incomplete'];
+  document.getElementById('filters').innerHTML=opts.map(o=>`<button class="${o===filter?'on':''}" data-f="${o}">${o}</button>`).join('');
+}
+function renderChecklist(){
+  const list=CH.filter(c=>filter==='All'?true:filter==='Incomplete'?!done.has(c.id):c.cat===filter);
+  document.getElementById('chalList').innerHTML=list.length?list.map(c=>`
+    <div class="chal ${done.has(c.id)?'done':''}">
+      <button class="tick" data-ch="${c.id}" aria-label="Mark ${c.name} complete">✓</button>
+      <div class="chal-main">
+        <p class="chal-name">${c.name}</p>
+        <p class="chal-cond">${c.cond}</p>
+        <div class="chal-meta">
+          <span class="badge" style="color:${CAT_COLOR[c.cat]};border-color:${CAT_COLOR[c.cat]}">${c.cat}</span>
+          <span class="badge b-chal">Run ${c.run}</span>
+          <span class="badge b-unv">? XP value unverified</span>
+        </div>
+      </div>
+    </div>`).join(''):'<p style="color:var(--bone-dim)">Nothing matches this filter.</p>';
+}
+
+/* ---------------- events ---------------- */
+document.addEventListener('click',e=>{
+  const tab=e.target.closest('.tab');
+  if(tab){
+    document.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-selected',t===tab));
+    document.querySelectorAll('.panel').forEach(p=>p.hidden=p.id!=='p-'+tab.dataset.panel);
+    return;
+  }
+  const jump=e.target.closest('[data-jump]');
+  if(jump){
+    const id=jump.dataset.jump;
+    openRuns.add(id); persist(); renderRuns();
+    document.querySelectorAll('[data-jump]').forEach(b=>b.classList.toggle('hot',b.dataset.jump===id));
+    document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});
+    return;
+  }
+  const all=e.target.closest('[data-all]');
+  if(all){
+    if(all.dataset.all==='open') RUNS.forEach(r=>openRuns.add(r.id)); else openRuns.clear();
+    persist(); renderRuns(); return;
+  }
+  const tg=e.target.closest('[data-toggle]');
+  if(tg){
+    const id=tg.dataset.toggle;
+    openRuns.has(id)?openRuns.delete(id):openRuns.add(id);
+    persist(); renderRuns(); return;
+  }
+  const ch=e.target.closest('[data-ch]');
+  if(ch){
+    const id=ch.dataset.ch;
+    done.has(id)?done.delete(id):done.add(id);
+    saveDone(); renderTracker(); renderChecklist(); return;
+  }
+  const sp=e.target.closest('[data-step]');
+  if(sp){
+    const k=sp.dataset.step;
+    stepsDone.has(k)?stepsDone.delete(k):stepsDone.add(k);
+    persist(); renderRuns(); return;
+  }
+  const m=e.target.closest('[data-more]');
+  if(m){
+    const d=document.getElementById('d-'+m.dataset.more);
+    d.hidden=!d.hidden;
+    m.setAttribute('aria-expanded',String(!d.hidden));
+    m.textContent=d.hidden?'+ Notes':'− Notes';
+  }
+});
+
+renderTracker(); renderNav(); renderFilters(); renderChecklist(); renderRuns();
+reportProgress();
+</script>
+<!-- step-progress-bridge -->
+<script>
+/* Reports route-step ticks into 'hitman-progress-registry' so the index can
+   show them beside the challenge counts. Counts what is on screen rather than
+   any guide-specific state, so one implementation serves every guide. */
+(function(){
+  var RID="sa02", SEL=".step";
+  function isDone(s){
+    var c=s.classList;
+    if(c.contains('done')||c.contains('dn')) return true;
+    if(s.getAttribute('data-done')==='1'||s.getAttribute('aria-pressed')==='true') return true;
+    return !!s.querySelector('.done,.dn,[data-done="1"],[aria-pressed="true"]');
+  }
+  function tally(){
+    var steps=document.querySelectorAll(SEL);
+    if(!steps.length) return null;
+    var n=0;
+    for(var i=0;i<steps.length;i++) if(isDone(steps[i])) n++;
+    return {steps:n,stepTotal:steps.length};
+  }
+  function push(){
+    var t;
+    try{ t=tally(); }catch(err){ return; }
+    if(!t||!t.stepTotal) return;
+    try{
+      var r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');
+      var e=r[RID]||(r[RID]={});
+      /* the guide's own reportProgress() rewrites this entry wholesale, so
+         re-add the step counts whenever they go missing or stale */
+      if(e.steps===t.steps&&e.stepTotal===t.stepTotal) return;
+      e.steps=t.steps; e.stepTotal=t.stepTotal; e.updated=Date.now();
+      localStorage.setItem('hitman-progress-registry',JSON.stringify(r));
+    }catch(err){}
+  }
+  var pending=false;
+  function schedule(){
+    if(pending) return; pending=true;
+    setTimeout(function(){pending=false;push();},120);
+  }
+  try{
+    new MutationObserver(schedule).observe(document.body,
+      {subtree:true,childList:true,attributes:true,attributeFilter:['class','aria-pressed','data-done']});
+  }catch(err){}
+  window.addEventListener('load',schedule);
+  setTimeout(push,600);
+})();
+</script>
+<!-- /step-progress-bridge -->
+</body>
+</html>

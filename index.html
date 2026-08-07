@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HITMAN World of Assassination — Challenge Guide Index</title>
+<style>
+  :root{
+    --bg:#0b0c0e;--panel:#151618;--panel2:#1c1e21;--line:#2b2d31;
+    --ink:#eceef0;--dim:#9a9ea5;--faint:#65686f;
+    --red:#c0392b;--gold:#c9a24b;
+    /* categorical slots — validated against surface #1c1e21 (dark) */
+    --c-main:#3987e5;--c-sniper:#d95926;--c-bonus:#199e70;--c-pz:#c98500;--c-sa:#d55181;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5;padding:0 0 5rem}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+
+  header{background:linear-gradient(135deg,#0d0e10,#151719);border-bottom:2px solid var(--red);padding:44px 0 38px;margin-bottom:34px;position:relative;overflow:hidden}
+  header::before{content:"";position:absolute;top:-40%;right:-10%;width:480px;height:220%;background:radial-gradient(circle,rgba(192,57,43,.13),transparent 65%);pointer-events:none}
+  .head-top{text-align:center;position:relative}
+  .eyebrow{font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--red);font-weight:700;margin-bottom:10px}
+  header h1{font-size:33px;font-weight:800;letter-spacing:-.02em;margin-bottom:6px}
+  header p.sub{color:var(--dim);font-size:14.5px;max-width:640px;margin:0 auto}
+
+  /* ── hero ring ── */
+  .hero{display:flex;flex-direction:column;align-items:center;margin-top:26px;position:relative}
+  .ring-wrap{position:relative;width:300px;height:300px;max-width:82vw}
+  .ring-wrap svg{width:100%;height:100%;display:block;overflow:visible}
+  .seg-track{fill:none;stroke-width:20;opacity:.16}
+  .seg-fill{fill:none;stroke-width:20;transition:stroke-dasharray .45s ease}
+  .seg-hit{fill:none;stroke-width:26;stroke:transparent;cursor:pointer;pointer-events:stroke}
+  .seg-g.dim .seg-fill,.seg-g.dim .seg-track{opacity:.12}
+  .seg-g.hot .seg-fill{filter:brightness(1.25)}
+  .seg-g.hot .seg-track{opacity:.3}
+
+  .ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;pointer-events:none;padding:0 58px}
+  .ring-pct{font-size:52px;font-weight:800;letter-spacing:-.03em;line-height:1;color:var(--ink)}
+  .ring-frac{font-size:13px;color:var(--dim);margin-top:7px}
+  .ring-frac b{color:var(--ink);font-weight:650}
+  .ring-guides{font-size:11px;color:var(--faint);margin-top:4px;letter-spacing:.03em}
+
+  /* positioned in ring-viewBox percentages, so it needs no measurement */
+  .tip{position:absolute;z-index:20;pointer-events:none;background:#0f1113;border:1px solid var(--line);border-radius:9px;padding:8px 11px;font-size:12.5px;box-shadow:0 6px 22px rgba(0,0,0,.6);opacity:0;transition:opacity .12s;white-space:nowrap;left:50%;top:50%;transform:translate(-50%,calc(-100% - 14px))}
+  .tip.on{opacity:1}
+  .tip .t-name{font-weight:650;display:flex;align-items:center;gap:7px}
+  .tip .t-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+  .tip .t-sub{color:var(--dim);margin-top:3px;font-size:11.5px}
+
+  .legend{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:20px;max-width:980px}
+  .lg{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--dim);background:var(--panel2);border:1px solid var(--line);border-radius:20px;padding:5px 12px;cursor:pointer;font-family:inherit}
+  .lg:hover{border-color:var(--gold);color:var(--ink)}
+  .lg[aria-pressed="true"]{border-color:var(--gold);color:var(--ink)}
+  .lg .sw{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+  .lg b{color:var(--ink);font-weight:650;font-variant-numeric:tabular-nums}
+
+  .ffnote{display:none;max-width:660px;margin:20px auto 0;background:rgba(250,178,25,.07);border:1px solid rgba(250,178,25,.35);border-left:3px solid #fab219;border-radius:10px;padding:12px 15px;font-size:12.5px;line-height:1.65;color:var(--dim);text-align:left}
+  .ffnote.on{display:block}
+  .ffnote b{color:var(--ink)}
+  .ffnote code{background:#0e0f11;border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-size:11.5px;color:var(--ink)}
+
+  .tablelink{margin-top:16px;font-size:12px;color:var(--faint)}
+  .tablelink summary{cursor:pointer;display:inline-block;padding:4px 0}
+  .tablelink summary:hover{color:var(--dim)}
+  .tbl-scroll{overflow-x:auto;margin-top:12px;text-align:left}
+  table.data{border-collapse:collapse;font-size:12.5px;width:100%;min-width:460px}
+  table.data th{text-align:left;padding:7px 12px;color:var(--faint);font-weight:600;border-bottom:1px solid var(--line);white-space:nowrap}
+  table.data td{padding:7px 12px;border-bottom:1px solid rgba(43,45,49,.5);color:var(--dim)}
+  table.data td.n{text-align:right;font-variant-numeric:tabular-nums;color:var(--ink)}
+  table.data .sw{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:8px;vertical-align:middle}
+
+  .search{width:100%;max-width:420px;margin:0 0 30px;display:block;padding:11px 16px;font-size:14px;border-radius:10px;background:var(--panel);border:1px solid var(--line);color:var(--ink);font-family:inherit}
+  .search::placeholder{color:var(--faint)}
+  .search:focus{outline:none;border-color:var(--gold)}
+
+  section.cat{margin-bottom:38px}
+  .cat-head{display:flex;align-items:baseline;gap:12px;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+  .cat-head h2{font-size:20px;font-weight:700;letter-spacing:-.01em}
+  .cat-head .count{font-size:12px;color:var(--faint);font-weight:600}
+  .cat-note{font-size:12.5px;color:var(--faint);margin:-8px 0 16px}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:12px}
+
+  .card{display:flex;flex-direction:column;gap:5px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:15px 17px;color:inherit;transition:.15s;position:relative}
+  .card:not(.missing){cursor:pointer}
+  .card:not(.missing):hover{border-color:var(--gold);background:var(--panel2);transform:translateY(-1px)}
+  .card .no{font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--gold)}
+  .card h3{font-size:15.5px;font-weight:650;line-height:1.3}
+  .card .loc{font-size:12px;color:var(--dim)}
+  .card .tag-sniper{position:absolute;top:14px;right:14px;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#0b0c0e;background:var(--gold);padding:2px 8px;border-radius:5px}
+
+  .card.missing{opacity:.55;border-style:dashed}
+  .card.missing .no{color:var(--faint)}
+  .card.missing .badge{font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--faint);margin-top:2px}
+
+  .cprog{margin-top:8px;display:flex;align-items:center;gap:9px}
+  .cbar{flex:1;height:5px;border-radius:3px;background:#0e0f11;border:1px solid var(--line);overflow:hidden}
+  .cbar i{display:block;height:100%;width:0;background:var(--gold);transition:width .35s}
+  .cnum{font-size:11.5px;color:var(--dim);font-variant-numeric:tabular-nums;flex-shrink:0}
+  .cnum b{color:var(--ink);font-weight:650}
+  /* route steps: same shape as the challenge bar, deliberately quieter */
+  .sprog{margin-top:5px;display:flex;align-items:center;gap:9px}
+  .sprog .cbar{height:3px}
+  .sprog .cbar i{background:var(--dim)}
+  .sprog .cnum{font-size:10.5px;opacity:.8}
+  .sprog .cnum b{color:var(--dim)}
+
+  .card.completed{border-color:rgba(25,158,112,.55);background:rgba(25,158,112,.07)}
+  .card.completed:hover{background:rgba(25,158,112,.11)}
+  .card.completed .done-flag{position:absolute;top:13px;right:13px;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#08110d;background:var(--c-bonus);padding:2px 8px;border-radius:5px}
+  .card.completed .tag-sniper{display:none}
+
+  footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);color:var(--faint);font-size:12px;line-height:1.7}
+
+  @media(max-width:640px){
+    header h1{font-size:25px}
+    .grid{grid-template-columns:1fr}
+    .ring-wrap{width:250px;height:250px}
+    .ring-pct{font-size:42px}
+    .ring-center{padding:0 46px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="head-top">
+      <div class="eyebrow">Hitman · World of Assassination Trilogy</div>
+      <h1>Challenge Guide Index</h1>
+      <p class="sub">Every step-by-step guide in one place. The ring is your whole completion at a glance — one segment per guide, sized by how many challenges it holds, filling as you tick them off inside that guide.</p>
+      <div class="ffnote" id="ffnote">
+        <b>Firefox keeps each local file's progress separate.</b> Opened straight off disk, Firefox gives every page its own private storage, so your ticks are saved inside each guide but this page can't read them — the ring will sit at 0%. Nothing is lost.
+        To see combined totals, run <code>Start Guides.cmd</code> in the <code>hitmanpeacock</code> folder (it serves the guides at <code>http://localhost</code>, where every browser shares one store), or open this page in Edge.
+      </div>
+    </div>
+
+    <div class="hero">
+      <div class="ring-wrap">
+        <svg viewBox="0 0 300 300" aria-labelledby="ringTitle ringDesc">
+          <title id="ringTitle">Overall challenge completion by guide</title>
+          <desc id="ringDesc">A ring split into one segment per guide, coloured by category and filled in proportion to the challenges completed in that guide. Exact figures are in the table below.</desc>
+          <g id="ringSegs" transform="rotate(-90 150 150)"></g>
+        </svg>
+        <div class="ring-center">
+          <span class="ring-pct" id="ringPct">0%</span>
+          <span class="ring-frac"><b id="ringDone">0</b> of <b id="ringTotal">1544</b> challenges</span>
+          <span class="ring-guides" id="ringGuides">0 of 35 guides finished</span>
+          <span class="ring-guides" id="ringSteps"></span>
+        </div>
+        <div class="tip" id="tip" role="status" aria-live="polite"></div>
+      </div>
+
+      <div class="legend" id="legend"></div>
+
+      <details class="tablelink">
+        <summary>Show the numbers as a table</summary>
+        <div class="tbl-scroll">
+          <table class="data">
+            <thead><tr><th>Guide</th><th>Category</th><th class="n">Done</th><th class="n">Total</th><th class="n">%</th><th class="n">Steps</th></tr></thead>
+            <tbody id="dataBody"></tbody>
+          </table>
+        </div>
+      </details>
+    </div>
+
+  </div>
+</header>
+
+<div class="wrap">
+
+  <input class="search" id="search" type="text" placeholder="Filter by mission or location…" autocomplete="off">
+
+  <section class="cat" data-section>
+    <div class="cat-head"><h2>Main Campaign</h2><span class="count">25 missions</span></div>
+    <div class="cat-note">Missions 14, 15 and 17 use the Sniper Assassin mechanic — their guides live in the Sniper Assassin section below and are linked from here.</div>
+    <div class="grid">
+      <div class="card missing"><span class="no">01</span><h3>The Final Test</h3><span class="loc">ICA Facility</span><span class="badge">No guide yet</span></div>
+      <div class="card" data-id="m02" data-href="Main%20Campaign/02%20-%20The%20Showstopper.html"><span class="no">02</span><h3>The Showstopper</h3><span class="loc">Paris</span></div>
+      <div class="card" data-id="m03" data-href="Main%20Campaign/03%20-%20World%20of%20Tomorrow.html"><span class="no">03</span><h3>World of Tomorrow</h3><span class="loc">Sapienza</span></div>
+      <div class="card" data-id="m04" data-href="Main%20Campaign/04%20-%20A%20Gilded%20Cage.html"><span class="no">04</span><h3>A Gilded Cage</h3><span class="loc">Marrakesh</span></div>
+      <div class="card" data-id="m05" data-href="Main%20Campaign/05%20-%20Club%2027.html"><span class="no">05</span><h3>Club 27</h3><span class="loc">Bangkok</span></div>
+      <div class="card" data-id="m06" data-href="Main%20Campaign/06%20-%20Freedom%20Fighters.html"><span class="no">06</span><h3>Freedom Fighters</h3><span class="loc">Colorado</span></div>
+      <div class="card" data-id="m07" data-href="Main%20Campaign/07%20-%20Situs%20Inversus.html"><span class="no">07</span><h3>Situs Inversus</h3><span class="loc">Hokkaido</span></div>
+      <div class="card" data-id="m08" data-href="Main%20Campaign/08%20-%20Nightcall.html"><span class="no">08</span><h3>Nightcall</h3><span class="loc">Hawke's Bay</span></div>
+      <div class="card" data-id="m09" data-href="Main%20Campaign/09%20-%20The%20Finish%20Line.html"><span class="no">09</span><h3>The Finish Line</h3><span class="loc">Miami</span></div>
+      <div class="card" data-id="m10" data-href="Main%20Campaign/10%20-%20Three-Headed%20Serpent.html"><span class="no">10</span><h3>Three-Headed Serpent</h3><span class="loc">Santa Fortuna</span></div>
+      <div class="card" data-id="m11" data-href="Main%20Campaign/11%20-%20Chasing%20A%20Ghost.html"><span class="no">11</span><h3>Chasing A Ghost</h3><span class="loc">Mumbai</span></div>
+      <div class="card" data-id="m12" data-href="Main%20Campaign/12%20-%20Another%20Life.html"><span class="no">12</span><h3>Another Life</h3><span class="loc">Whittleton Creek</span></div>
+      <div class="card" data-id="m13" data-href="Main%20Campaign/13%20-%20The%20Ark%20Society.html"><span class="no">13</span><h3>The Ark Society</h3><span class="loc">Isle of Sgail</span></div>
+      <div class="card" data-id="m14" data-href="Sniper%20Assassin/Himmelstein.html"><span class="no">14</span><h3>The Last Yardbird</h3><span class="loc">Himmelstein</span><span class="tag-sniper">Sniper</span></div>
+      <div class="card" data-id="m15" data-href="Sniper%20Assassin/Hantu%20Port.html"><span class="no">15</span><h3>The Pen and the Sword</h3><span class="loc">Hantu Port</span><span class="tag-sniper">Sniper</span></div>
+      <div class="card" data-id="m16" data-href="Main%20Campaign/16%20-%20Golden%20Handshake.html"><span class="no">16</span><h3>Golden Handshake</h3><span class="loc">New York</span></div>
+      <div class="card" data-id="m17" data-href="Sniper%20Assassin/Siberia.html"><span class="no">17</span><h3>Crime and Punishment</h3><span class="loc">Perm-14, Siberia</span><span class="tag-sniper">Sniper</span></div>
+      <div class="card" data-id="m18" data-href="Main%20Campaign/18%20-%20The%20Last%20Resort.html"><span class="no">18</span><h3>The Last Resort</h3><span class="loc">Haven Island</span></div>
+      <div class="card" data-id="m19" data-href="Main%20Campaign/19%20-%20On%20Top%20Of%20The%20World.html"><span class="no">19</span><h3>On Top Of The World</h3><span class="loc">Dubai</span></div>
+      <div class="card" data-id="m20" data-href="Main%20Campaign/20%20-%20Death%20In%20The%20Family.html"><span class="no">20</span><h3>Death In The Family</h3><span class="loc">Dartmoor</span></div>
+      <div class="card" data-id="m21" data-href="Main%20Campaign/21%20-%20Apex%20Predator.html"><span class="no">21</span><h3>Apex Predator</h3><span class="loc">Berlin</span></div>
+      <div class="card" data-id="m22" data-href="Main%20Campaign/22%20-%20End%20Of%20An%20Era.html"><span class="no">22</span><h3>End Of An Era</h3><span class="loc">Chongqing</span></div>
+      <div class="card" data-id="m23" data-href="Main%20Campaign/23%20-%20The%20Farewell.html"><span class="no">23</span><h3>The Farewell</h3><span class="loc">Mendoza</span></div>
+      <div class="card" data-id="m24" data-href="Main%20Campaign/24%20-%20Untouchable.html"><span class="no">24</span><h3>Untouchable</h3><span class="loc">Carpathian Mountains</span></div>
+      <div class="card" data-id="m25" data-href="Main%20Campaign/25%20-%20Shadows%20in%20the%20Water.html"><span class="no">25</span><h3>Shadows in the Water</h3><span class="loc">Ambrose Island</span></div>
+    </div>
+  </section>
+
+  <section class="cat" data-section>
+    <div class="cat-head"><h2>Sniper Assassin</h2><span class="count">3 locations</span></div>
+    <div class="cat-note">Rifle-only missions — no loadout, no saves. Each one also doubles as a numbered campaign mission above, and shares its progress with that card.</div>
+    <div class="grid">
+      <div class="card" data-id="m15" data-href="Sniper%20Assassin/Hantu%20Port.html"><span class="no">15</span><h3>Hantu Port</h3><span class="loc">The Pen and the Sword</span></div>
+      <div class="card" data-id="m14" data-href="Sniper%20Assassin/Himmelstein.html"><span class="no">14</span><h3>Himmelstein</h3><span class="loc">The Last Yardbird</span></div>
+      <div class="card" data-id="m17" data-href="Sniper%20Assassin/Siberia.html"><span class="no">17</span><h3>Siberia</h3><span class="loc">Crime and Punishment · Perm-14</span></div>
+    </div>
+  </section>
+
+  <section class="cat" data-section>
+    <div class="cat-head"><h2>Bonus Missions</h2><span class="count">5 missions</span></div>
+    <div class="grid">
+      <div class="card missing"><span class="no">01</span><h3>Holiday Hoarders</h3><span class="loc">Paris</span><span class="badge">No guide yet</span></div>
+      <div class="card" data-id="b02" data-href="Bonus%20Missions/02%20-%20The%20Icon.html"><span class="no">02</span><h3>The Icon</h3><span class="loc">Sapienza</span></div>
+      <div class="card" data-id="b03" data-href="Bonus%20Missions/03%20-%20Landslide.html"><span class="no">03</span><h3>Landslide</h3><span class="loc">Sapienza</span></div>
+      <div class="card" data-id="b04" data-href="Bonus%20Missions/04%20-%20A%20House%20Built%20on%20Sand.html"><span class="no">04</span><h3>A House Built on Sand</h3><span class="loc">Marrakesh</span></div>
+      <div class="card missing"><span class="no">05</span><h3>Hokkaido Snow Festival</h3><span class="loc">Hokkaido</span><span class="badge">No guide yet</span></div>
+    </div>
+  </section>
+
+  <section class="cat" data-section>
+    <div class="cat-head"><h2>Patient Zero</h2><span class="count">4 missions</span></div>
+    <div class="grid">
+      <div class="card" data-id="pz01" data-href="Patient%20Zero/01%20-%20The%20Source.html"><span class="no">01</span><h3>The Source</h3><span class="loc">Bangkok</span></div>
+      <div class="card" data-id="pz02" data-href="Patient%20Zero/02%20-%20The%20Author.html"><span class="no">02</span><h3>The Author</h3><span class="loc">Sapienza</span></div>
+      <div class="card" data-id="pz03" data-href="Patient%20Zero/03%20-%20The%20Vector.html"><span class="no">03</span><h3>The Vector</h3><span class="loc">Colorado</span></div>
+      <div class="card" data-id="pz04" data-href="Patient%20Zero/04%20-%20Patient%20Zero.html"><span class="no">04</span><h3>Patient Zero</h3><span class="loc">Hokkaido</span></div>
+    </div>
+  </section>
+
+  <section class="cat" data-section>
+    <div class="cat-head"><h2>Special Assignments</h2><span class="count">4 missions</span></div>
+    <div class="grid">
+      <div class="card" data-id="sa01" data-href="Special%20Assignments/01%20-%20A%20Silver%20Tongue.html"><span class="no">01</span><h3>A Silver Tongue</h3><span class="loc">Miami</span></div>
+      <div class="card" data-id="sa02" data-href="Special%20Assignments/02%20-%20Embrace%20of%20the%20Serpent.html"><span class="no">02</span><h3>Embrace of the Serpent</h3><span class="loc">Santa Fortuna</span></div>
+      <div class="card" data-id="sa03" data-href="Special%20Assignments/03%20-%20Illusions%20of%20Grandeur.html"><span class="no">03</span><h3>Illusions of Grandeur</h3><span class="loc">Mumbai</span></div>
+      <div class="card" data-id="sa04" data-href="Special%20Assignments/04%20-%20A%20Bitter%20Pill.html"><span class="no">04</span><h3>A Bitter Pill</h3><span class="loc">Whittleton Creek</span></div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Progress is read live from each guide's own checklist and is stored in this browser only. Tick challenges inside a guide — this page updates the moment you come back to it. A card turns green on its own once every challenge in its guide is done.</p>
+    <p style="margin-top:8px">For the totals to add up across guides, all the pages must share one browser storage. Opening them over <code style="background:#0e0f11;border:1px solid var(--line);border-radius:4px;padding:1px 5px">Start Guides.cmd</code> (<code style="background:#0e0f11;border:1px solid var(--line);border-radius:4px;padding:1px 5px">http://localhost</code>) guarantees that in every browser; opening the files directly works in Edge and Chrome but not Firefox.</p>
+    <p style="margin-top:8px">Segment size is that guide's share of all 1,544 tracked challenges. Cards without a link have no guide written yet and are not counted. <em>Another Life</em> tracks its 35 route steps rather than a challenge list; every other guide tracks challenges. Each guide has its own reset button.</p>
+  </footer>
+
+</div>
+
+<script>
+/* ── guides in ring order; totals extracted from each guide's own data ── */
+var CATS = {
+  main:   { label:'Main Campaign',      color:'#3987e5' },
+  sniper: { label:'Sniper Assassin',    color:'#d95926' },
+  bonus:  { label:'Bonus Missions',     color:'#199e70' },
+  pz:     { label:'Patient Zero',       color:'#c98500' },
+  sa:     { label:'Special Assignments',color:'#d55181' }
+};
+var GUIDES = [
+  {id:'m02', name:'The Showstopper',        cat:'main',   total:65},
+  {id:'m03', name:'World of Tomorrow',      cat:'main',   total:77},
+  {id:'m04', name:'A Gilded Cage',          cat:'main',   total:62},
+  {id:'m05', name:'Club 27',                cat:'main',   total:58},
+  {id:'m06', name:'Freedom Fighters',       cat:'main',   total:61},
+  {id:'m07', name:'Situs Inversus',         cat:'main',   total:60},
+  {id:'m08', name:'Nightcall',              cat:'main',   total:33},
+  {id:'m09', name:'The Finish Line',        cat:'main',   total:78},
+  {id:'m10', name:'Three-Headed Serpent',   cat:'main',   total:65},
+  {id:'m11', name:'Chasing A Ghost',        cat:'main',   total:80},
+  {id:'m12', name:'Another Life',           cat:'main',   total:35},
+  {id:'m13', name:'The Ark Society',        cat:'main',   total:62},
+  {id:'m16', name:'Golden Handshake',       cat:'main',   total:55},
+  {id:'m18', name:'The Last Resort',        cat:'main',   total:67},
+  {id:'m19', name:'On Top Of The World',    cat:'main',   total:58},
+  {id:'m20', name:'Death In The Family',    cat:'main',   total:58},
+  {id:'m21', name:'Apex Predator',          cat:'main',   total:58},
+  {id:'m22', name:'End Of An Era',          cat:'main',   total:57},
+  {id:'m23', name:'The Farewell',           cat:'main',   total:61},
+  {id:'m24', name:'Untouchable',            cat:'main',   total:25},
+  {id:'m25', name:'Shadows in the Water',   cat:'main',   total:49},
+  {id:'m14', name:'Himmelstein',            cat:'sniper', total:28},
+  {id:'m15', name:'Hantu Port',             cat:'sniper', total:27},
+  {id:'m17', name:'Siberia',                cat:'sniper', total:27},
+  {id:'b02', name:'The Icon',               cat:'bonus',  total:22},
+  {id:'b03', name:'Landslide',              cat:'bonus',  total:35},
+  {id:'b04', name:'A House Built on Sand',  cat:'bonus',  total:35},
+  {id:'pz01',name:'The Source',             cat:'pz',     total:20},
+  {id:'pz02',name:'The Author',             cat:'pz',     total:20},
+  {id:'pz03',name:'The Vector',             cat:'pz',     total:7},
+  {id:'pz04',name:'Patient Zero',           cat:'pz',     total:18},
+  {id:'sa01',name:'A Silver Tongue',        cat:'sa',     total:26},
+  {id:'sa02',name:'Embrace of the Serpent', cat:'sa',     total:18},
+  {id:'sa03',name:'Illusions of Grandeur',  cat:'sa',     total:16},
+  {id:'sa04',name:'A Bitter Pill',          cat:'sa',     total:21}
+];
+
+var SVG_NS = 'http://www.w3.org/2000/svg';
+var R = 124, CIRC = 2 * Math.PI * R, GAP = 2.5;
+var segEls = {}, catFilter = null;
+
+/* Read the shared registry every guide writes into. The baked-in totals keep
+   the ring whole before a guide has ever been opened; a guide's own reported
+   total wins once it exists, so a corrected count self-heals. */
+function readRegistry(){
+  var reg = {};
+  try { reg = JSON.parse(localStorage.getItem('hitman-progress-registry') || '{}'); } catch(e){}
+  var out = {};
+  GUIDES.forEach(function(g){
+    var r = reg[g.id];
+    var total = (r && typeof r.total === 'number' && r.total > 0) ? r.total : g.total;
+    var done  = (r && typeof r.done  === 'number') ? Math.min(r.done, total) : 0;
+    /* Route steps are reported by each guide's step bridge. A guide that has
+       never been opened has no step counts at all, so leave them undefined
+       rather than inventing a 0/0 the cards would have to render. */
+    var stepTotal = (r && typeof r.stepTotal === 'number' && r.stepTotal > 0) ? r.stepTotal : 0;
+    var steps = (r && typeof r.steps === 'number') ? Math.min(r.steps, stepTotal) : 0;
+    out[g.id] = { done: done, total: total, seen: !!r, steps: steps, stepTotal: stepTotal };
+  });
+  return out;
+}
+
+function buildRing(){
+  var g = document.getElementById('ringSegs');
+  var grand = GUIDES.reduce(function(s,x){ return s + x.total; }, 0);
+  var avail = CIRC - GUIDES.length * GAP;
+  var cursor = 0;
+  GUIDES.forEach(function(gd){
+    var len = gd.total / grand * avail;
+    var color = CATS[gd.cat].color;
+    var grp = document.createElementNS(SVG_NS, 'g');
+    grp.setAttribute('class', 'seg-g');
+
+    var track = document.createElementNS(SVG_NS, 'circle');
+    track.setAttribute('class', 'seg-track');
+    track.setAttribute('cx', 150); track.setAttribute('cy', 150); track.setAttribute('r', R);
+    track.setAttribute('stroke', color);
+    track.setAttribute('stroke-dasharray', len + ' ' + (CIRC - len));
+    track.setAttribute('stroke-dashoffset', -cursor);
+
+    var fill = document.createElementNS(SVG_NS, 'circle');
+    fill.setAttribute('class', 'seg-fill');
+    fill.setAttribute('cx', 150); fill.setAttribute('cy', 150); fill.setAttribute('r', R);
+    fill.setAttribute('stroke', color);
+    fill.setAttribute('stroke-dasharray', '0 ' + CIRC);
+    fill.setAttribute('stroke-dashoffset', -cursor);
+
+    var hit = document.createElementNS(SVG_NS, 'circle');
+    hit.setAttribute('class', 'seg-hit');
+    hit.setAttribute('cx', 150); hit.setAttribute('cy', 150); hit.setAttribute('r', R);
+    hit.setAttribute('stroke-dasharray', len + ' ' + (CIRC - len));
+    hit.setAttribute('stroke-dashoffset', -cursor);
+
+    grp.appendChild(track); grp.appendChild(fill); grp.appendChild(hit);
+    g.appendChild(grp);
+    segEls[gd.id] = { grp: grp, fill: fill, len: len, start: cursor, guide: gd };
+
+    // midpoint angle, for tooltip placement (ring is rotated -90°)
+    var mid = (cursor + len / 2) / CIRC * 2 * Math.PI - Math.PI / 2;
+    segEls[gd.id].mx = 150 + R * Math.cos(mid);
+    segEls[gd.id].my = 150 + R * Math.sin(mid);
+
+    hit.addEventListener('mouseenter', function(){ hoverSeg(gd.id); });
+    hit.addEventListener('mouseleave', clearHover);
+    hit.addEventListener('click', function(){ jumpToCard(gd.id); });
+
+    cursor += len + GAP;
+  });
+}
+
+var tipEl = document.getElementById('tip');
+function hoverSeg(id){
+  var s = segEls[id], st = readRegistry()[id];
+  Object.keys(segEls).forEach(function(k){
+    segEls[k].grp.classList.toggle('hot', k === id);
+    segEls[k].grp.classList.toggle('dim', k !== id);
+  });
+  var pct = st.total ? Math.round(st.done / st.total * 100) : 0;
+  tipEl.innerHTML =
+    '<div class="t-name"><span class="t-dot" style="background:' + CATS[s.guide.cat].color + '"></span>' + s.guide.name + '</div>' +
+    '<div class="t-sub">' + st.done + ' / ' + st.total + ' challenges · ' + pct + '%</div>' +
+    (st.stepTotal ? '<div class="t-sub">' + st.steps + ' / ' + st.stepTotal + ' route steps</div>' : '');
+  // the tip lives inside .ring-wrap, so the segment midpoint maps straight to
+  // a percentage of the 300-unit viewBox — no layout measurement to go wrong.
+  tipEl.style.left = (s.mx / 300 * 100) + '%';
+  tipEl.style.top  = (s.my / 300 * 100) + '%';
+  tipEl.classList.add('on');
+}
+function clearHover(){
+  tipEl.classList.remove('on');
+  Object.keys(segEls).forEach(function(k){
+    segEls[k].grp.classList.remove('hot');
+    segEls[k].grp.classList.toggle('dim', catFilter && segEls[k].guide.cat !== catFilter);
+  });
+}
+function jumpToCard(id){
+  var card = document.querySelector('.card[data-id="' + id + '"]');
+  if(!card) return;
+  card.scrollIntoView({ behavior:'smooth', block:'center' });
+  card.style.transition = 'box-shadow .3s';
+  card.style.boxShadow = '0 0 0 2px var(--gold)';
+  setTimeout(function(){ card.style.boxShadow = ''; }, 1400);
+}
+
+function buildLegend(){
+  var el = document.getElementById('legend');
+  el.innerHTML = Object.keys(CATS).map(function(k){
+    return '<button class="lg" type="button" data-cat="' + k + '" aria-pressed="false">' +
+           '<span class="sw" style="background:' + CATS[k].color + '"></span>' +
+           CATS[k].label + ' <b data-lg="' + k + '">0/0</b></button>';
+  }).join('');
+  el.addEventListener('click', function(e){
+    var b = e.target.closest('[data-cat]'); if(!b) return;
+    catFilter = (catFilter === b.dataset.cat) ? null : b.dataset.cat;
+    el.querySelectorAll('.lg').forEach(function(x){
+      x.setAttribute('aria-pressed', String(x.dataset.cat === catFilter));
+    });
+    Object.keys(segEls).forEach(function(k){
+      segEls[k].grp.classList.toggle('dim', catFilter && segEls[k].guide.cat !== catFilter);
+    });
+  });
+}
+
+function render(){
+  var st = readRegistry();
+  var done = 0, total = 0, finished = 0, steps = 0, stepTotal = 0;
+  var perCat = {};
+  Object.keys(CATS).forEach(function(k){ perCat[k] = { d:0, t:0 }; });
+
+  GUIDES.forEach(function(g){
+    var s = st[g.id];
+    done += s.done; total += s.total;
+    steps += s.steps; stepTotal += s.stepTotal;
+    if(s.total > 0 && s.done >= s.total) finished++;
+    perCat[g.cat].d += s.done; perCat[g.cat].t += s.total;
+
+    var seg = segEls[g.id];
+    var f = s.total ? s.done / s.total : 0;
+    var fl = seg.len * f;
+    seg.fill.setAttribute('stroke-dasharray', fl + ' ' + (CIRC - fl));
+  });
+
+  var pct = total ? Math.round(done / total * 100) : 0;
+  document.getElementById('ringPct').textContent = pct + '%';
+  document.getElementById('ringDone').textContent = done.toLocaleString();
+  document.getElementById('ringTotal').textContent = total.toLocaleString();
+  document.getElementById('ringGuides').textContent = finished + ' of ' + GUIDES.length + ' guides finished';
+  document.getElementById('ringSteps').textContent =
+    stepTotal ? steps.toLocaleString() + ' of ' + stepTotal.toLocaleString() + ' route steps' : '';
+
+  Object.keys(perCat).forEach(function(k){
+    var b = document.querySelector('[data-lg="' + k + '"]');
+    if(b) b.textContent = perCat[k].d + '/' + perCat[k].t;
+  });
+
+  document.getElementById('dataBody').innerHTML = GUIDES.map(function(g){
+    var s = st[g.id], p = s.total ? Math.round(s.done / s.total * 100) : 0;
+    return '<tr><td><span class="sw" style="background:' + CATS[g.cat].color + '"></span>' + g.name + '</td>' +
+           '<td>' + CATS[g.cat].label + '</td>' +
+           '<td class="n">' + s.done + '</td><td class="n">' + s.total + '</td><td class="n">' + p + '%</td>' +
+           '<td class="n">' + (s.stepTotal ? s.steps + ' / ' + s.stepTotal : '—') + '</td></tr>';
+  }).join('') +
+    '<tr><td><b style="color:var(--ink)">All guides</b></td><td></td>' +
+    '<td class="n"><b>' + done + '</b></td><td class="n"><b>' + total + '</b></td><td class="n"><b>' + pct + '%</b></td>' +
+    '<td class="n"><b>' + (stepTotal ? steps + ' / ' + stepTotal : '—') + '</b></td></tr>';
+
+  document.querySelectorAll('.card[data-id]').forEach(function(card){
+    var s = st[card.dataset.id]; if(!s) return;
+    var p = s.total ? s.done / s.total : 0;
+    var bar = card.querySelector('.cprog');
+    if(!bar){
+      bar = document.createElement('div');
+      bar.className = 'cprog';
+      bar.innerHTML = '<div class="cbar"><i></i></div><span class="cnum"></span>';
+      card.appendChild(bar);
+    }
+    bar.querySelector('i').style.width = (p * 100) + '%';
+    bar.querySelector('.cnum').innerHTML = '<b>' + s.done + '</b> / ' + s.total;
+
+    /* second bar for route steps, once the guide has reported any */
+    var sbar = card.querySelector('.sprog');
+    if(s.stepTotal > 0){
+      if(!sbar){
+        sbar = document.createElement('div');
+        sbar.className = 'sprog';
+        sbar.innerHTML = '<div class="cbar"><i></i></div><span class="cnum"></span>';
+        card.appendChild(sbar);
+      }
+      sbar.querySelector('i').style.width = (s.steps / s.stepTotal * 100) + '%';
+      sbar.querySelector('.cnum').innerHTML = '<b>' + s.steps + '</b> / ' + s.stepTotal + ' steps';
+    } else if(sbar){ sbar.remove(); }
+
+    var isDone = s.total > 0 && s.done >= s.total;
+    card.classList.toggle('completed', isDone);
+    var flag = card.querySelector('.done-flag');
+    if(isDone && !flag){
+      flag = document.createElement('span');
+      flag.className = 'done-flag';
+      flag.textContent = 'Complete';
+      card.appendChild(flag);
+    } else if(!isDone && flag){ flag.remove(); }
+  });
+}
+
+/* card click-through */
+document.querySelectorAll('.grid').forEach(function(grid){
+  grid.addEventListener('click', function(e){
+    var card = e.target.closest('.card');
+    if(card && card.dataset.href) window.location.href = card.dataset.href;
+  });
+});
+
+/* search */
+document.getElementById('search').addEventListener('input', function(e){
+  var q = e.target.value.trim().toLowerCase();
+  document.querySelectorAll('.card').forEach(function(card){
+    card.style.display = card.textContent.toLowerCase().indexOf(q) !== -1 ? '' : 'none';
+  });
+  document.querySelectorAll('[data-section]').forEach(function(sec){
+    var any = Array.prototype.some.call(sec.querySelectorAll('.card'), function(c){ return c.style.display !== 'none'; });
+    sec.style.display = any ? '' : 'none';
+  });
+});
+
+/* Firefox isolates every file:// page into its own storage, so a guide's ticks
+   are invisible here. Say so rather than showing a misleading 0%. */
+if(location.protocol === 'file:' && navigator.userAgent.indexOf('Firefox') !== -1){
+  document.getElementById('ffnote').classList.add('on');
+}
+
+buildRing();
+buildLegend();
+render();
+
+window.addEventListener('storage', render);
+window.addEventListener('pageshow', render);
+document.addEventListener('visibilitychange', function(){ if(!document.hidden) render(); });
+</script>
+
+</body>
+</html>

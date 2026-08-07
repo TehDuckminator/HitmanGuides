@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Club 27 — Verified Challenge Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ═══ BANGKOK — gig poster / neon setlist ═══
+   Condensed display caps, hard edges, offset ink shadows and a VU-meter tracker.
+   The run list reads like a setlist; the steps are the tracklist. */
+:root{
+  --bg:#08070a; --panel:#100e14; --panel2:#17141d; --ink:#f4f1f7; --dim:#9c94ab; --faint:#655d75;
+  --neon:#ff2e88; --cyan:#22d3ee; --acid:#d9f24a;
+  --amber:#d9f24a; --rust:#ff4d4d; --violet:#a98bff; --sky:#22d3ee; --jade:#ff2e88;
+  --line:rgba(244,241,247,.13); --line-2:rgba(244,241,247,.06);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);
+  background-image:repeating-linear-gradient(115deg,rgba(255,46,136,.035) 0 1px,transparent 1px 7px);
+  font-family:"Space Grotesk",system-ui,sans-serif;font-size:14.5px;line-height:1.6;
+  -webkit-font-smoothing:antialiased}
+.wrap{max-width:1020px;margin:0 auto;padding:0 20px 90px}
+code{font-family:"Space Grotesk",monospace;font-size:.88em;background:var(--panel2);
+  border-left:2px solid var(--neon);padding:1px 6px;color:var(--acid)}
+
+/* ── masthead: the poster ───────────────────────────────── */
+.backlink{display:inline-block;margin:22px 0 0;font-size:11px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--faint);text-decoration:none;font-weight:500}
+.backlink:hover{color:var(--neon)}
+.mast{margin:18px 0 26px;padding:26px 24px 24px;background:var(--panel);
+  border:2px solid var(--ink);box-shadow:7px 7px 0 var(--neon)}
+.eyebrow{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--bg);
+  background:var(--acid);display:inline-block;padding:4px 10px;margin:0 0 16px;font-weight:700}
+h1{font-family:"Bebas Neue",Impact,sans-serif;font-weight:400;
+  font-size:clamp(46px,12vw,116px);line-height:.84;letter-spacing:.005em;margin:0;
+  text-transform:uppercase;color:var(--ink);
+  text-shadow:0 0 26px rgba(255,46,136,.5),3px 3px 0 rgba(34,211,238,.55)}
+h1 em{display:block;font-family:"Space Grotesk",sans-serif;font-style:normal;font-weight:300;
+  font-size:.13em;letter-spacing:.24em;color:var(--cyan);margin-top:14px;text-shadow:none}
+.facts{font-size:12px;color:var(--dim);line-height:1.95;margin:20px 0 0;padding-top:18px;
+  border-top:2px dashed var(--line)}
+.facts b{color:var(--acid);font-weight:500}
+
+/* ── tracker: a VU meter ────────────────────────────────── */
+.tracker{background:var(--panel);border:2px solid var(--ink);box-shadow:5px 5px 0 var(--cyan);
+  padding:18px 20px;margin-bottom:24px}
+.tracker-top{display:flex;justify-content:space-between;align-items:center;gap:14px;
+  flex-wrap:wrap;margin-bottom:14px}
+.tracker-top h2{font-family:"Bebas Neue",sans-serif;font-size:17px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--faint);margin:0}
+.tally{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin:0}
+.tally b{font-family:"Bebas Neue",sans-serif;color:var(--neon);font-size:30px;
+  letter-spacing:0;vertical-align:-3px;margin-right:3px}
+.bar{height:12px;background:var(--bg);border:1px solid var(--line);overflow:hidden;margin-bottom:20px}
+.bar span{display:block;height:100%;width:0;
+  background:repeating-linear-gradient(90deg,var(--neon) 0 7px,var(--bg) 7px 9px);
+  transition:width .35s ease}
+.cats{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap}
+.cat{flex:1 1 120px;display:flex;gap:11px;align-items:flex-end;background:var(--bg);
+  border:1px solid var(--line);padding:10px 11px}
+.cat .mb{flex:0 0 auto;width:12px;height:56px;background:
+  repeating-linear-gradient(0deg,var(--line-2) 0 4px,transparent 4px 6px);
+  display:flex;align-items:flex-end}
+.cat .mb i{display:block;width:100%;height:0;transition:height .3s ease}
+.cat .txt{flex:1;min-width:0}
+.cat .v{font-family:"Bebas Neue",sans-serif;font-size:30px;line-height:.9;display:block}
+.cat .v em{font-style:normal;font-size:15px;color:var(--faint)}
+.cat .n{display:block;font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--faint);margin-top:5px}
+.resetbtn{font-family:"Bebas Neue",sans-serif;font-size:13px;letter-spacing:.16em;
+  text-transform:uppercase;background:none;border:2px solid var(--line);color:var(--faint);
+  padding:2px 10px;cursor:pointer}
+.resetbtn:hover{color:var(--rust);border-color:var(--rust)}
+
+/* ── tabs: ticket stubs ─────────────────────────────────── */
+.tabs{display:flex;gap:8px;margin-bottom:22px;flex-wrap:wrap}
+.tab{font-family:"Bebas Neue",sans-serif;font-size:16px;letter-spacing:.14em;
+  text-transform:uppercase;background:var(--panel);border:2px solid var(--ink);
+  color:var(--dim);padding:7px 18px;cursor:pointer;box-shadow:3px 3px 0 var(--line)}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected="true"]{color:var(--bg);background:var(--neon);border-color:var(--neon);
+  box-shadow:3px 3px 0 var(--cyan)}
+.panel[hidden]{display:none}
+
+/* ── run nav ────────────────────────────────────────────── */
+.runnav{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;position:sticky;top:0;
+  background:var(--bg);padding:12px 0;z-index:20;border-bottom:2px dashed var(--line)}
+.runnav button{font-family:"Bebas Neue",sans-serif;font-size:13.5px;letter-spacing:.1em;
+  text-transform:uppercase;background:var(--panel);border:1px solid var(--line);
+  color:var(--dim);padding:5px 11px;cursor:pointer}
+.runnav button:hover{color:var(--ink);border-color:var(--cyan)}
+.runnav button.hot{color:var(--bg);background:var(--acid);border-color:var(--acid)}
+.runnav .util{margin-left:auto;display:flex;gap:6px}
+
+/* ── runs: setlist entries ──────────────────────────────── */
+.run{background:var(--panel);border:2px solid var(--line);margin-bottom:14px;
+  scroll-margin-top:70px;transition:box-shadow .18s,border-color .18s}
+.run.open{border-color:var(--neon);box-shadow:6px 6px 0 rgba(255,46,136,.28)}
+.run-head{width:100%;text-align:left;background:none;border:0;color:inherit;font:inherit;
+  padding:16px 18px;cursor:pointer;display:flex;gap:18px;align-items:center}
+.run-head:hover{background:var(--panel2)}
+.rnum{flex:0 0 auto;font-family:"Bebas Neue",sans-serif;font-size:50px;line-height:.78;
+  color:transparent;-webkit-text-stroke:1.5px var(--faint);width:56px;text-align:left}
+.run.open .rnum{-webkit-text-stroke-color:var(--neon)}
+.rh{flex:1;min-width:0}
+.run-no{display:block;font-size:9px;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--cyan);margin-bottom:5px;font-weight:500}
+.run-head h3{font-family:"Bebas Neue",sans-serif;font-size:clamp(24px,4vw,36px);font-weight:400;
+  letter-spacing:.015em;line-height:1;margin:0 0 8px;text-transform:uppercase}
+.run-head p{margin:0;color:var(--dim);font-size:13px;max-width:74ch;line-height:1.55}
+.run-prog{flex:0 0 auto;font-family:"Bebas Neue",sans-serif;font-size:15px;letter-spacing:.1em;
+  color:var(--faint);white-space:nowrap;border:1px solid var(--line);padding:1px 9px}
+.run-body[hidden]{display:none}
+
+.loadout{padding:16px 18px;border-top:2px dashed var(--line);background:var(--bg)}
+.loadout h4{font-family:"Bebas Neue",sans-serif;font-size:15px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--acid);margin:0 0 12px}
+.lo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(195px,1fr));gap:12px 22px}
+.lo-grid div{font-size:12.5px;line-height:1.5}
+.lo-grid div span{display:block;font-size:8.5px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--faint);margin-bottom:3px}
+.lo-note{margin:16px 0 0;font-size:12.5px;color:var(--dim);border-left:3px solid var(--cyan);
+  padding-left:12px}
+
+.sect{padding:6px 18px 18px}
+.sect>h4{font-family:"Bebas Neue",sans-serif;font-size:17px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--neon);margin:22px 0 12px;
+  border-bottom:2px dashed var(--line);padding-bottom:7px}
+
+/* steps: tracklist rows */
+.step{border-bottom:1px dashed var(--line-2);padding:13px 0}
+.step.done .step-title{color:var(--faint);text-decoration:line-through}
+.step-top{display:flex;gap:13px;align-items:flex-start}
+.snum{flex:0 0 auto;font-family:"Bebas Neue",sans-serif;font-size:21px;line-height:1;
+  color:var(--faint);width:28px;padding-top:2px}
+.step.done .snum{color:var(--neon)}
+.tick{flex:0 0 auto;width:20px;height:20px;border:2px solid var(--line);background:none;
+  cursor:pointer;color:transparent;font-size:11px;line-height:1;padding:0;margin-top:1px}
+.tick:hover{border-color:var(--acid)}
+.done .tick{background:var(--acid);border-color:var(--acid);color:var(--bg)}
+.step-body{flex:1;min-width:0}
+.step-title{font-family:"Bebas Neue",sans-serif;font-size:20px;letter-spacing:.02em;
+  margin:0 0 7px;line-height:1.1;text-transform:uppercase}
+.bul{margin:0;padding:0;list-style:none;font-size:13px}
+.bul li{display:flex;gap:11px;margin-bottom:3px;line-height:1.55}
+.bul k{flex:0 0 66px;font-size:8.5px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--faint);padding-top:4px;font-weight:500}
+.badges{display:flex;flex-wrap:wrap;gap:4px;margin-top:10px}
+.badge{font-family:"Space Grotesk",sans-serif;font-size:9px;letter-spacing:.1em;
+  text-transform:uppercase;padding:3px 8px;display:inline-block;font-weight:700;border:0}
+.b-chal{color:var(--bg);background:var(--neon)}
+.b-warn{color:var(--bg);background:var(--rust)}
+.b-save{color:var(--bg);background:var(--acid)}
+.b-unv{color:var(--bg);background:var(--violet)}
+.b-src{color:var(--bg);background:var(--cyan)}
+.more{font-family:"Bebas Neue",sans-serif;font-size:13px;letter-spacing:.18em;
+  text-transform:uppercase;background:none;border:0;color:var(--faint);cursor:pointer;
+  padding:9px 0 0 72px}
+.more:hover{color:var(--acid)}
+.detail{padding:4px 0 4px 72px;font-size:12.5px;color:var(--dim)}
+.detail[hidden]{display:none}
+.detail dl{margin:0}
+.detail dt{font-size:8.5px;letter-spacing:.17em;text-transform:uppercase;color:var(--cyan);
+  margin-top:12px;font-weight:500}
+.detail dd{margin:3px 0 0;line-height:1.62}
+.flag{border-left:3px solid var(--rust);padding-left:11px;margin-top:12px;color:#ffb3b3}
+.flag.amber{border-color:var(--acid);color:#e9f5a8}
+.flag.unv{border-color:var(--violet);color:#cfc0ff}
+
+/* ── checklist ──────────────────────────────────────────── */
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
+.filters button{font-family:"Bebas Neue",sans-serif;font-size:14px;letter-spacing:.14em;
+  text-transform:uppercase;background:var(--panel);border:1px solid var(--line);
+  color:var(--dim);padding:5px 13px;cursor:pointer}
+.filters button:hover{color:var(--ink)}
+.filters button.on{color:var(--bg);background:var(--neon);border-color:var(--neon)}
+.chal{display:flex;gap:12px;padding:12px 14px;border:1px solid var(--line-2);margin-bottom:6px;
+  background:var(--panel);border-left:4px solid var(--line)}
+.chal.done{border-left-color:var(--acid);background:var(--panel2)}
+.chal-main{flex:1;min-width:0}
+.chal-name{font-family:"Bebas Neue",sans-serif;font-size:19px;letter-spacing:.02em;margin:0;
+  text-transform:uppercase}
+.chal.done .chal-name{text-decoration:line-through;color:var(--faint)}
+.chal-cond{margin:2px 0 0;font-size:12.5px;color:var(--dim)}
+.chal-meta{display:flex;gap:4px;flex-wrap:wrap;margin-top:8px}
+
+/* ── audit ──────────────────────────────────────────────── */
+.audit h3{font-family:"Bebas Neue",sans-serif;font-size:26px;letter-spacing:.1em;
+  text-transform:uppercase;margin:28px 0 10px;color:var(--acid)}
+.audit h3:first-child{margin-top:0}
+.audit p{color:var(--dim)}
+.audit ul{padding-left:0;list-style:none;margin:0 0 14px}
+.audit li{margin-bottom:7px;padding-left:18px;position:relative;color:var(--dim);font-size:13.5px}
+.audit li:before{content:"▸";position:absolute;left:0;color:var(--neon)}
+.audit li b{color:var(--ink)}
+table.src{font-size:12px;border-collapse:collapse;width:100%;background:var(--panel);
+  border:2px solid var(--line)}
+table.src th,table.src td{border-bottom:1px solid var(--line-2);padding:9px 11px;
+  text-align:left;vertical-align:top;color:var(--dim)}
+table.src th{font-family:"Bebas Neue",sans-serif;color:var(--bg);background:var(--cyan);
+  font-size:13px;letter-spacing:.16em;text-transform:uppercase;font-weight:400}
+.pass{color:var(--acid)}.fail{color:var(--rust)}.part{color:var(--neon)}
+footer{margin-top:34px;padding:16px 18px;border:2px dashed var(--line);font-size:11.5px;
+  color:var(--faint);line-height:1.9}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (max-width:640px){
+  .more,.detail{padding-left:0}
+  .rnum{font-size:34px;width:38px}
+  .bul li{display:block}
+  .bul k{display:block;padding:0 0 2px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="mast">
+  <a class="backlink" href="../index.html">← All guides</a>
+  <p class="eyebrow">Main Campaign 05 · Himmapan Hotel, Bangkok · World of Assassination</p>
+  <h1>Club 27 <em>— challenge run planner</em></h1>
+  <p class="facts">
+    <b>Targets:</b> Jordan Cross (&ldquo;The Rockstar&rdquo;) · Ken Morgan (&ldquo;The Lawyer&rdquo;)<br>
+    <b>Challenges:</b> 58 — 24 Assassination · 16 Discovery · 11 Feats · 2 Targets · 5 The Classics<br>
+    <b>Tracked disguises:</b> 10 &nbsp;·&nbsp; <b>Tracked areas:</b> 38 &nbsp;·&nbsp; <b>Mission Stories:</b> 8<br>
+    <b>Runs needed:</b> 7 &nbsp;·&nbsp; <b>Route source:</b> fish's Steam challenge guide, plus new research for the Sniper and SASO runs
+  </p>
+</header>
+
+<section class="tracker">
+  <div class="tracker-top">
+    <h2>Progress</h2>
+    <p class="tally"><b id="tDone">0</b> / 58 challenges complete &nbsp; <button class="resetbtn" id="reset">Reset</button></p>
+  </div>
+  <div class="bar"><span id="tBar"></span></div>
+  <div class="cats" id="cats"></div>
+</section>
+
+<div class="tabs" role="tablist">
+  <button class="tab" role="tab" aria-selected="true" data-panel="runs">Optimized runs</button>
+  <button class="tab" role="tab" aria-selected="false" data-panel="checklist">Checklist</button>
+  <button class="tab" role="tab" aria-selected="false" data-panel="audit">Audit &amp; sources</button>
+</div>
+
+<div class="panel" id="p-runs">
+  <div class="runnav" id="runnav"></div>
+  <div id="runList"></div>
+</div>
+
+<div class="panel" id="p-checklist" hidden>
+  <div class="filters" id="filters"></div>
+  <div id="chalList"></div>
+</div>
+
+<div class="panel audit" id="p-audit" hidden>
+  <h3>Verification result</h3>
+  <p>All 58 challenge names and conditions come verbatim from the in-game challenge data in this repository (<code>missions/05 - Club 27.json</code>). Runs 1&ndash;5 are a conversion of fish's tested Steam route. Runs 6 and 7 are new — fish's combined "Sniper Assassin/SA/SO" section is a video with no text — and were rebuilt from NamuWiki's written routes, cross-checked where possible.</p>
+
+  <table class="src">
+    <thead><tr><th>Check</th><th>Result</th><th>Evidence</th></tr></thead>
+    <tbody>
+      <tr><td>Total count (58)</td><td class="pass">Pass</td><td>In-game data: <code>challengeCount: 58</code>, category sum also 58</td></tr>
+      <tr><td>Category split 24/16/11/2/5</td><td class="pass">Pass</td><td>In-game data</td></tr>
+      <tr><td>Runs 1&ndash;5 routes</td><td class="pass">Pass</td><td>fish, Steam guide 3601618652 — a written, tested 5-run route</td></tr>
+      <tr><td>All five loadouts</td><td class="pass">Pass</td><td>Read off the five planning-screen screenshots in that guide</td></tr>
+      <tr><td>Starting-location mastery levels</td><td class="pass">Pass</td><td>Hitman Wiki, <i>List of Mastery Unlocks by Mission</i>: Riverside Landing 1 (the wiki spells it "River Landing") · Undercover by the Security Shed 2 · 47's Suite 4 · Undercover in the Restaurant Kitchen 9</td></tr>
+      <tr><td>47's Suite smuggle point (Run 4 / 6)</td><td class="pass">Pass</td><td>Same wiki list: 47's Suite is the Bangkok Agency Pickup at mastery 1</td></tr>
+      <tr><td>Sniper Assassin route (Run 6)</td><td class="pass">Pass</td><td>NamuWiki gives the full written route (47's Suite start, rifle smuggled to 47's Suite, Ken from the suite window, Jordan through the opposite building's window from floor 5). The <b>loadout it describes is identical to the one in fish's own Run 4 screenshot</b>, which is independent confirmation that the smuggle point works.</td></tr>
+      <tr><td>Sniper Assassin ≠ Take My Breath Away</td><td class="pass">Pass</td><td>NamuWiki states plainly that the floor-5 shot does <b>not</b> score <i>Take My Breath Away</i>, which requires the shot to be taken from the 4th floor. fish's Run 4 takes it from Ken's penthouse window, which is consistent.</td></tr>
+      <tr><td>SASO route (Run 7)</td><td class="pass">Pass</td><td>NamuWiki's written route. Its opening — poison the plate Ken tastes first at the restaurant buffet — is independently confirmed by fish's Run 5, which does exactly that. Steam guide 644994482 gives a second, different SASO (emetic then coconuts) recorded in the notes.</td></tr>
+      <tr><td>Jordan's body is never found</td><td class="pass">Pass</td><td>NamuWiki states this explicitly, and it is why a suit-only run survives without hiding him.</td></tr>
+      <tr><td>Per-challenge XP values</td><td class="fail">Unverified</td><td>No source breaks the mission XP down per challenge. Not guessed, so none is shown.</td></tr>
+      <tr><td>Heeeere's Johnny</td><td class="part">Not routed</td><td>Needs a custom contract with four targets — fish says so explicitly. Stays in the checklist, marked "Not routed".</td></tr>
+      <tr><td>Chameleon · Discover Bangkok</td><td class="part">Not routed</td><td>10 disguises and 38 areas — exploration passes, not route steps.</td></tr>
+      <tr><td>Redacted conditions</td><td class="pass">Pass</td><td>Eight challenges are <code>[REDACTED]</code> in the game data: Oh Snap!, Oops! I Did it Again!, Smooth Operator, Power Chord, Ordering In, Put the Lime in the Coconut, Looking Into the Distance, La Cucaracha. Conditions stay redacted in the checklist; fish's documented actions appear in the runs.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Run-logic validation (simulated step by step)</h3>
+  <ul>
+    <li><b>55 of 58 challenges are assigned.</b> The three left out are Heeeere's Johnny, Chameleon and Discover Bangkok — see above.</li>
+    <li><b>Prerequisites precede use.</b> Run 1 takes the master keycard before the Camberwell lounge; Run 3 takes the cake topper before the birthday room and the master keycard before the kitchen; Run 4 breaches room 207 before it needs anything inside it; Run 5 takes Dexy's safe combination before the safe.</li>
+    <li><b>Nothing needed later is destroyed earlier.</b> Every branch that kills a target sits behind a save and reloads, except the last one in each run. Run 1 keeps the balcony push, Run 3 keeps the cake smother, Run 4 keeps the microphone, Run 5 keeps the exploding phone.</li>
+    <li><b>Un-spotted requirements are isolated.</b> Run 1 carries <i>Basement Jack</i> at the very start; Run 5 carries <i>Hide and Don't Seek</i> and <i>Rubber Duck Sunday</i>, which are at opposite ends of that run with a lot of cover between them.</li>
+    <li><b>Ordering hazards are respected.</b> Run 4 delays picking up the microphone because of a known script bug, and delays the room-207 sniping until security has removed the body.</li>
+    <li><b>The Classics capstone lands last.</b> Run 6 delivers Sniper Assassin; Run 7 delivers Silent Assassin, Silent Assassin Suit Only and Suit Only, and the capstone fires when Run 7 completes.</li>
+  </ul>
+
+  <h3>Known conflicts, bugs and ordering rules</h3>
+  <ul>
+    <li><b>Run 2, coconut RNG.</b> fish reports a bug where the second set of coconuts can vanish as they fall. Save at the shooting position and reload until all three land. The two nearest trees are also the only ones that do not kill an NPC when their coconuts drop.</li>
+    <li><b>Run 4, do not take the microphone early.</b> There is a bug where <i>Mission Story — Are 'Friends' Electric</i> will not start if you are already carrying the microphone. Start the story first, collect the microphone afterwards.</li>
+    <li><b>Run 5, do not sit down too early.</b> Jordan leaves the room instead of talking if you are already seated behind the room divider when he enters. Wait until he is in and talking to himself before sitting.</li>
+    <li><b>Run 5, the phone kill is tight.</b> His guards enter shortly after the explosion, so the body has to be hidden and you have to be in his bathroom almost immediately. Expect several attempts.</li>
+    <li><b>Run 1, stay close to Ken during the escort.</b> If you fall behind he decides you are taking too long and resumes his normal route. It is recoverable — talk to him again — but it costs a minute.</li>
+    <li><b>Cameras:</b> the north wing and the basement are covered densely and there is only one recorder, in the second-floor security office of the north building, guarded by three people. NamuWiki's advice is to shoot cameras with a silenced pistol rather than hunt the recorder, which is what the SASO run does.</li>
+    <li><b>Difficulty:</b> the branch-and-reload structure assumes unlimited manual saves, i.e. Casual. The Classic challenges are no longer difficulty-tiered in World of Assassination.</li>
+  </ul>
+
+  <h3>Sources</h3>
+  <ul>
+    <li><b>In-game challenge data</b> (<code>missions/05 - Club 27.json</code>) — authoritative for names, conditions and counts.</li>
+    <li><b>fish, <i>HITMAN I — All Bangkok Challenges</i></b> (Steam guide 3601618652) — the five-run route and all five loadout screenshots. His combined "Sniper Assassin/SA/SO" section contains a video only, no text.</li>
+    <li><b>NamuWiki</b>, <i>Hitman (game) / Challenges / Bangkok</i> — the written Sniper Assassin and Silent Assassin Suit Only routes used for Runs 6 and 7. Machine-translated from Korean.</li>
+    <li><b>Steam guide 644994482</b>, <i>Hitman | Silent Assassin, Suit Only</i> — the alternative coconut-accident SASO recorded in Run 7's notes.</li>
+    <li><b>Hitman Wiki</b>, <i>List of Mastery Unlocks by Mission</i> — starting locations and agency pickups with their mastery levels.</li>
+  </ul>
+</div>
+
+<footer>
+  Progress is saved in this browser and persists across reloads.<br>
+  Compiled 2 August 2026 against the in-game challenge list. Unverified detail is labelled, never filled in.
+</footer>
+</div>
+
+<script>
+const CH=[
+ {id:'a1',cat:'Assassination',name:'Take My Breath Away',cond:'Assassinate Jordan Cross through the window with a sniper rifle .',run:4},
+ {id:'a2',cat:'Assassination',name:'Burying the Hatchet',cond:'Assassinate Ken Morgan with the axe in the linen room.',run:4},
+ {id:'a3',cat:'Assassination',name:'I\'m Ex-static',cond:'Assassinate Jordan Cross by electrocuting him.',run:4},
+ {id:'a4',cat:'Assassination',name:'Fade to Black',cond:'Assassinate Jordan Cross while sitting in the chair in his suite.',run:5},
+ {id:'a5',cat:'Assassination',name:'Icing on the Cake',cond:'Assassinate Jordan Cross by smothering him in the birthday cake.',run:3},
+ {id:'a6',cat:'Assassination',name:'Oh, Snap!',cond:'[REDACTED]',run:2},
+ {id:'a7',cat:'Assassination',name:'Tuk-Tuk and Away',cond:'Assassinate Ken Morgan with the tuk-tuk.',run:3},
+ {id:'a8',cat:'Assassination',name:'You\'re So Fly',cond:'Assassinate Jordan Cross by pushing him onto the glass roof.',run:1},
+ {id:'a9',cat:'Assassination',name:'Don\'t Forget to Flush',cond:'Assassinate Ken Morgan by drowning him.',run:1},
+ {id:'a10',cat:'Assassination',name:'Oops! I Did it Again!',cond:'[REDACTED]',run:2},
+ {id:'a11',cat:'Assassination',name:'I Believe I Can Fly',cond:'Assassinate Ken Morgan by pushing him off the balcony.',run:1},
+ {id:'a12',cat:'Assassination',name:'Have Your Cake',cond:'Assassinate Jordan Cross by poisoning his cake.',run:3},
+ {id:'a13',cat:'Assassination',name:'Look Ma\', No Head',cond:'Assassinate Jordan Cross in the recording booth by shooting him in the head.',run:4},
+ {id:'a14',cat:'Assassination',name:'Thunder Kiss \'65',cond:'Assassinate Jordan Cross with the faulty microphone.',run:4},
+ {id:'a15',cat:'Assassination',name:'Smooth Operator',cond:'[REDACTED]',run:2},
+ {id:'a16',cat:'Assassination',name:'Piano Man',cond:'Assassinate a target with the fiber wire.',run:1},
+ {id:'a17',cat:'Assassination',name:'Heeeere\'s Johnny',cond:'Assassinate 4 targets with an axe while disguised as Hotel Staff. / Do not get spotted. / All bodies must be found.',run:0},
+ {id:'a18',cat:'Assassination',name:'Hold My Hair',cond:'Assassinate a target by drowning them.',run:1},
+ {id:'a19',cat:'Assassination',name:'Hello, Who\'s There?',cond:'Assassinate a target with the exploding phone.',run:5},
+ {id:'a20',cat:'Assassination',name:'Versatile Assassin',cond:'Complete all the Versatile challenges in Bangkok: / Piano Man / Someone Could Hurt Themselves / Hold My Hair / Straight Shot / Tasteless, Traceless',run:4},
+ {id:'a21',cat:'Assassination',name:'Rubber Duck Sunday',cond:'Assassinate a target with an explosive device. / No bodies found. / Do not get spotted.',run:5},
+ {id:'a22',cat:'Assassination',name:'Straight Shot',cond:'Assassinate a target with a headshot.',run:4},
+ {id:'a23',cat:'Assassination',name:'Tasteless, Traceless',cond:'Assassinate a target with lethal poison.',run:3},
+ {id:'a24',cat:'Assassination',name:'Someone Could Hurt Themselves',cond:'Assassinate a target in an accident.',run:1},
+
+ {id:'d1',cat:'Discovery',name:'Power Chord',cond:'[REDACTED]',run:5},
+ {id:'d2',cat:'Discovery',name:'Chef\'s Table',cond:'Disguise yourself as Kitchen Staff.',run:3},
+ {id:'d3',cat:'Discovery',name:'47 Out',cond:'Sabotage Jordan Cross\' recording session.',run:4},
+ {id:'d4',cat:'Discovery',name:'How May I Serve You?',cond:'Disguise yourself as Hotel Staff.',run:1},
+ {id:'d5',cat:'Discovery',name:'Ode to the Bouncer',cond:'Disguise yourself as Jordan Cross\'s Bodyguard.',run:3},
+ {id:'d6',cat:'Discovery',name:'Return to Sender',cond:'Deliver the message.',run:4},
+ {id:'d7',cat:'Discovery',name:'X-Terminator',cond:'Disguise yourself as an Exterminator.',run:2},
+ {id:'d8',cat:'Discovery',name:'Memory Loss',cond:'Get the combination for Dexy Barat\'s safe.',run:5},
+ {id:'d9',cat:'Discovery',name:'Recording in Progress',cond:'Disguise yourself as a Recording Crew Member.',run:3},
+ {id:'d10',cat:'Discovery',name:'The Replacement',cond:'Disguise yourself as Abel de Silva.',run:1},
+ {id:'d11',cat:'Discovery',name:'Walk on the Wild Side',cond:'Find Jackie Carrington\'s suite.',run:4},
+ {id:'d12',cat:'Discovery',name:'Discover Bangkok',cond:'Reveal all undiscovered areas in Bangkok.',run:0},
+ {id:'d13',cat:'Discovery',name:'Basement Jack',cond:'Enter the basement unspotted.',run:1},
+ {id:'d14',cat:'Discovery',name:'Chameleon',cond:'Find and equip all disguises in Bangkok.',run:0},
+ {id:'d15',cat:'Discovery',name:'Ordering In',cond:'[REDACTED]',run:4},
+ {id:'d16',cat:'Discovery',name:'Put the Lime in the Coconut',cond:'[REDACTED]',run:2},
+
+ {id:'f1',cat:'Feats',name:'Mission Story - Are \'Friends\' Electric',cond:'A defective microphone. Sounds like an accident waiting to happen.',run:4},
+ {id:'f2',cat:'Feats',name:'Mission Story - On The House',cond:'Impersonate a member of the hotel staff and assist Ken Morgan in moving into his private penthouse suite.',run:1},
+ {id:'f3',cat:'Feats',name:'Mission Story - The Smoking Gun',cond:'Get Ken Morgan to go to the linen room.',run:4},
+ {id:'f4',cat:'Feats',name:'Hide and Don\'t Seek',cond:'Get rid of Dexy Barat. / Do not eliminate her. / Do not get spotted.',run:5},
+ {id:'f5',cat:'Feats',name:'Mission Story - Intervention',cond:'Infiltrate Jordan Cross\'s penthouse and expose incriminating evidence against him.',run:5},
+ {id:'f6',cat:'Feats',name:'Mission Story - Man Machine',cond:'A replacement drummer. Could be your fifteen minutes of fame, 47.',run:1},
+ {id:'f7',cat:'Feats',name:'Mission Story - Tick Tuk',cond:'Repair the tuk-tuk.',run:3},
+ {id:'f8',cat:'Feats',name:'Mission Story - It\'s My Party',cond:'Put the final touches on Jordan Cross\'s birthday cake and participate in the celebrations.',run:3},
+ {id:'f9',cat:'Feats',name:'Mission Story - Bugman',cond:'Pollute the ventilation system.',run:2},
+ {id:'f10',cat:'Feats',name:'Looking Into the Distance',cond:'[REDACTED]',run:4},
+ {id:'f11',cat:'Feats',name:'La Cucaracha',cond:'[REDACTED]',run:2},
+
+ {id:'t1',cat:'Targets',name:'The Lawyer',cond:'Assassinate Ken Morgan.',run:1},
+ {id:'t2',cat:'Targets',name:'The Rockstar',cond:'Assassinate Jordan Cross.',run:1},
+
+ {id:'c1',cat:'The Classics',name:'Silent Assassin, Suit Only',cond:'Complete "Club 27." / Only eliminate the targets. / No bodies found. / Do not get spotted. / Do it all in your suit.',run:7},
+ {id:'c2',cat:'The Classics',name:'Suit Only',cond:'Assassinate the targets and complete the mission. / Do it all in your suit.',run:7},
+ {id:'c3',cat:'The Classics',name:'Silent Assassin',cond:'Complete "Club 27." / Only eliminate the targets. / No bodies found. / Do not get spotted.',run:7},
+ {id:'c4',cat:'The Classics',name:'The Classics',cond:'Complete all the Classic challenges for "Club 27". / Silent Assassin / Silent Assassin, Suit Only / Sniper Assassin / Suit Only',run:7},
+ {id:'c5',cat:'The Classics',name:'Sniper Assassin',cond:'Complete "Club 27." / Assassinate your targets with a sniper rifle. / Only eliminate the targets. / Do not get spotted.',run:6}
+];
+const CAT_COLOR={'Assassination':'var(--rust)','Discovery':'var(--sky)','Feats':'var(--amber)','Targets':'var(--violet)','The Classics':'var(--jade)'};
+
+const RUNS=[
+{
+ id:'r1', tag:'Run 1', title:'Room service and the drummer',
+ goal:"Escort Ken to his penthouse and take him three ways, then replace the band's drummer and take Jordan two ways. Eleven challenges and both target kills.",
+ diff:'Casual — you need unlimited manual saves.',
+ loadout:{
+   start:'Riverside Landing · Bangkok mastery level 1 (default)',
+   suit:'Casual Suit',
+   items:['Concealed weapon: Krugermeier 2-2','Gear: Fiber Wire','Gear: Coin ×3','Smuggled item: none']
+ },
+ note:'Basement Jack is live from the first second — do not let anyone see you go in. Everything after that is relaxed.',
+ sections:[
+ {h:'The basement',steps:[
+  {t:'In through the pier door, unseen',
+   b:[['Where','Turn left off the spawn and go down the pier; the door at the end leads into the basement and is free to use.'],
+      ['Action','Enter without being spotted, then shoot the camera by the entrance.']],
+   badges:[['chal','Basement Jack'],['warn','Do not get spotted going in']],
+   d:{}},
+  {t:'Crowbar, staff room, waiter outfit',
+   b:[['NPC','Two women in the first room; a security guard by the lockers in the staff room.'],
+      ['Action','Sneak past the women and take the crowbar for faster knockouts. In the staff room read the manager note to start On the House, then take the waiter disguise while the guard is looking away.'],
+      ['Why the waiter','It only makes moving round the basement easier — the real outfit is next.']],
+   badges:[],
+   d:{}},
+  {t:'Master keycard and hotel staff',
+   b:[['Where','Through the hallway to the other basement entrance by the laundry room — shoot that camera too. The room between the staff room and laundry room holds the master keycard.'],
+      ['NPC','A male hotel staff member who rotates past the hamper side.'],
+      ['Action','Take the keycard, pacify him when he comes round, hide the body and take the disguise.']],
+   badges:[['chal','How May I Serve You?'],['warn','Take the master keycard now — Run 1 needs it upstairs']],
+   d:{}}
+ ]},
+ {h:'Ken Morgan',steps:[
+  {t:'Escort him upstairs',
+   b:[['Where','Out of the basement at the rear, then reception.'],
+      ['NPC','Ken Morgan.'],
+      ['Disguise','Hotel Staff.'],
+      ['Action','Talk to him and escort him all the way to his penthouse. Stay close the whole way.'],
+      ['Warning','Fall behind and he decides you are too slow and resumes his normal route. You can just talk to him again, but it wastes a minute.']],
+   badges:[['warn','Keep up with him']],
+   d:{}},
+  {t:'Clean the bathroom counter last',
+   b:[['Action','He points out areas to clean. You may clean ahead of him to save time, but leave the bathroom counter until he actually comments on it — otherwise he never goes to the toilet.'],
+      ['Then','Save when he is at the toilet and his guard has walked past you.']],
+   badges:[['chal','Mission Story - On The House'],['save','Save with him at the toilet'],['warn','Do not clean the counter early']],
+   d:{}},
+  {t:'Branch · Drown him',
+   b:[['Action','Drown Ken in the toilet. Three challenges land together.'],
+      ['Then','Reload.']],
+   badges:[['chal',"Don't Forget to Flush"],['chal','Someone Could Hurt Themselves'],['chal','Hold My Hair']],
+   d:{}},
+  {t:'Push him off the balcony',
+   b:[['Action','Let him wander the penthouse until he goes out on the balcony, then push him while his bodyguard is not looking.']],
+   badges:[['chal','I Believe I Can Fly'],['chal','The Lawyer']],
+   d:{}}
+ ]},
+ {h:'Jordan Cross',steps:[
+  {t:'Become Abel de Silva',
+   b:[['Where','Two levels down at the cocktail bar; use the master keycard on the Beauty Camberwell lounge and close both doors behind you.'],
+      ['NPC','Abel de Silva, out on the balcony.'],
+      ['Action','Lure him with coins, pacify him, and drag the body to the corner out of sight of the door you came in by. Then take his identity.'],
+      ['Note','Start Man Machine first by listening to the conversation in the dining area by the cocktail bar.']],
+   badges:[['chal','The Replacement']],
+   d:{}},
+  {t:'Play the drums and take the meeting',
+   b:[['Where','Up to Jordan\'s side of the hotel — mind the cameras at each flight of stairs — then the reception roof.'],
+      ['Action','Play the drums for Jordan; he asks to meet you on the reception roof. Meet him there, and save when he leans over the railing.']],
+   badges:[['chal','Mission Story - Man Machine'],['save','Save as he leans on the railing']],
+   d:{}},
+  {t:'Branch · Fiber wire',
+   b:[['Item','Fiber wire.'],
+      ['Action','Garrote Jordan.'],
+      ['Then','Reload.']],
+   badges:[['chal','Piano Man']],
+   d:{}},
+  {t:'Push him onto the glass roof',
+   b:[['Action','Push Jordan off the railing onto the glass roof below.'],
+      ['Then','Exit the mission.']],
+   badges:[['chal',"You're So Fly"],['chal','The Rockstar']],
+   d:{'Run 1 tally':'Basement Jack · MS On the House · How May I Serve You? · Don\'t Forget to Flush · Someone Could Hurt Themselves · Hold My Hair · I Believe I Can Fly · The Lawyer · The Replacement · MS Man Machine · Piano Man · You\'re So Fly · The Rockstar.'}}
+ ]}]
+},
+{
+ id:'r2', tag:'Run 2', title:'Coconuts and the exterminator',
+ goal:"Six coconuts, the ventilation system, and a scripted meeting where Jordan kills Ken for you. Seven challenges, one of them RNG.",
+ diff:'Casual — expect reloads on the coconuts.',
+ loadout:{
+   start:'Undercover by the Security Shed · Bangkok mastery level 2 (starts you as Hotel Security)',
+   suit:'Disguise fixed by starting location: Hotel Security',
+   items:['Concealed weapon: Krugermeier 2-2','Gear: Coin ×3','Second gear slot: empty','Smuggled item: none']
+ },
+ note:'The coconut bug is the only genuinely random thing in this mission. Save at the shooting position before the second volley and reload until all three land.',
+ sections:[
+ {h:'Six coconuts',steps:[
+  {t:'Insecticide and the first three',
+   b:[['Where','Round the van at the spawn for the insecticide; then inside the hotel, at the top of the stairs directly above the indoor bar, on the side with the most coconut trees.'],
+      ['Action','From that position shoot the coconuts furthest from you.']],
+   badges:[],
+   d:{}},
+  {t:'Start Bugman while the fuss dies down',
+   b:[['Where','The hallway outside the director\'s office.'],
+      ['NPC','An exterminator and a hotel staff member talking.'],
+      ['Action','Walk past to trigger their dialogue. When the hotel manager leaves her office, read the exterminator\'s schedule on her desk. Then go back and pick up the three fallen coconuts.']],
+   badges:[],
+   d:{}},
+  {t:'The second three — save first',
+   b:[['Action','Return to the shooting position and save. Shoot the two nearest coconut trees. If any coconut vanishes as it falls, reload and try again. Wait for the confusion to settle, then collect all three.'],
+      ['Note','These two trees are the only ones whose coconuts do not kill an NPC on the way down.']],
+   badges:[['chal','Put the Lime in the Coconut'],['save','Save before the second volley'],['warn','Known bug: coconuts can disappear mid-fall']],
+   d:{'Redacted':'Put the Lime in the Coconut is [REDACTED] in the game data. Collecting six coconuts is fish\'s documented action.'}}
+ ]},
+ {h:'The meeting',steps:[
+  {t:'Become the exterminator',
+   b:[['Where','The stock room — the exterminator and the hotel staff member walk in shortly.'],
+      ['Action','Pacify both, hide the bodies, and take the exterminator disguise.']],
+   badges:[['chal','X-Terminator']],
+   d:{}},
+  {t:'Set the two targets against each other',
+   b:[['Action','Talk to the hotel manager. Jordan and his crew start walking down to the atrium. Change back into hotel staff in the stock room, then talk to Ken so he follows you, and lead him back and forth around the atrium until Jordan arrives. When Jordan sees Ken he runs at him.'],
+      ['Then','Once Jordan is running, change back to the exterminator and save.']],
+   badges:[['save','Save in the exterminator outfit']],
+   d:{}},
+  {t:'Branch · Ventilation, a neck snap and the keyboard',
+   b:[['Disguise','Exterminator.'],
+      ['Action','Pollute the ventilation system to complete Bugman, snap either target\'s neck, then go up to the recording studio and play the keyboard behind the recording booth.'],
+      ['Note','Go outside and look toward the riverside landing afterwards if you want to see what the keyboard does.'],
+      ['Then','Reload.']],
+   badges:[['chal','Mission Story - Bugman'],['chal','Oh, Snap!'],['chal','La Cucaracha']],
+   d:{'Redacted':'Oh, Snap! and La Cucaracha are both [REDACTED] in the game data. A neck snap on either target, and playing the recording-studio keyboard, are fish\'s documented actions.'}},
+  {t:'Let Jordan do it, then push him',
+   b:[['Where','The upper level of Ken\'s penthouse — the stalker hides in the bathroom.'],
+      ['Action','Change back to hotel staff, pacify the stalker and take his clothes. Wait for Jordan and Ken to walk up and start talking. Jordan kills Ken. When Jordan leans over the railing, push him.'],
+      ['Then','Change back to hotel staff and exit.']],
+   badges:[['chal','Oops! I Did it Again!'],['chal','Smooth Operator'],['chal','The Lawyer'],['chal','The Rockstar']],
+   d:{'Redacted':'Oops! I Did it Again! and Smooth Operator are both [REDACTED]. Jordan killing Ken, and pushing Jordan while dressed as the stalker, are fish\'s documented actions.'}}
+ ]}]
+},
+{
+ id:'r3', tag:'Run 3', title:'The tuk-tuk and the birthday cake',
+ goal:"Repair the tuk-tuk and blow Ken up with it, decorate Jordan's cake and take him two ways. Eight challenges.",
+ diff:'Casual.',
+ loadout:{
+   start:'Undercover by the Security Shed · Bangkok mastery level 2',
+   suit:'Disguise fixed by starting location: Hotel Security',
+   items:['Concealed weapon: Krugermeier 2-2','Gear: Lethal Poison Vial','Second gear slot: empty','Smuggled item: none']
+ },
+ note:'Four disguises this run — security, kitchen staff, recording crew, and Jordan\'s bodyguard. Keep track of which one you are wearing before you open a door.',
+ sections:[
+ {h:'The tuk-tuk',steps:[
+  {t:'Start Tick Tuk and clear the camera',
+   b:[['Where','Left of the spawn, the two NPCs by the tuk-tuk.'],
+      ['Action','Walk past to trigger their dialogue, move forward into a corner out of everyone\'s view and shoot the camera above the door, then come back and listen to the rest of the conversation.']],
+   badges:[],
+   d:{}},
+  {t:'Kitchen staff and the tools',
+   b:[['Where','The basement — shoot the entry camera; the master keycard is in the same room as Run 1.'],
+      ['Action','Take the master keycard. In the laundry room take the wrench and the kitchen staff disguise. In the cellar hall corridor take the screwdriver, then go back to the delivery area and repair the tuk-tuk.']],
+   badges:[['chal',"Chef's Table"],['chal','Mission Story - Tick Tuk']],
+   d:{}},
+  {t:'Cake topper and It\'s My Party',
+   b:[['Where','Through the keycarded door into the kitchen.'],
+      ['NPC','A chef on the phone.'],
+      ['Action','Take the cake topper while his back is turned, then listen to his call to start It\'s My Party.']],
+   badges:[],
+   d:{}},
+  {t:'Blow Ken up',
+   b:[['Where','Back at the tuk-tuk, once the groundskeeper has moved away.'],
+      ['Action','Puncture the gasoline drum beside it.']],
+   badges:[['chal','Tuk-Tuk and Away'],['chal','The Lawyer']],
+   d:{}}
+ ]},
+ {h:'Two more disguises',steps:[
+  {t:'Cross the reception roof',
+   b:[['Action','Look up and note where the security guards are, then climb the pipe on the opposite side. If they are in the way, use a coin from the middle of the roof to pull the two groundskeepers off.']],
+   badges:[],
+   d:{}},
+  {t:'Recording crew',
+   b:[['Where','Jordan\'s side of the hotel — shoot the camera by the stairs from the corner. Then the suite across from the birthday room.'],
+      ['NPC','A lone recording crew member in the bedroom.'],
+      ['Action','Pacify him and drag him into the corner so he is not visible when the door opens. Take the disguise after you have decorated the cake.']],
+   badges:[['chal','Recording in Progress']],
+   d:{}},
+  {t:'Decorate the cake',
+   b:[['Where','The birthday room.'],
+      ['Warning','If you have not been in the birthday room before, watch for the kitchen staff enforcer.'],
+      ['Action','Decorate the cake. Jordan starts walking down to the birthday room.']],
+   badges:[['chal',"Mission Story - It's My Party"]],
+   d:{}},
+  {t:'Jordan\'s bodyguard',
+   b:[['Where','The recording studio; facing the booth, go left.'],
+      ['NPC','A lone bodyguard in that room.'],
+      ['Action','Lure him with coins or the wrench, pacify him, hide the body and take the disguise.']],
+   badges:[['chal','Ode to the Bouncer']],
+   d:{}}
+ ]},
+ {h:'The cake',steps:[
+  {t:'Delay him and get back into position',
+   b:[['Action','Head back downstairs, bumping into Jordan on the way to slow him down. Change back to kitchen staff in the suite across from the birthday room, then wait inside the birthday room. Save when he is just outside.']],
+   badges:[['save','Save with Jordan outside the room']],
+   d:{}},
+  {t:'Branch · Poison the cake',
+   b:[['Item','Lethal poison vial.'],
+      ['Action','Spike the cake and wait for him to taste it.'],
+      ['Then','Reload.']],
+   badges:[['chal','Have Your Cake'],['chal','Tasteless, Traceless']],
+   d:{}},
+  {t:'Smother him in it',
+   b:[['Action','Wait until Jordan is alone in the room, then smother him in the birthday cake.'],
+      ['Then','Exit the mission.']],
+   badges:[['chal','Icing on the Cake'],['chal','The Rockstar']],
+   d:{}}
+ ]}]
+},
+{
+ id:'r4', tag:'Run 4', title:'The recording studio',
+ goal:"Room 207, the axe in the linen room, two long-range shots, and every way to kill Jordan in the sound booth. Eleven challenges — the densest run on the map.",
+ diff:'Casual.',
+ loadout:{
+   start:"47's Suite · Bangkok mastery level 4",
+   suit:'Casual Suit',
+   items:['Concealed weapon: Krugermeier 2-2','Gear: Remote Breaching Charge','Gear: Coin ×3','Smuggled item: Sieger 300 Tactical → 47\'s Suite (Agency Pickup, mastery 1)']
+ },
+ note:'Do not pick up the microphone before you have started Are \'Friends\' Electric. There is a bug where the mission story will not start if you are already carrying it.',
+ sections:[
+ {h:'Room 207',steps:[
+  {t:'Order room service and breach the door',
+   b:[['Action','Call room service. Go to room 207 down the hall to the left of 47\'s suite and open the door with the remote breaching charge.'],
+      ['Note','The breach leaves the door permanently open, which matters for where you hide the body inside.']],
+   badges:[['chal','Ordering In']],
+   d:{'Redacted':'Ordering In is [REDACTED] in the game data. Calling room service is fish\'s documented action.'}},
+  {t:'Clear your own suite',
+   b:[['NPC','A male hotel staff member who goes into either the bedroom or the bathroom, and a female NPC who later comes looking for him.'],
+      ['Action','Pacify both. You want the hotel staff disguise later in the run.']],
+   badges:[],
+   d:{}},
+  {t:'Into 207',
+   b:[['Action','Enter room 207. Take the recording crew disguise in the bathroom. Shoot the NPC in the bedroom and drag him to the corner outside the bedroom where he is not visible from the entrance.'],
+      ['Warning','Do NOT pick up the microphone yet.']],
+   badges:[['chal','Walk on the Wild Side'],['warn','Microphone stays where it is for now']],
+   d:{}}
+ ]},
+ {h:'The note and the axe',steps:[
+  {t:'Cross to Jordan\'s side',
+   b:[['Action','Open the reception-roof door nearest 47\'s suite, but before stepping out, aim up and shoot the camera directly above you. Coin-distract the two groundskeepers, cross, and shoot the camera by the stairs on the far side.']],
+   badges:[],
+   d:{}},
+  {t:'Deliver the message',
+   b:[['Where','The suite across from the birthday room.'],
+      ['NPC','The NPC carrying the note — take him in the bathroom.'],
+      ['Action','Listen to the conversation to start The Smoking Gun, pacify him, take his note and deliver it to reception.'],
+      ['Note','His body will eventually be found. That is fine on this run.']],
+   badges:[['chal','Mission Story - The Smoking Gun'],['chal','Return to Sender']],
+   d:{}},
+  {t:'Start Are \'Friends\' Electric',
+   b:[['Where','Out on the terraces, right, to the area below the outdoor bar.'],
+      ['Action','Listen to the conversation.'],
+      ['Warning','This is the story that breaks if you are already holding the microphone.']],
+   badges:[['chal',"Mission Story - Are 'Friends' Electric"],['warn','Story first, microphone later']],
+   d:{}},
+  {t:'The axe in the linen room',
+   b:[['Where','Down the stairs to your right into the basement — shoot the basement camera and take the waiter disguise from the staff room. The fire axe is in the laundry room.'],
+      ['NPC','Ken Morgan, who comes to the linen room because of the delivered note.'],
+      ['Action','Take the axe, hide in the hamper near the groundskeeper, wait until Ken is alone, and kill him with the axe.'],
+      ['Then','Change back to recording crew.']],
+   badges:[['chal','Burying the Hatchet'],['chal','The Lawyer']],
+   d:{}}
+ ]},
+ {h:'Two long shots',steps:[
+  {t:'Branch · Snipe Jordan through the penthouse window',
+   b:[['Where','Back to 47\'s suite, change to hotel staff, take the smuggled briefcase, then up to Ken\'s penthouse. From the entrance go right — the big window with the chairs and table beside it faces Jordan\'s side.'],
+      ['Action','Save when Jordan looks like he is walking toward his window but is not yet at it, then take the shot through the glass.'],
+      ['Then','Reload.']],
+   badges:[['chal','Take My Breath Away'],['save','Save before he reaches the window']],
+   d:{'Not the same as Sniper Assassin':'NamuWiki notes that Take My Breath Away specifically requires the shot from the 4th floor. The Sniper Assassin run in Run 6 shoots from the 5th floor and does not score this challenge.'}},
+  {t:'The man on the pier',
+   b:[['Where','Down to room 207 with the briefcase — security should have removed the body by now — then the room\'s small balcony.'],
+      ['Action','Take the microphone from the bedroom. From the balcony, look right: there is a pier in the distance with a golf bag on it, and behind the foliage a box with an NPC hiding behind it. Snipe him.']],
+   badges:[['chal','Looking Into the Distance'],['warn','Wait for security to clear the body first']],
+   d:{'Redacted':'Looking Into the Distance is [REDACTED] in the game data. The NPC behind the box on the distant pier is fish\'s documented target.'}}
+ ]},
+ {h:'The sound booth',steps:[
+  {t:'Install the microphone and pick the right mix',
+   b:[['Where','Back to 47\'s suite, change to recording crew, cross the reception roof and go up to the recording studio.'],
+      ['Action','Install the microphone. When asked to mix, choose left to right: top selection, second from the top, second from the bottom, top.'],
+      ['Then','Jordan walks down and enters the booth. Save when he starts singing.']],
+   badges:[['chal',"Mission Story - Are 'Friends' Electric"],['save','Save as he starts singing'],['warn','Exact mix: top, 2nd from top, 2nd from bottom, top']],
+   d:{}},
+  {t:'Branch · Sabotage the session',
+   b:[['Action','Start mixing again and pick a different selection from before.'],
+      ['Then','Reload.']],
+   badges:[['chal','47 Out']],
+   d:{}},
+  {t:'Branch · Headshot in the booth',
+   b:[['Action','Shoot Jordan in the head while he is in the recording booth.'],
+      ['Then','Reload.']],
+   badges:[['chal',"Look Ma', No Head"],['chal','Straight Shot'],['chal','Versatile Assassin']],
+   d:{'Versatile Assassin':'The set is Piano Man (Run 1), Someone Could Hurt Themselves (Run 1), Hold My Hair (Run 1), Tasteless Traceless (Run 3) and Straight Shot — which lands here.'}},
+  {t:'Turn the voltage up',
+   b:[['Where','To the left of the mixing table.'],
+      ['Action','Increase the voltage. The faulty microphone does the rest.'],
+      ['Then','Exit the mission.']],
+   badges:[['chal',"I'm Ex-static"],['chal',"Thunder Kiss '65"],['chal','The Rockstar']],
+   d:{}}
+ ]}]
+},
+{
+ id:'r5', tag:'Run 5', title:'Intervention',
+ goal:"Poison Ken from the buffet, remove Dexy without killing her, crack her safe, and blow Jordan up with a phone. Seven challenges, two of them no-detection.",
+ diff:'Casual.',
+ loadout:{
+   start:'Undercover in the Restaurant Kitchen · Bangkok mastery level 9 (starts you as Kitchen Staff)',
+   suit:'Disguise fixed by starting location: Kitchen Staff',
+   items:['Concealed weapon: Krugermeier 2-2','Gear: Lethal Poison Vial','Gear: ICA Explosive Phone','Smuggled item: none']
+ },
+ note:'Hide and Don\'t Seek and Rubber Duck Sunday both forbid being spotted, and Rubber Duck Sunday also requires no bodies found at the exit. Hide everyone you touch.',
+ sections:[
+ {h:'Ken and Dexy',steps:[
+  {t:'Poison the buffet',
+   b:[['Where','Out of the kitchen to the restaurant area, past the chef enforcer.'],
+      ['Item','Lethal poison vial.'],
+      ['Action','Spike the dish in the middle of the buffet. Ken eats from it and dies on his own.']],
+   badges:[['chal','The Lawyer'],['warn','It must be the middle dish — that is the one he takes']],
+   d:{'Also used for SASO':'This exact poisoning is the opening of the Silent Assassin Suit Only route in Run 7.'}},
+  {t:'Out the window and up the pipe',
+   b:[['Where','The restaurant bathrooms — out of the window onto the patio.'],
+      ['Action','Listen to the conversation by the patio building to start Intervention, then head to the delivery area, shooting the camera on the way. The two roof guards should just be leaving the right side — climb the right-hand pipe.']],
+   badges:[],
+   d:{}},
+  {t:'Lure Dexy with a propane tank',
+   b:[['Where','The birthday room for a propane tank; then the hallway by the hiding spot.'],
+      ['NPC','Dexy Barat.'],
+      ['Action','Throw the tank into the hallway. Dexy comes to investigate the noise; pacify her without being spotted, then take her safe combination.'],
+      ['Warning','Do not kill her — the challenge is explicit about that.']],
+   badges:[['chal',"Hide and Don't Seek"],['chal','Memory Loss'],['warn','Pacify only, and do not get spotted']],
+   d:{}},
+  {t:'Recording crew disguise',
+   b:[['Action','Shoot the camera by the stairs and take another propane tank. In the birthday room, go to the corner with the hiding spot and throw the tank again so a recording crew member investigates. Pacify them, hide the body and take the disguise.']],
+   badges:[],
+   d:{}}
+ ]},
+ {h:'Jordan\'s room',steps:[
+  {t:'The safe and the guitar',
+   b:[['Where','The upper level of Jordan\'s penthouse; Dexy\'s safe, then the bedroom to the left of her room.'],
+      ['Action','Open the safe with the combination and take the flash drive. Play the guitar in the bedroom.']],
+   badges:[['chal','Power Chord']],
+   d:{'Redacted':'Power Chord is [REDACTED] in the game data. Playing the guitar in that bedroom is fish\'s documented action.'}},
+  {t:'Branch · The chair',
+   b:[['Where','Jordan\'s room. Save before you play the recording.'],
+      ['Action','Play the recording to complete Intervention. Hide behind the room divider but do NOT sit down until Jordan is in the room and talking to himself. Then shoot him from the chair.'],
+      ['Warning','Sitting too early is a known bug — he simply leaves the room.'],
+      ['Then','Reload.']],
+   badges:[['chal','Mission Story - Intervention'],['chal','Fade to Black'],['save','Save before playing the recording'],['warn','Do not sit down until he is talking']],
+   d:{}},
+  {t:'The exploding phone',
+   b:[['Item','ICA Explosive Phone.'],
+      ['Action','Place the phone in the far corner of his room by the table and chairs. Play the recording, hide behind the divider, and call the phone when Jordan enters.'],
+      ['Warning','His guards come in shortly after the blast — you must hide the body and get into his bathroom almost immediately. Expect a few attempts.'],
+      ['Then','Exit the mission without being spotted.']],
+   badges:[['chal',"Hello, Who's There?"],['chal','Rubber Duck Sunday'],['chal','The Rockstar'],['warn','No bodies found and no spotting, all the way to the exit']],
+   d:{}}
+ ]}]
+},
+{
+ id:'r6', tag:'Run 6', title:'Sniper Assassin — two windows',
+ goal:"Ken from your own suite window in the first seconds, then Jordan through the glass of the building opposite. Nothing else dies.",
+ diff:'Any. Not difficulty-tiered in World of Assassination.',
+ loadout:{
+   start:"47's Suite · Bangkok mastery level 4",
+   suit:'Any — Sniper Assassin does not require the suit',
+   items:['Gear: Coin ×3','Concealed weapon: optional','Second gear slot: free','Smuggled item: silenced sniper rifle → 47\'s Suite (Agency Pickup, mastery 1)']
+ },
+ note:'fish left the Sniper Assassin section of his guide as a video with no text. This route is NamuWiki\'s — and the loadout it calls for is exactly the one in fish\'s own Run 4 screenshot, which is independent confirmation that the smuggle point works.',
+ sections:[
+ {h:'Ken, immediately',steps:[
+  {t:'Take the rifle to the window and look right',
+   b:[['Where','The window of 47\'s suite, the moment the mission starts.'],
+      ['NPC','Ken Morgan is visible to the right.'],
+      ['Action','Take the smuggled rifle and shoot him straight away.'],
+      ['Warning','Only the two targets may die, and you must never be spotted.']],
+   badges:[['chal','The Lawyer'],['src','NamuWiki'],['save','Save before firing']],
+   d:{'Why so early':'It is the one moment where Ken is in the open, in the same line of sight as your own room, with nobody between you.'}},
+  {t:'Wait before you climb',
+   b:[['Action','Wait. Then climb the pipe, watching the crew below.'],
+      ['Warning','Climbing immediately is not a crew problem — it is the ground-floor security who catch you.']],
+   badges:[['src','NamuWiki'],['warn','Do not climb straight away']],
+   d:{}}
+ ]},
+ {h:'Jordan, from the fifth floor',steps:[
+  {t:'Through the kitchen to floor five',
+   b:[['Where','Floor four, through the kitchen, then the stairs.'],
+      ['Action','Wait inside the kitchen until the female staff member watching it moves on, then go carefully up to the fifth floor.']],
+   badges:[['src','NamuWiki']],
+   d:{}},
+  {t:'Deal with the stalker',
+   b:[['NPC','The stalker, on floor five.'],
+      ['Action','Subdue him and hide the body.'],
+      ['Note','Pacifying a non-target is fine — the challenge forbids killing anyone but the targets, not knocking people out.']],
+   badges:[['src','NamuWiki']],
+   d:{'Bonus':'NamuWiki notes that if you take the stalker\'s clothes first and then kill both targets, you also pick up <i>Smooth Operator</i> — though that one is already covered by Run 2.'}},
+  {t:'Break the window and take the shot',
+   b:[['Action','Break the window of the building across the way and wait for Jordan Cross to appear on the far side. Snipe him.'],
+      ['Then','Go back the way you came, put the rifle down and exit — Sniper Assassin only banks on mission completion.']],
+   badges:[['chal','The Rockstar'],['chal','Sniper Assassin'],['src','NamuWiki'],['warn','Do not kill anyone but the two targets']],
+   d:{'Not Take My Breath Away':'This shot is from the fifth floor, and NamuWiki states plainly that <i>Take My Breath Away</i> requires the fourth floor. That challenge is covered by Run 4 instead.'}}
+ ]}]
+},
+{
+ id:'r7', tag:'Run 7', title:'Silent Assassin, Suit Only',
+ goal:"Poison Ken at the buffet and never touch him again, then work all the way up to the sound booth in the suit for Jordan. Finishing this fires the Classics capstone.",
+ diff:'Any. These Classics are no longer difficulty-tiered in World of Assassination.',
+ loadout:{
+   start:'Riverside Landing · Bangkok mastery level 1',
+   suit:'Casual Suit — mandatory. Any disguise voids Suit Only and SASO.',
+   items:['Gear: Lethal Poison Vial','Gear: Lethal Poison Syringe','Concealed weapon: silenced pistol, for cameras','Smuggled item: none']
+ },
+ note:'fish left this section of his guide as a video with no text. This route is NamuWiki\'s. Its opening is confirmed by fish\'s own Run 5, which poisons the same buffet dish. Jordan\'s body is never found, which is what makes the run survivable without hiding him.',
+ sections:[
+ {h:'Ken, without leaving a trace',steps:[
+  {t:'Poison the plate he tastes first',
+   b:[['Where','Straight to the ground-floor restaurant from the spawn.'],
+      ['Item','Lethal poison vial.'],
+      ['Action','Poison the dish Ken Morgan tastes first — the middle one at the buffet — then walk away and leave him to it.'],
+      ['Note','On the original higher difficulties there is an extra staff member permanently in front of the food; lure him off with a coin first.']],
+   badges:[['chal','The Lawyer'],['src','NamuWiki, confirmed by fish Run 5'],['warn','Do not linger — he dies on his own']],
+   d:{'Why this works for SA':'A poisoned target dying of the food is not attributed to you and leaves no body for you to hide.'}}
+ ]},
+ {h:'Crossing to the north wing',steps:[
+  {t:'Over the connecting walkway',
+   b:[['Where','Up to your own floor, then across to the second floor of the far building via the connecting passage.'],
+      ['Warning','Everything past the passage is restricted, so from here on any sighting is fatal.'],
+      ['Action','Outside, two glass mechanics run a scripted conversation. When it ends one drops away to the left and the other looks straight ahead — jump backwards at that moment and hug the far wall to slip past.']],
+   badges:[['src','NamuWiki'],['warn','Restricted from here on']],
+   d:{}},
+  {t:'Use the far entrance and kill the camera',
+   b:[['Action','The stairway entrance is heavily guarded; use the entrance on the opposite side instead. Destroy the corridor camera with the silenced pistol and pick up a billiard ball.'],
+      ['Note','There is only one camera recorder on the map, in the second-floor security office of the north building, with three guards inside. Shooting cameras is faster and safer than going for it.']],
+   badges:[['src','NamuWiki'],['warn','Shoot cameras — do not go for the recorder']],
+   d:{}},
+  {t:'Slip into the notes room',
+   b:[['Where','The room with the staffer holding Dexy\'s notes.'],
+      ['Action','If you have moved without hesitating, the music-room staff in front of that room stops smoking and turns away just as you arrive. Enter at that moment — the one watching the door looks away to switch the TV on.'],
+      ['Then','Take down the person inside, take the pipe up to floor five.']],
+   badges:[['src','NamuWiki'],['warn','This is a timing window, not a lure']],
+   d:{}}
+ ]},
+ {h:'The sound booth',steps:[
+  {t:'Gather throwables on the terrace',
+   b:[['Where','Out on the terrace, go right for a piece of fruit; the wrench is in front of the sound booth.'],
+      ['Action','Take both, then work from the bathroom beside the booth with the door open.']],
+   badges:[['src','NamuWiki']],
+   d:{}},
+  {t:'Empty the studio one at a time',
+   b:[['NPC','The recording studio staff.'],
+      ['Item','The fruit, the wrench and the three billiard balls.'],
+      ['Action','Lure them out one by one and take each down with a non-lethal throw. Hide the second one in the locker room.'],
+      ['Warning','Every body must be hidden — "no bodies found" is a hard requirement of Silent Assassin.']],
+   badges:[['src','NamuWiki'],['warn','Hide every body']],
+   d:{'Higher-difficulty variant':'NamuWiki\'s Master route differs slightly: two guards shuttle through the bathroom, so you work while one of them is outside it and take the staff in front of the booth one at a time.'}},
+  {t:'Take Jordan in the booth and leave',
+   b:[['NPC','Jordan Cross, who walks into the sound booth once the room is clear.'],
+      ['Item','Lethal poison syringe.'],
+      ['Action','Kill him inside the booth and leave in reverse order.'],
+      ['Result','His body is never found, so nothing has to be hidden. Completing the mission banks Silent Assassin, Silent Assassin Suit Only and Suit Only — and with Sniper Assassin already done in Run 6, the capstone as well.']],
+   badges:[['chal','The Rockstar'],['chal','Silent Assassin'],['chal','Silent Assassin, Suit Only'],['chal','Suit Only'],['chal','The Classics'],['src','NamuWiki']],
+   d:{'Exit note':'On the original Master rules the boat area was trespassing and you had to escape through the basement — coin the basement-door guard away, close the door behind you, shoot the basement camera and slip past the two guards inside. In World of Assassination the difficulty tiers are gone, so use whichever exit is clean.',
+      'Alternative route':'Steam guide 644994482 gives a different SASO: make Ken sick with emetic poison from the Thai buffet in the east wing, follow him to the lobby, and shoot the coconuts in the palm above him from behind the café window before his bodyguard gets close. That is an accident kill, so a discovered body does not count against you. Jordan is handled by luring him with coins into a side room off the garden after-party.',
+      'Capstone':'The Classics requires Silent Assassin, Silent Assassin Suit Only, Sniper Assassin and Suit Only. Run 6 delivers Sniper Assassin; this run delivers the other three and fires the capstone.'}}
+ ]}]
+}];
+
+const KEY='club27_done_v1', RID='m05';
+const SKEY=KEY+':steps', OKEY=KEY+':open';
+const done=new Set(), stepsDone=new Set(), openRuns=new Set();
+function loadSet(k,set,fallback){
+  try{const v=JSON.parse(localStorage.getItem(k));if(Array.isArray(v)){v.forEach(x=>set.add(x));return;}}catch(e){}
+  if(fallback)fallback.forEach(x=>set.add(x));
+}
+loadSet(KEY,done);          /* ticked challenges */
+loadSet(SKEY,stepsDone);    /* ticked route steps */
+loadSet(OKEY,openRuns,['r1']); /* which runs are expanded */
+function reportProgress(){try{const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r[RID]={done:done.size,total:CH.length,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
+/* one writer for all three sets — every toggle below calls this */
+function persist(){
+  try{
+    localStorage.setItem(KEY,JSON.stringify([...done]));
+    localStorage.setItem(SKEY,JSON.stringify([...stepsDone]));
+    localStorage.setItem(OKEY,JSON.stringify([...openRuns]));
+    localStorage.setItem(KEY+':auto',JSON.stringify([...autoDone]));
+  }catch(e){}
+  reportProgress();
+}
+const saveDone=persist;
+
+/* ---- steps -> challenges ----------------------------------------
+   A step's 'chal' badges name the challenges it earns. A challenge counts as
+   done once every step carrying its badge is ticked. Only challenges this
+   code ticked are ever un-ticked here, so manual ticks survive. */
+const AUTO_KEY=KEY+':auto';
+const ID_BY_NAME={}; CH.forEach(c=>{ID_BY_NAME[c.name]=c.id;});
+const STEPS_FOR={};
+RUNS.forEach(r=>r.sections.forEach((sec,si)=>sec.steps.forEach((st,ti)=>{
+  const key=`${r.id}-${si}-${ti}`;
+  (st.badges||[]).forEach(b=>{
+    if(b[0]!=='chal')return;
+    const id=ID_BY_NAME[b[1]];
+    if(!id)return;
+    (STEPS_FOR[id]||(STEPS_FOR[id]=[])).push(key);
+  });
+})));
+const autoDone=new Set();
+loadSet(AUTO_KEY,autoDone);
+function syncChallenges(){
+  Object.keys(STEPS_FOR).forEach(id=>{
+    const earned=STEPS_FOR[id].every(k=>stepsDone.has(k));
+    if(earned){ if(!done.has(id)){ done.add(id); autoDone.add(id); } }
+    else if(autoDone.has(id)){ done.delete(id); autoDone.delete(id); }
+  });
+}
+syncChallenges();
+let filter='All';
+
+/* ---------------- tracker: VU meter ---------------- */
+function renderTracker(){
+  const cats=['Assassination','Discovery','Feats','Targets','The Classics'];
+  document.getElementById('cats').innerHTML=cats.map(c=>{
+    const all=CH.filter(x=>x.cat===c), d=all.filter(x=>done.has(x.id)).length;
+    return `<div class="cat">
+      <span class="mb"><i style="height:${Math.round(d/all.length*100)}%;background:${CAT_COLOR[c]}"></i></span>
+      <span class="txt"><span class="v">${d}<em>/${all.length}</em></span><span class="n">${c}</span></span>
+    </div>`;
+  }).join('');
+  document.getElementById('tDone').textContent=done.size;
+  document.getElementById('tBar').style.width=(done.size/CH.length*100)+'%';
+}
+
+/* ---------------- run nav ---------------- */
+function renderNav(){
+  document.getElementById('runnav').innerHTML=
+    RUNS.map((r,i)=>`<button data-jump="${r.id}">${String(i+1).padStart(2,'0')} — ${r.title}</button>`).join('')+
+    `<span class="util"><button data-all="open">Expand all</button><button data-all="close">Collapse</button></span>`;
+}
+
+/* ---------------- runs ---------------- */
+function badgeHTML(b){
+  const cls={chal:'b-chal',warn:'b-warn',save:'b-save',unv:'b-unv',src:'b-src'}[b[0]];
+  const pre={warn:'⚠ ',save:'◆ ',unv:'? ',src:'✎ ',chal:''}[b[0]];
+  return `<span class="badge ${cls}">${pre}${b[1]}</span>`;
+}
+function renderRuns(){
+  document.getElementById('runList').innerHTML=RUNS.map((r,ri)=>{
+    const open=openRuns.has(r.id);
+    let n=0;
+    const total=r.sections.reduce((a,s)=>a+s.steps.length,0);
+    const doneCount=r.sections.reduce((a,s,si)=>a+s.steps.filter((_,ti)=>stepsDone.has(`${r.id}-${si}-${ti}`)).length,0);
+    return `<article class="run ${open?'open':''}" id="${r.id}">
+      <button class="run-head" data-toggle="${r.id}" aria-expanded="${open}">
+        <span class="rnum">${String(ri+1).padStart(2,'0')}</span>
+        <span class="rh">
+          <span class="run-no">${r.tag} — ${r.diff.split('.')[0]}</span>
+          <h3>${r.title}</h3>
+          <p>${r.goal}</p>
+        </span>
+        <span class="run-prog">${doneCount}/${total}</span>
+      </button>
+      <div class="run-body" ${open?'':'hidden'}>
+        <div class="loadout">
+          <h4>Loadout</h4>
+          <div class="lo-grid">
+            <div><span>Starting location</span>${r.loadout.start}</div>
+            <div><span>Difficulty</span>${r.diff}</div>
+            <div><span>Suit</span>${r.loadout.suit}</div>
+            ${r.loadout.items.map((it,i)=>`<div><span>Slot ${i+1}</span>${it}</div>`).join('')}
+          </div>
+          ${r.note?`<p class="lo-note">${r.note}</p>`:''}
+        </div>
+        <div class="sect">
+          ${r.sections.map((sec,si)=>`<h4>${sec.h}</h4>`+sec.steps.map((st,ti)=>{
+            const key=`${r.id}-${si}-${ti}`; n++;
+            const hasD=st.d&&Object.keys(st.d).length;
+            return `<div class="step ${stepsDone.has(key)?'done':''}" id="s-${key}">
+              <div class="step-top">
+                <span class="snum">${String(n).padStart(2,'0')}</span>
+                <button class="tick" data-step="${key}" aria-label="Mark step complete">✓</button>
+                <div class="step-body">
+                  <p class="step-title">${st.t}</p>
+                  <ul class="bul">${st.b.map(x=>`<li><k>${x[0]}</k><span>${x[1]}</span></li>`).join('')}</ul>
+                  <div class="badges">${st.badges.map(badgeHTML).join('')}</div>
+                </div>
+              </div>
+              ${hasD?`<button class="more" data-more="${key}" aria-expanded="false">+ Notes</button>
+              <div class="detail" id="d-${key}" hidden><dl>${Object.entries(st.d).map(([k,v])=>{
+                const c=k==='Unverified'?'flag unv':(/^(Why the order|Ordering|Order note|Requirement|Warning|Why first|Conflict|Exit note|Higher|Not the same|Not Take|Known bug|Bug)/.test(k)?'flag amber':'');
+                return c?`<div class="${c}"><dt style="margin-top:0">${k}</dt><dd>${v}</dd></div>`:`<dt>${k}</dt><dd>${v}</dd>`;
+              }).join('')}</dl></div>`:''}
+            </div>`;
+          }).join('')).join('')}
+        </div>
+      </div>
+    </article>`;
+  }).join('');
+}
+
+/* ---------------- checklist ---------------- */
+function renderFilters(){
+  const opts=['All','Assassination','Discovery','Feats','Targets','The Classics','Incomplete'];
+  document.getElementById('filters').innerHTML=opts.map(o=>`<button class="${o===filter?'on':''}" data-f="${o}">${o}</button>`).join('');
+}
+function renderChecklist(){
+  const list=CH.filter(c=>filter==='All'?true:filter==='Incomplete'?!done.has(c.id):c.cat===filter);
+  document.getElementById('chalList').innerHTML=list.length?list.map(c=>`
+    <div class="chal ${done.has(c.id)?'done':''}">
+      <button class="tick" data-ch="${c.id}" aria-label="Mark ${c.name} complete">✓</button>
+      <div class="chal-main">
+        <p class="chal-name">${c.name}</p>
+        <p class="chal-cond">${c.cond}</p>
+        <div class="chal-meta">
+          <span class="badge" style="color:var(--bg);background:${CAT_COLOR[c.cat]}">${c.cat}</span>
+          ${c.run?`<span class="badge b-chal">Run ${c.run}</span>`:'<span class="badge b-unv">Not routed — see Audit</span>'}
+        </div>
+      </div>
+    </div>`).join(''):'<p style="color:var(--dim)">Nothing matches this filter.</p>';
+}
+
+document.addEventListener('click',e=>{
+  const tab=e.target.closest('.tab');
+  if(tab){
+    document.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-selected',t===tab));
+    document.querySelectorAll('.panel').forEach(p=>p.hidden=p.id!=='p-'+tab.dataset.panel);
+    return;
+  }
+  const jump=e.target.closest('[data-jump]');
+  if(jump){
+    const id=jump.dataset.jump;
+    openRuns.add(id); persist(); renderRuns();
+    document.querySelectorAll('[data-jump]').forEach(b=>b.classList.toggle('hot',b.dataset.jump===id));
+    document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});
+    return;
+  }
+  const all=e.target.closest('[data-all]');
+  if(all){
+    if(all.dataset.all==='open') RUNS.forEach(r=>openRuns.add(r.id)); else openRuns.clear();
+    persist(); renderRuns(); return;
+  }
+  const tg=e.target.closest('[data-toggle]');
+  if(tg){
+    const id=tg.dataset.toggle;
+    openRuns.has(id)?openRuns.delete(id):openRuns.add(id);
+    persist(); renderRuns(); return;
+  }
+  const f=e.target.closest('[data-f]');
+  if(f){ filter=f.dataset.f; renderFilters(); renderChecklist(); return; }
+  const ch=e.target.closest('[data-ch]');
+  if(ch){
+    const id=ch.dataset.ch;
+    done.has(id)?done.delete(id):done.add(id);
+    saveDone(); renderTracker(); renderChecklist(); return;
+  }
+  const sp=e.target.closest('[data-step]');
+  if(sp){
+    const k=sp.dataset.step;
+    stepsDone.has(k)?stepsDone.delete(k):stepsDone.add(k);
+    syncChallenges();
+    persist(); renderRuns(); renderTracker(); renderChecklist(); return;
+  }
+  const rs=e.target.closest('#reset');
+  if(rs){
+    if(confirm('Clear every ticked challenge for this mission?')){
+      done.clear(); stepsDone.clear(); autoDone.clear(); saveDone(); renderTracker(); renderChecklist(); renderRuns();
+    }
+    return;
+  }
+  const m=e.target.closest('[data-more]');
+  if(m){
+    const d=document.getElementById('d-'+m.dataset.more);
+    d.hidden=!d.hidden;
+    m.setAttribute('aria-expanded',String(!d.hidden));
+    m.textContent=d.hidden?'+ Notes':'− Notes';
+  }
+});
+
+renderTracker(); renderNav(); renderFilters(); renderChecklist(); renderRuns();
+reportProgress();
+</script>
+<!-- step-progress-bridge -->
+<script>
+/* Reports route-step ticks into 'hitman-progress-registry' so the index can
+   show them beside the challenge counts. Counts what is on screen rather than
+   any guide-specific state, so one implementation serves every guide. */
+(function(){
+  var RID="m05", SEL=".step";
+  function isDone(s){
+    var c=s.classList;
+    if(c.contains('done')||c.contains('dn')) return true;
+    if(s.getAttribute('data-done')==='1'||s.getAttribute('aria-pressed')==='true') return true;
+    return !!s.querySelector('.done,.dn,[data-done="1"],[aria-pressed="true"]');
+  }
+  function tally(){
+    var steps=document.querySelectorAll(SEL);
+    if(!steps.length) return null;
+    var n=0;
+    for(var i=0;i<steps.length;i++) if(isDone(steps[i])) n++;
+    return {steps:n,stepTotal:steps.length};
+  }
+  function push(){
+    var t;
+    try{ t=tally(); }catch(err){ return; }
+    if(!t||!t.stepTotal) return;
+    try{
+      var r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');
+      var e=r[RID]||(r[RID]={});
+      /* the guide's own reportProgress() rewrites this entry wholesale, so
+         re-add the step counts whenever they go missing or stale */
+      if(e.steps===t.steps&&e.stepTotal===t.stepTotal) return;
+      e.steps=t.steps; e.stepTotal=t.stepTotal; e.updated=Date.now();
+      localStorage.setItem('hitman-progress-registry',JSON.stringify(r));
+    }catch(err){}
+  }
+  var pending=false;
+  function schedule(){
+    if(pending) return; pending=true;
+    setTimeout(function(){pending=false;push();},120);
+  }
+  try{
+    new MutationObserver(schedule).observe(document.body,
+      {subtree:true,childList:true,attributes:true,attributeFilter:['class','aria-pressed','data-done']});
+  }catch(err){}
+  window.addEventListener('load',schedule);
+  setTimeout(push,600);
+})();
+</script>
+<!-- /step-progress-bridge -->
+</body>
+</html>

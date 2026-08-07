@@ -1,0 +1,846 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>On Top of the World — Dubai Challenge Route (v3)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --glass:#0c1418;--glass-2:#111d23;--glass-3:#17272f;
+  --sand:#c9a227;--sand-dim:#8a7326;
+  --paper:#e6ecec;--paper-dim:#8ea3a8;
+  --ica:#c0392b;--amber:#e0a53a;--jade:#3f9e7c;
+  --line:rgba(201,162,39,.22);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--glass);color:var(--paper);
+  font-family:Inter,system-ui,sans-serif;font-size:15px;line-height:1.55;
+  background-image:linear-gradient(180deg,#0c1418 0%,#0e1a20 60%,#0c1418 100%)}
+h1,h2,h3,h4{font-family:"Barlow Condensed",Oswald,Impact,sans-serif;letter-spacing:.02em;text-transform:uppercase;font-weight:600;margin:0}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 80px}
+
+header.hero{border-bottom:1px solid var(--line);padding:34px 0 22px}
+.eyebrow{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.22em;color:var(--sand);text-transform:uppercase}
+h1{font-size:clamp(34px,6vw,62px);line-height:.94;margin:8px 0 6px}
+h1 span{color:var(--sand)}
+.sub{color:var(--paper-dim);max-width:64ch;font-size:14px}
+
+.note{border:1px solid var(--jade);background:rgba(63,158,124,.08);border-radius:4px;padding:15px 17px;margin:20px 0}
+.note.warn{border-color:var(--ica);background:rgba(192,57,43,.09)}
+.note h3{font-size:16px;margin-bottom:5px;color:#6fd4ab}
+.note.warn h3{color:#ff8b7d}
+.note ul{margin:7px 0 0;padding-left:18px}
+.note li{font-size:13.5px;margin-bottom:6px;color:#cfe6dd}
+.note.warn li{color:#e9d4d0}
+.note b{color:#fff}
+
+.tracker{border:1px solid var(--line);border-radius:4px;background:var(--glass-2);padding:18px;margin:20px 0 8px}
+.tracker-top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.bigcount{font-family:"Barlow Condensed",sans-serif;font-size:52px;line-height:.85;color:var(--sand)}
+.bigcount small{font-size:20px;color:var(--paper-dim)}
+.bar{height:8px;background:var(--glass-3);border-radius:99px;overflow:hidden;margin:14px 0 16px}
+.bar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--sand-dim),var(--sand));transition:width .45s cubic-bezier(.2,.7,.3,1)}
+.cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}
+.cat{border:1px solid var(--line);border-radius:3px;padding:9px 11px;background:rgba(0,0,0,.2)}
+.cat .n{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.14em;color:var(--paper-dim);text-transform:uppercase}
+.cat .v{font-family:"Barlow Condensed",sans-serif;font-size:26px;color:var(--paper)}
+.cat .v em{font-style:normal;color:var(--paper-dim);font-size:16px}
+.cat.done .v{color:var(--jade)}
+.reset{background:none;border:1px solid var(--line);color:var(--paper-dim);font-size:11px;padding:6px 12px;border-radius:3px;cursor:pointer;font-family:"JetBrains Mono",monospace;letter-spacing:.1em}
+.reset:hover{border-color:var(--ica);color:#ff8b7d}
+
+nav.tabs{display:flex;gap:2px;border-bottom:1px solid var(--line);margin:24px 0 20px;flex-wrap:wrap}
+nav.tabs>button{background:none;border:0;border-bottom:2px solid transparent;color:var(--paper-dim);
+  font-family:"Barlow Condensed",sans-serif;text-transform:uppercase;letter-spacing:.08em;font-size:17px;padding:10px 15px;cursor:pointer}
+nav.tabs>button[aria-selected=true]{color:var(--sand);border-bottom-color:var(--sand)}
+nav.tabs>button:focus-visible{outline:2px solid var(--sand);outline-offset:2px}
+.panel[hidden]{display:none}
+
+/* run navigator */
+.runnav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.runnav button{display:flex;flex-direction:column;gap:2px;text-align:left;min-width:150px;flex:1;
+  border:1px solid var(--line);background:var(--glass-2);color:var(--paper);border-radius:4px;padding:9px 12px;cursor:pointer}
+.runnav button:hover{border-color:var(--sand)}
+.runnav .rn{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.16em;color:var(--sand)}
+.runnav .rt{font-family:"Barlow Condensed",sans-serif;font-size:15px;text-transform:uppercase;letter-spacing:.02em;line-height:1.05}
+.runnav .rp{font-family:"JetBrains Mono",monospace;font-size:9px;color:var(--paper-dim)}
+
+/* run cards */
+.run{border:1px solid var(--line);border-radius:4px;margin-bottom:20px;background:var(--glass-2);overflow:hidden;scroll-margin-top:12px}
+.run-head{width:100%;text-align:left;background:linear-gradient(90deg,rgba(201,162,39,.08),transparent);
+  border:0;border-bottom:1px solid var(--line);padding:16px 18px;cursor:pointer;color:var(--paper);display:flex;gap:14px;align-items:flex-start}
+.run.closed .run-head{border-bottom:0}
+.chev{font-family:"JetBrains Mono",monospace;color:var(--sand);font-size:15px;margin-top:2px;transition:transform .2s}
+.run.closed .chev{transform:rotate(-90deg)}
+.run-head .rnum{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--sand);letter-spacing:.2em}
+.run-head h2{font-size:25px;margin:2px 0 5px;line-height:.98}
+.run-head .goal{color:var(--paper-dim);font-size:13px;max-width:74ch;font-family:Inter,sans-serif;text-transform:none;letter-spacing:0;font-weight:400}
+.run-body[hidden]{display:none}
+
+.loadout{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));border-bottom:1px solid var(--line)}
+.lo{padding:11px 15px;border-right:1px solid var(--line)}
+.lo:last-child{border-right:0}
+.lo .k{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.16em;color:var(--sand);text-transform:uppercase}
+.lo .v{font-size:13px;margin-top:3px}
+.sec{padding:4px 18px 0}
+.sec>h3{font-size:14px;color:var(--sand);letter-spacing:.12em;margin:18px 0 6px;padding-bottom:6px;border-bottom:1px dashed var(--line)}
+.prereq{font-size:13px;color:var(--paper-dim);padding:6px 0 2px}
+
+/* steps */
+.step{display:grid;grid-template-columns:60px 24px 1fr;position:relative}
+.step .floor{font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--sand-dim);padding:13px 6px 0 0;text-align:right;letter-spacing:.05em;white-space:nowrap}
+.spine{position:relative}
+.spine::before{content:"";position:absolute;left:11px;top:0;bottom:0;width:1px;background:var(--line)}
+.spine i{position:absolute;left:6px;top:15px;width:11px;height:11px;border:1px solid var(--sand-dim);border-radius:2px;background:var(--glass-2);transform:rotate(45deg)}
+.step.done .spine i{background:var(--jade);border-color:var(--jade)}
+.step .body{padding:9px 0 13px 12px;min-width:0}
+.step-head{cursor:pointer;display:flex;gap:8px;align-items:baseline}
+.step-head .sc{font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--sand);margin-top:1px}
+.step h4{font-size:16px;letter-spacing:.01em}
+.step .sum{color:var(--paper-dim);font-size:13px;margin-top:3px}
+.step.done h4{color:var(--paper-dim);text-decoration:line-through;text-decoration-thickness:1px}
+
+.rowbtns{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.chk{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  border:1px solid var(--line);background:none;color:var(--paper-dim);padding:5px 10px;border-radius:3px;cursor:pointer}
+.chk:hover{border-color:var(--sand);color:var(--sand)}
+.chk[aria-pressed=true]{background:var(--jade);border-color:var(--jade);color:#04140e}
+
+.detail{margin-top:11px;border-left:2px solid var(--sand-dim);padding-left:0;font-size:13.5px}
+.detail[hidden]{display:none}
+.frow{display:grid;grid-template-columns:82px 1fr;gap:10px;padding:5px 0 5px 12px;border-bottom:1px solid rgba(201,162,39,.08)}
+.frow:last-of-type{border-bottom:0}
+.frow .fk{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.12em;color:var(--sand);text-transform:uppercase;padding-top:2px}
+.frow.warn .fk{color:#ff8b7d}
+.frow .fv{color:#cfdadb}
+.frow.warn .fv{color:#ffcabf}
+
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+.b{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:2px;border:1px solid;white-space:nowrap}
+.b.ch{color:var(--sand);border-color:var(--sand-dim);background:rgba(201,162,39,.09)}
+.b.save{color:var(--amber);border-color:var(--amber);background:rgba(224,165,58,.12)}
+.b.unv{color:#9fb0b5;border-color:#4a5c62;background:rgba(120,140,150,.12)}
+.b.ok{color:#6fd4ab;border-color:#2f6f57;background:rgba(63,158,124,.12)}
+
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.filters button{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  border:1px solid var(--line);background:none;color:var(--paper-dim);padding:7px 12px;border-radius:3px;cursor:pointer}
+.filters button[aria-pressed=true]{background:var(--sand);border-color:var(--sand);color:#151006}
+.clitem{display:grid;grid-template-columns:26px 1fr;gap:12px;padding:11px 12px;border:1px solid var(--line);border-radius:3px;margin-bottom:7px;background:var(--glass-2);align-items:start}
+.clitem[hidden]{display:none}
+.clitem.done{opacity:.5}
+.clitem.done .cname{text-decoration:line-through}
+.clitem input{width:17px;height:17px;accent-color:var(--jade);margin-top:3px;cursor:pointer}
+.cname{font-family:"Barlow Condensed",sans-serif;font-size:18px}
+.ctag{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.12em;color:var(--sand);text-transform:uppercase}
+.ccond{font-size:13px;color:var(--paper-dim);margin-top:3px}
+.cmeta{font-family:"JetBrains Mono",monospace;font-size:10px;color:#6f8288;margin-top:5px}
+.cnote{font-size:12.5px;color:#ffcabf;margin-top:4px;border-left:2px solid var(--sand-dim);padding-left:8px}
+
+table.cx{width:100%;border-collapse:collapse;font-size:13px;margin-top:10px}
+table.cx th,table.cx td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+table.cx th{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.12em;color:var(--sand);text-transform:uppercase}
+footer{border-top:1px solid var(--line);margin-top:36px;padding-top:18px;color:#6f8288;font-size:12px}
+a{color:var(--sand)}
+@media (max-width:620px){.step{grid-template-columns:0 22px 1fr}.step .floor{display:none}.lo{border-right:0;border-bottom:1px solid var(--line)}.frow{grid-template-columns:70px 1fr}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+
+<div class="wrap">
+<header class="hero">
+  <div class="eyebrow">HITMAN: World of Assassination — Mission 01 — Guide v3</div>
+  <h1>On Top of<br>the <span>World</span></h1>
+  <p class="sub">Burj Al-Ghazali, Dubai. Targets: Carl Ingram and Marcus Stuyvesant. Six runs covering all 58 mission challenges, now reconciled against the game's own challenge data.</p>
+</header>
+
+<section class="note">
+  <h3>Verified against the in-game challenge export you provided</h3>
+  <ul>
+    <li><b>The real total is 58</b>, not the 60/61/83 that circulate online. Your export lists 15 Assassination, 22 Discovery, 14 Feats, 2 Targets, 5 Classics = 58. The tracker matches exactly.</li>
+    <li><b>The three escalation challenges are correctly excluded.</b> The Phoenix Ascension and both Asmodeus Waltz tiers are separate escalation contracts, not part of this mission's 58 — they are not in your export, so they are not tracked here. This was the source of every inflated count.</li>
+    <li><b>Several conditions were corrected to match the official wording.</b> Icarus is an <b>electrocution</b> at the sun installation, not a generic accident. Impactful Art requires <b>both</b> targets under a single chandelier. Conserving Ammunition specifically requires a <b>sniper rifle</b>. Geronimo fires when you <b>trigger the evacuation with the keycard readers</b>, not on the parachute kill. Here Goes Nothing is an escape <b>via parachute</b>. Cashing Out is a <b>pacify</b>, not a kill.</li>
+    <li><b>Flying Monkey Business is [REDACTED] in the game data.</b> The official description is hidden, so the method shown (banana-peel slip during the evacuation) is community-sourced and labelled as such rather than presented as official.</li>
+  </ul>
+</section>
+
+<section class="note warn">
+  <h3>What genuinely cannot be verified</h3>
+  <ul>
+    <li><b>Guard names and patrol timings.</b> Dubai's guards are unnamed generic NPCs across every source. Named NPCs, all confirmed: Carl Ingram, Marcus Stuyvesant, Cordelia Stuyvesant, Lucy (the artist), Zana "The Vulture" Kazem, Hans Lucht, Omar Al-Ghazali, the Sheikh.</li>
+    <li><b>Per-challenge XP is only partially published.</b> Where a source states a figure it is shown (Icarus and Angry Birdy are each 4,000 XP, confirmed by two guides each). For every other challenge no reliable figure exists, and it is marked so rather than invented.</li>
+    <li>Remaining method-level disagreements are logged in the <b>Conflicts</b> tab with both accounts.</li>
+  </ul>
+</section>
+
+<section class="tracker" id="tracker">
+  <div class="tracker-top">
+    <div><div class="eyebrow">Progress</div>
+    <div class="bigcount"><span id="tDone">0</span><small> / <span id="tTotal">58</span> challenges</small></div></div>
+    <button class="reset" id="reset">Reset all</button>
+  </div>
+  <div class="bar"><i id="tBar"></i></div>
+  <div class="cats" id="cats"></div>
+</section>
+
+<nav class="tabs" role="tablist">
+  <button role="tab" id="tab-runs" aria-controls="p-runs" aria-selected="true">Optimized runs</button>
+  <button role="tab" id="tab-list" aria-controls="p-list" aria-selected="false">Checklist</button>
+  <button role="tab" id="tab-conf" aria-controls="p-conf" aria-selected="false">Conflicts</button>
+  <button role="tab" id="tab-ref" aria-controls="p-ref" aria-selected="false">Reference</button>
+</nav>
+
+<div class="panel" id="p-runs" role="tabpanel" aria-labelledby="tab-runs">
+  <div class="runnav" id="runnav"></div>
+  <div id="runs"></div>
+</div>
+<div class="panel" id="p-list" role="tabpanel" aria-labelledby="tab-list" hidden>
+  <div class="filters" id="filters"></div><div id="clist"></div>
+</div>
+<div class="panel" id="p-conf" role="tabpanel" aria-labelledby="tab-conf" hidden></div>
+<div class="panel" id="p-ref" role="tabpanel" aria-labelledby="tab-ref" hidden></div>
+
+<footer>
+  Ground truth: the in-game challenge export supplied by the user (58 challenges, official descriptions). Method detail cross-referenced from PowerPyx, SegmentNext, Gamepressure, Neoseeker, GameActuality, GoSuNoob, Gamepur, GamesRadar, Shacknews, TheGamer, ScreenRant, GamerJournalist, Gamers Heroes, PCGamesN, Gameranx; mastery table from TheSixthAxis + Attack of the Fanboy + DBLTAP (three-way agreement); save/reload mechanic and consumable counts from Steam community threads (labelled where used). Guard names and full XP tables are not published and are not invented here.
+</footer>
+</div>
+
+<script>
+/* ============ 58 CHALLENGES (official export wording) ============ */
+/* [id, name, category, official condition, xp, note] */
+const CHALLENGES = [
+ ["poison","Pick Your Poison","Assassination","Eliminate Carl Ingram by making him eat poisoned food.","",""],
+ ["vertical","Vertical Approach","Assassination","Eliminate Marcus Stuyvesant by pushing, dumping or pulling him over a ledge or railing.","",""],
+ ["angry","Angry Birdy","Assassination","Eliminate Carl Ingram by making him strike an explosive golf ball.","4000",""],
+ ["blackgold","Black Gold Eye","Assassination","Eliminate Carl Ingram by impaling him on his oil-rig model in his office.","",""],
+ ["impactful","Impactful Art","Assassination","Eliminate both targets with a single chandelier.","",""],
+ ["milehigh","Mile High Drop","Assassination","Eliminate each target while they are in the air parachuting.","",""],
+ ["conserv","Conserving Ammunition","Assassination","Eliminate both targets with a single bullet using a sniper rifle.","",""],
+ ["steep","Steep Task","Assassination","Eliminate Carl Ingram by pushing, dumping or pulling him over a ledge or railing.","",""],
+ ["icarus","Icarus","Assassination","Electrocute Marcus Stuyvesant using the sun at the art installation.","4000",""],
+ ["piano","Piano Man","Assassination","Assassinate a target with the fiber wire.","",""],
+ ["versatile","Versatile Assassin","Assassination","Complete these Versatile challenges: Piano Man, Someone Could Hurt Themselves, Hold My Hair, Straight Shot, Tasteless Traceless.","",""],
+ ["tasteless","Tasteless, Traceless","Assassination","Assassinate a target with lethal poison.","",""],
+ ["hold","Hold My Hair","Assassination","Assassinate a target by drowning them.","",""],
+ ["straight","Straight Shot","Assassination","Assassinate a target with a headshot.","",""],
+ ["someone","Someone Could Hurt Themselves","Assassination","Assassinate a target in an accident.","",""],
+
+ ["discover","Discover Dubai","Discovery","Reveal all undiscovered areas in the Burj Al-Ghazali.","",""],
+ ["breezy","Easy Breezy","Discovery","Open all electronic window shutters using the phone (camera).","",""],
+ ["rotorman","Rotor Man","Discovery","Disguise yourself as the Helicopter Pilot.","",""],
+ ["sc_terrace","Shortcut: Penthouse Terrace Ladder","Discovery","Unlock the ladder shortcut at the penthouse terrace.","",""],
+ ["wet","Wet Worker","Discovery","Disguise yourself as Zana \u201cThe Vulture\u201d Kazem, Agent of Crystal Dawn.","",""],
+ ["rotorready","Rotor Ready","Discovery","Obtain the helicopter key.","",""],
+ ["sc_vent","Shortcut: Ventilation Area Ladder","Discovery","Unlock the ladder shortcut at the ventilation area behind the penthouse.","",""],
+ ["elite","Elite Heat","Discovery","Disguise yourself as a Penthouse Guard.","",""],
+ ["hotone","Hot One","Discovery","Disguise yourself as the Chef.","",""],
+ ["toothpick","Toothpick","Discovery","Obtain a scimitar.","",""],
+ ["waiter","Waiter Cater","Discovery","Disguise yourself as an Event Staff Member.","",""],
+ ["sc_atrium","Shortcut: Atrium Lobby Door","Discovery","Unlock the door shortcut in the atrium lobby.","",""],
+ ["heregoes","Here Goes Nothing","Discovery","Escape the Burj Al-Ghazali via parachute.","",""],
+ ["grand","Grand Connection","Discovery","Escape the Burj Al-Ghazali via the penthouse elevator.","",""],
+ ["pocket","Pocket-Sized Empire","Discovery","Obtain a skyscraper miniature model.","",""],
+ ["sc_heli","Shortcut: Helipad Ladder","Discovery","Unlock the ladder shortcut at the helipad.","",""],
+ ["ground","Ground Floor, Please","Discovery","Escape the Burj Al-Ghazali via the atrium elevator.","",""],
+ ["sceptre","Key to the Sceptre","Discovery","Obtain the penthouse key.","",""],
+ ["servant","Servant Exit","Discovery","Escape the Burj Al-Ghazali via the staff elevator.","",""],
+ ["upaway","Up and Away","Discovery","Escape the Burj Al-Ghazali via helicopter.","",""],
+ ["emerg","For Emergencies Only","Discovery","Obtain the evacuation keycard.","",""],
+ ["chameleon","Chameleon","Discovery","Find and equip all disguises at the Burj Al-Ghazali.","","Disguise count is not in the export; community sources list 11."],
+
+ ["meetstuy","Meet the Stuyvesants","Feats","Reunite the Stuyvesants.","",""],
+ ["suiting","Suiting Attire","Feats","Exit the Burj Al-Ghazali while wearing the skydiving suit.","",""],
+ ["precious","Precious Moments","Feats","Take a photo of Marcus Stuyvesant being reunited with his daughter.","",""],
+ ["ms_insec","Mission Story - (In)Security","Feats","Complete the mission story \u201c(In)Security.\u201d","",""],
+ ["geronimo","Geronimo","Feats","Trigger an evacuation by using the keycard readers in the penthouse.","",""],
+ ["chip","Chip and Dip","Feats","Hack the server room without triggering the silent alarm.","",""],
+ ["cashing","Cashing Out","Feats","Pacify the Sheikh using a goldbar.","",""],
+ ["night","Nightcrawler","Feats","Take a photo of the Sheikh sleeping.","",""],
+ ["ms_bird","Mission Story - Bird Of Prey","Feats","Complete the mission story \u201cBird Of Prey.\u201d","",""],
+ ["disturb","Disturbing the Peace","Feats","Disturb Carl Ingram while he is on his dictaphone.","",""],
+ ["ms_htmf","Mission Story - How The Mighty Fall","Feats","Complete the mission story \u201cHow The Mighty Fall.\u201d","",""],
+ ["monkey","Flying Monkey Business","Feats","[REDACTED in the game export.] Community sources: make a target slip on a placed banana peel during the evacuation.","","Official description is hidden in the export. Method is community-sourced (PowerPyx, SegmentNext)."],
+ ["palette","Particular Palette","Feats","Serve Marcus Stuyvesant his requested drink at the art gallery bar.","",""],
+ ["highrise","High Rise Drop","Feats","Push or dump anyone down an elevator shaft.","",""],
+
+ ["t_ingram","Eliminate Carl Ingram","Targets","Eliminate Carl Ingram.","",""],
+ ["t_stuy","Eliminate Marcus Stuyvesant","Targets","Eliminate Marcus Stuyvesant.","",""],
+
+ ["c_sniper","Sniper Assassin","Classics","Complete the mission. Assassinate your targets with a sniper rifle. Only eliminate the targets. Do not get spotted.","",""],
+ ["c_sa","Silent Assassin","Classics","Only kill the targets. No bodies found. Do not get compromised. Erase or destroy any camera evidence.","",""],
+ ["c_saso","Silent Assassin, Suit Only","Classics","As Silent Assassin, and do it all in your suit.","",""],
+ ["c_so","Suit Only","Classics","Assassinate the targets and complete the mission in your suit.","",""],
+ ["c_all","The Classics","Classics","Complete all Classic challenges: Silent Assassin, Silent Assassin Suit Only, Sniper Assassin, Suit Only.","",""]
+];
+const CATS=["Assassination","Discovery","Feats","Targets","Classics"];
+const nameOf=id=>(CHALLENGES.find(c=>c[0]===id)||[,"?"])[1];
+
+/* ============ CONFLICTS ============ */
+const CONFLICTS=[
+ ["Explosive golf ball — where it comes from",
+  "The Mastery 10 unlock lets you start with the ball. Shacknews, GamesRadar and TheGamer confirm a ball is also findable in-level: next to the toolbox beside the door at the end of a closet, in a shortcut room; a nearby guard conversation hints at it.",
+  "Both are real and both work. Bring it if you are Mastery 10+; otherwise grab the in-level ball. Resolved — no longer marked unverified."],
+ ["Disturbing the Peace / Angry Birdy — the noise sequence",
+  "Screen Rant and PowerPyx say vacuum then radio (or radio then vacuum). GamesRadar specifies vacuum when he is in the Master Suite (L5), radio when he is in the Study (L3). A PowerPyx reader insists three disturbances are needed.",
+  "Two-source majority: two disturbances, one vacuum + one radio, timed to when he is on the dictaphone. Disturbing the Peace itself can pop on the first disturbance; the second is to force the golf trip for Angry Birdy. Keep a third noise source ready as insurance."],
+ ["Grand Connection — which elevator",
+  "PowerPyx and Neoseeker say the Floor 03 (penthouse) elevator. SegmentNext says Floor 01.",
+  "Your export calls it 'the penthouse elevator', which matches Floor 03. Use the penthouse-level lift; if it does not fire, try the Floor 01 lift."],
+ ["Suiting Attire — floor of the suit rack",
+  "PowerPyx: Level -1 Atrium, at your original entry point. SegmentNext: Floor 01.",
+  "Both agree it is at your original entry point. Navigate by that, not the floor number."],
+ ["Guard names",
+  "No source names individual Dubai guards; they are generic NPCs.",
+  "Guards are referred to by post and clothing throughout, which is all any source supports."]
+];
+
+/* ============ RUNS (structured steps) ============ */
+/* step fields: floor,t,sum, where,disguise,item,npc,action,warn (any nullable), badges[] */
+const RUNS=[
+{
+ title:"Discovery sweep — areas, shortcuts, disguises",
+ goal:"Do this first, with no stealth pressure. Opens all four permanent shortcuts, walks all 33 areas, collects all 11 disguises and the key items. Start from the default skydive so window 1 is reachable.",
+ loadout:{start:"Default — skydiving insertion (no mastery needed). Chosen because window 1 for Easy Breezy only exists on this entry path.",suit:"Any",
+  items:["Lockpick — the single tool the default start allows; opens deposit boxes and the Guest Bedroom","(Crowbar is found in-level — no need to bring one)","—","—"]},
+ prereq:"None. Deaths and detection do not matter here — nothing depends on stealth.",
+ sections:[
+  {name:"Insertion and Level 0", steps:[
+   {floor:"Roof",t:"Scan window 1 on the insertion path",
+    sum:"Scan the first electronic window the moment you land, before entering the building.",
+    where:"The skydiving entry path on the roof where you touch down.",item:"Camera (phone)",
+    action:"Point the camera at the electronic window on the landing path and scan it so Grey unlocks it. This is window 1 of 6 for Easy Breezy and cannot be reached from any other start.",
+    warn:"If you ever start from Atrium Lobby instead, this window is unreachable and Easy Breezy will stick at 5/6.",
+    badges:[{c:"ch",x:"Easy Breezy 1/6"}]},
+   {floor:"L0 → L-1",t:"Open the Atrium Lobby Door shortcut",
+    sum:"Take the bathroom keycard, cut through the maintenance corridor, and open the door from the stairwell side.",
+    where:"Level 0 bathrooms, then the maintenance corridor down to the Level -1 Atrium.",disguise:"Staff or guard (for the maintenance corridor)",item:"Bathroom attendant's keycard",npc:"Bathroom attendant",
+    action:"Take the attendant's keycard, go through the far bathroom door into the maintenance corridor, follow it down to the bottom, and open the glass door onto the Atrium. It only opens from this side.",
+    badges:[{c:"ch",x:"Shortcut: Atrium Lobby Door"},{c:"ok",x:"4 sources agree"}]},
+   {floor:"L0",t:"Take the three Level 0 staff disguises",
+    sum:"Event Security, Event Staff and Kitchen Staff all live in the Level 0 Staff Area.",
+    where:"Level 0 Staff Area, southern side of the building.",item:"Coins (to lure)",npc:"Event Security (white/blue hat), Event Staff (gold vests), Kitchen Staff",
+    action:"Lure each into a side room with a coin, subdue, take the outfit, stash the body. Event Staff pops Waiter Cater.",
+    badges:[{c:"ch",x:"Waiter Cater"}]},
+   {floor:"L0 → L1",t:"Scan windows 2, 3 and 4 via the exterior climb",
+    sum:"Climb out the two maintenance-room windows and scale the outside of the tower to the third.",
+    where:"Floor 0 maintenance room by the staff area, then the building exterior.",disguise:"Staff",item:"Camera (phone)",
+    action:"Scan and climb out windows 2 and 3 in the maintenance room, shimmy along the exterior and up, then scan window 4 at the top of the climb (the same window the How the Mighty Fall waypoints use).",
+    badges:[{c:"ch",x:"Easy Breezy 4/6"}]}
+  ]},
+  {name:"Level 1", steps:[
+   {floor:"L1",t:"Take the Assassin disguise (Wet Worker)",
+    sum:"Subdue Zana Kazem in the Garden; he also drops lethal poison worth keeping.",
+    where:"Level 1 Garden, northern side.",npc:"Zana \u201cThe Vulture\u201d Kazem — black suit, green shirt",item:"His dropped lethal poison vial (keep it for Run 6)",
+    action:"Turn on the garden sound system to mask the takedown, subdue Kazem, take his outfit. Pops Wet Worker. Two extra coins sit on a bench in this garden.",
+    badges:[{c:"ch",x:"Wet Worker"}]},
+   {floor:"L1",t:"Scan windows 5 and 6",
+    sum:"The last two windows are in the Art Installation Backstage.",
+    where:"Level 1 Art Installation Backstage, northern side.",disguise:"Staff or guard",item:"Camera (phone)",
+    action:"Scan both electronic windows here to finish Easy Breezy at 6/6.",
+    badges:[{c:"ch",x:"Easy Breezy"}]}
+  ]},
+  {name:"Vertical shortcuts and the key", steps:[
+   {floor:"L2",t:"Grab the crowbar and open the Helipad Ladder",
+    sum:"The crowbar behind the art gallery unlocks the helipad ladder past the Level 3 emergency exit.",
+    where:"Crowbar on the Level 2 rooftop behind the art gallery; ladder past the Level 3 emergency exit.",disguise:"Staff to reach the restricted stairs; Penthouse Guard once you climb up",item:"Crowbar",
+    action:"Take the crowbar, go through the 'restricted access' door, up the stairs and scaffolding, cross to the far glass door and pry the helipad ladder open. It is the backbone of the Run 4 suit-only crossing.",
+    badges:[{c:"ch",x:"Shortcut: Helipad Ladder"},{c:"save",x:"SAVE HERE — crowbar in hand"}]},
+   {floor:"L2",t:"Pick up the Helicopter Key (Rotor Ready)",
+    sum:"Slide down the ladder at the front of the helipad; the key is on the walkway below.",
+    where:"Level 2 walkway directly beneath the helipad ladder, by the swinging knife-throwing targets.",
+    action:"Slide down the ladder at the front-centre of the helipad; the key sits on the walkway at the bottom. Grab it. (PowerPyx originally misplaced this and corrected it — this is the corrected spot.)",
+    badges:[{c:"ch",x:"Rotor Ready"}]},
+   {floor:"L4",t:"Open the Ventilation and Penthouse Terrace ladders",
+    sum:"Both ladders sit on Level 4, clustered near the top of the helipad climb.",
+    where:"Level 4: the yellow-door ventilation room, and the terrace off the open area beside it.",disguise:"Penthouse Guard",item:"Crowbar",
+    action:"From the top of the helipad ladder, go through the glass door, left, upstairs, into the yellow-door room for the Ventilation Area ladder, then cross to the glass door on the left for the Penthouse Terrace ladder.",
+    warn:"Both are Level 4 areas — not Level 5. Earlier guide drafts placed them a floor too high.",
+    badges:[{c:"ch",x:"Shortcut: Ventilation Area Ladder"},{c:"ch",x:"Shortcut: Penthouse Terrace Ladder"}]}
+  ]},
+  {name:"Level 3 and Penthouse disguises", steps:[
+   {floor:"L3",t:"Take Maintenance, Art Crew and Pilot disguises",
+    sum:"Three disguises across the Level 3 maintenance area, Control Room and Helipad.",
+    where:"Level 3 maintenance area, Control Room, and Helipad.",item:"Coins",npc:"Maintenance Staffer (blue), Art Crew member, Helicopter Pilot",
+    action:"Subdue and change for each. Keep the Art Crew outfit — it is the only Silent-Assassin-safe way to separate Lucy from Cordelia in Run 6. Pilot pops Rotor Man.",
+    badges:[{c:"ch",x:"Rotor Man"}]},
+   {floor:"L3–L5",t:"Take the four Penthouse disguises and both key items",
+    sum:"Penthouse Guard, Penthouse Staff, Chef and Ingram's Bodyguard complete Chameleon; grab the scimitar and the miniature.",
+    where:"Penthouse floors 03–05: guard posts, the Floor 04 kitchen, the Floor 04 Storage room, the Study, and the living room.",disguise:"Penthouse Guard to move freely up here",item:"Coins; you will also pick up the penthouse key, scimitar and miniature",npc:"Penthouse Guard, Penthouse Staffer (drops the penthouse key), Famous Chef, Ingram's Bodyguard",
+    action:"Take all four outfits — the eleventh completes Chameleon. The Storage-room staffer (back room behind the Level 4 kitchen) drops the penthouse key (Key to the Sceptre). Grab the Ornate Scimitar in the Study (Toothpick) and the skyscraper miniature in the living room (Pocket-Sized Empire). Guard pops Elite Heat, Chef pops Hot One.",
+    warn:"Ingram's Bodyguard is the hardest of the eleven — take him only when Ingram's group splits.",
+    badges:[{c:"ch",x:"Elite Heat"},{c:"ch",x:"Hot One"},{c:"ch",x:"Key to the Sceptre"},{c:"ch",x:"Toothpick"},{c:"ch",x:"Pocket-Sized Empire"},{c:"ch",x:"Chameleon"},{c:"save",x:"SAVE HERE — before the bodyguard grab"}]}
+  ]},
+  {name:"Final area sweep", steps:[
+   {floor:"L-1 → L5",t:"Walk the remaining named areas (Discover Dubai)",
+    sum:"Mop up the easy-to-miss zones to finish all 33 areas.",
+    where:"All levels. The commonly missed ones: Deposit Room (L-1), Private Bar (L1), both L2 Security Rooms, the L3 Frisk Zone, the L5 Guest Bedroom.",disguise:"Penthouse Guard reaches the Private Bar and penthouse zones; staff reaches the rest",item:"Lockpick or crowbar for the Guest Bedroom",
+    action:"Sweep any zone not yet revealed. The Private Bar needs a Penthouse Guard specifically; the Guest Bedroom is locked by default.",
+    warn:"Many players stick at 32/33 — the culprits are the Frisk Zone and the second L2 Security Room, which are separate areas.",
+    badges:[{c:"ch",x:"Discover Dubai"}]}
+  ]}
+ ],
+ pops:["discover","breezy","rotorman","sc_terrace","wet","rotorready","sc_vent","elite","hotone","toothpick","waiter","sc_atrium","pocket","sc_heli","sceptre","chameleon"],
+ excl:"Nothing here conflicts. Easy Breezy is the reason this run starts from the default skydive — window 1 exists nowhere else."
+},
+
+{
+ title:"Mission stories — all three, in mandatory order",
+ goal:"Complete (In)Security, Bird of Prey and How the Mighty Fall in one run with save/reload, harvesting every kill and escape challenge each story unlocks.",
+ loadout:{start:"Atrium Lobby — Mastery 2",suit:"Any",
+  items:["Silenced pistol — for the chandelier rope","Sniper rifle — required for Conserving Ammunition in the sealed lounge (bring in ICA Briefcase Mk III, Mastery 7, or stage at the Penthouse Supply Room pickup, Mastery 6)","Coins","Lockpick"]},
+ prereq:"ORDER IS MANDATORY: (In)Security \u2192 Bird of Prey \u2192 How the Mighty Fall. Each story ends by isolating a target for a kill, and that kill ends every other story needing him. (In)Security isolates Stuyvesant; Bird of Prey isolates Ingram; How the Mighty Fall needs BOTH alive, so it must be last. Save before each payoff, take the kill, then reload with the target alive.",
+ sections:[
+  {name:"Story 1 — (In)Security", steps:[
+   {floor:"L2",t:"Overhear the bodyguard setup",
+    sum:"Two guards mention a new bodyguard for Stuyvesant, unknown by sight, starting today.",
+    where:"Level 2 Security Room (a named area).",action:"Track (In)Security from the Mission Stories menu and listen in. This opens the recruit-impersonation branch.",
+    badges:[]},
+   {floor:"L0",t:"Get the recruit's orders and disguise",
+    sum:"Take the papers from the changing room, then take the recruit's uniform.",
+    where:"Level 0 kitchen/changing area.",item:"The recruit's orders (on the changing-room bench)",npc:"The missing recruit",
+    action:"Grab the papers from the bench first, then lure the recruit somewhere quiet, subdue him and take his uniform. A spare guard outfit is also on a Laundry-room shelf if you need one.",
+    warn:"Take the papers before the man — reporting in without the orders wastes the trip.",
+    badges:[{c:"save",x:"SAVE HERE — orders + disguise"}]},
+   {floor:"L2",t:"Report in, then push Marcus off the balcony",
+    sum:"Hand over the orders, throw four knives, then push Stuyvesant over the edge.",
+    where:"Security Office, then the demonstration balcony.",disguise:"The recruit's uniform",item:"Wrench or blunt object (to clear balcony witnesses)",npc:"Marcus Stuyvesant",
+    action:"Present yourself, hand Marcus the orders, follow him to the balcony, hit the four swinging targets with knives. He dismisses his last guard and stands at the edge — push him from directly behind. Registers as an accident, so Silent Assassin is preserved. Pops Vertical Approach and, automatically, Someone Could Hurt Themselves.",
+    warn:"Save before the push and RELOAD after the challenges register — Stuyvesant must be alive for Story 3.",
+    badges:[{c:"ch",x:"Mission Story - (In)Security"},{c:"ch",x:"Vertical Approach"},{c:"ch",x:"Someone Could Hurt Themselves"},{c:"save",x:"SAVE HERE — before the push"}]}
+  ]},
+  {name:"Story 2 — Bird of Prey", steps:[
+   {floor:"L1 → L3",t:"Become Kazem and pass the frisk",
+    sum:"Take Kazem's disguise, stash illegal gear, and meet the assistant past the frisk.",
+    where:"Level 1 Garden, then up past the Level 3 frisk zone.",disguise:"Zana Kazem (Assassin)",npc:"Zana Kazem; Omar Al-Ghazali's assistant (yellow attire)",item:"Stash weapons/tools before the frisk",
+    action:"Subdue Kazem, take his outfit, stash anything illegal before the frisk, then talk to the assistant in yellow and follow her to the Conference Room. Wait for Ingram.",
+    warn:"The frisk strips illegal items — stash them somewhere retrievable first.",
+    badges:[{c:"ch",x:"Wet Worker"}]},
+   {floor:"L1",t:"Photograph Hans Lucht incapacitated",
+    sum:"Ingram tasks you with the journalist; lead Lucht away, subdue him, photograph him.",
+    where:"Lucht walks between the Black Gold Bar and the speech podium.",npc:"Hans Lucht — purple blazer",item:"Camera",
+    action:"Talk to Lucht (he then follows you), walk him somewhere secluded, subdue him, and photograph his head. Return the photo to the assistant and follow her into the Penthouse.",
+    badges:[]},
+   {floor:"L4",t:"Impale Ingram on the oil-rig model",
+    sum:"When Ingram faces his desk statue, push him from behind onto it.",
+    where:"Ingram's Penthouse office, at the desk.",npc:"Carl Ingram",
+    action:"Approach Ingram to finish the story. He briefly faces the golden oil-rig model on his desk — push him from behind onto it. One guard reacts; subdue him immediately. Pops Black Gold Eye.",
+    warn:"The window is only a few seconds. Save before it; RELOAD after — Ingram must be alive for Story 3.",
+    badges:[{c:"ch",x:"Mission Story - Bird Of Prey"},{c:"ch",x:"Black Gold Eye"},{c:"save",x:"SAVE HERE — before the push"}]}
+  ]},
+  {name:"Story 3 — How the Mighty Fall", steps:[
+   {floor:"L0 → L3",t:"Reach the Server Room via the scenic route",
+    sum:"Enter the Staff Area (code 4706), climb the exterior, and change into Maintenance for the Server Room.",
+    where:"Staff Area entrance one level above the default start; then the exterior climb to the Storage/Server Room.",disguise:"Staff, then Maintenance for the server floor",item:"Keypad code 4706",
+    action:"Enter 4706 at the Staff Area keypad, take a staff outfit from the man by the cabinet, follow the scenic route out the window and up the pipe, then take the Maintenance Staffer's outfit in the Storage Room, which leads into the Server Room.",
+    badges:[]},
+   {floor:"L3",t:"Hack the Server Room without the silent alarm (Chip and Dip)",
+    sum:"Get the keycard from the workers behind the server room BEFORE pulling any rack.",
+    where:"Server Room and the corridor behind it.",npc:"Two workers in blue (drop a keycard)",item:"Their dropped keycard",
+    action:"Do NOT pull a rack first. Subdue the two blue workers behind the room, take their keycard, return — a platform rises. Swipe, read which rack shows YELLOW text, pull only that one, and re-order the schedule. Zero wrong pulls = no silent alarm.",
+    warn:"Which rack is correct is randomised; green text always alarms. One wrong pull loses Chip and Dip for the run — save before entering.",
+    badges:[{c:"ch",x:"Chip and Dip"},{c:"save",x:"SAVE HERE — before the Server Room"}]},
+   {floor:"L3",t:"Open all elevators, then dump a body (High Rise Drop)",
+    sum:"The console opens every lift; use an open shaft for High Rise Drop.",
+    where:"The Server Room console; shafts at Level -1 Atrium, Floor 02 staff corridor, Floor 03.",npc:"Any NPC to knock out",
+    action:"At the console, open the building's elevators (also lets you disable cameras). Then knock someone out, drag them to any open shaft and dump them for High Rise Drop.",
+    badges:[{c:"ch",x:"High Rise Drop"},{c:"save",x:"SAVE HERE — elevators open"}]},
+   {floor:"L3 → L4",t:"Seal the Lounge with both targets",
+    sum:"Take the Penthouse Guard outfit and activate Secure Meeting to isolate both targets.",
+    where:"Vending machine outside the Server Room, then the central Lounge.",disguise:"Penthouse Guard",npc:"Carl Ingram and Marcus Stuyvesant",
+    action:"Take the Penthouse Guard's outfit at the vending machine, go up to the Lounge, and activate the Secure Meeting panel behind the counter (Instinct highlights it). The guards leave and both targets are sealed in alone.",
+    badges:[{c:"ch",x:"Mission Story - How The Mighty Fall"},{c:"ch",x:"Elite Heat"},{c:"save",x:"SAVE HERE — the instant the room seals"}]},
+   {floor:"L4",t:"Chandelier, then sniper — via reloads",
+    sum:"Impactful Art needs both under the chandelier; Conserving Ammunition needs both in one sniper shot.",
+    where:"The sealed Lounge.",item:"Silenced pistol (chandelier rope); sniper rifle (double kill)",npc:"Both targets",
+    action:"Impactful Art: knock BOTH out (don't kill), drag both under the chandelier, shoot the rope. Reload. Conserving Ammunition: wait until they stand together in front of the TV and put one sniper bullet through both heads. Reload.",
+    warn:"These are mutually exclusive — do one, reload to the seal save, do the next.",
+    badges:[{c:"ch",x:"Impactful Art"},{c:"ch",x:"Conserving Ammunition"},{c:"ch",x:"Eliminate Carl Ingram"},{c:"ch",x:"Eliminate Marcus Stuyvesant"}]},
+   {floor:"L-1/L2/L3",t:"Bank all four escapes by reloading",
+    sum:"With both dead and lifts open, take each exit, reload, and take the next.",
+    where:"Penthouse-level lift, Floor 02 staff lift, Level -1 Atrium lift, and the roof parachute exit.",
+    action:"From a both-dead save: exit via the penthouse lift (Grand Connection), reload; the staff lift (Servant Exit), reload; the Atrium lift (Ground Floor, Please), reload; and the roof edge by parachute (Here Goes Nothing). Progress persists through reloads.",
+    badges:[{c:"ch",x:"Grand Connection"},{c:"ch",x:"Servant Exit"},{c:"ch",x:"Ground Floor, Please"},{c:"ch",x:"Here Goes Nothing"},{c:"save",x:"SAVE HERE — both dead, before any exit"}]}
+  ]}
+ ],
+ pops:["ms_insec","vertical","someone","ms_bird","blackgold","ms_htmf","chip","highrise","impactful","conserv","grand","servant","ground","heregoes","t_ingram","t_stuy","wet","elite"],
+ excl:"Every target kill here is mutually exclusive with every other — the reloads are not optional. Silent Assassin is impossible in this run: the default Server Room path alarms by design (do the alarm-free version only for Chip and Dip)."
+},
+
+{
+ title:"Evacuation run — trigger, parachutes, bananas",
+ goal:"Set up and trigger the emergency evacuation, then harvest the challenges that exist only inside it plus the helicopter and skydiving-suit escapes.",
+ loadout:{start:"Atrium Lobby — Mastery 2",suit:"Any",
+  items:["Assault rifle or any accurate weapon (or take one from an evacuating guard)","Any knife — to sabotage chutes on the wall","Coins","—"]},
+ prereq:"The evacuation is a timed, one-way script with a hard fail state. Grab the helicopter key first — 47 taking it is what makes the pilot 'lose' his keys and diverts the targets to parachute. Stage everything before you swipe the panels.",
+ sections:[
+  {name:"Setup", steps:[
+   {floor:"L2 → L3",t:"Grab the helicopter key and the evacuation keycard",
+    sum:"The key diverts the targets to parachute and enables your helicopter escape; the keycard is in safe 6927.",
+    where:"Helicopter key on the L2 walkway below the helipad ladder; evacuation keycard in the Level 3 Security Room safe.",disguise:"Penthouse Guard for the Security Room",item:"Helicopter key; safe code 6927; grab a banana here too",
+    action:"Take the helicopter key, then open the Security Room safe (6927) for the evacuation keycard (For Emergencies Only) and pocket the banana inside. A second banana is in the Level 0 Staff Meeting Room.",
+    badges:[{c:"ch",x:"For Emergencies Only"},{c:"ok",x:"safe 6927 — 3 sources"},{c:"save",x:"SAVE HERE — key + keycard + banana"}]},
+   {floor:"L4/L5",t:"Place a banana peel and sabotage the chutes",
+    sum:"Set the slip trap at the jump point and cut the wall-mounted parachutes.",
+    where:"The roof jump-off point; the parachutes hang on the wall by the evacuation alarm.",item:"Banana (place, don't throw); knife",
+    action:"Equip the banana and PLACE the peel (hold both bumpers + Triangle/Y) at the jump-off point for Flying Monkey Business. Then cut the chutes on the wall with the knife — sabotaging them beforehand is far cleaner than shooting them mid-air.",
+    warn:"Placing (not throwing) the peel is required, and it often needs 2\u20133 attempts — save before placing.",
+    badges:[{c:"ch",x:"Flying Monkey Business"},{c:"save",x:"SAVE HERE — before placing the peel"}]}
+  ]},
+  {name:"Trigger and kill", steps:[
+   {floor:"L4 & L5",t:"Trigger the evacuation (Geronimo)",
+    sum:"Swipe the keycard readers on both penthouse panels to start the lockdown.",
+    where:"Wall panels on Penthouse Floor 04 and Floor 05.",item:"Evacuation keycard",npc:"Both targets (escorted by guards)",
+    action:"Swipe both panels. This fires Geronimo. The targets are escorted toward the helipad, redirected to put on skydiving suits (because the pilot's keys are gone), and sent to the golfing balcony to jump.",
+    warn:"After they jump you have a 20-second window to kill both or the mission fails. Save immediately before swiping.",
+    badges:[{c:"ch",x:"Geronimo"},{c:"save",x:"SAVE HERE — before swiping"}]},
+   {floor:"L5 roof",t:"Eliminate both in the air (Mile High Drop)",
+    sum:"They jump with sabotaged chutes, or you shoot the chutes as they fall.",
+    where:"The golfing balcony / roof edge.",item:"Assault rifle if shooting chutes",npc:"Both targets",
+    action:"If you sabotaged the chutes, they fall on their own. Otherwise shoot both chutes in the air with the rifle. Pops Mile High Drop for the kills.",
+    badges:[{c:"ch",x:"Mile High Drop"},{c:"ch",x:"Eliminate Carl Ingram"},{c:"ch",x:"Eliminate Marcus Stuyvesant"}]}
+  ]},
+  {name:"Two exits from one save", steps:[
+   {floor:"L3 / entry",t:"Helicopter, then reload for the skydiving suit",
+    sum:"Escape by helicopter, reload, then exit in the skydiving suit.",
+    where:"Level 3 Helipad; then the suit rack at your original entry point.",item:"Helicopter key; skydiving suit",
+    action:"From a both-dead save: escape by helicopter (Up and Away). Reload, take the skydiving suit from the rack where you first entered the building, and exit any other way (Suiting Attire).",
+    badges:[{c:"ch",x:"Up and Away"},{c:"ch",x:"Suiting Attire"},{c:"save",x:"SAVE HERE — both dead, before exit"}]}
+  ]}
+ ],
+ pops:["emerg","monkey","geronimo","milehigh","upaway","suiting","t_ingram","t_stuy"],
+ excl:"The evacuation is exclusive with every other kill method and with the mission stories — a story that isolates a target conflicts with the lockdown moving him."
+},
+
+{
+ title:"The Classics — Silent Assassin, Suit Only",
+ goal:"A clean suit-only, silent kill on both targets, then a normal exit. Buys four Classics and both target kills — nothing else. Stacking here is how people lose Silent Assassin.",
+ loadout:{start:"Atrium Lobby — Mastery 2",suit:"Signature Suit (must be a suit, not a disguise)",
+  items:["Fiber Wire","Silenced pistol","Coins","—"]},
+ prereq:"The Helipad Ladder shortcut must already be open from Run 1 — it is the only suit-friendly crossing between the party floors and the Penthouse (Gameranx, TheGamer and PCGamesN agree).",
+ sections:[
+  {name:"Stuyvesant", steps:[
+   {floor:"L0 → L2",t:"Reach the Level 2 Security wing",
+    sum:"Sprint up via the Black Gold Bar's hidden staircase to catch Stuyvesant early.",
+    where:"Up the grand stairs, left past the Black Gold Bar, up the staircase behind the blue drapes, through the double doors.",disguise:"None (all public in a suit)",
+    action:"Rush so you arrive while Stuyvesant is still with the guards in the Security Room. Close the doors behind you.",
+    badges:[{c:"save",x:"SAVE HERE — before the corridor"}]},
+   {floor:"L2",t:"Separate and kill Marcus",
+    sum:"Isolate him from his bodyguard, then fiber-wire him or drop the gallery chandelier.",
+    where:"Corridor between the Security Room window and the Staff Hallway; or the Art Gallery.",disguise:"None",item:"Fiber wire (for Piano Man) or silenced pistol (for the chandelier rope)",npc:"Stuyvesant's bodyguard (by post), then Marcus",
+    action:"Subdue the bodyguard in the corridor, stash him in the left-end cupboard, and drop his pistol near your entry so the escort peels off. Then fiber-wire Marcus when he passes alone (pops Piano Man), or shoot the Art Gallery chandelier rope as he walks beneath it (accident, no body).",
+    warn:"A found body ends Silent Assassin. Watch the roaming Staff-Hallway guard before committing.",
+    badges:[{c:"ch",x:"Eliminate Marcus Stuyvesant"},{c:"ch",x:"Piano Man (fiber-wire method)"},{c:"save",x:"SAVE HERE — body hidden"}]}
+  ]},
+  {name:"Ingram and exit", steps:[
+   {floor:"L2 → L4",t:"Cross to the Penthouse via the helipad ladder",
+    sum:"Use the shortcut to skip the frisk zone into the penthouse in a suit.",
+    where:"Along the balcony to the helipad ladder, up, then toward the ventilation-room ladder.",disguise:"None",
+    action:"Climb the (already-unlocked) helipad ladder. Move behind the patrolling guards; use coins to reposition, never to bunch them.",
+    warn:"Requires Run 1's shortcut — the ladder does not open during this run.",
+    badges:[]},
+   {floor:"L4/L5",t:"Kill Ingram silently, then exit",
+    sum:"Eliminate Ingram, hide the body, and leave via the Atrium lift.",
+    where:"The Penthouse; exit at the Level -1 Atrium lift.",disguise:"None",item:"Silenced pistol or fiber wire",npc:"Carl Ingram",
+    action:"Coin single guards out of sightlines, never two at once, and take Ingram from concealment. Every body goes in a container. Retrace to the Atrium lift and leave. If the Penthouse proves unworkable in a suit, reroute to the Floor 05 railing push (see Run 6's Steep Task — an accident kill, Silent Assassin safe). Silent Assassin, Suit Only and Suit Only resolve at the debrief.",
+    warn:"If caught on camera, erase the recorders (two on Level 2, per NamuWiki) before exiting.",
+    badges:[{c:"ch",x:"Eliminate Carl Ingram"},{c:"ch",x:"Silent Assassin"},{c:"ch",x:"Silent Assassin, Suit Only"},{c:"ch",x:"Suit Only"},{c:"save",x:"SAVE HERE — before the kill"}]}
+  ]}
+ ],
+ pops:["c_sa","c_saso","c_so","t_ingram","t_stuy","piano"],
+ excl:"Mutually exclusive with every disguise-based challenge, Cashing Out, and the Server Room alarm. Do not stack anything onto this run."
+},
+
+{
+ title:"Sniper Assassin — the last Classic",
+ goal:"A short dedicated run for the one Classic that can't share suit-only routing: both targets by sniper rifle while staying Silent Assassin.",
+ loadout:{start:"Atrium Lobby — Mastery 2, or Art Installation — Mastery 7",suit:"Signature Suit",
+  items:["Sniper rifle (Druzhina 34 DTI at Mastery 15, or any silenced sniper)","Coins","Lockpick","—"]},
+ prereq:"The rifle must be smuggled in, which is why this cannot combine with Suit Only.",
+ sections:[
+  {name:"Setup and execution", steps:[
+   {floor:"varies",t:"Stage the rifle",
+    sum:"Bring it in a briefcase or stage it at an agency pickup near the targets.",
+    where:"ICA Briefcase Mk III (Mastery 7), or the Penthouse Supply Room pickup (Mastery 6).",item:"Sniper rifle",
+    action:"Get the rifle onto the same floor band as the targets. Scout for a concealed line of sight before firing — no source documents fixed nests, so this is manual.",
+    badges:[{c:"unv",x:"UNVERIFIED — no published nest positions"}]},
+   {floor:"varies",t:"Two silent sniper kills",
+    sum:"Take both from concealment and leave before any body is found.",
+    where:"Concealed vantage points over each target.",item:"Sniper rifle",npc:"Both targets",
+    action:"Fire only when the target is out of everyone's sightline, and be gone before a patrol returns. Pops Straight Shot (headshot) and Sniper Assassin. The Classics fires once all four Classics are done (this plus Run 4).",
+    warn:"A found body breaks Silent Assassin — save before each shot.",
+    badges:[{c:"ch",x:"Sniper Assassin"},{c:"ch",x:"Straight Shot"},{c:"ch",x:"The Classics"},{c:"save",x:"SAVE HERE — before each shot"}]}
+  ]}
+ ],
+ pops:["c_sniper","c_all","straight"],
+ excl:"Cannot combine with Run 4 (Suit Only forbids the smuggle route). Every disguise challenge is off while Silent Assassin is live."
+},
+
+{
+ title:"Social engineering — poison, photos and the Sheikh",
+ goal:"The long cleanup run. The three start-of-mission challenges, the Sheikh's day, the Stuyvesant reunion, the poison and golf chains, and the umbrella challenges — all separated by saves.",
+ loadout:{start:"Art Installation — Mastery 7 (for Icarus), or Atrium Lobby (for Cashing Out)",suit:"Any",
+  items:["Emetic Poison Vial (Mastery 5) or ICA Pen Syringe Emetic (Chongqing Mastery 5)","Lethal poison — or take Kazem's free drop in the Level 1 Garden","Camera","Explosive Golf Ball (Mastery 10) — or grab the in-level ball"]},
+ prereq:"THREE challenges are time-critical from the opening seconds and can't share one attempt: Icarus, Cashing Out and Steep Task. Do one, reload to mission start, do the next. Everything after is done in any order via save/reload.",
+ sections:[
+  {name:"Opening seconds — one per attempt", steps:[
+   {floor:"L2",t:"Icarus — electrocute Stuyvesant at the sun",
+    sum:"Fuse the sun installation, then override it as Marcus stands before it.",
+    where:"Art Gallery, Floor 02. Crowbar on the Floor 02 rooftop; fusebox in the corridor or L3 Control Room; the override panel by the sun.",disguise:"Security or Event Staff to reach the Control Room",item:"Crowbar, then the fuse",npc:"Marcus Stuyvesant",
+    action:"Take the crowbar, pry a fusebox for the fuse, climb the ladder by the sun and insert the fuse, then wait. When Marcus reaches the installation and stretches his arms before the sun, hit the override — the voltage electrocutes him.",
+    warn:"Set this up in the opening minutes; if you're slow, Marcus leaves the gallery and may not return for a long time. The Art Installation start spawns you on top of it.",
+    badges:[{c:"ch",x:"Icarus"},{c:"ch",x:"Eliminate Marcus Stuyvesant"},{c:"save",x:"SAVE HERE — fuse installed"}]},
+   {floor:"L-1 → L0",t:"Cashing Out — pacify the Sheikh with a gold bar",
+    sum:"Pry a deposit box for the gold bar, then throw it at the Sheikh during his speech.",
+    where:"Level -1 Atrium deposit boxes; the Sheikh speaks in the middle of the Atrium.",item:"Crowbar or lockpick; gold bar (and grab the whiskey bottle in another box)",npc:"The Sheikh",
+    action:"Open the deposit boxes, take the gold bar (and the whiskey — you need it later), then throw the bar at the Sheikh's head during his speech to pacify him. This is a pacify, not a kill.",
+    warn:"Do it during the speech; afterwards he roams and is hard to track. Competes with Icarus for the opening window and the same crowbar.",
+    badges:[{c:"ch",x:"Cashing Out"}]},
+   {floor:"L5",t:"Steep Task — send Ingram over the railing",
+    sum:"Catch Ingram on the Floor 05 balcony early, or pre-sabotage the railing bolt.",
+    where:"Penthouse Floor 05 balcony.",disguise:"Penthouse Guard",item:"Optional: screwdriver from Ingram's office (under the TV) for the railing bolt",npc:"Carl Ingram",
+    action:"Reach Floor 05 fast; when Ingram leans on the railing, push him from behind (accident). Alternatively, unscrew the left railing bolt in advance with the screwdriver so he falls when he leans — this removes the timing pressure.",
+    warn:"Third start-of-mission challenge — realistically needs its own attempt from a mission-start save.",
+    badges:[{c:"ch",x:"Steep Task"},{c:"ch",x:"Eliminate Carl Ingram"},{c:"save",x:"SAVE HERE — before the push"}]}
+  ]},
+  {name:"The Sheikh and the Stuyvesants", steps:[
+   {floor:"L0 → L5",t:"Nightcrawler — photograph the sleeping Sheikh",
+    sum:"Shadow the Sheikh until he naps in the Guest Bedroom, then photograph him.",
+    where:"He wanders after his speech and eventually sleeps in the Floor 05 Guest Bedroom.",disguise:"Penthouse Guard (to follow him through restricted floors)",item:"Camera; crowbar/lockpick/penthouse key for the locked bedroom",npc:"The Sheikh",
+    action:"Follow him (it can take a while) until he lies down, then photograph him asleep.",
+    warn:"Sedating him does not count — it must be the natural bedroom sleep. Get into the locked Guest Bedroom first.",
+    badges:[{c:"ch",x:"Nightcrawler"}]},
+   {floor:"L1",t:"Reunite the Stuyvesants and photograph them",
+    sum:"Pull Lucy away from Cordelia so Marcus joins his daughter, then photograph the reunion.",
+    where:"Level 1 Private Bar.",disguise:"Art Crew (for the clean method); Penthouse Guard to enter the Private Bar",item:"Camera",npc:"Lucy (artist, dark blue), Cordelia Stuyvesant, Marcus Stuyvesant",
+    action:"In the Art Crew outfit, tell Lucy her exhibit needs attention; she leaves, Cordelia is alone, and Marcus joins her when he passes. When father and daughter are together, photograph them (Precious Moments). (Poisoning Lucy's drink also works but costs Silent Assassin.)",
+    badges:[{c:"ch",x:"Meet the Stuyvesants"},{c:"ch",x:"Precious Moments"},{c:"save",x:"SAVE HERE — before separating them"}]},
+   {floor:"L2",t:"Particular Palette — serve Marcus his drink",
+    sum:"Serve Stuyvesant whiskey at the art gallery bar as a waiter.",
+    where:"Level 2 Balcony Bar (the art gallery bar).",disguise:"Waiter",item:"Whiskey bottle (Level -1 deposit box, or storage behind the Black Gold Bar)",npc:"Marcus Stuyvesant",
+    action:"Place the whiskey on the tray, select it to serve, and offer Marcus a glass as he passes. Can be dosed with emetic (chains into Hold My Hair) or lethal poison first.",
+    badges:[{c:"ch",x:"Particular Palette"},{c:"save",x:"SAVE HERE — bottle in hand"}]}
+  ]},
+  {name:"Ingram — poison and golf (reload between each)", steps:[
+   {floor:"L4",t:"Pick Your Poison — poisoned food",
+    sum:"As the Chef, poison Ingram's plate with LETHAL poison and ring the bell.",
+    where:"Penthouse Floor 04 kitchen.",disguise:"Famous Chef",item:"Lethal poison (Kazem's drop or Berlin Mastery 10); coins to lure the chef",npc:"The Famous Chef; Carl Ingram",
+    action:"Coin the chef into the back room, subdue him, take his outfit (pops Hot One). Prepare the plate, add lethal poison, ring the bell, and wait for Ingram to eat. Fires Tasteless, Traceless automatically.",
+    warn:"Lethal poison only — emetic does nothing for this challenge.",
+    badges:[{c:"ch",x:"Pick Your Poison"},{c:"ch",x:"Tasteless, Traceless"},{c:"ch",x:"Hot One"},{c:"ch",x:"Eliminate Carl Ingram"},{c:"save",x:"SAVE HERE — before poisoning"}]},
+   {floor:"L4/L5",t:"Hold My Hair — emetic, then drown him",
+    sum:"Reload and give Ingram emetic instead; drown him at the toilet.",
+    where:"Deliver via syringe, the kitchen plate, or a dosed Study glass; he heads to a toilet.",item:"Emetic poison",npc:"Carl Ingram",
+    action:"Dose Ingram with emetic, follow him to the toilet, and drown him in the bowl.",
+    warn:"Reload to before the Pick Your Poison kill first — both target Ingram and each ends the other.",
+    badges:[{c:"ch",x:"Hold My Hair"},{c:"ch",x:"Eliminate Carl Ingram"},{c:"save",x:"SAVE HERE — before poisoning"}]},
+   {floor:"L4/L5",t:"Disturbing the Peace + Angry Birdy",
+    sum:"Plant the golf ball, then disturb Ingram with noise until he plays golf and explodes.",
+    where:"Golf ball in the basket on the Floor 04/terrace driving range; vacuum by his Master Suite (L5) door; radio in the Study (L3).",disguise:"Penthouse Guard",item:"Explosive golf ball (Mastery 10 or the in-level ball in the closet by the toolbox)",npc:"Carl Ingram",
+    action:"Place the explosive ball in the driving-range basket first. Then, while Ingram is on his dictaphone, turn on the vacuum (Disturbing the Peace pops), and when he resumes, the radio. He storms off to golf, hits the explosive ball and dies (Angry Birdy).",
+    warn:"Ball first — once he's walking to the green it's too late. Sources vary on whether one or two disturbances are needed; keep a third noise source ready.",
+    badges:[{c:"ch",x:"Disturbing the Peace"},{c:"ch",x:"Angry Birdy"},{c:"ch",x:"Eliminate Carl Ingram"},{c:"save",x:"SAVE HERE — ball placed, before the noise"}]}
+  ]},
+  {name:"Umbrella cleanup", steps:[
+   {floor:"any",t:"Piano Man, Straight Shot, Versatile Assassin",
+    sum:"Mop up any Versatile components still open; the umbrella then pops on its own.",
+    where:"Anywhere with a clean shot or a behind-the-back approach.",item:"Fiber wire (Piano Man); any firearm (Straight Shot)",npc:"Either target",
+    action:"If not already banked in Runs 4\u20135: fiber-wire a target for Piano Man and headshot one for Straight Shot. Versatile Assassin fires once Piano Man, Someone Could Hurt Themselves, Hold My Hair, Straight Shot and Tasteless, Traceless are all done — it does not need them in one run.",
+    badges:[{c:"ch",x:"Piano Man"},{c:"ch",x:"Straight Shot"},{c:"ch",x:"Versatile Assassin"}]}
+  ]}
+ ],
+ pops:["icarus","cashing","steep","night","meetstuy","precious","palette","poison","tasteless","hotone","hold","disturb","angry","piano","straight","versatile","t_ingram","t_stuy"],
+ excl:"Icarus, Cashing Out and Steep Task each need the opening minutes — separate attempts. All Ingram kill methods here are mutually exclusive; reload between each."
+}
+];
+
+/* ============ STATE ============ */
+let done={},stepsDone={},mem=false;
+function reportProgress(){try{const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r['m19']={done:CHALLENGES.filter(c=>done[c[0]]).length,total:CHALLENGES.length,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
+async function load(){
+  try{const a=localStorage.getItem("dubai3:ch");if(a)done=JSON.parse(a);}catch(e){}
+  try{const b=localStorage.getItem("dubai3:st");if(b)stepsDone=JSON.parse(b);}catch(e){}
+}
+async function save(){try{
+  localStorage.setItem("dubai3:ch",JSON.stringify(done));
+  localStorage.setItem("dubai3:st",JSON.stringify(stepsDone));
+}catch(e){}reportProgress();}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;")}
+
+function renderTracker(){
+  const total=CHALLENGES.length,n=CHALLENGES.filter(c=>done[c[0]]).length;
+  tDone.textContent=n;tTotal.textContent=total;tBar.style.width=(n/total*100)+"%";
+  cats.innerHTML=CATS.map(cat=>{
+    const all=CHALLENGES.filter(c=>c[2]===cat),d=all.filter(c=>done[c[0]]).length;
+    return `<div class="cat${d===all.length?" done":""}"><div class="n">${cat}</div><div class="v">${d}<em> / ${all.length}</em></div></div>`;
+  }).join("");
+}
+
+const FIELD_ORDER=[["where","Where"],["disguise","Disguise"],["item","Item"],["npc","NPC"],["action","Action"],["warn","Warning"]];
+function renderRuns(){
+  runnav.innerHTML=RUNS.map((r,i)=>`<button data-run="${i}"><span class="rn">RUN ${String(i+1).padStart(2,"0")}</span><span class="rt">${esc(r.title.split(" \u2014 ")[0])}</span><span class="rp">${r.pops.length} challenges</span></button>`).join("");
+  runs.innerHTML=RUNS.map((r,ri)=>{
+    const items=r.loadout.items.map((it,i)=>`<div class="lo"><div class="k">Slot ${i+1}</div><div class="v">${esc(it)}</div></div>`).join("");
+    const secs=r.sections.map((sec,si)=>`<div class="sec"><h3>${esc(sec.name)}</h3>${sec.steps.map((st,i)=>{
+      const key=`${ri}-${si}-${i}`,isDone=!!stepsDone[key];
+      const rows=FIELD_ORDER.filter(([k])=>st[k]).map(([k,label])=>
+        `<div class="frow${k==="warn"?" warn":""}"><div class="fk">${label}</div><div class="fv">${esc(st[k])}</div></div>`).join("");
+      const bd=(st.badges||[]).map(b=>`<span class="b ${b.c}">${esc(b.x)}</span>`).join("");
+      return `<div class="step${isDone?" done":""}" data-key="${key}">
+        <div class="floor">${esc(st.floor)}</div><div class="spine"><i></i></div>
+        <div class="body">
+          <div class="step-head"><span class="sc">▸</span><div><h4>${esc(st.t)}</h4><div class="sum">${esc(st.sum)}</div></div></div>
+          ${bd?`<div class="badges">${bd}</div>`:""}
+          <div class="detail" hidden>${rows}</div>
+          <div class="rowbtns"><button class="chk" aria-pressed="${isDone}">${isDone?"Done":"Mark done"}</button></div>
+        </div></div>`;
+    }).join("")}</div>`).join("");
+    return `<article class="run${ri>0?" closed":""}" id="run-${ri}">
+      <button class="run-head" aria-expanded="${ri===0}"><span class="chev">▾</span>
+        <span><span class="rnum">RUN ${String(ri+1).padStart(2,"0")}</span>
+        <h2>${esc(r.title)}</h2><span class="goal">${esc(r.goal)}</span></span></button>
+      <div class="run-body"${ri>0?" hidden":""}>
+        <div class="loadout"><div class="lo"><div class="k">Starting location</div><div class="v">${esc(r.loadout.start)}</div></div>
+        <div class="lo"><div class="k">Suit</div><div class="v">${esc(r.loadout.suit)}</div></div>${items}</div>
+        <div class="sec"><h3>Before you start</h3><div class="prereq">${esc(r.prereq)}</div></div>
+        ${secs}
+        <div class="sec" style="padding-bottom:16px"><h3>Exclusivity</h3><div class="prereq">${esc(r.excl)}</div>
+        <div class="badges" style="margin-top:8px">${r.pops.map(id=>`<span class="b ch">${esc(nameOf(id))}</span>`).join("")}</div></div>
+      </div></article>`;
+  }).join("");
+
+  // run collapse
+  document.querySelectorAll(".run-head").forEach(h=>h.onclick=()=>{
+    const run=h.closest(".run"),body=run.querySelector(".run-body"),open=run.classList.contains("closed");
+    run.classList.toggle("closed",!open);
+    body.hidden=!open;
+    h.setAttribute("aria-expanded",String(open));
+  });
+  // step collapse
+  document.querySelectorAll(".step-head").forEach(h=>h.onclick=()=>{
+    const d=h.closest(".body").querySelector(".detail"),sc=h.querySelector(".sc");
+    d.hidden=!d.hidden; sc.textContent=d.hidden?"▸":"▾";
+  });
+  // step done
+  document.querySelectorAll(".chk").forEach(b=>b.onclick=async e=>{
+    e.stopPropagation();
+    const step=b.closest(".step"),k=step.dataset.key;
+    stepsDone[k]=!stepsDone[k];
+    step.classList.toggle("done",stepsDone[k]);
+    b.setAttribute("aria-pressed",String(!!stepsDone[k]));
+    b.textContent=stepsDone[k]?"Done":"Mark done";
+    await save();
+  });
+  // nav
+  runnav.querySelectorAll("button").forEach(b=>b.onclick=()=>{
+    const i=+b.dataset.run,run=document.getElementById("run-"+i);
+    if(run.classList.contains("closed"))run.querySelector(".run-head").click();
+    run.scrollIntoView({behavior:"smooth",block:"start"});
+  });
+}
+
+let filter="All";
+function renderList(){
+  const fs=["All","Assassination","Discovery","Feats","Targets","Classics","Incomplete","Has note"];
+  filters.innerHTML=fs.map(f=>`<button data-f="${f}" aria-pressed="${f===filter}">${f}</button>`).join("");
+  filters.querySelectorAll("button").forEach(b=>b.onclick=()=>{filter=b.dataset.f;renderList();});
+  clist.innerHTML=CHALLENGES.map(([id,name,cat,cond,xp,note])=>{
+    const show=filter==="All"||filter===cat||(filter==="Incomplete"&&!done[id])||(filter==="Has note"&&note);
+    const xpTxt=xp?`XP: ${xp} (source-confirmed)`:"XP: not published";
+    return `<label class="clitem${done[id]?" done":""}"${show?"":" hidden"}>
+      <input type="checkbox" data-id="${id}"${done[id]?" checked":""}>
+      <span><span class="ctag">${esc(cat)}</span><div class="cname">${esc(name)}</div>
+      <div class="ccond">${esc(cond)}</div>
+      <div class="cmeta">Official game data · ${esc(xpTxt)}</div>
+      ${note?`<div class="cnote">${esc(note)}</div>`:""}</span></label>`;
+  }).join("");
+  clist.querySelectorAll("input").forEach(i=>i.onchange=async()=>{
+    done[i.dataset.id]=i.checked;
+    i.closest(".clitem").classList.toggle("done",i.checked);
+    renderTracker();await save();
+    if(filter==="Incomplete")renderList();
+  });
+}
+
+function renderConf(){
+  document.getElementById("p-conf").innerHTML=`<div class="run"><div style="padding:16px 18px">
+    <h2 style="font-size:24px">Source conflicts</h2>
+    <p class="goal" style="color:var(--paper-dim);font-size:13px;margin-top:4px">Every remaining place two sources disagree. The challenge names and conditions themselves are no longer in doubt — those come from your in-game export. These are method-level disagreements only.</p>
+    <table class="cx"><tr><th>Subject</th><th>The disagreement</th><th>How this guide handles it</th></tr>
+    ${CONFLICTS.map(c=>`<tr><td><b style="color:#fff">${esc(c[0])}</b></td><td>${esc(c[1])}</td><td>${esc(c[2])}</td></tr>`).join("")}
+    </table></div></div>`;
+}
+
+function renderRef(){
+  document.getElementById("p-ref").innerHTML=`<div class="run"><div style="padding:16px 18px">
+  <h2 style="font-size:24px">Reference</h2>
+  <div class="sec" style="padding:12px 0 0"><h3>Escalations (not part of the 58)</h3>
+  <div class="prereq">The Phoenix Ascension, The Asmodeus Waltz (1) and The Asmodeus Waltz (2) are separate Dubai escalation contracts. They are not in the mission challenge export and are excluded from the tracker. Start the escalation to get Waltz (2); complete all its levels for Waltz (1) and Phoenix Ascension.</div></div>
+  <div class="sec"><h3>Starting locations (mastery confirmed by 3 sources)</h3>
+  <div class="prereq">Default skydive (no mastery, 1 tool, only start reaching window 1) · Atrium Lobby (2) · Meeting Room (4) · Art Installation (7, spawns at Icarus) · Guard Room (11) · Penthouse (19).</div></div>
+  <div class="sec"><h3>Codes &amp; items</h3>
+  <div class="prereq">Staff Area keypad 4706 · Level 3 Security Room safe 6927 (evacuation keycard) · crowbars: Floor 02 rooftop, restricted-access stairs, ventilation room · bananas: L3 Security Room, L0 Staff Meeting Room (third reported in the L0 Meeting Room) · screwdriver under Ingram's office TV (railing bolt) · whiskey: L-1 deposit box or storage behind the Black Gold Bar · explosive golf ball: Mastery 10 or in-level in the closet by the toolbox.</div></div>
+  <div class="sec"><h3>Run order &amp; the core trick</h3>
+  <div class="prereq">Order 1\u21922\u21923\u21924\u21925\u21926 as numbered. Run 1 is first because shortcuts unlock permanently and Run 4's suit-only crossing needs the helipad ladder open. Runs 2\u20133 build the mastery that unlocks the items later runs assume. The whole structure rests on one confirmed mechanic: a challenge registers the instant it completes and persists through manual saves and reloads (Steam community), so you save before a kill, take one challenge, reload, and take the next.</div></div>
+  <div class="sec" style="padding-bottom:16px"><h3>Chameleon — the 11 disguises</h3>
+  <div class="prereq">Event Security, Event Staff, Kitchen Staff (L0) · Assassin/Kazem (L1 Garden) · Maintenance, Art Crew, Pilot (L3) · Penthouse Guard, Penthouse Staff, Famous Chef, Ingram's Bodyguard (L3\u2013L5).</div></div>
+  </div></div>`;
+}
+
+document.querySelectorAll('nav.tabs>[role=tab]').forEach(t=>t.onclick=()=>{
+  document.querySelectorAll('nav.tabs>[role=tab]').forEach(x=>{
+    const on=x===t;x.setAttribute("aria-selected",String(on));
+    document.getElementById(x.getAttribute("aria-controls")).hidden=!on;
+  });
+});
+document.getElementById("reset").onclick=async()=>{done={};stepsDone={};await save();renderTracker();renderList();renderRuns();};
+(async function(){await load();renderTracker();renderRuns();renderList();renderConf();renderRef();reportProgress();})();
+</script>
+
+<!-- step-progress-bridge -->
+<script>
+/* Reports route-step ticks into 'hitman-progress-registry' so the index can
+   show them beside the challenge counts. Counts what is on screen rather than
+   any guide-specific state, so one implementation serves every guide. */
+(function(){
+  var RID="m19", SEL=".step";
+  function isDone(s){
+    var c=s.classList;
+    if(c.contains('done')||c.contains('dn')) return true;
+    if(s.getAttribute('data-done')==='1'||s.getAttribute('aria-pressed')==='true') return true;
+    return !!s.querySelector('.done,.dn,[data-done="1"],[aria-pressed="true"]');
+  }
+  function tally(){
+    var steps=document.querySelectorAll(SEL);
+    if(!steps.length) return null;
+    var n=0;
+    for(var i=0;i<steps.length;i++) if(isDone(steps[i])) n++;
+    return {steps:n,stepTotal:steps.length};
+  }
+  function push(){
+    var t;
+    try{ t=tally(); }catch(err){ return; }
+    if(!t||!t.stepTotal) return;
+    try{
+      var r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');
+      var e=r[RID]||(r[RID]={});
+      /* the guide's own reportProgress() rewrites this entry wholesale, so
+         re-add the step counts whenever they go missing or stale */
+      if(e.steps===t.steps&&e.stepTotal===t.stepTotal) return;
+      e.steps=t.steps; e.stepTotal=t.stepTotal; e.updated=Date.now();
+      localStorage.setItem('hitman-progress-registry',JSON.stringify(r));
+    }catch(err){}
+  }
+  var pending=false;
+  function schedule(){
+    if(pending) return; pending=true;
+    setTimeout(function(){pending=false;push();},120);
+  }
+  try{
+    new MutationObserver(schedule).observe(document.body,
+      {subtree:true,childList:true,attributes:true,attributeFilter:['class','aria-pressed','data-done']});
+  }catch(err){}
+  window.addEventListener('load',schedule);
+  setTimeout(push,600);
+})();
+</script>
+<!-- /step-progress-bridge -->

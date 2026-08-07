@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>World of Tomorrow — Verified Challenge Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ═══ SAPIENZA — Ether biolab dossier ═══
+   Squared, instrumented, printed on graph paper. Every run is a specimen card
+   with a vertical rail; every readout is segmented like lab equipment. */
+:root{
+  --bg:#070e11; --panel:#0d181c; --panel2:#112229; --ink:#dfe8e6; --dim:#8ba0a2; --faint:#5b7175;
+  --cyan:#4fd4c4; --amber:#e5b95c; --rust:#e2634c; --violet:#9b8ede; --sky:#63a8c4;
+  --jade:#4fd4c4; --line:#1e343b; --line-2:#16272d;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);
+  background-image:linear-gradient(var(--line-2) 1px,transparent 1px),
+                   linear-gradient(90deg,var(--line-2) 1px,transparent 1px);
+  background-size:28px 28px;background-position:-1px -1px;
+  font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:14.5px;line-height:1.62;
+  -webkit-font-smoothing:antialiased}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 90px}
+code{font-family:"IBM Plex Mono",monospace;font-size:.88em;background:var(--panel2);
+  border:1px solid var(--line);padding:1px 5px;color:var(--cyan)}
+
+/* ── masthead: a specimen label ─────────────────────────── */
+.backlink{display:inline-block;margin:22px 0 0;font-family:"IBM Plex Mono",monospace;
+  font-size:11px;letter-spacing:.1em;color:var(--faint);text-decoration:none}
+.backlink:before{content:"◄ "}
+.backlink:hover{color:var(--cyan)}
+.mast{border:1px solid var(--line);background:var(--panel);margin:16px 0 22px;
+  padding:0;position:relative}
+.mast:before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--cyan)}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--bg);background:var(--cyan);margin:0;
+  padding:6px 18px 6px 22px;display:block}
+h1{font-size:clamp(27px,5.4vw,46px);font-weight:700;letter-spacing:-.025em;line-height:1.04;
+  margin:0;padding:22px 22px 0}
+h1 em{font-style:normal;font-weight:400;color:var(--faint);font-size:.42em;
+  display:block;margin-top:8px;letter-spacing:0}
+.facts{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--dim);
+  margin:0;padding:16px 22px 20px;line-height:1.95;border-top:1px dashed var(--line);
+  margin-top:20px}
+.facts b{color:var(--ink);font-weight:500}
+
+/* ── tracker: an instrument readout ─────────────────────── */
+.tracker{border:1px solid var(--line);background:var(--panel);margin-bottom:20px}
+.tracker-top{display:flex;justify-content:space-between;align-items:center;gap:14px;
+  flex-wrap:wrap;padding:11px 16px;border-bottom:1px solid var(--line);background:var(--panel2)}
+.tracker-top h2{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--faint);margin:0;font-weight:500}
+.tally{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--dim);margin:0}
+.tally b{color:var(--cyan);font-size:19px;font-weight:600}
+.bar{height:10px;background:repeating-linear-gradient(90deg,var(--line-2) 0 4px,transparent 4px 6px);
+  border-bottom:1px solid var(--line);overflow:hidden;position:relative}
+.bar span{display:block;height:100%;width:0;
+  background:repeating-linear-gradient(90deg,var(--cyan) 0 4px,transparent 4px 6px);
+  transition:width .4s ease}
+.cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+.cat{padding:12px 16px;border-right:1px solid var(--line-2)}
+.cat:last-child{border-right:0}
+.cat .n{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--faint);display:block;margin-bottom:6px}
+.cat .v{font-family:"IBM Plex Mono",monospace;font-size:20px;font-weight:600;line-height:1}
+.cat .v em{font-style:normal;font-size:12px;color:var(--faint)}
+.cat .mb{display:block;height:6px;margin-top:9px;
+  background:repeating-linear-gradient(90deg,var(--line-2) 0 3px,transparent 3px 5px)}
+.cat .mb i{display:block;height:100%;width:0;transition:width .3s ease}
+.resetbtn{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.1em;
+  text-transform:uppercase;background:var(--bg);border:1px solid var(--line);
+  color:var(--faint);padding:4px 9px;cursor:pointer}
+.resetbtn:hover{color:var(--rust);border-color:var(--rust)}
+
+/* ── tabs: instrument switches ──────────────────────────── */
+.tabs{display:flex;gap:-1px;margin-bottom:20px;flex-wrap:wrap}
+.tab{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.11em;
+  text-transform:uppercase;background:var(--panel);border:1px solid var(--line);
+  color:var(--faint);padding:9px 16px;cursor:pointer;margin-right:-1px}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected="true"]{color:var(--bg);background:var(--cyan);border-color:var(--cyan);
+  font-weight:600;position:relative;z-index:2}
+.panel[hidden]{display:none}
+
+/* ── run nav ────────────────────────────────────────────── */
+.runnav{display:flex;gap:0;flex-wrap:wrap;margin-bottom:18px;position:sticky;top:0;
+  background:var(--bg);padding:10px 0;z-index:20;border-bottom:1px solid var(--line)}
+.runnav button{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.06em;
+  background:var(--panel);border:1px solid var(--line);color:var(--dim);padding:6px 10px;
+  cursor:pointer;margin:0 -1px -1px 0}
+.runnav button:hover{color:var(--ink);background:var(--panel2)}
+.runnav button.hot{color:var(--bg);background:var(--amber);border-color:var(--amber);font-weight:600}
+.runnav .util{margin-left:auto;display:flex}
+
+/* ── runs: specimen cards with a vertical rail ──────────── */
+.run{position:relative;padding-left:34px;border:1px solid var(--line);background:var(--panel);
+  margin-bottom:12px;scroll-margin-top:64px}
+.run:before{content:attr(data-rail);position:absolute;left:0;top:0;bottom:0;width:34px;
+  background:var(--panel2);border-right:1px solid var(--line);
+  writing-mode:vertical-rl;text-orientation:mixed;
+  font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.28em;
+  text-transform:uppercase;color:var(--faint);padding:12px 0;text-align:left}
+.run.open{border-color:var(--cyan)}
+.run.open:before{color:var(--bg);background:var(--cyan)}
+.run-head{width:100%;text-align:left;background:none;border:0;color:inherit;font:inherit;
+  padding:16px 18px;cursor:pointer;display:flex;gap:14px;align-items:flex-start}
+.run-head:hover{background:rgba(79,212,196,.04)}
+.chev{flex:0 0 auto;font-family:"IBM Plex Mono",monospace;color:var(--cyan);font-size:11px;
+  margin-top:5px;transition:transform .18s;display:inline-block}
+.run.open .chev{transform:rotate(90deg)}
+.rh{flex:1;min-width:0}
+.run-no{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.14em;
+  color:var(--amber);text-transform:uppercase}
+.run-head h3{margin:5px 0 6px;font-size:20px;font-weight:700;letter-spacing:-.015em}
+.run-head p{margin:0;color:var(--dim);font-size:13px;max-width:76ch}
+.run-prog{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--faint);
+  white-space:nowrap;margin-top:4px;border:1px solid var(--line);padding:2px 7px}
+.run-body[hidden]{display:none}
+
+.loadout{padding:0;border-top:1px solid var(--line);background:var(--bg)}
+.loadout h4{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--faint);margin:0;padding:8px 18px;
+  border-bottom:1px dashed var(--line);background:var(--panel2)}
+.lo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.lo-grid div{font-family:"IBM Plex Mono",monospace;font-size:11.5px;padding:10px 18px;
+  border-right:1px solid var(--line-2);border-bottom:1px solid var(--line-2);line-height:1.5}
+.lo-grid div span{display:block;color:var(--faint);font-size:9px;letter-spacing:.13em;
+  text-transform:uppercase;margin-bottom:3px}
+.lo-note{margin:0;padding:12px 18px;font-size:12.5px;color:var(--dim);
+  border-bottom:1px solid var(--line);background:var(--panel2)}
+
+.sect{padding:0 18px 16px}
+.sect>h4{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--cyan);margin:20px 0 10px;padding-bottom:5px;
+  border-bottom:1px solid var(--line)}
+.sect>h4:before{content:"§ "}
+
+/* steps: numbered records */
+.step{border:1px solid var(--line-2);border-left:3px solid var(--line);margin-bottom:7px;
+  background:var(--bg)}
+.step.done{border-left-color:var(--cyan);background:rgba(79,212,196,.05)}
+.step-top{display:flex;gap:10px;padding:11px 13px;align-items:flex-start}
+.snum{flex:0 0 auto;font-family:"IBM Plex Mono",monospace;font-size:10px;color:var(--faint);
+  border:1px solid var(--line);padding:1px 5px;margin-top:2px}
+.tick{flex:0 0 auto;width:20px;height:20px;border:1px solid var(--line);background:var(--panel);
+  cursor:pointer;color:transparent;font-size:12px;line-height:1;padding:0;margin-top:1px}
+.tick:hover{border-color:var(--cyan)}
+.done .tick{background:var(--cyan);border-color:var(--cyan);color:var(--bg)}
+.step-body{flex:1;min-width:0}
+.step-title{font-weight:600;font-size:14.5px;margin:0 0 6px}
+.bul{margin:0;padding:0;list-style:none;font-size:13px}
+.bul li{display:flex;gap:10px;margin-bottom:3px;line-height:1.55}
+.bul k{flex:0 0 68px;font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--faint);padding-top:3px}
+.badges{display:flex;flex-wrap:wrap;gap:4px;margin-top:9px}
+.badge{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.07em;
+  text-transform:uppercase;padding:2px 6px;border:1px solid;display:inline-block}
+.b-chal{color:var(--cyan);border-color:rgba(79,212,196,.4);background:rgba(79,212,196,.08)}
+.b-warn{color:var(--rust);border-color:rgba(226,99,76,.5);background:rgba(226,99,76,.09)}
+.b-save{color:var(--amber);border-color:rgba(229,185,92,.45);background:rgba(229,185,92,.09)}
+.b-unv{color:var(--violet);border-color:rgba(155,142,222,.45);background:rgba(155,142,222,.09)}
+.b-src{color:var(--sky);border-color:rgba(99,168,196,.4);background:rgba(99,168,196,.08)}
+.more{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.11em;
+  text-transform:uppercase;background:none;border:0;border-top:1px dashed var(--line);
+  color:var(--faint);cursor:pointer;padding:7px 13px;width:100%;text-align:left}
+.more:hover{color:var(--cyan)}
+.detail{padding:2px 13px 12px;font-size:12.5px;color:var(--dim)}
+.detail[hidden]{display:none}
+.detail dl{margin:0}
+.detail dt{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--faint);margin-top:11px}
+.detail dd{margin:3px 0 0;line-height:1.62}
+.flag{border-left:3px solid var(--rust);padding:2px 0 2px 10px;margin-top:11px;color:#f2b0a2}
+.flag.amber{border-color:var(--amber);color:#f0d69a}
+.flag.unv{border-color:var(--violet);color:#c9c1ea}
+
+/* ── checklist: a data table ────────────────────────────── */
+.filters{display:flex;gap:0;flex-wrap:wrap;margin-bottom:14px}
+.filters button{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.09em;
+  text-transform:uppercase;background:var(--panel);border:1px solid var(--line);
+  color:var(--faint);padding:6px 11px;cursor:pointer;margin:0 -1px -1px 0}
+.filters button:hover{color:var(--ink)}
+.filters button.on{color:var(--bg);background:var(--cyan);border-color:var(--cyan);font-weight:600}
+.chal{display:flex;gap:10px;padding:10px 13px;border:1px solid var(--line-2);
+  border-left:3px solid var(--line);margin-bottom:5px;background:var(--panel)}
+.chal.done{border-left-color:var(--cyan);background:rgba(79,212,196,.05)}
+.chal-main{flex:1;min-width:0}
+.chal-name{font-weight:600;margin:0;font-size:14px}
+.chal.done .chal-name{text-decoration:line-through;color:var(--faint)}
+.chal-cond{margin:2px 0 0;font-size:12.5px;color:var(--dim)}
+.chal-meta{display:flex;gap:4px;flex-wrap:wrap;margin-top:7px}
+
+/* ── audit ──────────────────────────────────────────────── */
+.audit h3{font-size:17px;margin:26px 0 10px;font-weight:700;letter-spacing:-.01em}
+.audit h3:before{content:"▚ ";color:var(--cyan)}
+.audit h3:first-child{margin-top:0}
+.audit ul{padding-left:18px;margin:0 0 14px}
+.audit li{margin-bottom:6px;color:var(--dim)}
+.audit li b{color:var(--ink)}
+.audit p{color:var(--dim)}
+table.src{font-family:"IBM Plex Mono",monospace;font-size:11.5px;border-collapse:collapse;
+  width:100%;border:1px solid var(--line)}
+table.src th,table.src td{border-bottom:1px solid var(--line-2);padding:8px 10px;
+  text-align:left;vertical-align:top;color:var(--dim)}
+table.src th{color:var(--faint);font-size:9px;letter-spacing:.13em;text-transform:uppercase;
+  font-weight:500;background:var(--panel2);border-bottom:1px solid var(--line)}
+.pass{color:var(--cyan)}.fail{color:var(--rust)}.part{color:var(--amber)}
+footer{margin-top:32px;padding:14px 16px;border:1px solid var(--line);background:var(--panel);
+  font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--faint);line-height:1.8}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (max-width:640px){
+  .run{padding-left:0}
+  .run:before{display:none}
+  .bul li{display:block}
+  .bul k{display:block;padding:0 0 2px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="mast">
+  <a class="backlink" href="../index.html">← All guides</a>
+  <p class="eyebrow">Main Campaign 03 · Sapienza, Italy · World of Assassination</p>
+  <h1>World of Tomorrow <em>— challenge run planner</em></h1>
+  <p class="facts">
+    <b>Targets:</b> Silvio Caruso (&ldquo;The Genius&rdquo;) · Francesca De Santis (&ldquo;The Scientist&rdquo;) &nbsp;·&nbsp; <b>Third objective:</b> destroy the virus<br>
+    <b>Challenges:</b> 77 — 31 Assassination · 19 Discovery · 20 Feats · 2 Targets · 5 The Classics<br>
+    <b>Tracked disguises:</b> 25 &nbsp;·&nbsp; <b>Tracked areas:</b> 47 &nbsp;·&nbsp; <b>Mission Stories:</b> 9<br>
+    <b>Runs needed:</b> 10 &nbsp;·&nbsp; <b>Route source:</b> fish's Steam challenge guide, plus new research for the SASO run
+  </p>
+</header>
+
+<section class="tracker">
+  <div class="tracker-top">
+    <h2>Progress</h2>
+    <p class="tally"><b id="tDone">0</b> / 77 challenges complete &nbsp; <button class="resetbtn" id="reset">Reset</button></p>
+  </div>
+  <div class="bar"><span id="tBar"></span></div>
+  <div class="cats" id="cats"></div>
+</section>
+
+<div class="tabs" role="tablist">
+  <button class="tab" role="tab" aria-selected="true" data-panel="runs">Optimized runs</button>
+  <button class="tab" role="tab" aria-selected="false" data-panel="checklist">Checklist</button>
+  <button class="tab" role="tab" aria-selected="false" data-panel="audit">Audit &amp; sources</button>
+</div>
+
+<div class="panel" id="p-runs">
+  <div class="runnav" id="runnav"></div>
+  <div id="runList"></div>
+</div>
+
+<div class="panel" id="p-checklist" hidden>
+  <div class="filters" id="filters"></div>
+  <div id="chalList"></div>
+</div>
+
+<div class="panel audit" id="p-audit" hidden>
+  <h3>Verification result</h3>
+  <p>All 77 challenge names and conditions come verbatim from the in-game challenge data in this repository (<code>missions/03 - World of Tomorrow.json</code>). Runs 1&ndash;9 are a conversion of fish's tested Steam route. Run 10 (Silent Assassin, Suit Only) is new — fish's SA/SO section is a video with no text — and was rebuilt from two written sources.</p>
+
+  <table class="src">
+    <thead><tr><th>Check</th><th>Result</th><th>Evidence</th></tr></thead>
+    <tbody>
+      <tr><td>Total count (77)</td><td class="pass">Pass</td><td>In-game data: <code>challengeCount: 77</code>, category sum also 77</td></tr>
+      <tr><td>Category split 31/19/20/2/5</td><td class="pass">Pass</td><td>In-game data</td></tr>
+      <tr><td>Runs 1&ndash;9 routes</td><td class="pass">Pass</td><td>fish, Steam guide 3548528503 — a written, tested 9-run route</td></tr>
+      <tr><td>All nine loadouts</td><td class="pass">Pass</td><td>Read off the nine planning-screen screenshots in that guide</td></tr>
+      <tr><td>Starting-location mastery levels</td><td class="pass">Pass</td><td>Hitman Wiki, <i>List of Mastery Unlocks by Mission</i>: Main Square 1 · ICA Safe House 2 · Mansion Kitchen 7 · Security Staff 9 · Harbor 13 · Main Square Tower 16 · Sapienza Ruins 18</td></tr>
+      <tr><td>Sapienza Ruins smuggle point (Run 9 / 10)</td><td class="pass">Pass</td><td>Same wiki list: Sapienza Ruins is the Agency Pickup at mastery 8</td></tr>
+      <tr><td>Run 9 starting location</td><td class="part">Corrected</td><td>fish's own screenshot shows "Main Square" but he writes underneath that the screenshot is wrong and you must start at the <b>Main Square Tower</b>. The text is used, the screenshot is not.</td></tr>
+      <tr><td>Sniper Assassin (Run 8)</td><td class="pass">Pass</td><td>fish's Run 8, corroborated by NamuWiki's Sapienza sniper note (church-tower position, Francesca through a window, then Silvio)</td></tr>
+      <tr><td><i>An Eye for an Eye</i> vs Sniper Assassin</td><td class="part">Conflict — resolved</td><td>fish states plainly that shooting the telescope glass does <b>not</b> count toward Sniper Assassin because the game does not score it as sniping Silvio. NamuWiki's wording points at the same church-tower <em>position</em> "referring to An Eye for an Eye", which is ambiguous. This guide follows fish and takes a direct shot on Silvio.</td></tr>
+      <tr><td>SASO route (Run 10)</td><td class="pass">Pass</td><td>Steam guide 2317857844 (full written ruins/cannon/stalactite route) + Steam guide 644994482 (independent observatory/VHS route, recorded as the alternative). The cannon accident is separately confirmed by fish's Run 7 (<i>Bogey</i>) and the stalactite accident by his Run 1 (<i>Caving In</i>).</td></tr>
+      <tr><td>Per-challenge XP values</td><td class="fail">Unverified</td><td>No source breaks the mission XP down per challenge. Not guessed, so none is shown.</td></tr>
+      <tr><td>The Bells are Ringing · Get What You Wish For</td><td class="part">Not routed</td><td>Both need a custom contract with an appropriately placed target, which fish says explicitly. They stay in the checklist, marked "Not routed".</td></tr>
+      <tr><td>Chameleon · Discover Sapienza</td><td class="part">Not routed</td><td>25 disguises and 47 areas — exploration passes, not route steps. fish excludes both and points at his separate disguise guide.</td></tr>
+      <tr><td>Bend It Like 47 · Sapienza Sports Club · Surgical Procedure</td><td class="fail">Not in dataset</td><td>fish's route unlocks these three, but none of them appears anywhere in this repository's challenge data — not in the mission file and not in the Sapienza location file. The steps that earn them are kept in the runs; they are deliberately <b>not</b> added to the 77-item checklist, because inventing checklist entries the game data does not have would corrupt the count.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Run-logic validation (simulated step by step)</h3>
+  <ul>
+    <li><b>73 of 77 challenges are assigned.</b> The four left out are The Bells are Ringing, Get What You Wish For, Chameleon and Discover Sapienza — see the table above.</li>
+    <li><b>Prerequisites precede use.</b> Run 1 takes the biolab keycard before the lab, the priest before the church, the flowers before the grave; Run 4 takes the explosive golf ball out of the safe house before crossing to the mansion; Run 9 collects both joints and the crowbar before it needs any of them.</li>
+    <li><b>The virus is handled every run.</b> Every run that is not Run 1 ends with "destroy the virus and exit" — the mission cannot be completed without it, and an unfinished mission banks nothing that requires completion.</li>
+    <li><b>Keycard shortcut.</b> After Run 1, fish notes that Francesca drops a biolab keycard when she dies, so later runs never repeat the morgue sequence.</li>
+    <li><b>Mutually exclusive kills are separated.</b> Silvio has fourteen distinct kill challenges and Francesca eight. Every run that stacks more than one puts a save between them, and the branch that is <em>kept</em> is always the last one in its section.</li>
+    <li><b>No-detection challenges are isolated.</b> Runs 1, 3 and 4 each carry one (<i>Weeding the Garden</i>, <i>Getting Your Hands Dirty</i>, <i>Pipe Down</i> / <i>BBQ Season</i>) and none of them shares a run with a different one — except Run 4, where <i>Pipe Down</i> and <i>BBQ Season</i> are both un-spotted requirements but are separated by a save.</li>
+    <li><b>The Classics capstone lands last.</b> Run 8 delivers Sniper Assassin; Run 10 delivers Silent Assassin, Silent Assassin Suit Only and Suit Only, and the capstone fires when Run 10 completes.</li>
+  </ul>
+
+  <h3>Known conflicts, bugs and ordering rules</h3>
+  <ul>
+    <li><b>BBQ Season only works on one fireplace.</b> The challenge text does not say so, but fish confirms it: the propane-down-the-chimney kill in Run 2 does <em>not</em> score BBQ Season. It must be the specific mansion fireplace on Silvio's patrol route in Run 4.</li>
+    <li><b>Run 4, the lure needs the fan.</b> After ringing the service bell in Mother Caruso's bedroom you must also switch on the fan by the rocking chair, or Silvio flees instead of entering.</li>
+    <li><b>Run 1, cook the sauce prompt.</b> In Run 3 the prompt has to actually read "cook sauce" before the spaghetti can be poisoned; interacting too early does nothing.</li>
+    <li><b>Run 5, poison the champagne early.</b> Save while Francesca is still outside the room and not too close to the door, or there is not enough time to spike the glass before she reaches it.</li>
+    <li><b>Run 7, the plane shot.</b> Fire the last cannon when the escape timer reads about 00:20 and the plane is centred on screen. It is the tightest single input in the whole mission.</li>
+    <li><b>Run 8, red guns are fine.</b> Bodies being found turns the guards hostile, but at church-tower range they only get a shot-location alert. Sniper Assassin survives as long as you are never actually compromised.</li>
+    <li><b>Difficulty:</b> the branch-and-reload structure assumes unlimited manual saves, i.e. Casual. The Classic challenges are no longer difficulty-tiered in World of Assassination.</li>
+  </ul>
+
+  <h3>Sources</h3>
+  <ul>
+    <li><b>In-game challenge data</b> (<code>missions/03 - World of Tomorrow.json</code>) — authoritative for names, conditions and counts.</li>
+    <li><b>fish, <i>HITMAN I — All Sapienza Challenges</i></b> (Steam guide 3548528503) — the nine-run route and all nine loadout screenshots. His "SA/SO" section contains a video only, no text.</li>
+    <li><b>Steam guide 2317857844</b>, <i>Sapienza Silent Assassin Suit only text guide</i> — the ruins/cannon/stalactite SASO route used for Run 10.</li>
+    <li><b>Steam guide 644994482</b>, <i>Hitman | Silent Assassin, Suit Only</i> — the alternative observatory/VHS SASO route, recorded in Run 10's notes.</li>
+    <li><b>NamuWiki</b>, <i>Hitman (game) / Challenges / Sapienza</i> — independent SASO and Sniper Assassin notes. Machine-translated from Korean.</li>
+    <li><b>Hitman Wiki</b>, <i>List of Mastery Unlocks by Mission</i> — starting locations and agency pickups with their mastery levels.</li>
+  </ul>
+</div>
+
+<footer>
+  Progress is saved in this browser and persists across reloads.<br>
+  Compiled 2 August 2026 against the in-game challenge list. Unverified detail is labelled, never filled in.
+</footer>
+</div>
+
+<script>
+const CH=[
+ {id:'a1',cat:'Assassination',name:'An Eye for an Eye',cond:'[REDACTED]',run:8},
+ {id:'a2',cat:'Assassination',name:'Pro Pain',cond:'Assassinate Francesca De Santis with a fireplace explosion.',run:2},
+ {id:'a3',cat:'Assassination',name:'Cliff Diving',cond:'Assassinate Silvio Caruso by pushing him of a cliff.',run:5},
+ {id:'a4',cat:'Assassination',name:'Walk the Plank',cond:'Assassinate Francesca De Santis with an antique cannon.',run:7},
+ {id:'a5',cat:'Assassination',name:'Bring Down the Sky',cond:'Assassinate Silvio Caruso with the solar system.',run:6},
+ {id:'a6',cat:'Assassination',name:'Silence of the Man',cond:'Assassinate Silvio Caruso by smothering him while disguised as Dr. Oscar Lafayette.',run:2},
+ {id:'a7',cat:'Assassination',name:'Caving In',cond:'Assassinate Francesca De Santis by dropping a stalactite on her.',run:1},
+ {id:'a8',cat:'Assassination',name:'Weeding the Garden',cond:'Assassinate Silvio Caruso. / Hide the body in the garden shredder. / Destroy the body with the shredder. / Do not get spotted.',run:1},
+ {id:'a9',cat:'Assassination',name:'Getting Your Hands Dirty',cond:'Become the Detective. / Assassinate Francesca De Santis during the meeting the on pier. / Do not get spotted.',run:3},
+ {id:'a10',cat:'Assassination',name:'I\'m on Fire',cond:'Assassinate both Silvio Caruso and Francesca De Santis using a single propane flask.',run:2},
+ {id:'a11',cat:'Assassination',name:'What\'s Your Poison?',cond:'Assassinate Silvio Caruso by poisoning his food.',run:3},
+ {id:'a12',cat:'Assassination',name:'My Name is Hurl',cond:'Assassinate Francesca De Santis by drowning her.',run:5},
+ {id:'a13',cat:'Assassination',name:'Shocking!',cond:'Assassinate Francesca De Santis by electrocuting her.',run:6},
+ {id:'a14',cat:'Assassination',name:'BBQ Season',cond:'Assassinate Silvio Caruso, with a fireplace explosion. / Do not get spotted.',run:4},
+ {id:'a15',cat:'Assassination',name:'Error Plane',cond:'Assassinate Silvio Caruso by shooting down his plane with an antique cannon.',run:7},
+ {id:'a16',cat:'Assassination',name:'Plague-iarism',cond:'Assassinate Silvio Caruso with an amputation knife while disguised as the Plague Doctor.',run:6},
+ {id:'a17',cat:'Assassination',name:'Tee Time',cond:'Assassinate Silvio Caruso with an explosive golf ball.',run:4},
+ {id:'a18',cat:'Assassination',name:'Fatal Reaction',cond:'Assassinate Francesca De Santis with the biolab gas.',run:1},
+ {id:'a19',cat:'Assassination',name:'Bogey',cond:'Assassinate Silvio Caruso by shooting him with an antique cannon.',run:7},
+ {id:'a20',cat:'Assassination',name:'.45 Therapy',cond:'[REDACTED]',run:2},
+ {id:'a21',cat:'Assassination',name:'Phantom Of The Mansion',cond:'Assassinate Silvio Caruso by dropping a chandelier on him.',run:4},
+ {id:'a22',cat:'Assassination',name:'A Poisonous Vintage',cond:'Assassinate Francesca De Santis by poisoning her drink.',run:5},
+ {id:'a23',cat:'Assassination',name:'The Personal Touch',cond:'Assassinate both Francesca De Santis and Silvio Caruso with the fiber wire.',run:1},
+ {id:'a24',cat:'Assassination',name:'Piano Man',cond:'Assassinate a target with the fiber wire in Sapienza.',run:1},
+ {id:'a25',cat:'Assassination',name:'Versatile Assassin',cond:'Complete all the Versatile challenges in Sapienza: / Piano Man / Someone Could Hurt Themselves / Hold My Hair / Straight Shot / Tasteless, Traceless',run:5},
+ {id:'a26',cat:'Assassination',name:'Hold My Hair',cond:'Assassinate a target by drowning them in Sapienza.',run:5},
+ {id:'a27',cat:'Assassination',name:'Straight Shot',cond:'Assassinate a target with a headshot in Sapienza.',run:2},
+ {id:'a28',cat:'Assassination',name:'Tasteless, Traceless',cond:'Assassinate a target with lethal poison in Sapienza.',run:3},
+ {id:'a29',cat:'Assassination',name:'The Bells are Ringing',cond:'Eliminate a target with the church bell.',run:0},
+ {id:'a30',cat:'Assassination',name:'Someone Could Hurt Themselves',cond:'Assassinate a target in an accident in Sapienza.',run:1},
+ {id:'a31',cat:'Assassination',name:'I Aim to Please',cond:'Assassinate a target from the church tower with a sniper rifle. / Do it all in your suit.',run:8},
+
+ {id:'d1',cat:'Discovery',name:'Employee of the Day',cond:'Disguise yourself as a Kitchen Assistant.',run:3},
+ {id:'d2',cat:'Discovery',name:'Getting Access',cond:'Get a mansion lab keycard.',run:1},
+ {id:'d3',cat:'Discovery',name:'Anybody There',cond:'Turn on the gramophone.',run:4},
+ {id:'d4',cat:'Discovery',name:'Special Delivery',cond:'Disguise yourself as a Delivery Man.',run:1},
+ {id:'d5',cat:'Discovery',name:'You Crack Me Up',cond:'Open Silvio Caruso\'s safe. / Find the DNA sample.',run:6},
+ {id:'d6',cat:'Discovery',name:'Double Jointed',cond:'Pacify Silvio Caruso with a cannabis joint.',run:9},
+ {id:'d7',cat:'Discovery',name:'Lover Boy',cond:'Disguise yourself as a Golf Coach.',run:5},
+ {id:'d8',cat:'Discovery',name:'Private Dick',cond:'Disguise yourself as a Detective.',run:3},
+ {id:'d9',cat:'Discovery',name:'One Hit Wonder',cond:'Pacify Francesca De Santis with a cannabis joint.',run:9},
+ {id:'d10',cat:'Discovery',name:'A Family Affair',cond:'Find Silvio Caruso\'s family video.',run:6},
+ {id:'d11',cat:'Discovery',name:'Underground',cond:'Enter the cave.',run:1},
+ {id:'d12',cat:'Discovery',name:'Watch The Skies',cond:'[REDACTED]',run:8},
+ {id:'d13',cat:'Discovery',name:'Therapist 47',cond:'Disguise yourself as Dr. Oscar Lafayette.',run:2},
+ {id:'d14',cat:'Discovery',name:'Discover Sapienza',cond:'Reveal all undiscovered areas in Sapienza.',run:0},
+ {id:'d15',cat:'Discovery',name:'Investigator',cond:'Find and destroy six crocodiles.',run:1},
+ {id:'d16',cat:'Discovery',name:'Chameleon',cond:'Find and equip all disguises in Sapienza.',run:0},
+ {id:'d17',cat:'Discovery',name:'The Living Dead',cond:'[REDACTED]',run:1},
+ {id:'d18',cat:'Discovery',name:'Unleash the Kraken',cond:'[REDACTED]',run:9},
+ {id:'d19',cat:'Discovery',name:'Safe House',cond:'Find the ICA Safe House in Sapienza.',run:1},
+
+ {id:'f1',cat:'Feats',name:'Hostile Environment',cond:'Get a hazmat suit.',run:1},
+ {id:'f2',cat:'Feats',name:'Mission Story - Absolution',cond:'Entering the lab requires a keycard and a uniform. Luckily, both are within reach.',run:1},
+ {id:'f3',cat:'Feats',name:'Mission Story - Memory Lane',cond:'Become a Plague Doctor.',run:6},
+ {id:'f4',cat:'Feats',name:'Mission Story - By Candlelight',cond:'De Santis plans a romantic rendezvous. Sounds like a chance to catch her with her guard down.',run:5},
+ {id:'f5',cat:'Feats',name:'The Heisenberg',cond:'Dump three bodies in an acid container while disguised in a Hazmat Suit.',run:1},
+ {id:'f6',cat:'Feats',name:'Mission Story - The Good Son',cond:'Place flowers on Silvio Caruso mother\'s grave while disguised as a Delivery Man.',run:1},
+ {id:'f7',cat:'Feats',name:'Mission Story - A Case Most Peculiar',cond:'Impersonate Francesca De Santis\'s private Investigator and meet with her.',run:3},
+ {id:'f8',cat:'Feats',name:'Mission Story - First Day On The Job',cond:'Cook spaghetti for Silvio Caruso. / Ring the dinner bell.',run:3},
+ {id:'f9',cat:'Feats',name:'Eliminating the Competition',cond:'Destroy the virus.',run:1},
+ {id:'f10',cat:'Feats',name:'Mission Story - Hostile Environment',cond:'Uncover the area where the secret weapon is being held.',run:1},
+ {id:'f11',cat:'Feats',name:'Fly, Silvio!',cond:'Trigger Silvio Caruso\'s evacuation.',run:7},
+ {id:'f12',cat:'Feats',name:'Mission Story - Memento',cond:'Disguise yourself as a Bodyguard. / Give Francesca De Santis the DNA sample.',run:6},
+ {id:'f13',cat:'Feats',name:'Man of the Cloth',cond:'Disguise yourself as a Priest. / Do not harm, pacify or eliminate the priest.',run:1},
+ {id:'f14',cat:'Feats',name:'Love Triangle',cond:'Hide Francesca De Santis and the golf coach in the same closet.',run:5},
+ {id:'f15',cat:'Feats',name:'Mission Story - Catharsis',cond:'Impersonate Silvio Caruso\'s therapist and join him in a private session.',run:2},
+ {id:'f16',cat:'Feats',name:'Mission Story - Beyond The Grave',cond:'A year ago, Caruso suffered a mental breakdown. Perhaps the circumstances can be replicated.',run:4},
+ {id:'f17',cat:'Feats',name:'Grave Robber',cond:'Disguise yourself as a Scientist while inside the morgue.',run:1},
+ {id:'f18',cat:'Feats',name:'Get What You Wish For',cond:'Push a target into the wishing well.',run:0},
+ {id:'f19',cat:'Feats',name:'Luck Alone is Worthless',cond:'[REDACTED]',run:1},
+ {id:'f20',cat:'Feats',name:'Pipe Down',cond:'Disguise yourself as either the Red or Green Plumber. / Pacify 10 individuals with a lead pipe. / Do not get spotted.',run:4},
+
+ {id:'t1',cat:'Targets',name:'The Genius',cond:'Assassinate Silvio Caruso.',run:1},
+ {id:'t2',cat:'Targets',name:'The Scientist',cond:'Assassinate Francesca De Santis.',run:1},
+
+ {id:'c1',cat:'The Classics',name:'Silent Assassin',cond:'Complete "World Of Tomorrow." / Only eliminate the targets. / No bodies found. / Do not get spotted.',run:10},
+ {id:'c2',cat:'The Classics',name:'The Classics',cond:'Complete all the Classic challenges for "World Of Tomorrow". / Silent Assassin / Silent Assassin, Suit Only / Sniper Assassin / Suit Only',run:10},
+ {id:'c3',cat:'The Classics',name:'Sniper Assassin',cond:'Complete "World Of Tomorrow." / Assassinate your targets with a sniper rifle. / Only eliminate the targets. / Do not get spotted.',run:8},
+ {id:'c4',cat:'The Classics',name:'Silent Assassin, Suit Only',cond:'Complete "World Of Tomorrow." / Only eliminate the targets. / No bodies found. / Do not get spotted. / Do it all in your suit.',run:10},
+ {id:'c5',cat:'The Classics',name:'Suit Only',cond:'Assassinate the targets and complete the mission. / Do it all in your suit.',run:10}
+];
+const CAT_COLOR={'Assassination':'var(--rust)','Discovery':'var(--sky)','Feats':'var(--amber)','Targets':'var(--violet)','The Classics':'var(--jade)'};
+
+const RUNS=[
+{
+ id:'r1', tag:'Run 1', title:'The long one — town, church, mansion, biolab',
+ goal:"One pass that sweeps the whole map: crocodiles, the priest, the morgue, the flower shop, the grave, the shredder, the lab, and both targets on the fiber wire. Clears 22 challenges.",
+ diff:'Casual — you need unlimited manual saves.',
+ loadout:{
+   start:'Main Square · Sapienza mastery level 1 (default)',
+   suit:'Italian Suit',
+   items:['Concealed weapon: Krugermeier 2-2','Gear: Fiber Wire','Gear: Classic Lockpick','Smuggled item: none']
+ },
+ note:'Weeding the Garden cannot be done while spotted, so treat everything up to the shredder as a stealth run. Collect all six coins on the way — they are what get you into the flower shop.',
+ sections:[
+ {h:'Town sweep',steps:[
+  {t:'Start The Good Son and find the safe house',
+   b:[['Where','The car crash site left of the spawn, then building #3 right of the butcher shop.'],
+      ['NPC','The man on the phone at the crash site.'],
+      ['Action','Listen to his call to start the story, then enter the second-floor apartment of building #3.']],
+   badges:[['chal','Safe House']],
+   d:{'Note':'The rooftop behind that apartment is used by four of the nine runs — learn the route now.'}},
+  {t:'Shoot the crocodiles and the beach balls',
+   b:[['Where','From the safe-house rooftop you can see two beach balls and two inflatable crocodiles on the beach; more are in the buildings below.'],
+      ['Action','Shoot the two crocodiles from the roof, drop to the landing on the right, shoot the beach ball outside that apartment, then go down through the next building and shoot the crocodile in the foyer.'],
+      ['Note','This is crocodiles 3 of 6 so far.']],
+   badges:[['src','fish\'s guide']],
+   d:{'Extra':'The four beach balls also feed a challenge called <i>Bend It Like 47</i> in fish\'s guide. That name does not exist anywhere in this repository\'s challenge data, so it is not on the checklist — but shooting them costs nothing.'}},
+  {t:'Sewers, plumber and the catacombs',
+   b:[['Where','The dock to the far left of the church, then the beach sewers.'],
+      ['Item','A crowbar near the sewer entrance — a faster, quieter knockout.'],
+      ['NPC','The red plumber.'],
+      ['Action','Take the crowbar, lockpick the gate while he is looking away and pacify him. Past the gate on the right, shoot crocodile 4, then take the three coins beside it.']],
+   badges:[['warn','Take all three coins — they are needed for the flower shop']],
+   d:{}},
+  {t:'Take the priest outfit and wipe the camera',
+   b:[['Where','Through the catacombs, first door on the right.'],
+      ['Disguise','Priest — hanging in the room, nobody needs to be touched.'],
+      ['Action','Change, then destroy the evidence on the camera recorder in the same room.']],
+   badges:[['chal','Man of the Cloth']],
+   d:{'Why it qualifies':'The challenge requires that the priest is not harmed, pacified or eliminated — this is a free outfit, so it is safe.'}}
+ ]},
+ {h:'The morgue',steps:[
+  {t:'Start Absolution and hide in the coffin',
+   b:[['Where','Upstairs into the church, then the morgue.'],
+      ['NPC','The confessional conversation starts the mission story.'],
+      ['Action','Listen in, then get into the coffin in the morgue.'],
+      ['Warning','Avoid the enforcers on the way up in the priest outfit.']],
+   badges:[['chal','The Living Dead']],
+   d:{'Redacted':'The Living Dead is [REDACTED] in the game data. Hiding in the morgue coffin is fish\'s documented action.'}},
+  {t:'Kill time while the technician walks over',
+   b:[['Where','The green-door building (#4) across from the morgue, then the beach square.'],
+      ['Action','In the second-floor apartment bathroom shoot crocodile 5. Back on the square, take the three coins from the table next to the sleeping man.'],
+      ['Why','The lab technician takes a long time to reach the morgue — this fills the gap without backtracking.']],
+   badges:[],
+   d:{}},
+  {t:'Take the keycard and the technician\'s clothes',
+   b:[['Where','The morgue lab room — hide on the stretcher.'],
+      ['NPC','The female lab technician, once she is alone.'],
+      ['Action','Pacify her, take the biolab keycard, then take the lab technician disguise from the corpse.']],
+   badges:[['chal','Getting Access'],['chal','Grave Robber']],
+   d:{'Note':'Grave Robber wants a scientist outfit worn <em>inside</em> the morgue, which is why you change here rather than later.'}}
+ ]},
+ {h:'The flower shop and the grave',steps:[
+  {t:'Five coins in the main square fountain',
+   b:[['Where','The fountain in the main square.'],
+      ['Action','Throw five coins in.']],
+   badges:[['chal','Luck Alone is Worthless']],
+   d:{'Redacted':'The condition is [REDACTED] in the game data; five coins into this fountain is the documented action. Keep the sixth coin — it is the flower-shop distraction.'}},
+  {t:'Get into the flower shop',
+   b:[['Where','The flower shop off the alleyway; use the side entrance.'],
+      ['NPC','A couple standing outside the front who will see you lockpick it.'],
+      ['Action','Save first. Use your last coin to make the man look away, then lockpick the side door and go in.'],
+      ['Warning','You still cannot be spotted — Weeding the Garden is live from here to the shredder.']],
+   badges:[['save','Save before the lockpick'],['warn','Do not get spotted']],
+   d:{'Timing':'fish notes the NPC timing varies; in his own recording he threw the fountain coins first because a woman was about to walk into the shop. Adapt the order if the couple is badly placed.'}},
+  {t:'Delivery man and the flowers',
+   b:[['Action','Take the delivery man disguise and pick up the flowers.']],
+   badges:[['chal','Special Delivery']],
+   d:{}},
+  {t:'Into the mansion the back way',
+   b:[['Where','Back to the safe-house rooftop and use the drop-down on the left into the mansion grounds.'],
+      ['Why','The front-gate guards frisk you and you need the pistol later.'],
+      ['Action','Talk to the butler, follow him, and place the flowers on Isabella\'s grave.']],
+   badges:[['chal','Mission Story - The Good Son'],['warn','Do not use the front gate — you lose the gun']],
+   d:{}},
+  {t:'Fiber-wire Silvio and shred him',
+   b:[['NPC','Silvio walks down to the grave shortly afterwards — wait until he is alone.'],
+      ['Item','Fiber wire.'],
+      ['Action','Garrote him, carry the body to the nearby garden shredder, dump it and run the shredder.'],
+      ['Warning','Being seen at any point since the flower shop voids Weeding the Garden.']],
+   badges:[['chal','Piano Man'],['chal','Weeding the Garden'],['chal','The Genius']],
+   d:{'Keep going':'Do not reload — Francesca is garroted later in this same run for The Personal Touch.'}}
+ ]},
+ {h:'The biolab',steps:[
+  {t:'Last crocodile, then into the cave',
+   b:[['Where','The bridge to the ruins — there is a ledge on the right side.'],
+      ['Action','Drop down and shoot the last crocodile under the pier in the distance, then enter the biolab from the seaside entrance.']],
+   badges:[['chal','Investigator'],['chal','Mission Story - Absolution'],['chal','Underground']],
+   d:{}},
+  {t:'Hazmat suit and the virus chamber',
+   b:[['Action','Cut the power to distract the nearby technician and take his outfit. In the main lab, use the ledge by the plane to stay unseen. Trigger the two technicians\' conversation at the virus security terminal, let it finish, then read the biolab safety protocol.'],
+      ['Then','Take a hazmat suit and enter the virus chamber. Save inside it.']],
+   badges:[['chal','Mission Story - Hostile Environment'],['chal','Hostile Environment'],['save','Save inside the virus chamber']],
+   d:{}},
+  {t:'Branch · Three bodies in the acid',
+   b:[['Disguise','Hazmat Suit — required.'],
+      ['Action','Kill three NPCs and dump all three in an acid container.'],
+      ['Then','Reload the save.']],
+   badges:[['chal','The Heisenberg']],
+   d:{}},
+  {t:'Destroy the virus with three distractions',
+   b:[['Action','Sabotage the research station computer, override the robot arm (grab the two red samples) and switch on the ventilation. That clears everyone away from the virus. Then raise the virus temperature to destroy it.'],
+      ['Result','Francesca walks down to the lab afterwards, provided she is still alive.']],
+   badges:[['chal','Eliminating the Competition']],
+   d:{}},
+  {t:'Francesca on the lab roof — two branches',
+   b:[['Where','The roof of the laboratory. Save once she is up there.'],
+      ['Action','Branch A: shoot the stalactite as she walks under it → <i>Caving In</i> and <i>Someone Could Hurt Themselves</i>, then reload. Branch B: fiber-wire her → <i>The Personal Touch</i>, since Silvio was already garroted this run, then reload.']],
+   badges:[['chal','Caving In'],['chal','Someone Could Hurt Themselves'],['chal','The Personal Touch'],['save','Save when she reaches the roof']],
+   d:{'Ordering':'Both branches reload. The kill you keep is the gas one below.'}},
+  {t:'Kill her with the biolab gas and exit',
+   b:[['Action','Wait for Francesca to enter the virus chamber, then go to the virus security terminal and switch the ventilation off.'],
+      ['Then','Exit the mission.']],
+   badges:[['chal','Fatal Reaction'],['chal','The Scientist']],
+   d:{'Run 1 tally':'Safe House · Investigator · Man of the Cloth · The Living Dead · Getting Access · Grave Robber · Luck Alone is Worthless · Special Delivery · MS The Good Son · Piano Man · Weeding the Garden · The Genius · MS Absolution · Underground · MS Hostile Environment · Hostile Environment · The Heisenberg · Eliminating the Competition · Caving In · Someone Could Hurt Themselves · The Personal Touch · Fatal Reaction · The Scientist.'}}
+ ]}]
+},
+{
+ id:'r2', tag:'Run 2', title:'The therapist',
+ goal:"Become Dr. Lafayette, sit through Silvio's private session, kill him two ways, then catch both targets with one propane flask down a fireplace. Six challenges.",
+ diff:'Casual.',
+ loadout:{
+   start:'Main Square · Sapienza mastery level 1',
+   suit:'Italian Suit',
+   items:['Concealed weapon: Krugermeier 2-2','Gear: Coin ×3','Gear: Classic Lockpick','Smuggled item: none']
+ },
+ note:'From this run on, every run ends with "destroy the virus and exit" — the mission does not complete without it. An easy keycard is the one Francesca drops when she dies.',
+ sections:[
+ {h:'Becoming Dr. Lafayette',steps:[
+  {t:'Start Catharsis and neutralise a witness early',
+   b:[['Where','The balcony directly above the spawn, outside the ice cream shop.'],
+      ['NPC','The man on the phone; then a woman in a pink top walking nearby.'],
+      ['Action','Listen to the call, then bump into the woman in the pink top a few times so she does not spot you later while you take the waiter outfit.']],
+   badges:[['warn','Bump her now or she interrupts the waiter grab']],
+   d:{'Why bumping works':'Repeated bumps make an NPC walk a different way for a while, which is enough to clear the alley.'}},
+  {t:'Waiter, then the therapist',
+   b:[['Where','The alleyway below the ice cream shop, then the bathrooms below it.'],
+      ['NPC','A waiter who eventually walks down into the alley; then Dr. Oscar Lafayette.'],
+      ['Action','Pacify the waiter and take his clothes. Take the rat poison inside the ice cream shop and spike the therapist\'s coffee. He goes to the bathroom to be sick — deal with the other NPC in that stall first, then take Lafayette\'s identity.']],
+   badges:[['chal','Therapist 47']],
+   d:{}}
+ ]},
+ {h:'The session',steps:[
+  {t:'Into the mansion and into the bedroom',
+   b:[['Where','Use the safe-house rooftop route again so you keep the pistol.'],
+      ['Action','Talk to the butler, enter Silvio\'s bedroom, sit down and wait. Save the moment Silvio lies down on the couch.']],
+   badges:[['chal','Mission Story - Catharsis'],['save','Save as he lies down']],
+   d:{}},
+  {t:'Branch A · Smother him',
+   b:[['Disguise','Dr. Oscar Lafayette — required for this one.'],
+      ['Action','Smother Silvio on the couch.'],
+      ['Then','Reload.']],
+   badges:[['chal','Silence of the Man']],
+   d:{}},
+  {t:'Branch B · Headshot',
+   b:[['Item','Krugermeier 2-2.'],
+      ['Action','Put a round in his head.'],
+      ['Then','Reload.']],
+   badges:[['chal','.45 Therapy'],['chal','Straight Shot']],
+   d:{'Redacted':'.45 Therapy is [REDACTED] in the game data. A headshot during the therapy session is fish\'s documented action, and it scores Straight Shot at the same time.'}}
+ ]},
+ {h:'One flask, two targets',steps:[
+  {t:'Wait out the session and take the attic pipe',
+   b:[['Action','Let the whole therapy session play out — it is long. Afterwards Silvio walks to Francesca and talks to her. Leave his room through the bathroom; round the left corner there is a pipe to the attic.']],
+   badges:[['warn','Do not skip ahead — they only meet after the session ends']],
+   d:{}},
+  {t:'Drop the propane down the right fireplace',
+   b:[['Where','The attic, above where the two are talking.'],
+      ['Item','A propane flask.'],
+      ['Action','Drop it down the fireplace they are standing at and detonate. Both die from one flask.'],
+      ['Then','Destroy the virus and exit.']],
+   badges:[['chal','Pro Pain'],['chal',"I'm on Fire"],['warn','This fireplace does NOT score BBQ Season']],
+   d:{'Why not BBQ Season':'fish confirms BBQ Season only registers on the specific mansion fireplace used in Run 4, even though the challenge text does not say so.'}}
+ ]}]
+},
+{
+ id:'r3', tag:'Run 3', title:'The cook and the detective',
+ goal:"Cook Silvio's spaghetti and poison it, then impersonate Francesca's private investigator and take her on the pier. Six challenges.",
+ diff:'Casual.',
+ loadout:{
+   start:'Main Square · Sapienza mastery level 1',
+   suit:'Italian Suit',
+   items:['Concealed weapon: Krugermeier 2-2','Gear: Lethal Poison Vial','Gear: Classic Lockpick','Smuggled item: none']
+ },
+ note:'Getting Your Hands Dirty cannot be done while spotted, so the second half is a stealth section.',
+ sections:[
+ {h:'Two stories at once',steps:[
+  {t:'Start First Day on the Job',
+   b:[['Where','The butcher shop just right of the spawn.'],
+      ['Action','Listen to the conversation. The story is finished later.']],
+   badges:[],
+   d:{}},
+  {t:'Start A Case Most Peculiar and wake the detective',
+   b:[['Where','The hairdresser, down the alley right of the butcher shop.'],
+      ['NPC','The sleeping private detective.'],
+      ['Action','Listen to the conversation, find the detective, then switch the nearby radio on and off to wake him. He calls Francesca and arranges to meet her on the pier — listen to that call too.']],
+   badges:[['warn','You must hear the phone call, not just wake him']],
+   d:{}}
+ ]},
+ {h:'The spaghetti',steps:[
+  {t:'Kitchen assistant',
+   b:[['Where','The safe-house rooftop; on the left there is a ledge up to the apartment above.'],
+      ['Action','Take the kitchen staff disguise.']],
+   badges:[['chal','Employee of the Day']],
+   d:{}},
+  {t:'Cook, poison, ring',
+   b:[['NPC','The mansion chef.'],
+      ['Item','Lethal poison vial from your loadout.'],
+      ['Action','Meet the chef and cook the sauce — wait until the prompt actually reads "cook sauce". Spike Silvio\'s spaghetti with lethal poison, then ring the lunch bell.'],
+      ['Warning','Interacting before the prompt changes does nothing and wastes the cycle.']],
+   badges:[['chal','Mission Story - First Day On The Job'],['chal',"What's Your Poison?"],['chal','Tasteless, Traceless'],['warn','Wait for the "cook sauce" prompt']],
+   d:{}}
+ ]},
+ {h:'The pier',steps:[
+  {t:'Become the detective',
+   b:[['Where','The detective ends up at the well outside the church and then stops in the nearby bathrooms.'],
+      ['Action','Pacify him in the bathrooms and take his identity.']],
+   badges:[['chal','Private Dick']],
+   d:{}},
+  {t:'Meet Francesca and kill her there',
+   b:[['Where','The pier.'],
+      ['Disguise','Private Detective — required.'],
+      ['Action','Meet her to complete the story. She walks off toward the alley and her bodyguards turn away — kill her as the detective, unspotted.'],
+      ['Then','Destroy the virus and exit.']],
+   badges:[['chal','Mission Story - A Case Most Peculiar'],['chal','Getting Your Hands Dirty'],['warn','Must be in the detective disguise and unspotted']],
+   d:{}}
+ ]}]
+},
+{
+ id:'r4', tag:'Run 4', title:'Bullying Silvio',
+ goal:"Ten lead-pipe knockouts as the plumber, then three separate accidents on Silvio off three saves, and the gramophone lure to finish. Six challenges.",
+ diff:'Casual — heavy save-scumming.',
+ loadout:{
+   start:'ICA Safe House · Sapienza mastery level 2',
+   suit:'Italian Suit',
+   items:['Concealed weapon: Krugermeier 2-2','Gear: Coin ×3','Gear: Classic Lockpick','Smuggled item: none']
+ },
+ note:'Pipe Down and BBQ Season both forbid being spotted. Save often — ten knockouts without a single sighting is the hardest part of this run.',
+ sections:[
+ {h:'Pipe Down',steps:[
+  {t:'Golf ball, coins, and into the fountain',
+   b:[['Where','The safe house kitchen for the explosive golf ball; then the mansion fountain right behind the front-gate guards.'],
+      ['Action','Take the golf ball, drop into the mansion grounds from the safe-house rooftop, climb into the fountain, take all three coins and climb out the back of it.']],
+   badges:[['warn','Grab the golf ball first — there is no second one']],
+   d:{}},
+  {t:'Take the green plumber and his pipe',
+   b:[['NPC','The green plumber, in the room straight ahead from the fountain exit.'],
+      ['Action','Pacify him, take his disguise and his lead pipe.']],
+   badges:[],
+   d:{}},
+  {t:'Ten knockouts, nobody sees',
+   b:[['Disguise','Red or Green Plumber — required.'],
+      ['Item','Lead pipe.'],
+      ['Action','Pacify ten people with the pipe without being spotted. Use the three fountain coins to lure people apart.'],
+      ['Warning','One sighting resets the whole challenge — save constantly.']],
+   badges:[['chal','Pipe Down'],['save','Save every two or three knockouts']],
+   d:{}}
+ ]},
+ {h:'Three ways to kill Silvio',steps:[
+  {t:'Branch A · Explosive golf ball',
+   b:[['Where','The garden where Silvio practises golf. Change to mansion security first.'],
+      ['Action','Put the explosive golf ball in the bucket and wait. Save as he walks onto the garden.'],
+      ['Then','Reload.']],
+   badges:[['chal','Tee Time'],['save','Save as he enters the garden']],
+   d:{'His loop':'Garden → observatory → dining hall → fireplace → repeat. Every branch below hangs off a point on that loop.'}},
+  {t:'Branch B · Dining hall chandelier',
+   b:[['Where','The observatory roof, watching his loop. Save as he approaches the dining hall.'],
+      ['Action','Shoot the chandelier while he is underneath.'],
+      ['Then','Reload.']],
+   badges:[['chal','Phantom Of The Mansion'],['save','Save before he enters the dining hall']],
+   d:{}},
+  {t:'Branch C · The fireplace — the only one that counts',
+   b:[['Where','The mansion fireplace on his loop. Save as he approaches it.'],
+      ['Item','A propane flask from nearby.'],
+      ['Action','Drop the propane down the fireplace while he is next to it, unspotted.'],
+      ['Then','Reload.']],
+   badges:[['chal','BBQ Season'],['warn','Only THIS fireplace scores BBQ Season'],['save','Save before the drop']],
+   d:{'Why it matters':'The Run 2 propane kill uses a different fireplace and does not register. fish confirms the challenge is tied to this one specifically, even though its text does not say so.'}}
+ ]},
+ {h:'Francesca and the gramophone',steps:[
+  {t:'Kill Francesca however you like',
+   b:[['Where','Silvio\'s bedroom — the room right of his fireplace holds a model ship.'],
+      ['Action','Shoot the model ship to release the secret virus prototype, then throw the prototype near Francesca.'],
+      ['Why','No Francesca challenge is live this run, so the cheapest silent method wins.']],
+   badges:[['src','fish\'s guide']],
+   d:{}},
+  {t:'Beyond the Grave',
+   b:[['Where','Mother Caruso\'s bedroom.'],
+      ['Action','Read the medical journal to start the story and turn on the gramophone. Ring the service bell to lure Silvio — and switch on the fan by the rocking chair as well, or he flees instead of entering.'],
+      ['Then','Kill Silvio, destroy the virus and exit.']],
+   badges:[['chal','Anybody There'],['chal','Mission Story - Beyond The Grave'],['warn','The fan is mandatory or he runs']],
+   d:{}}
+ ]}]
+},
+{
+ id:'r5', tag:'Run 5', title:'The golf coach and the candlelit dinner',
+ goal:"Make Silvio sick so he walks to the cliff, then take the golf coach's place at Francesca's dinner and kill her two ways. Seven challenges including Versatile Assassin.",
+ diff:'Casual.',
+ loadout:{
+   start:'Undercover in Mansion Kitchen · Sapienza mastery level 7 (starts you as Kitchen Assistant)',
+   suit:'Disguise fixed by starting location: Kitchen Assistant',
+   items:['Concealed weapon: Krugermeier 2-2','Gear: Lethal Poison Vial','Gear: Emetic Poison Vial','Smuggled item: none']
+ },
+ note:'The expired sauce is what makes Silvio sick. Rat poison from the counter is for the golf coach. Do not mix them up — you need the coach sick at roughly the same time.',
+ sections:[
+ {h:'The spoiled lunch',steps:[
+  {t:'Spike the sauce with the expired can',
+   b:[['Where','The back room of the mansion kitchen for the expired spaghetti sauce; the counter for the rat poison.'],
+      ['Action','Talk to the chef to start his dialogue, take both, cook the sauce, spike it with the expired can, and ring the bell to call Silvio.']],
+   badges:[],
+   d:{}},
+  {t:'Start By Candlelight',
+   b:[['Where','The window across from the dinner bell — there is a camera directly above it.'],
+      ['Action','Climb through into Francesca\'s bedroom and read the romantic note.']],
+   badges:[['chal','Mission Story - By Candlelight'],['warn','Mind the camera above the window']],
+   d:{}},
+  {t:'Make the golf coach sick too',
+   b:[['Where','The mansion backyard, the table by the pool.'],
+      ['Action','Spike the water bottle with rat poison and listen to the golf coach\'s phone call.']],
+   badges:[],
+   d:{}},
+  {t:'Push Silvio off the cliff',
+   b:[['NPC','Silvio, once the expired sauce has taken effect.'],
+      ['Where','The cliff just left of where he eats.'],
+      ['Action','Push him off.']],
+   badges:[['chal','Cliff Diving'],['chal','The Genius']],
+   d:{}}
+ ]},
+ {h:'Dinner for two',steps:[
+  {t:'Become the golf coach',
+   b:[['Where','Back in Francesca\'s bedroom, where he goes to be sick.'],
+      ['Action','Pacify him, take the disguise, and put his body in the bathroom cabinet.'],
+      ['Why the cabinet','Love Triangle needs him and Francesca in the same closet.']],
+   badges:[['chal','Lover Boy'],['warn','Use the bathroom cabinet, not any other container']],
+   d:{}},
+  {t:'Call her and sit down, then save',
+   b:[['Action','Call Francesca and wait. Sit down as the golf coach to complete the story. Save while she is still outside the room and not yet near the door.'],
+      ['Warning','Save too late and there is no time to spike the champagne.']],
+   badges:[['chal','Mission Story - By Candlelight'],['save','Save while she is still out of the room']],
+   d:{}},
+  {t:'Branch · Lethal poison',
+   b:[['Action','Poison her champagne with the lethal vial.'],
+      ['Then','Reload.']],
+   badges:[['chal','A Poisonous Vintage']],
+   d:{}},
+  {t:'Emetic, drown, then the cabinet',
+   b:[['Action','Spike the champagne with emetic poison instead and drown her when she is sick. Then put her body in the same bathroom cabinet as the coach.'],
+      ['Then','Destroy the virus and exit.']],
+   badges:[['chal','My Name is Hurl'],['chal','Hold My Hair'],['chal','Versatile Assassin'],['chal','Love Triangle'],['chal','The Scientist']],
+   d:{'Versatile Assassin':'The set is Piano Man (Run 1), Someone Could Hurt Themselves (Run 1), Straight Shot (Run 2), Tasteless Traceless (Run 3) and Hold My Hair — which lands here.'}}
+ ]}]
+},
+{
+ id:'r6', tag:'Run 6', title:'The safe, the séance and the plague doctor',
+ goal:"Crack Silvio's safe for the DNA sample, electrocute Francesca on the patio, then become the plague doctor and take Silvio twice. Seven challenges.",
+ diff:'Casual.',
+ loadout:{
+   start:'Undercover as Security Staff · Sapienza mastery level 9 (starts you as Mansion Security)',
+   suit:'Disguise fixed by starting location: Mansion Security',
+   items:['Concealed weapon: Krugermeier 2-2','Gear: Coin ×3','Gear: Classic Lockpick','Smuggled item: none']
+ },
+ note:'Turn the faucet off again immediately after you tamper with the wire plug, otherwise the running water becomes a distraction and pulls the wrong people over.',
+ sections:[
+ {h:'The safe',steps:[
+  {t:'Screwdriver and safe combination',
+   b:[['Where','Inside to your right for the screwdriver; then the room to the right of Francesca\'s desk for the combination.'],
+      ['Action','Take both.']],
+   badges:[],
+   d:{}},
+  {t:'Attic, guards, and the DNA sample',
+   b:[['Where','Up the stairs from the outdoor patio to the attic.'],
+      ['NPC','Two guards having a conversation — it starts the Memento story.'],
+      ['Action','Listen, then pacify both so the floor below is easier later. Open the safe and take the DNA sample.']],
+   badges:[['chal','You Crack Me Up']],
+   d:{}}
+ ]},
+ {h:'Francesca',steps:[
+  {t:'Rig the patio',
+   b:[['Where','The outdoor patio you started on.'],
+      ['Item','Screwdriver.'],
+      ['Action','Tamper with the wire plug and turn the faucet on, then turn it off again straight away. Francesca eventually walks into the trap.'],
+      ['Warning','Leaving the tap running creates a distraction that draws the wrong NPC.']],
+   badges:[['chal','Shocking!'],['chal','The Scientist'],['warn','Turn the faucet back off immediately']],
+   d:{}},
+  {t:'Hand over the DNA sample',
+   b:[['Action','Give Francesca the DNA sample to complete Memento.'],
+      ['Note','Do this before the electrocution if she is still alive — a dead target cannot be handed anything.']],
+   badges:[['chal','Mission Story - Memento'],['warn','Give her the sample before she dies']],
+   d:{'Ordering':'fish\'s text does the electrocution first, but the story completion needs her alive. Do the hand-over on the walk into the trap, or set the trap after the hand-over.'}}
+ ]},
+ {h:'The plague doctor',steps:[
+  {t:'Find the family video and become the plague doctor',
+   b:[['Where','The balcony connecting the mansion and the observatory — map level 5.'],
+      ['Action','Listen to the conversation to start Memory Lane, find the VHS tape, play it, take the amputation knife and hide as the plague doctor. Save when Silvio is alone in front of you.']],
+   badges:[['chal','A Family Affair'],['chal','Mission Story - Memory Lane'],['save','Save with Silvio alone in front of you']],
+   d:{}},
+  {t:'Branch · Solar system, and knives',
+   b:[['Action','Subdue Silvio — do not kill him — drag him under the solar system display and shoot it down. While you are here, kill three guards with the amputation knife.'],
+      ['Then','Reload.']],
+   badges:[['chal','Bring Down the Sky']],
+   d:{'Extra':'The three-guard knife kill is <i>Surgical Procedure</i> in fish\'s guide. That name does not appear anywhere in this repository\'s challenge data, so it is not on the checklist — but it costs nothing to do here.'}},
+  {t:'Kill him with the knife as the plague doctor',
+   b:[['Disguise','Plague Doctor — required.'],
+      ['Item','Amputation knife.'],
+      ['Action','Kill Silvio with the knife.'],
+      ['Then','Destroy the virus and exit.']],
+   badges:[['chal','Plague-iarism'],['chal','The Genius']],
+   d:{}}
+ ]}]
+},
+{
+ id:'r7', tag:'Run 7', title:'The cannons',
+ goal:"Three cannon shots and one remote charge: Silvio in the garden, Francesca on the boardwalk, Silvio again in lockdown, and finally his plane out of the sky. Four challenges, all fiddly.",
+ diff:'Casual.',
+ loadout:{
+   start:'Harbor · Sapienza mastery level 13',
+   suit:'Italian Suit',
+   items:['Concealed weapon: Krugermeier 2-2','Gear: ICA Remote Explosive','Gear: Napoleon Blownaparte (any explosive item works)','Smuggled item: none']
+ },
+ note:'Break the wall early. A lab guard investigates the explosion, and doing it now means you are not standing around waiting later.',
+ sections:[
+ {h:'Setup',steps:[
+  {t:'Blow the breakable wall',
+   b:[['Where','Across the beach, into the alleyways — the breakable wall is in the corner and leads to the biolab.'],
+      ['Item','Napoleon Blownaparte, or any explosive.'],
+      ['Action','Throw it at the wall.']],
+   badges:[],
+   d:{}},
+  {t:'Wake the detective — for Francesca, not for the story',
+   b:[['Action','Wake the detective. You do not need his phone call this time; you only need Francesca to start walking to the pier.']],
+   badges:[['warn','Needed for Walk the Plank — she has to be on the boardwalk']],
+   d:{}},
+  {t:'Plant the charge in the lockdown room',
+   b:[['Where','Through the broken wall into the biolab, upstairs to the right.'],
+      ['NPC','A lone guard up there — pacify him and take the biolab security disguise.'],
+      ['Action','In the same area there is a climbable pipe surrounded by lab clutter. Drop the remote explosive by that clutter. That spot is where Silvio goes during lockdown.']],
+   badges:[['src','fish\'s guide — exact spot shown in his video']],
+   d:{'Unverified':'The precise placement is described only in fish\'s guide and demonstrated in his video. No second written source gives the position.'}}
+ ]},
+ {h:'Three cannon shots',steps:[
+  {t:'Bogey — the rightmost cannon',
+   b:[['Where','Upstairs in the ruins where the cannons are; use the cannon furthest right, facing the mansion backyard garden.'],
+      ['Item','A cannonball and gunpowder lying beside it.'],
+      ['Action','Save when Silvio is in the garden, then load and fire.'],
+      ['Then','Reload.']],
+   badges:[['chal','Bogey'],['save','Save with Silvio in the garden']],
+   d:{}},
+  {t:'Walk the Plank — the pier cannon',
+   b:[['Action','Wait until Francesca is on the boardwalk. Shoot Silvio without killing him to put him into lockdown, then move to the cannon facing the pier and fire it at Francesca.']],
+   badges:[['chal','Walk the Plank'],['chal','The Scientist'],['warn','Shoot Silvio to wound, not to kill']],
+   d:{}},
+  {t:'Fly, Silvio! and the remote charge',
+   b:[['Action','Take the cannonball and gunpowder by the last cannon (facing the island). Hide from the search party and watch Silvio run to the lockdown spot. Once he is standing still, detonate the remote explosive.']],
+   badges:[['chal','Fly, Silvio!']],
+   d:{'Note':'Fly, Silvio! is the evacuation trigger, which you already caused with the wounding shot — the charge is what kills him at the lockdown point.'}},
+  {t:'Shoot the plane down',
+   b:[['Action','Once the guards have cleared, load the last cannon. Wait for Silvio to take off; at about 00:20 on the timer, fire when the plane is centred on screen.'],
+      ['Then','Destroy the virus and exit — you cannot leave by plane this time.']],
+   badges:[['chal','Error Plane'],['chal','The Genius'],['warn','Tightest timing in the mission — expect several attempts']],
+   d:{}}
+ ]}]
+},
+{
+ id:'r8', tag:'Run 8', title:'Sniper Assassin — the church tower',
+ goal:"One silenced rifle, one bell tower, both targets. Also picks up the telescope kill and the observatory dome. Four challenges.",
+ diff:'Any. Not difficulty-tiered in World of Assassination.',
+ loadout:{
+   start:'Harbor · Sapienza mastery level 13',
+   suit:'Italian Suit — required, I Aim to Please is a suit-only challenge',
+   items:['Concealed weapon: Krugermeier 2-2','Gear: Explosive Baseball (any explosive works)','Gear: ICA Briefcase carrying the silenced sniper rifle','Smuggled item: none']
+ },
+ note:'The briefcase unlocks at Miami mastery 10. Without it, stash the rifle at the Sewers agency pickup instead (Sapienza mastery 17).',
+ sections:[
+ {h:'Getting up the tower',steps:[
+  {t:'Open the observatory dome',
+   b:[['Where','The electrical box outside the observatory.'],
+      ['Action','Shoot it. The dome starts opening.']],
+   badges:[['chal','Watch The Skies']],
+   d:{'Redacted':'Watch The Skies is [REDACTED] in the game data; shooting this box is fish\'s documented action, and it is what puts Silvio at the telescope.'}},
+  {t:'Break the wall and grab a coin',
+   b:[['Action','Throw your explosive at the breakable wall, then take a coin from the bathrooms right of the church.']],
+   badges:[],
+   d:{}},
+  {t:'Climb the bell tower',
+   b:[['Where','Behind the altar at the back of the church — the staircase to the tower.'],
+      ['NPC','Two church members: one walks downstairs, one comes into the room.'],
+      ['Action','Wait for the first to leave, distract the second with the coin, and go up. Save at the top.']],
+   badges:[['save','Save at the top of the tower']],
+   d:{}}
+ ]},
+ {h:'Two shots',steps:[
+  {t:'Branch · Shoot the telescope glass',
+   b:[['NPC','Silvio, at the observatory telescope.'],
+      ['Action','Shoot the glass.'],
+      ['Then','Reload.']],
+   badges:[['chal','An Eye for an Eye'],['warn','This does NOT count toward Sniper Assassin']],
+   d:{'Redacted':'An Eye for an Eye is [REDACTED] in the game data; the telescope shot is fish\'s documented action.',
+      'Conflict':'fish states the game does not score this as sniping Silvio, so it cannot be used for Sniper Assassin. NamuWiki\'s sniper note mentions the same church-tower position "referring to An Eye for an Eye", which reads as the position rather than the kill. This guide follows fish and takes a direct shot instead.'}},
+  {t:'Snipe Francesca, then Silvio',
+   b:[['Disguise','None — stay in the Italian Suit, or I Aim to Please does not fire.'],
+      ['Action','Francesca becomes visible through a window from the tower — snipe her. Then wait for Silvio to walk out of the observatory and snipe him directly.'],
+      ['Result','Red guns from a discovered body are fine. At this range the guards only get a shot-location alert; the challenge survives as long as you are never compromised.'],
+      ['Then','Destroy the virus and exit — Sniper Assassin only banks on mission completion.']],
+   badges:[['chal','I Aim to Please'],['chal','Sniper Assassin'],['chal','The Genius'],['chal','The Scientist'],['warn','Only the two targets may die']],
+   d:{'Second source':'NamuWiki gives the same shape of route from the church morgue start: dongle from the morgue technician, rifle from a stash, up the church tower for Silvio, then Francesca from the tower with a line onto the third floor of the mansion.'}}
+ ]}]
+},
+{
+ id:'r9', tag:'Run 9', title:'Joints, bells and the long shots',
+ goal:"Pacify both targets with cannabis joints, then ring the ship's bells from the mansion roof. Three challenges and a lot of walking.",
+ diff:'Casual.',
+ loadout:{
+   start:'Main Square Tower · Sapienza mastery level 16',
+   suit:'Italian Suit',
+   items:['Concealed weapon: Krugermeier 2-2','Gear: Explosive Baseball','Gear: ICA Remote Audio Distraction','Smuggled item: Sieger 300 Tactical → Sapienza Ruins (Agency Pickup, mastery 8)']
+ },
+ note:'fish\'s own screenshot for this run shows "Main Square" — he says underneath that the screenshot is wrong and you must start at the Main Square Tower. Follow the text, not the picture.',
+ sections:[
+ {h:'Collecting the joints',steps:[
+  {t:'Lead pipe and the first joint',
+   b:[['Where','Turn round at the tower spawn for the lead pipe, then one floor down and out to the balcony, up to the hippie\'s apartment.'],
+      ['NPC','The hippie.'],
+      ['Action','Throw the lead pipe at him and take the first joint from the table by the window.']],
+   badges:[],
+   d:{}},
+  {t:'Golf ball and a free security outfit',
+   b:[['Where','Down to the safe house.'],
+      ['Action','Take the explosive golf ball, then the free mansion security disguise in the adjacent apartment.']],
+   badges:[],
+   d:{}},
+  {t:'Cross to the ruins for the second joint',
+   b:[['Where','Behind the mansion pool there is a path to the ruins; cross the bridge, then go right around to the back entrance.'],
+      ['Item','ICA Remote Audio Distraction, to move the guard off the back gate quickly.'],
+      ['Action','From the back entrance, up the stairs on the right, down the stairs on the left, drop the ledge and take the second joint. Then collect your stashed briefcase in the main tower area.']],
+   badges:[],
+   d:{}}
+ ]},
+ {h:'Two stoned targets',steps:[
+  {t:'Throw the briefcase up and place Silvio\'s joint',
+   b:[['Where','Back at the mansion backyard.'],
+      ['Action','Throw the briefcase so it lands on the balcony above with the black iron railing. Place one joint by the fireplace.'],
+      ['Result','Silvio smokes it and goes down.']],
+   badges:[['chal','Double Jointed']],
+   d:{}},
+  {t:'Place Francesca\'s joint',
+   b:[['Where','The big room with the fireplace where Francesca stays — the prompt is on top of some boxes.'],
+      ['Action','Place the other joint there.']],
+   badges:[['chal','One Hit Wonder']],
+   d:{}}
+ ]},
+ {h:'The bells',steps:[
+  {t:'Crowbar, rifle, and the four ship bells',
+   b:[['Where','Out of Francesca\'s office onto the observatory roof for the crowbar, then drop to the black-railing balcony and take the rifle from the briefcase.'],
+      ['Action','Out in the ocean there is a ship with four bells. Shoot them in order: left, right, top, bottom.']],
+   badges:[['chal','Unleash the Kraken']],
+   d:{'Redacted':'Unleash the Kraken is [REDACTED] in the game data. The four bells in that order is fish\'s documented sequence.'}},
+  {t:'Clear the guard and finish',
+   b:[['NPC','A guard who waits by the outdoor seating area near Francesca.'],
+      ['Action','Throw the crowbar at him when the coast is clear, then wait for Francesca to smoke her joint.'],
+      ['Then','Destroy the virus and exit.']],
+   badges:[],
+   d:{'Extra':'fish also throws the explosive golf ball at the pacified Francesca and the explosive baseball at the pacified Silvio, for a challenge he calls <i>Sapienza Sports Club</i>. That name does not appear anywhere in this repository\'s challenge data, so it is not on the checklist — but the throws cost nothing, and throwing the golf ball from outside the room at an angle avoids being spotted.'}}
+ ]}]
+},
+{
+ id:'r10', tag:'Run 10', title:'Silent Assassin, Suit Only — two accidents',
+ goal:"A cannon and two stalactites. No disguise, no bodies hidden, nothing to clean up: every kill is an accident, and accidents do not break Silent Assassin when the body is found.",
+ diff:'Any. These Classics are no longer difficulty-tiered in World of Assassination.',
+ loadout:{
+   start:'Sapienza Ruins · Sapienza mastery level 18',
+   suit:'Italian Suit — mandatory. Any disguise voids Suit Only and SASO.',
+   items:['At minimum one silenced firearm','Best: silenced sniper rifle from the Sapienza Ruins Agency Pickup (mastery 8)','Gear: free choice','Smuggled item: the rifle, at the Ruins pickup']
+ },
+ note:'fish left the SA/SO section of his guide as a video with no text. This route comes from a separate written Steam guide and is corroborated step by step against fish\'s own runs: the cannon accident is his Run 7 (Bogey) and the stalactite accident is his Run 1 (Caving In).',
+ sections:[
+ {h:'Silvio, in thirty seconds',steps:[
+  {t:'Cannon on the golf game',
+   b:[['Where','Start in the Ruins and climb straight up to the cannon deck. Cannonballs and gunpowder are lying around; use the furthest-right cannon.'],
+      ['NPC','Silvio Caruso, playing golf in the mansion garden.'],
+      ['Action','Load the cannon and fire it at him. It scores as an accident kill.'],
+      ['Result','A "body found" banner can appear and the run still ends as Silent Assassin — the source author reports exactly that.']],
+   badges:[['chal','The Genius'],['src','Steam guide 2317857844 + fish Run 7 (Bogey)'],['save','Save before firing']],
+   d:{'Why an accident':'Accident kills do not break Silent Assassin when the body is discovered, which is what makes a suit-only run on this map tractable at all.'}},
+  {t:'Retreat to the cave path and kill the camera',
+   b:[['Where','Back down to the start; right of the spawn near the boat there is a path to the cave.'],
+      ['Action','Move immediately — the cannon shot pulls guards to investigate. On the way, shoot the camera on that path.'],
+      ['Why','It is the only camera on this entire route, so killing it here means there is no recorder to hunt down later.']],
+   badges:[['warn','Shoot that camera — it is the only one on the route']],
+   d:{}}
+ ]},
+ {h:'The cave',steps:[
+  {t:'Shimmy to the firing position',
+   b:[['Where','Inside the cave, hugging the wall crouched, past the seaplane, to the right.'],
+      ['Action','Shimmy across the ledge, then climb the next one past the acid container. Stay crouched and do not move further — this is the minimum distance that gives you a line on the stalactite above the virus.'],
+      ['Warning','Standing up or advancing gets you spotted by the lab guards when you shoot.']],
+   badges:[['warn','Stay crouched — do not advance past this ledge']],
+   d:{}},
+  {t:'Destroy the virus with a stalactite',
+   b:[['Item','Silenced weapon; instinct vision helps you find the tip.'],
+      ['Action','Shoot the stalactite hanging above the virus so it falls and destroys it.']],
+   badges:[['chal','Eliminating the Competition'],['src','Steam guide 2317857844']],
+   d:{}},
+  {t:'Wait for Francesca, then drop the second stalactite',
+   b:[['Action','Back off toward the cave path and wait out the search cycle. A scientist notices the virus is compromised and calls Francesca. She comes down the stairs and stops at the screen in front of the virus room — save here.'],
+      ['NPC','Francesca De Santis.'],
+      ['Warning','There is a stalactite directly above the door of the lab that connects to the virus room. Shoot it a moment <em>after</em> she starts up the steps so it lands as she reaches the door.']],
+   badges:[['chal','The Scientist'],['save','Save while she is at the screen'],['warn','Fire a moment after she starts walking, not when she arrives']],
+   d:{'Tip':'A rifle with the slow-time scope makes this far easier to time. Without one, expect to reload the save a few times.'}},
+  {t:'Leave',
+   b:[['Action','Either crouch-run to the seaplane right there and take it, or walk back to your boat at the Ruins.'],
+      ['Result','Completing the mission banks Silent Assassin, Silent Assassin Suit Only and Suit Only. With Sniper Assassin already done in Run 8, the capstone fires too.']],
+   badges:[['chal','Silent Assassin'],['chal','Silent Assassin, Suit Only'],['chal','Suit Only'],['chal','The Classics']],
+   d:{'Alternative route':'Steam guide 644994482 gives a completely different SASO: start in the Main Square, take the remote breaching charges from the ICA safe house, reach the observatory through the wine cellar or the lab staircase, take the VHS tape from the observatory tower, wait upstairs for Francesca and her guards to leave the office, hide in her bathroom and overflow the sink when she returns, kill her there; then put the VHS in the ground-floor player, Silvio comes back and dismisses his guards, kill and hide him; finally destroy the virus with the stalactite. It needs two bodies hidden rather than none, so the accident route above is the safer one.',
+      'Why this run is late':'It is placed last because it is the only run where nothing may be hidden, nobody may be pacified for convenience, and no disguise exists to fall back on. Every earlier run has already taught you the map.'}}
+ ]}]
+}];
+
+const KEY='world_of_tomorrow_done_v1', RID='m03';
+const SKEY=KEY+':steps', OKEY=KEY+':open';
+const done=new Set(), stepsDone=new Set(), openRuns=new Set();
+function loadSet(k,set,fallback){
+  try{const v=JSON.parse(localStorage.getItem(k));if(Array.isArray(v)){v.forEach(x=>set.add(x));return;}}catch(e){}
+  if(fallback)fallback.forEach(x=>set.add(x));
+}
+loadSet(KEY,done);          /* ticked challenges */
+loadSet(SKEY,stepsDone);    /* ticked route steps */
+loadSet(OKEY,openRuns,['r1']); /* which runs are expanded */
+function reportProgress(){try{const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r[RID]={done:done.size,total:CH.length,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
+/* one writer for all three sets — every toggle below calls this */
+function persist(){
+  try{
+    localStorage.setItem(KEY,JSON.stringify([...done]));
+    localStorage.setItem(SKEY,JSON.stringify([...stepsDone]));
+    localStorage.setItem(OKEY,JSON.stringify([...openRuns]));
+    localStorage.setItem(KEY+':auto',JSON.stringify([...autoDone]));
+  }catch(e){}
+  reportProgress();
+}
+const saveDone=persist;
+
+/* ---- steps -> challenges ----------------------------------------
+   A step's 'chal' badges name the challenges it earns. A challenge counts as
+   done once every step carrying its badge is ticked. Only challenges this
+   code ticked are ever un-ticked here, so manual ticks survive. */
+const AUTO_KEY=KEY+':auto';
+const ID_BY_NAME={}; CH.forEach(c=>{ID_BY_NAME[c.name]=c.id;});
+const STEPS_FOR={};
+RUNS.forEach(r=>r.sections.forEach((sec,si)=>sec.steps.forEach((st,ti)=>{
+  const key=`${r.id}-${si}-${ti}`;
+  (st.badges||[]).forEach(b=>{
+    if(b[0]!=='chal')return;
+    const id=ID_BY_NAME[b[1]];
+    if(!id)return;
+    (STEPS_FOR[id]||(STEPS_FOR[id]=[])).push(key);
+  });
+})));
+const autoDone=new Set();
+loadSet(AUTO_KEY,autoDone);
+function syncChallenges(){
+  Object.keys(STEPS_FOR).forEach(id=>{
+    const earned=STEPS_FOR[id].every(k=>stepsDone.has(k));
+    if(earned){ if(!done.has(id)){ done.add(id); autoDone.add(id); } }
+    else if(autoDone.has(id)){ done.delete(id); autoDone.delete(id); }
+  });
+}
+syncChallenges();
+let filter='All';
+
+/* ---------------- tracker ---------------- */
+function renderTracker(){
+  const cats=['Assassination','Discovery','Feats','Targets','The Classics'];
+  document.getElementById('cats').innerHTML=cats.map(c=>{
+    const all=CH.filter(x=>x.cat===c), d=all.filter(x=>done.has(x.id)).length;
+    return `<div class="cat"><span class="n">${c}</span>
+      <span class="v">${String(d).padStart(2,'0')}<em>/${all.length}</em></span>
+      <span class="mb"><i style="width:${Math.round(d/all.length*100)}%;background:${CAT_COLOR[c]}"></i></span></div>`;
+  }).join('');
+  document.getElementById('tDone').textContent=done.size;
+  document.getElementById('tBar').style.width=(done.size/CH.length*100)+'%';
+}
+
+/* ---------------- run nav ---------------- */
+function renderNav(){
+  document.getElementById('runnav').innerHTML=
+    RUNS.map((r,i)=>`<button data-jump="${r.id}">${String(i+1).padStart(2,'0')} ${r.title}</button>`).join('')+
+    `<span class="util"><button data-all="open">Expand all</button><button data-all="close">Collapse</button></span>`;
+}
+
+/* ---------------- runs ---------------- */
+function badgeHTML(b){
+  const cls={chal:'b-chal',warn:'b-warn',save:'b-save',unv:'b-unv',src:'b-src'}[b[0]];
+  const pre={warn:'⚠ ',save:'◆ ',unv:'? ',src:'✎ ',chal:'▸ '}[b[0]];
+  return `<span class="badge ${cls}">${pre}${b[1]}</span>`;
+}
+function renderRuns(){
+  document.getElementById('runList').innerHTML=RUNS.map((r,ri)=>{
+    const open=openRuns.has(r.id);
+    let n=0;
+    const total=r.sections.reduce((a,s)=>a+s.steps.length,0);
+    const doneCount=r.sections.reduce((a,s,si)=>a+s.steps.filter((_,ti)=>stepsDone.has(`${r.id}-${si}-${ti}`)).length,0);
+    return `<article class="run ${open?'open':''}" id="${r.id}" data-rail="${r.tag} — ${doneCount}/${total}">
+      <button class="run-head" data-toggle="${r.id}" aria-expanded="${open}">
+        <span class="chev">▶</span>
+        <span class="rh">
+          <span class="run-no">${r.tag} // ${r.diff.split('.')[0]}</span>
+          <h3>${r.title}</h3>
+          <p>${r.goal}</p>
+        </span>
+        <span class="run-prog">${doneCount}/${total} steps</span>
+      </button>
+      <div class="run-body" ${open?'':'hidden'}>
+        <div class="loadout">
+          <h4>Loadout</h4>
+          <div class="lo-grid">
+            <div><span>Starting location</span>${r.loadout.start}</div>
+            <div><span>Difficulty</span>${r.diff}</div>
+            <div><span>Suit</span>${r.loadout.suit}</div>
+            ${r.loadout.items.map((it,i)=>`<div><span>Slot ${i+1}</span>${it}</div>`).join('')}
+          </div>
+          ${r.note?`<p class="lo-note">${r.note}</p>`:''}
+        </div>
+        <div class="sect">
+          ${r.sections.map((sec,si)=>`<h4>${sec.h}</h4>`+sec.steps.map((st,ti)=>{
+            const key=`${r.id}-${si}-${ti}`; n++;
+            const hasD=st.d&&Object.keys(st.d).length;
+            return `<div class="step ${stepsDone.has(key)?'done':''}" id="s-${key}">
+              <div class="step-top">
+                <span class="snum">${String(n).padStart(2,'0')}</span>
+                <button class="tick" data-step="${key}" aria-label="Mark step complete">✓</button>
+                <div class="step-body">
+                  <p class="step-title">${st.t}</p>
+                  <ul class="bul">${st.b.map(x=>`<li><k>${x[0]}</k><span>${x[1]}</span></li>`).join('')}</ul>
+                  <div class="badges">${st.badges.map(badgeHTML).join('')}</div>
+                </div>
+              </div>
+              ${hasD?`<button class="more" data-more="${key}" aria-expanded="false">+ Notes</button>
+              <div class="detail" id="d-${key}" hidden><dl>${Object.entries(st.d).map(([k,v])=>{
+                const c=k==='Unverified'?'flag unv':(/^(Why the order|Ordering|Order note|Requirement|Warning|Why first|Conflict|Known bug|Bug)/.test(k)?'flag amber':'');
+                return c?`<div class="${c}"><dt style="margin-top:0">${k}</dt><dd>${v}</dd></div>`:`<dt>${k}</dt><dd>${v}</dd>`;
+              }).join('')}</dl></div>`:''}
+            </div>`;
+          }).join('')).join('')}
+        </div>
+      </div>
+    </article>`;
+  }).join('');
+}
+
+/* ---------------- checklist ---------------- */
+function renderFilters(){
+  const opts=['All','Assassination','Discovery','Feats','Targets','The Classics','Incomplete'];
+  document.getElementById('filters').innerHTML=opts.map(o=>`<button class="${o===filter?'on':''}" data-f="${o}">${o}</button>`).join('');
+}
+function renderChecklist(){
+  const list=CH.filter(c=>filter==='All'?true:filter==='Incomplete'?!done.has(c.id):c.cat===filter);
+  document.getElementById('chalList').innerHTML=list.length?list.map(c=>`
+    <div class="chal ${done.has(c.id)?'done':''}">
+      <button class="tick" data-ch="${c.id}" aria-label="Mark ${c.name} complete">✓</button>
+      <div class="chal-main">
+        <p class="chal-name">${c.name}</p>
+        <p class="chal-cond">${c.cond}</p>
+        <div class="chal-meta">
+          <span class="badge" style="color:${CAT_COLOR[c.cat]};border-color:${CAT_COLOR[c.cat]}">${c.cat}</span>
+          ${c.run?`<span class="badge b-chal">Run ${c.run}</span>`:'<span class="badge b-unv">Not routed — see Audit</span>'}
+        </div>
+      </div>
+    </div>`).join(''):'<p style="color:var(--dim)">Nothing matches this filter.</p>';
+}
+
+document.addEventListener('click',e=>{
+  const tab=e.target.closest('.tab');
+  if(tab){
+    document.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-selected',t===tab));
+    document.querySelectorAll('.panel').forEach(p=>p.hidden=p.id!=='p-'+tab.dataset.panel);
+    return;
+  }
+  const jump=e.target.closest('[data-jump]');
+  if(jump){
+    const id=jump.dataset.jump;
+    openRuns.add(id); persist(); renderRuns();
+    document.querySelectorAll('[data-jump]').forEach(b=>b.classList.toggle('hot',b.dataset.jump===id));
+    document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});
+    return;
+  }
+  const all=e.target.closest('[data-all]');
+  if(all){
+    if(all.dataset.all==='open') RUNS.forEach(r=>openRuns.add(r.id)); else openRuns.clear();
+    persist(); renderRuns(); return;
+  }
+  const tg=e.target.closest('[data-toggle]');
+  if(tg){
+    const id=tg.dataset.toggle;
+    openRuns.has(id)?openRuns.delete(id):openRuns.add(id);
+    persist(); renderRuns(); return;
+  }
+  const f=e.target.closest('[data-f]');
+  if(f){ filter=f.dataset.f; renderFilters(); renderChecklist(); return; }
+  const ch=e.target.closest('[data-ch]');
+  if(ch){
+    const id=ch.dataset.ch;
+    done.has(id)?done.delete(id):done.add(id);
+    saveDone(); renderTracker(); renderChecklist(); return;
+  }
+  const sp=e.target.closest('[data-step]');
+  if(sp){
+    const k=sp.dataset.step;
+    stepsDone.has(k)?stepsDone.delete(k):stepsDone.add(k);
+    syncChallenges();
+    persist(); renderRuns(); renderTracker(); renderChecklist(); return;
+  }
+  const rs=e.target.closest('#reset');
+  if(rs){
+    if(confirm('Clear every ticked challenge for this mission?')){
+      done.clear(); stepsDone.clear(); autoDone.clear(); saveDone(); renderTracker(); renderChecklist(); renderRuns();
+    }
+    return;
+  }
+  const m=e.target.closest('[data-more]');
+  if(m){
+    const d=document.getElementById('d-'+m.dataset.more);
+    d.hidden=!d.hidden;
+    m.setAttribute('aria-expanded',String(!d.hidden));
+    m.textContent=d.hidden?'+ Notes':'− Notes';
+  }
+});
+
+renderTracker(); renderNav(); renderFilters(); renderChecklist(); renderRuns();
+reportProgress();
+</script>
+<!-- step-progress-bridge -->
+<script>
+/* Reports route-step ticks into 'hitman-progress-registry' so the index can
+   show them beside the challenge counts. Counts what is on screen rather than
+   any guide-specific state, so one implementation serves every guide. */
+(function(){
+  var RID="m03", SEL=".step";
+  function isDone(s){
+    var c=s.classList;
+    if(c.contains('done')||c.contains('dn')) return true;
+    if(s.getAttribute('data-done')==='1'||s.getAttribute('aria-pressed')==='true') return true;
+    return !!s.querySelector('.done,.dn,[data-done="1"],[aria-pressed="true"]');
+  }
+  function tally(){
+    var steps=document.querySelectorAll(SEL);
+    if(!steps.length) return null;
+    var n=0;
+    for(var i=0;i<steps.length;i++) if(isDone(steps[i])) n++;
+    return {steps:n,stepTotal:steps.length};
+  }
+  function push(){
+    var t;
+    try{ t=tally(); }catch(err){ return; }
+    if(!t||!t.stepTotal) return;
+    try{
+      var r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');
+      var e=r[RID]||(r[RID]={});
+      /* the guide's own reportProgress() rewrites this entry wholesale, so
+         re-add the step counts whenever they go missing or stale */
+      if(e.steps===t.steps&&e.stepTotal===t.stepTotal) return;
+      e.steps=t.steps; e.stepTotal=t.stepTotal; e.updated=Date.now();
+      localStorage.setItem('hitman-progress-registry',JSON.stringify(r));
+    }catch(err){}
+  }
+  var pending=false;
+  function schedule(){
+    if(pending) return; pending=true;
+    setTimeout(function(){pending=false;push();},120);
+  }
+  try{
+    new MutationObserver(schedule).observe(document.body,
+      {subtree:true,childList:true,attributes:true,attributeFilter:['class','aria-pressed','data-done']});
+  }catch(err){}
+  window.addEventListener('load',schedule);
+  setTimeout(push,600);
+})();
+</script>
+<!-- /step-progress-bridge -->
+</body>
+</html>

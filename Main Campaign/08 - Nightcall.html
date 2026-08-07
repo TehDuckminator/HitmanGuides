@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nightcall — Hawke's Bay · 33-Challenge Run Planner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#07131A; --tide:#0D2029; --tide-2:#123340;
+  --bone:#E9E4D6; --muted:#8DA6B0;
+  --sodium:#E9A23B; --sodium-dim:#7A5A22;
+  --surf:#5FC9B0; --alarm:#DE5548; --violet:#9C8AD6;
+  --line:rgba(233,228,214,.14); --line-soft:rgba(233,228,214,.07);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--ink);color:var(--bone);
+  font-family:'Instrument Sans',system-ui,sans-serif;font-size:15.5px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  background-image:radial-gradient(1100px 500px at 78% -12%,rgba(233,162,59,.11),transparent 62%),
+                   radial-gradient(900px 620px at 6% 104%,rgba(95,201,176,.07),transparent 60%);
+  background-attachment:fixed}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+h1,h2,h3,h4{font-family:'Bricolage Grotesque',sans-serif;margin:0;letter-spacing:-.022em;line-height:1.1}
+.mono{font-family:'IBM Plex Mono',monospace}
+a{color:var(--surf)}
+
+header.mast{padding:48px 0 24px;border-bottom:1px solid var(--line)}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--sodium)}
+h1{font-size:clamp(38px,7vw,70px);font-weight:800;margin:12px 0 0}
+h1 .sub{display:block;font-size:clamp(15px,2.3vw,21px);font-weight:600;color:var(--muted);margin-top:10px;letter-spacing:0}
+.mast-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.chip{font-family:'IBM Plex Mono',monospace;font-size:11.5px;padding:4px 9px;border:1px solid var(--line);border-radius:4px;color:var(--muted);background:rgba(255,255,255,.02)}
+.chip b{color:var(--bone);font-weight:600}
+
+.tracker{position:sticky;top:0;z-index:40;background:rgba(7,19,26,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.tracker-inner{padding:13px 0 10px}
+.tk-top{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.tk-count{font-family:'Bricolage Grotesque',sans-serif;font-size:29px;font-weight:800;line-height:1}
+.tk-count small{font-size:15px;color:var(--muted);font-weight:600}
+.tk-xp{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--sodium)}
+.bar{height:5px;background:var(--tide-2);border-radius:99px;overflow:hidden;margin:10px 0 12px}
+.bar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--sodium),var(--surf));transition:width .45s cubic-bezier(.2,.7,.3,1)}
+.board{display:grid;grid-template-columns:repeat(33,1fr);gap:3px;margin-bottom:11px}
+.board i{display:block;height:15px;border-radius:2px;background:var(--tide-2);border-bottom:2px solid transparent;transition:.25s;cursor:pointer}
+.board i[data-cat=A]{border-bottom-color:rgba(233,162,59,.45)}
+.board i[data-cat=D]{border-bottom-color:rgba(95,201,176,.45)}
+.board i[data-cat=F]{border-bottom-color:rgba(156,138,214,.45)}
+.board i[data-cat=T]{border-bottom-color:rgba(222,85,72,.45)}
+.board i[data-cat=C]{border-bottom-color:rgba(233,228,214,.4)}
+.board i.on[data-cat=A]{background:var(--sodium)}
+.board i.on[data-cat=D]{background:var(--surf)}
+.board i.on[data-cat=F]{background:var(--violet)}
+.board i.on[data-cat=T]{background:var(--alarm)}
+.board i.on[data-cat=C]{background:var(--bone)}
+.cats{display:flex;flex-wrap:wrap;gap:14px}
+.cat{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--muted);display:flex;align-items:center;gap:6px}
+.cat s{width:8px;height:8px;border-radius:2px;display:inline-block;text-decoration:none}
+.cat b{color:var(--bone);font-weight:500}
+
+nav.tabs{display:flex;gap:2px;border-bottom:1px solid var(--line);margin-top:12px;overflow-x:auto}
+nav.tabs button{background:none;border:0;border-bottom:2px solid transparent;color:var(--muted);
+  font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+  padding:11px 15px;cursor:pointer;white-space:nowrap;transition:.2s}
+nav.tabs button:hover{color:var(--bone)}
+nav.tabs button[aria-selected=true]{color:var(--sodium);border-bottom-color:var(--sodium)}
+.panel{display:none;padding:30px 0 90px}
+.panel.on{display:block}
+
+/* run jump bar */
+.jump{display:flex;flex-wrap:wrap;gap:7px;align-items:center;margin-bottom:24px;padding:14px 16px;border:1px solid var(--line);border-radius:6px;background:rgba(18,51,64,.28)}
+.jump>span{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-right:4px}
+.jbtn{background:none;border:1px solid var(--line);color:var(--bone);font-family:'IBM Plex Mono',monospace;font-size:11.5px;padding:7px 12px;border-radius:4px;cursor:pointer;transition:.18s;display:flex;gap:7px;align-items:center}
+.jbtn:hover{border-color:var(--sodium);color:var(--sodium)}
+.jbtn i{font-style:normal;color:var(--surf);font-size:10.5px}
+.jbtn.full{border-color:rgba(95,201,176,.5)}
+.jbtn.full i{color:var(--surf)}
+.tiny{background:none;border:1px solid var(--line);color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:10.5px;padding:6px 10px;border-radius:99px;cursor:pointer}
+.tiny:hover{color:var(--bone);border-color:var(--muted)}
+
+.run{border:1px solid var(--line);border-radius:6px;background:linear-gradient(180deg,rgba(18,51,64,.42),rgba(13,32,41,.22));margin-bottom:22px;overflow:hidden;scroll-margin-top:210px}
+.run-head{padding:20px 22px;cursor:pointer;display:flex;gap:16px;align-items:flex-start;user-select:none}
+.run-head:hover{background:rgba(255,255,255,.02)}
+.run-no{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--sodium);border:1px solid var(--sodium-dim);border-radius:4px;padding:3px 7px;flex:none;margin-top:4px}
+.run-head h2{font-size:23px;font-weight:700}
+.run-goal{color:var(--muted);font-size:14.3px;margin-top:6px;max-width:64ch}
+.run-prog{margin-left:auto;flex:none;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);text-align:right}
+.run-prog em{display:block;font-style:normal;color:var(--surf);font-size:16px}
+.run-prog s{display:block;text-decoration:none;margin-top:5px;font-size:14px;color:var(--muted);transition:.25s}
+.run.open .run-prog s{transform:rotate(180deg)}
+.run-body{display:none;padding:0 22px 22px;border-top:1px solid var(--line-soft)}
+.run.open .run-body{display:block}
+
+.loadout{display:grid;grid-template-columns:repeat(auto-fit,minmax(178px,1fr));gap:1px;background:var(--line-soft);border:1px solid var(--line-soft);border-radius:5px;margin:18px 0 22px;overflow:hidden}
+.lo{background:rgba(7,19,26,.62);padding:12px 14px}
+.lo span{display:block;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.lo b{font-weight:600;font-size:14px;display:block}
+.lo p{margin:4px 0 0;font-size:12.2px;color:var(--muted);line-height:1.42}
+
+.sec-title{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.19em;text-transform:uppercase;color:var(--sodium);margin:24px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--line-soft)}
+
+.step{border:1px solid var(--line-soft);border-radius:5px;margin-bottom:8px;background:rgba(7,19,26,.42);transition:.2s}
+.step.done{border-color:rgba(95,201,176,.35);background:rgba(95,201,176,.045)}
+.step-top{display:flex;gap:12px;padding:13px 15px;align-items:flex-start}
+.tick{flex:none;width:21px;height:21px;border:1.5px solid var(--muted);border-radius:3px;background:none;cursor:pointer;color:transparent;font-size:13px;line-height:1;margin-top:2px;transition:.2s;padding:0}
+.tick:hover{border-color:var(--surf)}
+.step.done .tick,.ch-row.done .tick{background:var(--surf);border-color:var(--surf);color:var(--ink)}
+.step-txt{flex:1;min-width:0;cursor:pointer}
+.snum{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--sodium);letter-spacing:.08em}
+.step-txt h4{font-size:15.5px;font-weight:700;margin-top:2px}
+.step-txt p{margin:4px 0 0;color:var(--muted);font-size:13.8px}
+.caret{flex:none;color:var(--muted);font-size:11px;margin-top:6px;transition:.25s;font-family:'IBM Plex Mono',monospace;cursor:pointer}
+.step.open .caret{transform:rotate(90deg)}
+.detail{display:none;padding:0 15px 15px 48px}
+.step.open .detail{display:block}
+.spec{list-style:none;margin:6px 0 0;padding:12px 0 0;border-top:1px solid var(--line-soft)}
+.spec li{display:flex;gap:11px;margin-bottom:7px;font-size:13.8px;color:#CFD9DD;align-items:flex-start}
+.spec li>b{flex:none;width:74px;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--sodium);padding-top:4px;font-weight:500}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:11px}
+.b{font-family:'IBM Plex Mono',monospace;font-size:10.5px;padding:3px 8px;border-radius:3px;border:1px solid;cursor:pointer}
+.b.A{color:var(--sodium);border-color:var(--sodium-dim);background:rgba(233,162,59,.09)}
+.b.D{color:var(--surf);border-color:rgba(95,201,176,.4);background:rgba(95,201,176,.09)}
+.b.F{color:var(--violet);border-color:rgba(156,138,214,.4);background:rgba(156,138,214,.09)}
+.b.T{color:var(--alarm);border-color:rgba(222,85,72,.4);background:rgba(222,85,72,.09)}
+.b.C{color:var(--bone);border-color:var(--line);background:rgba(233,228,214,.07)}
+.warn,.save{display:flex;gap:9px;margin-top:10px;padding:9px 11px;border-radius:4px;font-size:13.3px}
+.warn{background:rgba(222,85,72,.1);border:1px solid rgba(222,85,72,.34);color:#F0C4BF}
+.warn b{color:var(--alarm);font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;flex:none;padding-top:2px}
+.save{background:rgba(233,162,59,.1);border:1px solid rgba(233,162,59,.34);color:#F2D9AE}
+.save b{color:var(--sodium);font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;flex:none;padding-top:2px}
+.unv{color:var(--alarm);font-family:'IBM Plex Mono',monospace;font-size:11px}
+
+.filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
+.filters button{background:none;border:1px solid var(--line);color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:11.5px;padding:6px 12px;border-radius:99px;cursor:pointer;transition:.2s}
+.filters button:hover{color:var(--bone);border-color:var(--muted)}
+.filters button.on{background:var(--bone);color:var(--ink);border-color:var(--bone)}
+.ch-row{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border:1px solid var(--line-soft);border-radius:5px;margin-bottom:7px;background:rgba(7,19,26,.42)}
+.ch-row.done{border-color:rgba(95,201,176,.32);background:rgba(95,201,176,.045)}
+.ch-row.done .ch-name{color:var(--muted);text-decoration:line-through;text-decoration-color:rgba(95,201,176,.6)}
+.ch-main{flex:1;min-width:0}
+.ch-name{font-weight:600;font-size:15px}
+.ch-cond{color:var(--muted);font-size:13.5px;margin-top:3px}
+.ch-note{font-size:12.2px;color:var(--sodium);margin-top:4px;font-family:'IBM Plex Mono',monospace}
+.ch-side{flex:none;text-align:right;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--muted)}
+.ch-side em{display:block;font-style:normal;color:var(--sodium)}
+.ch-side s{display:block;text-decoration:none;margin-top:4px;opacity:.75}
+
+.panel h2.big{font-size:29px;margin-bottom:8px}
+.lede{color:var(--muted);max-width:70ch;margin:0 0 24px}
+.card{border:1px solid var(--line);border-radius:6px;padding:19px 21px;margin-bottom:15px;background:rgba(18,51,64,.24)}
+.card h3{font-size:17.5px;margin-bottom:9px}
+.card p{margin:0 0 9px;font-size:14.4px}
+.card p:last-child{margin-bottom:0}
+.card ul{margin:7px 0 0;padding-left:19px;font-size:14.4px}
+.card li{margin-bottom:6px}
+table{width:100%;border-collapse:collapse;font-size:13.8px;margin-top:9px}
+th,td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+th{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--sodium);font-weight:500}
+td.mono{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted)}
+footer{border-top:1px solid var(--line);padding:24px 0 60px;color:var(--muted);font-size:13px}
+@media (max-width:720px){
+  .board{grid-template-columns:repeat(17,1fr)}
+  .detail{padding-left:15px}
+  .spec li{flex-direction:column;gap:2px}
+  .spec li>b{width:auto;padding-top:0}
+  .run-prog{margin-left:0;width:100%;text-align:left;display:flex;gap:12px;align-items:center}
+  .run-prog s{margin-top:0}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+:focus-visible{outline:2px solid var(--sodium);outline-offset:2px}
+</style>
+</head>
+<body>
+
+<header class="mast"><div class="wrap">
+  <div class="eyebrow">HITMAN World of Assassination · Hawke's Bay, New Zealand</div>
+  <h1>Nightcall<span class="sub">All 33 challenges, in step format, across six validated runs</span></h1>
+  <div class="mast-meta">
+    <span class="chip"><b>33</b> challenges</span>
+    <span class="chip"><b>63,000</b> XP</span>
+    <span class="chip"><b>0</b> mission stories</span>
+    <span class="chip"><b>1</b> disguise</span>
+    <span class="chip"><b>6</b> discovery areas</span>
+    <span class="chip"><b>3</b> starting locations</span>
+  </div>
+</div></header>
+
+<div class="tracker"><div class="wrap"><div class="tracker-inner">
+  <div class="tk-top">
+    <div class="tk-count" id="tkCount">0 <small>/ 33 complete</small></div>
+    <div class="tk-xp" id="tkXp">0 / 63,000 XP</div>
+  </div>
+  <div class="bar"><i id="tkBar"></i></div>
+  <div class="board" id="board" title="One tile per challenge — click to toggle"></div>
+  <div class="cats" id="cats"></div>
+  <nav class="tabs" role="tablist">
+    <button role="tab" aria-selected="true" data-tab="runs">Runs</button>
+    <button role="tab" aria-selected="false" data-tab="list">Checklist</button>
+    <button role="tab" aria-selected="false" data-tab="map">Map &amp; items</button>
+    <button role="tab" aria-selected="false" data-tab="verify">Verification</button>
+  </nav>
+</div></div></div>
+
+<main class="wrap">
+
+<section class="panel on" id="tab-runs">
+  <div class="jump" id="jump"><span>Jump to run</span></div>
+
+  <div class="card" style="border-color:rgba(222,85,72,.35);background:rgba(222,85,72,.07)">
+    <h3 style="color:var(--alarm)">Four rules that govern every run</h3>
+    <ul>
+      <li><b>There are no Mission Stories.</b> The wiki states this outright and your challenge data contains none. Nothing here can be broken by story-script ordering, and no "Hero of Hawke's Bay" challenge exists.</li>
+      <li><b>The map is empty until the office computer is used.</b> No guards, no target, no witnesses. Every pickup and every discovery area in this guide is collected before that moment, in every run.</li>
+      <li><b>The lockpick comes before the poison.</b> The lockpick sits in the Panic Room; the lethal poison sits in a locked cabinet in the second-floor bathroom. Runs 4 and 5 both open the Panic Room first for exactly this reason.</li>
+      <li><b>Alertness never resets.</b> Once anyone in the level is alerted, Alma's bodyguards stay on high alert for the rest of the attempt. This is why every run front-loads its quiet objectives.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Run the runs in order</h3>
+    <p>Runs 1&ndash;3 are the mastery engine. The <b>Office</b> starting location only unlocks at Mastery&nbsp;5, which is this destination's cap, so a fresh profile will be starting from the <b>Boat</b> for the first few attempts. Runs 4, 5 and 6 assume you have Office by then; if not, every one of them opens with the same Boat approach used in Run&nbsp;2, which costs about ninety seconds.</p>
+    <p>One dependency is hard: <b>Versatile Assassin</b> needs Straight Shot, which is earned in Run&nbsp;2. Do Run&nbsp;2 before Run&nbsp;4 or it will not fire. <b>The Classics</b> needs Sniper Assassin from Run&nbsp;3 plus the three from Run&nbsp;2.</p>
+  </div>
+
+  <div id="runs"></div>
+</section>
+
+<section class="panel" id="tab-list">
+  <h2 class="big">All 33 challenges</h2>
+  <p class="lede">Names and unlock conditions are taken verbatim from your in-game challenge data. XP values come from the Hitman Wiki challenge table and sum to exactly 63,000, matching the wiki's stated mission total.</p>
+  <div class="filters" id="filters"></div>
+  <div id="list"></div>
+  <div style="margin-top:20px"><button class="tiny" id="resetBtn">Clear all progress</button></div>
+</section>
+
+<section class="panel" id="tab-map">
+  <h2 class="big">The house, room by room</h2>
+  <p class="lede">One beach house, a garage, a pool room and a shoreline. Where sources disagree, both readings are given rather than one being picked.</p>
+
+  <div class="card">
+    <h3>The six discovery areas</h3>
+    <p>These are the exact area names from your challenge data, and there are exactly six of them. Older web guides list a "ruined boathouse" as a separate area — it is not one. <b>The Garage is the one people miss</b>, because the obvious routes into the house go through the pool room or the front door.</p>
+    <ul>
+      <li><b>Boat / House</b> — the shoreline, the grounds and the main floor, all counted as a single area.</li>
+      <li><b>Garage</b> — enter by shorting the signal box with the screwdriver, or through the Panic Room's second door.</li>
+      <li><b>Alma's Office</b> — second floor, straight ahead from the top of the garage stairs.</li>
+      <li><b>Alma's / Bedroom</b> — second floor, off the hallway.</li>
+      <li><b>Roof</b> — via the bathroom balcony or the drainpipe beside the garage door.</li>
+      <li><b>Panic Room</b> — behind the square painting on the office wall.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Starting locations and mastery unlocks</h3>
+    <table>
+      <tr><th>Mastery</th><th>Unlock</th><th>What it changes</th></tr>
+      <tr><td class="mono">1</td><td><b>Boat</b> — starting location</td><td>Arrive by boat, a walk down the shoreline from the house. The default, and the only start a fresh profile has.</td></tr>
+      <tr><td class="mono">2</td><td>Garbage container stash · ICA Proximity Explosive Mk II</td><td>The stash holds one small item and sits behind the house. The proximity mine is the cleanest tool for Contained Explosion.</td></tr>
+      <tr><td class="mono">3</td><td><b>Beach</b> — starting location</td><td>On the sand near the house. Shortest walk to the driftwood.</td></tr>
+      <tr><td class="mono">4</td><td>Beach shack agency pickup</td><td>A briefcase with a large item, smuggled into the old boat house on the beach. This is how you get a sniper rifle in without a briefcase in your loadout.</td></tr>
+      <tr><td class="mono">5</td><td><b>Office</b> — starting location · Flash Grenade · Tanto</td><td>Starts you inside the office, beside the Panic Room painting. It removes the entire approach from every repeat run, which matters enormously in Runs 4 and 5. The Tanto is listed as HITMAN III only.</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>Item locations</h3>
+    <table>
+      <tr><th>Item</th><th>Where</th><th>Sources</th></tr>
+      <tr><td><b>Screwdriver</b></td><td>On the floor beside the pool, next to a toolbox. Shorts the signal box left of the garage door.</td><td class="mono">2</td></tr>
+      <tr><td><b>House Keys</b></td><td>Inside the white vase in the corner of the pool room, beside a bench with a plant and towels. 47 will not reach in — shoot or throw something at it. Opens only the door next to it.</td><td class="mono">4</td></tr>
+      <tr><td><b>Password Dongle</b></td><td>Panic Room, on the desk to the left. Required for the computer.</td><td class="mono">4</td></tr>
+      <tr><td><b>Lockpick</b></td><td>Panic Room, same desk. Not present on Master difficulty.</td><td class="mono">3</td></tr>
+      <tr><td><b>Camera recorder</b></td><td>Panic Room, far left. Destroy it to wipe camera evidence.</td><td class="mono">3</td></tr>
+      <tr><td><b>Arsenal</b></td><td>Panic Room, on the right: fragmentation grenades, katana, shurikens, shotgun, tranquilizer.</td><td class="mono">3</td></tr>
+      <tr><td><b>Lethal Poison Pill Jar</b></td><td>Locked cabinet on the bathroom wall next to the second-floor bedroom. Needs the lockpick. A cannabis joint is in the same cabinet.</td><td class="mono">4</td></tr>
+      <tr><td><b>Emetic Rat Poison &times;2</b></td><td>One in the storage room, one in the downstairs bathroom. <span class="unv">Note:</span> one trophy guide instead describes a shelf just inside the door next to the aquarium — check that too if you come up short.</td><td class="mono">2, one conflict</td></tr>
+      <tr><td><b>Scissors</b></td><td><b>The ground-floor bathroom</b> — the same room Alma runs to when she is sick. The wiki's scissors location index calls it the "zero floor bathroom"; a Steam forum route independently describes going down from the office to a bathroom for them.</td><td class="mono">2</td></tr>
+      <tr><td><b>Kitchen Knife &amp; Cleaver</b></td><td>Hanging on the kitchen wall downstairs, near the bar.</td><td class="mono">3</td></tr>
+      <tr><td><b>Squeaky Toy</b></td><td>On the floor next to Alma's bed, and a second one behind the bathtub in the second-floor bathroom.</td><td class="mono">2 (one each)</td></tr>
+      <tr><td><b>Driftwood Log</b></td><td>Along the beach; one lies near the ruined boat house south of the property. Visible in Instinct. Large and unconcealable — drop it once the challenge fires.</td><td class="mono">3</td></tr>
+      <tr><td><b>Sugar &amp; Honey</b></td><td>On the kitchen counter, ground floor.</td><td class="mono">4</td></tr>
+      <tr><td><b>Orson's whisky</b></td><td>The bedroom, on a table to your left as you face the bed.</td><td class="mono">2</td></tr>
+      <tr><td><b>Aquarium</b></td><td>Ground floor, just inside from the pool.</td><td class="mono">2</td></tr>
+      <tr><td><b>Roof ventilation</b></td><td>Two units: one over the Panic Room, one over Alma's bathroom. The filtration unit is a large rectangular fan housing on the southwestern corner; the air tanks are at the back of it.</td><td class="mono">2</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>Named NPCs</h3>
+    <p>Three people in this level have names in any verifiable source. Everyone else is described by post, because inventing names would be worse than admitting the gap.</p>
+    <ul>
+      <li><b>Alma Reynard</b> — the only target. Does not exist on the map until the computer is used.</li>
+      <li><b>Orson Mills</b> — her partner, ex-CICADA. The level's only non-combatant civilian, and the subject of two Feats. Killing him voids "only eliminate the target" on every Classic.</li>
+      <li><b>Gerard Mann</b> — Head of Security, personal bodyguard to Reynard and Mills. He enters through the front door beside Alma.</li>
+    </ul>
+    <p style="color:var(--muted);font-size:13.4px">The wiki records 34 non-target NPCs, of whom Orson is the only civilian. Mercenaries appear on the second floor after the trigger, and the wiki walkthrough notes they are lax enough that even when ordered to sweep upstairs they do not check the office or the arms room.</p>
+  </div>
+
+  <div class="card">
+    <h3>Scripted behaviour worth knowing</h3>
+    <ul>
+      <li><b>The Panic Room is one-shot.</b> During an emergency Alma and Orson lock themselves in, and it can then be opened from neither the office painting nor the garage door. If it is breached or discovered, she instead runs into the sea and drowns herself. Reported variants: she huddles by the mercenaries at the grave-digging truck, or stops at the water's edge and stays alive. In all cases the Panic Room script is gone for that attempt.</li>
+      <li><b>Bedtime has a timer.</b> If undisturbed, Alma wakes roughly fifteen minutes after going to sleep to phone her sister Celia. Sleeping-target challenges have to land inside that window.</li>
+      <li><b>Being sick is not an alert.</b> Emetic poison sends an NPC to a toilet without putting anyone into an alert state. It works on Orson as well as Alma, which is a clean way to separate the pair.</li>
+      <li><b>The tea choice is random.</b> Alma picks either sugar or honey. The wiki walkthrough's answer is to poison both. A Steam guide instead describes hiding behind the kitchen counter and poisoning the chosen ingredient in the moment while the tea is being made.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="panel" id="tab-verify">
+  <h2 class="big">Verification and run validation</h2>
+  <p class="lede">What was checked, what your file corrected, and what still cannot be confirmed.</p>
+
+  <div class="card">
+    <h3>What your challenge data corrected</h3>
+    <ul>
+      <li><b>Discovery areas.</b> Web guides list "ruined boathouse / house exterior / roof / main floor / second floor / panic room". Your file gives the actual area names: <b>Boat&nbsp;/&nbsp;House, Garage, Alma's Office, Alma's&nbsp;/&nbsp;Bedroom, Roof, Panic Room</b>. The boathouse is not an area and the Garage is — the run has been re-routed through the garage as a result.</li>
+      <li><b>Challenge text.</b> Your data spells it <b>"Smells like Nail Polish"</b> (lowercase L) and phrases several conditions without the "in Hawke's Bay" suffix the wiki adds. The checklist now uses your text verbatim.</li>
+      <li><b>Classics wording.</b> Your data says "Only eliminate the <em>target</em>" (singular) and does <b>not</b> list the camera-evidence clause the wiki includes. This guide still destroys the camera recorder in Runs 2 and 3, because it is free, it is on the route, and it costs nothing if the clause turns out not to apply.</li>
+      <li><b>Confirmed unchanged:</b> 33 challenges, 19/5/3/1/5 split, exactly one disguise (Bodyguard), area goal 6.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Count audit</h3>
+    <table>
+      <tr><th>Category</th><th>Your data</th><th>Wiki</th><th>XP</th><th>Assigned to runs</th></tr>
+      <tr><td>Assassination</td><td class="mono">19</td><td class="mono">19</td><td class="mono">30,000</td><td class="mono">19</td></tr>
+      <tr><td>Discovery</td><td class="mono">5</td><td class="mono">5</td><td class="mono">9,000</td><td class="mono">5</td></tr>
+      <tr><td>Feats</td><td class="mono">3</td><td class="mono">3</td><td class="mono">3,000</td><td class="mono">3</td></tr>
+      <tr><td>Targets</td><td class="mono">1</td><td class="mono">1</td><td class="mono">1,000</td><td class="mono">1</td></tr>
+      <tr><td>The Classics</td><td class="mono">5</td><td class="mono">5</td><td class="mono">20,000</td><td class="mono">5</td></tr>
+      <tr><td><b>Total</b></td><td class="mono"><b>33</b></td><td class="mono"><b>33</b></td><td class="mono"><b>63,000</b></td><td class="mono"><b>33</b></td></tr>
+    </table>
+    <p style="margin-top:12px">Run distribution: 6 + 4 + 3 + 10 + 8 + 2 = 33. No challenge appears in two runs, none is unassigned, no name is duplicated.</p>
+  </div>
+
+  <div class="card">
+    <h3>Run-by-run logic simulation</h3>
+    <table>
+      <tr><th>Check</th><th>Result</th></tr>
+      <tr><td>Every step's required item is picked up earlier in the same run</td><td><b>Pass.</b> The one real trap is the lockpick&rarr;poison chain: the lockpick is in the Panic Room, the lethal poison is behind a locked cabinet. Runs 4 and 5 both open the Panic Room before going to the bathroom.</td></tr>
+      <tr><td>Every step's required disguise is obtained earlier</td><td><b>Pass.</b> Run 5 is the only run needing the Bodyguard outfit for its objectives, and it takes one before its hub save. Runs 2 and 6-A must <em>not</em> change clothes and never do.</td></tr>
+      <tr><td>No step depends on an NPC killed earlier</td><td><b>Pass.</b> The one risk was Orson: Death of a Statesman kills him on his own schedule, so it is isolated on its own reload and never shares a branch with A Clean Kill or Orson Bathes.</td></tr>
+      <tr><td>No scripted event is broken by an earlier step</td><td><b>Pass.</b> The Panic Room roof hatch is never destroyed. Run 5 does its Panic Room branch last so nothing can pre-empt the lockdown script.</td></tr>
+      <tr><td>Save/reload points do not break later objectives</td><td><b>Pass.</b> Runs 4 and 5 both save <em>before</em> the computer is used, so each branch reloads with its poisons, scissors and shotgun back in inventory and the house un-alerted.</td></tr>
+      <tr><td>Mutually exclusive challenges are separated</td><td><b>Pass.</b> See the table below.</td></tr>
+      <tr><td>Route efficiency and backtracking</td><td><b>Pass.</b> Every run uses the same one-way path: beach &rarr; pool room &rarr; garage &rarr; upstairs &rarr; office. The only repeated leg is office&harr;kitchen in Run 4's poison branches, which is unavoidable because the sugar and honey must be dosed before the trigger.</td></tr>
+      <tr><td>Targets not killed before related challenges complete</td><td><b>Pass.</b> Alma dies only at the end of each branch, and every branch that needs her alive reloads from a pre-trigger save.</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>Mutually exclusive pairs, and where they are split</h3>
+    <table>
+      <tr><th>Conflict</th><th>Why</th><th>Split</th></tr>
+      <tr><td>Chameleon vs. Suit Only / SASO</td><td>Equipping the Bodyguard outfit voids every suit condition</td><td>Run 1 vs. Run 2</td></tr>
+      <tr><td>Deadly Shadow vs. Deadly Ninja</td><td>Deadly Shadow needs no bodies found; Deadly Ninja needs ten corpses</td><td>Two branches of Run 6, split at the pre-trigger save, each ending with its own exit</td></tr>
+      <tr><td>Hitman with a Shotgun vs. everything loud</td><td>Being spotted resets the counter to zero</td><td>Its own reload in Run 5, before any target method</td></tr>
+      <tr><td>Contained Explosion vs. any other casualty</td><td>No one else may die or be pacified in the blast</td><td>Its own reload in Run 5</td></tr>
+      <tr><td>Sniper Assassin vs. Run 5 entirely</td><td>Requires never being spotted and only the target eliminated</td><td>Run 3, kept clean</td></tr>
+      <tr><td>Every Alma kill method</td><td>She can only die once per attempt</td><td>One reload each from the Run 4 and Run 5 hub saves</td></tr>
+      <tr><td>Death of a Statesman vs. A Clean Kill / Orson Bathes</td><td>Orson drinks the whisky on his own schedule and may die before the shower scene</td><td>Separate reloads inside Run 4</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>Patch history</h3>
+    <ul>
+      <li><b>HITMAN 2 patch 2.21, Shinobi pack:</b> added Waterbender, Deadly Ninja, Deadly Shadow, Contained Explosion. The "Shinobi" meta-challenge that unlocked the Tanto was cut in HITMAN III; the four survive as Assassination challenges.</li>
+      <li><b>HITMAN 2 patch 2.71.0, Thriller Night pack:</b> added Vertigo, The Scissor Man, Hitman with a Shotgun and Hitman of the Black Lagoon. Black Lagoon and the "Thriller Night" meta-challenge were cut in HITMAN III; the other three survive.</li>
+      <li><b>Also cut in HITMAN III:</b> the classic challenge No Evidence. Guides quoting 34+ challenges for this mission are counting cut content; guides quoting 43 are counting the whole Hawke's Bay destination including escalations.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Still unverified or conflicting</h3>
+    <ul>
+      <li><b>Emetic rat poison locations</b> — the wiki walkthrough says storage room and downstairs bathroom; a PSN trophy guide describes a shelf near the aquarium. All three are worth a sweep.</li>
+      <li><b>Who makes the tea</b> — one guide says Orson prepares it and asks Alma which she wants; another describes a guard doing it. The mechanic is the same either way.</li>
+      <li><b>Hitman with a Shotgun weapon restriction</b> — several users in one Steam thread report it only counting with a shotgun found in the level, never a loadout one, and report the counter resetting for no visible reason. Community-reported, never confirmed by IOI. The guide uses the Panic Room arsenal shotgun as a precaution.</li>
+      <li><b>Vertigo reliability</b> — reported as inconsistent, especially in Contract Mode. Confirmed working by two separate users: pushing Alma off the second-floor balcony while she smokes, and dumping a body from the roof above the fireplace.</li>
+      <li><b>Guard captain disguise</b> — one guide claims the captain beside Alma on arrival does not yield the standard outfit. Single source; simply use another guard.</li>
+      <li><b>Deadly Ninja persistence</b> — no source states whether the ten kills must happen in one attempt. Treated as single-attempt, which is safe either way.</li>
+      <li><b>Contained Explosion isolation window</b> — no published guide names a moment when Alma is provably alone. The route given (emetic poison sends her alone to the ground-floor bathroom, where a proximity charge is waiting) is <b>derived</b> from two separately sourced behaviours rather than lifted from a guide, and is labelled as such in the step.</li>
+      <li><b>Full NPC patrol routes</b> — <span class="unv">UNVERIFIED.</span> No source documents them. Only positions that sources actually describe are named: the guard at the pool door, a second guard who sometimes crosses the pool area, the guard at the foot of the drainpipe, the two roof guards, the mercenaries around the boat, the crew at the grave-digging truck, and the bodyguard who walks into the bedroom shortly after Alma arrives.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Sources</h3>
+    <ul>
+      <li>Your uploaded in-game challenge data — authoritative for names, conditions, counts, disguises and area names.</li>
+      <li>Hitman Wiki: the Nightcall mission page and challenge table, the Nightcall walkthrough, the Scissors location index, and the Waterbender, Deadly Ninja, Under the Mat, Smells Like Nail Polish, Shinobi and Thriller Night pages.</li>
+      <li>Prima Games — Hawke's Bay Silent Assassin Suit Only route (entry, garage, panic room layout).</li>
+      <li>Gamepur — Hitman 3 SASO guide for Hawke's Bay (bathroom kill, drainpipe exit).</li>
+      <li>Neoseeker — Nightcall walkthrough and assassination methods.</li>
+      <li>Steam community guide "Hawke's Bay: Nightcall — Complete Guide", including its numbered item map.</li>
+      <li>GameSkinny, Gamepressure, Shacknews (including the Shinobi pack walkthrough), PSNProfiles, PlayStationTrophies, XboxAchievements.</li>
+      <li>Steam discussion threads — used only to corroborate bugs.</li>
+    </ul>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap"><p>Progress is saved automatically to this browser and survives reloads. Opened straight off disk, Firefox keeps each guide's storage separate from the index page — serve the folder with <code>Start Guides.cmd</code> (or use Edge/Chrome) for totals to add up on the index.</p></div></footer>
+
+<script>
+/* ── challenge data: names + descriptions verbatim from the uploaded in-game file ── */
+const CH=[
+ {id:'fish',n:'Like Fish in a Barrel',c:'A',xp:4000,d:'Assassinate Alma Reynard from the roof, while she is in the panic room.',run:5},
+ {id:'nail',n:'Smells like Nail Polish',c:'A',xp:1000,d:'Assassinate Alma Reynard by poisoning the ventilation system.',run:5},
+ {id:'clean',n:'A Clean Kill',c:'A',xp:2000,d:'Assassinate Alma Reynard while Orson Mills is in the shower.',run:4},
+ {id:'sugar',n:'Sugar, Honey, Honey',c:'A',xp:2000,d:'Assassinate Alma Reynard by poisoning her tea.',run:4},
+ {id:'sleep',n:'Sleep Tight',c:'A',xp:1000,d:"Smother Alma Reynard with a pillow while she's sleeping.",run:4},
+ {id:'ninja',n:'Deadly Ninja',c:'A',xp:1000,d:'Eliminate 10 people using only katanas and shurikens.',run:6,note:'Added in HITMAN 2 patch 2.21 (Shinobi pack)'},
+ {id:'versatile',n:'Versatile Assassin',c:'A',xp:4000,d:"Complete the following Versatile challenges in Hawke's Bay: Piano Man / Someone Could Hurt Themselves / Hold My Hair / Straight Shot / Tasteless, Traceless",run:4,note:'Cumulative across runs \u2014 needs Straight Shot from Run 2'},
+ {id:'straight',n:'Straight Shot',c:'A',xp:1000,d:'Assassinate a target with a headshot.',run:2},
+ {id:'shadow',n:'Deadly Shadow',c:'A',xp:2000,d:'Eliminate a target with a katana while wearing your suit. / No bodies found.',run:6,note:'Added in HITMAN 2 patch 2.21 (Shinobi pack)'},
+ {id:'explosion',n:'Contained Explosion',c:'A',xp:2000,d:"Eliminate a target with an explosion. / Don't kill or pacify anyone else in the explosion.",run:5,note:'Added in HITMAN 2 patch 2.21 (Shinobi pack)'},
+ {id:'hair',n:'Hold My Hair',c:'A',xp:1000,d:'Assassinate a target by drowning them.',run:4},
+ {id:'shotgun',n:'Hitman with a Shotgun',c:'A',xp:2000,d:'Eliminate 5 guards with a shotgun without getting spotted. / Getting spotted resets the counter.',run:5,note:'Added in HITMAN 2 patch 2.71.0 (Thriller Night pack)'},
+ {id:'accident',n:'Someone Could Hurt Themselves',c:'A',xp:1000,d:'Assassinate a target in an accident.',run:4},
+ {id:'water',n:'Waterbender',c:'A',xp:1000,d:'Pacify someone with the aquarium.',run:5,note:'Shinobi pack. No kill required.'},
+ {id:'piano',n:'Piano Man',c:'A',xp:1000,d:'Assassinate a target with the fiber wire.',run:4},
+ {id:'vertigo',n:'Vertigo',c:'A',xp:1000,d:'Eliminate a target by pushing or dumping them from high above.',run:5,note:'Thriller Night pack'},
+ {id:'tiles',n:'No Running on the Tiles!',c:'A',xp:1000,d:'Push someone into the pool.',run:5},
+ {id:'scissor',n:'The Scissor Man',c:'A',xp:1000,d:'Eliminate a target with a pair of scissors.',run:5,note:'Thriller Night pack'},
+ {id:'tasteless',n:'Tasteless, Traceless',c:'A',xp:1000,d:'Assassinate a target with lethal poison.',run:4},
+ {id:'discover',n:"Discover Hawke's Bay",c:'D',xp:1000,d:"Reveal all undiscovered areas in Hawke's Bay.",run:1,note:'6 areas: Boat/House, Garage, Office, Bedroom, Roof, Panic Room'},
+ {id:'wood',n:'Wood You Believe It?',c:'D',xp:2000,d:'Find the driftwood weapon.',run:1},
+ {id:'toy',n:"Don't Tread on Me!",c:'D',xp:1000,d:'Find the squeaky toy.',run:1},
+ {id:'chameleon',n:'Chameleon',c:'D',xp:4000,d:"Find and equip all disguises in Hawke's Bay.",run:1,note:'Exactly one disguise exists: Bodyguard'},
+ {id:'mat',n:'Under the Mat',c:'D',xp:1000,d:'Find the hidden house key.',run:1},
+ {id:'sandman',n:'Mr. Sandman',c:'F',xp:1000,d:"Assassinate Alma by shooting her through the skylight above her bed while she's sleeping.",run:3},
+ {id:'statesman',n:'Death of a Statesman',c:'F',xp:1000,d:"Spike Orson's whisky with a lethal dose of poison.",run:4},
+ {id:'bathes',n:'Orson Bathes',c:'F',xp:1000,d:"Assassinate Orson Mills with a kitchen knife while he's in the shower.",run:4},
+ {id:'mastermind',n:'The Mastermind',c:'T',xp:1000,d:'Assassinate Alma Reynard.',run:1},
+ {id:'sniper',n:'Sniper Assassin',c:'C',xp:4000,d:'Complete "Nightcall." / Assassinate your target with a sniper rifle. / Only eliminate the target. / Do not get spotted.',run:3},
+ {id:'saso',n:'Silent Assassin, Suit Only',c:'C',xp:4000,d:'Complete "Nightcall." / Only eliminate the target. / No bodies found. / Do not get spotted. / Do it all in your suit.',run:2},
+ {id:'classics',n:'The Classics',c:'C',xp:4000,d:'Complete all the Classic challenges on "Nightcall". / Silent Assassin / Silent Assassin, Suit Only / Sniper Assassin / Suit Only',run:3,note:'Pops when the other four are done'},
+ {id:'sa',n:'Silent Assassin',c:'C',xp:4000,d:'Complete "Nightcall." / Only eliminate the target. / No bodies found. / Do not get spotted.',run:2},
+ {id:'suit',n:'Suit Only',c:'C',xp:4000,d:'Assassinate the target and complete the mission. / Do it all in your suit.',run:2}
+];
+const CAT={A:{label:'Assassination',color:'var(--sodium)'},D:{label:'Discovery',color:'var(--surf)'},
+ F:{label:'Feats',color:'var(--violet)'},T:{label:'Targets',color:'var(--alarm)'},C:{label:'The Classics',color:'var(--bone)'}};
+
+/* ── runs ── */
+const RUNS=[
+{no:1,title:'The empty house',
+ goal:'Nothing on this map is hostile until the office computer runs, so the whole discovery sweep is a free walk. All five Discovery challenges plus the target kill, in one one-way loop with no backtracking.',
+ lo:{start:'Boat',startNote:'Mastery 1. Beach (Mastery 3) works too and saves a short walk.',suit:'Any suit \u2014 you will be wearing a disguise by the end.',
+     w:'Silenced pistol (ICA19 Silverballer or similar) \u2014 needed to break the vase',i1:'Coin \u2014 to isolate a guard at the end',i2:'Free',pick:'None'},
+ secs:[
+ {n:'Beach and pool room',steps:[
+  {t:'Pick up a driftwood log on the sand',
+   s:'A blunt weapon lying on the shoreline finishes a Discovery challenge the moment you touch it.',
+   where:'The shoreline between your boat and the house. Logs lie along the sand; one sits near the ruined boat house south of the property.',
+   dis:'None \u2014 there are no NPCs on the map yet.',item:'None. Instinct highlights the log.',npc:'None.',
+   act:'Walk over and pick it up, then drop it \u2014 it is large and unconcealable, so 47 carries it visibly.',
+   ch:['wood']},
+  {t:'Smash the white vase in the pool room',
+   s:'The "hidden house key" is inside a vase and 47 will not reach in for it. Break the vase, take the key, take the screwdriver.',
+   where:'Back of the house. Climb in through the open window into the pool room on the left side.',
+   dis:'None.',item:'Any firearm, or anything throwable.',npc:'None.',
+   act:'The vase is in the corner beside a bench holding a plant and towels \u2014 shoot or throw at it, pick the House Keys off the floor, and grab the Screwdriver lying by the toolbox beside the pool.',
+   warn:'The key opens only the door right next to it, between the pool room and the main house. Do not skip the screwdriver \u2014 the next step needs it.',
+   ch:['mat']}
+ ]},
+ {n:'Through the garage and up',steps:[
+  {t:'Short the garage signal box',
+   s:'The Garage is a Discovery area in its own right, and this is the route people skip.',
+   where:'Exit the pool room through the back window and circle clockwise around the building to the garage door.',
+   dis:'None.',item:'Screwdriver from the pool room.',npc:'None.',
+   act:'Use the screwdriver on the signal box to the left of the garage door, then walk in. Area 2 of 6 ticks off.',
+   warn:'Missing the Garage is the single most common reason Discover Hawke\u2019s Bay refuses to complete.'},
+  {t:'Open the Panic Room behind the office painting',
+   s:'One room holds the dongle, the lockpick, the camera recorder and the arsenal every later run draws from.',
+   where:'From the garage take the door on the left, go upstairs, office straight ahead. The square painting is on the left wall just before the exercise equipment.',
+   dis:'None.',item:'None needed to open it.',npc:'None.',
+   act:'Interact with the painting, then take the Password Dongle and Lockpick from the desk on the left and destroy the Camera Recorder on the far left. The arsenal on the right holds frag grenades, a katana, shurikens, a shotgun and a tranquilizer. Areas 3 and 4 tick off.',
+   warn:'Never destroy the Panic Room\u2019s roof hatch. Doing so permanently changes Alma\u2019s emergency behaviour and makes both Run 5 Panic Room challenges impossible.'},
+  {t:'Take the squeaky toy in the bedroom',
+   s:'A dog toy on the bedroom floor finishes another Discovery challenge and doubles as a distraction item.',
+   where:'Back out of the office, down the hallway to the master bedroom.',
+   dis:'None.',item:'None.',npc:'None.',
+   act:'Pick up the toy from the floor next to Alma\u2019s bed. A second one sits behind the bathtub in the second-floor bathroom if you cannot find this one. Area 5 ticks off.',
+   ch:['toy']},
+  {t:'Step onto the roof',
+   s:'The last of the six areas, and the position Runs 3 and 5 both use later.',
+   where:'Out through the bathroom balcony, or up the drainpipe beside the garage door.',
+   dis:'None.',item:'None.',npc:'None.',
+   act:'Walk onto the roof. With Boat/House, Garage, Office, Bedroom, Panic Room and Roof all seen, the Discovery challenge fires. Note the two ventilation units up here \u2014 one over the Panic Room, one over the bathroom.',
+   ch:['discover']}
+ ]},
+ {n:'Trigger and finish',steps:[
+  {t:'Use the dongle on the office computer',
+   s:'The point of no return. Alma, Orson and Gerard Mann come through the front door and the house fills with mercenaries.',
+   where:'Alma\u2019s Office, second floor.',dis:'None yet.',item:'Password Dongle from the Panic Room.',
+   npc:'Alma Reynard, Orson Mills and Gerard Mann enter together; mercenaries spawn on the second floor.',
+   act:'Interact with the computer and get out of the office or into cover before the cutscene ends.',
+   save:'Save here before you touch the computer. Later runs use the same position, and it is the cheapest place in the level to restart from.',
+   warn:'Anything you wanted from an empty map must already be in your pockets. There is no way back without restarting.'},
+  {t:'Take a Bodyguard outfit',
+   s:'Exactly one disguise exists in this level, so a single grab completes Chameleon \u2014 4,000 XP, the joint-largest challenge here.',
+   where:'The bedroom, or the pool door at the back of the house.',
+   dis:'This step is where you get it.',item:'Coin, to pull a guard somewhere private.',
+   npc:'A bodyguard walks into the bedroom shortly after Alma arrives. The guard posted at the pool door is the other isolated option.',
+   act:'Subdue him out of sight, hide the body, equip the outfit.',
+   warn:'One guide reports that the guard captain standing beside Alma on arrival does not give the standard outfit. Single source, but there is no reason to test it \u2014 use anyone else.',
+   ch:['chameleon']},
+  {t:'Kill Alma and reach the boat',
+   s:'Any method, any amount of noise. Reaching an exit banks the target challenge and the run\u2019s mastery XP.',
+   where:'Exit is the boat on the beach.',dis:'Bodyguard.',item:'Anything.',npc:'Mercenaries may be standing around the boat.',
+   act:'Eliminate Alma however is convenient, then walk out. If the boat is guarded, blow the fuel-and-flare truck Diana points out and move while they investigate, or use the foliage along the shoreline.',
+   ch:['mastermind']}
+ ]}]},
+
+{no:2,title:'Suit only, unseen',
+ goal:'The three suit-and-stealth Classics in one clean pass, plus the headshot that Versatile Assassin depends on later. Touch nothing you do not have to and change clothes never.',
+ lo:{start:'Boat',startNote:'Mastery 1. Office (Mastery 5) skips the entire approach if you already have it.',suit:'Any suit, and it stays on. One disguise change voids all three Classics at once.',
+     w:'Silenced pistol \u2014 the only thing you actually need',i1:'Free',i2:'Free',pick:'None'},
+ secs:[
+ {n:'Get in and get armed',steps:[
+  {t:'Pool room window, then the garage',
+   s:'Ignore the cameras entirely \u2014 you will wipe their footage from inside in two steps\u2019 time.',
+   where:'Run at the house, in through the open window to the pool room on the left, out through the back window, then clockwise around the building to the garage.',
+   dis:'Suit.',item:'Screwdriver, on the floor beside the pool next to the toolbox.',npc:'None \u2014 map is empty.',
+   act:'Short the signal box on the left of the garage door with the screwdriver and go in.',
+   warn:'Do not shoot at cameras on the way in unless you want the noise; the recorder is a cleaner fix and it is on your route.'},
+  {t:'Panic Room: dongle out, recorder destroyed',
+   s:'Both things you need are on the same desk, and the camera evidence dies here.',
+   where:'Garage, door on the left, upstairs, office straight ahead. Painting on the left wall before the exercise equipment.',
+   dis:'Suit.',item:'None.',npc:'None.',
+   act:'Open the Panic Room, take the Password Dongle from the desk on the left, destroy the Camera Recorder on the far left. Leave the arsenal alone \u2014 you need nothing from it this run.'},
+  {t:'Run the computer, then get on the bathroom balcony',
+   s:'Position yourself outside the room the pair will use before they start climbing the stairs.',
+   where:'Use the computer in the office, then leave, turn left in the hallway and take the first door on the left \u2014 it opens onto the balcony outside the bathroom.',
+   dis:'Suit.',item:'Password Dongle.',npc:'Alma and Orson come upstairs together some minutes after the cutscene; mercenaries work the upper floor but not the balcony.',
+   act:'Wait on the balcony, out of sight.',
+   save:'Save on the balcony once you are in position. The bathroom sequence is timing-dependent and this saves you the whole approach if it goes wrong.'}
+ ]},
+ {n:'The kill',steps:[
+  {t:'Headshot through the steam, then subdue Orson',
+   s:'Once the shower fogs the glass, neither of them can see you. Vault in, shoot Alma in the head, choke Orson out.',
+   where:'The second-floor bathroom, entered by vaulting the window from the balcony.',
+   dis:'Suit.',item:'Silenced pistol.',
+   npc:'Orson Mills is in the shower and is a civilian. Alma is at the sink.',
+   act:'Wait for the glass to steam over completely, vault in, headshot Alma, subdue Orson \u2014 do not shoot him.',
+   warn:'Hide both bodies in the nearby wardrobe. A headshot is not an accident, so Alma\u2019s body counts as a body found and will void Silent Assassin the moment anyone walks in.',
+   ch:['straight']},
+  {t:'Leave through the Panic Room into the garage',
+   s:'The Panic Room\u2019s second door opens into the garage, which puts you outside without passing the drainpipe guard.',
+   where:'Office &rarr; painting &rarr; Panic Room &rarr; garage &rarr; out. Then the foliage line down to the boat.',
+   dis:'Suit.',item:'None.',npc:'Mercenaries around the boat; a guard now stands at the foot of the drainpipe on the driveway.',
+   act:'Move through the bushes to the boat. If they will not clear, bait the drainpipe guard by vaulting the balcony rail and back up so he comes to investigate.',
+   warn:'The popular trick of shooting a vehicle fuel tank to scatter the boat guards will void all three Classics if it kills or pacifies anyone. Check the blast radius, or just use the foliage.',
+   ch:['sa','saso','suit']}
+ ]}]},
+
+{no:3,title:'One shot from the roof',
+ goal:'A suppressed sniper plus the sleeping-target skylight shot completes Sniper Assassin and Mr. Sandman on the same trigger pull, which in turn pops The Classics.',
+ lo:{start:'Office',startNote:'Mastery 5 if you have it; otherwise Boat, using the Run 2 approach.',suit:'Any \u2014 Suit Only is already banked, so a disguise here costs nothing.',
+     w:'Suppressed sniper rifle in a briefcase (Sieger 300 Ghost or any silenced variant)',i1:'Lockpick',i2:'Coin',pick:'Beach shack (Mastery 4) if you have no briefcase \u2014 it smuggles a large item into the old boat house'},
+ secs:[
+ {n:'Setup',steps:[
+  {t:'Get the rifle onto the map',
+   s:'A sniper rifle is a large item, so it needs a briefcase in your loadout or the beach shack Agency Pickup.',
+   where:'The Agency Pickup briefcase appears inside the old boat house on the beach, and unlocks at Mastery 4.',
+   dis:'Any.',item:'Suppressed sniper rifle.',npc:'None yet.',
+   act:'Collect the case before you trigger anything.',
+   warn:'The rifle must be suppressed. Sniper Assassin requires that you are never spotted, and an unsuppressed shot on a roof in a house full of mercenaries ends that immediately \u2014 the challenge text does not mention silencers, the "do not get spotted" clause is what forces it.'},
+  {t:'Dongle, computer, roof',
+   s:'Trigger the level and be in position before the pair start their evening.',
+   where:'Panic Room for the dongle, office for the computer, then the roof by the bathroom balcony or the drainpipe.',
+   dis:'Any.',item:'Password Dongle.',npc:'Two guards work the roof.',
+   act:'Use the computer, then climb straight up and take the position over the master bedroom skylight.',
+   save:'Save on the roof once you are in position with both roof guards handled. Bedtime takes several minutes and you do not want to redo the approach.'},
+  {t:'Subdue the two roof guards \u2014 do not kill them',
+   s:'Sniper Assassin allows only the target to be eliminated. Knocking guards out is fine; killing them is not.',
+   where:'The roof.',dis:'Any.',item:'Fists, tranquilizer from the Panic Room arsenal, or a coin to separate them first.',
+   npc:'The two guards patrolling the roof.',
+   act:'Take them one at a time and drag each body out of the other\u2019s sight line.',
+   warn:'A discovered body starts an alert, and alerts in this level never wear off. If you can stay hidden without touching them at all, do that instead.'}
+ ]},
+ {n:'The shot',steps:[
+  {t:'Wait for her to fall asleep, then shoot through the skylight',
+   s:'She has to be genuinely asleep, not settling. Once she stops moving, take the head shot through the glass.',
+   where:'The skylight directly above the master bed.',dis:'Any.',item:'Suppressed sniper rifle.',
+   npc:'Alma Reynard in bed; Orson Mills beside her.',
+   act:'Line up on Alma and fire once through the glass.',
+   warn:'Two timing traps. She must be asleep for Mr. Sandman to register, and if the pair sleep undisturbed she wakes roughly fifteen minutes later to phone her sister \u2014 take the shot inside that window. Do not shoot Orson; he is a civilian and killing him voids Sniper Assassin retroactively.',
+   ch:['sandman','sniper']},
+  {t:'Exit and collect The Classics',
+   s:'Sniper Assassin only scores on mission completion, so the walk out still counts.',
+   where:'Boat exit on the beach.',dis:'Any.',item:'None.',npc:'Mercenaries around the boat.',
+   act:'Move down through the foliage and leave.',
+   warn:'The Classics only fires once Silent Assassin, Silent Assassin Suit Only, Sniper Assassin and Suit Only are all complete. If it does not pop, check which of the four is still open in the checklist rather than replaying this run.',
+   ch:['classics']}
+ ]}]},
+
+{no:4,title:'The poison hub',
+ goal:'Ten challenges from one save. Loot the house once, save in the office before the trigger, then reload for each of six different ways to kill Alma or Orson.',
+ lo:{start:'Office',startNote:'Mastery 5. This run reloads six times, so starting inside the office is worth more here than anywhere else.',suit:'Any. Nothing in this run is suit-restricted.',
+     w:'Silenced pistol',i1:'Lethal Poison Pill Jar if unlocked \u2014 a second dose removes the tea guesswork entirely',i2:'Fiber Wire (bring it explicitly so there is no doubt it is equipped)',pick:'Garbage container (Mastery 2) for a spare small item'},
+ secs:[
+ {n:'Loot the empty house \u2014 order matters',steps:[
+  {t:'Panic Room first, for the lockpick',
+   s:'The lethal poison is behind a locked cabinet, and the key to that cabinet is a lockpick sitting in the Panic Room. Going to the bathroom first wastes a lap.',
+   where:'Office, second floor. Square painting on the left wall before the exercise equipment.',
+   dis:'None.',item:'None.',npc:'None.',
+   act:'Open the Panic Room, take the Password Dongle and the Lockpick from the desk on the left.',
+   warn:'On Master difficulty the lockpick is not in the Panic Room. Bring your own or skip the poison branches.'},
+  {t:'Lockpick the bathroom cabinet for lethal poison',
+   s:'One jar of lethal poison, which is one dose \u2014 enough for exactly one branch per reload.',
+   where:'The locked cabinet on the bathroom wall next to the second-floor bedroom.',
+   dis:'None.',item:'Lockpick from the Panic Room.',npc:'None.',
+   act:'Pick the cabinet and take the Lethal Poison Pill Jar. A cannabis joint is in there too.',
+   warn:'Reloading restores the jar, so each branch below gets a fresh dose. You only need a second dose from your loadout if you want to poison both tea ingredients at once.'},
+  {t:'Collect both emetic rat poisons and the kitchen knife',
+   s:'Two emetic doses and the specific knife the Orson Bathes challenge demands.',
+   where:'Storage room and the downstairs bathroom for the emetic; the kitchen wall near the bar for the knife.',
+   dis:'None.',item:'None.',npc:'None.',
+   act:'Pick up both emetic jars and the Kitchen Knife.',
+   warn:'One trophy guide instead places an emetic on a shelf just inside the door next to the aquarium \u2014 check there if you come up one short. Orson Bathes needs the Kitchen Knife specifically, not the cleaver and not a folding knife.'},
+  {t:'Save in the office, before the computer',
+   s:'This is the hub. All six branches below reload to this exact point.',
+   where:'Alma\u2019s Office, standing at the computer.',dis:'None.',item:'Everything above, in your pockets.',npc:'None.',
+   act:'Make the save, then use the computer when a branch tells you to.',
+   save:'Save before the trigger, not after. The sugar, honey and whisky all have to be dosed while the house is still empty, so each branch needs to reload to a pre-trigger state.'}
+ ]},
+ {n:'Branch A \u2014 the tea',steps:[
+  {t:'Lethal poison in the tea',
+   s:'Three challenges land on one kill. She drinks and drops, and it registers as an accident.',
+   where:'Sugar and honey sit on the kitchen counter, ground floor.',
+   dis:'None needed \u2014 dose it before the trigger, then watch from cover.',item:'Lethal Poison Pill Jar.',
+   npc:'The tea is prepared for her after they arrive; Alma is asked whether she wants sugar or honey and the choice is random.',
+   act:'Poison one ingredient, go up, use the computer, then stay out of sight until she drinks.',
+   warn:'With one dose you are guessing. With two \u2014 the map jar plus a loadout jar \u2014 poison both and the branch becomes deterministic. If she picks the clean one, reload the hub save and swap.',
+   ch:['sugar','tasteless','accident']}
+ ]},
+ {n:'Branch B \u2014 the toilet',steps:[
+  {t:'Emetic in the tea, then drown her',
+   s:'Sick instead of dead. She walks alone to the ground-floor bathroom, which is the only moment in the level she is reliably unescorted.',
+   where:'Kitchen counter to dose; the downstairs bathroom to wait.',
+   dis:'None \u2014 wait inside the bathroom, out of sight of the door.',item:'Both Emetic Rat Poisons, so you can dose sugar and honey and skip the coin flip.',
+   npc:'Alma comes in alone. Afterwards Orson goes upstairs and her head of security starts knocking on the bathroom door.',
+   act:'Reload the hub save, dose both ingredients with emetic, trigger, then drown her in the bowl while she is being sick.',
+   warn:'Drowning counts as an accident, so the body does not have to be hidden \u2014 but leave through the bathroom\u2019s other door while the security chief is knocking on the first one.',
+   ch:['hair']}
+ ]},
+ {n:'Branch C \u2014 the bathroom, twice',steps:[
+  {t:'Fiber wire Alma while Orson showers',
+   s:'Do nothing to the tea and let the evening play out. Two challenges land on one garrote.',
+   where:'The second-floor bathroom. Wait in the room or vault in from the balcony.',
+   dis:'None, but hide before they come upstairs.',item:'Fiber Wire.',
+   npc:'Orson in the shower behind fogged glass, Alma at the sink.',
+   act:'Reload the hub save, trigger, wait for the glass to steam over, then garrote Alma.',
+   warn:'Piano Man only counts on a target. Alma is the only target in this mission \u2014 fiber-wiring a guard does nothing.',
+   ch:['piano','clean']},
+  {t:'Throw the kitchen knife at Orson in the shower',
+   s:'Same scene, different victim, separate reload so a dead Orson cannot interfere with the branch above.',
+   where:'The second-floor bathroom.',dis:'None.',item:'Kitchen Knife from the kitchen wall.',
+   npc:'Orson Mills, in the shower.',
+   act:'Reload the hub save, trigger, wait for the glass to fog, then throw the knife at Orson. Kill Alma however you like afterwards and exit.',
+   warn:'Do this on its own reload. Killing Orson first can cost you A Clean Kill, which needs him alive and showering.',
+   ch:['bathes']}
+ ]},
+ {n:'Branch D \u2014 whisky and pillow',steps:[
+  {t:'Spike Orson\u2019s whisky',
+   s:'A lethal dose in the decanter kills him on his own schedule, which is exactly why it gets its own reload.',
+   where:'The bedroom, on a table to your left as you face the bed.',
+   dis:'None \u2014 dose it before the trigger.',item:'Lethal Poison Pill Jar.',npc:'Orson Mills drinks it unprompted.',
+   act:'Reload the hub save, poison the whisky, trigger, then wait. Kill Alma however is convenient afterwards and exit.',
+   warn:'He may drink before the shower scene ever starts, which is why this never shares a branch with A Clean Kill or Orson Bathes.',
+   ch:['statesman']},
+  {t:'Smother Alma with a pillow',
+   s:'Reload and do nothing at all. Left undisturbed the pair go to bed, and a pillow finishes it silently.',
+   where:'The master bedroom, at the bedside.',
+   dis:'Bodyguard makes the upstairs approach far easier; take one from the guard who walks into the bedroom.',
+   item:'None.',npc:'Alma and Orson asleep; mercenaries work the upper floor.',
+   act:'Reload the hub save, trigger, stay hidden, and smother her once she is asleep.',
+   warn:'She wakes roughly fifteen minutes in to phone her sister. If you miss the window you are waiting for another cycle.',
+   ch:['sleep']},
+  {t:'Check Versatile Assassin',
+   s:'The meta-challenge wants Piano Man, Someone Could Hurt Themselves, Hold My Hair, Straight Shot and Tasteless, Traceless. Four came from this run and one from Run 2.',
+   where:'Challenge list.',dis:'\u2014',item:'\u2014',npc:'\u2014',
+   act:'If it has not fired, the missing piece is almost always Straight Shot, the headshot from Run 2. It accumulates across runs and sessions, so it will pop the moment the last one lands.',
+   ch:['versatile']}
+ ]}]},
+
+{no:5,title:'Alarms, aquariums and the Panic Room',
+ goal:'Eight challenges in a strict order. Two need the house calm and two need it panicking, so the sequence is not optional \u2014 quiet objectives first, the Panic Room lockdown dead last.',
+ lo:{start:'Office',startNote:'Mastery 5.',suit:'Any. You will be in the Bodyguard outfit for most of this run.',
+     w:'Silenced pistol',i1:'Lockpick \u2014 for the bathroom poison cabinet',i2:'Coin \u2014 for the pool push and for isolating shotgun targets',pick:'ICA Proximity Explosive Mk II (Mastery 2) via the garbage container, for Contained Explosion'},
+ secs:[
+ {n:'Loot everything before the trigger',steps:[
+  {t:'Panic Room: lockpick, shotgun, grenade',
+   s:'Everything loud in this run comes off one wall.',
+   where:'Office, painting on the left wall, Panic Room behind it.',
+   dis:'None.',item:'None to get in.',npc:'None.',
+   act:'Take the Password Dongle and Lockpick from the desk, then take the shotgun and a fragmentation grenade from the arsenal on the right.',
+   warn:'Take the shotgun from this arsenal specifically. Several players report the shotgun challenge only counting with a weapon found in the level, never one brought from the loadout \u2014 community-reported and never confirmed by IOI, but the arsenal is free and on your route.'},
+  {t:'Lethal poison from the bathroom cabinet',
+   s:'The ventilation kill at the end of this run needs a dose, and the lockpick you just took is what opens it.',
+   where:'Locked cabinet on the bathroom wall next to the second-floor bedroom.',
+   dis:'None.',item:'Lockpick.',npc:'None.',
+   act:'Pick the cabinet and take the Lethal Poison Pill Jar.'},
+  {t:'Scissors from the ground-floor bathroom',
+   s:'The only pair in the level, and they are downstairs \u2014 pick them up now rather than fighting through an alerted house later.',
+   where:'The ground-floor bathroom, the same room Alma runs to when she is sick.',
+   dis:'None.',item:'None.',npc:'None.',
+   act:'Take the scissors. Instinct will highlight them as a melee weapon.',
+   warn:'Confirmed by the wiki\u2019s scissors location index and independently by a Steam route description. If they are not there, sweep the second-floor bathroom as a fallback.'},
+  {t:'Trigger, take a Bodyguard outfit, then save',
+   s:'The disguise has to exist before the hub save, because four of the branches below assume you are wearing it.',
+   where:'Office computer, then the bedroom or the pool door for the guard.',
+   dis:'This is where you get the Bodyguard outfit.',item:'Password Dongle, coin.',
+   npc:'A bodyguard walks into the bedroom shortly after Alma arrives; the pool-door guard is the other quiet option.',
+   act:'Use the computer, take an outfit quietly, hide the body, then save.',
+   save:'Save here, disguised and un-alerted, with the shotgun, scissors, poison and grenade all in inventory. Every branch below reloads to this point.'}
+ ]},
+ {n:'Quiet pass \u2014 no target kills yet',steps:[
+  {t:'Break the aquarium onto someone',
+   s:'Nobody has to die. The water knocks whoever is standing in front of the glass unconscious.',
+   where:'The aquarium is on the ground floor, just inside from the pool.',
+   dis:'Bodyguard.',item:'Silenced pistol, plus a coin to position the victim.',npc:'Any NPC will do.',
+   act:'Lure someone directly in front of the glass with a coin or a dropped weapon, then shoot the tank.',
+   warn:'They have to be directly in front of it. Standing to the side does nothing.',
+   ch:['water']},
+  {t:'Coin at the pool edge, then push',
+   s:'A guard is posted just outside the pool door. Bait him to the water\u2019s edge and shove.',
+   where:'The pool terrace, at the lip of the water.',
+   dis:'Bodyguard, so you can stand beside him without suspicion.',item:'Coin.',
+   npc:'The guard posted at the pool door. A second guard sometimes crosses the pool area \u2014 check before you push.',
+   act:'Throw the coin as close to the edge as possible and push him in while he is bending for it.',
+   warn:'This must be a push on a live NPC. Knocking someone out and dropping the body in the water does not count.',
+   ch:['tiles']}
+ ]},
+ {n:'Shotgun pass \u2014 its own reload',steps:[
+  {t:'Five shotgun kills without ever being seen',
+   s:'The fragile one. Any sighting resets the counter to zero, which is why it gets a clean reload and nothing else shares it.',
+   where:'Isolated posts around the house. The upstairs mercenaries and the pool-door guard are the easiest to catch alone.',
+   dis:'Bodyguard.',item:'The shotgun from the Panic Room arsenal.',npc:'Any five guards.',
+   act:'Reload the hub save. Separate each guard with a coin, kill, hide the body, save, then move to the next.',
+   warn:'Save between every single kill. Players report the counter resetting with no visible cause, so a per-kill save is the difference between a five-minute job and an hour.',
+   ch:['shotgun']}
+ ]},
+ {n:'Target methods \u2014 one reload each',steps:[
+  {t:'Kill Alma with the scissors',
+   s:'Straightforward once you already have them in your pocket from the prep phase.',
+   where:'Any moment she is alone \u2014 the bathroom scene, or on the stairs.',
+   dis:'Bodyguard.',item:'Scissors from the ground-floor bathroom.',npc:'Alma Reynard.',
+   act:'Reload the hub save, trigger, then stab her in close quarters. Scissors can also be thrown.',
+   warn:'This came from the Thriller Night pack, which players describe as glitchy. If the kill lands but nothing pops, reload and use a close-quarters stab rather than a throw.',
+   ch:['scissor']},
+  {t:'Push her from the balcony',
+   s:'A push over the second-floor rail, or a body dumped from the roof above the fireplace.',
+   where:'The second-floor balcony rail, or the roof section over the fireplace.',
+   dis:'Bodyguard.',item:'None.',
+   npc:'Alma Reynard \u2014 one report has her stepping outside her room to smoke before bed, which is the confirmed position.',
+   act:'Reload the hub save, wait for her at the rail, and push.',
+   warn:'Vertigo is the least reliable challenge in this mission and is reported failing repeatedly in Contract Mode. Run it in the main mission. If the live push refuses to register, subdue her and dump the body from the roof above the fireplace \u2014 that is the other confirmed method.',
+   ch:['vertigo']},
+  {t:'One explosion, one casualty',
+   s:'She has to die in the blast with nobody else killed or even pacified by it, which makes isolating her the entire difficulty.',
+   where:'The ground-floor bathroom, or the balcony where she smokes.',
+   dis:'Bodyguard.',item:'ICA Proximity Explosive Mk II, or a fragmentation grenade from the arsenal.',
+   npc:'Alma Reynard, alone. Her detail normally shadows her.',
+   act:'Reload the hub save. Place a proximity charge in the ground-floor bathroom, dose the tea with emetic, and let her walk in alone. Alternatively throw a grenade when she steps onto the balcony to smoke.',
+   warn:'No published guide names an isolation window for this challenge \u2014 the emetic route is derived from two separately sourced behaviours (emetic sends her alone to the downstairs bathroom; explosives kill) rather than lifted from a guide. Pacifying a bystander with the blast fails the condition just as much as killing one.',
+   ch:['explosion']},
+  {t:'Force the lockdown, then poison the roof vent',
+   s:'The last thing you do in this run. Two challenges land on one interaction.',
+   where:'The roof, southwestern corner \u2014 a large rectangular fan housing, with the air tanks at the back of it.',
+   dis:'Bodyguard, though everyone is alert by this point anyway.',item:'Lethal Poison Pill Jar.',
+   npc:'Alma and Orson lock themselves in the Panic Room; two guards are on the roof.',
+   act:'Reload the hub save, then cause an emergency \u2014 opening fire on the guards or throwing a frag grenade both work. Once she is inside, go up and insert the poison into the air tanks of the unit above the Panic Room.',
+   warn:'She must already be inside before you insert the poison. Never breach the Panic Room and never destroy its roof hatch: if the room is breached or discovered she runs into the sea and drowns herself instead of locking herself in, and both of these challenges become impossible for that attempt.',
+   ch:['fish','nail']}
+ ]}]},
+
+{no:6,title:'Katana and shurikens',
+ goal:'The two blade challenges pull in opposite directions \u2014 one wants a spotless suit-only kill with nothing found, the other wants ten bodies. Two branches of one save, each with its own exit.',
+ lo:{start:'Office',startNote:'Mastery 5. The Panic Room is one room away, which is where both weapons live.',suit:'Your suit, and it stays on for branch A. Deadly Shadow explicitly requires it.',
+     w:'Briefcase, if you have one \u2014 it lets you carry the katana concealed',i1:'Lockpick',i2:'Coin',pick:'None'},
+ secs:[
+ {n:'Arm up',steps:[
+  {t:'Take the katana and shurikens from the arsenal',
+   s:'Both are on the Panic Room wall, and they are the only ones in the level.',
+   where:'Office, painting on the left wall, arsenal on the right inside the Panic Room.',
+   dis:'Suit.',item:'None to get in.',npc:'None.',
+   act:'Take the katana and the shurikens, plus the Password Dongle from the desk.',
+   warn:'Bat Shurikens do not count toward Deadly Ninja \u2014 the wiki attributes this to their being added in a later update. Use the map\u2019s shurikens.'},
+  {t:'Trigger and save',
+   s:'One save, two completely incompatible branches.',
+   where:'Alma\u2019s Office.',dis:'Suit.',item:'Password Dongle.',npc:'Full detail arrives.',
+   act:'Use the computer, then save before you engage anyone.',
+   save:'Save here. Branch A needs a spotless house and branch B destroys it, so they cannot share an attempt.'}
+ ]},
+ {n:'Branch A \u2014 the clean one',steps:[
+  {t:'Katana kill on Alma, in your suit, nothing found',
+   s:'Reuse the Run 2 bathroom route with a blade instead of a bullet.',
+   where:'The balcony outside the second-floor bathroom, then vault in when the glass fogs.',
+   dis:'Suit only \u2014 a disguise voids this challenge outright.',item:'Katana.',
+   npc:'Alma at the sink, Orson in the shower.',
+   act:'Kill Alma with the katana, subdue Orson, hide both bodies in the wardrobe, then exit through the Panic Room into the garage and down to the boat.',
+   warn:'A katana cannot be concealed. Either carry it in a briefcase, or drop it on the balcony during the approach and pick it up at the moment you vault in. Finish this branch by actually exiting before you attempt branch B \u2014 the "no bodies found" condition is judged over the whole attempt.',
+   ch:['shadow']}
+ ]},
+ {n:'Branch B \u2014 the loud one',steps:[
+  {t:'Ten kills, blades only',
+   s:'Reload and work through the house with nothing but the katana and the shurikens.',
+   where:'Everywhere. Start upstairs and work down \u2014 once the alarm goes, they come to you.',
+   dis:'Irrelevant.',item:'Katana and shurikens.',
+   npc:'34 non-target NPCs plus Alma. Orson is the only civilian.',
+   act:'Reload the save, then kill ten people using only those two weapons. Include Alma so the attempt also ends with the mission complete.',
+   warn:'The condition says "using only". No source states whether a single pistol shot resets the counter or merely fails to add to it, so treat it as a hard restriction and use nothing else for the entire attempt. No source confirms the ten kills persist across separate attempts either \u2014 assume they do not.',
+   ch:['ninja']}
+ ]}]}
+];
+
+/* ── state ── */
+const GUIDE_ID='m08', STORAGE_KEY='nightcall_v1';
+const done=new Set(), stepsDone=new Set();
+try{
+  const d=JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}');
+  (d.done||[]).forEach(id=>done.add(id));
+  (d.steps||[]).forEach(k=>stepsDone.add(k));
+}catch(e){}
+function reportProgress(){
+  try{
+    const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');
+    r[GUIDE_ID]={done:done.size,total:CH.length,updated:Date.now()};
+    localStorage.setItem('hitman-progress-registry',JSON.stringify(r));
+  }catch(e){}
+}
+function save(){
+  try{localStorage.setItem(STORAGE_KEY,JSON.stringify({done:[...done],steps:[...stepsDone]}));}catch(e){}
+  reportProgress();
+}
+let filter='all';
+const byId=Object.fromEntries(CH.map(c=>[c.id,c]));
+const TOTAL_XP=CH.reduce((a,c)=>a+c.xp,0);
+
+/* ── tracker board ── */
+const board=document.getElementById('board');
+CH.forEach(c=>{
+  const i=document.createElement('i');
+  i.dataset.cat=c.c;i.dataset.id=c.id;i.title=c.n;i.setAttribute('role','button');i.tabIndex=0;
+  i.addEventListener('click',()=>toggle(c.id));
+  i.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle(c.id);}});
+  board.appendChild(i);
+});
+function renderTracker(){
+  document.querySelectorAll('#board i').forEach(i=>i.classList.toggle('on',done.has(i.dataset.id)));
+  document.getElementById('tkCount').innerHTML=done.size+' <small>/ 33 complete</small>';
+  const xp=[...done].reduce((a,id)=>a+byId[id].xp,0);
+  document.getElementById('tkXp').textContent=xp.toLocaleString()+' / '+TOTAL_XP.toLocaleString()+' XP';
+  document.getElementById('tkBar').style.width=(done.size/CH.length*100)+'%';
+  document.getElementById('cats').innerHTML=Object.entries(CAT).map(([k,v])=>{
+    const t=CH.filter(c=>c.c===k).length,d=CH.filter(c=>c.c===k&&done.has(c.id)).length;
+    return `<span class="cat"><s style="background:${v.color}"></s>${v.label} <b>${d}/${t}</b></span>`;
+  }).join('');
+  RUNS.forEach(r=>{
+    const list=CH.filter(c=>c.run===r.no), d=list.filter(c=>done.has(c.id)).length;
+    const el=document.querySelector(`.run[data-run="${r.no}"] .run-prog em`); if(el) el.textContent=d+'/'+list.length;
+    const jb=document.querySelector(`.jbtn[data-jump="${r.no}"]`);
+    if(jb){jb.querySelector('i').textContent=d+'/'+list.length;jb.classList.toggle('full',d===list.length);}
+  });
+}
+function toggle(id){done.has(id)?done.delete(id):done.add(id);save();renderTracker();renderList();syncBadges();}
+
+/* ── build runs ── */
+function badge(id){const c=byId[id];return `<span class="b ${c.c}" data-badge="${id}">${done.has(id)?'\u2713 ':''}${c.n} +${c.xp.toLocaleString()}</span>`;}
+function stepHTML(runNo,num,st){
+  const key=runNo+'-'+num, isDone=stepsDone.has(key);
+  const spec=[['Where',st.where],['Disguise',st.dis],['Item',st.item],['NPC',st.npc],['Do',st.act]]
+    .filter(([,v])=>v).map(([k,v])=>`<li><b>${k}</b><span>${v}</span></li>`).join('');
+  return `<div class="step${isDone?' done':''}" data-step="${key}">
+    <div class="step-top">
+      <button class="tick" aria-label="Mark step done">\u2713</button>
+      <div class="step-txt"><div class="snum">STEP ${runNo}.${num}</div><h4>${st.t}</h4><p>${st.s}</p></div>
+      <span class="caret">\u25B8</span>
+    </div>
+    <div class="detail">
+      <ul class="spec">${spec}</ul>
+      ${st.warn?`<div class="warn"><b>WARNING</b><span>${st.warn}</span></div>`:''}
+      ${st.save?`<div class="save"><b>SAVE HERE</b><span>${st.save}</span></div>`:''}
+      ${st.ch&&st.ch.length?`<div class="badges">${st.ch.map(badge).join('')}</div>`:''}
+    </div></div>`;
+}
+document.getElementById('runs').innerHTML=RUNS.map(r=>{
+  let num=0; const list=CH.filter(c=>c.run===r.no);
+  const slots=[['Weapon',r.lo.w],['Item 1',r.lo.i1],['Item 2',r.lo.i2],['Agency pickup',r.lo.pick]];
+  return `<article class="run${r.no===1?' open':''}" id="run${r.no}" data-run="${r.no}">
+    <div class="run-head">
+      <span class="run-no">RUN ${r.no}</span>
+      <div><h2>${r.title}</h2><div class="run-goal">${r.goal}</div></div>
+      <div class="run-prog"><em>0/${list.length}</em><s>\u25BE</s></div>
+    </div>
+    <div class="run-body">
+      <div class="loadout">
+        <div class="lo"><span>Start</span><b>${r.lo.start}</b><p>${r.lo.startNote}</p></div>
+        <div class="lo"><span>Suit</span><b>${r.lo.suit.split('.')[0]}</b><p>${r.lo.suit.split('.').slice(1).join('.').trim()}</p></div>
+        ${slots.map(([lab,v])=>`<div class="lo"><span>${lab}</span><b>${v.split('\u2014')[0].trim()}</b><p>${(v.split('\u2014')[1]||'').trim()}</p></div>`).join('')}
+      </div>
+      ${r.secs.map(s=>`<div class="sec-title">${s.n}</div>${s.steps.map(st=>stepHTML(r.no,++num,st)).join('')}`).join('')}
+    </div></article>`;
+}).join('');
+
+/* jump bar */
+document.getElementById('jump').insertAdjacentHTML('beforeend',
+  RUNS.map(r=>`<button class="jbtn" data-jump="${r.no}">Run ${r.no} \u00b7 ${r.title}<i>0/0</i></button>`).join('')
+  + `<button class="tiny" id="expandAll">Expand all</button><button class="tiny" id="collapseAll">Collapse all</button>`);
+
+document.querySelectorAll('.jbtn').forEach(b=>b.addEventListener('click',()=>{
+  const r=document.getElementById('run'+b.dataset.jump);
+  r.classList.add('open'); r.scrollIntoView({block:'start'});
+}));
+document.getElementById('expandAll').addEventListener('click',()=>{
+  document.querySelectorAll('.run').forEach(r=>r.classList.add('open'));
+  document.querySelectorAll('.step').forEach(s=>s.classList.add('open'));
+});
+document.getElementById('collapseAll').addEventListener('click',()=>{
+  document.querySelectorAll('.run').forEach(r=>r.classList.remove('open'));
+  document.querySelectorAll('.step').forEach(s=>s.classList.remove('open'));
+});
+document.querySelectorAll('.run-head').forEach(h=>h.addEventListener('click',()=>h.parentElement.classList.toggle('open')));
+document.querySelectorAll('.step').forEach(s=>{
+  const t=()=>s.classList.toggle('open');
+  s.querySelector('.step-txt').addEventListener('click',t);
+  s.querySelector('.caret').addEventListener('click',t);
+  s.querySelector('.tick').addEventListener('click',e=>{
+    e.stopPropagation();const k=s.dataset.step;
+    stepsDone.has(k)?stepsDone.delete(k):stepsDone.add(k);
+    s.classList.toggle('done',stepsDone.has(k));
+    save();
+  });
+});
+function syncBadges(){document.querySelectorAll('[data-badge]').forEach(b=>{
+  const c=byId[b.dataset.badge];b.textContent=(done.has(c.id)?'\u2713 ':'')+c.n+' +'+c.xp.toLocaleString();});}
+document.querySelectorAll('[data-badge]').forEach(b=>b.addEventListener('click',()=>toggle(b.dataset.badge)));
+
+/* ── checklist ── */
+const FILTERS=[['all','All 33'],['A','Assassination'],['D','Discovery'],['F','Feats'],['T','Targets'],['C','The Classics'],['todo','Incomplete']];
+document.getElementById('filters').innerHTML=FILTERS.map(([k,l])=>`<button data-f="${k}" class="${k==='all'?'on':''}">${l}</button>`).join('');
+document.querySelectorAll('#filters button').forEach(b=>b.addEventListener('click',()=>{
+  filter=b.dataset.f;document.querySelectorAll('#filters button').forEach(x=>x.classList.toggle('on',x===b));renderList();}));
+function renderList(){
+  const rows=CH.filter(c=>filter==='all'?true:filter==='todo'?!done.has(c.id):c.c===filter);
+  document.getElementById('list').innerHTML=rows.length?rows.map(c=>`
+    <div class="ch-row${done.has(c.id)?' done':''}">
+      <button class="tick" data-ch="${c.id}" aria-label="Mark complete">\u2713</button>
+      <div class="ch-main"><div class="ch-name">${c.n}</div><div class="ch-cond">${c.d}</div>
+      ${c.note?`<div class="ch-note">${c.note}</div>`:''}</div>
+      <div class="ch-side"><em>+${c.xp.toLocaleString()}</em><s>${CAT[c.c].label}</s><s>Run ${c.run}</s></div>
+    </div>`).join('') : `<div class="card"><p>Nothing left in this filter.</p></div>`;
+  document.querySelectorAll('[data-ch]').forEach(b=>b.addEventListener('click',()=>toggle(b.dataset.ch)));
+}
+document.getElementById('resetBtn').addEventListener('click',()=>{
+  done.clear();stepsDone.clear();
+  document.querySelectorAll('.step').forEach(s=>s.classList.remove('done'));
+  save();
+  renderTracker();renderList();syncBadges();});
+
+/* ── tabs ── */
+document.querySelectorAll('nav.tabs button').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('nav.tabs button').forEach(x=>x.setAttribute('aria-selected',x===b));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('on',p.id==='tab-'+b.dataset.tab));
+  window.scrollTo({top:0,behavior:'smooth'});}));
+
+renderTracker();renderList();
+/* every other guide reports on load, not only after a tick */
+reportProgress();
+</script>
+<!-- step-progress-bridge -->
+<script>
+/* Reports route-step ticks into 'hitman-progress-registry' so the index can
+   show them beside the challenge counts. Counts what is on screen rather than
+   any guide-specific state, so one implementation serves every guide. */
+(function(){
+  var RID="m08", SEL=".step";
+  function isDone(s){
+    var c=s.classList;
+    if(c.contains('done')||c.contains('dn')) return true;
+    if(s.getAttribute('data-done')==='1'||s.getAttribute('aria-pressed')==='true') return true;
+    return !!s.querySelector('.done,.dn,[data-done="1"],[aria-pressed="true"]');
+  }
+  function tally(){
+    var steps=document.querySelectorAll(SEL);
+    if(!steps.length) return null;
+    var n=0;
+    for(var i=0;i<steps.length;i++) if(isDone(steps[i])) n++;
+    return {steps:n,stepTotal:steps.length};
+  }
+  function push(){
+    var t;
+    try{ t=tally(); }catch(err){ return; }
+    if(!t||!t.stepTotal) return;
+    try{
+      var r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');
+      var e=r[RID]||(r[RID]={});
+      /* the guide's own reportProgress() rewrites this entry wholesale, so
+         re-add the step counts whenever they go missing or stale */
+      if(e.steps===t.steps&&e.stepTotal===t.stepTotal) return;
+      e.steps=t.steps; e.stepTotal=t.stepTotal; e.updated=Date.now();
+      localStorage.setItem('hitman-progress-registry',JSON.stringify(r));
+    }catch(err){}
+  }
+  var pending=false;
+  function schedule(){
+    if(pending) return; pending=true;
+    setTimeout(function(){pending=false;push();},120);
+  }
+  try{
+    new MutationObserver(schedule).observe(document.body,
+      {subtree:true,childList:true,attributes:true,attributeFilter:['class','aria-pressed','data-done']});
+  }catch(err){}
+  window.addEventListener('load',schedule);
+  setTimeout(push,600);
+})();
+</script>
+<!-- /step-progress-bridge -->
+</body>
+</html>

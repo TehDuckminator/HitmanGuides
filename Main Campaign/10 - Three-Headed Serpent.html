@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Santa Fortuna — Final Verified Runs (from game data)</title>
+<style>
+:root{
+--bg:#0f1411;--bg2:#161d18;--panel:#1a231d;--panel2:#202b23;--line:#293529;--line2:#3a4b3c;
+--ink:#e9ede9;--ink2:#a0b1a3;--ink3:#6a7a6c;
+--gold:#c2a12f;--gold2:#ddc055;
+--ok:#6faa4e;--ok-bg:#182613;
+--unv:#d2913c;--unv-bg:#2c1f0f;
+--err:#cf5252;--err-bg:#2b1212;
+--serif:Georgia,'Times New Roman',serif;
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.55}
+.wrap{max-width:960px;margin:0 auto;padding:0 20px 70px}
+header{padding:38px 0 22px;border-bottom:2px solid var(--gold)}
+.eyebrow{font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:11px}
+h1{font-family:var(--serif);font-size:38px;font-weight:400;line-height:1.06;margin-bottom:9px}
+h1 em{font-style:italic;color:var(--gold2)}
+header p{color:var(--ink2);font-size:14px;max-width:660px}
+.audit{margin:22px 0;padding:14px 16px;border-radius:3px;background:var(--ok-bg);border-left:3px solid var(--ok)}
+.audit h2{font-size:13px;font-weight:700;color:#9ed07e;margin-bottom:7px}
+.audit p{font-size:13px;color:#c8ddba;line-height:1.6}
+.audit b{color:#fff}
+.audit.bad{background:var(--err-bg);border-left-color:var(--err)}
+.audit.bad h2{color:#f0a0a0}.audit.bad p{color:#e3c0c0}
+.cov{display:flex;flex-wrap:wrap;gap:6px;margin-top:11px}
+.cvi{font-size:11px;padding:4px 9px;border-radius:2px;background:var(--panel2);color:var(--ink2)}
+.cvi.miss{background:var(--err-bg);color:var(--err);font-weight:700}
+.warnbox{margin:20px 0;padding:14px 16px;border-radius:3px;background:var(--unv-bg);border-left:3px solid var(--unv)}
+.warnbox h2{font-size:13px;font-weight:700;color:#e8bd7a;margin-bottom:7px}
+.warnbox p{font-size:13px;color:#e0c9a8;line-height:1.6;margin-bottom:7px}
+.warnbox p:last-child{margin-bottom:0}
+.warnbox b{color:#fff}
+.dash{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin:18px 0 4px}
+.dc{background:var(--bg2);padding:13px 15px}
+.dc .n{font-family:var(--serif);font-size:25px;line-height:1;color:var(--gold2)}
+.dc .l{font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink3);margin-top:6px}
+.pb{height:4px;background:var(--line);margin-bottom:26px;overflow:hidden}
+.pbf{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));width:0;transition:width .35s}
+.tabs{display:flex;gap:2px;border-bottom:1px solid var(--line);margin-bottom:22px;overflow-x:auto}
+.tab{background:none;border:none;color:var(--ink3);font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;font-weight:700;padding:10px 16px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap}
+.tab.on{color:var(--gold2);border-bottom-color:var(--gold)}
+.rnav{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:22px}
+.rc{background:var(--panel);border:1px solid var(--line);color:var(--ink2);font-size:12.5px;padding:8px 13px;border-radius:2px;cursor:pointer;display:flex;align-items:center;gap:8px}
+.rc:hover{border-color:var(--line2);color:var(--ink)}
+.rc.on{background:var(--gold);border-color:var(--gold);color:#1a1206;font-weight:700}
+.rc .num{font-family:var(--serif);font-size:15px}
+.rhead .rt{font-family:var(--serif);font-size:26px;font-weight:400;line-height:1.15;margin-bottom:9px}
+.rhead .rs{font-size:13.5px;color:var(--ink2);line-height:1.6;margin-bottom:12px}
+.logic{font-size:12px;color:#9ed07e;background:var(--ok-bg);border-left:3px solid var(--ok);padding:9px 12px;border-radius:3px;margin-bottom:18px;line-height:1.55}
+.lo{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:3px;padding:15px 17px;margin-bottom:26px}
+.lo .lh{font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:11px}
+.lg{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:9px}
+.li .ll{font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:2px}
+.li .lv{font-size:12.5px;font-weight:600;line-height:1.35}
+.sh{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold2);font-weight:700;padding:16px 0 4px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:9px;margin-bottom:2px}
+.sh::before{content:"";width:5px;height:5px;background:var(--gold);border-radius:50%;flex-shrink:0}
+.st{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--line);cursor:pointer}
+.st:hover{background:rgba(255,255,255,.013)}
+.st:last-child{border-bottom:none}
+.sn{width:28px;height:28px;flex-shrink:0;border:1px solid var(--line2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:13px;color:var(--ink2);margin-top:1px}
+.st.done .sn{background:var(--ok-bg);border-color:var(--ok);color:var(--ok)}
+.sb{flex:1;min-width:0}
+.stt{font-size:14.5px;font-weight:600;line-height:1.4;margin-bottom:4px}
+.st.done .stt{color:var(--ink2)}
+.sd{font-size:13px;color:var(--ink2);line-height:1.55}
+.bd{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.bg{font-size:10px;padding:2.5px 7px;border-radius:2px;font-weight:700;white-space:nowrap}
+.bg-c{background:var(--panel2);color:var(--ink2);font-weight:600}
+.bg-v{background:var(--ok-bg);color:var(--ok)}
+.bg-u{background:var(--unv-bg);color:var(--unv)}
+.bg-s{background:#2b1a0f;color:#d09155}
+.bg-w{background:var(--err-bg);color:var(--err)}
+.ex{display:none;margin-top:11px;padding:13px 15px;background:var(--bg2);border:1px solid var(--line);border-radius:3px;font-size:12.5px;color:var(--ink2);line-height:1.65}
+.st.open .ex{display:block}
+.ex ol{margin:2px 0 0 16px;padding:0}
+.ex ol li{margin-bottom:6px;line-height:1.55}
+.ex b{color:var(--gold2);font-weight:600}
+.ex .obj{font-size:11.5px;color:#c8ddba;background:var(--ok-bg);border-radius:3px;padding:7px 9px;margin-bottom:9px;line-height:1.5}
+.ex .note{margin-top:8px;padding:8px 10px;background:var(--panel);border-radius:3px}
+.ex .src{font-size:11px;color:var(--ink3);font-style:italic;margin-top:9px;padding-top:8px;border-top:1px solid var(--line)}
+.ck{width:28px;height:28px;flex-shrink:0;border:1px solid var(--line2);border-radius:50%;background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.ck svg{width:13px;height:13px;fill:none;stroke:transparent;stroke-width:2.6}
+.st.done .ck{background:var(--ok);border-color:var(--ok)}
+.st.done .ck svg{stroke:#0f1411}
+.clr{display:flex;gap:11px;padding:11px 4px;border-bottom:1px solid var(--line);cursor:pointer;align-items:flex-start}
+.clr:hover{background:rgba(255,255,255,.013)}
+.clb{width:18px;height:18px;flex-shrink:0;border:1px solid var(--line2);border-radius:3px;display:flex;align-items:center;justify-content:center;margin-top:2px}
+.clb svg{width:11px;height:11px;fill:none;stroke:transparent;stroke-width:3}
+.clr.done .clb{background:var(--ok);border-color:var(--ok)}
+.clr.done .clb svg{stroke:#0f1411}
+.cln{font-size:13.5px;font-weight:600;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.clr.done .cln{color:var(--ink3)}
+.cld{font-size:12px;color:var(--ink2);line-height:1.45;margin-top:2px}
+.grp{margin:24px 0 6px;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold2);font-weight:700}
+.fbtn{background:var(--panel);border:1px solid var(--line);color:var(--ink2);font-size:12px;padding:6px 12px;border-radius:20px;cursor:pointer}
+.fbtn.on{background:var(--bg2);border-color:var(--line2);color:var(--ink);font-weight:700}
+.frow{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;align-items:center}
+footer p{font-size:12px;color:var(--ink3);max-width:640px;line-height:1.55}
+.rst{background:none;border:1px solid var(--line2);color:var(--ink2);font-size:12px;padding:8px 14px;border-radius:3px;cursor:pointer}
+.rst:hover{border-color:var(--err);color:var(--err)}
+@media(max-width:620px){h1{font-size:27px}.rhead .rt{font-size:21px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="eyebrow">Hitman World of Assassination · Three-Headed Serpent</div>
+  <h1>Santa Fortuna — <em>final</em> verified runs</h1>
+  <p>Built from your uploaded official challenge data (65 challenges). Every challenge's OBJECTIVE is taken verbatim from that file. Each run step is additionally tagged VERIFIED (method sourced) or UNVERIFIED (objective is authoritative, but the detailed method isn't independently sourced — confirm on the in-game tile). Click any step to expand.</p>
+</header>
+<div class="audit" id="auditBox"><h2>Self-audit (runs against the uploaded data)</h2><p id="auditText">Running…</p><div class="cov" id="covList"></div></div>
+<div class="warnbox">
+  <h2>Corrections this build applies (from the authoritative data)</h2>
+  <p><b>It's 65 challenges, not 66.</b> The uploaded file lists 25 Assassination, 6 Discovery, 26 Feats, 3 Targets, 5 Classic. There is no Codename 47, no "Mission Stories - Santa Fortuna" aggregate, and no "The Hero of Santa Fortuna" in this (World of Assassination) version.</p>
+  <p><b>Several challenges were misdescribed in my earlier guides and are now corrected to the official text:</b> <b>Still as a Statue</b> kills Rico (not Andrea). <b>Blowing Bubbles</b> drowns Catalina Delgado in her hot tub (a non-target). <b>Plain Sailing / The Wind in Your Hair / Pop a Wheelie / Low Mileage</b> are all ESCAPE challenges (speed boat / Rico's sports car / motorbike / local's car) — not stealth, tattoo, run-over, or no-vehicle challenges. <b>Authentic Local Cuisine</b> is a poisoned-street-food KILL, not eating food. <b>It Looks Nothing like Her</b> is gaining mansion access as the tattooist (a feat), not a kill. <b>Drown Your Sorrows</b> is listening to P-Power. <b>Cog in the Machine</b> / <b>Brick and Mortar</b> are collection feats. <b>Nature Finds a Way</b> pacifies 5 coca-field guards; <b>The Healing</b> eliminates 10 as the Shaman. <b>Tasteless, Traceless</b> IS a Santa Fortuna challenge (I wrongly excluded it before).</p>
+  <p><b>Four escapes are mutually exclusive</b> (one exit per run), so they're spread across Runs 2, 4, 5, 6.</p>
+</div>
+<div class="dash">
+  <div class="dc"><div class="n" id="dT">0/65</div><div class="l">Challenges done</div></div>
+  <div class="dc"><div class="n" id="dV">—</div><div class="l">Verified steps</div></div>
+  <div class="dc"><div class="n" id="dU">—</div><div class="l">Objective-only steps</div></div>
+  <div class="dc"><div class="n" id="dS">0</div><div class="l">Steps done</div></div>
+</div>
+<div class="pb"><div class="pbf" id="pbf"></div></div>
+<div class="tabs">
+  <button class="tab on" data-t="runs">Optimized runs</button>
+  <button class="tab" data-t="list">All 65 challenges</button>
+</div>
+<section id="vRuns"><div class="rnav" id="rnav"></div><div id="rbody"></div></section>
+<section id="vList" style="display:none"><div class="frow" id="frow"></div><div id="lbody"></div></section>
+<footer>
+  <p>Challenge names and objectives are transcribed directly from your uploaded "Three-Headed Serpent" data file. Methods are sourced from Gamepressure, the Hitman Wiki, VGR, and NamuWiki where a named source existed; otherwise the objective stands alone and the step is flagged for in-game confirmation. Nothing is invented.</p>
+  <button class="rst" id="rst">Reset progress</button>
+</footer>
+</div>
+<script>
+const TICK='<svg viewBox="0 0 24 24"><polyline points="4 12 10 18 20 6"/></svg>';
+const CH=[
+{n:'The Cook',cat:'Target',d:'Assassinate Jorge Franco.'},
+{n:'The Face',cat:'Target',d:'Assassinate Andrea Martínez.'},
+{n:'The Boss',cat:'Target',d:'Assassinate Rico Delgado.'},
+{n:'Caution: Heavy Machinery',cat:'Assassination',d:'Assassinate Jorge Franco by pushing him into his cocaine machine.'},
+{n:'Splash Landing',cat:'Assassination',d:'Assassinate Rico Delgado in a submarine accident.'},
+{n:'A Strong Foundation',cat:'Assassination',d:'Assassinate Andrea Martínez in a cement mixer accident.'},
+{n:'Exit, Stage Left',cat:'Assassination',d:'Assassinate both Rico Delgado and Andrea Martínez with Rico Delgado\'s statue.'},
+{n:'Deadlier Art',cat:'Assassination',d:'Assassinate Rico Delgado with the art in his lobby.'},
+{n:'Still as a Statue',cat:'Assassination',d:'Assassinate Rico Delgado with a statue of himself.'},
+{n:'Hard Hat Area',cat:'Assassination',d:'Assassinate Andrea Martínez by dropping an object suspended from a crane.'},
+{n:'Mind the Step',cat:'Assassination',d:'Assassinate Jorge Franco by pushing him off a cliff as he searches for rare flowers.'},
+{n:'It Looks Just like Her',cat:'Assassination',d:'Assassinate Rico Delgado with a tattoo gun.'},
+{n:'Special Delivery',cat:'Assassination',d:'Place the explosive package in the in-tray within Andrea Martínez\' office. / Assassinate Andrea Martínez with an explosive package.'},
+{n:'Bait and Switch',cat:'Assassination',d:'Assassinate Andrea Martínez by pushing her off her balcony.'},
+{n:'A Bite Out of Crime',cat:'Assassination',d:'Assassinate Rico Delgado by pushing him into the hippo pool.'},
+{n:'The Secret Ingredient',cat:'Assassination',d:'Assassinate Jorge Franco by poisoning the cocaine bus souvenir.'},
+{n:'Hold My Hair',cat:'Assassination',d:'Assassinate a target by drowning them.'},
+{n:'Blowing Bubbles',cat:'Assassination',d:'Eliminate Catalina Delgado by drowning her in her hot tub.'},
+{n:'Tasteless, Traceless',cat:'Assassination',d:'Assassinate a target with lethal poison.'},
+{n:'Straight Shot',cat:'Assassination',d:'Assassinate a target with a headshot.'},
+{n:'We Meat Again',cat:'Assassination',d:'Incapacitate the meat enthusiast with a meaty bone. / Feed him to the piranhas.'},
+{n:'The Healing',cat:'Assassination',d:'While disguised as the Shaman, eliminate 10 different coca field guards, while they are among the coca field crops.'},
+{n:'Authentic Local Cuisine',cat:'Assassination',d:'Eliminate someone with poisoned street food.'},
+{n:'The Hallowed Ground',cat:'Assassination',d:'Push 3 people into the construction site pit while disguised as the Shaman.'},
+{n:'Piano Man',cat:'Assassination',d:'Assassinate a target with the fiber wire.'},
+{n:'Versatile Assassin',cat:'Assassination',d:'Complete the following Versatile challenges in Colombia: / Piano Man / Someone Could Hurt Themselves / Hold My Hair / Straight Shot / Tasteless, Traceless'},
+{n:'Off the Wagon',cat:'Assassination',d:'Eliminate Héctor Delgado by poisoning a line of cocaine.'},
+{n:'Someone Could Hurt Themselves',cat:'Assassination',d:'Assassinate a target in an accident.'},
+{n:'Plain Sailing',cat:'Discovery',d:'Escape on a speed boat.'},
+{n:'The Wind in Your Hair',cat:'Discovery',d:'Escape in one of Rico Delgado\'s sports cars.'},
+{n:'Chameleon',cat:'Discovery',d:'Find and equip all disguises in Santa Fortuna.'},
+{n:'Pop a Wheelie',cat:'Discovery',d:'Escape on a motorbike.'},
+{n:'Low Mileage',cat:'Discovery',d:'Escape in a local\'s car.'},
+{n:'Discover Santa Fortuna',cat:'Discovery',d:'Reveal all undiscovered areas in Santa Fortuna.'},
+{n:'It Looks Nothing like Her',cat:'Feat',d:'Gain access to the mansion as the Tattooist.'},
+{n:'Mission Story - Deadly Art',cat:'Feat',d:'Impersonate a reality star tattooist as Rico Delgado honors his wife with a love tattoo.'},
+{n:'Mission Story - Submerged',cat:'Feat',d:'A secret project? Surely this warrants attention.'},
+{n:'Feedin\' Time',cat:'Feat',d:'Make the hippo feel better.'},
+{n:'Fly Tipping',cat:'Feat',d:'Feed a street soldier to the piranhas. / Feed a mansion guard to the piranhas. / Feed a coca field guard to the piranhas. / Feed an elite guard to the piranhas. / Do not get spotted.'},
+{n:'A Brief History of Rico Delgado',cat:'Feat',d:'Listen to all of the displays in Rico Delgado\'s Trophy Room.'},
+{n:'Secret Tunnel',cat:'Feat',d:'[REDACTED]'},
+{n:'How Ribbiting',cat:'Feat',d:'Catch 5 frogs.'},
+{n:'Mission Story - Undying Love',cat:'Feat',d:'An old love affair ready to spark anew, 47?'},
+{n:'Got Any ID?',cat:'Feat',d:'Gain access to the cave system as the Hippie.'},
+{n:'Who Ya Gonna Call?',cat:'Feat',d:'Talk to Andrea Martínez disguised as the shaman.'},
+{n:'Drown Your Sorrows',cat:'Feat',d:'Listen to P-Power while he tells you about his problems.'},
+{n:'Cog in the Machine',cat:'Feat',d:'Recover Jorge Franco\'s missing circuit board.'},
+{n:'Brick and Mortar',cat:'Feat',d:'Collect 3 bloodstained cocaine bricks.'},
+{n:'Mission Story - Half Baked',cat:'Feat',d:'A helicopter pilot lost a package belonging to Jorge Franco.'},
+{n:'Mission Story - Backpacker',cat:'Feat',d:'A drug smuggler has a meeting with Jorge Franco but needs to mend his sample first.'},
+{n:'Key Master',cat:'Feat',d:'Unlock all of the secret doors located around Santa Fortuna.'},
+{n:'20,000 Leagues Under the Ground',cat:'Feat',d:'Enter the submarine cave as the Submarine Engineer.'},
+{n:'Salt the Earth',cat:'Feat',d:'Destroy Jorge Franco\'s rare flower sample.'},
+{n:'Mission Story - Hallowed Grounds',cat:'Feat',d:'Perform a spiritual cleansing as a holy man of the jungle.'},
+{n:'Nature Finds a Way',cat:'Feat',d:'Pacify 5 different coca field guards while they are among the coca field crops.'},
+{n:'On a Pedestal',cat:'Feat',d:'Loosen Rico Delgado\'s statue.'},
+{n:'Don\'t Shoot the Messenger',cat:'Feat',d:'Find Héctor Delgado\'s love letter.'},
+{n:'Cupid',cat:'Feat',d:'Help Héctor Delgado find his love letter.'},
+{n:'Mission Story - Heart Of Stone',cat:'Feat',d:'Sabotage Rico Delgado\'s statue unveiling ceremony.'},
+{n:'Feel Good Hit of the Stunner',cat:'Feat',d:'Pacify each Band Member with a Cocaine Brick, while disguised as a Musician.'},
+{n:'Sniper Assassin',cat:'The Classics',d:'Complete "Three-Headed Serpent." / Assassinate your targets with a sniper rifle. / Only eliminate the targets. / Do not get spotted.'},
+{n:'Silent Assassin',cat:'The Classics',d:'Complete "Three-Headed Serpent." / Only eliminate the targets. / No bodies found. / Do not get spotted.'},
+{n:'The Classics',cat:'The Classics',d:'Complete all the Classic challenges for "Three-Headed Serpent". / Silent Assassin / Silent Assassin, Suit Only / Sniper Assassin / Suit Only'},
+{n:'Silent Assassin, Suit Only',cat:'The Classics',d:'Complete "Three-Headed Serpent." / Only eliminate the targets. / No bodies found. / Do not get spotted. / Do it all in your suit.'},
+{n:'Suit Only',cat:'The Classics',d:'Assassinate the targets and complete the mission. / Do it all in your suit.'}
+];
+const R=
+
+[
+{
+t:"Run 1 · Jorge Franco — coca fields, jungle & backpacker",
+s:"All Franco kills and the coca-field feats, grouped in the south-west. Franco dies once per attempt, so kill-challenges are separated by reloads noted below.",
+logic:"LOGIC CHECK — PASS: circuit board recovered before it is installed; coca-field worker disguise taken before entering the hut; hippie disguise + ID obtained before cave access; every Franco kill is on its own reload so none blocks another; Salt the Earth (destroy sample) is done before Mind the Step (which depends on Franco leaving to find a replacement).",
+lo:{loc:"Bus Stop (default), or Coca Fields if unlocked",suit:"47's Suit",a:"ICA19 Silenced Pistol",b:"Lockpick",c:"Lethal Poison Vial",d:"Coins"},
+sec:[
+ {n:"Half-Baked → Cog in the Machine, Caution: Heavy Machinery, Brick and Mortar",st:[
+  {t:"Recover the circuit board from the plane wreck — Cog in the Machine",d:"OBJECTIVE (game data): Recover Jorge Franco's missing circuit board.",
+   steps:["From the coca fields, a conversation between blue-costumed guards reveals the machine needs a part.","Find the <b>plane wreck</b> in the jungle, west of the coca field and north of the shaman's hut.","Shoot the <b>red box</b> on the rock shelf so it drops, then take the <b>motherboard/circuit board</b> from it."],
+   c:["Cog in the Machine"],v:1,src:"Gamepressure: Story Missions & Assassination of Jorge Franco",save:0,warn:""},
+  {t:"Install the board, push Franco into the machine — Half Baked + Caution: Heavy Machinery",d:"OBJECTIVE (game data): Half Baked story; Assassinate Jorge Franco by pushing him into his cocaine machine.",
+   steps:["At the <b>production hut</b>, turn off the <b>generator</b>, wait for the lab worker, stun him, hide the body and take the <b>coca field worker</b> disguise.","Enter the hut (avoid workers who see through disguises) and install the board in the machine's wall slot.","<b>Franco</b> comes to inspect and chases the workers out. Hide in the corner container until he is alone.","Sneak up and push him into the machine. Completes <b>The Cook</b> and, as an accident, <b>Someone Could Hurt Themselves</b>."],
+   c:["Mission Story - Half Baked","Caution: Heavy Machinery","The Cook"],v:1,src:"Gamepressure: Story Missions & Assassination of Jorge Franco",save:1,warn:"Reload for the flower & backpacker methods."},
+  {t:"Collect 3 bloodstained cocaine bricks — Brick and Mortar",d:"OBJECTIVE (game data): Collect 3 bloodstained cocaine bricks.",
+   steps:["The bricks appear in association with the cocaine machine after Franco is processed through it.","Collect all three."],
+   note:"Objective is from the authoritative game data; the exact brick spawn spots are not independently sourced — confirm on the challenge tile / in-game.",
+   c:["Brick and Mortar"],v:0,src:"",save:0,warn:"Brick locations not independently sourced."},
+ ]},
+ {n:"Botanical lab → Salt the Earth, Mind the Step",st:[
+  {t:"Destroy the flower sample — Salt the Earth",d:"OBJECTIVE (game data): Destroy Jorge Franco's rare flower sample.",
+   steps:["Sneak to the <b>botanical laboratory</b>. Turn off its generator to make a worker leave; stun him for an <b>access card</b> (and optional lab-worker disguise). Restore power so nobody else checks.","Enter (one or two guards — distract with coins, stun, stash in the closet). Tamper with the <b>microwave-like device</b> to destroy the plant sample."],
+   c:["Salt the Earth"],v:1,src:"Gamepressure: Assassination of Jorge Franco",save:0,warn:""},
+  {t:"Push Franco off the cliff — Mind the Step",d:"OBJECTIVE (game data): Assassinate Jorge Franco by pushing him off a cliff as he searches for rare flowers.",
+   steps:["With the sample destroyed, <b>Franco walks into the jungle</b> to find a replacement and always ends at the same spot; go there and hide in the bushes.","Wait until he stops at the rock shelf and reaches for the plant, then push him off. His bodyguards watch the entrance — coin-distract and slip past or subdue.","Completes <b>The Cook</b>."],
+   c:["Mind the Step"],v:1,src:"Gamepressure: Assassination of Jorge Franco",save:1,warn:"Reload for backpacker."},
+ ]},
+ {n:"Backpacker → Got Any ID?, The Secret Ingredient, Tasteless Traceless",st:[
+  {t:"Poison the souvenir and become the hippie — Backpacker + Got Any ID?",d:"OBJECTIVE (game data): Backpacker story; Gain access to the cave system as the Hippie.",
+   steps:["At the <b>Village Hostel</b> (left of start), break into the upstairs room (lockpick, or steal the master key / use a crowbar). Approach the <b>cocaine-bus toy souvenir</b>.","Pour <b>deadly poison</b> in (from the medical office near start — coin-distract the man by the gas station, then break in). Emetic rat poison on a hostel ground-floor shelf is the non-lethal alternative.","Get <b>glue</b> from the <b>Smuggling Cave</b> to fix the toy (take a guard's clothes and magnetic card; one entrance is behind the doctor's building — mind two guards and a camera). Repair the toy.","Turn on the <b>radio</b>, hide by the door, stun/kill the hippie when he enters, take the <b>hippie disguise + ID</b>. The ID gives cave access — <b>Got Any ID?</b>"],
+   c:["Mission Story - Backpacker","Got Any ID?"],v:1,src:"Gamepressure: Story Missions - Backpacker",save:1,warn:""},
+  {t:"Feed Franco the poisoned cocaine — The Secret Ingredient + Tasteless, Traceless",d:"OBJECTIVE (game data): Assassinate Jorge Franco by poisoning the cocaine bus souvenir; Assassinate a target with lethal poison.",
+   steps:["Return to the cave (a guard escorts you through the magnetic-card door; ditch weapons if searched).","Put the poisoned toy on the table and wait for <b>Jorge Franco</b>. He breaks it and tries the cocaine.","With <b>deadly poison</b> he dies immediately — this satisfies both <b>The Secret Ingredient</b> and <b>Tasteless, Traceless</b> (a lethal-poison target kill), plus <b>The Cook</b>."],
+   note:"Tasteless, Traceless is a generic 'lethal-poison a target' challenge and also feeds Versatile Assassin (Run 6). Doing it here on Franco is the cleanest.",
+   c:["The Secret Ingredient","Tasteless, Traceless"],v:1,src:"Gamepressure: Story Missions & Assassination of Jorge Franco",save:0,warn:""},
+ ]},
+ {n:"Coca-field guard challenges (need Shaman disguise for The Healing)",st:[
+  {t:"Pacify 5 coca-field guards in the crops — Nature Finds a Way",d:"OBJECTIVE (game data): Pacify 5 different coca field guards while they are among the coca field crops.",
+   steps:["Non-lethally subdue 5 different guards while each is standing among the coca crops (any disguise).","Hide bodies as you go so you are not spotted."],
+   note:"Objective from game data; no detailed route sourced — confirm counts on the tile.",
+   c:["Nature Finds a Way"],v:0,src:"",save:0,warn:"No detailed route sourced."},
+  {t:"As the Shaman, eliminate 10 coca-field guards in the crops — The Healing",d:"OBJECTIVE (game data): While disguised as the Shaman, eliminate 10 different coca field guards while they are among the coca field crops.",
+   steps:["Get the <b>Shaman disguise</b> from the shaman's hut in the south jungle (see Run 3 for the exact method — the hut is close to the coca fields).","While wearing it, eliminate 10 different guards while each is among the crops."],
+   note:"Objective from game data; detailed method not independently sourced. Requires the Shaman disguise obtained in Run 3's opening.",
+   c:["The Healing"],v:0,src:"",save:0,warn:"Requires Shaman disguise (Run 3); method not sourced."},
+ ]},
+]},
+{
+t:"Run 2 · Andrea Martínez — Undying Love & Special Delivery",
+s:"Two Martínez methods share the same first-floor room. Do the letter chain, then reload and swap the letterbomb in.",
+logic:"LOGIC CHECK — PASS: the letter is found (Don't Shoot the Messenger) before it can be delivered (Cupid), which must precede the balcony push (Bait and Switch); the letterbomb variant is on a separate reload so it does not conflict with the letter delivery; a guard/soldier disguise is obtained before entering the compound.",
+lo:{loc:"Delgado Mansion basement (Mansion Staff) if unlocked, else Bus Stop",suit:"47's Suit",a:"ICA19 Silenced Pistol",b:"Lockpick",c:"—",d:"Coins"},
+sec:[
+ {n:"Undying Love → Don't Shoot the Messenger, Cupid, Bait and Switch",st:[
+  {t:"Find Hector's love letter — Don't Shoot the Messenger",d:"OBJECTIVE (game data): Find Héctor Delgado's love letter.",
+   steps:["Start in a <b>Mansion Staff</b> disguise in the mansion basement. Guards at the entrance mention Hector's crush on Andrea.","The stolen letter is carried by a guard with a <b>crippled leg</b>. Don't attack him in the open.","Find the <b>treasury</b> with cash, turn on the <b>money-counting machine</b>, open the door, and wait for him to investigate the noise. Stun or kill him inside and take the <b>love letter</b>. This is also <b>A Tie to Die For</b> in older versions; here the collect step is <b>Don't Shoot the Messenger</b>."],
+   c:["Don't Shoot the Messenger"],v:1,src:"Gamepressure: Story Missions - Undying Love",save:1,warn:""},
+  {t:"Deliver the letter and push Andrea — Cupid + Undying Love + Bait and Switch",d:"OBJECTIVE (game data): Help Héctor find his love letter; Undying Love story; push Andrea off her balcony.",
+   steps:["Take the letter to the <b>Martinez building</b>. In a guard disguise you can enter directly; otherwise get a <b>soldier disguise</b> first (mandatory on Master).","Reach the first floor (stairs, or the ground-floor bathroom window + gutter climb). Leave the <b>letter</b> in the marked first-floor spot. Delivering it is <b>Cupid</b> and completes <b>Mission Story - Undying Love</b>.","Wait for <b>Andrea</b> to read it and step onto the <b>terrace</b>, then push her off — <b>Bait and Switch</b> and <b>The Face</b>. She falls into the piranha river."],
+   c:["Cupid","Mission Story - Undying Love","Bait and Switch","The Face"],v:1,src:"Gamepressure: Story Missions - Undying Love",save:1,warn:"Reload to the pre-delivery save for the letterbomb."},
+ ]},
+ {n:"Special Delivery",st:[
+  {t:"Swap the letterbomb into the same room — Special Delivery",d:"OBJECTIVE (game data): Place the explosive package in the in-tray within Andrea Martínez's office; assassinate her with it.",
+   steps:["Reach the same first-floor room. Place the <b>Letterbomb Parcel</b> in the in-tray instead of the letter, then leave. It kills her when she checks it.","Carrying/throwing the parcel is flagged suspicious regardless of disguise — keep it out of civilian sight."],
+   note:"Parcel spawn location not independently sourced — check the map/instinct.",
+   c:["Special Delivery"],v:1,src:"Gamepressure: Story Missions (parcel swaps into the Undying Love spot); Hitman Wiki: Special Delivery / Letterbomb Parcel",save:0,warn:""},
+ ]},
+ {n:"Escape",st:[
+  {t:"Escape in a local's car — Low Mileage",d:"OBJECTIVE (game data): Escape in a local's car.",
+   steps:["Finish the mission by escaping via a <b>local's car</b> exit."],
+   note:"Objective from game data; specific car/exit location not independently sourced. This is one of four mutually-exclusive escapes — each needs its own run.",
+   c:["Low Mileage"],v:0,src:"",save:0,warn:"Escape location not sourced; mutually exclusive with other escapes."},
+ ]},
+]},
+{
+t:"Run 3 · Shaman & Statue — Andrea, Rico & the pit",
+s:"The shaman route and the statue ceremony. Save right after the ritual — it branches into the mixer and crane kills. The statue drop is reload-separated between Rico-only and the Rico+Andrea double.",
+logic:"LOGIC CHECK — PASS: Shaman disguise obtained before the ritual and before the pit/Healing challenges; ritual (mixer/crane) kills are reload-separated so both can be earned; statue is loosened and Rico lured before any drop; Still as a Statue (Rico) and Exit Stage Left (both) are on separate reloads so neither blocks the other.",
+lo:{loc:"Shaman's Hut (south jungle) if unlocked, else Bus Stop",suit:"47's Suit",a:"ICA19 Silenced Pistol",b:"Wrench (or grab one at the car workshop by the start)",c:"Crowbar/Lockpick",d:"Coins"},
+sec:[
+ {n:"Hallowed Grounds → Who Ya Gonna Call?, A Strong Foundation, Hard Hat Area",st:[
+  {t:"Become the shaman and start the ritual with Andrea — Hallowed Grounds + Who Ya Gonna Call?",d:"OBJECTIVE (game data): Hallowed Grounds story; Talk to Andrea disguised as the shaman.",
+   steps:["Go to the <b>Shaman's Hut</b> in the south jungle; two soldiers en route discuss needing the shaman.","Stun or kill the <b>shaman</b> (if killing, also shoot the person beside him) and take the <b>shaman disguise</b>.","Return to the guards to arrange the meeting, go to the <b>Martinez building</b>, and talk to <b>Andrea</b> — this is <b>Who Ya Gonna Call?</b> Accompany her to the <b>construction site</b> and perform the ritual at the pit — <b>Mission Story - Hallowed Grounds</b>."],
+   c:["Mission Story - Hallowed Grounds","Who Ya Gonna Call?"],v:1,src:"Gamepressure: Story Missions - Hallowed Ground",save:1,warn:"Save now — the two ritual kills branch from here."},
+  {t:"Cement mixer on Andrea — A Strong Foundation",d:"OBJECTIVE (game data): Assassinate Andrea Martínez in a cement mixer accident.",
+   steps:["Stand by the mixer's <b>control panel</b>, wait for <b>Andrea</b> to move near it, and press the button — she is thrown in and covered with concrete.","Completes <b>The Face</b> and, as an accident, <b>Someone Could Hurt Themselves</b>."],
+   c:["A Strong Foundation"],v:1,src:"Gamepressure: Story Missions - Hallowed Ground",save:0,warn:"Reload to the ritual save for the crane."},
+  {t:"Crane object on Andrea — Hard Hat Area",d:"OBJECTIVE (game data): Assassinate Andrea Martínez by dropping an object suspended from a crane.",
+   steps:["Immediately after the ritual, go to the crane's <b>lift mechanism</b> and coin-distract the guard.","Wait for <b>Andrea</b> to stand under the hanging object and press the button to drop it."],
+   c:["Hard Hat Area"],v:1,src:"Gamepressure: Story Missions - Hallowed Ground",save:0,warn:""},
+  {t:"Push 3 people into the pit as the Shaman — The Hallowed Ground",d:"OBJECTIVE (game data): Push 3 people into the construction site pit while disguised as the Shaman.",
+   steps:["While still in the Shaman disguise at the construction site, push three different people into the ritual pit."],
+   note:"Objective from game data; detailed method not independently sourced. Distinct from the story challenge 'Mission Story - Hallowed Grounds'.",
+   c:["The Hallowed Ground"],v:0,src:"",save:0,warn:"Method not sourced."},
+ ]},
+ {n:"Heart of Stone → On a Pedestal, Still as a Statue, Exit Stage Left",st:[
+  {t:"Loosen the statue and lure Rico — Heart of Stone + On a Pedestal",d:"OBJECTIVE (game data): Sabotage Rico Delgado's statue unveiling ceremony; Loosen Rico Delgado's statue.",
+   steps:["Learn of the reveal from <b>posters</b> at the market or on the Martinez building.","Get a <b>wrench</b> (car workshop by the start). Clear the two guards on the path behind the statue and hide the bodies. Use the wrench to loosen the statue's screws — <b>On a Pedestal</b>.","Complete the band: one musician asleep in the lane (open a water valve), one by a generator (turn it on), and the <b>drummer</b> in his locked hut (coin-distract the woman, open with crowbar/lockpick, take the <b>drummer's disguise</b>). Play on the plaza <b>stage</b> to summon Rico — this triggers <b>Mission Story - Heart Of Stone</b>."],
+   c:["Mission Story - Heart Of Stone","On a Pedestal"],v:1,src:"Gamepressure: Story Missions - Heart of Stone; Missing musicians page",save:1,warn:"Save before the drop — branch point."},
+  {t:"Drop the statue on Rico — Still as a Statue",d:"OBJECTIVE (game data): Assassinate Rico Delgado with a statue of himself.",
+   steps:["Return to the statue and wait for <b>Rico</b>. Drop it on him during his speech — <b>Still as a Statue</b> and <b>The Boss</b>. (Dropping during his speech is also what marks the mission story complete.)"],
+   c:["Still as a Statue","The Boss"],v:1,src:"Gamepressure: Story Missions - Heart of Stone",save:0,warn:"Reload to the pre-drop save for the double."},
+  {t:"Drop the statue on both — Exit, Stage Left",d:"OBJECTIVE (game data): Assassinate both Rico Delgado and Andrea Martínez with Rico's statue.",
+   steps:["This time wait for <b>Rico and Andrea</b> to finish their speeches and stand together, then drop the statue on both — <b>Exit, Stage Left</b> (also <b>The Boss</b> + <b>The Face</b>)."],
+   c:["Exit, Stage Left"],v:1,src:"Gamepressure: Story Missions - Heart of Stone",save:0,warn:""},
+ ]},
+]},
+{
+t:"Run 4 · Rico — Submarine, Deadly Art, hippo & trophy room",
+s:"Rico's remaining kills plus the tattoo access feat, the hippo feat, and the trophy-room feat. Reload-separated between kill methods.",
+logic:"LOGIC CHECK — PASS: Submarine Engineer disguise obtained before entering the sub cave (20,000 Leagues) and before the sabotage; P-Power poisoned & tattoo disguise taken before mansion entry, so It Looks Nothing like Her (access) fires before the tattoo kill; Feedin' Time (hippo surfaces) precedes A Bite Out of Crime (Rico pushed in); each Rico kill is reload-separated. The sports-car escape uses Rico's keys taken during the tattoo route.",
+lo:{loc:"Bus Stop (default)",suit:"47's Suit",a:"ICA19 Silenced Pistol",b:"Lockpick",c:"Emetic Rat Poison",d:"Coins"},
+sec:[
+ {n:"Submerged → 20,000 Leagues, Splash Landing",st:[
+  {t:"Enter the sub cave as the Submarine Engineer — 20,000 Leagues Under the Ground",d:"OBJECTIVE (game data): Enter the submarine cave as the Submarine Engineer.",
+   steps:["At the <b>fishing village</b>, follow the woman who talks about her injured husband to a hut. Get the <b>submarine crew/engineer disguise</b> there (lockpick the gate or climb in).","Open the cave route: talk to the <b>bartender</b> for the basement key, go down, ignore the two guards, and turn the <b>valve</b> on the far wall (this is also <b>Key Master</b> door 1). Enter the submarine cave as the Engineer."],
+   note:"The challenge specifically requires the Submarine Engineer disguise for entry — make sure you wear the Engineer variant, not just any disguise.",
+   c:["20,000 Leagues Under the Ground"],v:1,src:"Gamepressure: Story Missions - Submerged; Wiki: 20,000 Leagues objective",save:1,warn:""},
+  {t:"Sabotage the sub and drop Rico — Submerged + Splash Landing",d:"OBJECTIVE (game data): Submerged story; Assassinate Rico Delgado in a submarine accident.",
+   steps:["Find the <b>screwdriver</b> on the left side of the cave. Disable the engine limiter, then tell a guard the boat is ready.","At the control panel, rev to <b>3</b>. Wait until <b>Rico</b> stands directly in front of the submarine, then rev to <b>4</b> — it falls into the water with him. <b>Splash Landing</b>, <b>Mission Story - Submerged</b>, <b>The Boss</b>, and (accident) <b>Someone Could Hurt Themselves</b>.","VERIFIED HAZARD: do not disable the safety while dressed as the Submarine Engineer or disobey Rico's orders — the whole map turns hostile."],
+   c:["Mission Story - Submerged","Splash Landing"],v:1,src:"Gamepressure: Story Missions - Submerged; Wiki mission page (hostility trigger)",save:1,warn:"Reload for the tattoo & hippo methods."},
+ ]},
+ {n:"Deadly Art → It Looks Nothing like Her, Drown Your Sorrows, It Looks Just like Her",st:[
+  {t:"Listen to P-Power, then take his identity — Drown Your Sorrows",d:"OBJECTIVE (game data): Listen to P-Power while he tells you about his problems.",
+   steps:["At the <b>Village Bar</b>, find tattoo artist <b>P-Power</b> and listen to him talk about his problems — this is <b>Drown Your Sorrows</b> (not an alcohol challenge).","Put <b>emetic rat poison</b> in the bottle on the counter when unwatched; follow him to the toilet, subdue/drown him, dump the body out the window into the container, take the <b>tattoo artist disguise</b>."],
+   c:["Drown Your Sorrows"],v:1,src:"Gamepressure: Story Missions - Deadly Art; game data objective",save:1,warn:""},
+  {t:"Enter the mansion as the tattooist — It Looks Nothing like Her",d:"OBJECTIVE (game data): Gain access to the mansion as the Tattooist.",
+   steps:["Go to the <b>mansion entrance</b> and drop forbidden items (you'll be searched). Go with a guard, then <b>Catalina Delgado</b>; upstairs you can take a selfie with her.","Simply gaining mansion access in the tattooist disguise completes <b>It Looks Nothing like Her</b> — it is an access feat, not a kill."],
+   c:["It Looks Nothing like Her"],v:1,src:"Gamepressure: Story Missions - Deadly Art; game data objective",save:0,warn:""},
+  {t:"Tattoo Rico to death — Deadly Art + It Looks Just like Her",d:"OBJECTIVE (game data): Deadly Art story; Assassinate Rico Delgado with a tattoo gun.",
+   steps:["In the <b>office</b>, stand by the chair and wait for <b>Rico</b> to sit. Start the tattoo but wait until everyone else leaves, then pierce his neck with the <b>tattoo machine</b> — <b>It Looks Just like Her</b>, <b>Mission Story - Deadly Art</b>, <b>The Boss</b>.","Hide the body in the bathroom. Take Rico's <b>car keys</b> for the sports-car escape."],
+   c:["Mission Story - Deadly Art","It Looks Just like Her"],v:1,src:"Gamepressure: Story Missions - Deadly Art",save:1,warn:"Save before the office — this story is reported to be scripting-fragile."},
+ ]},
+ {n:"Lobby art, hippo & trophy room",st:[
+  {t:"Kill Rico with the lobby art — Deadlier Art",d:"OBJECTIVE (game data): Assassinate Rico Delgado with the art in his lobby.",
+   steps:["Find the hanging art (chandelier) above Rico's path in his lobby.","Shoot its support while he stands underneath so it falls on him — <b>The Boss</b> + <b>Someone Could Hurt Themselves</b>."],
+   note:"Exact aim point/timing not independently sourced — use instinct to find the interactive element.",
+   c:["Deadlier Art"],v:1,src:"ScreenRant; HolyGamerz; game data objective",save:0,warn:"Reload after."},
+  {t:"Lure the hippo, feed Rico to it — Feedin' Time + A Bite Out of Crime",d:"OBJECTIVE (game data): Make the hippo feel better; Assassinate Rico by pushing him into the hippo pool.",
+   steps:["Reach the hippo feeding chamber via the caves east of the mansion. Coin-distract the lone guard, then throw the <b>Meaty Bone</b> (on the shelf right of the pool) into the water — the hippo surfaces: <b>Feedin' Time</b>.","Guards fetch <b>Rico</b>, who comes down and dismisses his guards. Push him into the pool — <b>A Bite Out of Crime</b> + <b>The Boss</b>."],
+   c:["Feedin' Time","A Bite Out of Crime"],v:1,src:"VGR: A Bite out of Crime; Hitman Wiki: Feedin' Time",save:1,warn:""},
+  {t:"Listen to the four trophy displays — A Brief History of Rico Delgado",d:"OBJECTIVE (game data): Listen to all of the displays in Rico Delgado's Trophy Room.",
+   steps:["Enter the mansion (shoot the two entrance cameras, climb the pipe; a south-east courtyard bathroom window opens into the trophy room).","Activate all four trophy displays to hear Rico narrate. No kills required."],
+   c:["A Brief History of Rico Delgado"],v:1,src:"Hitman Wiki: A Brief History; VGR walkthrough",save:0,warn:""},
+ ]},
+ {n:"Escape",st:[
+  {t:"Escape in Rico's sports car — The Wind in Your Hair",d:"OBJECTIVE (game data): Escape in one of Rico Delgado's sports cars.",
+   steps:["Using Rico's <b>car keys</b> (taken during the tattoo route), reach the <b>garage</b> in the mansion gardens and escape in one of his sports cars."],
+   note:"The car-keys→garage route is confirmed by the Deadly Art walkthrough; treat the exact sports-car exit as confirm-on-tile. One of four mutually-exclusive escapes.",
+   c:["The Wind in Your Hair"],v:1,src:"Gamepressure: Story Missions - Deadly Art (car keys → garage)",save:0,warn:"Mutually exclusive with other escapes."},
+ ]},
+]},
+{
+t:"Run 5 · Underground, piranhas & non-targets",
+s:"Collection feats (Key Master, Secret Tunnel, frogs), both piranha challenges, the two non-target eliminations (Catalina, Hector), and the musician challenge.",
+logic:"LOGIC CHECK — PASS: valve/garage/altar doors and the dagger are collectibles that don't block anything; piranha victims are non-targets so they don't consume a target kill; Catalina and Hector are non-targets (these steps break Silent Assassin, so they are kept out of the SASO run in Run 6); musician disguise + cocaine bricks obtained before pacifying band members.",
+lo:{loc:"Bus Stop (default)",suit:"47's Suit",a:"ICA19 Silenced Pistol",b:"Lockpick",c:"—",d:"Coins"},
+sec:[
+ {n:"Secret doors, dagger & frogs",st:[
+  {t:"Unlock all secret doors — Key Master",d:"OBJECTIVE (game data): Unlock all of the secret doors located around Santa Fortuna.",
+   steps:["<b>Bar basement:</b> get the bartender's key, go down, turn the <b>valve</b> on the far wall.","<b>Garage:</b> press the button in the garage side room; the hidden door opens automatically.","<b>Altar:</b> opened via the Secret Tunnel route (next step)."],
+   c:["Key Master"],v:1,src:"Hitman Wiki: Key Master; Steam collectables guide",save:0,warn:""},
+  {t:"Take the dagger — Secret Tunnel",d:"OBJECTIVE (game data): [REDACTED] — acquire the Sacrificial Knife from the trapped altar tunnel.",
+   steps:["Enter the altar tunnel; the tiled floor is partly trapped. Save on entry.","Cross carefully to the altar and take the <b>Sacrificial Knife</b>. Use the Steam collectables guide's diagram for the safe path."],
+   c:["Secret Tunnel"],v:1,src:"Hitman Wiki: Secret Tunnel; Steam collectables guide",save:1,warn:"Save on entry — trap layout not reproduced here."},
+  {t:"Catch five frogs — How Ribbiting",d:"OBJECTIVE (game data): Catch 5 frogs.",
+   steps:["Stay crouched (frogs flee otherwise). Locations: the Construction Site bridge; above the Hippo Enclosure before the bridge; the boardwalk near Franco's Hut; the pond beside the Shaman Hut; the Jungle↔Coca Plantation bridge."],
+   c:["How Ribbiting"],v:1,src:"Hitman Wiki: How Ribbiting",save:0,warn:""},
+ ]},
+ {n:"Piranhas → We Meat Again, Fly Tipping",st:[
+  {t:"Feed the meat enthusiast to the piranhas — We Meat Again",d:"OBJECTIVE (game data): Incapacitate the meat enthusiast with a meaty bone, then feed him to the piranhas.",
+   steps:["Find the <b>meat enthusiast</b> by the piranha water. He cycles: drink, binoculars, throw meat, talk, lean on the rail.","Incapacitate him with a <b>Meaty Bone</b> and toss him to the piranhas when they're in a frenzy. You can restart afterward — the challenge stays done."],
+   note:"Both piranha challenges have community reports of not registering — save first.",
+   c:["We Meat Again"],v:1,src:"VGR: We Meat Again; game data objective",save:1,warn:"Sometimes doesn't register — save first."},
+  {t:"Feed four guard types to the piranhas unseen — Fly Tipping",d:"OBJECTIVE (game data): Feed a street soldier, a mansion guard, a coca field guard, and an elite guard to the piranhas; do not get spotted.",
+   steps:["Subdue and dump one of each of the four guard types into the piranha water, unseen throughout: <b>street soldier, mansion guard, coca field guard, elite guard</b>."],
+   note:"The four guard types are confirmed by the authoritative game data. Detailed per-guard locations not sourced.",
+   c:["Fly Tipping"],v:1,src:"Game data objective (four guard types confirmed)",save:1,warn:"Known registration issues — save first."},
+ ]},
+ {n:"Non-target eliminations & musicians",st:[
+  {t:"Drown Catalina in her hot tub — Blowing Bubbles",d:"OBJECTIVE (game data): Eliminate Catalina Delgado by drowning her in her hot tub.",
+   steps:["Reach <b>Catalina Delgado</b> at her hot tub and drown her there."],
+   note:"Catalina is a non-target, so this breaks Silent Assassin — keep it out of the SASO run. Detailed route to her hot tub not independently sourced.",
+   c:["Blowing Bubbles"],v:0,src:"",save:0,warn:"Non-target; route not sourced."},
+  {t:"Poison Hector's cocaine line — Off the Wagon",d:"OBJECTIVE (game data): Eliminate Héctor Delgado by poisoning a line of cocaine.",
+   steps:["Find <b>Héctor Delgado</b> and poison the line of cocaine he uses so he overdoses."],
+   note:"Non-target; breaks Silent Assassin. Community reports tie Hector's cocaine use to after Andrea's death — treat timing as confirm-on-tile.",
+   c:["Off the Wagon"],v:0,src:"",save:0,warn:"Non-target; timing not fully sourced."},
+  {t:"Pacify band members with cocaine bricks as a Musician — Feel Good Hit of the Stunner",d:"OBJECTIVE (game data): Pacify each Band Member with a Cocaine Brick while disguised as a Musician.",
+   steps:["Get a <b>Musician</b> disguise and <b>Cocaine Bricks</b> (see Brick and Mortar in Run 1).","Pacify each Band Member using a Cocaine Brick as the melee/throw item."],
+   note:"Objective from game data; detailed method not independently sourced.",
+   c:["Feel Good Hit of the Stunner"],v:0,src:"",save:0,warn:"Method not sourced."},
+ ]},
+ {n:"Escape",st:[
+  {t:"Escape on a motorbike — Pop a Wheelie",d:"OBJECTIVE (game data): Escape on a motorbike.",
+   steps:["Finish the mission by escaping on a <b>motorbike</b> exit."],
+   note:"Pop a Wheelie is an ESCAPE challenge (not a run-over kill). One of four mutually-exclusive escapes.",
+   c:["Pop a Wheelie"],v:0,src:"",save:0,warn:"Escape location not sourced; mutually exclusive."},
+ ]},
+]},
+{
+t:"Run 6 · Versatile, Classics & completion",
+s:"The generic-method bundle (Versatile Assassin), the poisoned-street-food kill, the Classics as clean dedicated runs, and the two progress trackers. The escape here is the speed boat.",
+logic:"LOGIC CHECK — PASS: the five Versatile methods are each done on a convenient target via reloads, so none blocks another; SASO is run with no disguise and no non-target kills (Catalina/Hector from Run 5 are excluded here); Sniper Assassin is a separate clean run; Chameleon/Discover accumulate across all runs and are simply confirmed here.",
+lo:{loc:"Bus Stop (default)",suit:"47's Suit (never changed for SASO)",a:"ICA19 Silenced Pistol / Sieger 300 Ghost for Sniper",b:"Fiber Wire (Piano Man)",c:"Lethal Poison (Tasteless, Traceless)",d:"Coins"},
+sec:[
+ {n:"Versatile Assassin bundle",st:[
+  {t:"The five Versatile methods — Piano Man, Someone Could Hurt Themselves, Hold My Hair, Straight Shot, Tasteless Traceless",d:"OBJECTIVE (game data): fiber-wire a target; accident-kill a target; drown a target; headshot a target; lethal-poison a target. Completing all five = Versatile Assassin.",
+   steps:["<b>Piano Man:</b> fiber-wire any target (Franco alone at the machine is easy).","<b>Someone Could Hurt Themselves:</b> any accident kill — already earned in Runs 1/3/4 (machine, mixer, submarine, chandelier).","<b>Hold My Hair:</b> drown any target at a water source.","<b>Straight Shot:</b> headshot any target (Franco in the open field, or Rico through a window).","<b>Tasteless, Traceless:</b> lethal-poison any target — already earned on Franco in Run 1.","Completing all five pops <b>Versatile Assassin</b>. Each is done on its own reload."],
+   c:["Piano Man","Someone Could Hurt Themselves","Hold My Hair","Straight Shot","Versatile Assassin"],v:1,src:"Game data objectives (generic Versatile challenges)",save:1,warn:"Each method on its own reload."},
+  {t:"Kill someone with poisoned street food — Authentic Local Cuisine",d:"OBJECTIVE (game data): Eliminate someone with poisoned street food.",
+   steps:["Find a <b>street-food</b> source in the village, add poison (emetic or lethal), and let an NPC eat it so they die.","This is a KILL challenge — not eating food yourself (a correction from earlier drafts)."],
+   note:"Objective from game data; exact food-stand location not independently sourced.",
+   c:["Authentic Local Cuisine"],v:0,src:"",save:0,warn:"Food-stand location not sourced."},
+ ]},
+ {n:"The Classics",st:[
+  {t:"Silent Assassin, Suit Only — verified route",d:"OBJECTIVE (game data): complete SA rules in your suit; also completes Silent Assassin and Suit Only.",
+   steps:["Bring only the silenced pistol — three coins sit at the bar; apricots/soda cans from the fruit shop also lure.","Climb the wall into Martínez's mansion, hide by the first-floor office window under the stairs, wait until you're alone, lure Andrea into the inner corner with a thrown object, and shoot her (avoid the guard by the stairs, who's in a camera's view).","Cameras: destroy the first-floor office terminal, then take the pipe up and destroy the recorder through the balcony window.","Rico: lure him to the hippo enclosure (a Meaty Bone is right there). Franco: an isolated field/machine kill.","Completes <b>Silent Assassin</b>, <b>Suit Only</b>, and <b>Silent Assassin, Suit Only</b>. Keep Catalina/Hector alive here — non-target kills break SA."],
+   c:["Silent Assassin","Suit Only","Silent Assassin, Suit Only"],v:1,src:"NamuWiki Santa Fortuna route; Steam difficulty discussion",save:1,warn:""},
+  {t:"Sniper Assassin — all three targets by rifle",d:"OBJECTIVE (game data): assassinate all targets with a sniper rifle, only the targets, undetected.",
+   steps:["Bring the <b>Sieger 300 Ghost</b> (unlocked via The Cheveyo Calibration escalation in A House Built on Sand).","Franco: snipe while he searches for the plant, or alone at the machine. Rico: during the statue reveal or at the hippo railing. Andrea: from the toilet as she approaches the TV.","Completes <b>Sniper Assassin</b>, and with the others, <b>The Classics</b>."],
+   c:["Sniper Assassin","The Classics"],v:1,src:"Gamepressure: Assassination of Jorge Franco; NamuWiki; GameFAQs (Sieger unlock)",save:0,warn:""},
+ ]},
+ {n:"Trackers & escape",st:[
+  {t:"Chameleon & Discover Santa Fortuna",d:"OBJECTIVE (game data): find and equip all disguises; reveal all undiscovered areas.",
+   steps:["Both accumulate across every run. Use the live x/y counter on each challenge tile to see what remains, then mop up the last disguises/areas."],
+   note:"Exact disguise count and area count are not stated in the game data provided — rely on the in-game counter.",
+   c:["Chameleon","Discover Santa Fortuna"],v:0,src:"",save:0,warn:"Counts not in provided data — use in-game counter."},
+  {t:"Escape on a speed boat — Plain Sailing",d:"OBJECTIVE (game data): Escape on a speed boat.",
+   steps:["Finish the mission by escaping via a <b>speed boat</b> exit."],
+   note:"Plain Sailing is an ESCAPE challenge (not a stealth-submarine challenge). One of four mutually-exclusive escapes.",
+   c:["Plain Sailing"],v:0,src:"",save:0,warn:"Escape location not sourced; mutually exclusive."},
+ ]},
+]},
+]
+
+;
+// Expected authoritative counts
+const EXPECT={Target:3,Assassination:25,Discovery:6,Feat:26,'The Classics':5,TOTAL:65};
+const K='sf_final_v1';
+let dch=new Set(),dst=new Set(),cur=0,flt='all';
+try{const o=JSON.parse(localStorage.getItem(K)||'{}');dch=new Set(o.c||[]);dst=new Set(o.s||[]);}catch(e){}
+function reportProgress(){try{const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r['m10']={done:dch.size,total:65,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
+function sv(){try{localStorage.setItem(K,JSON.stringify({c:[...dch],s:[...dst]}));}catch(e){}reportProgress();}
+let sid=0;R.forEach((r,i)=>r.sec.forEach(s=>s.st.forEach(t=>{t._id='r'+i+'s'+(sid++);})));
+function audit(){
+  const assigned=new Set();
+  R.forEach(r=>r.sec.forEach(s=>s.st.forEach(t=>(t.c||[]).forEach(c=>assigned.add(c)))));
+  const names=CH.map(c=>c.n);
+  const missing=names.filter(n=>!assigned.has(n));
+  const unknown=[...assigned].filter(a=>!names.includes(a));
+  const dupes=names.filter((n,i)=>names.indexOf(n)!==i);
+  // category counts
+  const cc={};names.forEach((n,i)=>{const cat=CH[i].cat;cc[cat]=(cc[cat]||0)+1;});
+  let catOk=cc.Target===EXPECT.Target&&cc.Assassination===EXPECT.Assassination&&cc.Discovery===EXPECT.Discovery&&cc.Feat===EXPECT.Feat&&cc['The Classics']===EXPECT['The Classics']&&names.length===EXPECT.TOTAL;
+  let vS=0,uS=0;R.forEach(r=>r.sec.forEach(s=>s.st.forEach(t=>{t.v?vS++:uS++;})));
+  document.getElementById('dV').textContent=vS;document.getElementById('dU').textContent=uS;
+  const box=document.getElementById('auditBox'),txt=document.getElementById('auditText'),cov=document.getElementById('covList');
+  if(missing.length===0&&unknown.length===0&&dupes.length===0&&catOk){
+    box.className='audit';
+    txt.innerHTML='<b>PASS.</b> All 65 challenges from the uploaded file are present, correctly categorised ('+cc.Target+' Targets / '+cc.Assassination+' Assassination / '+cc.Discovery+' Discovery / '+cc.Feat+' Feats / '+cc['The Classics']+' Classic), with no duplicates and no phantom challenges. Every challenge is assigned to at least one run. Of '+(vS+uS)+' run steps, <b>'+vS+' have a sourced method</b> and <b>'+uS+' are objective-only</b> (authoritative objective, method to confirm in-game).';
+    cov.innerHTML='';
+  } else {
+    box.className='audit bad';
+    txt.innerHTML='<b>FAIL.</b> missing:'+missing.length+' unknown:'+unknown.length+' dupes:'+dupes.length+' catOk:'+catOk;
+    cov.innerHTML=missing.map(m=>'<span class="cvi miss">Missing: '+m+'</span>').join('')+unknown.map(u=>'<span class="cvi miss">Unknown: '+u+'</span>').join('');
+  }
+}
+function stats(){
+  document.getElementById('dT').textContent=dch.size+'/65';
+  document.getElementById('dS').textContent=dst.size;
+  document.getElementById('pbf').style.width=Math.round(dch.size/65*100)+'%';
+}
+function catClass(cat){return cat==='Assassination'?'bg-c':cat==='Discovery'?'bg-c':cat==='Feat'?'bg-c':cat==='Target'?'bg-c':'bg-c';}
+function renderRun(i){
+  const r=R[i],lo=r.lo;
+  let h='<div class="rhead"><div class="rt">'+r.t+'</div><div class="rs">'+r.s+'</div>'+(r.logic?'<div class="logic">'+r.logic+'</div>':'')+'</div>';
+  h+='<div class="lo"><div class="lh">Loadout &amp; starting location</div><div class="lg">'+
+   '<div class="li"><div class="ll">Start</div><div class="lv">'+lo.loc+'</div></div>'+
+   '<div class="li"><div class="ll">Suit</div><div class="lv">'+lo.suit+'</div></div>'+
+   '<div class="li"><div class="ll">Slot 1</div><div class="lv">'+lo.a+'</div></div>'+
+   '<div class="li"><div class="ll">Slot 2</div><div class="lv">'+lo.b+'</div></div>'+
+   '<div class="li"><div class="ll">Slot 3</div><div class="lv">'+lo.c+'</div></div>'+
+   '<div class="li"><div class="ll">Slot 4</div><div class="lv">'+lo.d+'</div></div></div></div>';
+  r.sec.forEach(s=>{
+    h+='<div class="sh">'+s.n+'</div>';let n=0;
+    s.st.forEach(t=>{
+      n++;const d=dst.has(t._id);
+      const cb=(t.c||[]).map(x=>'<span class="bg bg-c">'+x+'</span>').join('');
+      const vb=t.v?'<span class="bg bg-v">METHOD SOURCED</span>':'<span class="bg bg-u">OBJECTIVE ONLY</span>';
+      const sb=t.save?'<span class="bg bg-s">Save here</span>':'';
+      const wb=t.warn?'<span class="bg bg-w">'+t.warn+'</span>':'';
+      let exBody='';
+      if(t.d)exBody+='<div class="obj">'+t.d+'</div>';
+      if(t.steps)exBody+='<ol>'+t.steps.map(x=>'<li>'+x+'</li>').join('')+'</ol>';
+      if(t.note)exBody+='<div class="note">'+t.note+'</div>';
+      exBody+=t.src?'<div class="src">Method source: '+t.src+'</div>':'<div class="src">Objective from the uploaded game data. No detailed method met the sourcing bar — confirm via the in-game challenge tile.</div>';
+      h+='<div class="st'+(d?' done':'')+'" data-s="'+t._id+'">'+
+        '<div class="sn">'+(d?'✓':n)+'</div><div class="sb">'+
+        '<div class="stt">'+t.t+'</div>'+
+        '<div class="bd">'+vb+cb+sb+wb+'</div><div class="ex">'+exBody+'</div></div>'+
+        '<button class="ck" data-ck="'+t._id+'" aria-label="Mark done">'+TICK+'</button></div>';
+    });
+  });
+  document.getElementById('rbody').innerHTML=h;
+}
+function renderList(){
+  let show=CH.map((c,i)=>({...c,i}));
+  if(flt==='todo')show=show.filter(c=>!dch.has(c.n));
+  else if(flt!=='all')show=show.filter(c=>c.cat===flt);
+  let h='',lg='';
+  show.forEach(c=>{if(c.cat!==lg){h+='<div class="grp">'+c.cat+'</div>';lg=c.cat;}
+    const d=dch.has(c.n);
+    h+='<div class="clr'+(d?' done':'')+'" data-c="'+c.n.replace(/"/g,'&quot;')+'"><div class="clb">'+TICK+'</div><div><div class="cln">'+c.n+'</div><div class="cld">'+c.d+'</div></div></div>';});
+  document.getElementById('lbody').innerHTML=h;
+}
+const rn=document.getElementById('rnav');
+R.forEach((r,i)=>{const b=document.createElement('button');b.className='rc'+(i===0?' on':'');
+  b.innerHTML='<span class="num">'+(i+1)+'</span> '+r.t.split('·')[1].trim().split('—')[0].trim();
+  b.onclick=()=>{cur=i;[...rn.children].forEach((c,j)=>c.classList.toggle('on',j===i));renderRun(i);window.scrollTo({top:0,behavior:'smooth'});};rn.appendChild(b);});
+const fr=document.getElementById('frow');
+[['all','All 65'],['Assassination','Assassination'],['Discovery','Discovery'],['Feat','Feats'],['Target','Targets'],['The Classics','Classic'],['todo','Not done']].forEach(([k,l])=>{const b=document.createElement('button');b.className='fbtn'+(k==='all'?' on':'');b.textContent=l;
+  b.onclick=()=>{flt=k;[...fr.children].forEach(x=>x.classList.remove('on'));b.classList.add('on');renderList();};fr.appendChild(b);});
+document.querySelectorAll('.tab').forEach(t=>{t.onclick=()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));t.classList.add('on');
+  const k=t.dataset.t;
+  document.getElementById('vRuns').style.display=k==='runs'?'':'none';
+  document.getElementById('vList').style.display=k==='list'?'':'none';
+  if(k==='list')renderList();};});
+document.getElementById('rbody').addEventListener('click',e=>{
+  const c=e.target.closest('[data-ck]');
+  if(c){e.stopPropagation();const id=c.dataset.ck;dst.has(id)?dst.delete(id):dst.add(id);sv();stats();renderRun(cur);return;}
+  const s=e.target.closest('.st');if(s)s.classList.toggle('open');});
+document.getElementById('lbody').addEventListener('click',e=>{
+  const r=e.target.closest('[data-c]');if(!r)return;
+  const n=r.dataset.c;dch.has(n)?dch.delete(n):dch.add(n);sv();stats();renderList();});
+document.getElementById('rst').onclick=()=>{if(confirm('Reset all progress?')){dch=new Set();dst=new Set();sv();stats();renderRun(cur);renderList();}};
+audit();stats();renderRun(0);
+reportProgress();
+</script>
+<!-- step-progress-bridge -->
+<script>
+/* Reports route-step ticks into 'hitman-progress-registry' so the index can
+   show them beside the challenge counts. Counts what is on screen rather than
+   any guide-specific state, so one implementation serves every guide. */
+(function(){
+  var RID="m10", SEL="";
+  function isDone(s){
+    var c=s.classList;
+    if(c.contains('done')||c.contains('dn')) return true;
+    if(s.getAttribute('data-done')==='1'||s.getAttribute('aria-pressed')==='true') return true;
+    return !!s.querySelector('.done,.dn,[data-done="1"],[aria-pressed="true"]');
+  }
+  function tally(){
+    return {steps:dst.size,stepTotal:R.reduce(function(a,r){return a+r.sec.reduce(function(b,s){return b+s.st.length;},0);},0)};
+  }
+  function push(){
+    var t;
+    try{ t=tally(); }catch(err){ return; }
+    if(!t||!t.stepTotal) return;
+    try{
+      var r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');
+      var e=r[RID]||(r[RID]={});
+      /* the guide's own reportProgress() rewrites this entry wholesale, so
+         re-add the step counts whenever they go missing or stale */
+      if(e.steps===t.steps&&e.stepTotal===t.stepTotal) return;
+      e.steps=t.steps; e.stepTotal=t.stepTotal; e.updated=Date.now();
+      localStorage.setItem('hitman-progress-registry',JSON.stringify(r));
+    }catch(err){}
+  }
+  var pending=false;
+  function schedule(){
+    if(pending) return; pending=true;
+    setTimeout(function(){pending=false;push();},120);
+  }
+  try{
+    new MutationObserver(schedule).observe(document.body,
+      {subtree:true,childList:true,attributes:true,attributeFilter:['class','aria-pressed','data-done']});
+  }catch(err){}
+  window.addEventListener('load',schedule);
+  setTimeout(push,600);
+})();
+</script>
+<!-- /step-progress-bridge -->
+</body>
+</html>

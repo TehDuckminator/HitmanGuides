@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Untouchable — Carpathian Mountains Challenge Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;500;700&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#0f141b; --panel:#161e29; --panel2:#1d2733; --steel:#2c3a4a;
+  --snow:#e7edf3; --dim:#8fa1b3; --amber:#e0a539; --blood:#b8362f;
+  --ice:#6fb3c9; --moss:#7ea86a; --r:3px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--night);color:var(--snow);
+  font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:15px;line-height:1.6;
+  background-image:linear-gradient(180deg,#12181f 0%,#0f141b 420px)}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 80px}
+
+header.top{border-bottom:1px solid var(--steel);padding:34px 0 22px;margin-bottom:24px}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--amber)}
+h1{font-family:"Oswald",sans-serif;font-weight:700;font-size:clamp(38px,7vw,68px);
+  line-height:.95;margin:8px 0 6px;text-transform:uppercase}
+.sub{color:var(--dim);font-size:14px;max-width:66ch;margin:0}
+
+.trainbar{margin:24px 0 16px}
+.loco{display:flex;align-items:flex-end;gap:3px;flex-wrap:wrap}
+.car{width:26px;height:20px;background:var(--steel);border-radius:2px 2px 0 0;transition:background .25s,box-shadow .25s}
+.car.on{background:var(--amber);box-shadow:0 0 10px rgba(224,165,57,.45)}
+.rail{height:2px;background:var(--steel);margin-top:2px}
+.readout{display:flex;justify-content:space-between;align-items:baseline;margin-top:10px;
+  font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--dim);gap:12px;flex-wrap:wrap}
+.readout b{font-family:"Oswald";font-size:26px;color:var(--snow);font-weight:500}
+
+.counters{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:18px 0 0}
+.ctr{background:var(--panel);border:1px solid var(--steel);border-radius:var(--r);padding:10px 12px}
+.ctr .lbl{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--dim);display:block}
+.ctr .val{font-family:"Oswald";font-size:22px;font-weight:500}
+.ctr .val small{font-size:13px;color:var(--dim)}
+
+nav.tabs{display:flex;gap:2px;margin:26px 0 20px;border-bottom:1px solid var(--steel);flex-wrap:wrap}
+nav.tabs button{background:none;border:none;border-bottom:2px solid transparent;color:var(--dim);
+  font-family:"Oswald";font-size:15px;letter-spacing:.08em;text-transform:uppercase;
+  padding:10px 16px;cursor:pointer}
+nav.tabs button:hover{color:var(--snow)}
+nav.tabs button[aria-selected="true"]{color:var(--amber);border-bottom-color:var(--amber)}
+.panel[hidden]{display:none}
+
+/* run jump bar */
+.jump{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px;align-items:center}
+.jump .jl{font-family:"IBM Plex Mono";font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--dim);margin-right:2px}
+.jump button{background:var(--panel);border:1px solid var(--steel);color:var(--snow);
+  font-family:"Oswald";font-size:14px;letter-spacing:.05em;text-transform:uppercase;
+  padding:8px 14px;border-radius:2px;cursor:pointer;display:flex;gap:8px;align-items:baseline}
+.jump button:hover{border-color:var(--amber);color:var(--amber)}
+.jump button span{font-family:"IBM Plex Mono";font-size:10px;color:var(--dim)}
+.jump .util{background:none;font-family:"IBM Plex Mono";font-size:11px;text-transform:uppercase;
+  letter-spacing:.1em;color:var(--dim);padding:8px 10px}
+
+.notice{border-left:3px solid var(--blood);background:#1b1416;padding:14px 16px;
+  border-radius:0 var(--r) var(--r) 0;margin-bottom:24px}
+.notice h3{font-family:"Oswald";text-transform:uppercase;letter-spacing:.06em;margin:0 0 6px;font-size:16px}
+.notice ul{margin:8px 0 0;padding-left:18px}
+.notice li{margin-bottom:6px}
+
+/* runs */
+.run{border:1px solid var(--steel);background:var(--panel);border-radius:var(--r);
+  margin-bottom:20px;overflow:hidden;scroll-margin-top:16px}
+.runhead{width:100%;text-align:left;background:var(--panel2);border:none;color:var(--snow);
+  padding:16px 20px;cursor:pointer;display:flex;gap:14px;align-items:flex-start}
+.runhead:hover{background:#22303f}
+.chev{font-family:"IBM Plex Mono";color:var(--amber);flex:0 0 auto;margin-top:5px;transition:transform .2s}
+.run.closed .chev{transform:rotate(-90deg)}
+.run.closed .runbody{display:none}
+.runhead .rh{flex:1;min-width:0}
+.runno{font-family:"IBM Plex Mono";font-size:11px;letter-spacing:.2em;color:var(--amber)}
+.runhead h2{font-family:"Oswald";text-transform:uppercase;font-size:23px;margin:2px 0 4px;font-weight:500}
+.runhead .goal{color:var(--dim);font-size:14px;margin:0}
+.runcount{font-family:"IBM Plex Mono";font-size:11px;color:var(--dim);white-space:nowrap;margin-top:6px}
+
+.loadout{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  border-top:1px solid var(--steel);border-bottom:1px solid var(--steel)}
+.loadout div{padding:11px 16px;border-right:1px solid var(--steel)}
+.loadout div:last-child{border-right:none}
+.loadout .k{font-family:"IBM Plex Mono";font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--dim);display:block}
+.loadout .v{font-size:14px}
+
+.sect{font-family:"Oswald";text-transform:uppercase;letter-spacing:.1em;font-size:13px;
+  color:var(--ice);padding:16px 20px 2px}
+
+/* steps */
+.step{border-top:1px solid #202b38}
+.strip{display:flex;gap:12px;align-items:flex-start;padding:11px 20px}
+.tick{flex:0 0 auto;width:22px;height:22px;border:1px solid var(--steel);border-radius:2px;
+  background:var(--night);cursor:pointer;color:transparent;font-size:13px;line-height:1;margin-top:3px}
+.tick.done{background:var(--moss);border-color:var(--moss);color:#0f141b}
+.stoggle{flex:1;text-align:left;background:none;border:none;color:var(--snow);cursor:pointer;
+  padding:0;min-width:0;display:flex;gap:10px;align-items:flex-start}
+.snum{font-family:"IBM Plex Mono";font-size:11px;color:var(--amber);flex:0 0 auto;margin-top:4px}
+.stxt{flex:1;min-width:0}
+.stxt h4{margin:0;font-size:15px;font-weight:600}
+.stxt p{color:var(--dim);font-size:14px;margin:2px 0 0}
+.step.done .stxt h4{text-decoration:line-through;color:var(--dim)}
+.sbody{padding:2px 20px 14px 54px}
+.step.closed .sbody{display:none}
+.sbody ul{list-style:none;margin:0;padding:0;border-left:2px solid var(--steel);padding-left:14px}
+.sbody li{margin-bottom:7px;font-size:14px}
+.sbody li:last-child{margin-bottom:0}
+.tagk{font-family:"IBM Plex Mono";font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ice);margin-right:7px}
+.tagk.w{color:#ff9d96}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;padding-left:14px}
+.badge{font-family:"IBM Plex Mono";font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+  padding:3px 7px;border-radius:2px;border:1px solid}
+.b-ch{color:var(--moss);border-color:#3d5636;background:#18201a}
+.b-warn{color:#ffb3ad;border-color:#5a2320;background:#241416}
+.b-save{color:var(--amber);border-color:#5c4520;background:#241d12}
+.b-unv{color:var(--dim);border-color:var(--steel);background:#141a22}
+
+/* checklist */
+.filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.filters button{background:var(--panel);border:1px solid var(--steel);color:var(--dim);
+  font-family:"IBM Plex Mono";font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  padding:6px 11px;border-radius:2px;cursor:pointer}
+.filters button[aria-pressed="true"]{color:var(--night);background:var(--amber);border-color:var(--amber)}
+.chal{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--steel);
+  background:var(--panel);border-radius:var(--r);padding:11px 14px;margin-bottom:8px}
+.chal .meta{flex:1;min-width:0}
+.chal h4{margin:0;font-size:15px}
+.chal .cond{color:var(--dim);font-size:13.5px;margin:2px 0 0}
+.chal.done h4{text-decoration:line-through;color:var(--dim)}
+.tag{font-family:"IBM Plex Mono";font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--dim);border:1px solid var(--steel);padding:2px 6px;border-radius:2px;white-space:nowrap}
+.chal .top{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.reset{background:none;border:1px solid var(--steel);color:var(--dim);font-family:"IBM Plex Mono";
+  font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:7px 12px;border-radius:2px;cursor:pointer}
+.reset:hover{color:var(--blood);border-color:var(--blood)}
+
+footer{border-top:1px solid var(--steel);margin-top:40px;padding-top:18px;color:var(--dim);font-size:13px}
+@media (max-width:600px){
+  .loadout div{border-right:none;border-bottom:1px solid var(--steel)}
+  .sbody{padding-left:24px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div class="eyebrow">Hitman: World of Assassination · HITMAN III mission 6 · Carpathian Mountains, Romania</div>
+  <h1>Untouchable</h1>
+  <p class="sub">Challenge names and categories in this build come from the mission's own challenge data (24 in-mission challenges), plus The Setup from the cross-mission Codename 47 tab — 25 total. Route steps are cross-checked against at least two independent walkthroughs; anything only one source claims, or that sources disagree on, is labelled.</p>
+
+  <div class="trainbar">
+    <div class="loco" id="loco"></div>
+    <div class="rail"></div>
+    <div class="readout">
+      <span><b id="pct">0%</b> of the train lit</span>
+      <span id="tally">0 / 25 challenges complete</span>
+    </div>
+  </div>
+
+  <div class="counters" id="counters"></div>
+</header>
+
+<nav class="tabs" role="tablist">
+  <button role="tab" aria-selected="true" data-tab="runs">Runs</button>
+  <button role="tab" aria-selected="false" data-tab="list">Checklist</button>
+  <button role="tab" aria-selected="false" data-tab="notes">Verification log</button>
+</nav>
+
+<!-- ===================== RUNS ===================== -->
+<section class="panel" id="tab-runs">
+
+<div class="jump">
+  <span class="jl">Jump to</span>
+  <button data-go="run1">Run 1 <span>SASO</span></button>
+  <button data-go="run2">Run 2 <span>14 challenges</span></button>
+  <button data-go="run3">Run 3 <span>Feats</span></button>
+  <button data-go="run4">Run 4 <span>The Setup</span></button>
+  <button class="util" id="expandAll">Expand all</button>
+  <button class="util" id="collapseAll">Collapse all</button>
+</div>
+
+<div class="notice">
+  <h3>Map rules that shape every run</h3>
+  <ul>
+    <li><b>No loadout at all.</b> Outside the ICA Facility training missions, this is the only mission in the trilogy with no smuggled items, no agency pickups, and nothing carried in. Every tool below is found on the train.</li>
+    <li><b>No Mission Stories exist here</b>, so there is no story ordering to protect and no "complete all stories" challenge.</li>
+    <li><b>No accident-kill challenge exists here.</b> Snow Angel (throwing a guard off the train) is a Feat, not an accident kill.</li>
+    <li><b>Three endings are mutually exclusive per attempt:</b> poison Edwards (Losing Everything), headshot Edwards (Straight Shot), or inject yourself (A New Father). Save outside his carriage and reload to bank all three.</li>
+    <li><b>Suit Only and all seven disguise challenges cannot share a run.</b> That is the Run 1 / Run 2 split.</li>
+    <li><b>If you shoot Edwards you must pull the Emergency Brake</b> in his office to end the mission. Injecting him ends it automatically. Missing this is the most common way people get stuck at the end.</li>
+    <li>Challenges only track <b>online</b>, and progress survives a reload — save-scumming the last carriage is intended play.</li>
+  </ul>
+</div>
+
+<!-- ============ RUN 1 ============ -->
+<article class="run closed" id="run1" data-run="1">
+  <button class="runhead">
+    <span class="chev">▾</span>
+    <span class="rh">
+      <span class="runno">Run 01</span>
+      <h2>Silent Assassin, Suit Only</h2>
+      <p class="goal">One no-kill, no-disguise pass from the rear of the train to Arthur Edwards, ending with the serum injection. Clears all three Classics plus the target and completion challenges.</p>
+      <div class="runcount">6 challenges · ~15 min</div>
+    </span>
+  </button>
+  <div class="runbody">
+  <div class="loadout">
+    <div><span class="k">Start</span><span class="v">Outdoors (Mastery 3)</span></div>
+    <div><span class="k">Suit</span><span class="v">Subject 47 — forced, do not change</span></div>
+    <div><span class="k">Item slots</span><span class="v">None — loadout disabled on this map</span></div>
+    <div><span class="k">Found en route</span><span class="v">Fuse ×2, Screwdriver, Hammer, Crowbar</span></div>
+  </div>
+
+  <div class="sect">Rear cars — roof running</div>
+
+  <div class="step closed" data-step="r1s1">
+    <div class="strip">
+      <button class="tick" aria-label="Mark complete">✓</button>
+      <button class="stoggle"><span class="snum">01</span><span class="stxt">
+        <h4>Skip the first guard group through the right-hand window</h4>
+        <p>Climb out before you reach them, cross the roof, and drop back onto the walkable roof line.</p>
+      </span></button>
+    </div>
+    <div class="sbody">
+      <ul>
+        <li><span class="tagk">Go</span>From the Outdoors spawn, enter the first occupied compartment and take the window on your <b>right</b> — before the guard group, not past it.</li>
+        <li><span class="tagk">Do</span>Climb to the roof, cross to the far side, hang down, shimmy left, pull up at the end. You can now walk the roof forward.</li>
+        <li><span class="tagk">Disguise</span>Subject 47 only. Do not touch a knocked-out guard's outfit or any suit rack for the whole run.</li>
+        <li><span class="tagk w">Watch out</span>If Outdoors isn't unlocked, start at Reflections and do the lab section first (Run 2, steps 1–3) — the routes merge here.</li>
+      </ul>
+      <div class="badges"><span class="badge b-save">Save before the first window</span></div>
+    </div>
+  </div>
+
+  <div class="step closed" data-step="r1s2">
+    <div class="strip">
+      <button class="tick" aria-label="Mark complete">✓</button>
+      <button class="stoggle"><span class="snum">02</span><span class="stxt">
+        <h4>Cross the bar car, then the sleeping guard's compartment</h4>
+        <p>Drop off the roof into a window, walk behind the two bar guards, and shimmy right into the room with the sleeping guard.</p>
+      </span></button>
+    </div>
+    <div class="sbody">
+      <ul>
+        <li><span class="tagk">Go</span>Ride the roof as far as it allows, drop down the <b>right</b> side, in through the window.</li>
+        <li><span class="tagk">NPC</span>Two guards stand in the bar compartment — walk behind their backs. Then out the windows on the right, shimmy as far right as the ledge goes, and in through the window where a guard sleeps in a chair. He does not wake unless you make noise.</li>
+        <li><span class="tagk">Do</span>Cross <b>immediately</b> to the window opposite that room and climb out. Tag it with Instinct first so the outline is already showing.</li>
+        <li><span class="tagk w">Watch out</span>The hallway guards spot you if you hesitate here. This is the tightest timing window in the run.</li>
+      </ul>
+      <div class="badges"><span class="badge b-save">Save before the hallway crossing</span></div>
+    </div>
+  </div>
+
+  <div class="step closed" data-step="r1s3">
+    <div class="strip">
+      <button class="tick" aria-label="Mark complete">✓</button>
+      <button class="stoggle"><span class="snum">03</span><span class="stxt">
+        <h4>Ladder chain to the container car, collect fuse and screwdriver</h4>
+        <p>Four climbs get you to the container; the fuse and screwdriver are lying at the far end of it.</p>
+      </span></button>
+    </div>
+    <div class="sbody">
+      <ul>
+        <li><span class="tagk">Go</span>Shimmy left → drop at the roof's end → ladder up to the next roof → hang down the left side → shimmy left → pull up → walk to the end and drop.</li>
+        <li><span class="tagk">Item</span>Walk through the container and pick up the <b>Fuse</b> and <b>Screwdriver</b> at the far end. Both are needed later — the fuse in step 4, the screwdriver in step 7.</li>
+        <li><span class="tagk">NPC</span>One lone guard here. Subdue him non-lethally, unseen, and put the body where nobody patrols.</li>
+        <li><span class="tagk w">Watch out</span>Subduing is fine for Silent Assassin; a <b>found body</b> is not. Rusty items break after one use.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sect">Fuse boxes — blinding the commandos</div>
+
+  <div class="step closed" data-step="r1s4">
+    <div class="strip">
+      <button class="tick" aria-label="Mark complete">✓</button>
+      <button class="stoggle"><span class="snum">04</span><span class="stxt">
+        <h4>First fuse: black out the open wagon and sprint through</h4>
+        <p>Five guards hold this wagon. The fuse blinds all of them at once — you get one window.</p>
+      </span></button>
+    </div>
+    <div class="sbody">
+      <ul>
+        <li><span class="tagk">Item</span>Insert the <b>Fuse</b> from step 3 into the fusebox at the head of the wagon.</li>
+        <li><span class="tagk">Do</span>Run the length of the wagon without stopping to loot, and <b>close the door behind you</b> so the blackout doesn't wear off with guards facing your exit.</li>
+        <li><span class="tagk">NPC</span>In the next room two men stand with their backs to you. One salutes and leaves — wait for that, then choke out the one who stays and put him in the box on the left.</li>
+        <li><span class="tagk w">Watch out</span>The remaining guard must be silenced here or he detects you in the next carriage.</li>
+      </ul>
+      <div class="badges"><span class="badge b-save">Save before inserting the fuse</span><span class="badge b-warn">One blackout window, no retry without reloading</span></div>
+    </div>
+  </div>
+
+  <div class="step closed" data-step="r1s5">
+    <div class="strip">
+      <button class="tick" aria-label="Mark complete">✓</button>
+      <button class="stoggle"><span class="snum">05</span><span class="stxt">
+        <h4>Second fuse: loot the armoury car and repeat the blackout</h4>
+        <p>Crowbar, hammer and screwdriver are in this car, and a second fuse is behind the right-hand wall panel.</p>
+      </span></button>
+    </div>
+    <div class="sbody">
+      <ul>
+        <li><span class="tagk">Item</span>Pick up the <b>Rusty Crowbar</b>, <b>Hammer</b> and <b>Screwdriver</b>. Open the panel on the right-hand wall to pull out a second <b>Fuse</b>.</li>
+        <li><span class="tagk">Do</span>Use that fuse on the next fusebox <b>only while the guards are facing away</b>, then run the length of the car.</li>
+        <li><span class="tagk w">Watch out</span>Keep the hammer. It is your only knockout tool for the three civilians in step 8 — leaving it behind forces a restart of that section.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sect">Office cars — a patrol, a leak, three civilians</div>
+
+  <div class="step closed" data-step="r1s6">
+    <div class="strip">
+      <button class="tick" aria-label="Mark complete">✓</button>
+      <button class="stoggle"><span class="snum">06</span><span class="stxt">
+        <h4>Wait out the corridor patrol in an empty compartment</h4>
+        <p>One guard walks this corridor. Duck into an unoccupied room on the left, shut the door, step out behind him.</p>
+      </span></button>
+    </div>
+    <div class="sbody">
+      <ul>
+        <li><span class="tagk">NPC</span>A single patrolling guard. Wait until he reaches the far end with his back turned before you move.</li>
+        <li><span class="tagk">Do</span>Enter an empty compartment on the left, lock the door behind you, wait for him to pass back, then exit behind him.</li>
+        <li><span class="tagk w">Watch out</span>The <b>Office Staff outfit hangs on a rack in this corridor.</b> It is mandatory for Chameleon in Run 2 and it voids Suit Only here. Walk past it.</li>
+      </ul>
+      <div class="badges"><span class="badge b-warn">Do not touch the suit rack in this run</span></div>
+    </div>
+  </div>
+
+  <div class="step closed" data-step="r1s7">
+    <div class="strip">
+      <button class="tick" aria-label="Mark complete">✓</button>
+      <button class="stoggle"><span class="snum">07</span><span class="stxt">
+        <h4>Puncture the water tank to pull the next guard away</h4>
+        <p>The leak draws him off his post; walk behind him without touching him.</p>
+      </span></button>
+    </div>
+    <div class="sbody">
+      <ul>
+        <li><span class="tagk">Item</span>Use the <b>Screwdriver</b> on the water tank on the <b>right-hand side</b> of the car.</li>
+        <li><span class="tagk">NPC</span>The guard walks over to investigate. Hold until he commits, then move behind his back into the next compartment.</li>
+        <li><span class="tagk">Do</span>Do <b>not</b> subdue him — an extra body is one more thing that can be discovered, and you gain nothing.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="step closed" data-step="r1s8">
+    <div class="strip">
+      <button class="tick" aria-label="Mark complete">✓</button>
+      <button class="stoggle"><span class="snum">08</span><span class="stxt">
+        <h4>Knock out three office civilians with one hammer</h4>
+        <p>Two thrown headshots, then bait the third into a corner and choke her. Then pull the lever to detach the rear cars.</p>
+      </span></button>
+    </div>
+    <div class="sbody">
+      <ul>
+        <li><span class="tagk">NPC</span>Three civilian employees. (1) Throw the <b>Hammer</b> at the first woman's head. (2) Retrieve it, throw it at the man sitting with his back to you. (3) Throw it into the corner behind the third; subdue her by hand when she investigates.</li>
+        <li><span class="tagk">Do</span>A thrown hammer knocks out rather than kills, so Silent Assassin holds. Then pull the <b>lever outside</b> to disconnect the remaining train cars.</li>
+        <li><span class="tagk w">Watch out</span>Detaching the cars removes the risk of bodies being found behind you — do it before you walk into Edwards.</li>
+      </ul>
+      <div class="badges"><span class="badge b-save">Save before Edwards' carriage — this is the reload point for Runs 2 and 3 endings</span></div>
+    </div>
+  </div>
+
+  <div class="sect">The Constant</div>
+
+  <div class="step closed" data-step="r1s9">
+    <div class="strip">
+      <button class="tick" aria-label="Mark complete">✓</button>
+      <button class="stoggle"><span class="snum">09</span><span class="stxt">
+        <h4>Inject Edwards with his own serum from behind</h4>
+        <p>Take the syringe from the briefcase on his desk and use it on him. The injection also ends the mission — no brake needed.</p>
+      </span></button>
+    </div>
+    <div class="sbody">
+      <ul>
+        <li><span class="tagk">NPC</span><b>Arthur Edwards (The Constant)</b>, final carriage. A forced cutscene has him notice you — this does <b>not</b> break Silent Assassin. He then stands still and waits; he has no Target Lockdown and no other NPCs remain on the map.</li>
+        <li><span class="tagk">Item</span>The <b>serum syringe</b> sits in a briefcase on the desk in his office.</li>
+        <li><span class="tagk">Do</span>Approach from behind while his back is turned and inject him. He loses his memory, the challenge scores, and the mission exits automatically.</li>
+        <li><span class="tagk w">Watch out</span>A non-lethal <i>shot</i> would knock him out instead, and with nobody left alive he cannot be revived. Use the syringe, not a gun, in this run.</li>
+      </ul>
+      <div class="badges">
+        <span class="badge b-ch">Losing Everything</span>
+        <span class="badge b-ch">Eliminate The Constant</span>
+        <span class="badge b-ch">Silent Assassin</span>
+        <span class="badge b-ch">Suit Only</span>
+        <span class="badge b-ch">Silent Assassin, Suit Only</span>
+        <span class="badge b-ch">Untouchable</span>
+      </div>
+    </div>
+  </div>
+  </div>
+</article>
+
+<!-- ============ RUN 2 ============ -->
+<article class="run closed" id="run2" data-run="2">
+  <button class="runhead">
+    <span class="chev">▾</span>
+    <span class="rh">
+      <span class="runno">Run 02</span>
+      <h2>All seven disguises, both shortcuts, every hidden item</h2>
+      <p class="goal">Start at the very back of the train so nothing is skipped, then work forward taking each disguise and pickup in the order you physically meet it. Ends with a headshot and the Emergency Brake.</p>
+      <div class="runcount">14 challenges · ~40 min</div>
+    </span>
+  </button>
+  <div class="runbody">
+  <div class="loadout">
+    <div><span class="k">Start</span><span class="v">Reflections (default, Mastery 1)</span></div>
+    <div><span class="k">Suit</span><span class="v">Subject 47 — you will change out of it</span></div>
+    <div><span class="k">Item slots</span><span class="v">None — loadout disabled on this map</span></div>
+    <div><span class="k">Found en route</span><span class="v">Keycard, Crowbar ×2, Pistol, Valve ×2, Fuse, Rusty Nail</span></div>
+  </div>
+
+  <div class="sect">Laboratory — keycard, code, crowbar</div>
+
+  <div class="step closed" data-step="r2s1">
+    <div class="strip">
+      <button class="tick" aria-label="Mark complete">✓</button>
+      <button class="stoggle"><span class="snum">01</span><span class="stxt">
+        <h4>Subdue the worker at the desk and take his keycard and coat</h4>
+        <p>First NPC after you wake. He carries the Blue Laboratory Keycard and wears the disguise for 47, Ph.D.</p>
+      </span></button>
+    </div>
+    <div class="sbody">
+      <ul>
+        <li><span class="tagk">Go</span>Get off the lab table and through the glass door.</li>
+        <li><span class="tagk">NPC</span>A worker in a <b>white apron</b> standing at the desk. Attack from behind and overpower him.</li>
+        <li><span class="tagk">Item</span>Take the <b>Blue Laboratory Keycard</b> from him, and change into his outfit for the challenge. Hide the body in the closet.</li>
+        <li><span class="tagk w">Watch out</span>Two more employees are further down the corridor — avoid them rather than fighting, and don't bother taking a second coat.</li>
+      </ul>
+      <div class="badges"><span class="badge b-ch">47, Ph.D.</span><span class="badge b-unv">In-game text says "Scientist"; guides call the outfit "Providence Doctor" — same pickup</span></div>
+    </div>
+  </div>
+
+  <div class="step closed" data-step="r2s2">
+    <div class="strip">
+      <button class="tick" aria-label="Mark complete">✓</button>
+      <button class="stoggle"><span class="snum">02</span><span class="stxt">
+        <h4>Open the cold storage door with code 1979 and take the crowbar</h4>
+        <p>The code is printed on the poster immediately left of the keypad. Behind the door is the rusty crowbar that gets you out of the lab.</p>
+      </span></button>
+    </div>
+    <div class="sbody">
+      <ul>
+        <li><span class="tagk">Go</span>Past the two employees into the next room; the cold storage door with the keypad is there.</li>
+        <li><span class="tagk">Do</span>Enter <b>1-9-7-9</b>. The same number is on the poster to the left of the door.</li>
+        <li><span class="tagk">Item</span>Pick up the <b>Rusty Crowbar</b> inside the cooler, return to the previous room, and use it on the large metal door — which opens onto the outside of a moving train.</li>
+        <li><span class="tagk w">Watch out</span>This challenge is <b>unreachable from the Outdoors start</b>; the keypad is behind you. Rusty items break after a single use.</li>
+      </ul>
+      <div class="badges"><span class="badge b-ch">Button Masher</span><span class="badge b-warn">Requires the Reflections or Laboratory start</span><span class="badge b-save">Save on exiting the lab</span></div>
+    </div>
+  </div>
+
+  <div class="sect">First cars — security guard, roof hatch, workbench</div>
+
+  <div class="step closed" data-step="r2s3">
+    <div class="strip">
+      <button class="tick" aria-label="Mark complete">✓</button>
+      <button class="stoggle"><span class="snum">03</span><span class="stxt">
+        <h4>Take the lone roof guard's uniform and his pistol</h4>
+        <p>Ledge to roof, drop behind him, subdue. The pistol you take here is what you'll silence at the workbench later.</p>
+      </span></button>
+    </div>
+    <div class="sbody">
+      <ul>
+        <li><span class="tagk">Go</span>Hold the wall of the car and move to the next one; where the surface turns icy, climb to the roof.</li>
+        <li><span class="tagk">NPC</span>One guard a little further ahead. Jump off the roof, approach from behind, overpower him, take the uniform, hide the body in the container.</li>
+        <li><span class="tagk">Item</span><b>Take his pistol.</b> The Gun Muffler in step 6 needs a plain pistol and there is no bench-supplied one.</li>
+        <li><span class="tagk w">Watch out</span>Security Guard = black clothes with a <b>baseball cap</b>. Elite Guard = same black clothes with a <b>helmet</b>. Don't confuse the two challenges.</li>
+      </ul>
+      <div class="badges"><span class="badge b-ch">Mall Cop</span></div>
+    </div>
+  </div>
+
+  <div class="step closed" data-step="r2s4">
+    <div class="strip">
+      <button class="tick" aria-label="Mark complete">✓</button>
+      <button class="stoggle"><span class="snum">04</span><span class="stxt">
+        <h4>Fit the first valve to open the roof hatch</h4>
+        <p>The valve lies on the ground at the far end of this car; the fitting point is back at the start of it.</p>
+      </span></button>
+    </div>
+    <div class="sbody">
+      <ul>
+        <li><span class="tagk">Go</span>Enter the next train car and walk to the far end.</li>
+        <li><span class="tagk">Item</span>Pick the <b>valve</b> up off the ground, carry it back to the beginning of the wagon, install it and turn it. The roof hatch opens.</li>
+        <li><span class="tagk">Do</span>Go out through the hatch and move forward keeping to the <b>right</b>.</li>
+        <li><span class="tagk w">Watch out</span>This is <b>not</b> the container-door valve — that is a separate valve much further forward (step 9). Two different valve puzzles on this train.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="step closed" data-step="r2s5">
+    <div class="strip">
+      <button class="tick" aria-label="Mark complete">✓</button>
+      <button class="stoggle"><span class="snum">05</span><span class="stxt">
+        <h4>Slip past the sleeping guard and the corridor patrol</h4>
+        <p>Two quiet cars: one sleeper who ignores you, one patroller you wait out in a side compartment.</p>
+      </span></button>
+    </div>
+    <div class="sbody">
+      <ul>
+        <li><span class="tagk">NPC</span>A <b>sleeping guard</b> in the first car — he ignores you entirely unless you make noise. Walk straight through.</li>
+        <li><span class="tagk">NPC</span>The next car's corridor has <b>one patrolling guard</b>. When his back turns, enter the nearest open compartment on the left and lock the door.</li>
+        <li><span class="tagk">Do</span>Let him pass, step out behind him, reach the hallway with the door on the left, cross the open wagon with the tree in it, and enter the next wagon.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="step closed" data-step="r2s6">
+    <div class="strip">
+      <button class="tick" aria-label="Mark complete">✓</button>
+      <button class="stoggle"><span class="snum">06</span><span class="stxt">
+        <h4>Craft the silencer at the workbench</h4>
+        <p>Interact with the bench holding the pistol from step 3. It becomes a silenced pistol.</p>
+      </span></button>
+    </div>
+    <div class="sbody">
+      <ul>
+        <li><span class="tagk">Go</span>The workbench is in the wagon just past the open car with the tree, roughly halfway along the train.</li>
+        <li><span class="tagk">Item</span>You must be carrying a <b>plain pistol</b>. Interact with the bench to convert it.</li>
+        <li><span class="tagk">Do</span>Keep the silenced pistol — it also counts toward the Bullet Train achievement (a kill each with silenced pistol, shotgun and SMG).</li>
+        <li><span class="tagk w">Watch out</span>Treat the bench as your landmark: the <b>Passenger Car Door shortcut is in the very next room.</b></li>
+      </ul>
+      <div class="badges"><span class="badge b-ch">The Gun Muffler</span></div>
+    </div>
+  </div>
+
+  <div class="sect">Shortcut one — the sealed weapons room</div>
+
+  <div class="step closed" data-step="r2s7">
+    <div class="strip">
+      <button class="tick" aria-label="Mark complete">✓</button>
+      <button class="stoggle"><span class="snum">07</span><span class="stxt">
+        <h4>Loop over the roof to open the Passenger Car Door from inside</h4>
+        <p>The door only opens from behind. Go one car forward, out the binocular guard's window, up and backward along the roof, then down through a gap in the ice.</p>
+      </span></button>
+    </div>
+    <div class="sbody">
+      <ul>
+        <li><span class="tagk">Go</span>From the shortcut door, continue into the next car and climb out the <b>first window on the left</b> — the one an agent periodically raises binoculars at.</li>
+        <li><span class="tagk">Do</span>Climb to the top of the train and move <b>backward</b> until you see a break in the ice on the right. Drop down there, climb in through the window, and pull the shortcut lever.</li>
+        <li><span class="tagk">Item</span>The room holds a <b>shotgun</b> and an <b>SMG</b>. Pick up both — one challenge each. Unlocking the door makes them available from the start in every future run.</li>
+        <li><span class="tagk w">Watch out</span>Time the window exit while the binocular agent is looking away.</li>
+      </ul>
+      <div class="badges">
+        <span class="badge b-ch">Shortcut: Passenger Car Door</span>
+        <span class="badge b-ch">Got My Boomstick</span>
+        <span class="badge b-ch">Spray and Slay</span>
+        <span class="badge b-save">Save with both weapons in hand</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="step closed" data-step="r2s8">
+    <div class="strip">
+      <button class="tick" aria-label="Mark complete">✓</button>
+      <button class="stoggle"><span class="snum">08</span><span class="stxt">
+        <h4>Take the helmeted uniform and a frag grenade in the mid-train weapon cars</h4>
+        <p>The Elite Guard outfit hangs in a compartment with a sleeping guard; the grenades sit on open tables a little earlier.</p>
+      </span></button>
+    </div>
+    <div class="sbody">
+      <ul>
+        <li><span class="tagk">Item</span>In the mid-train room patrolled by <b>two Elite Guards</b>, shotguns, SMGs and <b>frag grenades</b> sit on the tables in plain sight. Take a grenade — you only see them if you walk the compartments rather than climbing over them.</li>
+        <li><span class="tagk">Go</span>Continue through the pool car and the bar car, using the right-hand windows to bypass groups, to a compartment containing one <b>sleeping guard</b>.</li>
+        <li><span class="tagk">Item</span>The <b>Elite Guard outfit hangs in that compartment</b> — change there. Alternative: subdue any helmeted guard directly.</li>
+        <li><span class="tagk w">Watch out</span>More frag grenades appear later inside the container (step 9), so a missed pickup here is recoverable.</li>
+      </ul>
+      <div class="badges"><span class="badge b-ch">Forbidden Pineapple</span><span class="badge b-ch">You've Got Some Skills</span><span class="badge b-unv">One source names this hanging outfit "Providence Guard"; challenge text says Elite Guard</span></div>
+    </div>
+  </div>
+
+  <div class="sect">Shortcut two — the container</div>
+
+  <div class="step closed" data-step="r2s9">
+    <div class="strip">
+      <button class="tick" aria-label="Mark complete">✓</button>
+      <button class="stoggle"><span class="snum">09</span><span class="stxt">
+        <h4>Fetch the second valve and crack the container door</h4>
+        <p>Climb over the shortcut door, get into the next car for the valve, carry it back and turn it.</p>
+      </span></button>
+    </div>
+    <div class="sbody">
+      <ul>
+        <li><span class="tagk">Go</span>Past the armoury car, head outside — the container shortcut door faces you. Climb over the top of it and past the Providence agent.</li>
+        <li><span class="tagk">Item</span>The next door is locked. Open it with a <b>Rusty Nail</b> or <b>Rusty Crowbar</b> if you have one; otherwise take the <b>ladder on the left</b> and drop down on the far side, where that door is already unlocked.</li>
+        <li><span class="tagk">Do</span>The <b>valve</b> sits on a crate/barrel near the locked door. Carry it back to the container, place it beside the door and turn it. Inside: frag grenades, ammo, and the shortcut lever.</li>
+        <li><span class="tagk w">Watch out</span>The ladder route means you never need a rusty item here — don't burn your crowbar on this if you'd rather save it.</li>
+      </ul>
+      <div class="badges"><span class="badge b-ch">Shortcut: Container Door</span></div>
+    </div>
+  </div>
+
+  <div class="sect">Commando cars — camo, then the leader</div>
+
+  <div class="step closed" data-step="r2s10">
+    <div class="strip">
+      <button class="tick" aria-label="Mark complete">✓</button>
+      <button class="stoggle"><span class="snum">10</span><span class="stxt">
+        <h4>Blind the five-guard wagon with a fuse and take the last man's camo</h4>
+        <p>Pick up the fuse off the floor a car earlier, black out the open wagon, then silence the guard at the far end.</p>
+      </span></button>
+    </div>
+    <div class="sbody">
+      <ul>
+        <li><span class="tagk">Item</span>A car before the open wagon there is a lone guard you can bypass or overpower — take the <b>Fuse from the floor</b> there, then climb the ladder to the next car's roof.</li>
+        <li><span class="tagk">Do</span>The next open wagon has <b>five guards</b>. Install the fuse to trigger the blinding flash, then run through without pausing.</li>
+        <li><span class="tagk">NPC</span>Overpower the <b>last guard</b> at the far end and hide the body in the container. Wear his white-and-black camo for the challenge.</li>
+        <li><span class="tagk w">Watch out</span>He <b>must</b> be silenced, or he detects your activity in the next carriage and the salute script in step 11 falls apart.</li>
+      </ul>
+      <div class="badges"><span class="badge b-ch">Heavy Duty</span><span class="badge b-save">Save before installing the fuse</span><span class="badge b-warn">Take the rank-and-file camo before disturbing the leader's car</span></div>
+    </div>
+  </div>
+
+  <div class="step closed" data-step="r2s11">
+    <div class="strip">
+      <button class="tick" aria-label="Mark complete">✓</button>
+      <button class="stoggle"><span class="snum">11</span><span class="stxt">
+        <h4>Wait for the salute, then take the Commando Leader's uniform</h4>
+        <p>Two men in the room; one walks off. Take the one standing by the crate from behind.</p>
+      </span></button>
+    </div>
+    <div class="sbody">
+      <ul>
+        <li><span class="tagk">Go</span>Enter and hide immediately inside the room past the commando group.</li>
+        <li><span class="tagk">NPC</span>Wait for one guard to walk to the <b>other end</b> of the car. Then attack the man standing <b>by the crate</b> from behind, overpower him, take his outfit, and hide the body in the chest on the left.</li>
+        <li><span class="tagk">Do</span>In the Commando Leader disguise the remaining soldiers salute you instead of questioning you — walk the next cars openly.</li>
+      </ul>
+      <div class="badges"><span class="badge b-ch">I'm the Conductor Now</span><span class="badge b-save">Save before the salute window</span></div>
+    </div>
+  </div>
+
+  <div class="sect">Office cars — the last two disguises</div>
+
+  <div class="step closed" data-step="r2s12">
+    <div class="strip">
+      <button class="tick" aria-label="Mark complete">✓</button>
+      <button class="stoggle"><span class="snum">12</span><span class="stxt">
+        <h4>Take the outfit off the office hanger, then a capless security guard</h4>
+        <p>The suit rack is in the corridor just before the first office car. The seventh disguise walks around inside them.</p>
+      </span></button>
+    </div>
+    <div class="sbody">
+      <ul>
+        <li><span class="tagk">Item</span><b>Office Staff</b> hangs on a rack on the hanger as you enter the office compartment — it is a rack pickup, not an NPC. Change into it so guards and employees don't question you through the next several carriages.</li>
+        <li><span class="tagk">NPC</span><b>Providence Security Guard #2</b> patrols the office cars: black suit, <b>no baseball cap</b>. That's the tell versus the Security Guard from step 3.</li>
+        <li><span class="tagk">Do</span>Chameleon pops on the seventh: Scientist/Providence Doctor · Security Guard · Elite Guard · Commando Guard · Commando Leader · Office Staff · Providence Security Guard #2.</li>
+        <li><span class="tagk w">Watch out</span>If Chameleon hasn't fired, the suit rack is almost always what was skipped — players routinely assume all seven come from NPCs.</li>
+      </ul>
+      <div class="badges"><span class="badge b-ch">Chameleon</span></div>
+    </div>
+  </div>
+
+  <div class="step closed" data-step="r2s13">
+    <div class="strip">
+      <button class="tick" aria-label="Mark complete">✓</button>
+      <button class="stoggle"><span class="snum">13</span><span class="stxt">
+        <h4>Detach the cars, headshot Edwards, pull the Emergency Brake</h4>
+        <p>The brake is the part people miss — a headshot alone leaves the mission unfinished.</p>
+      </span></button>
+    </div>
+    <div class="sbody">
+      <ul>
+        <li><span class="tagk">Do</span>Outside, pull the <b>lever</b> to disconnect the remaining train cars, then walk through to Edwards' office.</li>
+        <li><span class="tagk">NPC</span><b>Arthur Edwards</b> stands still once threatened — no lockdown, no escort, nobody else alive on the map. Shoot him in the <b>head</b> with any lethal weapon.</li>
+        <li><span class="tagk">Do</span>Then activate the <b>Emergency Brake in his office</b> to stop the train and exit. This is the mission's exit point for any ending that isn't the syringe.</li>
+        <li><span class="tagk w">Watch out</span>Straight Shot cannot share an attempt with Losing Everything or A New Father. Reload the save from Run 1 step 8 to take the other endings.</li>
+      </ul>
+      <div class="badges"><span class="badge b-ch">Straight Shot</span><span class="badge b-ch">Eliminate The Constant</span><span class="badge b-warn">Missable — pull the Emergency Brake or the mission never ends</span></div>
+    </div>
+  </div>
+  </div>
+</article>
+
+<!-- ============ RUN 3 ============ -->
+<article class="run closed" id="run3" data-run="3">
+  <button class="runhead">
+    <span class="chev">▾</span>
+    <span class="rh">
+      <span class="runno">Run 03</span>
+      <h2>Stunt feats and the secret ending</h2>
+      <p class="goal">A loud, disposable run for the three outdoor feats, finished by injecting yourself instead of Edwards. Grab a firearm early — two of the three feats need one.</p>
+      <div class="runcount">4 challenges · ~20 min</div>
+    </span>
+  </button>
+  <div class="runbody">
+  <div class="loadout">
+    <div><span class="k">Start</span><span class="v">Outdoors (Mastery 3)</span></div>
+    <div><span class="k">Suit</span><span class="v">Subject 47 — disguises don't matter here</span></div>
+    <div><span class="k">Item slots</span><span class="v">None — loadout disabled on this map</span></div>
+    <div><span class="k">Found en route</span><span class="v">Pistol, Soda Can ×3</span></div>
+  </div>
+
+  <div class="step closed" data-step="r3s1">
+    <div class="strip">
+      <button class="tick" aria-label="Mark complete">✓</button>
+      <button class="stoggle"><span class="snum">01</span><span class="stxt">
+        <h4>Take a pistol off the first guard you meet</h4>
+        <p>Exhibition Shooting needs a firearm and there's no loadout, so this comes first.</p>
+      </span></button>
+    </div>
+    <div class="sbody">
+      <ul>
+        <li><span class="tagk">NPC</span>The lone guard on the early roof section (the same one as Run 2 step 3) drops a pistol when subdued.</li>
+        <li><span class="tagk">Item</span>Any firearm works for the signal shot. If you've unlocked the Passenger Car Door shortcut in Run 2, the shotgun and SMG are also available from the start.</li>
+        <li><span class="tagk w">Watch out</span>Don't skip this — reaching the outdoor sections unarmed means backtracking, and the train is one-directional.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="step closed" data-step="r3s2">
+    <div class="strip">
+      <button class="tick" aria-label="Mark complete">✓</button>
+      <button class="stoggle"><span class="snum">02</span><span class="stxt">
+        <h4>Shoot a trackside signal from an open-air section</h4>
+        <p>The lit signal gantries pass overhead roughly every ten seconds. Aim up and lead one.</p>
+      </span></button>
+    </div>
+    <div class="sbody">
+      <ul>
+        <li><span class="tagk">Go</span>Any outdoor section of the train — roof or open wagon.</li>
+        <li><span class="tagk">Do</span>Aim <b>upward</b> and watch for the signs with lights mounted above the track. Fire as one approaches; they recur about every ten seconds so a miss costs nothing.</li>
+        <li><span class="tagk w">Watch out</span>The shot alerts nearby guards. Do this in a stretch with nobody around, or accept the fight — this run has no stealth requirement.</li>
+      </ul>
+      <div class="badges"><span class="badge b-ch">Exhibition Shooting</span></div>
+    </div>
+  </div>
+
+  <div class="step closed" data-step="r3s3">
+    <div class="strip">
+      <button class="tick" aria-label="Mark complete">✓</button>
+      <button class="stoggle"><span class="snum">03</span><span class="stxt">
+        <h4>Throw a guard out of the dining car window</h4>
+        <p>Exit the window, wait underneath on the far side, and grab him when he comes to it.</p>
+      </span></button>
+    </div>
+    <div class="sbody">
+      <ul>
+        <li><span class="tagk">Go</span>The <b>dining car</b>, just past the workbench. Once the guard isn't looking your way, climb out the window on the <b>left</b>, then move under the window to the other side and wait.</li>
+        <li><span class="tagk">NPC</span>When that guard approaches the window again, <b>grab him and throw him outside</b>. The other guards don't react.</li>
+        <li><span class="tagk">Do</span>Repeatable in the <b>pool car</b> too — look out the right-hand window, move to the end of the car and pull another guard through.</li>
+        <li><span class="tagk w">Watch out</span>Alternative method: in the forward outdoor sections, push a Commando Guard standing at a railing — but you must approach from <b>directly behind</b> or the shove only staggers him.</li>
+      </ul>
+      <div class="badges"><span class="badge b-ch">Snow Angel</span><span class="badge b-save">Save before each attempt</span></div>
+    </div>
+  </div>
+
+  <div class="step closed" data-step="r3s4">
+    <div class="strip">
+      <button class="tick" aria-label="Mark complete">✓</button>
+      <button class="stoggle"><span class="snum">04</span><span class="stxt">
+        <h4>Collect three soda cans and knock out three guards with them</h4>
+        <p>Cans are scattered the length of the train. Three separate guards, spread over the whole mission.</p>
+      </span></button>
+    </div>
+    <div class="sbody">
+      <ul>
+        <li><span class="tagk">Item</span><b>Soda cans</b> are scattered throughout — two documented spots are on the seats after the early ladder/roof section, and in the middle room of the car before the workshop.</li>
+        <li><span class="tagk">Do</span>Throw one at each of <b>three different guards</b> to knock them out. It does not have to happen in one room or one car.</li>
+        <li><span class="tagk w">Watch out</span>There are more than three cans, and a missed throw can be picked back up — but a can thrown at a guard already knocked out won't count toward the tally.</li>
+      </ul>
+      <div class="badges"><span class="badge b-ch">Soda Slinger</span></div>
+    </div>
+  </div>
+
+  <div class="step closed" data-step="r3s5">
+    <div class="strip">
+      <button class="tick" aria-label="Mark complete">✓</button>
+      <button class="stoggle"><span class="snum">05</span><span class="stxt">
+        <h4>Hold the syringe for 47 seconds, then inject yourself</h4>
+        <p>Pick the serum up and do nothing. Edwards eventually speaks and the self-injection prompt appears.</p>
+      </span></button>
+    </div>
+    <div class="sbody">
+      <ul>
+        <li><span class="tagk">Item</span>The <b>mind-erasure serum syringe</b>, in the briefcase on the desk in Edwards' office. Pick it up and <b>keep it in hand</b>.</li>
+        <li><span class="tagk">Do</span>Wait while Edwards awaits his fate. Sources say 47 seconds; one says a full minute — wait the minute. He then urges 47 to take it himself and the prompt appears. Use it.</li>
+        <li><span class="tagk">NPC</span>47 becomes disoriented and wakes in a sanatorium room — one of three possible endings to the mission and the trilogy. Also unlocks the Count Down From 47 achievement.</li>
+        <li><span class="tagk w">Watch out</span>This works even if you already killed Edwards in the same attempt; his voice still plays over the intercom. It cannot share an attempt with Losing Everything scoring.</li>
+      </ul>
+      <div class="badges"><span class="badge b-ch">A New Father</span><span class="badge b-warn">Excludes Losing Everything and Straight Shot in the same attempt</span></div>
+    </div>
+  </div>
+  </div>
+</article>
+
+<!-- ============ RUN 4 ============ -->
+<article class="run closed" id="run4" data-run="4">
+  <button class="runhead">
+    <span class="chev">▾</span>
+    <span class="rh">
+      <span class="runno">Run 04</span>
+      <h2>The Setup — eliminate all 47 guards</h2>
+      <p class="goal">The cross-mission Codename 47 challenge. Fight the length of the train leaving nobody alive, then end it by injecting yourself. Do this last, after both shortcuts are unlocked.</p>
+      <div class="runcount">1 challenge · ~60 min</div>
+    </span>
+  </button>
+  <div class="runbody">
+  <div class="loadout">
+    <div><span class="k">Start</span><span class="v">Reflections — so no rear guard is skipped</span></div>
+    <div><span class="k">Suit</span><span class="v">Subject 47 — irrelevant here</span></div>
+    <div><span class="k">Item slots</span><span class="v">None — loadout disabled on this map</span></div>
+    <div><span class="k">Found en route</span><span class="v">Shortcut shotgun + SMG, frag grenades, commando weapons</span></div>
+  </div>
+
+  <div class="step closed" data-step="r4s1">
+    <div class="strip">
+      <button class="tick" aria-label="Mark complete">✓</button>
+      <button class="stoggle"><span class="snum">01</span><span class="stxt">
+        <h4>Finish Run 2 first so both weapon caches are already open</h4>
+        <p>With the shortcuts unlocked, the shotgun and SMG are reachable without the roof detour.</p>
+      </span></button>
+    </div>
+    <div class="sbody">
+      <ul>
+        <li><span class="tagk">Do</span>Confirm <b>Shortcut: Passenger Car Door</b> and <b>Shortcut: Container Door</b> show as unlocked before starting. That converts two awkward climbs into open doors, which matters a lot in a firefight.</li>
+        <li><span class="tagk w">Watch out</span>Check the <b>Codename 47 tab</b> in your own challenge menu for the live prerequisite. The wiki lists it as completing an earlier objective in that chain, but names it "Explosions Runs Loose" while the Codename 47 mission it refers to is "Plutonium Runs Loose" — no second source resolves which string the game uses.</li>
+      </ul>
+      <div class="badges"><span class="badge b-unv">Prerequisite challenge name unverified</span></div>
+    </div>
+  </div>
+
+  <div class="step closed" data-step="r4s2">
+    <div class="strip">
+      <button class="tick" aria-label="Mark complete">✓</button>
+      <button class="stoggle"><span class="snum">02</span><span class="stxt">
+        <h4>Clear car by car, sweeping with Instinct before you advance</h4>
+        <p>47 guards across the whole train. A single survivor behind you is the usual reason this doesn't complete.</p>
+      </span></button>
+    </div>
+    <div class="sbody">
+      <ul>
+        <li><span class="tagk">Do</span>Kill everything in a car, then use <b>Instinct</b> to check for remaining signs of life <b>before</b> moving forward. The train is one-directional — going back is slow or impossible.</li>
+        <li><span class="tagk">NPC</span><b>47 guards.</b> Civilians in the office cars are not guards and do not count toward the total.</li>
+        <li><span class="tagk w">Watch out</span>One manual save per cleared car. Reloading does not undo challenge progress, so a bad fight costs a car, not the run.</li>
+      </ul>
+      <div class="badges"><span class="badge b-save">Save after every cleared car</span></div>
+    </div>
+  </div>
+
+  <div class="step closed" data-step="r4s3">
+    <div class="strip">
+      <button class="tick" aria-label="Mark complete">✓</button>
+      <button class="stoggle"><span class="snum">03</span><span class="stxt">
+        <h4>End the mission by injecting yourself, not by killing Edwards</h4>
+        <p>Same 47-second wait as Run 3. Both objectives must land in the same attempt.</p>
+      </span></button>
+    </div>
+    <div class="sbody">
+      <ul>
+        <li><span class="tagk">Item</span>Pick up the <b>serum syringe</b> from the briefcase in Edwards' office, hold it, wait for the prompt, inject yourself.</li>
+        <li><span class="tagk">Do</span>"Eliminate all guards" and "end it all by taking a trip down memory lane" must both be satisfied in one attempt. Killing Edwards completes the mission but not the challenge.</li>
+        <li><span class="tagk w">Watch out</span>+4,000 XP, and it counts toward The Codename 47 Suit unlock.</li>
+      </ul>
+      <div class="badges"><span class="badge b-ch">The Setup</span><span class="badge b-warn">Must end via self-injection</span></div>
+    </div>
+  </div>
+  </div>
+</article>
+</section>
+
+<!-- ===================== CHECKLIST ===================== -->
+<section class="panel" id="tab-list" hidden>
+  <div class="filters" id="filters">
+    <button data-f="all" aria-pressed="true">All</button>
+    <button data-f="Assassination" aria-pressed="false">Assassination</button>
+    <button data-f="Discovery" aria-pressed="false">Discovery</button>
+    <button data-f="Feats" aria-pressed="false">Feats</button>
+    <button data-f="Targets" aria-pressed="false">Targets</button>
+    <button data-f="The Classics" aria-pressed="false">The Classics</button>
+    <button data-f="Codename 47" aria-pressed="false">Codename 47</button>
+    <button data-f="incomplete" aria-pressed="false">Incomplete</button>
+  </div>
+  <div id="chals"></div>
+  <button class="reset" id="reset">Clear all progress</button>
+</section>
+
+<!-- ===================== NOTES ===================== -->
+<section class="panel" id="tab-notes" hidden>
+
+  <div class="notice" style="border-left-color:var(--moss);background:#141a15">
+    <h3>Count reconciliation</h3>
+    <ul>
+      <li>Your mission file lists <b>challengeCount: 24</b> — 2 Assassination, 11 Discovery, 7 Feats, 1 Targets, 3 The Classics. I counted each category in the file by hand and all five totals match.</li>
+      <li><b>The Setup</b> is not in that file because it sits in the cross-mission <b>Codename 47</b> tab rather than the mission's own list, but it is completed in this mission and the Hitman Wiki counts it inside its total of 25. 24 + 1 = <b>25</b>, which matches the count you gave.</li>
+      <li>PowerPyx's widely-quoted "32" folds in nine cross-mission Classics variants shared across maps. It is not the in-game tab total.</li>
+      <li>No duplicates: 25 unique names, each assigned to exactly one run. Run 1 = 6, Run 2 = 14, Run 3 = 4, Run 4 = 1, with Eliminate The Constant scoring in whichever run kills him first.</li>
+    </ul>
+  </div>
+
+  <div class="notice">
+    <h3>Corrections your file forced on the previous draft</h3>
+    <ul>
+      <li><b>The Gun Muffler is a Feat, not Discovery.</b> PowerPyx files it under Discovery; the mission data files it under Feats. Fixed to Feats.</li>
+      <li><b>Shortcut names use a colon</b> — "Shortcut: Passenger Car Door", "Shortcut: Container Door" — not a dash.</li>
+      <li><b>47, Ph.D. reads "Disguise yourself as a Scientist"</b> in game. Every external guide calls the outfit "Providence Doctor". Same pickup, from the white-apron worker at the lab desk; the name is flagged rather than picked.</li>
+      <li><b>Losing Everything reads "Eliminate the Constant by poisoning him"</b> — which is why the serum injection scores it. It is not a separate poison item.</li>
+      <li><b>A New Father's in-game description is [REDACTED]</b> because it spoils the secret ending. The conditions here come from the wiki and PowerPyx, not from the file.</li>
+    </ul>
+  </div>
+
+  <div class="notice" style="border-left-color:var(--ice);background:#111a1e">
+    <h3>Run logic simulation</h3>
+    <ul>
+      <li><b>Run 1</b> — Fuse (step 3) is picked up before the fusebox needs it (step 4). Screwdriver (step 3) before the water tank (step 7). Hammer (step 5) before the three civilians (step 8). No disguise is ever equipped, so Suit Only holds; only subduals, so Silent Assassin holds. Ends via syringe, which is itself the exit — no brake required. <b>Passes.</b></li>
+      <li><b>Run 2</b> — Keycard and coat (1) precede the corridor. Code 1979 and crowbar (2) precede the metal door. Pistol taken at step 3 is required by the bench at step 6 — this was the one real ordering trap and it is now explicit. Valve for the roof hatch (4) is distinct from the container valve (9). Both shortcut rooms are entered from behind before the levers are pulled. Commando Guard camo (10) is taken before the leader's car (11), so the salute script is intact. Office Staff rack (12) is reached before the office cars, and the seventh disguise lives inside them, so Chameleon can only fire after both. Ends with headshot plus brake. <b>Passes.</b></li>
+      <li><b>Run 3</b> — Pistol at step 1 precedes the signal shot at step 2. Snow Angel's dining-car guard is upstream of Edwards and is never removed by an earlier step. Cans can be gathered at any point before their throws. Self-injection is last. <b>Passes.</b></li>
+      <li><b>Run 4</b> — Depends only on Run 2's shortcut unlocks, which persist across runs. Killing everyone cannot lock out anything, because it is the last run. <b>Passes.</b></li>
+      <li><b>Mutual exclusions separated:</b> Suit Only (R1) vs all disguises (R2). Losing Everything (R1) vs Straight Shot (R2) vs A New Father (R3/R4). The save recommended at Run 1 step 8 is the single reload point that lets all three endings be banked without replaying the train.</li>
+      <li><b>No backtracking:</b> the only doubling-back in any run is within a single car (both valve fetches) or the deliberate roof loop that opens the Passenger Car Door from inside — that loop is the only way in, not an inefficiency.</li>
+    </ul>
+  </div>
+
+  <div class="notice" style="border-left-color:var(--amber);background:#1c1811">
+    <h3>Marked UNVERIFIED</h3>
+    <ul>
+      <li><b>Per-challenge XP.</b> Only two are sourced: Untouchable +2,000 XP, The Setup +4,000 XP. Mission total 46,000 XP. The other 23 individual values are not published consistently, so none are listed.</li>
+      <li><b>NPC names.</b> Arthur Edwards (The Constant) is the only named character on this map. The lab worker, guards, commando leader and office staff are unnamed generics — none invented here, which is why steps identify them by post and clothing instead.</li>
+      <li><b>Elite Guard outfit naming.</b> Gamepressure calls the outfit hanging in the sleeping guard's compartment a "Providence Guard outfit" and attributes You've Got Some Skills to it; other guides say the disguise comes from helmeted NPCs. Both routes are given.</li>
+      <li><b>Does killing guards void Silent Assassin?</b> Sources conflict. One wiki summary says killing Providence members gives a bonus rather than a non-target-kill penalty; Gameranx says plainly it instantly fails the check. Run 1 is a no-kill route, so it satisfies either reading.</li>
+      <li><b>A New Father timing.</b> Wiki says 47 seconds, PowerPyx says one minute.</li>
+      <li><b>The Setup prerequisite string</b> — "Explosions Runs Loose" (wiki) vs the Codename 47 mission "Plutonium Runs Loose". Unresolved.</li>
+      <li><b>Got My Boomstick bug.</b> A single 2021 PowerPyx commenter reported shotgun pickups not registering. No second source, and it long predates current patches — historical report, not a live warning.</li>
+      <li><b>Laboratory / Outdoors disguise restriction.</b> A May 2023 patch preview said Patch 3.150.1 would remove it. Not confirmed shipped by a second source.</li>
+      <li><b>Patch attribution.</b> The Untouchable challenge was added in patch 3.50 on 27 July 2021 (Season of Lust) and unlocks the ICA19 Goldballer. The Codename 47 pack containing The Setup was also post-launch. Neither is required for the Train Surfing achievement, which predates them.</li>
+    </ul>
+  </div>
+
+  <div class="notice" style="border-left-color:var(--steel);background:#131922">
+    <h3>Sources</h3>
+    <ul>
+      <li><b>Your uploaded mission data</b> — authoritative for challenge names, categories, counts and unlock text.</li>
+      <li><b>Gamepressure</b> (Eliminating Arthur Edwards) — the car-by-car route: keycard, cold storage code, roof-hatch valve, sleeping guard, corridor patrol, workbench, dining-car Snow Angel, Elite Guard hanger, floor fuse, five-guard wagon, Heavy Duty, the salute and the crate, office hanger, detach lever, Emergency Brake.</li>
+      <li><b>PowerPyx</b> — challenge conditions and the SASO walkthrough Run 1 follows step for step.</li>
+      <li><b>Gamepur</b> and <b>PCInvasion</b> — independent accounts of both shortcut routes, the rusty-nail/ladder alternative and the container valve.</li>
+      <li><b>Gameranx</b> — no-loadout confirmation, Emergency Brake, and rusty items breaking after one use.</li>
+      <li><b>Hitman Wiki</b> — mission page, A New Father, The Setup, Exit page (brake as exit), Starting Locations, mastery unlocks.</li>
+      <li><b>SegmentNext</b> — independent confirmation of the seven Chameleon disguises.</li>
+      <li><b>TheSixthAxis</b> and <b>DBLTAP</b> — matching mastery tables: Laboratory + HWK21 Pale Homemade Silencer at 2, Outdoors at 3, Proximity Semtex Demo Block MK III at 4, ICA Tactical Shotgun Covert at 5.</li>
+      <li><b>PSNProfiles</b> — Train Surfing notes and the 47-guard figure.</li>
+      <li><b>Neoseeker</b> — the two documented soda can spots (single source, so described as documented spots rather than the only ones).</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  Progress is held in the page only while it stays open. Cross-check names against your own in-game Challenges tab before a long run — IO patches this game regularly.
+</footer>
+
+</div>
+
+<script>
+const CHALLENGES = [
+  {n:"Losing Everything", c:"Assassination", d:"Eliminate the Constant by poisoning him.", run:1},
+  {n:"Straight Shot", c:"Assassination", d:"Assassinate a target with a headshot.", run:2},
+  {n:"Shortcut: Passenger Car Door", c:"Discovery", d:"Unlock the door in the passenger car.", run:2},
+  {n:"I'm the Conductor Now", c:"Discovery", d:"Disguise yourself as the Commando Leader.", run:2},
+  {n:"Heavy Duty", c:"Discovery", d:"Disguise yourself as a Commando Guard.", run:2},
+  {n:"47, Ph.D.", c:"Discovery", d:"Disguise yourself as a Scientist.", run:2},
+  {n:"Mall Cop", c:"Discovery", d:"Disguise yourself as a Security Guard.", run:2},
+  {n:"Spray and Slay", c:"Discovery", d:"Find an SMG.", run:2},
+  {n:"Chameleon", c:"Discovery", d:"Find and equip all disguises in The Carpathian Mountains.", run:2},
+  {n:"You've Got Some Skills", c:"Discovery", d:"Disguise yourself as an Elite Guard.", run:2},
+  {n:"Forbidden Pineapple", c:"Discovery", d:"Find a fragmentation grenade.", run:2},
+  {n:"Got My Boomstick", c:"Discovery", d:"Find a shotgun.", run:2},
+  {n:"Shortcut: Container Door", c:"Discovery", d:"Unlock the door to the container.", run:2},
+  {n:"Untouchable", c:"Feats", d:"Complete \u201cUntouchable\u201d.", run:1},
+  {n:"A New Father", c:"Feats", d:"[REDACTED] in game. Hold the serum in the final carriage, wait for the prompt, inject yourself.", run:3},
+  {n:"Snow Angel", c:"Feats", d:"Push a guard off the train.", run:3},
+  {n:"The Gun Muffler", c:"Feats", d:"Construct a silencer.", run:2},
+  {n:"Exhibition Shooting", c:"Feats", d:"Shoot a train signal.", run:3},
+  {n:"Soda Slinger", c:"Feats", d:"Hit three guards with soda cans.", run:3},
+  {n:"Button Masher", c:"Feats", d:"Unlock the keypad.", run:2},
+  {n:"Eliminate The Constant", c:"Targets", d:"Eliminate the Constant.", run:1},
+  {n:"Silent Assassin", c:"The Classics", d:"Complete the mission. Only eliminate the target. No bodies found. Do not get spotted.", run:1},
+  {n:"Suit Only", c:"The Classics", d:"Assassinate the target and complete the mission, all in your suit.", run:1},
+  {n:"Silent Assassin, Suit Only", c:"The Classics", d:"All Silent Assassin conditions, in your suit.", run:1},
+  {n:"The Setup", c:"Codename 47", d:"Eliminate all 47 guards on the train, then end the mission by injecting yourself. +4,000 XP.", run:4}
+];
+const CATS=["Assassination","Discovery","Feats","Targets","The Classics","Codename 47"];
+const state={done:new Set(),steps:new Set(),filter:"all"};
+try{const saved=JSON.parse(localStorage.getItem('untouchable_done_v1')||'[]');saved.forEach(i=>state.done.add(i));}catch(e){}
+try{const _s=JSON.parse(localStorage.getItem('untouchable_done_v1:steps')||'[]');_s.forEach(k=>state.steps.add(k));}catch(e){}
+function reportProgress(){try{const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r['m24']={done:state.done.size,total:CHALLENGES.length,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
+function saveDone(){try{localStorage.setItem('untouchable_done_v1',JSON.stringify([...state.done]));localStorage.setItem('untouchable_done_v1:steps',JSON.stringify([...state.steps]));}catch(e){}reportProgress();}
+
+const loco=document.getElementById('loco');
+CHALLENGES.forEach((_,i)=>{const d=document.createElement('div');d.className='car';d.dataset.i=i;loco.appendChild(d);});
+
+const counters=document.getElementById('counters');
+CATS.forEach(c=>{
+  const total=CHALLENGES.filter(x=>x.c===c).length;
+  const el=document.createElement('div');el.className='ctr';
+  el.innerHTML='<span class="lbl">'+c+'</span><span class="val" data-cat="'+c+'">0<small>/'+total+'</small></span>';
+  counters.appendChild(el);
+});
+
+const list=document.getElementById('chals');
+function renderList(){
+  list.innerHTML='';
+  CHALLENGES.forEach((ch,i)=>{
+    const isDone=state.done.has(i);
+    if(state.filter!=='all'){
+      if(state.filter==='incomplete'){if(isDone)return;}
+      else if(ch.c!==state.filter)return;
+    }
+    const row=document.createElement('div');
+    row.className='chal'+(isDone?' done':'');
+    row.innerHTML='<button class="tick'+(isDone?' done':'')+'" data-ci="'+i+'" aria-label="Mark '+ch.n+' complete">\u2713</button>'
+      +'<div class="meta"><div class="top"><h4>'+ch.n+'</h4><span class="tag">'+ch.c+'</span><span class="tag">Run '+ch.run+'</span></div>'
+      +'<p class="cond">'+ch.d+'</p></div>';
+    list.appendChild(row);
+  });
+}
+function refresh(){
+  const total=CHALLENGES.length,n=state.done.size;
+  document.getElementById('pct').textContent=Math.round(n/total*100)+'%';
+  document.getElementById('tally').textContent=n+' / '+total+' challenges complete';
+  document.querySelectorAll('.car').forEach(c=>c.classList.toggle('on',state.done.has(+c.dataset.i)));
+  CATS.forEach(c=>{
+    const idx=CHALLENGES.map((x,i)=>x.c===c?i:-1).filter(i=>i>=0);
+    const done=idx.filter(i=>state.done.has(i)).length;
+    document.querySelector('.val[data-cat="'+c+'"]').innerHTML=done+'<small>/'+idx.length+'</small>';
+  });
+}
+list.addEventListener('click',e=>{
+  const b=e.target.closest('.tick');if(!b)return;
+  const i=+b.dataset.ci;
+  state.done.has(i)?state.done.delete(i):state.done.add(i);
+  saveDone();renderList();refresh();
+});
+document.getElementById('filters').addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b)return;
+  state.filter=b.dataset.f;
+  document.querySelectorAll('#filters button').forEach(x=>x.setAttribute('aria-pressed',x===b));
+  renderList();
+});
+
+/* collapse: runs */
+document.querySelectorAll('.runhead').forEach(h=>{
+  h.addEventListener('click',()=>h.closest('.run').classList.toggle('closed'));
+});
+/* collapse: steps */
+document.querySelectorAll('.stoggle').forEach(t=>{
+  t.addEventListener('click',()=>t.closest('.step').classList.toggle('closed'));
+});
+/* step ticks — keyed off the step's data-step id so they survive a reload */
+document.querySelectorAll('.step .tick').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const step=btn.closest('.step'),k=step.dataset.step;
+    state.steps.has(k)?state.steps.delete(k):state.steps.add(k);
+    step.classList.toggle('done');
+    btn.classList.toggle('done');
+    saveDone();
+  });
+});
+/* re-apply saved step ticks */
+state.steps.forEach(k=>{
+  const step=document.querySelector('.step[data-step="'+k+'"]');
+  if(!step)return;
+  step.classList.add('done');
+  const t=step.querySelector('.tick'); if(t)t.classList.add('done');
+});
+/* jump buttons */
+document.querySelectorAll('.jump button[data-go]').forEach(b=>{
+  b.addEventListener('click',()=>{
+    const run=document.getElementById(b.dataset.go);
+    run.classList.remove('closed');
+    run.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+});
+document.getElementById('expandAll').addEventListener('click',()=>{
+  document.querySelectorAll('.run').forEach(r=>r.classList.remove('closed'));
+  document.querySelectorAll('.step').forEach(s=>s.classList.remove('closed'));
+});
+document.getElementById('collapseAll').addEventListener('click',()=>{
+  document.querySelectorAll('.run').forEach(r=>r.classList.add('closed'));
+  document.querySelectorAll('.step').forEach(s=>s.classList.add('closed'));
+});
+
+/* tabs */
+document.querySelectorAll('nav.tabs button').forEach(b=>{
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('nav.tabs button').forEach(x=>x.setAttribute('aria-selected',x===b));
+    ['runs','list','notes'].forEach(t=>{document.getElementById('tab-'+t).hidden=(t!==b.dataset.tab);});
+  });
+});
+document.getElementById('reset').addEventListener('click',()=>{
+  state.done.clear();state.steps.clear();
+  document.querySelectorAll('.step').forEach(s=>s.classList.remove('done'));
+  document.querySelectorAll('.step .tick').forEach(t=>t.classList.remove('done'));
+  saveDone();renderList();refresh();
+});
+
+/* open Run 1 by default */
+document.getElementById('run1').classList.remove('closed');
+renderList();refresh();
+reportProgress();
+</script>
+<!-- step-progress-bridge -->
+<script>
+/* Reports route-step ticks into 'hitman-progress-registry' so the index can
+   show them beside the challenge counts. Counts what is on screen rather than
+   any guide-specific state, so one implementation serves every guide. */
+(function(){
+  var RID="m24", SEL=".step";
+  function isDone(s){
+    var c=s.classList;
+    if(c.contains('done')||c.contains('dn')) return true;
+    if(s.getAttribute('data-done')==='1'||s.getAttribute('aria-pressed')==='true') return true;
+    return !!s.querySelector('.done,.dn,[data-done="1"],[aria-pressed="true"]');
+  }
+  function tally(){
+    var steps=document.querySelectorAll(SEL);
+    if(!steps.length) return null;
+    var n=0;
+    for(var i=0;i<steps.length;i++) if(isDone(steps[i])) n++;
+    return {steps:n,stepTotal:steps.length};
+  }
+  function push(){
+    var t;
+    try{ t=tally(); }catch(err){ return; }
+    if(!t||!t.stepTotal) return;
+    try{
+      var r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');
+      var e=r[RID]||(r[RID]={});
+      /* the guide's own reportProgress() rewrites this entry wholesale, so
+         re-add the step counts whenever they go missing or stale */
+      if(e.steps===t.steps&&e.stepTotal===t.stepTotal) return;
+      e.steps=t.steps; e.stepTotal=t.stepTotal; e.updated=Date.now();
+      localStorage.setItem('hitman-progress-registry',JSON.stringify(r));
+    }catch(err){}
+  }
+  var pending=false;
+  function schedule(){
+    if(pending) return; pending=true;
+    setTimeout(function(){pending=false;push();},120);
+  }
+  try{
+    new MutationObserver(schedule).observe(document.body,
+      {subtree:true,childList:true,attributes:true,attributeFilter:['class','aria-pressed','data-done']});
+  }catch(err){}
+  window.addEventListener('load',schedule);
+  setTimeout(push,600);
+})();
+</script>
+<!-- /step-progress-bridge -->
+</body>
+</html>

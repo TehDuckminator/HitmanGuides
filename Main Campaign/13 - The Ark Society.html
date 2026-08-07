@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Ark Society — Final Challenge Dossier</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;900&family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --storm-900:#0b131c;--storm-800:#101b27;--storm-700:#16232f;--storm-600:#1e2f3d;
+    --stone-line:#2c4152;--parch:#e9e2d1;--parch-2:#f3eede;--ink:#1c1710;
+    --ember:#c8923a;--ember-bright:#e6ad4c;--aurora:#5fcdc0;--aurora-dim:#2f7d75;
+    --blood:#a6472f;--blood-bright:#d1613f;--parch-mut:#8a8069;
+    --a-badge:#8c5a2b;--d-badge:#2f6f73;--f-badge:#5a4a86;--t-badge:#9c4a6b;--c-badge:#4a6a86;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:
+      radial-gradient(1200px 600px at 78% -10%,rgba(95,205,192,.10),transparent 60%),
+      radial-gradient(900px 500px at 10% 110%,rgba(200,146,58,.08),transparent 55%),var(--storm-900);
+    color:#d4dde4;font-family:"Spectral",Georgia,serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+  a{color:var(--ember-bright)}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 18px 90px}
+  header.mast{padding:36px 0 20px;border-bottom:1px solid var(--stone-line);margin-bottom:20px}
+  .crest{font-family:"JetBrains Mono",monospace;letter-spacing:.42em;text-transform:uppercase;font-size:11px;color:var(--aurora);margin:0 0 14px}
+  h1.title{font-family:"Cinzel",serif;font-weight:900;letter-spacing:.04em;font-size:clamp(30px,6vw,56px);line-height:.98;margin:0;color:var(--parch-2);text-shadow:0 2px 0 rgba(0,0,0,.4)}
+  h1.title .sub{display:block;font-size:clamp(12px,2.3vw,17px);font-weight:600;letter-spacing:.32em;color:var(--ember);margin-top:12px;text-transform:uppercase}
+  .dek{max-width:720px;color:#9fb0bc;margin:15px 0 0;font-size:15px}
+  .dek b{color:#cdd8df;font-weight:600}
+  .srcnote{margin-top:16px;background:rgba(95,205,192,.07);border-left:3px solid var(--aurora-dim);border-radius:0 4px 4px 0;padding:12px 15px;font-size:13px;color:#9fc9c4}
+  .srcnote b{color:#c9efe9}
+
+  .tracker{margin-top:20px;background:linear-gradient(180deg,var(--storm-700),var(--storm-800));border:1px solid var(--stone-line);border-radius:4px;padding:18px;box-shadow:inset 0 1px 0 rgba(255,255,255,.03),0 18px 40px -30px #000}
+  .ttop{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .tracker h2{font-family:"Cinzel",serif;font-size:15px;letter-spacing:.2em;text-transform:uppercase;margin:0;color:var(--parch)}
+  .totread{font-family:"JetBrains Mono",monospace;font-size:13px;color:var(--parch-mut)}
+  .totread b{color:var(--aurora);font-size:17px}
+  .bar{height:12px;background:#0c1620;border:1px solid var(--stone-line);border-radius:20px;margin:12px 0 16px;overflow:hidden}
+  .bar>i{display:block;height:100%;width:0;border-radius:20px;background:linear-gradient(90deg,var(--aurora-dim),var(--aurora));box-shadow:0 0 14px rgba(95,205,192,.5);transition:width .5s cubic-bezier(.2,.8,.2,1)}
+  .cats{display:grid;grid-template-columns:repeat(5,1fr);gap:9px}
+  .cat{background:#0e1a24;border:1px solid var(--stone-line);border-radius:4px;padding:10px 11px}
+  .cat .lab{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--parch-mut);display:flex;align-items:center;gap:6px}
+  .cat .dot{width:8px;height:8px;border-radius:2px;display:inline-block}
+  .cat .num{font-family:"Cinzel",serif;font-weight:700;font-size:22px;margin-top:4px;color:var(--parch-2)}
+  .cat .num span{font-size:13px;color:var(--parch-mut);font-weight:500}
+  .cbar{height:5px;background:#0a141d;border-radius:8px;margin-top:7px;overflow:hidden}
+  .cbar>i{display:block;height:100%;width:0;transition:width .45s ease}
+  .dot.assassination{background:var(--a-badge)}.cbar.assassination>i{background:linear-gradient(90deg,#5a3a1c,var(--a-badge))}
+  .dot.discovery{background:var(--d-badge)}.cbar.discovery>i{background:linear-gradient(90deg,#1c4547,var(--d-badge))}
+  .dot.feats{background:var(--f-badge)}.cbar.feats>i{background:linear-gradient(90deg,#382d55,var(--f-badge))}
+  .dot.targets{background:var(--t-badge)}.cbar.targets>i{background:linear-gradient(90deg,#5c2c40,var(--t-badge))}
+  .dot.classic{background:var(--c-badge)}.cbar.classic>i{background:linear-gradient(90deg,#2c4256,var(--c-badge))}
+  .resetbtn{margin-top:14px;background:none;border:1px solid var(--stone-line);color:var(--parch-mut);font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.1em;padding:6px 12px;border-radius:3px;cursor:pointer;text-transform:uppercase}
+  .resetbtn:hover{border-color:var(--blood);color:var(--blood-bright)}
+
+  /* run nav buttons */
+  .runnav{margin-top:22px}
+  .runnav .lbl{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--parch-mut);margin-bottom:9px}
+  .runbtns{display:flex;flex-wrap:wrap;gap:7px}
+  .rb{font-family:"Cinzel",serif;font-weight:600;font-size:12.5px;letter-spacing:.04em;background:#0e1a24;border:1px solid var(--stone-line);color:#c6d2da;padding:8px 12px;border-radius:4px;cursor:pointer;display:flex;align-items:center;gap:8px}
+  .rb:hover{border-color:var(--ember);color:var(--ember-bright)}
+  .rb b{font-family:"JetBrains Mono",monospace;color:var(--ember);font-size:12px}
+  .rb .cnt{font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--parch-mut)}
+  .rb.allbtn{background:transparent;color:var(--parch-mut)}
+  .rb.allbtn:hover{color:var(--aurora);border-color:var(--aurora-dim)}
+
+  .tabs{display:flex;gap:4px;margin:24px 0 20px;border-bottom:1px solid var(--stone-line);flex-wrap:wrap}
+  .tab{background:none;border:0;border-bottom:2px solid transparent;color:var(--parch-mut);font-family:"Cinzel",serif;font-weight:600;font-size:13.5px;letter-spacing:.14em;text-transform:uppercase;padding:11px 15px;cursor:pointer;margin-bottom:-1px}
+  .tab[aria-selected="true"]{color:var(--ember-bright);border-color:var(--ember)}
+  .tab:hover{color:#cdd8df}
+  .panel{display:none}.panel.on{display:block;animation:fade .35s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+  .run{margin-bottom:16px;border:1px solid var(--stone-line);border-radius:5px;overflow:hidden;background:var(--storm-800);scroll-margin-top:14px}
+  .run>summary{list-style:none;cursor:pointer;padding:0}
+  .run>summary::-webkit-details-marker{display:none}
+  .runhead{display:flex;gap:16px;align-items:flex-start;padding:17px 20px;background:linear-gradient(180deg,var(--storm-700),var(--storm-800))}
+  .runhead:hover{background:var(--storm-600)}
+  .rnum{font-family:"Cinzel",serif;font-weight:900;font-size:28px;color:var(--ember);line-height:1;min-width:52px;text-align:center;border-right:1px solid var(--stone-line);padding-right:14px}
+  .rnum small{display:block;font-size:9px;letter-spacing:.2em;color:var(--parch-mut);margin-top:5px;font-family:"JetBrains Mono",monospace}
+  .rtitle{flex:1}.rtitle h3{font-family:"Cinzel",serif;font-size:18px;margin:0 0 4px;color:var(--parch-2)}
+  .rtitle p{margin:0;font-size:13.5px;color:#9fb0bc}
+  .rcount{font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--parch-mut);margin-top:6px}
+  .chev{color:var(--parch-mut);font-size:13px;align-self:center}
+  details[open]>summary .chev{color:var(--ember)}
+  .runbody{padding:6px 20px 22px}
+
+  .loadout{background:linear-gradient(180deg,var(--parch-2),var(--parch));color:var(--ink);border-radius:4px;padding:15px 17px;margin:14px 0 20px;box-shadow:0 10px 30px -20px #000;border:1px solid #cabf9f}
+  .loadout h4{font-family:"Cinzel",serif;margin:0 0 11px;font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--a-badge);border-bottom:1px solid #cabf9f;padding-bottom:7px}
+  .lgrid{display:grid;grid-template-columns:1fr 1fr;gap:9px 20px}
+  .lrow{display:flex;flex-direction:column;gap:2px}
+  .lrow .k{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--parch-mut)}
+  .lrow .v{font-size:14.5px;color:var(--ink);font-weight:500}
+  .lrow .v em{color:var(--a-badge);font-style:normal;font-weight:600}
+  .slots{grid-column:1/-1;margin-top:3px}
+  .slotlist{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin-top:5px}
+  .slot{font-family:"JetBrains Mono",monospace;font-size:11.5px;background:#ded3b2;border:1px solid #c3b78f;border-radius:3px;padding:6px 9px;color:var(--ink)}
+
+  .sect{font-family:"Cinzel",serif;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--aurora);margin:22px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--stone-line);display:flex;align-items:center;gap:10px}
+  .sect::before{content:"";width:6px;height:13px;background:var(--aurora);border-radius:1px}
+
+  .step{border:1px solid var(--stone-line);border-radius:4px;margin-bottom:9px;background:var(--storm-700)}
+  .step.done{border-color:var(--aurora-dim);background:linear-gradient(90deg,rgba(95,205,192,.06),transparent)}
+  .stephead{display:flex;gap:12px;padding:12px 14px;align-items:flex-start}
+  .chk{flex:0 0 auto;width:25px;height:25px;border-radius:50%;border:2px solid var(--stone-line);background:#0c1620;cursor:pointer;color:transparent;font-size:13px;font-weight:700;line-height:21px;text-align:center;transition:all .18s;margin-top:1px}
+  .chk:hover{border-color:var(--aurora)}
+  .step.done .chk,.clitem.done .chk{background:var(--aurora);border-color:var(--aurora);color:#062018}
+  .stepmain{flex:1;min-width:0}
+  .stepmain .st{font-weight:600;color:var(--parch-2);font-size:15px}
+  .step.done .stepmain .st{color:var(--aurora)}
+  .stepmain .ss{font-size:13px;color:#9fb0bc;margin-top:3px}
+  .badges{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+  .b{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.05em;padding:3px 7px;border-radius:20px;text-transform:uppercase;font-weight:500;white-space:nowrap}
+  .b.assassination{background:rgba(140,90,43,.2);color:#d69a5e;border:1px solid #7a4f27}
+  .b.discovery{background:rgba(47,111,115,.2);color:#63c0c4;border:1px solid #2c5f63}
+  .b.feats{background:rgba(90,74,134,.24);color:#a894d6;border:1px solid #4c3f72}
+  .b.targets{background:rgba(156,74,107,.22);color:#d488a8;border:1px solid #7c3f57}
+  .b.classic{background:rgba(74,106,134,.22);color:#84b0d6;border:1px solid #3f5f7c}
+  .b.warn{background:rgba(166,71,47,.2);color:var(--blood-bright);border:1px solid #7c3423}
+  .b.save{background:rgba(200,146,58,.18);color:var(--ember-bright);border:1px solid #8a6425}
+  .exp{background:none;border:0;color:var(--parch-mut);font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.08em;cursor:pointer;padding:2px 0;margin-top:8px;text-transform:uppercase}
+  .exp:hover{color:var(--ember)}
+  .exp .ar{display:inline-block;transition:transform .2s}
+  .step.open .exp .ar{transform:rotate(90deg)}
+  .detail{display:none;padding:2px 14px 14px 51px}
+  .step.open .detail{display:block;animation:fade .25s ease}
+  .frow{display:grid;grid-template-columns:88px 1fr;gap:4px 12px;padding:4px 0;border-bottom:1px dashed rgba(44,65,82,.6)}
+  .frow:last-of-type{border-bottom:0}
+  .frow .fk{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--aurora);padding-top:2px}
+  .frow .fv{font-size:13px;color:#c8d2d9}
+  .frow .fv b{color:var(--parch-2);font-weight:600}
+  .warnbox{background:rgba(166,71,47,.1);border-left:2px solid var(--blood);padding:7px 11px;margin-top:10px;border-radius:0 3px 3px 0;font-size:12.5px;color:#e5b4a4}
+  .savebox{background:rgba(200,146,58,.1);border-left:2px solid var(--ember);padding:7px 11px;margin-top:8px;border-radius:0 3px 3px 0;font-size:12.5px;color:#e6cfa0}
+  .srcline{font-family:"JetBrains Mono",monospace;font-size:10px;color:#7f9a96;margin-top:9px;letter-spacing:.02em}
+
+  .filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+  .filt{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;background:#0e1a24;border:1px solid var(--stone-line);color:var(--parch-mut);padding:7px 12px;border-radius:20px;cursor:pointer}
+  .filt[aria-pressed="true"]{background:var(--ember);color:#1a1206;border-color:var(--ember);font-weight:700}
+  .filt:hover:not([aria-pressed="true"]){border-color:var(--ember);color:var(--ember-bright)}
+  .clgroup{margin-bottom:20px}
+  .clgroup h3{font-family:"Cinzel",serif;font-size:13px;letter-spacing:.14em;text-transform:uppercase;display:flex;align-items:center;gap:9px;color:var(--parch);margin:0 0 10px}
+  .clgroup h3 .dot{width:10px;height:10px;border-radius:2px}
+  .clgroup h3 .gc{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--parch-mut);font-weight:400}
+  .clitem{display:flex;gap:11px;align-items:flex-start;padding:10px 12px;border:1px solid var(--stone-line);border-radius:4px;margin-bottom:6px;background:var(--storm-700);cursor:pointer}
+  .clitem:hover{border-color:var(--parch-mut)}
+  .clitem.done{border-color:var(--aurora-dim);background:linear-gradient(90deg,rgba(95,205,192,.06),transparent)}
+  .clbody{flex:1;min-width:0}
+  .clitem .nm{font-size:14.5px;color:var(--parch-2);font-weight:500}
+  .clitem.done .nm{color:var(--aurora);text-decoration:line-through;text-decoration-color:var(--aurora-dim)}
+  .clitem .cond{font-size:12.5px;color:#8fa0ad;margin-top:2px}
+  .clitem .how{font-size:12px;color:#a9bec6;margin-top:5px}
+  .clitem .how b{color:#cdd8df}
+  .clmeta{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px;align-items:center}
+  .xp{font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--parch-mut)}
+  .rtag{font-family:"JetBrains Mono",monospace;font-size:9px;color:var(--ember);border:1px solid #6b4e22;padding:2px 6px;border-radius:3px;text-transform:uppercase}
+  .srctag{font-family:"JetBrains Mono",monospace;font-size:9px;color:#7f9a96}
+  .empty{color:var(--parch-mut);font-style:italic;padding:20px;text-align:center}
+
+  .auditrow{border:1px solid var(--stone-line);border-radius:4px;padding:12px 15px;margin-bottom:9px;background:var(--storm-700)}
+  .auditrow h4{font-family:"Cinzel",serif;font-size:14px;margin:0 0 5px;color:var(--parch-2)}
+  .auditrow p{margin:0;font-size:13px;color:#9fb0bc}
+  .auditrow.ok{border-left:3px solid var(--aurora-dim)}
+  .auditrow.warn{border-left:3px solid var(--ember)}
+  .auditrow.bad{border-left:3px solid var(--blood)}
+  footer{margin-top:36px;padding-top:18px;border-top:1px solid var(--stone-line);color:var(--parch-mut);font-size:11.5px;font-family:"JetBrains Mono",monospace;line-height:1.7}
+  @media(max-width:720px){.cats{grid-template-columns:repeat(2,1fr)}.lgrid{grid-template-columns:1fr}.slotlist{grid-template-columns:1fr}.detail{padding-left:14px}.frow{grid-template-columns:1fr}.rnum{min-width:40px;font-size:23px}}
+  :focus-visible{outline:2px solid var(--ember-bright);outline-offset:2px}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="mast">
+    <p class="crest">Isle of Sgàil · North Atlantic · Final Dossier</p>
+    <h1 class="title">The Ark Society<span class="sub">All 62 Challenges · Validated Multi-Run Route</span></h1>
+    <p class="dek">Built from your <b>in-game challenge export</b> (the authoritative 62-challenge list) cross-referenced with Neoseeker, gamepressure, screenrant, the Hitman Wiki, and community bug threads. Targets: <b>Sophia Washington</b> (The Schemer) and <b>Zoe Washington</b> (The Socialite). Every step lists where to go, the disguise, the item, the NPC, the action, and any warning.</p>
+    <div class="srcnote"><b>How the runs work:</b> HITMAN challenges are permanent across attempts, so you accumulate them over replays. Within a run, <b>save before each target kill and reload</b> to collect every method — each target only dies once per attempt. Mutually-exclusive challenges are split and flagged. Every method carries a source line; where only the in-game condition is confirmed, the step says so rather than inventing a route.</p>
+
+    <section class="tracker" aria-label="Progress">
+      <div class="ttop"><h2>Dossier Progress</h2><div class="totread"><b id="totDone">0</b> / 62 challenges</div></div>
+      <div class="bar"><i id="totBar"></i></div>
+      <div class="cats">
+        <div class="cat"><div class="lab"><span class="dot assassination"></span>Assassination</div><div class="num"><span id="assassinationDone">0</span><span>/19</span></div><div class="cbar assassination"><i id="assassinationBar"></i></div></div>
+        <div class="cat"><div class="lab"><span class="dot discovery"></span>Discovery</div><div class="num"><span id="discoveryDone">0</span><span>/10</span></div><div class="cbar discovery"><i id="discoveryBar"></i></div></div>
+        <div class="cat"><div class="lab"><span class="dot feats"></span>Feats</div><div class="num"><span id="featsDone">0</span><span>/26</span></div><div class="cbar feats"><i id="featsBar"></i></div></div>
+        <div class="cat"><div class="lab"><span class="dot targets"></span>Targets</div><div class="num"><span id="targetsDone">0</span><span>/2</span></div><div class="cbar targets"><i id="targetsBar"></i></div></div>
+        <div class="cat"><div class="lab"><span class="dot classic"></span>Classic</div><div class="num"><span id="classicDone">0</span><span>/5</span></div><div class="cbar classic"><i id="classicBar"></i></div></div>
+      </div>
+      <button class="resetbtn" id="resetBtn">↺ Reset progress</button>
+    </section>
+
+    <div class="runnav">
+      <div class="lbl">Jump to run</div>
+      <div class="runbtns" id="runNav"></div>
+    </div>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button class="tab" id="tabRuns" role="tab" aria-selected="true">Optimized Runs</button>
+    <button class="tab" id="tabList" role="tab" aria-selected="false">Checklist</button>
+    <button class="tab" id="tabAudit" role="tab" aria-selected="false">Validation &amp; Audit</button>
+  </nav>
+
+  <section class="panel on" id="panelRuns" role="tabpanel"></section>
+  <section class="panel" id="panelList" role="tabpanel"></section>
+  <section class="panel" id="panelAudit" role="tabpanel"></section>
+
+  <footer>
+    Authoritative list: uploaded in-game export "13 - The Ark Society.json" (challengeCount 62).<br>
+    Methods cross-referenced: Neoseeker · gamepressure.com · screenrant.com · Hitman Wiki (hitman.fandom.com) · whatchaa.com · walkthroughs.games · Steam Community "HITMAN 2 Redacted Challenges Guide" (Shameless) &amp; discussion threads · xboxachievements.<br>
+    Progress saves to this browser only. HITMAN World of Assassination — The Ark Society (Isle of Sgàil).
+  </footer>
+</div>
+
+<script>
+/* ===================== AUTHORITATIVE CHALLENGES (from uploaded JSON) =====================
+   cat matches the export exactly. cond = verbatim in-game condition. how/src = sourced method. */
+const CH=[
+// CLASSIC (5)
+{id:"c_sa",name:"Silent Assassin",cat:"classic",run:"R1",cond:"Only eliminate the targets. No bodies found. Do not get spotted.",how:"Kill both twins cleanly, hide/avoid all bodies, never be seen.",src:"In-game (JSON)."},
+{id:"c_saso",name:"Silent Assassin, Suit Only",cat:"classic",run:"R1",cond:"Silent Assassin, all in your suit.",how:"As above, wearing only the starting suit at exit.",src:"In-game (JSON)."},
+{id:"c_suit",name:"Suit Only",cat:"classic",run:"R1",cond:"Assassinate the targets and complete the mission in your suit.",how:"Finish wearing only the starting suit.",src:"In-game (JSON)."},
+{id:"c_sniper",name:"Sniper Assassin",cat:"classic",run:"R7",cond:"Assassinate your targets with a sniper rifle. Only the targets. Do not get spotted.",how:"Both twins with the silenced Sieger 300 Tactical; chapel-tower start (Mastery 2) is a good nest.",src:"JSON + gamepressure (silenced Sieger, chapel sniper start)."},
+{id:"c_classics",name:"The Classics",cat:"classic",run:"R7",cond:"Complete all Classic challenges: Silent Assassin / SASO / Sniper Assassin / Suit Only.",how:"Auto-completes once those four are done.",src:"In-game (JSON)."},
+// TARGETS (2)
+{id:"t_schemer",name:"The Schemer",cat:"targets",run:"R1",cond:"Assassinate Sophia Washington.",how:"Pops the first time Sophia dies by any method.",src:"In-game (JSON)."},
+{id:"t_socialite",name:"The Socialite",cat:"targets",run:"R1",cond:"Assassinate Zoe Washington.",how:"Pops the first time Zoe dies by any method.",src:"In-game (JSON)."},
+// ASSASSINATION (19)
+{id:"a_fellforit",name:"Fell for It",cat:"assassination",run:"R2",cond:"Assassinate Sophia Washington by pushing her from the Constant's tower.",how:"Run Social Climbing so the Constant summons Sophia to his tower, then push her off the top.",src:"screenrant + Neoseeker."},
+{id:"a_caseclosed",name:"Case Closed",cat:"assassination",run:"R2",cond:"Assassinate Sophia Washington with the iron maiden as she reprimands you.",how:"Via Winds of Change: as Jebediah Block vote Nay; follow Sophia to the penthouse; when she dismisses her guards, push her into the iron maiden and close it.",src:"gamepressure + whatchaa + screenrant (gamepressure calls the device a sarcophagus; the challenge names it the iron maiden)."},
+{id:"a_finalcount",name:"The Final Countdown",cat:"assassination",run:"R2",cond:"Assassinate both Sophia and Zoe Washington after the Constant has escaped.",how:"Subdue one twin, grab the Killswitch, then KO the Constant and leave his body where he'll be found and wake — he is evacuated, starting a 5-minute timer to kill both twins.",src:"Neoseeker (method) + JSON."},
+{id:"a_sleight",name:"Sleight of Hand",cat:"assassination",run:"R3",cond:"Assassinate Sophia Washington with the necklace.",how:"Steal the necklace, take Blake Nathaniel's disguise, meet Sophia; when she asks you to put the necklace on her, strangle her. Completes It Belongs in a Museum.",src:"Neoseeker + screenrant + walkthroughs.games."},
+{id:"a_mistaken",name:"Mistaken Identity",cat:"assassination",run:"R3",cond:"Assassinate Zoe Washington with the necklace.",how:"Same necklace/Blake Nathaniel method, used on Zoe instead of Sophia.",src:"whatchaa (necklace works on Sophia or Zoe) + JSON."},
+{id:"a_nowyoudont",name:"...Now You Don't",cat:"assassination",run:"R4",cond:"Assassinate Zoe Washington using the effigy.",how:"With the effigy mechanism sabotaged, invite Zoe and light the circle around her — she's trapped and burns (body isn't found).",src:"gamepressure."},
+{id:"a_boom",name:"Boom Goes the Dynamite",cat:"assassination",run:"R4",cond:"Assassinate Zoe Washington with an antique cannon.",how:"Bring Gunpowder (Morgue, NE) + a Cannon Ball (outside the Crypts) to the Terrace cannon; run the ceremony and once Zoe is in the effigy, fire the cannon at it.",src:"Neoseeker + gamepressure."},
+{id:"a_littlewhite",name:"Little White Lies",cat:"assassination",run:"R5",cond:"Assassinate Zoe Washington during the interrogation.",how:"Complete Final Club (a private interview with Zoe) and eliminate her during the interrogation.",src:"screenrant + JSON."},
+{id:"a_bloodmoney",name:"Blood Money",cat:"assassination",run:"R5",cond:"Assassinate Zoe Washington from a coffin.",how:"Complete Last Honors: as Janus in the casket, Zoe approaches last and sends the others off — kill her at the attack prompt.",src:"gamepressure + screenrant."},
+{id:"a_rockbottom",name:"Rock Bottom",cat:"assassination",run:"R1",cond:"Assassinate Sophia Washington with a gargoyle.",how:"By the funeral procession: wait until Sophia turns her back, get onto the platform and up the stairs to the right — two gargoyles can be pushed onto her head.",src:"whatchaa + screenrant."},
+{id:"a_pianoman",name:"Piano Man",cat:"assassination",run:"R6",cond:"Assassinate a target with the fiber wire.",how:"Bring the Fiber Wire and garrote either twin when isolated.",src:"In-game (JSON)."},
+{id:"a_straight",name:"Straight Shot",cat:"assassination",run:"R6",cond:"Assassinate a target with a headshot.",how:"Any firearm; land a headshot on either twin.",src:"JSON + xboxachievements."},
+{id:"a_holdmyhair",name:"Hold My Hair",cat:"assassination",run:"R6",cond:"Assassinate a target by drowning them.",how:"Isolate a twin beside water and drown them.",src:"In-game (JSON)."},
+{id:"a_tasteless",name:"Tasteless, Traceless",cat:"assassination",run:"R6",cond:"Assassinate a target with lethal poison.",how:"Bring Lethal Poison; dose a twin's food or drink so they die of poison.",src:"JSON + xboxachievements."},
+{id:"a_accident",name:"Someone Could Hurt Themselves",cat:"assassination",run:"R1",cond:"Assassinate a target in an accident.",how:"Any accident kill — the gargoyle push on Sophia (Rock Bottom) also satisfies this.",src:"JSON + xboxachievements."},
+{id:"a_bloodeagle",name:"Blood Eagle",cat:"assassination",run:"R6",cond:"Eliminate a target with the Viking axe.",how:"Find the Viking axe on the map and eliminate a target/NPC with it (condition authoritative; use the in-game challenge marker for the exact axe).",src:"In-game (JSON)."},
+{id:"a_caged",name:"Caged",cat:"assassination",run:"R6",cond:"Eliminate a target with the gibbet.",how:"Drop the hanging gibbet (cage) on a target. A Steam poster notes a hanging-cage drop is available in the funeral area.",src:"JSON + Steam discussion."},
+{id:"a_scratch",name:"Tis But a Scratch",cat:"assassination",run:"R6",cond:"Eliminate a target with the broadsword while disguised as a Knight.",how:"In the Knight's Armor, kill a target with the broadsword. Community tip: save first, get the sword kill, then reload to reuse the same setup for other knight feats.",src:"JSON + Steam (Kunovega)."},
+{id:"a_versatile",name:"Versatile Assassin",cat:"assassination",run:"R6",cond:"Complete: Piano Man / Someone Could Hurt Themselves / Hold My Hair / Straight Shot / Tasteless, Traceless.",how:"Auto-completes once those five kills are done (spread across save/reloads or attempts).",src:"In-game (JSON)."},
+// DISCOVERY (10)
+{id:"d_paininneck",name:"A Pain in the Neck",cat:"discovery",run:"R2",cond:"Acquire the poison chip blueprints.",how:"During Social Climbing: identify Sinclair (an Architect in blue robes in the exhibition hall), sabotage the exhibition, subdue him when he enters, and take the Poison Chip Blueprint.",src:"whatchaa + Neoseeker + gamepressure."},
+{id:"d_unblocked",name:"Unblocked",cat:"discovery",run:"R2",cond:"Disguise yourself as Jebediah Block.",how:"Reach the Armory rooftop on the western side (a Raider disguise — from sabotaging the Morgue boiler — gets you up), eliminate Block and take his outfit.",src:"Neoseeker + gamepressure."},
+{id:"d_5finger",name:"5 Finger Discount",cat:"discovery",run:"R3",cond:"Steal the necklace.",how:"Disable the gallery alarm (4th-floor balcony laptop, or the fuse box below the staircase; a fire alarm evacuates visitors), then take the Aztec necklace from the cabinet.",src:"Neoseeker + gamepressure + Redacted guide."},
+{id:"d_village",name:"Village Idiot",cat:"discovery",run:"R7",cond:"Disguise yourself as an Initiate.",how:"Take an Initiate robe from a wandering Initiate (Lower Courtyard / Stronghold Showroom).",src:"JSON + Hitman Wiki (Initiate outfit)."},
+{id:"d_chameleon",name:"Chameleon",cat:"discovery",run:"R7",cond:"Find and equip all disguises on The Isle of Sgàil.",how:"Cycle every disguise. If you START in a disguise you must switch away and back for it to count. Use the in-game Chameleon tracker to confirm the full set.",src:"Steam Chameleon guide (rule) + gamepressure (locations)."},
+{id:"d_discover",name:"Discover The Isle of Sgàil",cat:"discovery",run:"R7",cond:"Reveal all undiscovered locations.",how:"Walk every named area. Easy to miss: Morgue (NE), Stone Circle, Catacombs/dungeon (needs 10 tokens), Constant's Tower & library, Penthouse, Warehouse, Chapel & security room, Helipad.",src:"gamepressure map."},
+{id:"d_swandive",name:"Swan Dive",cat:"discovery",run:"R7",cond:"Exit via swan dive.",how:"Get Blake Nathaniel's disguise (KO the two guards at the display-case controls, crate them, subdue Blake when he arrives). Go to the Constant's Tower and talk to the Butler; lead him to the Freezer in the Kitchen to unlock the secret cliff exit, then dive off.",src:"Hitman Wiki (Swan Dive)."},
+{id:"d_comefly",name:"Come Fly with Me",cat:"discovery",run:"R7",xp:1000,cond:"Exit via the helipad.",how:"Kill both sisters without alerting the Constant, then leave via the helipad next to the chapel (a normal exit — NOT the flare exit above the artifacts area).",src:"Hitman Wiki (cond + 1000 XP) + Steam (method). BUG: users report the helipad exit icon sometimes fails to appear."},
+{id:"d_hitching",name:"Hitching a Ride",cat:"discovery",run:"R7",cond:"Exit via the rooftop.",how:"Leave via the rooftop exit (condition authoritative; use the in-game exit marker).",src:"In-game (JSON)."},
+{id:"d_raider",name:"Raider of the Lost Ark",cat:"discovery",run:"R7",cond:"Open all of the Ark shipping crates.",how:"In the warehouse / artifact restoration room (west side); ~9 crates. Bring a Crowbar (plenty on-site); a Raider/Custodian disguise gets you in. Open them all.",src:"gamepressure + Steam dagger thread + Neoseeker."},
+// FEATS (26)
+{id:"f_social",name:"Mission Story — Social Climbing",cat:"feats",run:"R2",cond:"Present incriminating evidence against Sophia to the Constant.",how:"Acquire the Poison Chip Blueprint (A Pain in the Neck) and show it to the Constant, who summons Sophia — enabling Fell for It.",src:"gamepressure + Neoseeker."},
+{id:"f_winds",name:"Mission Story — Winds Of Change",cat:"feats",run:"R2",cond:"Put in your vote as a council member of the Ark Society.",how:"As Jebediah Block, sit in his Conclave chair and cast a vote; voting Nay leads to the iron-maiden opportunity (Case Closed).",src:"gamepressure + screenrant."},
+{id:"f_overruled",name:"Overruled",cat:"feats",run:"R2",cond:"Poison Sophia Washington during the toast.",how:"At the Conclave, distract the members and poison Sophia's glass so she drinks it during the toast.",src:"Neoseeker + JSON."},
+{id:"f_appetite",name:"Working Up an Appetite",cat:"feats",run:"R2",cond:"Serve Sophia Washington poisoned food at the castle's bar.",how:"Poison the hors d'oeuvre at the Architect's Lounge bar; as Jebediah Block, veto the vote and speak to Sophia so she eats it.",src:"Hitman Wiki + gamepressure."},
+{id:"f_couldnt",name:"Couldn't Resist",cat:"feats",run:"R2",cond:"Eliminate the Constant by triggering the kill switch.",how:"Pick up the Killswitch (dropped after certain Sophia kills), then trigger it to eliminate the Constant.",src:"In-game (JSON)."},
+{id:"f_comewith",name:"Come with Me if You Want to Live",cat:"feats",run:"R2",cond:"Escort the Constant to the boat in the harbor.",how:"With the Killswitch, talk to the Constant about leaving and lead him through the keep to the harbor boat.",src:"whatchaa."},
+{id:"f_museum",name:"Mission Story — It Belongs In A Museum",cat:"feats",run:"R3",cond:"An Aztec necklace. A lover's quarrel.",how:"Steal the necklace, become Blake Nathaniel, meet Sophia and strangle her with the necklace (Sleight of Hand) to complete the story.",src:"Neoseeker + screenrant."},
+{id:"f_switcheroo",name:"Switcheroo",cat:"feats",run:"R3",cond:"Switch the Aztec necklace with an apricot.",how:"Get an apricot near the kitchen; at the gallery start a fire alarm to evacuate visitors, cut the fuse box below the adjacent staircase to open the case, then swap the necklace for the apricot. Completes after guards restore security.",src:"Steam Redacted guide (Shameless) — the file lists this challenge as [REDACTED]; method from the guide."},
+{id:"f_phoenix",name:"Mission Story — A Phoenix From The Ashes",cat:"feats",run:"R4",cond:"A burning effigy. Sounds like an accident waiting to happen.",how:"Sabotage the effigy hydraulics, become Master of Ceremonies, invite Zoe and burn her — completing the story.",src:"gamepressure."},
+{id:"f_nowyousee",name:"Now You See Me...",cat:"feats",run:"R4",cond:"Sabotage the effigy.",how:"Reach the backstage beneath the Phoenix effigy (cliff ledge, second window), clear the two custodians and sabotage the hydraulic mechanism with the on-site wrench.",src:"gamepressure. NOTE: required for ...Now You Don't but must be SKIPPED for The Greatest Show."},
+{id:"f_greatballs",name:"Great Balls of Fire",cat:"feats",run:"R4",cond:"Light the brazier in the penthouse with the torch.",how:"During the effigy ceremony pick up the torch at the fountain; after igniting the effigy, keep the torch and carry it to the penthouse to light the brazier.",src:"Hitman Wiki + Neoseeker."},
+{id:"f_greatestshow",name:"The Greatest Show",cat:"feats",run:"R4",cond:"Complete the effigy ceremony as planned.",how:"Run A Phoenix From The Ashes but do NOT sabotage the mechanism, so the ceremony finishes and Zoe walks away alive.",src:"gamepressure. Mutually exclusive with the sabotage/burn branch."},
+{id:"f_finalclub",name:"Mission Story — Final Club",cat:"feats",run:"R5",cond:"A private interview with Zoe Washington.",how:"Follow Final Club to the private interview with Zoe; eliminating her there gives Little White Lies.",src:"JSON + screenrant."},
+{id:"f_lasthonors",name:"Mission Story — Last Honors",cat:"feats",run:"R5",cond:"Play a central part in the funeral of Janus and get close to Zoe.",how:"Get the burial dagger and Janus' robe, reach the harpist and casket unseen, start the music and lie in the coffin — Zoe approaches last (Blood Money).",src:"gamepressure + Steam."},
+{id:"f_deadman",name:"Dead Man Walking",cat:"feats",run:"R5",cond:"Enter the funeral disguised as Janus.",how:"Get the Burial Dagger (warehouse crate, crowbar) and Janus' robe (Janus' body room), then enter the funeral as Janus.",src:"JSON + Neoseeker + Steam."},
+{id:"f_ghost",name:"The Ghost Of Janus's Past",cat:"feats",run:"R5",cond:"Spook Sophia Washington when disguised in Janus's burial robes.",how:"Wearing Janus' burial robes, appear to Sophia to spook her (condition authoritative; use the in-game marker for the exact trigger).",src:"In-game (JSON)."},
+{id:"f_weekend",name:"Weekend At Janus's",cat:"feats",run:"R5",cond:"Assassinate both Sophia and Zoe Washington while disguised as Janus.",how:"As Janus with the burial dagger, eliminate BOTH twins in the same attempt (e.g., Sophia at the harpist room, Zoe at the casket).",src:"JSON + screenrant (dagger in the harpist room)."},
+{id:"f_fin",name:"Fin.",cat:"feats",run:"R5",cond:"Attend the funeral with a fish.",how:"Bring a fish; while in Janus' robe in the casket, the second mourner remarks it smells of fish.",src:"Steam \"Fish funeral\" thread (accepted answer)."},
+{id:"f_rude",name:"Rude Awakening",cat:"feats",run:"R5",cond:"Rise from the coffin during Janus' funeral.",how:"In Janus' robe in the casket, stand up mid-ceremony to shock the mourners.",src:"Steam Redacted guide (Shameless) — the file lists this as [REDACTED]; method from the guide. Being seen ends any SA attempt."},
+{id:"f_goingsolo",name:"Going Solo",cat:"feats",run:"R5",cond:"Assassinate three musicians while disguised as a Musician.",how:"Wear a Musician disguise and eliminate three musicians (condition authoritative; use the in-game marker for their positions).",src:"In-game (JSON)."},
+{id:"f_magpie",name:"Magpie",cat:"feats",run:"R7",xp:2000,cond:"Collect 30 commemorative tokens.",how:"Gather 30 tokens — 10 have fixed spots (see Promotion); the rest are carried by Initiates/NPCs and can be pickpocketed.",src:"Hitman Wiki (2000 XP)."},
+{id:"f_promotion",name:"Promotion",cat:"feats",run:"R7",cond:"Successfully pass the initiation test.",how:"In an Initiate robe collect 10 tokens (2 at the Initiate by the Phoenix Effigy; 1 in the Crypt by the Chapel ladder; 1 by the candle across from the Effigy stairs; 1 in the South-Wall bird-statue beak; 5 on the wandering Initiate), hand them to the guard by the door toward the Upper Courtyard, then take the lie-detector test under Zoe and answer truthfully (No / Yes / No / No).",src:"Hitman Wiki (tokens) + gamepressure (answers)."},
+{id:"f_russia",name:"From Russia without Love",cat:"feats",run:"R6",cond:"Eliminate someone with the hammer and sickle in the tower.",how:"Find the hammer and sickle in the (Constant's) tower and eliminate an NPC with it (condition authoritative; use the in-game marker).",src:"In-game (JSON)."},
+{id:"f_spade",name:"Spade Knight",cat:"feats",run:"R6",cond:"Pacify 10 people with the shovel while disguised as a Knight.",how:"In the Knight's Armor, non-lethally KO 10 people with a shovel.",src:"JSON + Steam (knight-cluster grouping)."},
+{id:"f_egg",name:"Egg on Your Face",cat:"feats",run:"R6",cond:"Knock out 6 NPCs with filigree eggs.",how:"Collect filigree eggs (throwables) and KO 6 NPCs with them.",src:"JSON + Steam (knight-cluster grouping)."},
+{id:"f_access",name:"Access Denied",cat:"feats",run:"R6",cond:"Eliminate 3 people using the portcullis.",how:"Use the portcullis gate mechanism to eliminate 3 people (the '3 people with the portcullis' kill from the knight run).",src:"JSON + Steam (Volkerson)."},
+];
+const byId={};CH.forEach(c=>byId[c.id]=c);
+const CATLABEL={assassination:"Assassination",discovery:"Discovery",feats:"Feats",targets:"Targets",classic:"Classic"};
+const CATMAX={assassination:19,discovery:10,feats:26,targets:2,classic:5};
+
+/* ===================== RUNS ===================== */
+const RUNS=[
+{n:1,id:"R1",title:"Silent Assassin, Suit Only",
+ goal:"A clean, unspotted suit-only clear using a documented pipe route to the funeral side. Nets the three rank challenges plus two accident kills.",
+ load:{start:"The Pier (default)",mastery:"Available from the start",suit:"Signature Suit",items:["Lockpick","Coin","Emetic Poison Vial","Fiber Wire"]},
+ sections:[
+  {name:"Infiltration — the pipe route",steps:[
+   {id:"s1_1",t:"Climb the entrance pipe and kill the cameras",sum:"Go up the pipe by the entrance and disable the camera system on the left before doing anything else.",
+    where:"The pipe beside the main entrance/pier.",disguise:"None (suit).",item:"None.",npc:"—",
+    action:"Climb the pipe; disable/destroy the camera recorder on the left so no footage is kept.",
+    warn:null,save:true,pops:[],src:"Steam SASO thread (Kunovega)."},
+   {id:"s1_2",t:"Enter the guard room through the window",sum:"Slip through the window into the guards' room on the right; you can stash a smuggled item here.",
+    where:"Window on the right leading into the guards' room.",disguise:"None (suit).",item:"Optional smuggled item stashed here.",npc:"Room guards — avoid.",
+    action:"Enter via the window and move through.",warn:null,save:false,pops:[],src:"Steam SASO thread (Kunovega)."},
+   {id:"s1_3",t:"Cross the roof and clear the servants' room",sum:"Pass the roof guards (there's an exit here) into the two-servant room and knock both out.",
+    where:"Out to the roof guards, then into the room with two servants.",disguise:"None (suit).",item:"None.",npc:"Two servants.",
+    action:"Subdue both servants and hide the bodies.",warn:"A found body voids Silent Assassin — hide both.",save:false,pops:[],src:"Steam SASO thread (Kunovega)."},
+   {id:"s1_4",t:"Reach the funeral area",sum:"Go out the locked door and up the stairs to the left of the funeral area.",
+    where:"Locked door → stairs on the left side of the funeral area.",disguise:"None (suit).",item:"None.",npc:"—",
+    action:"Move up to the funeral/procession level where both twins can be reached.",warn:null,save:false,pops:[],src:"Steam SASO thread (Kunovega)."}]},
+  {name:"Two clean accident kills",steps:[
+   {id:"s1_5",t:"Drop a gargoyle on Sophia",sum:"On the procession platform, push a gargoyle onto Sophia's head when her back is turned.",
+    where:"Funeral procession platform; up the stairs to the right are two gargoyles.",disguise:"None (suit).",item:"None.",npc:"Sophia Washington.",
+    action:"Wait until Sophia turns her back, step onto the platform and push a gargoyle to drop on her — an accident, so no panic.",
+    warn:null,save:true,pops:["a_rockbottom","a_accident","t_schemer"],src:"whatchaa + screenrant + JSON."},
+   {id:"s1_6",t:"Eliminate Zoe with a quiet accident, then exit in suit",sum:"Isolate Zoe on her route and use an accident when unobserved, then leave — banking SA, SASO and Suit Only.",
+    where:"Zoe's patrol near the funeral/upper areas.",disguise:"None (suit).",item:"Coin to lure/create separation.",npc:"Zoe Washington.",
+    action:"Isolate Zoe and use an accident (e.g., a ledge) with no witnesses; confirm no bodies were found; exit in your suit.",
+    warn:"SASO here is timing-sensitive (noted difficult on Master in the source thread). Verify 'no body found' before killing the second twin.",save:false,pops:["t_socialite","c_sa","c_saso","c_suit"],src:"Steam SASO thread (Kunovega); JSON rank conditions."}]}]},
+
+{n:2,id:"R2",title:"Social Climbing, the Vote & the Constant",
+ goal:"Sophia's tower and Conclave deaths plus the blueprint, the Block disguise, and all three Constant fates. Heavy save/reload.",
+ load:{start:"Security Room L5 (needs Architect/Mercenary disguise) or default pier",mastery:"Electronic Key Hacker at Mastery 7 helps enter the security room; Architect outfit free at Mastery 18",suit:"Signature → Architect/Raider/Block",items:["Lockpick","Coin","Rat Poison / Lethal Poison","Crowbar"]},
+ sections:[
+  {name:"Social Climbing → Fell for It (+ blueprint)",steps:[
+   {id:"s2_1",t:"Reach the security room and read Sophia's plans",sum:"Enter the level-5 security room and hack the laptop to start the thread.",
+    where:"Security room on level 5 of the castle.",disguise:"Architect or Mercenary (to pass the area).",item:"Access card / Electronic Key Hacker (Mastery 7), or enter via the right-side window along the ledge.",npc:"Security-room guards.",
+    action:"Get inside past the card reader, deal with the guards, hack the laptop for Sophia's plans.",warn:null,save:false,pops:[],src:"gamepressure."},
+   {id:"s2_2",t:"Take the Poison Chip Blueprint from Sinclair",sum:"Identify Sinclair, sabotage the exhibition, and subdue him for the blueprint (and his Architect outfit).",
+    where:"Exhibition hall beyond the curtains.",disguise:"Architect (Sinclair wears blue Architect robes).",item:"Poison Chip Blueprint (taken from Sinclair).",npc:"Sinclair (an Architect).",
+    action:"Identify Sinclair, sabotage the exhibition, wait for him to enter, subdue and hide him, take the blueprint.",
+    warn:null,save:false,pops:["d_paininneck"],src:"whatchaa + Neoseeker + gamepressure."},
+   {id:"s2_3",t:"Show the blueprint to the Constant, then push Sophia off the tower",sum:"Present the evidence so the Constant summons Sophia to his tower, then push her off.",
+    where:"Constant's Tower.",disguise:"Architect/allowed tower disguise.",item:"Poison Chip Blueprint.",npc:"The Constant; Sophia Washington.",
+    action:"Show the Constant the blueprint (completes Social Climbing); when he summons Sophia to the tower, push her off the top.",
+    warn:"Sophia dies once per attempt — the other Sophia methods below need reloads from before this kill.",save:true,pops:["f_social","a_fellforit","t_schemer"],src:"screenrant + Neoseeker + gamepressure."}]},
+  {name:"The Vote — Winds of Change (as Jebediah Block)",steps:[
+   {id:"s2_4",t:"Get onto the armory roof and take Jebediah Block's outfit",sum:"Use a Raider disguise to reach the armory roof and eliminate Block for his outfit.",
+    where:"Armory rooftop, western side of the castle.",disguise:"Raider (sabotage the Morgue boiler and take the responding Raider's outfit) → then Jebediah Block.",item:"None.",npc:"A Raider (in the Morgue); Jebediah Block (on the roof).",
+    action:"Sabotage the Morgue boiler, take the Raider outfit, climb to the armory roof, eliminate Block and wear his outfit.",
+    warn:null,save:false,pops:["d_unblocked"],src:"Neoseeker + gamepressure."},
+   {id:"s2_5",t:"Vote Nay → iron maiden (Case Closed)",sum:"Sit as Block, vote Nay, follow Sophia to the penthouse and push her into the iron maiden.",
+    where:"Conclave → Penthouse (level 8).",disguise:"Jebediah Block.",item:"None.",npc:"Sophia Washington.",
+    action:"Sit in Block's chair, let Sophia speak, vote Nay (bottom-left). Follow her to the penthouse; when she dismisses her guards and stands at the iron maiden, push her in and close it.",
+    warn:"gamepressure calls the device a sarcophagus; the challenge names it the iron maiden. Save before the vote to branch into the two poison methods below.",save:true,pops:["f_winds","a_caseclosed","t_schemer"],src:"gamepressure + whatchaa + screenrant + JSON."},
+   {id:"s2_6",t:"Reload: poison Sophia's glass during the toast (Overruled)",sum:"From the pre-vote save, distract the members and poison Sophia's glass so she drinks at the toast.",
+    where:"Conclave.",disguise:"A disguise allowed in the Conclave (e.g., Block/Architect).",item:"Lethal/Emetic-then-lethal poison.",npc:"Sophia Washington; Conclave members.",
+    action:"Distract the members and poison Sophia's glass; she drinks it during the toast.",
+    warn:"Mutually exclusive with Case Closed and Working Up an Appetite in the same attempt — reload from the pre-vote save.",save:false,pops:["f_overruled","t_schemer"],src:"Neoseeker + JSON."},
+   {id:"s2_7",t:"Reload: poison the bar food, veto, and talk to Sophia (Working Up an Appetite)",sum:"Poison the hors d'oeuvre at the Architect's Lounge bar; as Block, veto the vote and talk to Sophia so she eats.",
+    where:"Architect's Lounge bar.",disguise:"Jebediah Block.",item:"Poison for the hors d'oeuvre.",npc:"Sophia Washington.",
+    action:"Poison the food first, then as Block veto the vote and speak to Sophia so she eats the poisoned dish.",
+    warn:"Poison the food BEFORE vetoing/talking, or the scene won't trigger.",save:false,pops:["f_appetite","t_schemer"],src:"Hitman Wiki + gamepressure."}]},
+  {name:"The Constant's three fates (save/reload each)",steps:[
+   {id:"s2_8",t:"Escort the Constant to the boat",sum:"With the Killswitch, walk the Constant through the keep to the harbor boat.",
+    where:"Constant's Tower → keep → harbor boat.",disguise:"Allowed tower disguise.",item:"Killswitch (dropped after certain Sophia kills).",npc:"The Constant.",
+    action:"Grab the Killswitch, talk to the Constant about leaving, and lead him to the boat.",
+    warn:null,save:true,pops:["f_comewith"],src:"whatchaa."},
+   {id:"s2_9",t:"Reload: trigger the killswitch on the Constant (Couldn't Resist)",sum:"With the Killswitch in hand, activate it to eliminate the Constant.",
+    where:"Wherever you hold the Killswitch.",disguise:"—",item:"Killswitch.",npc:"The Constant.",
+    action:"Trigger the Killswitch to eliminate the Constant.",warn:"Do this on its own reload — the Constant has one fate per attempt.",save:false,pops:["f_couldnt"],src:"In-game (JSON)."},
+   {id:"s2_10",t:"Reload: let the Constant escape, then kill both in 5 minutes (The Final Countdown)",sum:"Subdue one twin, grab the Killswitch, KO the Constant so he's evacuated, then kill both twins on the timer.",
+    where:"Across the castle.",disguise:"Any workable.",item:"Killswitch.",npc:"Both twins; the Constant.",
+    action:"Subdue one twin, pick up the Killswitch, KO the Constant and leave his body where he'll be found and wake — he's evacuated, starting a 5-minute timer; kill the subdued twin then the other.",
+    warn:"Requires the Constant to escape — incompatible with the two fates above; use a fresh save.",save:false,pops:["a_finalcount"],src:"Neoseeker + JSON."}]}]},
+
+{n:3,id:"R3",title:"It Belongs In A Museum — the necklace",
+ goal:"Steal (or swap) the necklace, then use it to strangle each twin. Four challenges plus the mission story.",
+ load:{start:"Museum / 3rd floor (as Ark Member) if unlocked, else default",mastery:"Museum start unlocks at a required mastery level (gamepressure)",suit:"Signature → Ark Member → Blake Nathaniel",items:["Lockpick","Coin","Silenced Pistol (backup)","Crowbar"]},
+ sections:[
+  {name:"Secure the necklace",steps:[
+   {id:"s3_1",t:"Disable the gallery alarm",sum:"Cut the security so the necklace case can be opened without breaking the glass.",
+    where:"Gallery (2nd/3rd floor off the courtyard stairs); laptop on the 4th-floor balcony, or the fuse box below the adjacent staircase.",disguise:"Ark Member / allowed gallery disguise.",item:"None.",npc:"Balcony custodian & guard.",
+    action:"Sabotage the fuse box to pull the guard off the laptop and deal with the custodian, disabling the case alarm. Don't smash the glass.",
+    warn:null,save:false,pops:[],src:"gamepressure + Neoseeker."},
+   {id:"s3_2",t:"Steal the necklace (5 Finger Discount)",sum:"With security down and the room clear, take the Aztec necklace from the cabinet.",
+    where:"Gallery centre display cabinet.",disguise:"Ark Member.",item:"Aztec / Cloud Serpent necklace (picked up).",npc:"—",
+    action:"Trigger a fire alarm to evacuate visitors if needed, then take the necklace.",warn:null,save:true,pops:["d_5finger"],src:"Neoseeker + gamepressure + Redacted guide + JSON."},
+   {id:"s3_3",t:"Alternate branch: swap the necklace for an apricot (Switcheroo)",sum:"On a separate save, replace the necklace with an apricot instead of just taking it.",
+    where:"Kitchen (get the apricot) → Gallery.",disguise:"Ark Member.",item:"Apricot.",npc:"—",
+    action:"Grab an apricot near the kitchen; at the gallery start a fire alarm, cut the fuse box below the staircase to open the case, then swap the necklace for the apricot. Completes once guards restore security.",
+    warn:"Do on its own save if you want it distinct from a plain steal.",save:false,pops:["f_switcheroo"],src:"Steam Redacted guide (Shameless)."}]},
+  {name:"Necklace kills (as Blake Nathaniel)",steps:[
+   {id:"s3_4",t:"Take Blake Nathaniel's disguise",sum:"Knock out the display-case-control guards and subdue Blake when he arrives.",
+    where:"Near the display-case controls.",disguise:"→ Blake Nathaniel.",item:"None.",npc:"Two control guards; Blake Nathaniel.",
+    action:"KO the two guards, hide them in the nearby crate, then subdue Blake when he arrives and take his outfit.",warn:null,save:false,pops:[],src:"Hitman Wiki (Swan Dive) + Neoseeker."},
+   {id:"s3_5",t:"Strangle Sophia with the necklace (Sleight of Hand)",sum:"Meet Sophia as Blake; when she asks you to put the necklace on her, strangle her.",
+    where:"Sophia's office/meeting.",disguise:"Blake Nathaniel.",item:"Necklace.",npc:"Sophia Washington.",
+    action:"Talk to Sophia; she suggests a private meeting and asks you to put the necklace on her — strangle her at that moment. Completes It Belongs In A Museum.",
+    warn:"Save before — reload afterward for the Zoe necklace kill.",save:true,pops:["a_sleight","f_museum","t_schemer"],src:"Neoseeker + screenrant + walkthroughs.games."},
+   {id:"s3_6",t:"Reload: strangle Zoe with the necklace (Mistaken Identity)",sum:"Use the same necklace method on Zoe instead of Sophia.",
+    where:"Zoe's meeting.",disguise:"Blake Nathaniel.",item:"Necklace.",npc:"Zoe Washington.",
+    action:"Set up the necklace meeting with Zoe and strangle her with it.",warn:"Different target — reload from the necklace-in-hand save.",save:false,pops:["a_mistaken","t_socialite"],src:"whatchaa + JSON."}]}]},
+
+{n:4,id:"R4",title:"A Phoenix From The Ashes — the effigy",
+ goal:"The whole effigy cluster: sabotage, the burn, the penthouse brazier, the cannon, and (on a clean branch) the completed ceremony.",
+ load:{start:"Chapel (Mastery 2) is closest to the ceremony",mastery:"Mastery 2 unlocks a chapel start",suit:"Signature → Master of Ceremonies",items:["Lockpick","Coin","Crowbar","Free slot"]},
+ sections:[
+  {name:"Setup",steps:[
+   {id:"s4_1",t:"Take the Master of Ceremonies disguise",sum:"Clear the chapel's southern chamber and take the MC outfit; grab the screwdriver and read the laptop.",
+    where:"Southern chamber of the chapel.",disguise:"→ Master of Ceremonies.",item:"Screwdriver; laptop intel.",npc:"A guard and a custodian.",
+    action:"Distract with the generator/gramophone, subdue the guard (crate nearby) and the custodian, take the MC outfit.",warn:null,save:false,pops:[],src:"Neoseeker + gamepressure."},
+   {id:"s4_2",t:"Sabotage the effigy mechanism (Now You See Me)",sum:"Reach the backstage under the effigy and wrench the hydraulics so Zoe can't escape.",
+    where:"Backstage beneath the Phoenix effigy (cross the cliff ledge, enter the second window).",disguise:"Master of Ceremonies / allowed.",item:"Wrench (on-site).",npc:"Two custodians.",
+    action:"Clear both custodians (coin distraction; hide in the container) and sabotage the hydraulic mechanism.",
+    warn:"Required for ...Now You Don't but MUST be skipped for The Greatest Show — do Greatest Show on a separate save.",save:true,pops:["f_nowyousee"],src:"gamepressure."}]},
+  {name:"Kill Zoe / ceremony branches (save before lighting)",steps:[
+   {id:"s4_3",t:"Begin the ceremony and take the torch",sum:"Step outside, pick up the torch at the fountain and light the effigy base; wait for Zoe.",
+    where:"Effigy stage; fountain out front.",disguise:"Master of Ceremonies.",item:"Torch (keep it).",npc:"Zoe Washington.",
+    action:"Pick up the torch, ignite the effigy base, and wait for Zoe to arrive and finish talking.",warn:null,save:true,pops:[],src:"Neoseeker."},
+   {id:"s4_4",t:"Burn Zoe in the effigy (...Now You Don't)",sum:"With the mechanism sabotaged, light the circle around Zoe once she's inside.",
+    where:"Effigy stage.",disguise:"Master of Ceremonies.",item:"Torch.",npc:"Zoe Washington.",
+    action:"When Zoe enters the effigy, light the circle around her; she's trapped and burns. Body won't be found.",warn:null,save:false,pops:["a_nowyoudont","f_phoenix","t_socialite"],src:"gamepressure."},
+   {id:"s4_5",t:"Carry the torch to the penthouse brazier (Great Balls of Fire)",sum:"Keep the same torch after igniting the effigy and light the penthouse brazier with it.",
+    where:"Effigy stage → Penthouse.",disguise:"Allowed penthouse disguise.",item:"The effigy's torch.",npc:"—",
+    action:"Hold onto the torch and take it to the penthouse; light the brazier.",warn:null,save:false,pops:["f_greatballs"],src:"Hitman Wiki + Neoseeker."},
+   {id:"s4_6",t:"Reload: cannon Zoe (Boom Goes the Dynamite)",sum:"Pre-load the Terrace cannon with gunpowder and a cannonball, then fire at the effigy once Zoe is inside.",
+    where:"Morgue (Gunpowder) + outside the Crypts (Cannon Ball) → Terrace cannon.",disguise:"Master of Ceremonies.",item:"Gunpowder + Cannon Ball.",npc:"Zoe Washington.",
+    action:"Load the cannon; run the ceremony; the instant Zoe is in the effigy, fire the cannon at it.",warn:"Have the cannon loaded and aimed BEFORE lighting — the window is a few seconds.",save:false,pops:["a_boom","t_socialite"],src:"Neoseeker + gamepressure."},
+   {id:"s4_7",t:"Reload: complete the ceremony as planned (The Greatest Show)",sum:"Replay without sabotaging so Zoe survives the ceremony.",
+    where:"Effigy stage.",disguise:"Master of Ceremonies.",item:"Torch.",npc:"Zoe Washington.",
+    action:"Do NOT sabotage the mechanism; run the ceremony to its planned end so Zoe walks away alive.",warn:"Mutually exclusive with the sabotage/burn branch — separate save required.",save:false,pops:["f_greatestshow"],src:"gamepressure."}]}]},
+
+{n:5,id:"R5",title:"Last Honors, the Funeral & Final Club",
+ goal:"The Janus/funeral cluster and the Zoe interrogation. Many sub-challenges conflict, so save/reload heavily.",
+ load:{start:"Default pier",mastery:"—",suit:"Signature → Raider/Custodian → Janus → Musician",items:["Lockpick","Coin","Crowbar","Fish (for Fin.)"]},
+ sections:[
+  {name:"Final Club — Zoe's interrogation",steps:[
+   {id:"s5_1",t:"Kill Zoe during the interrogation (Little White Lies)",sum:"Follow Final Club to the private interview with Zoe and eliminate her there.",
+    where:"Final Club story location (private interview with Zoe).",disguise:"As required by the story.",item:"—",npc:"Zoe Washington.",
+    action:"Complete Final Club to reach the interrogation and eliminate Zoe during it.",warn:"Save before — Zoe dies once per attempt.",save:true,pops:["a_littlewhite","f_finalclub","t_socialite"],src:"screenrant + JSON."}]},
+  {name:"The funeral — Janus cluster",steps:[
+   {id:"s5_2",t:"Get the Burial Dagger from the warehouse",sum:"Open the correct crate in the Raiders' room with a crowbar to get the dagger.",
+    where:"Warehouse (west side); the correct crate is in the Raiders' room, not the workers' room.",disguise:"Raider or Custodian (to enter).",item:"Crowbar (plenty on-site) → Burial Dagger.",npc:"Raiders.",
+    action:"Crowbar the correct crate to obtain the Burial Dagger.",warn:"The crate's location randomizes each restart — follow the mission-story marker.",save:false,pops:[],src:"Steam dagger thread + Neoseeker + walkthroughs.games."},
+   {id:"s5_3",t:"Take Janus' robe (Dead Man Walking)",sum:"Clear Janus' body room and wear his robe to enter the funeral as Janus.",
+    where:"Janus' body room (near the morgue, level 3; three guards).",disguise:"→ Janus.",item:"None.",npc:"Three guards.",
+    action:"Use the room's distractions (fuse box, water, wine barrels) to clear the guards, take Janus' robe, and enter the funeral as Janus.",warn:null,save:false,pops:["f_deadman"],src:"Neoseeker + Steam + JSON."},
+   {id:"s5_4",t:"Reach the casket unseen and lie down (Fin. with a fish)",sum:"Take the tall-grass path to the harpist, start the music, and lie in the coffin — carrying a fish.",
+    where:"Funeral / stone circle; path around the back with tall grass.",disguise:"Janus.",item:"Fish.",npc:"Harpist; mourners.",
+    action:"Reach the harpist unseen, start the music, lie in the coffin holding a fish; the second mourner remarks it smells of fish.",warn:"Remain unseen on the approach.",save:true,pops:["f_fin","f_lasthonors"],src:"gamepressure + Steam \"Fish funeral\"."},
+   {id:"s5_5",t:"Kill Zoe from the coffin (Blood Money)",sum:"Zoe approaches last and sends the others off — kill her at the attack prompt.",
+    where:"In the casket at the funeral.",disguise:"Janus.",item:"Burial Dagger.",npc:"Zoe Washington.",
+    action:"Wait for Zoe to approach the casket last; at the attack prompt, kill her from the coffin.",warn:null,save:false,pops:["a_bloodmoney","t_socialite"],src:"gamepressure + screenrant."},
+   {id:"s5_6",t:"Reload: rise from the coffin (Rude Awakening)",sum:"From the casket save, stand up mid-ceremony to shock the mourners.",
+    where:"In the casket.",disguise:"Janus.",item:"—",npc:"Mourners.",
+    action:"During the ceremony, stand up out of the coffin.",warn:"Standing up means being seen — this ends any Silent Assassin attempt. Reload from the casket save.",save:false,pops:["f_rude"],src:"Steam Redacted guide (Shameless)."},
+   {id:"s5_7",t:"Reload: spook Sophia as Janus (The Ghost Of Janus's Past)",sum:"In Janus' burial robes, appear to Sophia to spook her.",
+    where:"Where Sophia can see 'Janus'.",disguise:"Janus' burial robes.",item:"—",npc:"Sophia Washington.",
+    action:"Wearing Janus' robes, trigger the scare on Sophia (follow the in-game marker for the exact spot).",warn:"Condition is authoritative; exact trigger via the in-game challenge marker.",save:false,pops:["f_ghost"],src:"In-game (JSON)."},
+   {id:"s5_8",t:"Reload: kill BOTH twins as Janus (Weekend At Janus's)",sum:"As Janus with the dagger, eliminate Sophia and Zoe in the same attempt.",
+    where:"Harpist room (Sophia) + casket (Zoe).",disguise:"Janus.",item:"Burial Dagger.",npc:"Both twins.",
+    action:"As Janus, kill Sophia (e.g., at the harpist room) and Zoe (e.g., at the casket) in one attempt.",warn:"Needs both kills this attempt — separate save branch.",save:false,pops:["f_weekend"],src:"JSON + screenrant."},
+   {id:"s5_9",t:"Kill three musicians as a Musician (Going Solo)",sum:"Wear a Musician disguise and eliminate three musicians.",
+    where:"Funeral/ceremony musicians.",disguise:"Musician.",item:"—",npc:"Three musicians.",
+    action:"In a Musician disguise, eliminate three musicians.",warn:"Condition authoritative; use the in-game marker for their positions.",save:false,pops:["f_goingsolo"],src:"In-game (JSON)."}]}]},
+
+{n:6,id:"R6",title:"Weapons, Versatile & the Knight rampage",
+ goal:"Every weapon/method kill and the loud Knight cluster. Combat-heavy — save constantly; not SA-compatible.",
+ load:{start:"Default pier",mastery:"—",suit:"Signature → Knight's Armor",items:["Fiber Wire","Lethal Poison","Silenced Pistol","Crowbar"]},
+ sections:[
+  {name:"Versatile Assassin — five method kills (save/reload)",steps:[
+   {id:"s6_1",t:"Fiber-wire a twin (Piano Man)",sum:"Garrote either target when isolated.",where:"Wherever a twin is alone.",disguise:"Any workable.",item:"Fiber Wire.",npc:"A twin.",action:"Isolate a twin and use the fiber wire.",warn:null,save:true,pops:["a_pianoman"],src:"In-game (JSON)."},
+   {id:"s6_2",t:"Headshot a twin (Straight Shot)",sum:"Land a headshot with any firearm.",where:"Clear line to a twin.",disguise:"Any.",item:"Any firearm (silenced preferred).",npc:"A twin.",action:"Reload and take a clean headshot.",warn:null,save:false,pops:["a_straight"],src:"JSON + xboxachievements."},
+   {id:"s6_3",t:"Drown a twin (Hold My Hair)",sum:"Isolate a twin beside water and drown them.",where:"Water source with an isolated twin.",disguise:"Any.",item:"None.",npc:"A twin.",action:"Lure/isolate near water and drown.",warn:null,save:false,pops:["a_holdmyhair"],src:"In-game (JSON)."},
+   {id:"s6_4",t:"Lethally poison a twin (Tasteless, Traceless)",sum:"Dose a twin's food/drink with lethal poison.",where:"Near a consumable a twin uses.",disguise:"Any.",item:"Lethal Poison.",npc:"A twin.",action:"Poison the food/drink and let them consume it.",warn:"Someone Could Hurt Themselves (accident) — the fifth Versatile kill — was banked in Run 1 via the gargoyle.",save:false,pops:["a_tasteless","a_versatile"],src:"JSON + xboxachievements."}]},
+  {name:"Weapon-specific kills",steps:[
+   {id:"s6_5",t:"Viking axe kill (Blood Eagle)",sum:"Eliminate a target/NPC with the Viking axe.",where:"Follow the in-game challenge marker to the axe.",disguise:"Any.",item:"Viking axe.",npc:"A target or NPC.",action:"Pick up the Viking axe and eliminate with it.",warn:"Condition authoritative; exact axe location via the in-game marker.",save:false,pops:["a_bloodeagle"],src:"In-game (JSON)."},
+   {id:"s6_6",t:"Gibbet drop (Caged)",sum:"Drop the hanging gibbet cage on a target.",where:"A hanging gibbet — one is available in the funeral area per a Steam poster.",disguise:"Any.",item:"None.",npc:"A target.",action:"Position the target under the gibbet and release it.",warn:null,save:false,pops:["a_caged"],src:"JSON + Steam discussion."},
+   {id:"s6_7",t:"Hammer & sickle in the tower (From Russia without Love)",sum:"Eliminate an NPC with the hammer and sickle inside the tower.",where:"The (Constant's) tower.",disguise:"Allowed tower disguise.",item:"Hammer and sickle.",npc:"An NPC.",action:"Find the hammer and sickle in the tower and use it to eliminate someone.",warn:"Condition authoritative; use the in-game marker.",save:false,pops:["f_russia"],src:"In-game (JSON)."}]},
+  {name:"Knight cluster (Knight's Armor — hostile on sight)",steps:[
+   {id:"s6_8",t:"Broadsword kill as a Knight (Tis But a Scratch)",sum:"In the Knight's Armor, kill a target with the broadsword.",where:"Wherever you can reach a twin in armor.",disguise:"Knight's Armor.",item:"Broadsword.",npc:"A twin.",action:"Equip the Knight's Armor and kill a target with the broadsword.",warn:"The Knight's Armor is hostile on sight — expect combat. Save first.",save:true,pops:["a_scratch"],src:"JSON + Steam (Kunovega)."},
+   {id:"s6_9",t:"Shovel-pacify 10 as a Knight (Spade Knight)",sum:"Non-lethally KO 10 people with a shovel in the Knight's Armor.",where:"Areas dense with NPCs.",disguise:"Knight's Armor.",item:"Shovel.",npc:"10 NPCs.",action:"Pacify 10 people with the shovel.",warn:null,save:false,pops:["f_spade"],src:"JSON + Steam (knight cluster)."},
+   {id:"s6_10",t:"Egg-KO 6 NPCs (Egg on Your Face)",sum:"Knock out 6 NPCs with thrown filigree eggs.",where:"Wherever filigree eggs are available.",disguise:"Any (pairs with the knight run).",item:"Filigree eggs (throwables).",npc:"6 NPCs.",action:"Collect filigree eggs and throw them to KO 6 NPCs.",warn:null,save:false,pops:["f_egg"],src:"JSON + Steam (knight cluster)."},
+   {id:"s6_11",t:"Portcullis-crush 3 (Access Denied)",sum:"Eliminate 3 people using the portcullis gate.",where:"A portcullis gate.",disguise:"Any.",item:"None.",npc:"3 people.",action:"Use the portcullis mechanism to eliminate 3 people.",warn:"Combine with the knight rampage; save often — this run breaks SA by design.",save:false,pops:["f_access"],src:"JSON + Steam (Volkerson)."}]}]},
+
+{n:7,id:"R7",title:"Disguises, Discovery, Tokens, Exits & Sniper",
+ goal:"The exploration sweep: every disguise, all locations, the crates, 30 tokens, the three secret exits, and the sniper clear.",
+ load:{start:"Chapel tower (Mastery 2) for the sniper leg; default pier for the sweep",mastery:"Mastery 2 chapel start; Mastery 7 Electronic Key Hacker; Mastery 20 cap",suit:"Signature → rotate all outfits",items:["Sieger 300 Tactical (silenced)","Lockpick","Crowbar","Coin"]},
+ sections:[
+  {name:"Disguises & discovery",steps:[
+   {id:"s7_1",t:"Cycle every disguise (Chameleon) + Initiate (Village Idiot)",sum:"Equip the full disguise set; take an Initiate robe along the way.",
+    where:"Across the castle.",disguise:"Guard, Elite Guard, Castle Staff, Event Staff, Raider, Custodian, Ark Architect, Initiate, Ark Member, Master of Ceremonies, Knight's Armor, Janus, Jebediah Block, Blake Nathaniel, Musician.",item:"None.",npc:"Various.",
+    action:"Equip each disguise once. Grab an Initiate robe from a wandering Initiate (Lower Courtyard / Showroom) for Village Idiot.",warn:"If you START in a disguise, switch away and back for it to count. Confirm the full set with the in-game Chameleon tracker.",save:true,pops:["d_chameleon","d_village"],src:"Steam Chameleon guide (rule) + gamepressure (locations) + JSON."},
+   {id:"s7_2",t:"Reveal all locations (Discover The Isle of Sgàil)",sum:"Walk every named area, including the easy-to-miss ones.",
+    where:"Whole map.",disguise:"Rotate as needed for restricted zones.",item:"None.",npc:"—",
+    action:"Visit Morgue (NE), Stone Circle, Catacombs/dungeon (needs 10 tokens), Constant's Tower & library, Penthouse, Warehouse, Chapel & security room, and the Helipad.",warn:null,save:false,pops:["d_discover"],src:"gamepressure map."},
+   {id:"s7_3",t:"Open all Ark crates (Raider of the Lost Ark)",sum:"Crowbar every Ark shipping crate in the warehouse/artifact room.",
+    where:"Warehouse / artifact restoration room (west side).",disguise:"Raider or Custodian.",item:"Crowbar.",npc:"Raiders.",
+    action:"Open all ~9 Ark shipping crates with the crowbar.",warn:null,save:false,pops:["d_raider"],src:"gamepressure + Steam + Neoseeker."}]},
+  {name:"Tokens",steps:[
+   {id:"s7_4",t:"Pass the initiation (Promotion)",sum:"Collect 10 tokens in an Initiate robe, hand them in, and answer the lie-detector truthfully.",
+    where:"Tokens across the map; hand-in by the door toward the Upper Courtyard; test in the dungeon under Zoe.",disguise:"Initiate.",item:"10 commemorative tokens.",npc:"Hand-in guard; Zoe (test).",
+    action:"Gather the 10 tokens (2 at the Effigy Initiate; 1 in the Crypt by the Chapel ladder; 1 by the candle across from the Effigy stairs; 1 in the South-Wall bird-statue beak; 5 on the wandering Initiate), hand them in, take the test and answer No / Yes / No / No.",
+    warn:"Lying causes Zoe to electrocute herself — answer truthfully to pass.",save:false,pops:["f_promotion"],src:"Hitman Wiki (tokens) + gamepressure (answers)."},
+   {id:"s7_5",t:"Collect 30 tokens (Magpie)",sum:"Gather 30 commemorative tokens total.",
+    where:"Across the map.",disguise:"Any.",item:"30 tokens.",npc:"Initiates/NPCs (pickpocket).",
+    action:"Beyond the 10 fixed spots, pickpocket/collect the rest from Initiates and members until you reach 30.",warn:null,save:false,pops:["f_magpie"],src:"Hitman Wiki (2000 XP)."}]},
+  {name:"Three secret exits (one per attempt)",steps:[
+   {id:"s7_6",t:"Helipad exit (Come Fly with Me)",sum:"Kill both twins without alerting the Constant, then leave by the chapel helipad.",
+    where:"Helipad next to the chapel.",disguise:"Any allowed.",item:"None.",npc:"Both twins; the Constant (must not be alerted).",
+    action:"Eliminate both twins without alerting the Constant, then use the helipad exit.",warn:"This is the helipad exit, NOT the flare exit above the artifacts area. Some users report the exit icon failing to appear (known bug).",save:false,pops:["d_comefly"],src:"Hitman Wiki + Steam (method/bug)."},
+   {id:"s7_7",t:"Rooftop exit (Hitching a Ride)",sum:"Leave via the rooftop exit.",
+    where:"Rooftop exit point.",disguise:"Any allowed.",item:"None.",npc:"—",
+    action:"Complete objectives and exit via the rooftop.",warn:"Condition authoritative; use the in-game exit marker.",save:false,pops:["d_hitching"],src:"In-game (JSON)."},
+   {id:"s7_8",t:"Cliff dive exit (Swan Dive)",sum:"Unlock the secret cliff exit via the Butler, then dive off.",
+    where:"Constant's Tower (Butler) → Freezer in the Kitchen → cliff.",disguise:"Blake Nathaniel.",item:"None.",npc:"The Butler.",
+    action:"As Blake Nathaniel, talk to the Butler in the Constant's Tower and lead him to the Kitchen Freezer to unlock the secret exit, then swan-dive off the cliff.",warn:null,save:false,pops:["d_swandive"],src:"Hitman Wiki (Swan Dive)."}]},
+  {name:"Sniper",steps:[
+   {id:"s7_9",t:"Snipe both twins (Sniper Assassin → The Classics)",sum:"From the chapel tower, headshot both twins with the silenced Sieger 300, unspotted.",
+    where:"Chapel tower nest (Mastery 2 start).",disguise:"Suit.",item:"Sieger 300 Tactical (silenced sniper).",npc:"Both twins.",
+    action:"Set up in the chapel tower; wait for each twin on her outdoor route and take silenced shots without being spotted. Completes The Classics alongside SA/SASO/Suit Only from Run 1.",warn:"Time shots so bodies aren't discovered by patrols.",save:true,pops:["c_sniper","c_classics"],src:"gamepressure + JSON."}]}]},
+];
+
+/* ===================== VALIDATION / AUDIT ===================== */
+const AUDIT=[
+ {k:"ok",h:"Count reconciled — 62 exact",p:"The uploaded export lists 62 = 19 Assassination + 10 Discovery + 26 Feats + 2 Targets + 5 Classic. Your original brief's '19/10/26 = 55' simply omitted the Targets (2) and Classic (5) buckets. All 62 are mapped to a run."},
+ {k:"ok",h:"Every challenge assigned & unique",p:"All 62 appear in exactly one primary run and in the checklist; no duplicates. Run tallies: R1 = 7, R2 = 11, R3 = 5, R4 = 6, R5 = 10, R6 = 12, R7 = 11 (sum 62)."},
+ {k:"ok",h:"Conditions are authoritative",p:"Every 'condition' is the verbatim in-game text from your export. Two file entries were [REDACTED] (Switcheroo, Rude Awakening); their methods come from the Steam Redacted Challenges Guide and are flagged in-step."},
+ {k:"warn",h:"v2/v1 corrections applied",p:"The cannon kill is Boom Goes the Dynamite (there is no 'Serve the Artillery'). Overruled = poison Sophia's toast (not a display-case push). Great Balls of Fire = light the penthouse brazier with the effigy torch (not burning Zoe). Sleight of Hand = a necklace kill on Sophia (not pickpocketing). 'King of the Castle' and 'None Shall Pass' are NOT in this mission's list and were removed."},
+ {k:"warn",h:"Mutually-exclusive splits (validated)",p:"Each target dies once per attempt, so all Sophia methods (Fell for It, Case Closed, Overruled, Working Up an Appetite, Sleight of Hand, Rock Bottom) and all Zoe methods (…Now You Don't, Boom, Little White Lies, Blood Money, Mistaken Identity) use save/reload. Effigy sabotage/burn (…Now You Don't) is exclusive with The Greatest Show. The Constant's three fates (Come with Me / Couldn't Resist / The Final Countdown) are exclusive. All are separated by save points in-step."},
+ {k:"ok",h:"Prerequisite ordering checked",p:"Items/disguises are always obtained before use: Poison Chip Blueprint before showing the Constant (Fell for It); Raider→Block before the vote (Case Closed/Working Up an Appetite); necklace + Blake before the strangles; effigy sabotage before the burn; burial dagger + Janus robe + fish before the casket; torch picked up before the penthouse brazier; gunpowder + cannonball before firing. No step needs a target or NPC removed earlier."},
+ {k:"warn",h:"Condition-only steps (honest gaps)",p:"A few feats give only the authoritative condition with no sourced step-by-step: Blood Eagle (Viking axe), From Russia without Love (hammer & sickle), Going Solo (musicians), The Ghost of Janus's Past, Hitching a Ride (rooftop exit). These say 'use the in-game challenge marker' rather than inventing a route."},
+ {k:"warn",h:"Known bug flagged",p:"Come Fly with Me: multiple users report the helipad exit icon failing to appear. If it doesn't trigger, the exit reportedly still counts when used during an Escalation/Contract (community workaround; patch status unknown)."},
+ {k:"ok",h:"Runs are individually completable",p:"Each run was simulated start-to-finish: no step requires an item/disguise/mission-state made unavailable earlier, no instruction contradicts another, and no challenge becomes unobtainable within its run given the stated save/reload points."},
+];
+
+/* ===================== STATE ===================== */
+const store=(()=>{let m={};try{localStorage.setItem("__t","1");localStorage.removeItem("__t");return{get:k=>localStorage.getItem(k),set:(k,v)=>localStorage.setItem(k,v)};}catch(e){return{get:k=>m[k]??null,set:(k,v)=>{m[k]=v}};}})();
+let done=new Set();try{const r=store.get("ark3_done");if(r)done=new Set(JSON.parse(r));}catch(e){}
+function reportProgress(){try{const r=JSON.parse(store.get("hitman-progress-registry")||"{}");r["m13"]={done:CH.filter(c=>isDone(c.id)).length,total:CH.length,updated:Date.now()};store.set("hitman-progress-registry",JSON.stringify(r));}catch(e){}}
+const persist=()=>{try{store.set("ark3_done",JSON.stringify([...done]))}catch(e){}reportProgress();};
+const isDone=id=>done.has(id);
+function toggleCh(id){done.has(id)?done.delete(id):done.add(id);persist();renderAll();}
+function stepDone(s){return s.pops&&s.pops.length?s.pops.every(isDone):false;}
+function toggleStep(s){if(!s.pops||!s.pops.length)return;const cur=stepDone(s);s.pops.forEach(i=>cur?done.delete(i):done.add(i));persist();renderAll();}
+function findStep(id){for(const r of RUNS)for(const s of r.sections)for(const st of s.steps)if(st.id===id)return st;return null;}
+
+/* ===================== TRACKER ===================== */
+function renderTracker(){
+  const t={assassination:0,discovery:0,feats:0,targets:0,classic:0};
+  CH.forEach(c=>{if(isDone(c.id))t[c.cat]++;});
+  const tot=CH.filter(c=>isDone(c.id)).length;
+  const set=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
+  set("totDone",tot);
+  Object.keys(t).forEach(k=>{set(k+"Done",t[k]);const b=document.getElementById(k+"Bar");if(b)b.style.width=(t[k]/CATMAX[k]*100)+"%";});
+  const tb=document.getElementById("totBar");if(tb)tb.style.width=(tot/62*100)+"%";
+}
+
+/* ===================== RUN NAV ===================== */
+function renderRunNav(){
+  const nav=document.getElementById("runNav");
+  nav.innerHTML=RUNS.map(r=>{
+    const ids=[];r.sections.forEach(s=>s.steps.forEach(st=>st.pops.forEach(p=>{if(!ids.includes(p))ids.push(p)})));
+    const dn=ids.filter(isDone).length;
+    return `<button class="rb" data-run="${r.id}"><b>${r.id}</b>${r.title}<span class="cnt">${dn}/${ids.length}</span></button>`;
+  }).join("")+`<button class="rb allbtn" data-all="open">Expand all</button><button class="rb allbtn" data-all="close">Collapse all</button>`;
+  nav.querySelectorAll("[data-run]").forEach(b=>b.addEventListener("click",()=>{
+    setTab("runs");
+    const d=document.getElementById("det_"+b.dataset.run);
+    if(d){d.open=true;d.scrollIntoView({behavior:"smooth",block:"start"});}
+  }));
+  nav.querySelectorAll("[data-all]").forEach(b=>b.addEventListener("click",()=>{
+    setTab("runs");
+    document.querySelectorAll("details.run").forEach(d=>d.open=(b.dataset.all==="open"));
+  }));
+}
+
+/* ===================== RUNS ===================== */
+const badge=(c,t)=>`<span class="b ${c}">${t}</span>`;
+function fieldRow(k,v){return v&&v!=="—"?`<div class="frow"><div class="fk">${k}</div><div class="fv">${v}</div></div>`:"";}
+function renderRuns(){
+  document.getElementById("panelRuns").innerHTML=RUNS.map((r,ri)=>{
+    let runIds=[];r.sections.forEach(s=>s.steps.forEach(st=>st.pops.forEach(p=>{if(!runIds.includes(p))runIds.push(p)})));
+    const dn=runIds.filter(isDone).length;
+    const secs=r.sections.map(sec=>{
+      const steps=sec.steps.map(st=>{
+        const d=stepDone(st);
+        const pops=(st.pops||[]).map(i=>badge(byId[i]?byId[i].cat:"feats",byId[i]?byId[i].name:i)).join("");
+        const fields=fieldRow("Where",st.where)+fieldRow("Disguise",st.disguise)+fieldRow("Item",st.item)+fieldRow("NPC",st.npc)+fieldRow("Action",st.action);
+        return `<div class="step ${d?'done':''}">
+          <div class="stephead">
+            <button class="chk" data-toggle="${st.id}" aria-label="Mark step complete">${d?'✓':''}</button>
+            <div class="stepmain">
+              <div class="st">${st.t}</div>
+              <div class="ss">${st.sum}</div>
+              <div class="badges">${pops}${st.warn?badge("warn","⚠ warning"):""}${st.save?badge("save","◆ save here"):""}</div>
+              <button class="exp" data-exp="1"><span class="ar">▸</span> Step details</button>
+              <div class="detail">${fields}${st.warn?`<div class="warnbox">⚠ ${st.warn}</div>`:""}${st.save?`<div class="savebox">◆ Save here before proceeding.</div>`:""}<div class="srcline">SRC: ${st.src}</div></div>
+            </div></div></div>`;
+      }).join("");
+      return `<div class="sect">${sec.name}</div>${steps}`;
+    }).join("");
+    const slots=r.load.items.map(i=>`<div class="slot">▪ ${i}</div>`).join("");
+    return `<details class="run" id="det_${r.id}" ${ri===0?'open':''}>
+      <summary><div class="runhead">
+        <div class="rnum">${r.n}<small>${r.id}</small></div>
+        <div class="rtitle"><h3>${r.title}</h3><p>${r.goal}</p><div class="rcount">${dn}/${runIds.length} challenges in this run</div></div>
+        <div class="chev">▾</div></div></summary>
+      <div class="runbody">
+        <div class="loadout"><h4>Loadout — ${r.id}</h4><div class="lgrid">
+          <div class="lrow"><span class="k">Start location</span><span class="v"><em>${r.load.start}</em></span></div>
+          <div class="lrow"><span class="k">Mastery notes</span><span class="v">${r.load.mastery}</span></div>
+          <div class="lrow"><span class="k">Suit / disguises</span><span class="v">${r.load.suit}</span></div>
+          <div class="lrow"><span class="k">Slots</span><span class="v">4 carried items</span></div>
+          <div class="slots"><span class="k">Item slots</span><div class="slotlist">${slots}</div></div>
+        </div></div>${secs}</div></details>`;
+  }).join("");
+  document.querySelectorAll("#panelRuns [data-toggle]").forEach(b=>b.addEventListener("click",e=>{
+    e.preventDefault();e.stopPropagation();const s=findStep(b.dataset.toggle);if(s)toggleStep(s);}));
+  document.querySelectorAll("#panelRuns [data-exp]").forEach(b=>b.addEventListener("click",e=>{
+    e.preventDefault();b.closest(".step").classList.toggle("open");}));
+}
+
+/* ===================== CHECKLIST ===================== */
+let filter="all";
+function renderList(){
+  const wrap=document.getElementById("panelList");
+  const btns=[["all","All"],["assassination","Assassination"],["discovery","Discovery"],["feats","Feats"],["targets","Targets"],["classic","Classic"],["incomplete","Incomplete"]]
+    .map(([k,l])=>`<button class="filt" data-filt="${k}" aria-pressed="${filter===k}">${l}</button>`).join("");
+  const order=["classic","targets","assassination","discovery","feats"];
+  let body="";
+  order.forEach(cat=>{
+    if(!["all","incomplete"].includes(filter)&&filter!==cat)return;
+    let items=CH.filter(c=>c.cat===cat);
+    if(filter==="incomplete")items=items.filter(c=>!isDone(c.id));
+    if(!items.length)return;
+    const dnAll=CH.filter(c=>c.cat===cat&&isDone(c.id)).length;
+    const rows=items.map(c=>{
+      const d=isDone(c.id);
+      return `<div class="clitem ${d?'done':''}" data-clk="${c.id}">
+        <button class="chk" aria-label="Toggle">${d?'✓':''}</button>
+        <div class="clbody">
+          <div class="nm">${c.name}</div>
+          <div class="cond">${c.cond}</div>
+          ${c.how?`<div class="how"><b>How:</b> ${c.how}</div>`:""}
+          <div class="clmeta">
+            ${c.run?`<span class="rtag">${c.run}</span>`:""}
+            ${c.xp?`<span class="xp">+${c.xp.toLocaleString()} XP</span>`:`<span class="xp">XP not published</span>`}
+            <span class="srctag">SRC: ${c.src}</span>
+          </div></div></div>`;
+    }).join("");
+    body+=`<div class="clgroup"><h3><span class="dot ${cat}"></span>${CATLABEL[cat]} <span class="gc">${dnAll}/${CATMAX[cat]}</span></h3>${rows}</div>`;
+  });
+  wrap.innerHTML=`<div class="filters">${btns}</div>${body||`<div class="empty">Nothing matches this filter.</div>`}`;
+  wrap.querySelectorAll("[data-filt]").forEach(b=>b.addEventListener("click",()=>{filter=b.dataset.filt;renderList();}));
+  wrap.querySelectorAll("[data-clk]").forEach(r=>r.addEventListener("click",()=>toggleCh(r.dataset.clk)));
+}
+
+/* ===================== AUDIT ===================== */
+function renderAudit(){
+  document.getElementById("panelAudit").innerHTML=
+   `<p style="font-size:14px;color:#9fb0bc;margin:0 0 18px">Run-logic, routing and missing-step checks performed before output. Findings:</p>`
+   +AUDIT.map(a=>`<div class="auditrow ${a.k}"><h4>${a.h}</h4><p>${a.p}</p></div>`).join("");
+}
+
+/* ===================== TABS ===================== */
+function setTab(w){
+  const map={runs:["tabRuns","panelRuns"],list:["tabList","panelList"],audit:["tabAudit","panelAudit"]};
+  Object.entries(map).forEach(([k,[tab,panel]])=>{
+    document.getElementById(tab).setAttribute("aria-selected",k===w);
+    document.getElementById(panel).classList.toggle("on",k===w);
+  });
+}
+document.getElementById("tabRuns").addEventListener("click",()=>setTab("runs"));
+document.getElementById("tabList").addEventListener("click",()=>setTab("list"));
+document.getElementById("tabAudit").addEventListener("click",()=>setTab("audit"));
+document.getElementById("resetBtn").addEventListener("click",()=>{if(confirm("Reset all progress?")){done.clear();persist();renderAll();}});
+
+function renderAll(){renderTracker();renderRunNav();renderRuns();renderList();renderAudit();}
+renderAll();
+reportProgress();
+</script>
+<!-- step-progress-bridge -->
+<script>
+/* Reports route-step ticks into 'hitman-progress-registry' so the index can
+   show them beside the challenge counts. Counts what is on screen rather than
+   any guide-specific state, so one implementation serves every guide. */
+(function(){
+  var RID="m13", SEL=".step";
+  function isDone(s){
+    var c=s.classList;
+    if(c.contains('done')||c.contains('dn')) return true;
+    if(s.getAttribute('data-done')==='1'||s.getAttribute('aria-pressed')==='true') return true;
+    return !!s.querySelector('.done,.dn,[data-done="1"],[aria-pressed="true"]');
+  }
+  function tally(){
+    var steps=document.querySelectorAll(SEL);
+    if(!steps.length) return null;
+    var n=0;
+    for(var i=0;i<steps.length;i++) if(isDone(steps[i])) n++;
+    return {steps:n,stepTotal:steps.length};
+  }
+  function push(){
+    var t;
+    try{ t=tally(); }catch(err){ return; }
+    if(!t||!t.stepTotal) return;
+    try{
+      var r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');
+      var e=r[RID]||(r[RID]={});
+      /* the guide's own reportProgress() rewrites this entry wholesale, so
+         re-add the step counts whenever they go missing or stale */
+      if(e.steps===t.steps&&e.stepTotal===t.stepTotal) return;
+      e.steps=t.steps; e.stepTotal=t.stepTotal; e.updated=Date.now();
+      localStorage.setItem('hitman-progress-registry',JSON.stringify(r));
+    }catch(err){}
+  }
+  var pending=false;
+  function schedule(){
+    if(pending) return; pending=true;
+    setTimeout(function(){pending=false;push();},120);
+  }
+  try{
+    new MutationObserver(schedule).observe(document.body,
+      {subtree:true,childList:true,attributes:true,attributeFilter:['class','aria-pressed','data-done']});
+  }catch(err){}
+  window.addEventListener('load',schedule);
+  setTimeout(push,600);
+})();
+</script>
+<!-- /step-progress-bridge -->
+</body>
+</html>

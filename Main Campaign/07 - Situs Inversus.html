@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Situs Inversus — 60-Challenge Run Guide (GAMA Private Hospital, Hokkaido)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#101820; --ink2:#2c3a46; --steel:#5b6f80;
+  --paper:#e9eef2; --card:#fff; --rule:#c6d2db; --soft:#dde5eb;
+  --crimson:#a8102a; --crimson-bg:#fbe9ec;
+  --amber:#96630a;  --amber-bg:#fdf1dc;
+  --jade:#0e6350;   --jade-bg:#e2f1ec;
+  --ice:#1f5f96;    --ice-bg:#e4eef7;
+  --violet:#5b3d8f; --violet-bg:#eee8f8;
+  --shadow:0 1px 0 rgba(16,24,32,.06), 0 8px 24px -18px rgba(16,24,32,.5);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:"IBM Plex Sans",system-ui,-apple-system,sans-serif;font-size:15.5px;line-height:1.6}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px 90px}
+.masthead{border-bottom:1px solid var(--rule);background:linear-gradient(180deg,#fff,#f4f7f9)}
+.masthead .wrap{padding:30px 20px 0}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--steel);margin:0 0 10px}
+h1{font-family:"Zen Kaku Gothic New",sans-serif;font-weight:900;
+  font-size:clamp(30px,5.4vw,52px);line-height:1.02;letter-spacing:-.02em;margin:0}
+h1 .jp{display:block;font-size:.4em;font-weight:500;letter-spacing:.3em;color:var(--crimson);margin-top:12px}
+.sub{color:var(--ink2);max-width:66ch;margin:16px 0 0}
+.meta{display:flex;flex-wrap:wrap;margin:22px 0 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.meta div{flex:1 1 140px;padding:12px 16px 12px 0;border-right:1px solid var(--soft)}
+.meta div:last-child{border-right:0}
+.meta dt{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--steel);margin:0 0 3px}
+.meta dd{margin:0;font-weight:600;font-size:14px}
+
+.vitals{background:var(--card);border:1px solid var(--rule);border-radius:3px;
+  margin-top:26px;box-shadow:var(--shadow);overflow:hidden}
+.vitals-top{display:flex;flex-wrap:wrap;align-items:flex-end;gap:18px;
+  padding:20px 22px 14px;border-bottom:1px solid var(--soft)}
+.vnum{font-family:"Zen Kaku Gothic New",sans-serif;font-weight:900;font-size:44px;line-height:.9}
+.vnum small{font-size:17px;font-weight:500;color:var(--steel)}
+.vlabel{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--steel);margin-bottom:6px}
+.ecg{flex:1 1 260px;min-width:200px;height:56px;display:block}
+.ecg .base{fill:none;stroke:var(--rule);stroke-width:1.5}
+.ecg .live{fill:none;stroke:var(--crimson);stroke-width:2.2;stroke-linecap:round;transition:stroke-dasharray .5s}
+.cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr))}
+.cat{padding:13px 16px;border-right:1px solid var(--soft)}
+.cat:last-child{border-right:0}
+.cat b{display:block;font-family:"IBM Plex Mono",monospace;font-size:10.5px;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--steel);font-weight:500}
+.cat span{font-weight:700;font-size:19px;font-family:"Zen Kaku Gothic New",sans-serif}
+.cat i{font-style:normal;color:var(--steel);font-size:14px}
+.bar{height:4px;background:var(--soft);border-radius:2px;margin-top:7px;overflow:hidden}
+.bar>span{display:block;height:100%;background:var(--ink2);transition:width .4s}
+.resetbtn{appearance:none;border:1px solid var(--rule);background:#fff;cursor:pointer;
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  padding:7px 12px;border-radius:2px;color:var(--steel);font-weight:500;margin-left:auto;align-self:center}
+.resetbtn:hover{background:var(--crimson-bg);border-color:var(--crimson);color:var(--crimson)}
+
+.tabs{display:flex;gap:2px;margin-top:28px;flex-wrap:wrap}
+.tab{appearance:none;border:1px solid var(--rule);border-bottom:0;background:#dfe7ec;
+  font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--steel);padding:11px 18px;cursor:pointer;border-radius:3px 3px 0 0;font-weight:500}
+.tab[aria-selected="true"]{background:var(--card);color:var(--ink);font-weight:600;position:relative;top:1px}
+.tab:focus-visible,.btn:focus-visible,summary:focus-visible,.check:focus-visible,.filt:focus-visible{outline:2px solid var(--ice);outline-offset:2px}
+.panel{background:var(--card);border:1px solid var(--rule);border-radius:0 3px 3px 3px;
+  padding:26px 24px;box-shadow:var(--shadow)}
+.panel[hidden]{display:none}
+
+.runnav{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.96);
+  backdrop-filter:blur(6px);border-bottom:1px solid var(--rule);
+  margin:-26px -24px 22px;padding:12px 24px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.runnav .lbl{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--steel);margin-right:4px}
+.btn{appearance:none;border:1px solid var(--rule);background:#fff;cursor:pointer;
+  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.08em;
+  padding:7px 12px;border-radius:2px;color:var(--ink2);font-weight:500;white-space:nowrap}
+.btn:hover{background:var(--ice-bg);border-color:var(--ice);color:var(--ice)}
+.btn.ghost{background:transparent;color:var(--steel)}
+
+.run{border:1px solid var(--rule);border-radius:3px;margin-bottom:16px;overflow:hidden;scroll-margin-top:70px}
+.run>summary{list-style:none;cursor:pointer;padding:18px 20px;background:#f6f9fb;display:block}
+.run>summary::-webkit-details-marker{display:none}
+.run[open]>summary{border-bottom:1px solid var(--rule)}
+.run-tag{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--crimson);font-weight:600}
+.run-tag .caret{float:right;color:var(--steel);font-weight:400}
+.run h3{font-family:"Zen Kaku Gothic New",sans-serif;font-weight:700;font-size:22px;
+  margin:5px 0 6px;letter-spacing:-.01em}
+.run summary p{margin:0;color:var(--ink2);max-width:72ch;font-size:14.5px}
+.run-pop{margin-top:8px;display:flex;flex-wrap:wrap;gap:5px}
+
+.loadout{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  border-bottom:1px solid var(--rule);background:#fcfdfe}
+.slot{padding:12px 16px;border-right:1px solid var(--soft)}
+.slot:last-child{border-right:0}
+.slot b{display:block;font-family:"IBM Plex Mono",monospace;font-size:10px;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--steel);font-weight:500;margin-bottom:3px}
+.slot span{font-size:14px;font-weight:600}
+.slot em{font-style:normal;display:block;font-size:12px;color:var(--steel);font-weight:400}
+
+.sec-h{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--steel);font-weight:600;padding:16px 20px 6px;border-top:1px solid var(--soft)}
+.step{display:flex;gap:12px;padding:0 20px 12px}
+.check{flex:0 0 auto;width:24px;height:24px;margin-top:4px;border:1.5px solid var(--rule);
+  border-radius:3px;background:#fff;cursor:pointer;display:grid;place-items:center;
+  color:transparent;font-size:14px;line-height:1;transition:all .15s;padding:0}
+.check[aria-pressed="true"]{background:var(--jade);border-color:var(--jade);color:#fff}
+.sbody{flex:1 1 auto;min-width:0}
+.snum{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--crimson);font-weight:600;letter-spacing:.08em}
+.sbody>b{display:block;font-weight:700;font-size:15px;margin:1px 0}
+.sbody>p{margin:0;color:var(--ink2);font-size:14.5px}
+.step.done .sbody>b,.step.done .sbody>p{opacity:.42;text-decoration:line-through;text-decoration-thickness:1px}
+
+details.dtl{margin-top:8px;border-left:2px solid var(--rule);padding-left:14px}
+details.dtl>summary{cursor:pointer;font-family:"IBM Plex Mono",monospace;font-size:11px;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--ice);font-weight:500;list-style:none;padding:2px 0}
+details.dtl>summary::-webkit-details-marker{display:none}
+details.dtl>summary::before{content:"▸ "}
+details.dtl[open]>summary::before{content:"▾ "}
+.dl{margin:8px 0 4px;display:grid;grid-template-columns:auto 1fr;gap:3px 12px;font-size:14px}
+.dl dt{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--steel);padding-top:4px;white-space:nowrap}
+.dl dd{margin:0;color:var(--ink2)}
+.dl dt.w{color:var(--crimson)} .dl dd.w{color:var(--crimson)}
+
+.badges{display:flex;flex-wrap:wrap;gap:5px;margin:8px 0 2px}
+.badge{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.05em;
+  padding:3px 8px;border-radius:2px;font-weight:500;border:1px solid transparent}
+.b-chal{background:var(--jade-bg);color:var(--jade);border-color:#bfded4}
+.b-warn{background:var(--crimson-bg);color:var(--crimson);border-color:#f0c6ce;font-weight:600}
+.b-save{background:var(--amber-bg);color:var(--amber);border-color:#eed7ac;font-weight:600}
+.b-unver{background:var(--violet-bg);color:var(--violet);border-color:#d8ccee;font-weight:600}
+.b-info{background:var(--ice-bg);color:var(--ice);border-color:#c8dcee}
+
+.filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
+.filt{appearance:none;border:1px solid var(--rule);background:#fff;cursor:pointer;
+  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  padding:7px 13px;border-radius:2px;color:var(--steel)}
+.filt[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.clg{margin-bottom:26px}
+.clg>h4{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--steel);margin:0 0 8px;font-weight:600;padding-bottom:6px;border-bottom:1px solid var(--rule)}
+.cli{display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(--soft)}
+.cli:last-child{border-bottom:0}
+.clt{flex:1 1 auto;min-width:0}
+.clt b{display:block;font-size:14.5px;font-weight:700}
+.clt p{margin:1px 0 0;font-size:13.5px;color:var(--steel)}
+.cli.done .clt b{text-decoration:line-through;opacity:.42}
+.cli.done .clt p{opacity:.42}
+.cls{flex:0 0 auto;display:flex;flex-direction:column;gap:3px;align-items:flex-end}
+
+.callout{border-left:3px solid var(--crimson);background:var(--crimson-bg);
+  padding:13px 16px;margin:14px 0;border-radius:0 3px 3px 0;font-size:14px}
+.callout.amber{border-color:var(--amber);background:var(--amber-bg)}
+.callout.ice{border-color:var(--ice);background:var(--ice-bg)}
+.callout.jade{border-color:var(--jade);background:var(--jade-bg)}
+.callout b{display:block;margin-bottom:3px}
+.audit h4{font-family:"Zen Kaku Gothic New",sans-serif;font-size:18px;font-weight:700;margin:26px 0 8px}
+.audit h4:first-child{margin-top:0}
+.audit table{width:100%;border-collapse:collapse;font-size:13.5px;margin-bottom:12px}
+.audit th,.audit td{text-align:left;padding:7px 10px 7px 0;border-bottom:1px solid var(--soft);vertical-align:top}
+.audit th{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--steel);font-weight:600}
+.audit li{margin-bottom:5px;font-size:14px}
+.src{font-size:13px;color:var(--steel)}
+.cols{columns:2;column-gap:26px}
+.cols li{break-inside:avoid}
+footer{border-top:1px solid var(--rule);margin-top:40px;padding-top:18px;font-size:12.5px;color:var(--steel)}
+@media (max-width:700px){
+  .wrap{padding:0 14px 70px}.panel{padding:18px 14px}
+  .runnav{margin:-18px -14px 18px;padding:10px 14px}
+  .step,.sec-h{padding-left:14px;padding-right:14px}
+  .dl{grid-template-columns:1fr;gap:0}.dl dt{padding-top:8px}
+  .cols{columns:1}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <p class="eyebrow">HITMAN: World of Assassination · Hokkaido, Japan · Evening</p>
+    <h1>Situs Inversus<span class="jp">GAMA PRIVATE HOSPITAL</span></h1>
+    <p class="sub">Seven runs, 60 challenges, every step written for someone who has never seen this map. Challenge names, descriptions, counts, disguises and areas come from your mission data file. Route detail is cross-referenced from guides — anything a source could not confirm is marked <span class="badge b-unver">UNVERIFIED</span> rather than guessed.</p>
+
+    <dl class="meta">
+      <div><dt>Challenges</dt><dd>60</dd></div>
+      <div><dt>Chameleon disguises</dt><dd>16</dd></div>
+      <div><dt>Areas</dt><dd>31 of 32 needed</dd></div>
+      <div><dt>Targets</dt><dd>Soders · Yamazaki</dd></div>
+      <div><dt>Loadout slots</dt><dd>Locked until Mastery 20</dd></div>
+    </dl>
+
+    <section class="vitals" aria-label="Progress tracker">
+      <div class="vitals-top">
+        <div>
+          <div class="vlabel">Challenges cleared</div>
+          <div class="vnum"><span id="doneCount">0</span><small> / 60</small></div>
+        </div>
+        <button class="resetbtn" type="button" id="reset">Reset progress</button>
+        <svg class="ecg" viewBox="0 0 600 56" preserveAspectRatio="none" aria-hidden="true">
+          <path class="base" d="M0,34 L120,34 L134,34 L142,14 L152,50 L162,26 L172,34 L300,34 L314,34 L322,14 L332,50 L342,26 L352,34 L480,34 L494,34 L502,14 L512,50 L522,26 L532,34 L600,34"/>
+          <path class="live" id="ecgLive" d="M0,34 L120,34 L134,34 L142,14 L152,50 L162,26 L172,34 L300,34 L314,34 L322,14 L332,50 L342,26 L352,34 L480,34 L494,34 L502,14 L512,50 L522,26 L532,34 L600,34"/>
+        </svg>
+      </div>
+      <div class="cats" id="catStrip"></div>
+    </section>
+
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" id="tab-runs" aria-controls="panel-runs" aria-selected="true">Runs</button>
+      <button class="tab" role="tab" id="tab-list" aria-controls="panel-list" aria-selected="false">Checklist</button>
+      <button class="tab" role="tab" id="tab-ref" aria-controls="panel-ref" aria-selected="false">Reference</button>
+      <button class="tab" role="tab" id="tab-audit" aria-controls="panel-audit" aria-selected="false">Verification</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="panel" role="tabpanel" id="panel-runs" aria-labelledby="tab-runs">
+    <div class="runnav" id="runnav"></div>
+
+    <div class="callout jade">
+      <b>Run the seven in order</b>
+      Two challenges only complete once their prerequisites are banked. <b>The Classics</b> needs Silent Assassin, Silent Assassin Suit Only, Sniper Assassin and Suit Only — it pops at the end of Run 2. <b>Versatile Assassin</b> needs Piano Man, Someone Could Hurt Themselves, Hold My Hair, Straight Shot and Tasteless Traceless — it pops during Run 4. Running out of order still works, those two just land later.
+    </div>
+    <div class="callout amber">
+      <b>The save-reload rule these runs are built on</b>
+      A challenge that has popped stays popped after a manual reload. Every run uses that: save right before a kill, take kill A, wait for the notification, reload, take kill B. Only genuinely conflicting objectives — flagged in red — need separate sessions. <b>Mastery 20 unlocks all loadout slots</b>; below that Hokkaido gives you no loadout at all and you must use Agency Pickups.
+    </div>
+    <div id="runs"></div>
+  </section>
+
+  <section class="panel" role="tabpanel" id="panel-list" aria-labelledby="tab-list" hidden>
+    <div class="filters" id="filters"></div>
+    <div id="checklist"></div>
+  </section>
+
+  <section class="panel audit" role="tabpanel" id="panel-ref" aria-labelledby="tab-ref" hidden>
+    <div id="ref"></div>
+  </section>
+
+  <section class="panel audit" role="tabpanel" id="panel-audit" aria-labelledby="tab-audit" hidden>
+    <div id="audit"></div>
+  </section>
+
+  <footer>Progress is saved in this browser and picked up by the guide index. Challenge names, descriptions, category split, disguise list and area list are taken verbatim from the supplied mission data file.</footer>
+</main>
+
+<script>
+/* ============ CHALLENGES: 60, verbatim from mission data ============ */
+const CH=[
+/* CLASSIC 5 */
+{id:'c1',cat:'Classic',n:'Silent Assassin',d:'Complete "Situs Inversus." / Only eliminate the targets. / No bodies found. / Do not get spotted.',run:1},
+{id:'c2',cat:'Classic',n:'Silent Assassin, Suit Only',d:'Complete "Situs Inversus." / Only eliminate the targets. / No bodies found. / Do not get spotted. / Do it all in your suit.',run:1},
+{id:'c3',cat:'Classic',n:'Suit Only',d:'Assassinate the targets and complete the mission. / Do it all in your suit.',run:1},
+{id:'c4',cat:'Classic',n:'Sniper Assassin',d:'Complete "Situs Inversus." / Assassinate Yuki Yamazaki with a sniper rifle. / Only eliminate the targets. / Do not get spotted.',run:2},
+{id:'c5',cat:'Classic',n:'The Classics',d:'Complete all the Classic challenges: Silent Assassin / Silent Assassin, Suit Only / Sniper Assassin / Suit Only.',run:2},
+/* TARGETS 2 */
+{id:'t1',cat:'Targets',n:'The Herald',d:'Assassinate Yuki Yamazaki.',run:1},
+{id:'t2',cat:'Targets',n:'The Operative',d:'Assassinate Erich Soders.',run:1},
+/* ASSASSINATION 27 */
+{id:'a1',cat:'Assassination',n:"Don't Look Down",d:'Assassinate Yuki Yamazaki by shooting down the cable car.',run:1},
+{id:'a2',cat:'Assassination',n:'Someone Could Hurt Themselves',d:'Assassinate a target in an accident.',run:1},
+{id:'a3',cat:'Assassination',n:'Expert Marksman',d:'Assassinate Yuki Yamazaki by sniping her on the garden bridge.',run:2},
+{id:'a4',cat:'Assassination',n:'Straight Shot',d:'Assassinate a target with a headshot.',run:2},
+{id:'a5',cat:'Assassination',n:'No Heart Feelings',d:'Assassinate Erich Soders by destroying his replacement heart.',run:2},
+{id:'a6',cat:'Assassination',n:'Silent Ninja',d:'Complete "Situs Inversus" while disguised as the ninja. / Only eliminate the targets. / No bodies found. / Do not get spotted. / If detected by cameras, erase or destroy the evidence.',run:3},
+{id:'a7',cat:'Assassination',n:'Cut Throat',d:'Assassinate a target with the shuriken while disguised as the Ninja. / Do not get spotted.',run:3},
+{id:'a8',cat:'Assassination',n:'Piano Man',d:'Assassinate a target with the fiber wire.',run:3},
+{id:'a10',cat:'Assassination',n:'Sushi, Honshū Style',d:'Assassinate Yuki Yamazaki with fugu poisoned sushi.',run:4},
+{id:'a11',cat:'Assassination',n:'Tasteless, Traceless',d:'Assassinate a target with lethal poison.',run:4},
+{id:'a12',cat:'Assassination',n:'Smoking Kills',d:'Assassinate Yuki Yamazaki by pushing her off the balcony.',run:4},
+{id:'a13',cat:'Assassination',n:'Up in Smoke',d:'Assassinate Yuki Yamazaki with a gas lamp explosion.',run:4},
+{id:'a14',cat:'Assassination',n:'A Bit of a Stretch',d:'Assassinate Yuki Yamazaki in a yoga accident.',run:4},
+{id:'a15',cat:'Assassination',n:'Jeg Sauna Hende Ikke',d:'Assassinate Yuki Yamazaki by trapping her in the sauna.',run:4},
+{id:'a16',cat:'Assassination',n:'Watch Your Back',d:'Assassinate Yuki Yamazaki by pushing her off the cable car platform while disguised as the director.',run:4},
+{id:'a17',cat:'Assassination',n:'Hold My Hair',d:'Assassinate a target by drowning them.',run:4},
+{id:'a18',cat:'Assassination',n:'Versatile Assassin',d:'Complete all the Versatile challenges: Piano Man / Someone Could Hurt Themselves / Hold My Hair / Straight Shot / Tasteless, Traceless.',run:4},
+{id:'a19',cat:'Assassination',n:'Ice Cold Cowboy',d:'Eliminate Yuki Yamazaki while disguised as Amos Dexter. / Complete "Situs Inversus". / Exit on the snow scooter.',run:4},
+{id:'a20',cat:'Assassination',n:'(Not) Malpractice',d:'Assassinate Erich Soders by making the chief surgeon fail the operation on purpose.',run:5},
+{id:'a21',cat:'Assassination',n:'(Not) Human Error',d:'Assassinate Erich Soders by performing the surgery yourself.',run:5},
+{id:'a22',cat:'Assassination',n:'Daisy, Daisy',d:'Assassinate Erich Soders with the robotic operating arms.',run:5},
+{id:'a23',cat:'Assassination',n:'Flatlined',d:'Assassinate Erich Soders by electrocuting him.',run:5},
+{id:'a24',cat:'Assassination',n:'Kiss of Death',d:'Assassinate Erich Soders by poisoning his stem cells.',run:5},
+{id:'a25',cat:'Assassination',n:'A Personal Goodbye',d:'[REDACTED] — shoot Soders with a firearm while he is on the operating table.',run:5},
+{id:'a26',cat:'Assassination',n:'One Last Time, Mr. Soders',d:'Assassinate Erich Soders after revealing yourself as Agent 47.',run:5},
+{id:'a27',cat:'Assassination',n:'Cottonmouth',d:'Complete a contract. / Assassinate a target with the katana while disguised as the Motorcyclist. / Once you have equipped the Motorcyclist disguise, you cannot change your disguise.',run:7},
+{id:'a28',cat:'Assassination',n:'Bye-Cicle',d:'Assassinate a target by dropping an icicle on them.',run:7},
+/* DISCOVERY 10 */
+{id:'d1',cat:'Discovery',n:'Stacking Up',d:'Find the cigarettes.',run:4},
+{id:'d2',cat:'Discovery',n:'Smell Something Fishy?',d:'Cut the fugu fish.',run:4},
+{id:'d3',cat:'Discovery',n:"What's Up-Dog?",d:'Disguise yourself as the Yoga Instructor.',run:4},
+{id:'d4',cat:'Discovery',n:'Under New Direction',d:'Disguise yourself as the director.',run:4},
+{id:'d5',cat:'Discovery',n:'Turn on Auto Pilot',d:'Disguise yourself as the Pilot.',run:5},
+{id:'d6',cat:'Discovery',n:'Fresh Faced',d:'Disguise yourself as Jason Portman.',run:6},
+{id:'d7',cat:'Discovery',n:'Armed and Dangerous',d:'Smuggle a firearm past the guards at the hospital entrance while disguised as a Patient.',run:6},
+{id:'d8',cat:'Discovery',n:'Mood Alteration',d:'Get the neurochip remote.',run:6},
+{id:'d9',cat:'Discovery',n:'Chameleon',d:'Find and equip all disguises in Hokkaido (16).',run:6},
+{id:'d10',cat:'Discovery',n:'Discover Hokkaido',d:'Reveal all undiscovered areas in Hokkaido (31 of 32).',run:6},
+/* FEATS 16 */
+{id:'f1',cat:'Feats',n:'We Meet Again',d:'[REDACTED] — open morgue freezer pod 2 and free Agent Carlton Smith.',run:2},
+{id:'f2',cat:'Feats',n:'Impossible Heights',d:'[REDACTED] — reach the highest point of the GAMA hospital.',run:3},
+{id:'f3',cat:'Feats',n:'Mission Story - Hot Springs',d:'Make sure Yuki Yamazaki has a relaxing time in the Hot Springs.',run:4},
+{id:'f4',cat:'Feats',n:'Mission Story - No Smoking',d:"Replace Yuki's empty cigarette pack with a full pack.",run:4},
+{id:'f5',cat:'Feats',n:'Mission Story - Thrill Seekers',d:'Prepare sushi.',run:4},
+{id:'f6',cat:'Feats',n:'Mission Story - Malpractice',d:'Impersonate the role of the Head Surgeon.',run:5},
+{id:'f7',cat:'Feats',n:'Mission Story - Tell-Tale Heart',d:'Manipulate the morgue doctor to help you gain access to the replacement heart.',run:5},
+{id:'f8',cat:'Feats',n:'Mission Story - Ghost in the Machine',d:'Sabotage the KAI mainframe.',run:5},
+{id:'f9',cat:'Feats',n:'Overkill',d:'[REDACTED] — eliminate Soders, THEN destroy the replacement heart.',run:5},
+{id:'f10',cat:'Feats',n:'I Think He is Dead Now',d:'[REDACTED] — destroy the replacement heart FIRST, then eliminate Soders by sabotaging the hospital AI.',run:5},
+{id:'f11',cat:'Feats',n:'Mission Story - Makeover',d:'Go to the doctor check-up.',run:6},
+{id:'f12',cat:'Feats',n:'Kick Back Kimono',d:"Lie down on all morgue tables and 47's bed while wearing the VIP Patient kimono.",run:6},
+{id:'f13',cat:'Feats',n:'Namaste',d:'[REDACTED] — make the people in the spa area meditate.',run:6},
+{id:'f14',cat:'Feats',n:'Techman',d:'[REDACTED] — play the DDR machine as 47.',run:6},
+{id:'f15',cat:'Feats',n:'Guardian Angel',d:'[REDACTED] — stop the Curator taking his own life and finish the mission with him alive.',run:6},
+{id:'f16',cat:'Feats',n:'The Groom',d:'Complete a contract. / Eliminate all targets with the katana while disguised as the Motorcyclist. / Only eliminate the targets. / No bodies found. / Do not get spotted. / If detected by cameras, erase or destroy the evidence.',run:7}
+];
+const CATS=['Classic','Assassination','Discovery','Feats','Targets'];
+
+/* ============ RUNS ============ */
+const RUNS=[
+{
+ id:'run1', tag:'Run 1 of 7', title:'Silent Assassin, Suit Only',
+ sum:'Both targets die as accidents you never touch, and you never change clothes once. Banks the three hardest ratings on the map in about six minutes.',
+ pops:['Silent Assassin','Silent Assassin, Suit Only','Suit Only',"Don't Look Down",'Someone Could Hurt Themselves','The Herald','The Operative'],
+ loadout:{start:"47's Suite (default) — no Mastery requirement", suit:"Any Classic suit (47's Signature Suit is fine)",
+  items:[
+   {n:'Smuggled',v:'—',s:'Nothing needed'},
+   {n:'Concealed weapon',v:'ICA19 Silverballer (silenced pistol)',s:'Mastery 20 loadout'},
+   {n:'Gear 1',v:'ICA Remote Explosive',s:'Any full-size wall-mountable lethal charge. NOT micro or breaching — radius too small'},
+   {n:'Gear 2',v:'Coins ×2',s:'Guard isolation on the exit'}]},
+ secs:[
+  {h:'Yamazaki — from your own bedroom', steps:[
+   {id:'r1s1',t:'Shoot the cable car until Yamazaki flees to it',
+    s:'Two silenced rounds into the cable car escalate her past lockdown into a full evacuation.',
+    where:"Inside 47's Suite, at the window overlooking the cable car line. Stay off the shared balcony.",
+    disg:"Your starting suit — do not touch the VIP Patient kimono in your own bathroom.",
+    item:'Silenced pistol.',
+    npc:'Amos Dexter occupies the neighbouring suite and his sightline crosses the shared balcony.',
+    act:'Fire 1–2 silenced shots at the cable car. Use Instinct and watch for the escape icon above Yamazaki — Hokkaido prints no "Target Escaping" message.',
+    warn:'If Dexter sees the muzzle flash, Silent Assassin and SASO are gone for this session. Reload.',
+    badges:[{t:'save',l:'SAVE HERE — before the first shot'}]},
+   {id:'r1s2',t:'Drop the car with her inside',
+    s:'Once she boards you have roughly 45 seconds to break the coupling.',
+    where:'Same firing position in your suite.',
+    item:'Silenced pistol.',
+    act:'Put 2–3 rounds into the cable car connector — the wire-wheel housing where the cabin meets the line. After a few hits the timer disappears and the gondola detaches and crashes.',
+    warn:'Leave the suite immediately after the crash. Her bodyguards route to your room and will start a firefight if you linger.',
+    badges:[{t:'chal',l:"Don't Look Down"},{t:'chal',l:'Someone Could Hurt Themselves'},{t:'chal',l:'The Herald'}]}]},
+  {h:'Soders — through the operating theatre glass', steps:[
+   {id:'r1s3',t:'Cross the central garden to the theatre window',
+    s:"Take the outer garden path to the exterior glass of Soders' operating theatre.",
+    where:'Out of the guest corridor into the central garden, then the outer ring path to the theatre glass.',
+    disg:'Still your starting suit.',
+    npc:'One gardener works this stretch of beds. He is the only sightline that matters — there is no guard post on the window itself.',
+    act:'Wait for the gardener to turn away, then move to the glass.',
+    warn:'On Master difficulty detection cones are wider, but only the planting action is genuinely risky.',
+    badges:[{t:'save',l:'SAVE HERE — before planting'}]},
+   {id:'r1s4',t:'Plant the charge, walk inside, detonate',
+    s:'Soders is mid-transplant and cannot survive the shock. You never enter the room and are never blamed.',
+    where:'Plant on the theatre window, then retreat inside to the hot spring entrance before detonating.',
+    item:'ICA Remote Explosive (full-size lethal charge).',
+    act:'Attach the charge to the theatre window, walk back inside, and detonate once you reach the hot spring entrance. Death is not instant — give it a beat.',
+    warn:'Micro explosives and breaching charges do not have the radius. Throwables work but force you to expose yourself.',
+    badges:[{t:'chal',l:'The Operative'},{t:'chal',l:'Silent Assassin'},{t:'chal',l:'Silent Assassin, Suit Only'},{t:'chal',l:'Suit Only'},
+     {t:'warn',l:'No outfit change at any point — including the kimono in your own bathroom'}]}]},
+  {h:'Exit', steps:[
+   {id:'r1s5',t:'Ride the snowmobile out',
+    s:'A side track off the hot spring open-air bath leads down to the snow scooter.',
+    where:'From the open-air bath, take the downhill side path toward the garage area.',
+    npc:'One patrol pair and one camera cover this stretch.',
+    act:'Wait for the patrol to move uphill, then go. Staff inside the warehouse notice you if you dawdle.',
+    warn:'The cable car is destroyed at this point in this run — use the snowmobile.',
+    badges:[{t:'info',l:'This mission has no exit-specific challenges'}]}]}]
+},
+{
+ id:'run2', tag:'Run 2 of 7', title:'Sniper Assassin and the replacement heart',
+ sum:'Start underground, free Agent Smith, kill Soders by destroying the transplant organ, then take Yamazaki off the garden bridge with a rifle. Finishes The Classics.',
+ pops:['Sniper Assassin','The Classics','Expert Marksman','Straight Shot','No Heart Feelings','We Meet Again'],
+ loadout:{start:'Morgue — Mastery 17', suit:'Any Classic suit',
+  items:[
+   {n:'Smuggled',v:'Sieger 300 Advanced (silenced sniper) at the Mountain Path Agency Pickup',s:'Rifle: Mastery 20 · Pickup: Mastery 3'},
+   {n:'Concealed weapon',v:'ICA19 Silverballer (silenced pistol)',s:'Camera terminal'},
+   {n:'Gear 1',v:'Disposable Scrambler',s:'Colorado Mastery 10 — opens morgue freezer pod 2'},
+   {n:'Gear 2',v:'Coins ×2',s:'Mortician isolation'}]},
+ secs:[
+  {h:'Morgue', steps:[
+   {id:'r2s1',t:'Split and subdue the two morticians',
+    s:'One morgue doctor patrols between the fridge room and the examination room; use the stairwell barrier to separate them.',
+    where:'Morgue level. The stairs on the right lead up toward the operating theatre and have a barrier you can hide behind.',
+    disg:'Starting suit is fine here — you are unseen, not blending.',
+    item:'Coins.',
+    npc:'Two Morgue Doctors. The Curator also works this floor but wears no unique outfit.',
+    act:'Wait until neither is looking, move to the stairs, lure the mobile one over and subdue him. Coin the second one out, subdue, hide both bodies.',
+    warn:'Professional and Master add guards in the morgue security room. Drop a pistol in the corridor as bait, hide beside the stairwell door, and take them one at a time as they come for it.',
+    badges:[{t:'save',l:'SAVE HERE — on entry'},{t:'warn',l:'Do not touch the Curator — you need him alive for Runs 5 and 6'}]},
+   {id:'r2s2',t:'Open freezer pod 2 and free Agent Smith',
+    s:'Pod number 2 holds Agent Carlton Smith. He hands over an RFID master keycard.',
+    where:'The morgue fridge room — the numbered pods along the wall.',
+    item:"Disposable Scrambler or Electronic Key Hacker. Alternative: the non-descript keycard in the Director's office on level 3.",
+    npc:'Agent Carlton Smith.',
+    act:'Use the scrambler on pod 2 and open it.',
+    warn:'The RFID master keycard opens hospital doors regardless of outfit — it replaces the Director disguise for the KAI mainframe later.',
+    badges:[{t:'chal',l:'We Meet Again'},{t:'info',l:'Grants the RFID master keycard'}]},
+   {id:'r2s3',t:'Kill the camera terminal, then shoot the heart',
+    s:"Destroy the morgue recorder, then destroy Soders' replacement organ from outside the storage room.",
+    where:'Morgue security room for the terminal; then find the angle where the heart container is visible from outside Organ Storage.',
+    item:'Silenced pistol for the terminal. Use the sniper rifle for the heart if you have it in hand.',
+    npc:'Two bodyguards stand on the heart container — you do not need to pass them.',
+    act:'Shoot the camera terminal first, then put a round through the heart from outside the room and leave immediately. Destroying the organ registers as eliminating Soders.',
+    warn:'There are exactly two camera recorders on this map: the guard room beside the garden, and the morgue security room. For this run only the morgue one matters.',
+    badges:[{t:'chal',l:'No Heart Feelings'},{t:'chal',l:'The Operative'},
+     {t:'unver',l:'Sources disagree on whether Sniper Assassin needs Soders killed by rifle too — using the rifle on the heart satisfies both readings'},
+     {t:'save',l:'SAVE HERE — before the shot'}]}]},
+  {h:'The garden bridge shot', steps:[
+   {id:'r2s4',t:'Climb to the mountain path and collect the rifle',
+    s:'Exit the hospital, go up the eastern footpath and pick your rifle out of the Agency Pickup.',
+    where:'The Mountain Path in the eastern part of the map, then the cliff edge overlooking the central garden.',
+    item:'Sieger 300 Advanced from the Mountain Path Large Agency Pickup. It must be a silenced, scoped model.',
+    act:'Take the rifle, move to the cliff edge and glass the garden below.',
+    warn:'Below Mastery 20 you have no loadout at all — the Agency Pickup at Mastery 3 is the only way to get a rifle onto this map.',
+    badges:[]},
+   {id:'r2s5',t:'Headshot her on the garden bridge',
+    s:'Yamazaki stands still on the small garden bridge during her patrol loop — that is the guaranteed window.',
+    where:'Fire from the mountain path cliff edge onto the small bridge in the central garden.',
+    npc:'Yuki Yamazaki. Her loop takes roughly five minutes; if she does not path onto the bridge, reload and wait again.',
+    act:'Take the headshot while she is on the bridge, drop the rifle, and escape up the path immediately behind you. The silencer buys you time during the search phase.',
+    warn:'Sniper Assassin requires "do not get spotted" but does NOT require "no bodies found" — her body being discovered is fine here.',
+    badges:[{t:'chal',l:'Expert Marksman'},{t:'chal',l:'Sniper Assassin'},{t:'chal',l:'Straight Shot'},{t:'chal',l:'The Herald'},
+     {t:'chal',l:'The Classics — completes here if Run 1 is done'},{t:'save',l:'SAVE HERE — before the bridge shot'}]}]}]
+},
+{
+ id:'run3', tag:'Run 3 of 7', title:'Ninja: the roof, the shuriken and the wire',
+ sum:'The Ninja outfit makes every area on the map hostile and cannot be swapped — but it is the only way onto the hospital roof and the only way to get Silent Ninja.',
+ pops:['Impossible Heights','Cut Throat','Piano Man','Silent Ninja'],
+ loadout:{start:'Infiltrating Along the Mountain Path — Mastery 7', suit:'Ninja (forced by the starting location)',
+  items:[
+   {n:'Smuggled',v:'—',s:'Not needed'},
+   {n:'Concealed weapon',v:'ICA19 Silverballer (silenced pistol)',s:'Cameras must die quietly'},
+   {n:'Gear 1',v:'Shuriken',s:'Hokkaido Mastery 2 — the standard Shuriken, not the Bat Shuriken'},
+   {n:'Gear 2',v:'Classic Fiber Wire',s:'The Classics unlock track — or any fibre wire'}]},
+ secs:[
+  {h:'Do this before you touch anyone', steps:[
+   {id:'r3s1',t:'Climb the I-beam to the hospital roof',
+    s:'The last climbable beam along the building exterior is Ninja-only and reaches the highest point of the GAMA.',
+    where:'From the mountain path, follow the building exterior downhill to the last I-beam / pillar, near the stairway door between the hospital and the morgue.',
+    disg:'Ninja — mandatory. No other outfit can climb it.',
+    act:'Climb to the roof. The challenge pops on arrival.',
+    warn:'Do this first, while there are no bodies or alerts on the map to complicate a retreat.',
+    badges:[{t:'chal',l:'Impossible Heights'},{t:'save',l:'SAVE HERE — on the roof'},
+     {t:'unver',l:'One source calls the climb point a pipe near the stairway door, another the last I-beam. Both agree: exterior, that stretch, Ninja-only.'}]}]},
+  {h:'Two throwaway kills on Yamazaki', steps:[
+   {id:'r3s2',t:'Isolate Yamazaki in the sauna back room',
+    s:'Empty the sauna, jam the door open, and take her as she comes out — this gives you a private body for both throwaway kills.',
+    where:'Sauna temperature control room, then the sauna lobby and the back storeroom behind it.',
+    item:'Any melee object to jam the door track and to pacify her.',
+    npc:'Yuki Yamazaki. Her bodyguards do not follow her into the sauna.',
+    act:'Raise the sauna temperature so the men leave. Drop a tool on the door track so the door cannot close, wait in the lobby, and knock her out with a thrown melee object as she exits. Drag her into the back storeroom.',
+    warn:'The back room is screened from the spa by a one-way mirror, so nobody sees what happens in there.',
+    badges:[{t:'save',l:'SAVE HERE — with her unconscious in the storeroom'}]},
+   {id:'r3s3',t:'Shuriken her, note the pop, reload, then fibre wire her',
+    s:'Two separate kills off the same save. Both are lethal, so both break the "no bodies found" clause of Silent Ninja.',
+    where:'The sauna back storeroom.',
+    disg:'Ninja — required for Cut Throat specifically.',
+    item:'Standard Shuriken, then Classic Fiber Wire.',
+    act:'Kill her with the shuriken and wait for the Cut Throat notification. Reload the save, then kill her with the fibre wire for Piano Man. Reload again.',
+    warn:'The Bat Shuriken does not count for Cut Throat. Use the standard Shuriken.',
+    badges:[{t:'chal',l:'Cut Throat'},{t:'chal',l:'Piano Man'},
+     {t:'warn',l:'Both are lethal non-accident kills — reload before attempting Silent Ninja'}]}]},
+  {h:'The clean run', steps:[
+   {id:'r3s4',t:'Clear the morgue by baiting a dropped pistol',
+    s:'Place a pistol in the corridor and take each guard and mortician one at a time as they come to collect it.',
+    where:'The corridor outside the morgue and the stairwell beside it.',
+    disg:'Ninja — every area is hostile, so you rely purely on not being seen.',
+    item:'A spare pistol as bait, plus your silenced pistol.',
+    npc:'Morgue guards and two Morgue Doctors.',
+    act:'Drop a pistol in the passage, hide in the corner beside the stairwell door, and subdue whoever comes down. Use a noise tool to make a mortician find it so he calls more guards over. Continue until no patrol and no security-room staff remain, then take the morticians and destroy the camera terminal.',
+    warn:'On the way down, if the two cliff-passage guards block you, shoot a nearby camera — the noise pulls their attention long enough to drop to the helipad.',
+    badges:[{t:'save',l:'SAVE HERE — before entering the morgue'}]},
+   {id:'r3s5',t:'Shoot the heart, sauna Yamazaki, snowmobile out',
+    s:'Destroy the organ for Soders, trap Yamazaki in the sauna for an accident kill, then backtrack to the snow scooter.',
+    where:'Organ Storage window angle, then the sauna control room, then the mountain path back down to the snowmobile.',
+    item:'Silenced pistol.',
+    act:'Shoot the replacement heart from outside Organ Storage. Then raise the sauna temperature, wait for it to empty and for Yamazaki to sit down inside, close the door and jam it. Exit via the snowmobile.',
+    warn:'The Ninja outfit cannot use the cable car exit. Accident kills on targets do not break the "no bodies found" clause, so the sauna kill is safe for Silent Ninja.',
+    badges:[{t:'chal',l:'Silent Ninja'},{t:'chal',l:'The Herald'},{t:'chal',l:'The Operative'},
+     {t:'warn',l:'The sauna CHALLENGE often fails to register — Silent Ninja is unaffected. Farm the sauna challenge itself in Run 4.'}]}]}]
+},
+{
+ id:'run4', tag:'Run 4 of 7', title:'Every way to kill Yuki Yamazaki',
+ sum:'Eight kill methods, three mission stories and four discoveries in one session, farmed off staged saves. Ends by actually completing the mission as Amos Dexter.',
+ pops:['Stacking Up','Mission Story - No Smoking','Smoking Kills','Up in Smoke','Smell Something Fishy?','Mission Story - Thrill Seekers','Sushi, Honshū Style','Tasteless, Traceless','Mission Story - Hot Springs',"What's Up-Dog?",'A Bit of a Stretch','Jeg Sauna Hende Ikke','Under New Direction','Watch Your Back','Hold My Hair','Versatile Assassin','Ice Cold Cowboy'],
+ loadout:{start:"47's Suite (default)", suit:'Any Classic suit',
+  items:[
+   {n:'Smuggled',v:'—',s:'Not needed'},
+   {n:'Concealed weapon',v:'ICA19 Silverballer (silenced pistol)',s:'For the Soders kill at the end'},
+   {n:'Gear 1',v:'Handyman Wrench',s:'Gas lamp sabotage and the spa cold-water valve. A wrench also sits in the garden toolbox'},
+   {n:'Gear 2',v:'Emetic Poison Vial',s:'For the drowning. Rat poison from the kitchen corner also works'}]},
+ secs:[
+  {h:'Setup — the guest floor', steps:[
+   {id:'r4s1',t:"Cross the ledge into Amos Dexter's suite and take the cigarettes",
+    s:"Dexter's room is the easiest cigarette source, and you come back here at the very end for his outfit.",
+    where:"Amos Dexter's suite, directly next to 47's. Climb the railing from your own balcony.",
+    npc:'Amos Dexter — the VIP in the hat and purple outfit.',
+    act:'Pick up the pack of cigarettes. Leave Dexter alone for now.',
+    warn:'Other cigarette sources: the third-floor operating theatre, and the hatted handyman working at the heliport.',
+    badges:[{t:'chal',l:'Stacking Up'}]},
+   {id:'r4s2',t:'Take a Bodyguard outfit at the south cable car',
+    s:'Two private bodyguards stand talking by the cable car deck at mission start — the fastest disguise on the map.',
+    where:'The cable car deck on the south side of the map.',
+    npc:'Two bodyguards in conversation.',
+    act:'Throw any object to split them, subdue one out of sight, take his outfit. Bodyguard is one of only three disguises that can stand in Yamazaki\'s suite.',
+    warn:'Bodyguards can go almost everywhere except guest suites and the operating theatre rooms.',
+    badges:[]},
+   {id:'r4s3',t:"Swap the empty pack in Yamazaki's room",
+    s:'An empty cigarette pack sits on a table in her suite. Replace it and she comes out to the balcony to smoke.',
+    where:"Yuki Yamazaki's apartment, level 0 — the table with the empty pack.",
+    disg:'Bodyguard (or Hospital Director / Resort Staff).',
+    item:"The pack of cigarettes from Dexter's room.",
+    npc:'Yuki Yamazaki, plus two bodyguards on her balcony.',
+    act:'Swap the packs, then hide and wait. She waves her bodyguard back and leans on the balcony railing to smoke.',
+    warn:'Do not let her see you when she returns — she sees through the Bodyguard disguise on sight. While you are in here, note the katana, the coins on the bed, the laptop with the kill list, and her water bottle.',
+    badges:[{t:'chal',l:'Mission Story - No Smoking'},{t:'save',l:'SAVE HERE — the moment she leans on the railing'}]},
+   {id:'r4s4',t:'Push her over, reload, then blow the gas lamp',
+    s:'Two kills off the leaning-on-the-railing save.',
+    where:"Yamazaki's balcony.",
+    item:'Wrench for the gas lamp.',
+    act:'Walk up behind her while she leans and push — that is Smoking Kills. Reload. This time, before she comes out, use the wrench on the balcony gas lamp to start a leak; her cigarette does the rest. Reload again.',
+    warn:'The gas explosion radius reaches her two balcony bodyguards. That is a non-target kill, which is why this is done on a save you intend to throw away.',
+    badges:[{t:'chal',l:'Smoking Kills'},{t:'chal',l:'Up in Smoke'}]}]},
+  {h:'The kitchen', steps:[
+   {id:'r4s5',t:'Cut the fugu and take a Chef outfit',
+    s:"The pufferfish gives the lethal poison used for the sushi here and Soders' stem cells in Run 5.",
+    where:'Staff Kitchen on level 0. The uncut fugu is on the counter in the walk-in cooler; a kitchen knife is on a nearby prep table.',
+    disg:'Chef, for the sushi step.',
+    npc:'Two chefs work the kitchen.',
+    act:'Cut the fugu with the kitchen knife to get the poison. Lure one chef into the side room, subdue him there where there is space to hide the body, and take his outfit.',
+    warn:'Sabotaging the fusebox beside the restaurant also summons a chef, but there is nowhere to hide a body there and throwing him over the wall kills him.',
+    badges:[{t:'chal',l:'Smell Something Fishy?'}]},
+   {id:'r4s6',t:'Prepare the poisoned sushi and hand it to her',
+    s:'Make the fugu sushi, then wait for the delivery prompt when she comes near.',
+    where:'The kitchen prep station, then the Sakura / Sushi restaurant area.',
+    disg:'Chef.',
+    item:'Fugu poison.',
+    npc:'Yuki Yamazaki.',
+    act:'Prepare the sushi — that alone completes Thrill Seekers. Wait by the counter; when she approaches, the option to pass it to her appears. She eats and dies. Reload afterwards.',
+    warn:'She takes a while to die. Both the sushi kill and the lethal-poison feat pop from the same act.',
+    badges:[{t:'chal',l:'Mission Story - Thrill Seekers'},{t:'chal',l:'Sushi, Honshū Style'},{t:'chal',l:'Tasteless, Traceless'}]}]},
+  {h:'The spa', steps:[
+   {id:'r4s7',t:'Shut off the cold water so she gets the spa to herself',
+    s:'Clearing the other guests is what triggers her relaxing session, and it is the prerequisite for the yoga lesson.',
+    where:'Spa maintenance room, off the Onsen Hot Spring area.',
+    item:'Wrench for the cold-water valve.',
+    act:'Turn off the cold water supply. The other bathers leave and Yamazaki settles in.',
+    warn:'This is also part of the Namaste sequence in Run 6 — but the order there is different. Do not mix them up.',
+    badges:[{t:'chal',l:'Mission Story - Hot Springs'}]},
+   {id:'r4s8',t:'Take the Yoga Instructor and walk her onto the footbridge',
+    s:'The lesson ends with Yamazaki standing on the footbridge, bodyguards left behind.',
+    where:'The instructor loiters around the spa. Take him in the garage, or the back room attached to the sauna.',
+    disg:'Yoga Instructor.',
+    npc:'The Yoga Instructor, then Yuki Yamazaki.',
+    act:'Subdue the instructor and take his outfit — the sauna back room has a container for the body and a one-way mirror hiding you from the spa. Find Yamazaki, start the lesson at the yoga platform, press the prompts through the poses. On the final pose she is on the footbridge — press the last prompt and 47 throws her off. Reload.',
+    warn:'Her bodyguards stay behind for the lesson and the guests are already gone from the cold-water sabotage. This is the safest of all her kills.',
+    badges:[{t:'chal',l:"What's Up-Dog?"},{t:'chal',l:'A Bit of a Stretch'},{t:'save',l:'SAVE HERE — at the final pose'}]},
+   {id:'r4s9',t:'Cook her in the sauna',
+    s:'Raise the temperature, wait for the sauna to empty, then jam the door on her.',
+    where:'Sauna temperature control room, adjacent to the changing room.',
+    item:'A hammer or similar tool to block the door.',
+    npc:'Yuki Yamazaki.',
+    act:'Raise the temperature. The men inside leave and she enters the empty sauna. When she sits down, close the door and block it. Reload after it pops.',
+    warn:'KNOWN BUG: if the door is not blocked at the right instant an event triggers and the challenge does not register even though she dies. Aim for the moment she is seated, and expect to reload and shift the timing several times.',
+    badges:[{t:'chal',l:'Jeg Sauna Hende Ikke'},{t:'warn',l:'Frequently fails to register — save immediately before jamming the door'},{t:'save',l:'SAVE HERE'}]}]},
+  {h:'The Director, and the drowning', steps:[
+   {id:'r4s10',t:"Poison the Director's meal and take his outfit",
+    s:'There is only one Hospital Director on the map, so he has to be caught alone — emetic poison does that for you.',
+    where:'The restaurant on level 1 for his meal; the toilets on the same level for the takedown.',
+    item:"Emetic poison or rat poison (kitchen corner, or the locked locker in 47's apartment which needs a crowbar).",
+    npc:'The Hospital Director.',
+    act:'Poison his food in the restaurant, follow him to the toilet cubicle, subdue him there and take the outfit.',
+    warn:'As the Director you can go almost anywhere except the surgeon-only rooms, and you must not be spotted on the mountain path east of the hospital.',
+    badges:[{t:'chal',l:'Under New Direction'}]},
+   {id:'r4s11',t:'Walk her to the cable car platform and push',
+    s:'As the Director, Yamazaki agrees to go somewhere quieter and leads you to the cable car deck.',
+    where:'From wherever she is, to the cable car platform.',
+    disg:'Hospital Director — named explicitly in the challenge conditions.',
+    npc:'Yuki Yamazaki.',
+    act:'Talk to her, follow her out, and push her off the platform during the conversation. Reload afterwards.',
+    warn:'This is the only Yamazaki kill that requires a specific disguise.',
+    badges:[{t:'chal',l:'Watch Your Back'},{t:'save',l:'SAVE HERE — before the push'}]},
+   {id:'r4s12',t:'Emetic her water bottle, then drown her in the toilet',
+    s:'Non-lethal poison in her suite sends her to a bathroom on her own.',
+    where:"The water bottle in Yamazaki's apartment; then the toilets she uses.",
+    disg:'Bodyguard, Director or Resort Staff to be in her suite.',
+    item:'Emetic poison or emetic rat poison.',
+    npc:'Yuki Yamazaki.',
+    act:'Poison the water bottle with a non-lethal dose. She drinks, gets sick and heads for the toilet alone. Follow and drown her in the bowl.',
+    warn:'Use emetic, not lethal — a lethal dose kills her on the spot and gives you Tasteless Traceless instead of the drowning.',
+    badges:[{t:'chal',l:'Hold My Hair'},{t:'chal',l:'Versatile Assassin — completes here if Runs 1–3 are done'}]}]},
+  {h:'Finish the run as Dexter', steps:[
+   {id:'r4s13',t:"Take Amos Dexter's outfit, kill both targets, exit on the snow scooter",
+    s:'Ice Cold Cowboy needs all three conditions in one completed session, so this is the kill you actually finish on.',
+    where:"Dexter's suite next to 47's, then the morgue for the heart, then the snowmobile below the hot spring bath.",
+    disg:'VIP Patient (Dexter) — you must be wearing it when Yamazaki dies.',
+    item:'Silenced pistol for the heart.',
+    npc:'Amos Dexter, then both targets.',
+    act:'Do the morgue work first — destroy the replacement heart to finish Soders. Then return to the guest floor, subdue Dexter in his own suite, take his outfit, kill Yamazaki by any method, and exit on the snow scooter.',
+    warn:"Dexter's outfit is a VIP Patient disguise with very limited access, which is why the morgue trip comes before you put it on.",
+    badges:[{t:'chal',l:'Ice Cold Cowboy'},{t:'warn',l:'All three conditions must land in the same completed session'}]}]}]
+},
+{
+ id:'run5', tag:'Run 5 of 7', title:'Every way to kill Erich Soders',
+ sum:'Seven Soders kills plus three mission stories, built around one long setup and a stack of reloads. The order-dependent feats are separated inside the run.',
+ pops:['Turn on Auto Pilot','(Not) Malpractice','Mission Story - Malpractice','(Not) Human Error','Mission Story - Ghost in the Machine','Daisy, Daisy','Flatlined','Kiss of Death','A Personal Goodbye','One Last Time, Mr. Soders','Mission Story - Tell-Tale Heart','Overkill','I Think He is Dead Now'],
+ loadout:{start:"47's Suite (default) — the kill list is two doors away", suit:"47's Signature Suit (required for One Last Time)",
+  items:[
+   {n:'Smuggled',v:'—',s:'Not needed'},
+   {n:'Concealed weapon',v:'ICA19 Silverballer (silenced pistol)',s:'A Personal Goodbye and Overkill'},
+   {n:'Gear 1',v:'Disposable Scrambler',s:'KAI mainframe without the Director outfit'},
+   {n:'Gear 2',v:'Coins ×2',s:'Isolating the surgeon and the pilot'}]},
+ secs:[
+  {h:'Setup — all of this before any kill', steps:[
+   {id:'r5s1',t:"Steal the kill list from Yamazaki's laptop",
+    s:'A flash drive plugged into her laptop is what turns the chief surgeon against Soders.',
+    where:"Yuki Yamazaki's apartment on level 0 — the laptop inside.",
+    disg:'Bodyguard (split the pair at the south cable car), Hospital Director or Resort Staff.',
+    item:"Erich Soders' kill list flash drive.",
+    npc:'Yuki Yamazaki and her bodyguards.',
+    act:"Take the flash drive. You can also reach her suite by the ledge from Portman's adjacent apartment.",
+    warn:'Do not be seen — she sees through the Bodyguard disguise.',
+    badges:[]},
+   {id:'r5s2',t:'Get a Surgeon outfit from the morgue back stairs',
+    s:'You need surgeon-level access to reach the operating theatre computers.',
+    where:'The back stairs leading up from the morgue toward the operating theatre.',
+    disg:'You will end up in Surgeon.',
+    item:'Coins or any throwable.',
+    npc:'A regular Surgeon — not the Chief Surgeon.',
+    act:'Throw a coin up the back stairs to attract a surgeon into the stairwell, subdue him there and take his gown.',
+    warn:'Do NOT engage the Chief Surgeon here. He must stay conscious and on his route for the next three steps.',
+    badges:[{t:'warn',l:'Chief Surgeon must remain untouched until Branch B'}]},
+   {id:'r5s3',t:'Upload the kill list in the operating theatre',
+    s:'Put the drive into a theatre computer so the chief surgeon reads what Soders did to his father.',
+    where:'One of the operating theatre side rooms with a computer terminal.',
+    disg:'Surgeon.',
+    item:'Kill list flash drive.',
+    act:'Upload the list while nobody is watching.',
+    warn:'Being seen uploading counts as a trespass offence and blows the sequence. Wait until the other surgeon looks away.',
+    badges:[{t:'save',l:'SAVE HERE — once the upload lands'}]},
+   {id:'r5s4',t:'Take the Helicopter Pilot outfit at the drug stash',
+    s:'The pilot is the only person the chief surgeon will walk anywhere with.',
+    where:'The helipad behind the hospital; he periodically walks down the stairs behind it to the small drug stash room.',
+    disg:'You will end up in Helicopter Pilot.',
+    npc:'The pilot, plus a guard dozing inside the drug stash.',
+    act:'Subdue the sleeping guard in the stash first, then take the pilot when he arrives and hide him in the cabinet.',
+    warn:'Taking the pilot out on the walkway instead sends his body over the edge, which counts as a kill.',
+    badges:[{t:'chal',l:'Turn on Auto Pilot'}]},
+   {id:'r5s5',t:'Walk Nicholas Laurent to the drugs',
+    s:'As the pilot, the chief surgeon follows you. In the stash he medicates himself without you doing anything.',
+    where:'Meet Laurent near the hospital rear exit, then walk him down the stairs behind the helipad to the drug stash.',
+    disg:'Helicopter Pilot.',
+    npc:'Nicholas Laurent, Chief Surgeon.',
+    act:'Talk to him, lead him to the stash. He picks the drug up himself — there is nothing to carry. He then makes a phone call and heads up to operate.',
+    warn:'Both halves — the kill list and the drugs — must be done. They can be done in either order.',
+    badges:[{t:'save',l:'SAVE HERE — this save is the branch point for the entire run'}]}]},
+  {h:'Branch A — Laurent kills him', steps:[
+   {id:'r5s6',t:'Let the operation go wrong',
+    s:'Laurent botches the transplant deliberately. You do nothing.',
+    where:'Anywhere safe. Watch through the theatre glass if you want to see it.',
+    npc:'Nicholas Laurent and Erich Soders.',
+    act:'Wait. Laurent kills his own patient. Reload to the branch save once it pops.',
+    warn:'This is the ONLY branch where Laurent stays conscious. Every other Soders kill in this run needs him subdued for his gown.',
+    badges:[{t:'chal',l:'(Not) Malpractice'},{t:'chal',l:'The Operative'},
+     {t:'warn',l:'MUTUALLY EXCLUSIVE with Mission Story - Malpractice and (Not) Human Error in the same session'}]}]},
+  {h:'Branch B — you take his place', steps:[
+   {id:'r5s7',t:'Reload, subdue Laurent, take the Chief Surgeon gown',
+    s:"Wearing the head surgeon's identity is itself a mission story.",
+    where:'The drug stash, at the end of the walk.',
+    disg:'You end up in Chief Surgeon.',
+    npc:'Nicholas Laurent.',
+    act:'Reload the branch save, walk him to the stash as before, then subdue him there and take his gown. Hide the body in the cabinet.',
+    warn:'Only the Chief Surgeon can use the robot console — no other disguise works.',
+    badges:[{t:'chal',l:'Mission Story - Malpractice'}]},
+   {id:'r5s8',t:'Operate on Soders yourself',
+    s:'The console beside the theatre lets you run the surgery, and you run it badly.',
+    where:'The operating theatre console room, above and beside the theatre.',
+    disg:'Chief Surgeon.',
+    npc:'Another surgeon in the console area can see through your disguise.',
+    act:'Use the console and press the on-screen buttons from right to left. Reload once it pops.',
+    warn:'Chief Surgeon is not universally safe — watch the second surgeon in the room.',
+    badges:[{t:'chal',l:'(Not) Human Error'},{t:'save',l:'SAVE HERE — before each remaining kill'}]},
+   {id:'r5s9',t:'Sabotage KAI and let the robot arm do it',
+    s:'Break the AI, mirror its reboot order, then trigger the malfunction from the console opposite.',
+    where:'The KAI mainframe room, directly above the operating theatre.',
+    disg:"Hospital Director — or bypass with a Disposable Scrambler, Electronic Key Hacker, or Agent Smith's RFID master card.",
+    item:'Scrambler.',
+    act:'Sabotage any one of the four mainframes. KAI reboots — watch the order the four come back online, then sabotage them again in exactly that order. Use the operating controls opposite to cause the malfunction. The arm punches through Soders. Reload.',
+    warn:'Sabotaging the mainframe at all is what completes Ghost in the Machine, even if you never finish the kill.',
+    badges:[{t:'chal',l:'Mission Story - Ghost in the Machine'},{t:'chal',l:'Daisy, Daisy'}]},
+   {id:'r5s10',t:'Electrocute him with the defibrillator',
+    s:'Kill the respirator, strip the safety module, then overcharge the defibrillator.',
+    where:'Morgue for the screwdriver; the far side of the operating theatre for the respirator; the Defibrillator / Power room upstairs.',
+    item:'Screwdriver from the morgue.',
+    npc:'The female surgeon works the side of the theatre with the respirator.',
+    act:'Switch off the respirator, go upstairs, use the screwdriver to remove the safety module, install the defibrillator and overcharge it while it counts down. Reload.',
+    warn:'KAI fails to regulate the voltage before the count begins, and the safety module only opens once — attempt this after that failure event.',
+    badges:[{t:'chal',l:'Flatlined'}]},
+   {id:'r5s11',t:'Poison the stem cells',
+    s:'Empty the blood pump and the surgeon fetches the poisoned stem cells herself.',
+    where:'Stem Cell Supply near the morgue, then the Stem Cell Controls room off the operating theatre.',
+    item:"Fugu poison, the botox vial, or rat poison. Botox sits in a locked locker in Portman's bathroom and in the second-floor hospital gym.",
+    npc:'The female surgeon collects the cells.',
+    act:'Poison the stem cells, then interact with the pump in her room to empty the blood. She does the rest. Reload.',
+    warn:'You never swap anything yourself — poisoning plus touching the pump is the whole method.',
+    badges:[{t:'chal',l:'Kiss of Death'}]},
+   {id:'r5s12',t:'Shoot him on the table',
+    s:'The plainest kill in the mission.',
+    where:'The operating theatre, or the door the female surgeon uses.',
+    disg:'Surgeon or Chief Surgeon for access.',
+    item:'Silenced pistol.',
+    act:'Shoot Soders while he lies on the operating table. Reload.',
+    warn:'One older source specifies wearing the VIP Patient gown and taking a headshot. If the challenge does not pop from a body shot, retry with a headshot.',
+    badges:[{t:'chal',l:'A Personal Goodbye'},{t:'unver',l:'Older source adds a VIP Patient gown + headshot requirement; the current source does not'}]},
+   {id:'r5s13',t:"Reveal yourself in 47's suit",
+    s:'Reach Soders wearing an actual suit and let him recognise you. The shock kills him.',
+    where:'Beside the operating table. The morgue and stem cell room route is the quietest approach.',
+    disg:"47's Signature Suit — a real suit, not the VIP Patient kimono.",
+    npc:'A nurse in the stem cell room is usually the only obstacle.',
+    act:'Walk up to Soders in the suit. An interaction prompt appears. He says "You!" and dies.',
+    warn:'Escaping cleanly afterwards is hard. Do this on a reload, not on the session you intend to finish.',
+    badges:[{t:'chal',l:'One Last Time, Mr. Soders'}]}]},
+  {h:'The two opposite orders', steps:[
+   {id:'r5s14',t:'Tell-Tale Heart: let the Curator open the organ room for you',
+    s:'The morgue doctor wears a neurochip. Pulsing it sends him into the heart room and clears the guards off it.',
+    where:"Read the research assistant's notes in the small room beside the morgue. The Neurochip Remote Control is in the Medical Staff Sleeping Quarters.",
+    item:'Neurochip Remote Control.',
+    npc:'The Curator, plus two bodyguards on the heart container.',
+    act:'Read the notes, fetch the remote, then pulse it near the Curator. He walks into Organ Storage elated and dismisses the two bodyguards. Follow him in.',
+    warn:'Reach the Medical Staff Sleeping Quarters by climbing down the pipe from the garden railing near the helipad, or through the quarters window.',
+    badges:[{t:'chal',l:'Mission Story - Tell-Tale Heart'},{t:'save',l:'SAVE HERE — with the heart room open'}]},
+   {id:'r5s15',t:'Overkill: kill Soders first, then destroy the heart',
+    s:'The order is the whole challenge. Wait for Diana to confirm the kill before you touch the organ.',
+    where:'Operating theatre, then Organ Storage in the morgue.',
+    act:'Kill Soders by any method. Wait for Diana\'s confirmation. Only then destroy the replacement heart — shooting it or throwing it away both count. Reload afterwards.',
+    warn:'MUTUALLY EXCLUSIVE with I Think He is Dead Now.',
+    badges:[{t:'chal',l:'Overkill'},{t:'warn',l:'Opposite order to the next step — separate save states required'}]},
+   {id:'r5s16',t:'I Think He is Dead Now: heart first, then sabotage KAI',
+    s:'Same two acts, reversed, and the kill has to come from the AI specifically.',
+    where:'Organ Storage first, then the KAI mainframe room above the theatre.',
+    item:'Scrambler or the RFID master card for the mainframe door.',
+    act:'Destroy the replacement heart. Then sabotage KAI, mirror the reboot order, and use the console opposite to trigger the malfunction that kills Soders. Finish the mission from here.',
+    warn:'Any other Soders kill method will not satisfy this one — it must be the AI sabotage.',
+    badges:[{t:'chal',l:'I Think He is Dead Now'},{t:'warn',l:'MUTUALLY EXCLUSIVE with Overkill'}]}]}]
+},
+{
+ id:'run6', tag:'Run 6 of 7', title:'Wardrobe, map and easter eggs',
+ sum:'No kill pressure until the very end. All 16 disguises, 31 areas, the four scripted oddities, and the timed Portman opportunity. Must be completed for Guardian Angel.',
+ pops:['Kick Back Kimono','Fresh Faced','Armed and Dangerous','Mission Story - Makeover','Chameleon','Discover Hokkaido','Namaste','Techman','Mood Alteration','Guardian Angel'],
+ loadout:{start:"47's Suite (default) — you begin in the VIP Patient kimono", suit:'VIP Patient kimono (the mission default)',
+  items:[
+   {n:'Smuggled',v:'—',s:'Not needed'},
+   {n:'Concealed weapon',v:'ICA19 Silverballer (silenced pistol)',s:'Also the firearm you smuggle past the search'},
+   {n:'Gear 1',v:'Handyman Wrench',s:'Namaste cold-water valve'},
+   {n:'Gear 2',v:'Disposable Scrambler',s:'Locked doors during the area sweep'}]},
+ secs:[
+  {h:'The first two minutes', steps:[
+   {id:'r6s1',t:"Lie down on 47's bed before you do anything else",
+    s:'Five seconds of work while you are still in the starting kimono.',
+    where:"47's Suite, on the bed you wake up beside.",
+    disg:'VIP Patient kimono — the outfit you start in.',
+    act:'Lie down on the bed. One of the required Kick Back Kimono spots is banked.',
+    warn:'ON MASTER DIFFICULTY the spare kimono is NOT placed in your bathroom, so you cannot get it back after changing. On Master, do the morgue tables now too and run Portman in a separate session.',
+    badges:[{t:'warn',l:'MASTER: the kimono cannot be re-acquired after you change'}]},
+   {id:'r6s2',t:'Take Jason Portman before the intercom calls him',
+    s:'Portman has an appointment on a timer. Miss it and the escorted route into the hospital is gone for the session.',
+    where:"Jason Portman's apartment, level 0, next to Yamazaki's. He is the patient wrapped in head bandages.",
+    disg:'You end up in VIP Patient (Portman).',
+    npc:'Jason Portman, plus another patient in the level 1 bathroom.',
+    act:'Either take out the other patient in the level 1 bathroom and stuff him in a cubicle, then take Portman there — or walk up to Portman in the open: 47 resembles Helmut Kruger, whom Portman wants to look like, so he follows you somewhere quiet.',
+    warn:'TIMED — do this within the first few minutes. If you miss it, Portman later wanders level 3 near the defibrillator control room. You can still get Fresh Faced, but not the check-up.',
+    badges:[{t:'chal',l:'Fresh Faced'},{t:'save',l:'SAVE HERE — the moment the mission loads'}]},
+   {id:'r6s3',t:'Carry a pistol through the entrance search, then attend the check-up',
+    s:'Portman is not frisked, so the gun goes straight through — and the escort puts you alone in a room with a surgeon.',
+    where:'Hospital main entrance, then the Rehabilitation / Supervisor room on level 3.',
+    disg:'VIP Patient (Portman).',
+    item:'Any firearm on you.',
+    npc:'The doctor who escorts you; the surgeon who removes the bandages.',
+    act:'Wait for the intercom call, meet the doctor, and let him walk you up. The examination completes Makeover. You are then alone with a surgeon — take his gown.',
+    warn:'Two challenges in one walk, plus a free Surgeon disguise for the Chameleon list.',
+    badges:[{t:'chal',l:'Armed and Dangerous'},{t:'chal',l:'Mission Story - Makeover'},{t:'info',l:'Also hands you the Surgeon disguise'}]}]},
+  {h:'The wardrobe sweep — all 16', steps:[
+   {id:'r6s4',t:'Collect the remaining disguises on a single loop',
+    s:'Sixteen count towards Chameleon. The Ninja, the plain white Patient gown and your own starting kimono do not.',
+    where:'Grouped below roughly by where they sit on the map.',
+    act:'Work top-down: guest floor, then resort level, then hospital, then morgue.',
+    warn:'The Ninja outfit is not on the map at all and is explicitly excluded from Chameleon.',
+    list:[
+     'Bodyguard — two talking at the south cable car deck at mission start; split them with a thrown object. Red-masked bodyguards also patrol the hospital.',
+     'Resort Security — open your own suite door and throw something to lure one inside; or the guard dozing in the drug stash below the helipad.',
+     "VIP Patient (Dexter) — the suite next to 47's. Climb the balcony ledge, or enter as a Doctor, or follow him in.",
+     'VIP Patient (Portman) — already taken in step 2.',
+     "Doctor — press the call button in Dexter's suite to summon two doctors, then isolate one on their way out.",
+     'Resort Staff — hanging in the staff room; also obtainable in the small laundry room near the garage.',
+     'Handyman — the one working on the snow scooter in the garage. Do it beside a container so the body goes straight in.',
+     'Chef — kitchen level 0; lure one into the side room where there is space to hide him.',
+     'Yoga Instructor — around the spa. Take him in the garage, or the back room behind the sauna where a one-way mirror hides you.',
+     'Hospital Director — unique. Poison his meal in the restaurant, follow him to the level 1 toilet.',
+     'Morgue Doctor — either the fridge room or the corpse examination room in the morgue.',
+     'Motorcyclist — on the dead biker lying in the morgue fridge room, in the same room as the Curator.',
+     "Baseball Player — the uniform is in the Director's office on level 3, alongside a bat.",
+     'Surgeon — already taken from the rehabilitation room in step 3. Otherwise lure one up the back stairs from the morgue.',
+     'Chief Surgeon — unique. Nicholas Laurent walks from the main console to the hospital rear exit. Easiest as the Helicopter Pilot on the drug-stash walk.',
+     'Helicopter Pilot — patrols the helipad and periodically walks to the drug stash. Take him there after handling the sleeping guard.'],
+    badges:[{t:'chal',l:'Chameleon'},{t:'chal',l:'Under New Direction'},{t:'chal',l:"What's Up-Dog?"},{t:'chal',l:'Turn on Auto Pilot'}]},
+   {id:'r6s5',t:'Walk the areas you would otherwise never enter',
+    s:'You need 31 of 32 named areas. The misses are almost all vertical — below the morgue and above the theatre.',
+    where:'Full area list on the Reference tab.',
+    item:'Scrambler for locked doors.',
+    act:"Sweep the easy-to-miss set: Medical Staff Sleeping Quarters, Stem Cell Supply, Stem Cell Controls, Organ Storage, both Security Rooms, Defibrillator / Power, Robot Surgery Control, Director's Office, Rehabilitation / Supervisor, Laundry Room, Loading Bay, Changing Room, Maintenance Room, Helipad, Cable Line and the Yoga Platform.",
+    warn:'The goal is 31 out of the 32 listed, so one area is optional — do not panic if the counter completes before you have stood in every single room.',
+    badges:[{t:'chal',l:'Discover Hokkaido'}]}]},
+  {h:'The four set pieces', steps:[
+   {id:'r6s6',t:'Namaste — three actions, strict order',
+    s:'Heat, then water, then alarm. Then wait for the spa to sit down together.',
+    where:'Spa Maintenance Room, off the Onsen Hot Spring area.',
+    item:'Handyman Wrench, or a wrench found on the map.',
+    act:'1. Raise the sauna temperature. 2. Use the wrench to shut off the cold water. 3. Trigger the fire alarm in the maintenance room. Then wait — when the alarm stops, the guests gradually sit in a circle and meditate.',
+    warn:'Order matters. Triggering the alarm before the heat and the water does not produce the meditation.',
+    badges:[{t:'chal',l:'Namaste'},{t:'warn',l:'Temperature → cold water → alarm, in that order'}]},
+   {id:'r6s7',t:'Techman — electrocute the dancer, then take his turn',
+    s:'Sabotage the dance pad, set expert mode, let the staffer cook himself, then repair the pad and play.',
+    where:'The staff area with the DDR machine.',
+    item:'Screwdriver — one is in the morgue.',
+    npc:'Two hospital staff at the machine: a gardener and an employee in green.',
+    act:'Distract one out, subdue and hide him. Distract the second, and while he is away sabotage the dance pad with the screwdriver and set expert mode on the console. He resumes, sweats, and electrocutes himself. Repair the pad with the screwdriver and play it yourself.',
+    warn:'Do not attempt this in the Ninja outfit — the only source describing that interaction contradicts itself.',
+    badges:[{t:'chal',l:'Techman'},{t:'unver',l:'Ninja-outfit interaction is self-contradictory in the only source describing it'}]},
+   {id:'r6s8',t:'Guardian Angel — three pulses, and he has to live',
+    s:'The same neurochip that makes the Curator euphoric drops him into a suicidal crash. The third pulse saves him.',
+    where:'Medical Staff Sleeping Quarters for the remote; the morgue for the Curator; the central garden railing for the finale.',
+    item:'Neurochip Remote Control.',
+    npc:'The Curator (morgue doctor).',
+    act:'Pulse once near him in the morgue — he becomes elated and walks into Organ Storage, dismissing the guards. Pulse again — the high wears off and he heads for the central garden. When he vaults the railing and starts his goodbye speech, increase the dosage one more time.',
+    warn:'KNOWN BUG: loading a save immediately after administering the drug can delete the dosage interaction entirely. Save well before, never right after. The challenge only unlocks when you complete the mission with him alive — pacifying him is fine, killing him is not.',
+    badges:[{t:'chal',l:'Mood Alteration'},{t:'chal',l:'Guardian Angel'},{t:'save',l:'SAVE HERE — before the first pulse, not after'}]}]},
+  {h:'Close the run out', steps:[
+   {id:'r6s9',t:'Change back into the kimono and do the morgue tables',
+    s:'The spare VIP Patient kimono is in your own bathroom on every difficulty except Master.',
+    where:"47's Suite bathroom, then the morgue examination tables.",
+    disg:'VIP Patient kimono — required for the challenge.',
+    npc:'Two guards beside the entrance table; two doctors near the Organ Storage entrance.',
+    act:'Change back into the kimono. Enter the morgue through the staff accommodation route. Lie on the table in front of the entrance door when both guards face the same way, then the one directly behind them, then the one by the stairs, then the one near the Organ Storage entrance when the two doctors are not facing each other.',
+    warn:'VIP Patient is trespassing in the morgue, so every table is a timing problem. Save before each one.',
+    badges:[{t:'chal',l:'Kick Back Kimono'},{t:'save',l:'SAVE HERE — before each table'}]},
+   {id:'r6s10',t:'Kill both targets and exit',
+    s:'Guardian Angel only unlocks on mission completion, so you have to finish.',
+    where:'Organ Storage — already unguarded thanks to the Curator — then any exit.',
+    item:'Silenced pistol.',
+    act:'Destroy the replacement heart for Soders, take Yamazaki by any convenient method, and leave.',
+    warn:'The Curator must still be alive when the mission ends.',
+    badges:[{t:'chal',l:'The Herald'},{t:'chal',l:'The Operative'}]}]}]
+},
+{
+ id:'run7', tag:'Run 7 of 7', title:'Contracts Mode: katana and icicle',
+ sum:'Three challenges that name contract targets and so cannot be done in the campaign. Two of them share a single contract.',
+ pops:['Cottonmouth','The Groom','Bye-Cicle'],
+ loadout:{start:'Morgue (Mastery 17) for the katana contract · Infiltrating Along the Mountain Path (Mastery 7) for the icicle',
+  suit:'Motorcyclist for the katana contract · Ninja for the icicle contract',
+  items:[
+   {n:'Smuggled',v:'Katana',s:"Or take the one in Yamazaki's apartment"},
+   {n:'Concealed weapon',v:'HWK21 Covert or ICA19 Silverballer',s:'Silenced — needed for the icicle and the camera'},
+   {n:'Gear 1',v:'Coins ×3',s:'Isolating masked bodyguards'},
+   {n:'Gear 2',v:'Disposable Scrambler',s:'Door access on the katana route'}]},
+ secs:[
+  {h:'Contract 1 — the katana', steps:[
+   {id:'r7s1',t:'Build a contract with masked bodyguards as targets',
+    s:'The Groom is a strict superset of Cottonmouth, so one clean contract pops both.',
+    where:'Contracts Mode, Situs Inversus. Mark masked bodyguards inside the hospital as targets.',
+    act:'Create the contract, then replay it under the challenge conditions.',
+    warn:'A contract holds a maximum of five targets. Keep it small — every target must die by katana and no body may be found.',
+    badges:[{t:'info',l:'One contract, both challenges'}]},
+   {id:'r7s2',t:'Take the Motorcyclist outfit and never change again',
+    s:'Both challenges forbid switching disguise once you are wearing it.',
+    where:'The dead motorcyclist lying in the morgue fridge room, in the same room as the Curator.',
+    disg:'Motorcyclist — and nothing else for the rest of the run.',
+    item:"Katana — brought in your loadout, or taken from Yamazaki's apartment.",
+    act:'Start in the morgue, take the outfit off the body, pick up the katana, and work upward.',
+    warn:'Plan the whole route around Motorcyclist access before you start. One outfit change voids both challenges.',
+    badges:[{t:'warn',l:'No disguise change after equipping Motorcyclist'}]},
+   {id:'r7s3',t:'Katana each target behind a closed door',
+    s:'Wait for each marked bodyguard to step somewhere private, kill with the katana, hide the body immediately.',
+    where:'Hospital corridors and the side offices off them.',
+    item:'Katana.',
+    npc:'Masked bodyguards.',
+    act:'When a marked bodyguard enters a room and the door closes, kill him with the katana and drag the body into an adjacent office. Repeat for each target, then exit via the stairs and the mountain path.',
+    warn:'The Groom additionally requires Silent Assassin conditions — no bodies found, never spotted, camera evidence destroyed. Cottonmouth alone does not.',
+    badges:[{t:'chal',l:'Cottonmouth'},{t:'chal',l:'The Groom'},{t:'save',l:'SAVE HERE — before each kill'}]}]},
+  {h:'Contract 2 — the icicle', steps:[
+   {id:'r7s4',t:'Make a mountain path patrol guard your target',
+    s:'The large hanging icicles only exist off the building edge near the mountain path, and no campaign target ever walks under them.',
+    where:'Contracts Mode. Mark one of the paired guards who patrol the mountain path.',
+    act:'Create the contract with that single guard as the target.',
+    warn:'Bye-Cicle cannot be completed by throwing the Icicle melee weapon. It must be one of the large, unequippable hanging icicles dropped onto the target.',
+    badges:[{t:'warn',l:'The throwable Icicle melee weapon does not count'}]},
+   {id:'r7s5',t:'Ninja start, kill the camera, drop the ice',
+    s:'Wait on the path for the patrol to pass beneath the overhang and shoot the icicle above them.',
+    where:'Start at Infiltrating Along the Mountain Path. The camera sits on a pole in the corner below the path.',
+    disg:'Ninja (the starting location default).',
+    item:'Silenced pistol.',
+    npc:'The paired mountain path patrol.',
+    act:'Sneak along the path. When the patrol is not present, shoot the camera on the pole below. Wait for them to come back, then shoot the icicle so it drops on your target. Exit at the head of the path.',
+    warn:'Ignore the katana lying on the path — it is not needed here.',
+    badges:[{t:'chal',l:'Bye-Cicle'},{t:'save',l:'SAVE HERE — before the icicle shot'}]}]}]
+}];
+
+/* ============ REFERENCE DATA (verbatim from mission file) ============ */
+const DISGUISES=["Bodyguard","Resort Security","Chief Surgeon","Helicopter Pilot","Hospital Director","VIP Patient (Dexter)","VIP Patient (Portman)","Yoga Instructor","Chef","Doctor","Handyman","Morgue Doctor","Resort Staff","Surgeon","Motorcyclist","Baseball Player"];
+const AREAS=["Robot / Surgery / Control","Walkway","Loading / Bay","GAMA / Hospital","Laundry / Room","Stem Cell / Controls","Garden","Stem Cell / Supply","Yuki's / Room","Medical Staff / Sleeping Quarters","Morgue","Operating / Theater","Security / Room (first entry)","Security / Room (second entry)","Staff / Area","Sakura / Sushi","Defibrillator / Power","Foyer","Amos / Dexter's / Room (first entry)","Organ / Storage","Yoga / Platform","Rehabilitation / Supervisor","Cable / Line","Director's / Office","Amos / Dexter's / Room (second entry)","Onsen Hot / Spring","Guest / Room","Changing Room","Maintenance / Room","Kitchen","Helipad","Guard / Room"];
+const MASTERY=[[2,"Shuriken (melee)"],[3,"Mountain Path (agency pickup)"],[4,"Staff Wardrobe (hidden stash)"],[5,"Custom 5mm (pistol)"],[6,"Spa (starting location)"],[7,"Infiltrating Along the Mountain Path (starting location — the Ninja start) · Okinawan Tonfa · Masamune"],[8,"Restaurant (starting location)"],[9,"Operating Theater Restroom"],[10,"Undercover in the Staff Quarters (starting location)"],[11,"Kitchen Food Storage (agency pickup)"],[12,"Undercover in the Kitchen (starting location) · Concealable Knife"],[13,"Garage (agency pickup)"],[14,"Undercover in the Garden (starting location)"],[15,"Explosive Compound"],[16,"Morgue Storage (agency pickup)"],[17,"Morgue (starting location)"],[18,"Restaurant Restroom (hidden stash)"],[19,"Undercover in the Operating Theater (starting location)"],[20,"Sieger 300 Advanced · HF Championship Bat · all loadout slots unlocked"]];
+const ITEMS=[
+["Fugu fish","Counter in the walk-in cooler, Staff Kitchen, level 0. Needs a kitchen knife from a nearby prep table."],
+["Kitchen knife","Prep table in the Staff Kitchen, level 0."],
+["Cigarettes","Amos Dexter's room · the third-floor operating theatre · on the hatted handyman at the heliport."],
+["Empty cigarette pack","Table inside Yuki Yamazaki's apartment — the pack you replace."],
+["Kill list flash drive","Plugged into the laptop in Yuki Yamazaki's apartment. Uploads at an operating theatre computer."],
+["Water bottle","Yuki Yamazaki's apartment. Emetic sends her to the toilet; lethal kills her outright."],
+["Katana","Yuki Yamazaki's apartment."],
+["Coins","On the bed in Yuki Yamazaki's apartment."],
+["Neurochip Remote Control","Medical Staff Sleeping Quarters. Reach it down the pipe from the garden railing near the helipad, or through the window."],
+["Research assistant's notes","Small room next to the morgue — starts the Tell-Tale Heart chain."],
+["Screwdriver","In the morgue. Used for the defibrillator safety module and the DDR pad."],
+["Wrench","Toolbox in the garden near the torii · heliport security room cabinet (needs a crowbar)."],
+["Rat poison","Corner of the kitchen · locked locker in 47's apartment (needs a crowbar)."],
+["Botox vial","Locked locker in Jason Portman's bathroom · the second-floor hospital gym where two bodyguards do push-ups."],
+["Non-descript keycard","Director's office, level 3. Opens morgue freezer pod 2 without a scrambler."],
+["RFID master keycard","Given by Agent Carlton Smith when you free him from morgue freezer pod 2."],
+["Baseball bat + uniform","Director's office, level 3."],
+["Hanging icicles","Off the building edge near the Mountain Path. Only these count for Bye-Cicle."],
+["Camera recorders","Two only: the guard room beside the garden, and the morgue security room."]];
+
+/* ============ STATE + RENDER ============ */
+const state={done:new Set(),steps:new Set(),filter:'All'};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* ---------------- persistence ---------------- */
+const KEY='situs_inversus_done_v1', RID='m07';
+const SKEY=KEY+':steps', AKEY=KEY+':auto';
+function loadSet(k,set){
+  try{const v=JSON.parse(localStorage.getItem(k));if(Array.isArray(v))v.forEach(x=>set.add(x));}catch(e){}
+}
+const autoDone=new Set();
+loadSet(KEY,state.done); loadSet(SKEY,state.steps); loadSet(AKEY,autoDone);
+
+/* every run names, in `pops`, the challenges it clears once all its steps are
+   ticked — verified 1:1 against CH with no gaps or duplicates. A challenge
+   this code ticked stays tracked in autoDone so it can be un-ticked if a step
+   is undone, without touching one the player ticked by hand. */
+const idByName={}; CH.forEach(c=>{idByName[c.n]=c.id;});
+const STEPS_OF_RUN={};
+RUNS.forEach(r=>{STEPS_OF_RUN[r.id]=[]; r.secs.forEach(sec=>sec.steps.forEach(st=>STEPS_OF_RUN[r.id].push(st.id)));});
+function syncChallenges(){
+  RUNS.forEach(r=>{
+    const finished=STEPS_OF_RUN[r.id].every(id=>state.steps.has(id));
+    r.pops.forEach(name=>{
+      const id=idByName[name]; if(!id)return;
+      if(finished){ if(!state.done.has(id)){ state.done.add(id); autoDone.add(id); } }
+      else if(autoDone.has(id)){ state.done.delete(id); autoDone.delete(id); }
+    });
+  });
+}
+syncChallenges();
+
+function reportProgress(){
+  try{
+    const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');
+    const stepTotal=RUNS.reduce((a,run)=>a+STEPS_OF_RUN[run.id].length,0);
+    r[RID]={done:state.done.size,total:CH.length,steps:state.steps.size,stepTotal,updated:Date.now()};
+    localStorage.setItem('hitman-progress-registry',JSON.stringify(r));
+  }catch(e){}
+}
+function persist(){
+  try{
+    localStorage.setItem(KEY,JSON.stringify([...state.done]));
+    localStorage.setItem(SKEY,JSON.stringify([...state.steps]));
+    localStorage.setItem(AKEY,JSON.stringify([...autoDone]));
+  }catch(e){}
+  reportProgress();
+}
+
+function renderStats(){
+  const total=CH.length, done=CH.filter(c=>state.done.has(c.id)).length;
+  document.getElementById('doneCount').textContent=done;
+  const p=document.getElementById('ecgLive'), len=p.getTotalLength();
+  p.style.strokeDasharray=(len*(total?done/total:0))+' '+len;
+  document.getElementById('catStrip').innerHTML=CATS.map(cat=>{
+    const it=CH.filter(c=>c.cat===cat), d=it.filter(c=>state.done.has(c.id)).length;
+    const pc=it.length?Math.round(d/it.length*100):0;
+    return '<div class="cat"><b>'+cat+'</b><span>'+d+'</span><i> / '+it.length+'</i><div class="bar"><span style="width:'+pc+'%"></span></div></div>';
+  }).join('');
+}
+
+const bmap={chal:['b-chal','✓ '],warn:['b-warn','⚠ '],save:['b-save','◆ '],unver:['b-unver','? '],info:['b-info','· ']};
+const badge=b=>'<span class="badge '+bmap[b.t][0]+'">'+bmap[b.t][1]+esc(b.l)+'</span>';
+
+function renderRuns(){
+  document.getElementById('runnav').innerHTML=
+    '<span class="lbl">Jump to</span>'+
+    RUNS.map((r,i)=>'<button class="btn" type="button" data-go="'+r.id+'">Run '+(i+1)+' · '+esc(r.title.length>24?r.title.slice(0,22)+'…':r.title)+'</button>').join('')+
+    '<button class="btn ghost" type="button" data-all="open">Expand all</button>'+
+    '<button class="btn ghost" type="button" data-all="close">Collapse all</button>';
+
+  document.getElementById('runs').innerHTML=RUNS.map((run,ri)=>{
+    const slots=run.loadout.items.map(i=>'<div class="slot"><b>'+esc(i.n)+'</b><span>'+esc(i.v)+'</span><em>'+esc(i.s)+'</em></div>').join('');
+    let n=0;
+    const secs=run.secs.map(sec=>{
+      const steps=sec.steps.map(st=>{
+        n++;
+        const rows=[];
+        if(st.where) rows.push(['Where',st.where,'']);
+        if(st.disg)  rows.push(['Disguise',st.disg,'']);
+        if(st.item)  rows.push(['Item',st.item,'']);
+        if(st.npc)   rows.push(['NPC',st.npc,'']);
+        if(st.act)   rows.push(['Do',st.act,'']);
+        if(st.warn)  rows.push(['Watch out',st.warn,'w']);
+        const dl=rows.map(r=>'<dt class="'+r[2]+'">'+r[0]+'</dt><dd class="'+r[2]+'">'+esc(r[1])+'</dd>').join('');
+        const list=st.list?'<ul style="margin:6px 0 8px;padding-left:18px;font-size:14px;color:var(--ink2)">'+st.list.map(x=>'<li style="margin-bottom:4px">'+esc(x)+'</li>').join('')+'</ul>':'';
+        const bd=(st.badges||[]).map(badge).join('');
+        const sdone=state.steps.has(st.id);
+        return '<div class="step'+(sdone?' done':'')+'" id="step-'+st.id+'">'
+          +'<button class="check" type="button" aria-pressed="'+sdone+'" data-step="'+st.id+'" aria-label="Mark step done">✓</button>'
+          +'<div class="sbody"><span class="snum">STEP '+(ri+1)+'.'+n+'</span>'
+          +'<b>'+esc(st.t)+'</b><p>'+esc(st.s)+'</p>'
+          +'<details class="dtl"><summary>Where / disguise / item / NPC / do</summary>'
+          +'<dl class="dl">'+dl+'</dl>'+list+(bd?'<div class="badges">'+bd+'</div>':'')
+          +'</details></div></div>';
+      }).join('');
+      return '<div class="sec-h">'+esc(sec.h)+'</div>'+steps;
+    }).join('');
+    const pops=run.pops.map(p=>'<span class="badge b-chal">✓ '+esc(p)+'</span>').join('');
+    return '<details class="run" id="'+run.id+'"'+(ri===0?' open':'')+'>'
+      +'<summary><div class="run-tag">'+esc(run.tag)+'<span class="caret">▾</span></div>'
+      +'<h3>'+esc(run.title)+'</h3><p>'+esc(run.sum)+'</p>'
+      +'<div class="run-pop">'+pops+'</div></summary>'
+      +'<div class="loadout">'
+      +'<div class="slot"><b>Starting location</b><span>'+esc(run.loadout.start)+'</span></div>'
+      +'<div class="slot"><b>Suit</b><span>'+esc(run.loadout.suit)+'</span></div>'+slots+'</div>'+secs+'</details>';
+  }).join('');
+
+  document.querySelectorAll('[data-step]').forEach(b=>b.addEventListener('click',()=>{
+    const id=b.dataset.step,on=!state.steps.has(id);
+    on?state.steps.add(id):state.steps.delete(id);
+    b.setAttribute('aria-pressed',String(on));
+    document.getElementById('step-'+id).classList.toggle('done',on);
+    syncChallenges(); persist(); renderStats(); renderChecklist();
+  }));
+  document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>{
+    const el=document.getElementById(b.dataset.go); el.open=true; el.scrollIntoView({block:'start'});
+  }));
+  document.querySelectorAll('[data-all]').forEach(b=>b.addEventListener('click',()=>{
+    const open=b.dataset.all==='open';
+    document.querySelectorAll('details.run').forEach(d=>d.open=open);
+  }));
+}
+
+const FILTERS=['All','Assassination','Discovery','Feats','Classic','Targets','Incomplete'];
+const match=c=>state.filter==='All'?true:(state.filter==='Incomplete'?!state.done.has(c.id):c.cat===state.filter);
+
+function renderFilters(){
+  document.getElementById('filters').innerHTML=FILTERS.map(f=>
+    '<button class="filt" type="button" data-f="'+f+'" aria-pressed="'+(state.filter===f)+'">'+f+'</button>').join('');
+  document.querySelectorAll('[data-f]').forEach(b=>b.addEventListener('click',()=>{
+    state.filter=b.dataset.f; renderFilters(); renderChecklist();}));
+}
+
+function renderChecklist(){
+  const w=document.getElementById('checklist');
+  w.innerHTML=CATS.map(cat=>{
+    const it=CH.filter(c=>c.cat===cat&&match(c));
+    if(!it.length) return '';
+    const rows=it.map(c=>{
+      const on=state.done.has(c.id);
+      return '<div class="cli '+(on?'done':'')+'">'
+        +'<button class="check" type="button" aria-pressed="'+on+'" data-ch="'+c.id+'" aria-label="Mark '+esc(c.n)+' done">✓</button>'
+        +'<div class="clt"><b>'+esc(c.n)+'</b><p>'+esc(c.d)+'</p></div>'
+        +'<div class="cls"><span class="badge b-info">Run '+c.run+'</span></div></div>';
+    }).join('');
+    const d=CH.filter(c=>c.cat===cat&&state.done.has(c.id)).length, t=CH.filter(c=>c.cat===cat).length;
+    return '<section class="clg"><h4>'+cat+' — '+d+'/'+t+'</h4>'+rows+'</section>';
+  }).join('')||'<p class="src">Nothing matches this filter.</p>';
+  w.querySelectorAll('[data-ch]').forEach(b=>b.addEventListener('click',()=>{
+    const id=b.dataset.ch;
+    state.done.has(id)?state.done.delete(id):state.done.add(id);
+    autoDone.delete(id); /* a manual tick or untick always wins over the run link */
+    persist(); renderChecklist(); renderStats();}));
+}
+
+function renderRef(){
+  document.getElementById('ref').innerHTML=
+  '<h4>Chameleon — the 16 disguises that count</h4>'
+  +'<p class="src">Straight from the mission data file. The Ninja outfit, the plain white Patient gown and 47\'s own default VIP Patient kimono are <b>not</b> on this list and do not count towards Chameleon.</p>'
+  +'<ul class="cols">'+DISGUISES.map(d=>'<li>'+esc(d)+'</li>').join('')+'</ul>'
+  +'<h4>Discover Hokkaido — 31 of these 32 areas</h4>'
+  +'<p class="src">The data file sets areaGoal 31 against areaCount 32, so one area is optional. Two pairs share a name in the raw data; they are labelled here to keep them distinguishable.</p>'
+  +'<ul class="cols">'+AREAS.map(a=>'<li>'+esc(a)+'</li>').join('')+'</ul>'
+  +'<h4>Item and pickup locations</h4>'
+  +'<table><thead><tr><th>Item</th><th>Where</th></tr></thead><tbody>'
+  +ITEMS.map(i=>'<tr><td><b>'+esc(i[0])+'</b></td><td>'+esc(i[1])+'</td></tr>').join('')+'</tbody></table>'
+  +'<h4>Mastery unlock ladder</h4>'
+  +'<table><thead><tr><th>Lv</th><th>Unlock</th></tr></thead><tbody>'
+  +MASTERY.map(m=>'<tr><td>'+m[0]+'</td><td>'+esc(m[1])+'</td></tr>').join('')+'</tbody></table>'
+  +'<p class="src">Cross-checked against two independent unlock lists, which agree on levels 4–13.</p>';
+}
+
+function renderAudit(){
+  const perRun=RUNS.map((r,i)=>'<tr><td>Run '+(i+1)+' — '+esc(r.title)+'</td><td>'+CH.filter(c=>c.run===i+1).length+'</td></tr>').join('');
+  const assigned=CH.filter(c=>c.run>0).length;
+  document.getElementById('audit').innerHTML=
+  '<div class="callout jade"><b>Count reconciled against the mission data file</b>'
+  +'The file states <b>challengeCount: 60</b>. Its five categories hold 27 Assassination + 10 Discovery + 16 Feats + 2 Targets + 5 Classic = <b>60</b>. Every one is in the checklist and assigned to exactly one run: <b>'+assigned+'/60 assigned</b>, no duplicates, no orphans.</div>'
+
+  +'<div class="callout ice"><b>What the data file corrected in the previous draft</b><ul style="margin:6px 0 0;padding-left:18px">'
+  +'<li><b>Chameleon is 16 disguises.</b> The plain white Patient gown, the default VIP Patient kimono and the Ninja outfit are excluded. That closes the open question from the last version.</li>'
+  +'<li><b>The Classics = Silent Assassin + SASO + Sniper Assassin + Suit Only.</b> There is no "Master Assassin" challenge on this mission.</li>'
+  +'<li><b>Cut Throat and Bye-Cicle are Assassination, not Feats.</b> Cut Throat is one target, not five.</li>'
+  +'<li><b>Removed entirely as not part of this mission:</b> Crazy 8, Young Hiro, Hon-Rui Da, Playing with Fire, Hanami Hitman, Nothing but Clear KAIs, Mission Stories - Hokkaido, No Evidence, the Art of Revenge pack, and the twelve legacy start/exit Discovery challenges.</li>'
+  +'<li><b>Discover Hokkaido needs 31 of 32 areas</b>, not all of them.</li>'
+  +'<li><b>Mission Story - Malpractice is "Impersonate the role of the Head Surgeon"</b> — wearing Laurent\'s gown. That directly conflicts with (Not) Malpractice, which needs him conscious and operating. Run 5 is split into Branch A and Branch B for exactly this reason.</li>'
+  +'</ul></div>'
+
+  +'<h4>Run logic validation</h4>'
+  +'<table><thead><tr><th>Check</th><th>Result</th></tr></thead><tbody>'
+  +'<tr><td>Every challenge assigned to a run</td><td>60 / 60, no duplicates</td></tr>'
+  +'<tr><td>Items picked up before they are used</td><td>Pass — cigarettes before the pack swap (4.1→4.3); wrench before the gas lamp and the cold-water valve; kill list and pilot outfit before Laurent walks (5.1→5.5); neurochip remote before the Curator (5.14, 6.8); screwdriver before the defibrillator and the DDR pad</td></tr>'
+  +'<tr><td>Disguises obtained before they are needed</td><td>Pass — Bodyguard before Yamazaki\'s suite; Chef before the sushi; Yoga Instructor before the lesson; Director before Watch Your Back; Surgeon before the kill-list upload; Pilot before the Laurent walk; Chief Surgeon before the robot console; Dexter last, immediately before the final kill and exit</td></tr>'
+  +'<tr><td>NPCs still alive when needed later</td><td>Pass — Run 2 explicitly forbids touching the Curator; Run 5 forbids touching Laurent until Branch B; Run 6 requires the Curator alive at mission end</td></tr>'
+  +'<tr><td>Mutually exclusive pairs separated</td><td>Pass — Overkill vs I Think He is Dead Now (5.15 / 5.16, separate saves); (Not) Malpractice vs Mission Story - Malpractice and (Not) Human Error (Branch A vs Branch B); Cut Throat and Piano Man vs Silent Ninja (3.3 reloads before 3.5); Silent Ninja vs Suit Only and SASO (Run 1 vs Run 3, the Ninja outfit is a disguise)</td></tr>'
+  +'<tr><td>Timed events scheduled first</td><td>Pass — Jason Portman is step 6.2, before the wardrobe sweep and the easter eggs</td></tr>'
+  +'<tr><td>Aggregators land after their prerequisites</td><td>Pass — The Classics completes at 2.5 (needs Run 1); Versatile Assassin completes at 4.12 (needs Runs 1–3)</td></tr>'
+  +'<tr><td>Save points do not break later objectives</td><td>Pass, with one flagged exception: Guardian Angel\'s dosage interaction can vanish if you load immediately after dosing, so step 6.8 places the save before the first pulse</td></tr>'
+  +'<tr><td>Backtracking minimised</td><td>Run 4 groups guest floor → kitchen → spa → restaurant/Director, then returns to the guest floor once for Dexter at the end. Run 5 chains guest floor → morgue stairs → theatre → helipad in one direction. Run 6 does 47\'s bed first so the kimono trip at the end is only one leg.</td></tr>'
+  +'</tbody></table>'
+
+  +'<h4>Challenges per run</h4><table><thead><tr><th>Run</th><th>Challenges</th></tr></thead><tbody>'+perRun+'</tbody></table>'
+
+  +'<h4>Known bugs and ordering rules</h4><ul>'
+  +'<li><b>Jeg Sauna Hende Ikke</b> — if the door is not blocked at the right instant, an event triggers and the challenge does not register even though Yamazaki dies. Save before jamming and retry with different timing.</li>'
+  +'<li><b>Guardian Angel</b> — loading a save immediately after administering the neurochip drug can delete the dosage interaction entirely.</li>'
+  +'<li><b>Overkill vs I Think He is Dead Now</b> — strictly opposite orders. Never in one session.</li>'
+  +'<li><b>(Not) Malpractice vs Mission Story - Malpractice / (Not) Human Error</b> — the first needs Laurent conscious and operating; the others need his gown. Branch the save.</li>'
+  +'<li><b>Mission Story - Makeover</b> is on a timer — Portman is called by intercom a few minutes in.</li>'
+  +'<li><b>Master difficulty</b> — the spare VIP Patient kimono is not placed in 47\'s bathroom, so Kick Back Kimono cannot be resumed after changing.</li>'
+  +'<li><b>Cut Throat</b> — the Bat Shuriken does not count. Use the standard Shuriken.</li>'
+  +'<li><b>Bye-Cicle</b> — the throwable Icicle melee weapon does not count; it must be a large hanging icicle dropped onto the target.</li>'
+  +'<li><b>Up in Smoke</b> — the gas explosion radius reaches Yamazaki\'s two balcony bodyguards, which is a non-target kill.</li>'
+  +'</ul>'
+
+  +'<h4>Still marked UNVERIFIED</h4><ul>'
+  +'<li><b>A Personal Goodbye</b> — [REDACTED] in the data file. A 2025 WoA guide says "shoot him with a firearm on the operating table"; a 2017 guide adds "wear the VIP patient gown" and "shoot him in the head". The guide uses the newer wording and gives the older one as a fallback.</li>'
+  +'<li><b>Sniper Assassin scope</b> — the condition names only Yamazaki for the rifle, but players report unexplained failures. Run 2 uses the rifle on the replacement heart as well, which satisfies both readings.</li>'
+  +'<li><b>Techman and the Ninja outfit</b> — the single source describing this contradicts itself. Run 6 avoids the Ninja outfit for it.</li>'
+  +'<li><b>Impossible Heights climb point</b> — one source calls it a pipe near the stairway door between hospital and morgue, another the last I-beam along the building from the mountain path. Both agree it is exterior, on that stretch, and Ninja-only.</li>'
+  +'<li><b>Which of the 32 areas is optional</b> — the data file gives areaGoal 31 and areaCount 32 but does not say which one is skippable.</li>'
+  +'<li><b>XP values</b> — sources conflict (a 2017 list says 5,000 for major assassinations; the current wiki lists 4,000 for one of them). No XP is printed anywhere in this guide rather than print numbers that cannot be stood behind.</li>'
+  +'<li><b>Individual guard names and patrol routes</b> — public sources describe Hokkaido guards by post and behaviour, not by name. The only named NPCs used here are ones sources actually name: Nicholas Laurent, Jason Portman, Amos Dexter, Yuki Yamazaki, Erich Soders, Carlton Smith, and the Curator.</li>'
+  +'</ul>'
+
+  +'<h4>Sources</h4><ol>'
+  +'<li><b>Supplied mission data file</b> — authoritative for challenge names, descriptions, category split, the 60 total, the 16 disguises and the 32 areas.</li>'
+  +'<li>Steam Community, "HITMAN: WoA Redacted Challenges Guide" (updated Aug 2025) — the redacted set: A Personal Goodbye, I Think He is Dead Now, Overkill, Namaste, Techman, Guardian Angel, Impossible Heights, We Meet Again.</li>'
+  +'<li>Gamepressure Hitman guide — Hokkaido disguises, important items, hospital exploration, and the Yamazaki and Soders kill pages.</li>'
+  +'<li>Neoseeker Hitman walkthrough — Hokkaido challenge list, hints (fugu, icicle, cable car), the Silent Ninja route, and the challenge contract setups.</li>'
+  +'<li>Hitman Wiki — Icicle page, confirming the throwable Icicle does not satisfy Bye-Cicle; per-challenge pages.</li>'
+  +'<li>Namu Wiki, Hitman/Challenges/Hokkaido — per-challenge method detail. Machine-translated and internally inconsistent in places; treated as a single source and never used alone for a hard claim.</li>'
+  +'<li>Half-Glass Gaming unlock guide — the current WoA Hokkaido mastery ladder.</li>'
+  +'</ol>';
+}
+
+document.querySelectorAll('.tab').forEach(tab=>tab.addEventListener('click',()=>{
+  document.querySelectorAll('.tab').forEach(t=>{
+    const sel=t===tab; t.setAttribute('aria-selected',String(sel));
+    document.getElementById(t.getAttribute('aria-controls')).hidden=!sel;
+  });
+  window.scrollTo({top:0});
+}));
+
+document.getElementById('reset').addEventListener('click',()=>{
+  if(!confirm('Clear every ticked challenge and step for this mission?'))return;
+  state.done.clear(); state.steps.clear(); autoDone.clear();
+  persist(); renderRuns(); renderChecklist(); renderStats();
+});
+
+renderRuns(); renderFilters(); renderChecklist(); renderStats(); renderRef(); renderAudit();
+reportProgress();
+</script>
+</body>
+</html>

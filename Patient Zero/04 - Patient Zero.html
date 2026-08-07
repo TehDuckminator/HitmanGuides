@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Patient Zero — GAMA Facility Challenge Dossier</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ice:#E7EEF1; --paper:#fff; --ink:#0E1A22; --steel:#5C7382;
+  --line:#CBD8DF; --soft:#E4ECF0;
+  --blood:#A81C24; --amber:#A96A08; --teal:#0E6B60; --violet:#54398A;
+  --shadow:0 1px 0 rgba(14,26,34,.04), 0 10px 26px -20px rgba(14,26,34,.6);
+  --r:3px;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--ice);
+  background-image:linear-gradient(180deg,rgba(255,255,255,.75),rgba(255,255,255,0) 320px),
+    repeating-linear-gradient(90deg,rgba(14,26,34,.026) 0 1px,transparent 1px 34px);
+  color:var(--ink); font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:15px; line-height:1.55; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1060px;margin:0 auto;padding:26px 16px 80px}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--steel);display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--blood)}
+h1{font-family:"Barlow Condensed",Impact,sans-serif;font-weight:700;font-size:clamp(42px,9.5vw,86px);
+  line-height:.87;letter-spacing:-.015em;text-transform:uppercase;margin:10px 0 6px}
+h1 em{font-style:normal;color:var(--blood)}
+.sub{font-family:"Barlow Condensed",sans-serif;font-weight:500;font-size:clamp(15px,3vw,20px);
+  letter-spacing:.05em;text-transform:uppercase;color:var(--steel);margin:0 0 20px}
+
+/* tracker */
+.tracker{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:16px}
+.ttop{display:flex;justify-content:space-between;align-items:baseline;gap:14px;flex-wrap:wrap}
+.tlabel{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--steel)}
+.tcount{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:36px;line-height:1}
+.tcount small{font-size:16px;color:var(--steel);font-weight:500}
+.bar{height:8px;background:var(--soft);border-radius:99px;overflow:hidden;margin:11px 0 14px}
+.bar span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal),#13907f);transition:width .4s}
+.cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:1px;background:var(--soft)}
+.cat{background:var(--paper);padding:9px 11px}
+.cat .n{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:23px;line-height:1.1}
+.cat .n s{font-size:14px;color:var(--steel);text-decoration:none}
+.cat .t{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--steel)}
+.cat.assassination .n{color:var(--blood)} .cat.feats .n{color:var(--amber)}
+.cat.classic .n{color:var(--teal)} .cat.discovery .n{color:var(--violet)}
+.btn-plain{background:none;border:1px solid var(--line);color:var(--steel);font-family:"IBM Plex Mono",monospace;
+  font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:6px 10px;border-radius:var(--r);cursor:pointer}
+.btn-plain:hover{border-color:var(--blood);color:var(--blood)}
+
+/* tabs */
+.tabs{display:flex;border-bottom:2px solid var(--ink);margin:24px 0 20px;flex-wrap:wrap}
+.tab{background:none;border:0;border-bottom:3px solid transparent;margin-bottom:-2px;
+  font-family:"Barlow Condensed",sans-serif;font-weight:600;font-size:18px;letter-spacing:.07em;
+  text-transform:uppercase;color:var(--steel);padding:8px 14px 7px;cursor:pointer}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--blood)}
+.tab:focus-visible,.jump:focus-visible,.btn-plain:focus-visible,.rhead:focus-visible,.shead:focus-visible,.filt:focus-visible,.tick:focus-visible{outline:2px solid var(--blood);outline-offset:2px}
+.panel[hidden]{display:none}
+
+/* jump bar */
+.jumpbar{position:sticky;top:0;z-index:20;background:rgba(231,238,241,.94);backdrop-filter:blur(8px);
+  border:1px solid var(--line);border-radius:var(--r);padding:9px 10px;margin-bottom:20px;
+  display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.jumpbar .jl{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--steel);margin-right:2px}
+.jump{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);cursor:pointer;
+  font-family:"Barlow Condensed",sans-serif;font-weight:600;font-size:13.5px;letter-spacing:.04em;
+  text-transform:uppercase;padding:6px 10px;color:var(--ink);display:flex;gap:6px;align-items:center}
+.jump:hover{border-color:var(--ink)}
+.jump b{font-family:"IBM Plex Mono",monospace;font-size:9.5px;color:var(--blood);font-weight:500}
+.jump .pg{font-family:"IBM Plex Mono",monospace;font-size:9.5px;color:var(--steel)}
+.jump.full{background:#EAF5F3;border-color:#B9D8D4}
+
+/* notice */
+.notice{background:#FFF8EC;border:1px solid #F0DFBE;border-left:4px solid var(--amber);
+  padding:13px 15px;border-radius:var(--r);margin-bottom:20px;font-size:14px}
+.notice.red{background:#FBEEEF;border-color:#E7BEC1;border-left-color:var(--blood)}
+.notice h4{margin:0 0 6px;font-family:"Barlow Condensed",sans-serif;font-size:16px;letter-spacing:.06em;
+  text-transform:uppercase;font-weight:700;color:var(--amber)}
+.notice.red h4{color:var(--blood)}
+.notice p{margin:0 0 7px} .notice p:last-child{margin:0}
+
+/* run */
+.run{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);
+  margin-bottom:16px;overflow:hidden;scroll-margin-top:72px}
+.rhead{width:100%;text-align:left;background:none;border:0;padding:16px 18px;cursor:pointer;display:flex;gap:12px;align-items:flex-start}
+.rhead:hover{background:#F6FAFB}
+.chev{flex:0 0 auto;font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--blood);margin-top:3px;transition:transform .2s}
+.run.open .chev{transform:rotate(90deg)}
+.rhead-body{flex:1;min-width:0}
+.ridx{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.15em;color:var(--blood);text-transform:uppercase}
+.rtitle{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:clamp(21px,4vw,30px);line-height:1.03;
+  text-transform:uppercase;margin:3px 0 6px}
+.rgoal{margin:0;color:#22323D;font-size:14px;max-width:70ch}
+.rchips{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
+.rbody{border-top:1px solid var(--soft)}
+.rbody[hidden]{display:none}
+
+/* loadout */
+.loadout{background:#F4F8FA;padding:15px 18px;border-bottom:1px solid var(--soft)}
+.loadout h5{margin:0 0 11px;font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--steel)}
+.lgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:13px}
+.lslot .k{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--steel);display:block;margin-bottom:2px}
+.lslot .v{font-weight:600;font-size:13.5px;line-height:1.35}
+.lslot .m{font-size:12px;color:var(--steel);line-height:1.4;display:block;margin-top:2px}
+
+/* steps */
+.sec-h{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:13px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--steel);padding:14px 18px 7px}
+.step{border-top:1px solid var(--soft);display:flex;gap:10px;padding:0 18px 0 14px;align-items:flex-start}
+.tick{flex:0 0 auto;width:23px;height:23px;margin-top:13px;border:1.5px solid var(--line);background:var(--paper);
+  border-radius:var(--r);cursor:pointer;color:transparent;font-size:13px;display:grid;place-items:center}
+.tick:hover{border-color:var(--teal)}
+.tick[aria-pressed="true"]{background:var(--teal);border-color:var(--teal);color:#fff}
+.stepwrap{flex:1;min-width:0}
+.shead{width:100%;text-align:left;background:none;border:0;padding:12px 0;cursor:pointer;display:flex;gap:9px;align-items:flex-start}
+.snum{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--steel);margin-top:2px;flex:0 0 auto}
+.stitle{font-weight:700;font-size:14.5px;flex:1}
+.step.done .stitle{text-decoration:line-through;color:var(--steel)}
+.schev{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--steel);flex:0 0 auto;margin-top:2px;transition:transform .2s}
+.step.sopen .schev{transform:rotate(90deg)}
+.sbody{padding:0 0 14px 22px}
+.sbody[hidden]{display:none}
+.sbody ul{margin:0 0 8px;padding-left:16px}
+.sbody li{margin-bottom:5px;font-size:14px}
+.sbody li b{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--steel);font-weight:500;margin-right:4px}
+.conf{font-size:12px;color:var(--steel);margin:6px 0 0;font-family:"IBM Plex Mono",monospace}
+.warnline{background:#FBEEEF;border-left:3px solid var(--blood);padding:8px 10px;margin:8px 0;font-size:13.5px;border-radius:2px}
+.warnline b{color:var(--blood);font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.09em;
+  text-transform:uppercase;display:block;font-weight:500}
+
+/* badges */
+.badge{display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.07em;
+  text-transform:uppercase;padding:3px 6px;border-radius:2px;border:1px solid;line-height:1.35;white-space:nowrap}
+.b-assassination{color:var(--blood);border-color:#E7BEC1;background:#FBEEEF}
+.b-feats{color:var(--amber);border-color:#EEDCBB;background:#FDF6EA}
+.b-classic{color:var(--teal);border-color:#B9D8D4;background:#EAF5F3}
+.b-discovery{color:var(--violet);border-color:#CFC2E6;background:#F2EEF9}
+.b-save{color:#5B3B02;border-color:var(--amber);background:#F7E2B8}
+.b-warn{color:#fff;border-color:var(--blood);background:var(--blood)}
+.b-unv{color:var(--steel);border-color:var(--line);background:#F1F5F7}
+.b-ver{color:var(--teal);border-color:#B9D8D4;background:#EAF5F3}
+.badges{display:flex;flex-wrap:wrap;gap:5px;margin:6px 0 0}
+
+/* checklist */
+.filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.filt{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);
+  font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  padding:7px 10px;cursor:pointer;color:var(--steel)}
+.filt[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.clist{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}
+.crow{display:flex;gap:11px;padding:12px 15px;border-top:1px solid var(--soft);align-items:flex-start}
+.crow:first-child{border-top:0}
+.crow .tick{margin-top:1px}
+.crow.done .cname{text-decoration:line-through;color:var(--steel)}
+.cname{font-weight:700;font-size:14px;margin:0 0 3px;display:flex;gap:7px;align-items:center;flex-wrap:wrap}
+.ccond{margin:0;font-size:13.5px;color:#33444F}
+.cmeta{margin:5px 0 0;font-size:11.5px;color:var(--steel);font-family:"IBM Plex Mono",monospace}
+.empty{padding:28px 15px;text-align:center;color:var(--steel)}
+
+/* intel */
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:18px;margin-bottom:18px}
+.card h3{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:23px;text-transform:uppercase;margin:0 0 4px}
+.card .lede{margin:0 0 14px;color:var(--steel);font-size:13px}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th,td{text-align:left;padding:9px 9px;border-top:1px solid var(--soft);vertical-align:top}
+th{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--steel);font-weight:500;border-top:0}
+.scroll{overflow-x:auto}
+.sources li{margin-bottom:6px;font-size:13.5px}
+
+/* chain */
+.chain{padding:14px 2px 4px;overflow-x:auto}
+.ctrack{display:flex;min-width:740px}
+.node{flex:1;position:relative;padding:0 9px}
+.node::before{content:"";position:absolute;left:0;right:0;top:9px;height:2px;background:var(--line)}
+.node:first-child::before{left:50%} .node:last-child::before{right:50%}
+.node i{position:relative;display:block;width:18px;height:18px;border-radius:50%;margin:0 auto 9px;
+  background:var(--paper);border:2px solid var(--blood)}
+.node.n0 i{background:var(--blood)}
+.node.n0 i::after{content:"";position:absolute;inset:-8px;border-radius:50%;border:2px solid var(--blood);
+  opacity:.5;animation:pulse 2.4s ease-out infinite}
+@keyframes pulse{0%{transform:scale(.6);opacity:.55}70%{transform:scale(1.5);opacity:0}100%{opacity:0}}
+@media(prefers-reduced-motion:reduce){.node.n0 i::after{animation:none;opacity:.22}}
+.node .nm{font-weight:700;font-size:12.5px;text-align:center;line-height:1.25}
+.node .rl{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;
+  color:var(--steel);text-align:center;display:block;margin-top:3px}
+.node .cut{display:block;margin-top:6px;font-size:11.5px;color:var(--blood);text-align:center;line-height:1.3}
+
+footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-size:12px;color:var(--steel)}
+@media(max-width:640px){.rhead,.loadout{padding:14px}.step{padding:0 14px 0 11px}.sec-h{padding:13px 14px 6px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">
+    <span><span class="dot" style="display:inline-block"></span> Hitman: World of Assassination</span>
+    <span>Patient Zero campaign · mission 4 of 4</span>
+    <span>GAMA Private Hospital · Hokkaido</span>
+  </div>
+  <h1>Patient <em>Zero</em></h1>
+  <p class="sub">6-run challenge route · Owen Cage &amp; Klaus Liebleid · 18 challenges, all accounted for</p>
+
+  <div class="tracker">
+    <div class="ttop">
+      <div>
+        <span class="tlabel">Challenges completed</span>
+        <div class="tcount"><span id="doneN">0</span><small> / 18</small></div>
+      </div>
+      <button class="btn-plain" id="reset" type="button">Clear all progress</button>
+    </div>
+    <div class="bar"><span id="barfill"></span></div>
+    <div class="cats" id="cats"></div>
+  </div>
+</header>
+
+<div class="tabs" role="tablist">
+  <button class="tab" role="tab" id="t-runs" aria-controls="p-runs" aria-selected="true">Runs</button>
+  <button class="tab" role="tab" id="t-check" aria-controls="p-check" aria-selected="false">Checklist</button>
+  <button class="tab" role="tab" id="t-intel" aria-controls="p-intel" aria-selected="false">Intel &amp; verification</button>
+</div>
+
+<!-- RUNS -->
+<section class="panel" id="p-runs" role="tabpanel" aria-labelledby="t-runs">
+  <div class="jumpbar" id="jumpbar"></div>
+
+  <div class="notice">
+    <h4>Three facts that change how you route this mission</h4>
+    <p><b>1. No Mastery, no Mission Stories, one start.</b> Patient Zero has no Mastery track, so nothing is gated behind a level, there is only one starting location, and there are no Mission Stories to order or break. Since Update 3.150 you can pick any starting suit — but suits, the Recon Gear and the VIP Patient outfit all make the entire map hostile.</p>
+    <p><b>2. Seven of the 18 are Hokkaido-wide, not Patient Zero-specific.</b> The five Versatile challenges plus Versatile Assassin, Chameleon and Discover Hokkaido all read "in Hokkaido" in their in-game text. They appear on Patient Zero's list but count from any Hokkaido mission — which matters a lot, because two of them are far easier in Situs Inversus.</p>
+    <p><b>3. Challenges bank the moment they pop.</b> Anything that does not say "complete the mission" unlocks immediately and survives a reload. That is why Run 02 is a single entry with five save-scummed kills instead of five separate runs.</p>
+  </div>
+
+  <div class="notice red">
+    <h4>The infection mechanic decides almost everything</h4>
+    <p>Touching Owen Cage or any infected NPC without the Bio Suit infects 47, starting a five-minute death timer, and you must use the antidote before leaving. That single rule is why melee challenges go on Liebleid and not Cage, why Sniper Assassin needs containment first, and why the Bio Suit permanently kills No Rubber.</p>
+  </div>
+
+  <div id="runs"></div>
+</section>
+
+<!-- CHECKLIST -->
+<section class="panel" id="p-check" role="tabpanel" aria-labelledby="t-check" hidden>
+  <div class="filters" id="filters"></div>
+  <div class="clist" id="clist"></div>
+</section>
+
+<!-- INTEL -->
+<section class="panel" id="p-intel" role="tabpanel" aria-labelledby="t-intel" hidden>
+
+  <div class="card">
+    <h3>Count reconciliation — resolved</h3>
+    <p class="lede">The mission data you supplied closes the gap that public guides could not.</p>
+    <div class="scroll"><table>
+      <thead><tr><th>Category</th><th>Count</th><th>Challenges</th></tr></thead>
+      <tbody>
+        <tr><td><b>Assassination</b></td><td>8</td><td>Needle Work, Inferno, Piano Man, Versatile Assassin, Tasteless&nbsp;Traceless, Hold My Hair, Someone Could Hurt Themselves, Straight Shot</td></tr>
+        <tr><td><b>Discovery</b></td><td>1</td><td>Discover Hokkaido</td></tr>
+        <tr><td><b>Feats</b></td><td>5</td><td>No Rubber, You Know the Number, Lucky Shot, Containment, Chameleon</td></tr>
+        <tr><td><b>Classic</b></td><td>4</td><td>Suit Only, Silent Assassin, Sniper Assassin, Silent Assassin Suit Only</td></tr>
+        <tr><td colspan="2"><b>Total</b></td><td><b>18 — matches the reported challengeCount exactly.</b></td></tr>
+      </tbody>
+    </table></div>
+    <div class="notice" style="margin:16px 0 0">
+      <h4>Two corrections to the public wiki</h4>
+      <p><b>"No Evidence" is not in the current challenge list.</b> The Hitman Wiki lists it as a Patient Zero assassination challenge, a 2017 French Steam guide lists it, and a well-known video is titled "7 Challenges in 1" — which only reaches seven if No Evidence is counted. It is absent from the mission data. Most likely it was removed or folded in at some point. If your game does show it, Run 01 earns it for free, since that route already finishes with no bodies.</p>
+      <p><b>"Nothing but Clear KAIs" is not one of the 18.</b> The wiki's challenges subpage lists it under Patient Zero. It is a Hokkaido location challenge from the Cloud Nine pack (HITMAN III, Year 3 winter) and does not appear in this mission's data. Worth doing for the White Sunset suit, but it is not part of this 18.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>The infection chain</h3>
+    <p class="lede">The scripted transmission order. Cut it at node 2 and roughly thirty infections never happen.</p>
+    <div class="chain"><div class="ctrack">
+      <div class="node n0"><i></i><span class="nm">Owen Cage</span><span class="rl">Patient Zero</span><span class="cut">Walks to the operating theatre a few minutes in</span></div>
+      <div class="node"><i></i><span class="nm">Yui Kawarasaki</span><span class="rl">Female surgeon</span><span class="cut">CUT HERE — the cascade dies with her</span></div>
+      <div class="node"><i></i><span class="nm">Ozaki · Kanou · Karou</span><span class="rl">Security, outside back door</span><span class="cut">Infected as Yui exits</span></div>
+      <div class="node"><i></i><span class="nm">Garage crew, incl. Nails</span><span class="rl">Karou's smoke break</span><span class="cut">Mass node</span></div>
+      <div class="node"><i></i><span class="nm">Yoga instructor → restaurant</span><span class="rl">≈15 min mark</span><span class="cut">Counter crosses 47 here</span></div>
+    </div></div>
+    <p style="font-size:13.5px;margin:12px 0 0"><b>Optional branch:</b> Cage may also infect bodyguard <b>Kei Nagai</b>. If so, patrolling corridor bodyguard <b>Ikuya Ogura</b> catches it and carries it to the garden, infecting <b>Yamato Hideki</b> by the door. Yamato never moves, so that branch dead-ends.</p>
+    <p style="font-size:13.5px;margin:7px 0 0;color:var(--steel)"><span class="badge b-unv">Conflict</span> The wiki says Yui descends at mission start and waits at the stairwell; a Steam route gives 1:30 for her arrival in the corridor. Treat the first 90 seconds as the window.</p>
+  </div>
+
+  <div class="card">
+    <h3>All 16 disguises</h3>
+    <p class="lede">The mission data lists exactly 16 for Patient Zero, and the names match a Steam disguise compendium and a separate Steam thread one-for-one. Locations are from the compendium.</p>
+    <div class="scroll"><table>
+      <thead><tr><th>#</th><th>Disguise</th><th>Where</th><th>Note</th></tr></thead>
+      <tbody id="dtable"></tbody>
+    </table></div>
+    <div class="notice" style="margin:14px 0 0">
+      <h4>Chameleon caveats</h4>
+      <p><b>Wording conflict.</b> The in-game text reads "find and equip all disguises in Hokkaido", but the data attaches a 16-item list specific to Patient Zero, and community guides publish separate per-mission lists. Treat it as this mission's 16, and if it does not pop, check whether a Situs Inversus-only outfit is also being demanded.</p>
+      <p><b>Known bug.</b> A Steam thread reports Chameleon failing to register on Patient Zero after all sixteen were worn. Whether it was ever patched is UNVERIFIED. Mitigation from that thread: start fresh rather than from a mid-mission reload, and if you began in a disguise, switch out of it and back in.</p>
+      <p><b>Progress reset bug.</b> A separate thread reports the Classics/Versatile set spontaneously resetting in Sapienza and Hokkaido. Screenshot the challenge screen after each pop.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Mutual exclusions</h3>
+    <div class="scroll"><table>
+      <thead><tr><th>A</th><th>B</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td><b>Containment</b></td><td><b>You Know the Number</b></td><td>Zero infections versus 47+ infections. Hard split — Run 01 vs Run 04.</td></tr>
+        <tr><td><b>Inferno</b></td><td><b>Needle Work</b>, <b>Sniper Assassin</b></td><td>Each dictates how the same two targets must die. Runs 01, 02, 03.</td></tr>
+        <tr><td><b>Suit Only</b>, <b>SA Suit Only</b></td><td><b>Needle Work</b>, <b>Chameleon</b></td><td>Both require wearing disguises.</td></tr>
+        <tr><td><b>No Rubber</b></td><td><b>Chameleon</b></td><td>The Bio Suit is on the Chameleon list and is a hazmat suit.</td></tr>
+        <tr><td><b>No Rubber</b></td><td><b>You Know the Number</b></td><td>Not strictly exclusive, but killing 47+ infected without a Bio Suit means repeated infection risk with only one antidote dose. Keep them apart.</td></tr>
+        <tr><td><b>Containment</b></td><td><b>Lucky Shot</b></td><td><span class="badge b-unv">Unverified</span> Lucky Shot needs 47 infected; Containment says "no additional infected". Whether 47 counts as "additional" is undocumented. Split them.</td></tr>
+        <tr><td><b>Silent Assassin</b></td><td><b>You Know the Number</b></td><td>Infected NPCs are legitimate targets, so it is not technically excluded — but "no bodies found" across 47+ corpses is impractical.</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h3>Key locations and mechanics</h3>
+    <div class="scroll"><table>
+      <thead><tr><th>Thing</th><th>Detail</th><th>Confidence</th></tr></thead>
+      <tbody>
+        <tr><td><b>Antidote / vaccine</b></td><td>Stem Cell Storage Facility room, level 1 of the GAMA Hospital, with the Stem Cell supplies near the hospital furnace room — described elsewhere as the Stem Cell Supply storage by the morgue. A bodyguard watches the door. The room is a hostile area if you are not wearing a Bio Suit. <b>Two doses exist; Liebleid has already used one, so you get one attempt.</b></td><td><span class="conf" style="color:var(--teal)">Wiki + Steam redacted-challenges guide agree</span></td></tr>
+        <tr><td><b>Infection of 47</b></td><td>Direct contact with Cage or any infected NPC without a Bio Suit infects 47. A five-minute timer starts (one player measured ~4:50). The antidote injection animation takes roughly ten seconds.</td><td><span class="conf" style="color:var(--teal)">Wiki + two Steam accounts</span></td></tr>
+        <tr><td><b>Poison on Cage</b></td><td>Any poison type kills him, not only lethal. Poisoning him voids Silent Assassin if the body is found — <b>unless</b> done via the IV drip in the surgery room.</td><td><span class="conf" style="color:var(--teal)">Wiki, stated explicitly</span></td></tr>
+        <tr><td><b>Toilet drowning</b></td><td>Place or throw a coin on or near a toilet so the target comes to inspect it, then drown them. Emetic poison also sends a target to a toilet. You cannot drown an unconscious NPC in a toilet.</td><td><span class="conf" style="color:var(--teal)">Multiple Steam threads</span></td></tr>
+        <tr><td><b>Sniper delivery</b></td><td>Use the <b>Garage</b> smuggle point. One player states a briefcase is unavailable on this map; the garage drop is the method more than one source uses.</td><td><span class="conf" style="color:var(--amber)">Conflict, resolved toward the garage</span></td></tr>
+        <tr><td><b>Accident kill in Patient Zero</b></td><td>Not documented by two sources. Whether the incineration procedure registers as an accident is unknown. Documented Hokkaido accidents are in Situs Inversus: a gas lamp explosion on Yuki Yamazaki, or pushing her off the cable car platform while disguised as the Director.</td><td><span class="conf" style="color:var(--steel)">UNVERIFIED for this mission</span></td></tr>
+        <tr><td><b>Discover Hokkaido</b></td><td>The mission data reports zero discovery areas for Patient Zero, an empty area list, and areas shared with Situs Inversus. Nothing here is uniquely discoverable.</td><td><span class="conf" style="color:var(--teal)">Mission data</span></td></tr>
+        <tr><td><b>Exit</b></td><td>A published SA/SO route leaves by bicycle.</td><td><span class="conf" style="color:var(--amber)">Single source</span></td></tr>
+        <tr><td><b>XP</b></td><td>Confirmed: Inferno +2000, Needle Work +2000, You Know the Number +4000, Versatile Assassin +4000. Hold My Hair is listed as +2500 by the wiki and +1000 by Neoseeker — conflict, so no XP figure is shown for it.</td><td><span class="conf" style="color:var(--amber)">Partial</span></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h3>You Know the Number — wording conflict</h3>
+    <p style="font-size:14px;margin:0 0 8px">Three sources describe this challenge three ways:</p>
+    <ul style="font-size:13.5px;margin:0 0 10px;padding-left:18px">
+      <li>Wiki challenge article: witness at least <b>47 concurrent infections</b>, complete all objectives, escape — and notes that killing victims as they become infected can make it unachievable, while total kill count does not matter.</li>
+      <li>Wiki mission table: <b>kill at least 47 people infected</b> with the virus besides Owen Cage.</li>
+      <li>Steam redacted-challenges guide: <b>eliminate at least 47 infected people.</b></li>
+    </ul>
+    <p style="font-size:14px;margin:0"><b>Route that satisfies all three readings:</b> let the count reach 47 or more live infected, then kill them all, then escape. Run 04 is built that way.</p>
+  </div>
+
+  <div class="card">
+    <h3>Sources</h3>
+    <ul class="sources">
+      <li><b>Mission data (user-supplied)</b> — authoritative challenge list, category counts, disguise list, area data.</li>
+      <li><b>Hitman Wiki</b> — Patient Zero (Mission) and /Challenges; Patient Zero (campaign); Vaccine; Lucky Shot; You Know the Number; Inferno; Needle Work; Hold My Hair; Versatile Assassin; Head Researcher, Hospital Director and Patient outfits.</li>
+      <li><b>Steam Community guides</b> — "HITMAN 2 Redacted Challenges Guide"; "HITMAN 2 | Chameleon | All Disguises"; "Hitman - Patient Zéro Tous les Défis".</li>
+      <li><b>Steam discussions</b> — SA/SO with no one infected; Patient Zero kill-everyone; Sniper Assassin difficulty; Is Patient Zero Chameleon broken; Classics feats reset; Hokkaido toilet drowning; challenge XP and reload behaviour.</li>
+      <li><b>Neoseeker</b> — Hokkaido challenge list, used to cross-check the Versatile set as location-scoped and to identify documented Hokkaido accident kills.</li>
+      <li><b>AllGamers / HyperX</b> — You Know the Number loadout.</li>
+      <li><b>MrFreeze2244 video titles</b> — used only to confirm that a Patient Zero route exists for Hold My Hair on Liebleid and for SASO + Inferno + Containment + No Rubber in one run.</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  Every step is tagged with source confidence. Where two sources disagree the conflict is shown rather than resolved by guesswork, and where no source covers a detail the step says UNVERIFIED instead of inventing one.
+</footer>
+</div>
+
+<script>
+/* ---------------- CHALLENGE DATA (from mission JSON) ---------------- */
+const CH = [
+ {id:'needle-work',name:'Needle Work',cat:'assassination',run:2,xp:'+2000 XP',conf:'verified',
+  cond:'Assassinate Owen Cage with a lethal injection disguised as Klaus Liebleid in the main surgery room.'},
+ {id:'inferno',name:'Inferno',cat:'assassination',run:1,xp:'+2000 XP',conf:'verified',
+  cond:'Assassinate Klaus Liebleid and Owen Cage using the incineration procedure without any other casualties.'},
+ {id:'piano-man',name:'Piano Man',cat:'assassination',run:2,xp:null,conf:'verified',scope:'Hokkaido-wide',
+  cond:'Assassinate a target with the fiber wire in Hokkaido.'},
+ {id:'versatile',name:'Versatile Assassin',cat:'assassination',run:2,xp:'+4000 XP',conf:'verified',scope:'Hokkaido-wide',
+  cond:'Complete all the Versatile challenges in Hokkaido: Piano Man, Someone Could Hurt Themselves, Hold My Hair, Straight Shot, Tasteless Traceless.'},
+ {id:'tasteless',name:'Tasteless, Traceless',cat:'assassination',run:2,xp:null,conf:'verified',scope:'Hokkaido-wide',
+  cond:'Assassinate a target with lethal poison in Hokkaido.'},
+ {id:'hold-my-hair',name:'Hold My Hair',cat:'assassination',run:2,xp:null,conf:'verified',scope:'Hokkaido-wide',
+  cond:'Assassinate a target by drowning them in Hokkaido.'},
+ {id:'hurt-themselves',name:'Someone Could Hurt Themselves',cat:'assassination',run:2,xp:null,conf:'verified',scope:'Hokkaido-wide',
+  cond:'Assassinate a target in an accident in Hokkaido.'},
+ {id:'straight-shot',name:'Straight Shot',cat:'assassination',run:2,xp:null,conf:'verified',scope:'Hokkaido-wide',
+  cond:'Assassinate a target with a headshot in Hokkaido.'},
+
+ {id:'discover',name:'Discover Hokkaido',cat:'discovery',run:6,xp:null,conf:'verified',scope:'Hokkaido-wide',
+  cond:'Reveal all undiscovered areas in Hokkaido.'},
+
+ {id:'no-rubber',name:'No Rubber',cat:'feats',run:1,xp:null,conf:'verified',
+  cond:'Complete the mission without using a Hazmat Suit.'},
+ {id:'you-know',name:'You Know the Number',cat:'feats',run:4,xp:'+4000 XP',conf:'verified',
+  cond:'In-game text is [REDACTED]. Reach at least 47 infected, eliminate them, complete all objectives and escape. See the Intel tab for the three conflicting source readings.'},
+ {id:'lucky-shot',name:'Lucky Shot',cat:'feats',run:4,xp:null,conf:'verified',
+  cond:'In-game text is [REDACTED]. Contract the Nabazov Virus, then inject 47 with the antidote with 10 seconds or less remaining before it kills him.'},
+ {id:'containment',name:'Containment',cat:'feats',run:1,xp:null,conf:'verified',
+  cond:'Complete the mission without any additional infected.'},
+ {id:'chameleon',name:'Chameleon',cat:'feats',run:5,xp:null,conf:'verified',scope:'Hokkaido-wide',
+  cond:'Find and equip all disguises in Hokkaido. 16 are listed for Patient Zero.'},
+
+ {id:'suit-only',name:'Suit Only',cat:'classic',run:1,xp:null,conf:'verified',
+  cond:'Assassinate the targets and complete the mission. Do it all in your suit.'},
+ {id:'silent-assassin',name:'Silent Assassin',cat:'classic',run:1,xp:null,conf:'verified',
+  cond:'Complete "Patient Zero". Only eliminate the targets. No bodies found. Do not get spotted. If detected by cameras, erase or destroy the evidence.'},
+ {id:'sniper-assassin',name:'Sniper Assassin',cat:'classic',run:3,xp:null,conf:'verified',
+  cond:'Complete "Patient Zero". Assassinate your targets with a sniper rifle. Only eliminate the target. Do not get spotted. If detected by cameras, erase or destroy the evidence.'},
+ {id:'saso',name:'Silent Assassin, Suit Only',cat:'classic',run:1,xp:null,conf:'verified',
+  cond:'All Silent Assassin conditions, done entirely in your suit.'}
+];
+const CATL={assassination:'Assassination',discovery:'Discovery',feats:'Feats',classic:'Classic'};
+const byId=Object.fromEntries(CH.map(c=>[c.id,c]));
+
+const DISGUISES=[
+ ['Bodyguard','Helipad','Armed. Take this first — you start beside it.'],
+ ['Resort Security','Walkway directly below the helipad','Armed.'],
+ ['Helicopter Pilot','Changing rooms',''],
+ ['Handyman','Sleeping quarters','Same room as Resort Staff.'],
+ ['Resort Staff','Sleeping quarters',''],
+ ['Chef','Kitchen',''],
+ ['Doctor',"47's guest room",''],
+ ['Patient','Toilets','Doubles as your Hold My Hair location.'],
+ ['VIP Patient (Dexter)',"Amos Dexter's room",'Makes the whole map hostile, like a suit. Wear briefly, then change.'],
+ ['Yoga Instructor','Yoga platform','This NPC is an infection-chain node.'],
+ ['Hospital Director',"Director's office",'Weaker here than in Situs Inversus — quarantine removes ground-floor hospital access.'],
+ ['Surgeon','GAMA hospital','If you cannot find one, the long-standing tip is to go up the back stairs from the morgue and draw a surgeon there.'],
+ ['Head Researcher','Rehabilitation supervisor area','Klaus Liebleid\'s own outfit. Also required for Needle Work.'],
+ ['Morgue Doctor','Morgue',''],
+ ['Bio Suit','Morgue security room','Hazmat. Wearing it permanently voids No Rubber.'],
+ ['Motorcyclist','Morgue incinerator room','Last stop — you end next to the incinerator.']
+];
+
+/* ---------------- RUNS ---------------- */
+const RUNS=[
+{
+ n:'Run 01', short:'Clean sheet', title:'Clean sheet — SASO, Inferno, Containment, No Rubber',
+ goal:'Six challenges in one clean pass. Cut the infection chain at its first node, stay in your suit, never touch a hazmat suit, and end both targets in the incinerator so no body is ever found.',
+ chips:['suit-only','silent-assassin','saso','inferno','no-rubber','containment'],
+ loadout:{
+  start:'GAMA facility arrival point beside the helipad — the mission\'s only starting location',
+  mastery:'No Mastery track exists. Nothing is gated behind a level.',
+  suit:'Any suit. Remember that in a suit the entire map is hostile, so treat every room as trespassing.',
+  items:[
+   {k:'Slot 1 — Tool',v:'Coins (2)',m:'Your only way to move Yui without touching her. There is also one coin in the utility room beside the start.'},
+   {k:'Slot 2 — Gadget',v:'Lockpick',m:'Recommended, not required by any challenge.'},
+   {k:'Slot 3 — Gadget',v:'Door hacking device',m:'A published route uses one to open doors without drawing NPCs over.'},
+   {k:'Slot 4 — Smuggled',v:'Leave empty',m:'Nothing in this run needs a smuggled item.'}],
+  conf:'Start location, suit rule and hostile-area behaviour verified. Specific item picks are recommendations.'
+ },
+ sections:[
+ {name:'Phase 1 — cut the chain in the first 90 seconds',steps:[
+  {id:'r1s1',title:'Drop off the helipad and get inside before Cage moves',
+   bullets:[
+    ['Where','Start beside the helipad, then take the walkway below it and head down toward the morgue side of the building.'],
+    ['Disguise','Suit only. Do not pick anything up.'],
+    ['Item','Grab the coin in the small utility room immediately beside the start if you want a spare.'],
+    ['NPC','Two bodyguards hold a conversation on the platform above you. A published route notes one can be pulled down the stairs alone with a coin — but you do not need to touch either of them.'],
+    ['Action','Move past them and descend. Community routes reach the morgue security area in well under a minute, which is the margin you need.']],
+   warn:'', save:false, badges:[],
+   conf:'Start layout and the utility-room coin from a detailed Steam route. Exact guard patrol paths UNVERIFIED.'},
+
+  {id:'r1s2',title:'Handle the camera and reach the hiding spot under the stairs',
+   bullets:[
+    ['Where','The corridor and stairwell on the way in; a published route shoots or hacks the camera covering it, then uses the space under the stairs as a hiding spot.'],
+    ['Disguise','Suit.'],
+    ['Item','Door hacking device or lockpick as needed.'],
+    ['Action','Disable the camera before anything else, then wait under the stairs while two doctors walk through. If you are recorded later you must erase or destroy the footage or you lose all three Silent Assassin variants at once.']],
+   warn:'Camera evidence silently voids Silent Assassin, Silent Assassin Suit Only and No Evidence. Check the recording status before you exit even if you think you were never seen.',
+   save:true, badges:[],
+   conf:'Route shape from a Steam SA/SO route. Evidence rule verified from the wiki. Exact camera positions UNVERIFIED.'},
+
+  {id:'r1s3',title:'Take Yui Kawarasaki out of the hallway before Cage walks through it',
+   bullets:[
+    ['Where','She descends from the second floor to the first and then stands in front of the entrance to the stairwell. Some accounts put her arrival in that corridor at about 1:30.'],
+    ['Disguise','Suit.'],
+    ['Item','Coin.'],
+    ['NPC','Yui Kawarasaki, a female surgeon — several Steam posts call her "the nurse". Same person.'],
+    ['Action','Throw a coin to pull her away, then subdue her and hide the body. She is only infected if Cage is in the hallway at the same time she is, so removing her from that hallway is enough. Everyone else in the corridor is wearing protective gear.']],
+   warn:'This is the single point of failure for Containment. If she catches it, restart — every later infection cascades from this one node and you cannot un-infect anyone.',
+   save:true, badges:['containment'],
+   conf:'Chain order and NPC name verified from the wiki. The "only if Cage shares the hallway" mechanic is from one detailed Steam route.'},
+
+  {id:'r1s4',title:'Confirm the counter reads zero infected',
+   bullets:[
+    ['Where','Anywhere safe — check the objective / infected counter.'],
+    ['NPC','The nodes that should never light up: Tsuneto Ozaki and Tenma Kanou (resort security) and Tarou Karou (bodyguard) outside the back door, plus the optional branch through Kei Nagai and Ikuya Ogura to Yamato Hideki in the garden.'],
+    ['Action','If the count is zero, Containment is locked in for the rest of the run and your target list stays at exactly two.']],
+   warn:'', save:true, badges:[],
+   conf:'All NPC names and the branch structure verified from the wiki.'}
+ ]},
+ {name:'Phase 2 — both targets, one incinerator',steps:[
+  {id:'r1s5',title:'Work down to the incineration controls near the morgue',
+   bullets:[
+    ['Where','Down through the morgue area, past the red-lit lab, then up the stairs beside the body-burning room where the incineration controls sit.'],
+    ['Disguise','Suit — use the under-stairs hiding spots between movements.'],
+    ['NPC','A published route reports at most two doctors and one guard needing to be handled on this stretch. Hide any body you create.'],
+    ['Action','Get into position and wait for the incineration cycle to bring both Owen Cage and Klaus Liebleid inside at the same time.']],
+   warn:'Do not kill either target by any other method first. Inferno requires both to die to the incineration procedure and nobody else to die at all.',
+   save:true, badges:[],
+   conf:'Route shape from a Steam SA/SO route. Exact console geometry UNVERIFIED — follow the in-game prompt.'},
+
+  {id:'r1s6',title:'Trigger the incineration with both targets inside',
+   bullets:[
+    ['Where','At the incineration controls.'],
+    ['Item','The incineration procedure itself — no equipment needed.'],
+    ['NPC','Owen Cage and Klaus Liebleid, both inside the cycle.'],
+    ['Action','Trigger it. Both targets burn, which means there is no body left to be discovered — the reason this one method satisfies Inferno, Silent Assassin and Suit Only simultaneously. If they are out of sync, wait for the next cycle rather than improvising a second kill.']],
+   warn:'Any non-target death, including a guard caught in the burn, kills Inferno on the spot.',
+   save:false, badges:['inferno'],
+   conf:'Inferno condition verified from the wiki; a video route confirms SASO + Inferno + Containment + No Rubber in a single run.'},
+
+  {id:'r1s7',title:'Erase any camera evidence, then leave by bicycle',
+   bullets:[
+    ['Where','Recording room if you were caught on camera, then the bicycle exit.'],
+    ['Disguise','Still your suit — you have not worn anything else, which is what earns Suit Only and No Rubber.'],
+    ['Action','Destroy or erase the recording, then exit. Suit Only, Silent Assassin, Silent Assassin Suit Only, No Rubber and Containment all resolve on mission completion, not before.']],
+   warn:'', save:false, badges:['suit-only','silent-assassin','saso','no-rubber','containment'],
+   conf:'Bicycle exit from a single Steam route. Evidence rule verified from the wiki.'}
+ ]}]
+},
+{
+ n:'Run 02', short:'Versatile', title:'Versatile — five kills, one entry, save-scummed',
+ goal:'Seven challenges from one mission entry. The five Versatile challenges and Needle Work all pop the instant they happen and survive a reload, so you save once next to Klaus Liebleid and kill him five different ways.',
+ chips:['piano-man','straight-shot','hold-my-hair','tasteless','hurt-themselves','versatile','needle-work'],
+ loadout:{
+  start:'GAMA facility arrival point beside the helipad',
+  mastery:'No Mastery track. Nothing is gated.',
+  suit:'Any suit. You will change into the Head Researcher outfit for the final step.',
+  items:[
+   {k:'Slot 1 — Melee',v:'Fiber wire',m:'Required for Piano Man. It is a default item.'},
+   {k:'Slot 2 — Poison',v:'Lethal Poison Vial',m:'Required for Tasteless, Traceless. Emetic will not do — the challenge names lethal poison.'},
+   {k:'Slot 3 — Poison',v:'Lethal syringe',m:'Required for Needle Work, which specifies a lethal injection.'},
+   {k:'Slot 4 — Tool',v:'Coins',m:'To bait Liebleid to a toilet for Hold My Hair and to separate him from company.'}],
+  conf:'All four items are dictated by the challenge texts. Whether the lethal syringe also satisfies Tasteless, Traceless is UNVERIFIED, which is why the vial is carried separately.'
+ },
+ sections:[
+ {name:'Phase 1 — set up a reusable save',steps:[
+  {id:'r2s1',title:'Cut the infection chain first so your target list stays at two',
+   bullets:[
+    ['Where','Same opening as Run 01 — down from the helipad, then intercept Yui Kawarasaki at the stairwell entrance in the first 90 seconds.'],
+    ['Item','Coin.'],
+    ['NPC','Yui Kawarasaki.'],
+    ['Action','Coin her away from the hallway, subdue, hide the body. This is optional for these seven challenges, but it stops the map filling with infected NPCs and keeps Liebleid approachable.']],
+   warn:'Do not skip this if you plan to melee anyone. Once the map is infected, close-range work without a Bio Suit gets 47 infected, and you only have one antidote dose.',
+   save:false, badges:[],
+   conf:'Chain mechanics verified from the wiki plus a Steam route.'},
+
+  {id:'r2s2',title:'Find Klaus Liebleid and make your master save',
+   bullets:[
+    ['Where','The Rehabilitation Supervision area, where the Head Researcher is stationed.'],
+    ['Disguise','Suit is fine for reaching him; you only need a disguise for the Needle Work step at the end.'],
+    ['NPC','Klaus Liebleid — target, and the safe subject for every melee challenge because he is not infected.'],
+    ['Action','Get him alone and unobserved, then save. You will reload to this point four times.']],
+   warn:'Do all melee work on Liebleid, never on Owen Cage. Touching Cage without a Bio Suit infects 47 and starts a five-minute death timer.',
+   save:true, badges:[],
+   conf:'Infection-on-contact rule verified from the wiki. Liebleid\'s exact station is from the disguise compendium\'s "Rehabilitation supervisor" entry — treat the precise room as SINGLE SOURCE.'}
+ ]},
+ {name:'Phase 2 — kill him five ways, reloading between each',steps:[
+  {id:'r2s3',title:'Fiber-wire Liebleid — Piano Man',
+   bullets:[
+    ['Item','Fiber wire.'],
+    ['NPC','Klaus Liebleid, alone and unobserved.'],
+    ['Action','Garrotte him. The challenge pops immediately. Reload your master save.']],
+   warn:'', save:false, badges:['piano-man'],
+   conf:'Challenge text verified from mission data. Fiber-wire kills are standard mechanics.'},
+
+  {id:'r2s4',title:'Headshot Liebleid — Straight Shot',
+   bullets:[
+    ['Item','Any pistol, ideally silenced.'],
+    ['NPC','Klaus Liebleid.'],
+    ['Action','Shoot him in the head. Pops immediately. Reload.'],
+    ['Note','If you would rather bank this one during Run 03, a sniper headshot on either target also counts — but doing it here means Run 03 has one less thing to get right.']],
+   warn:'', save:false, badges:['straight-shot'],
+   conf:'Challenge text verified from mission data.'},
+
+  {id:'r2s5',title:'Drown Liebleid in a toilet — Hold My Hair',
+   bullets:[
+    ['Where','The nearest toilets — the same bathrooms where the Patient outfit is found.'],
+    ['Item','Coin, or emetic poison as a backup.'],
+    ['NPC','Klaus Liebleid.'],
+    ['Action','Place or throw a coin on or near the toilet bowl so he walks over to inspect it, then drown him while he leans over. Pops immediately. Reload.']],
+   warn:'You cannot drown an unconscious NPC in a toilet — he has to be standing and inspecting. If the coin does not draw him, use emetic poison and follow him to the bowl instead.',
+   save:false, badges:['hold-my-hair'],
+   conf:'A published video confirms Hold My Hair on Liebleid by toilet drowning in Patient Zero. The coin-at-the-bowl technique is confirmed across multiple Steam threads.'},
+
+  {id:'r2s6',title:'Lethal-poison a target — Tasteless, Traceless',
+   bullets:[
+    ['Where','Two options. In Patient Zero: the IV drip in the surgery room, which the wiki confirms as a poison route on Owen Cage that uniquely does not void Silent Assassin. In Situs Inversus: poison Yuki Yamazaki\'s water bottle in her personal room, then wait.'],
+    ['Item','Lethal Poison Vial.'],
+    ['Action','Use lethal poison specifically — any poison type kills Cage, but this challenge only counts lethal poison. Pops immediately. Reload.']],
+   warn:'The Situs Inversus water-bottle route is the better-documented of the two. Because this is a Hokkaido-wide challenge, doing it there still ticks the entry on Patient Zero\'s list.',
+   save:false, badges:['tasteless'],
+   conf:'IV-drip route and the any-poison note are verified from the wiki, but that it registers as a LETHAL poison kill is inferred, not source-confirmed. The Yamazaki water bottle is a Steam-documented method.'},
+
+  {id:'r2s7',title:'Accident kill — Someone Could Hurt Themselves',
+   bullets:[
+    ['Where','No accident kill in Patient Zero is documented by two sources. Do this one in Situs Inversus, which shares the challenge.'],
+    ['NPC','Yuki Yamazaki.'],
+    ['Action','Either kill her with a gas lamp explosion, or push her off the cable car platform while disguised as the Hospital Director. Both are named Hokkaido challenges in their own right, so you get two ticks for one kill.'],
+    ['Note','Completing this fifth Versatile challenge is what makes Versatile Assassin pop.']],
+   warn:'If you try to force this in Patient Zero, note that whether the incineration procedure counts as an accident is UNVERIFIED. Do not burn your Run 01 attempt testing it.',
+   save:false, badges:['hurt-themselves','versatile'],
+   conf:'Both Situs Inversus accident methods are listed in a published Hokkaido challenge index. Location-wide scope confirmed by the in-game text, a Steam post stating the Versatile challenges are not target-specific, and the same index.'}
+ ]},
+ {name:'Phase 3 — Needle Work, last because it consumes Liebleid',steps:[
+  {id:'r2s8',title:'Take the Head Researcher outfit',
+   bullets:[
+    ['Where','The Rehabilitation Supervision area where you made your master save.'],
+    ['Disguise','You are switching out of your suit here, which is why this run can never also earn Suit Only.'],
+    ['NPC','Klaus Liebleid. This is his own outfit — he is one of only three targets in the game whose clothes 47 can wear.'],
+    ['Action','Reload to the master save, subdue or kill him, take the outfit and hide the body.']],
+   warn:'A generic Doctor or Surgeon outfit will not work. The challenge names this specific disguise, even though its in-game label is "Head Researcher" and the challenge text calls it "Klaus Liebleid".',
+   save:true, badges:[],
+   conf:'Naming quirk verified from the wiki outfit page. Whether the outfit can be picked up without touching Liebleid is UNVERIFIED — if you find a loose copy at that location, use it.'},
+
+  {id:'r2s9',title:'Wait in the Operating Theatre and inject Owen Cage',
+   bullets:[
+    ['Where','The main surgery room / Operating Theatre. Cage walks there by himself a few minutes into the mission, so you do not have to move him.'],
+    ['Disguise','Head Researcher — required.'],
+    ['Item','Lethal syringe — the challenge specifies a lethal injection.'],
+    ['Action','Be in position and in costume before he arrives, then inject him. All four conditions must be true at once: right target, right weapon, right room, right disguise.']],
+   warn:'A syringe kill anywhere other than the main surgery room does not count, and neither does killing him elsewhere and dragging the body in.',
+   save:false, badges:['needle-work'],
+   conf:'All four conditions verified — mission data, the wiki mission page and the Needle Work article agree.'}
+ ]}]
+},
+{
+ n:'Run 03', short:'Sniper', title:'Sniper Assassin — contain first, then two shots',
+ goal:'The hardest challenge on the map, and the reason is the virus: every infected NPC becomes a target you must also shoot. Break the chain and the challenge shrinks from twenty targets to two.',
+ chips:['sniper-assassin'],
+ loadout:{
+  start:'GAMA facility arrival point beside the helipad',
+  mastery:'No Mastery track. Nothing is gated.',
+  suit:'Any suit, or plan to pick up a disguise on the way. This challenge has no clothing restriction.',
+  items:[
+   {k:'Slot 1 — Smuggled',v:'A sniper rifle at the Garage smuggle point',m:'A published guide for this map smuggles the Tac-4 S/A into the Garage. This is the delivery route more than one source uses.'},
+   {k:'Slot 2 — Tool',v:'Coins',m:'To move Yui out of the hallway.'},
+   {k:'Slot 3 — Sidearm',v:'Silenced pistol',m:'Emergency only. The targets themselves must die to the rifle.'},
+   {k:'Slot 4 — Gadget',v:'Door hacking device',m:'Recommended.'}],
+  conf:'Garage smuggle point confirmed by two sources. One player states a briefcase cannot be brought into this mission — treat that as a live conflict and use the garage.'
+ },
+ sections:[
+ {name:'Phase 1 — containment is the strategy, not a bonus',steps:[
+  {id:'r3s1',title:'Stop Yui Kawarasaki before Cage reaches her',
+   bullets:[
+    ['Where','Same 90-second window as Run 01 — she waits in front of the stairwell entrance on the first floor.'],
+    ['Item','Coin.'],
+    ['NPC','Yui Kawarasaki. Downstream if you fail: Ozaki, Kanou, Karou, then the garage crew including Nails.'],
+    ['Action','Coin her away, subdue, hide. Your target list must stay at exactly two — a player who skipped this reports the count ballooning to between ten and twenty and running out of rifle ammunition.']],
+   warn:'Do not shoot infected NPCs to clean up. Every extra shot risks being seen, and Sniper Assassin voids the moment you are spotted.',
+   save:true, badges:[],
+   conf:'The contain-first tactic is recommended independently by several Steam posters and matches the wiki chain.'},
+
+  {id:'r3s2',title:'Collect the rifle from the Garage',
+   bullets:[
+    ['Where','The Garage smuggle point. One player describes running down the side of the building and in through the garage as the fast route.'],
+    ['Disguise','Whatever gets you in cleanly.'],
+    ['NPC','Tarou Karou takes a smoke break in the garage on the infected timeline. If you contained the chain he arrives healthy and is just a guard to avoid.'],
+    ['Action','Retrieve the rifle and find cover with a line on your targets.']],
+   warn:'Named sniping perches for this mission are UNVERIFIED — no two sources agree on one. Scout your own line from cover before firing.',
+   save:true, badges:[],
+   conf:'Garage smuggle and the side-of-building approach are Steam-sourced. Firing positions UNVERIFIED.'},
+
+  {id:'r3s3',title:'Take both targets with the rifle, clear evidence, exit',
+   bullets:[
+    ['NPC','Owen Cage and Klaus Liebleid — the challenge text says "targets", plural, so both need to die to the rifle.'],
+    ['Action','Shoot both, kill nobody else, stay unseen, then destroy or erase any recording and leave.'],
+    ['Note','Aim for the head and you also bank Straight Shot if you have not already taken it in Run 02.']],
+   warn:'"Only eliminate the target" is enforced. A single stray non-target death voids the run even if you were never seen.',
+   save:false, badges:['sniper-assassin'],
+   conf:'Challenge conditions verified from mission data and the wiki. Note the known community complaint that on multi-target maps every target may need a rifle kill for this to register.'}
+ ]}]
+},
+{
+ n:'Run 04', short:'Outbreak', title:'Outbreak — You Know the Number and Lucky Shot',
+ goal:'The mirror image of Run 01. Interfere with nothing, let the virus take the building, kill everyone infected, and cure yourself at the last possible second.',
+ chips:['you-know','lucky-shot'],
+ loadout:{
+  start:'GAMA facility arrival point beside the helipad',
+  mastery:'No Mastery track. Nothing is gated.',
+  suit:'Any suit. Do not plan around the Bio Suit — you need to be infectable for Lucky Shot.',
+  items:[
+   {k:'Slot 1 — Sidearm',v:'ICA Silverballer',m:'Named in a published guide for this challenge.'},
+   {k:'Slot 2 — Explosive',v:'"Napoleon Blownaparte"',m:'Named in the same guide.'},
+   {k:'Slot 3 — Tool',v:'Coin',m:'Named in the same guide. Also needed to distract the bodyguard at the antidote door.'},
+   {k:'Slot 4 — Smuggled',v:'Tac-4 S/A rifle at the Garage smuggle point',m:'Named in the same guide. You are killing dozens of people; take the rifle.'}],
+  conf:'This loadout comes from one published guide for You Know the Number. Single source, but specific and consistent with the map\'s known smuggle point.'
+ },
+ sections:[
+ {name:'Phase 1 — build the outbreak',steps:[
+  {id:'r4s1',title:'Scout the antidote room before you do anything else',
+   bullets:[
+    ['Where','Stem Cell Storage Facility on level 1 of the GAMA Hospital, with the stem cell supplies near the hospital furnace room — described elsewhere as the stem cell supply storage by the morgue.'],
+    ['NPC','A bodyguard watches the door and will need distracting with a coin.'],
+    ['Action','Walk the route now and time it. Later you will have five minutes and a single dose, so this cannot be a search.']],
+   warn:'Two antidotes exist but Liebleid has already used one, so you get exactly one attempt at Lucky Shot per mission entry. Also note the room is flagged as a hostile area if you are not wearing a Bio Suit.',
+   save:true, badges:[],
+   conf:'Location, the bodyguard, the hostile-area flag and the used dose are all verified — the wiki Vaccine article and a Steam redacted-challenges guide agree.'},
+
+  {id:'r4s2',title:'Interfere with nothing and let the chain run',
+   bullets:[
+    ['Where','Stay out of the way — the garage and outer walkways are good places to wait.'],
+    ['NPC','Cage infects Yui Kawarasaki, who infects Ozaki, Kanou and Karou outside; Karou infects the garage crew including Nails; near the 15-minute mark the yoga instructor carries it into the resort restaurant.'],
+    ['Action','Do nothing. Around thirty NPCs catch it on the scripted timeline alone, and the count climbs far higher if you leave every routine intact — one player reports 90+ infected before killing anyone.']],
+   warn:'Do not kill victims as they become infected. The wiki article states the requirement is 47 CONCURRENT infections and that diligently killing them off as they appear can make the challenge unachievable.',
+   save:false, badges:[],
+   conf:'Chain and the 15-minute restaurant tipping point verified from the wiki. Infection ceiling from a detailed Steam account.'},
+
+  {id:'r4s3',title:'Save the moment the counter passes 47',
+   bullets:[
+    ['Where','Anywhere safe with the infected counter visible.'],
+    ['Action','Save. This is the checkpoint the whole run hangs on, and everything after it is expendable.'],
+    ['Note','The challenge only resolves when the mission ends, so expect the notification on the post-mission summary rather than at the moment you hit the number.']],
+   warn:'', save:true, badges:[],
+   conf:'Delayed notification confirmed by the wiki article and a published guide.'}
+ ]},
+ {name:'Phase 2 — the ordering trick that makes both challenges possible',steps:[
+  {id:'r4s4',title:'Kill the infected, but deliberately leave one alive',
+   bullets:[
+    ['Where','Work through the building with the Tac-4 from the garage.'],
+    ['NPC','Every infected NPC is a legitimate target, so killing them carries no non-target penalty. Both Cage and Liebleid also have to die.'],
+    ['Action','Clear the map but leave exactly one infected NPC breathing, somewhere you can reach the antidote from quickly.']],
+   warn:'This is the critical ordering rule. If you kill every infected NPC first, nothing is left to infect 47, and Lucky Shot becomes impossible without replaying the whole 15-minute build-up. Leave one.',
+   save:true, badges:[],
+   conf:'That infected NPCs count as targets is confirmed by a player who completed this challenge with zero non-target kills. The leave-one-alive sequencing follows necessarily from the two challenge conditions.'},
+
+  {id:'r4s5',title:'Catch the virus from your last infected NPC',
+   bullets:[
+    ['Disguise','Anything except the Bio Suit — it blocks infection.'],
+    ['NPC','The one infected NPC you kept alive.'],
+    ['Action','Walk into direct contact with them. A five-minute countdown starts immediately; one player measured about 4 minutes 50 seconds.'],
+    ['Note','Head for the antidote at once but plan to arrive early and wait.']],
+   warn:'', save:false, badges:[],
+   conf:'Infection-on-contact and Bio Suit immunity verified from the wiki. Timer length from two Steam accounts.'},
+
+  {id:'r4s6',title:'Inject the antidote with 10 seconds or less left',
+   bullets:[
+    ['Where','Stem Cell Storage Facility, the room you scouted in step 1.'],
+    ['Item','The remaining antidote dose. 47 injects it into his neck.'],
+    ['NPC','Distract the bodyguard at the door with a coin.'],
+    ['Action','Stand at the antidote and deliberately wait. Start the injection inside the final ten seconds — the animation itself takes roughly ten seconds, so this is genuinely tight. A player reports killing himself by starting with nine seconds left.']],
+   warn:'One dose only. If you die or mistime it, reload the save from step 4 rather than restarting the mission.',
+   save:false, badges:['lucky-shot'],
+   conf:'Ten-second condition verified from the wiki; the deliberate-wait tactic and animation length from a detailed Steam account.'},
+
+  {id:'r4s7',title:'Kill the last infected NPC and escape',
+   bullets:[
+    ['NPC','The NPC you caught the virus from.'],
+    ['Action','Kill them, confirm every objective is clear — both targets plus all additional infected — and leave.'],
+    ['Note','Route it this way and you satisfy all three published readings of You Know the Number at once: 47+ concurrent infections witnessed, 47+ infected eliminated, and the mission completed.']],
+   warn:'You must have used the antidote before leaving. Exiting while still infected does not complete the mission.',
+   save:false, badges:['you-know'],
+   conf:'Objectives verified from the wiki. The must-cure-before-leaving rule is stated on the wiki Vaccine article.'}
+ ]}]
+},
+{
+ n:'Run 05', short:'Chameleon', title:'Chameleon — all 16 disguises in one loop',
+ goal:'One challenge, but sixteen pickups. The route below runs helipad to guest wing to hospital core to morgue, so you finish standing next to the incinerator with no backtracking.',
+ chips:['chameleon'],
+ loadout:{
+  start:'GAMA facility arrival point beside the helipad',
+  mastery:'No Mastery track. Nothing is gated.',
+  suit:'Start in a suit. If you start in a disguise instead you must switch out of it and back into it for it to register.',
+  items:[
+   {k:'Slot 1 — Tool',v:'Coins',m:'The workhorse for isolating individual NPCs.'},
+   {k:'Slot 2 — Gadget',v:'Lockpick',m:'Recommended.'},
+   {k:'Slot 3 — Gadget',v:'Door hacking device',m:'Recommended — opens doors without pulling NPCs over.'},
+   {k:'Slot 4 — Sidearm',v:'Sedative of your choice',m:'Recommendation, not source-verified.'}],
+  conf:'The start-in-disguise caveat is from the Steam disguise compendium. Item picks are recommendations.'
+ },
+ sections:[
+ {name:'Phase 1 — outer ring',steps:[
+  {id:'r5s1',title:'Helipad ring — Bodyguard and Resort Security',
+   bullets:[
+    ['Where','Bodyguards are on the helipad itself; Resort Security is on the walkway directly below it.'],
+    ['Item','Coin — there is one in the utility room beside the start.'],
+    ['NPC','A published route describes distracting one of the two conversing platform guards so the other paths down the stairs alone.'],
+    ['Action','Take both armed outfits before moving inward. Equip each one at least briefly so it registers.']],
+   warn:'', save:true, badges:[],
+   conf:'Disguise locations from the Steam compendium, corroborated by a second thread listing the same sixteen.'}
+ ]},
+ {name:'Phase 2 — guest and staff wing, eight outfits',steps:[
+  {id:'r5s2',title:'Changing rooms, sleeping quarters and kitchen — four outfits',
+   bullets:[
+    ['Where','Helicopter Pilot in the changing rooms; Handyman and Resort Staff both in the sleeping quarters; Chef in the kitchen.'],
+    ['Action','Chain them — each outfit opens access to fetch the next, so take them in this order rather than doubling back.']],
+   warn:'', save:true, badges:[],
+   conf:'Locations from the Steam compendium, corroborated by a second thread.'},
+
+  {id:'r5s3',title:'Guest rooms, toilets and yoga platform — four outfits',
+   bullets:[
+    ['Where','Doctor in 47\'s guest room; Patient in the toilets; VIP Patient in Amos Dexter\'s room; Yoga Instructor on the yoga platform.'],
+    ['NPC','Amos Dexter still wanders the GAMA hospital in this mission, exactly as in Situs Inversus.'],
+    ['Action','Equip each briefly. Change out of the VIP Patient outfit as soon as it registers.']],
+   warn:'The VIP Patient outfit makes the entire map hostile, just like a suit or the Recon Gear. Do not walk anywhere in it.',
+   save:true, badges:[],
+   conf:'Locations from the Steam compendium; the VIP Patient hostility note is verified from the wiki outfit page.'}
+ ]},
+ {name:'Phase 3 — hospital core and morgue block, six outfits',steps:[
+  {id:'r5s4',title:'Director\'s office, hospital and rehabilitation area — three outfits',
+   bullets:[
+    ['Where','Hospital Director in the director\'s office; Surgeon somewhere in the GAMA hospital; Head Researcher at the Rehabilitation Supervision area.'],
+    ['NPC','Akira Nakamura is the director. Klaus Liebleid wears the Head Researcher outfit.'],
+    ['Action','If you cannot find a loose Surgeon outfit, the long-standing community method is to go up the back stairs from the morgue and draw a surgeon there.']],
+   warn:'The Director disguise is weaker here than in Situs Inversus — the quarantine removes its ground-floor hospital access.',
+   save:true, badges:[],
+   conf:'Locations from the Steam compendium; the Director access change verified from the wiki outfit page; the Surgeon workaround is a single-source community tip.'},
+
+  {id:'r5s5',title:'Morgue block — Morgue Doctor, Bio Suit, Motorcyclist',
+   bullets:[
+    ['Where','Morgue Doctor in the morgue; Bio Suit in the morgue security room; Motorcyclist in the morgue incinerator room — all three clustered together.'],
+    ['Action','Equip all three. The sixteenth pickup should pop Chameleon on the spot; the challenge text does not require finishing the mission.'],
+    ['Note','You end this run standing at the incinerator, which is also where Run 01 ends — convenient if you want to finish the mission normally afterwards.']],
+   warn:'The Bio Suit is the hazmat suit. Wearing it permanently voids No Rubber, which is exactly why No Rubber lives in Run 01 and not here.',
+   save:false, badges:['chameleon'],
+   conf:'Locations from the Steam compendium, corroborated by a second thread. That Chameleon pops without completing the mission is inferred from the challenge text — UNVERIFIED.'}
+ ]}]
+},
+{
+ n:'Run 06', short:'Discovery', title:'Discover Hokkaido — do this one in Situs Inversus',
+ goal:'The one challenge on Patient Zero\'s list that cannot be progressed here. The mission data reports zero discovery areas for Patient Zero and an empty area list, with areas shared with Situs Inversus.',
+ chips:['discover'],
+ loadout:{
+  start:'Situs Inversus, any starting location you have unlocked',
+  mastery:'Situs Inversus does have a Mastery track, unlike Patient Zero, so more starts open up as you level Hokkaido.',
+  suit:'Any. Discovery has no clothing or stealth conditions.',
+  items:[
+   {k:'Slot 1 — Tool',v:'Coins',m:'For getting into restricted areas quietly.'},
+   {k:'Slot 2 — Gadget',v:'Lockpick',m:'Several Hokkaido areas are behind locked doors.'},
+   {k:'Slot 3 — Gadget',v:'Door hacking device',m:'Recommended.'},
+   {k:'Slot 4 — Smuggled',v:'Leave empty',m:''}],
+  conf:'Area data verified from mission data. The specific list of Hokkaido areas is not enumerated in the data supplied — use the in-game map, which greys out anything undiscovered.'
+ },
+ sections:[
+ {name:'Single phase',steps:[
+  {id:'r6s1',title:'Walk the full Situs Inversus map with the in-game map open',
+   bullets:[
+    ['Where','Situs Inversus, not Patient Zero. Patient Zero\'s footprint is smaller because of the quarantine and it contributes no unique areas.'],
+    ['Action','Open the map and visit every greyed-out region across all floors, including the morgue, stem cell storage, organ storage, the spa and sauna level, the operating theatre area, the director\'s office and the outer garden and cable car platform.'],
+    ['Note','Because this is a Hokkaido-wide challenge, completing it in Situs Inversus ticks the entry that appears on Patient Zero\'s challenge list.']],
+   warn:'The exact named area list is not in the data supplied and no second source enumerates it, so this step is deliberately structural rather than a checklist. Use the in-game map as the authority.',
+   save:false, badges:['discover'],
+   conf:'Scope and the shared-areas relationship verified from mission data. Individual area names UNVERIFIED.'}
+ ]}]
+}
+];
+
+/* ---------------- STATE ---------------- */
+const state={done:new Set(),steps:new Set(),filter:'all',openRuns:new Set(['Run 01']),openSteps:new Set()};
+const KEY='pz-guide-v2';
+function reportProgress(){try{const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r['pz04']={done:state.done.size,total:CH.length,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
+async function load(){
+  try{const r=localStorage.getItem(KEY);
+    if(r){const d=JSON.parse(r);
+      (d.done||[]).forEach(x=>state.done.add(x));(d.steps||[]).forEach(x=>state.steps.add(x));}
+  }catch(e){}
+  render();
+  reportProgress();
+}
+async function save(){
+  try{localStorage.setItem(KEY,JSON.stringify({done:[...state.done],steps:[...state.steps]}));}catch(e){}
+  reportProgress();
+}
+
+/* ---------------- RENDER ---------------- */
+function chip(id){const c=byId[id];if(!c)return'';
+  return `<span class="badge b-${c.cat}">${c.name}${state.done.has(id)?' ✓':''}</span>`;}
+
+function renderTracker(){
+  const d=CH.filter(c=>state.done.has(c.id)).length;
+  document.getElementById('doneN').textContent=d;
+  document.getElementById('barfill').style.width=(d/CH.length*100)+'%';
+  document.getElementById('cats').innerHTML=['assassination','discovery','feats','classic'].map(g=>{
+    const all=CH.filter(c=>c.cat===g),dn=all.filter(c=>state.done.has(c.id)).length;
+    return `<div class="cat ${g}"><div class="n">${dn}<s>/${all.length}</s></div><div class="t">${CATL[g]}</div></div>`;
+  }).join('');
+}
+
+function renderJump(){
+  document.getElementById('jumpbar').innerHTML=
+    `<span class="jl">Jump to run</span>`+
+    RUNS.map((r,i)=>{
+      const ids=r.chips, dn=ids.filter(x=>state.done.has(x)).length;
+      return `<button class="jump ${dn===ids.length?'full':''}" data-jump="${i}"><b>${String(i+1).padStart(2,'0')}</b>${r.short}<span class="pg">${dn}/${ids.length}</span></button>`;
+    }).join('')+
+    `<button class="btn-plain" data-toggleall="1" style="margin-left:auto">Expand / collapse all</button>`;
+}
+
+function renderRuns(){
+  document.getElementById('runs').innerHTML=RUNS.map((r,ri)=>{
+    const open=state.openRuns.has(r.n);
+    return `<article class="run ${open?'open':''}" id="run-${ri}">
+      <button class="rhead" data-run="${r.n}" aria-expanded="${open}">
+        <span class="chev">▶</span>
+        <span class="rhead-body">
+          <span class="ridx">${r.n}</span>
+          <span class="rtitle" style="display:block">${r.title}</span>
+          <span class="rgoal" style="display:block">${r.goal}</span>
+          <span class="rchips">${r.chips.map(chip).join('')}</span>
+        </span>
+      </button>
+      <div class="rbody" ${open?'':'hidden'}>
+        <div class="loadout">
+          <h5>Loadout</h5>
+          <div class="lgrid">
+            <div class="lslot"><span class="k">Starting location</span><span class="v">${r.loadout.start}</span><span class="m">${r.loadout.mastery}</span></div>
+            <div class="lslot"><span class="k">Suit</span><span class="v">${r.loadout.suit}</span></div>
+            ${r.loadout.items.map(i=>`<div class="lslot"><span class="k">${i.k}</span><span class="v">${i.v}</span>${i.m?`<span class="m">${i.m}</span>`:''}</div>`).join('')}
+          </div>
+          <p style="margin:13px 0 0;font-size:12.5px;color:var(--steel)"><b style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:500">Confidence — </b>${r.loadout.conf}</p>
+        </div>
+        ${r.sections.map(sec=>{
+          let html=`<div class="sec-h">${sec.name}</div>`;
+          html+=sec.steps.map(s=>{
+            const dn=state.steps.has(s.id), so=state.openSteps.has(s.id);
+            const num=stepNumber(r,s.id);
+            return `<div class="step ${dn?'done':''} ${so?'sopen':''}">
+              <button class="tick" data-tick="${s.id}" aria-pressed="${dn}" aria-label="Mark step done">✓</button>
+              <div class="stepwrap">
+                <button class="shead" data-step="${s.id}" aria-expanded="${so}">
+                  <span class="snum">${num}</span>
+                  <span class="stitle">${s.title}</span>
+                  <span class="schev">▶</span>
+                </button>
+                <div class="sbody" ${so?'':'hidden'}>
+                  <ul>${s.bullets.map(b=>`<li><b>${b[0]}</b>${b[1]}</li>`).join('')}</ul>
+                  ${s.warn?`<div class="warnline"><b>Warning</b>${s.warn}</div>`:''}
+                  <div class="badges">
+                    ${s.badges.map(chip).join('')}
+                    ${s.save?`<span class="badge b-save">Save here</span>`:''}
+                  </div>
+                  <p class="conf">Source confidence — ${s.conf}</p>
+                </div>
+              </div>
+            </div>`;
+          }).join('');
+          return html;
+        }).join('')}
+      </div>
+    </article>`;
+  }).join('');
+}
+function stepNumber(run,id){
+  let n=0;
+  for(const sec of run.sections) for(const s of sec.steps){n++; if(s.id===id) return String(n).padStart(2,'0');}
+  return '';
+}
+
+const FILTERS=[['all','All'],['assassination','Assassination'],['discovery','Discovery'],['feats','Feats'],['classic','Classic'],['incomplete','Incomplete']];
+function renderFilters(){
+  document.getElementById('filters').innerHTML=FILTERS.map(([k,l])=>
+    `<button class="filt" data-filter="${k}" aria-pressed="${state.filter===k}">${l}</button>`).join('');
+}
+function renderList(){
+  let rows=CH.slice(); const f=state.filter;
+  if(f==='incomplete') rows=rows.filter(c=>!state.done.has(c.id));
+  else if(f!=='all') rows=rows.filter(c=>c.cat===f);
+  const el=document.getElementById('clist');
+  if(!rows.length){el.innerHTML=`<p class="empty">Nothing matches this filter. Try All.</p>`;return;}
+  el.innerHTML=rows.map(c=>{
+    const dn=state.done.has(c.id);
+    return `<div class="crow ${dn?'done':''}">
+      <button class="tick" data-chal="${c.id}" aria-pressed="${dn}" aria-label="Mark ${c.name} complete">✓</button>
+      <div style="flex:1;min-width:0">
+        <p class="cname">${c.name} <span class="badge b-${c.cat}">${CATL[c.cat]}</span>${c.scope?` <span class="badge b-unv">${c.scope}</span>`:''}</p>
+        <p class="ccond">${c.cond}</p>
+        <p class="cmeta">${c.xp?c.xp+' · ':''}Run ${String(c.run).padStart(2,'0')}</p>
+      </div>
+    </div>`;}).join('');
+}
+function renderDisguises(){
+  document.getElementById('dtable').innerHTML=DISGUISES.map((d,i)=>
+    `<tr><td>${i+1}</td><td><b>${d[0]}</b></td><td>${d[1]}</td><td>${d[2]}</td></tr>`).join('');
+}
+function render(){renderTracker();renderJump();renderRuns();renderFilters();renderList();renderDisguises();}
+
+/* ---------------- EVENTS ---------------- */
+document.addEventListener('click',e=>{
+  const t=e.target;
+  const rh=t.closest('[data-run]');
+  if(rh){const n=rh.dataset.run; state.openRuns.has(n)?state.openRuns.delete(n):state.openRuns.add(n); renderRuns(); return;}
+  const sh=t.closest('[data-step]');
+  if(sh){const id=sh.dataset.step; state.openSteps.has(id)?state.openSteps.delete(id):state.openSteps.add(id); renderRuns(); return;}
+  const tk=t.closest('[data-tick]');
+  if(tk){const id=tk.dataset.tick; state.steps.has(id)?state.steps.delete(id):state.steps.add(id); save(); renderRuns(); return;}
+  const ch=t.closest('[data-chal]');
+  if(ch){const id=ch.dataset.chal; state.done.has(id)?state.done.delete(id):state.done.add(id); save(); renderTracker(); renderJump(); renderList(); renderRuns(); return;}
+  const jp=t.closest('[data-jump]');
+  if(jp){const i=+jp.dataset.jump; state.openRuns.add(RUNS[i].n); renderRuns();
+    document.getElementById('run-'+i).scrollIntoView({behavior:'smooth',block:'start'}); return;}
+  const ta=t.closest('[data-toggleall]');
+  if(ta){
+    if(state.openRuns.size===RUNS.length){state.openRuns.clear();state.openSteps.clear();}
+    else{RUNS.forEach(r=>state.openRuns.add(r.n));}
+    renderRuns(); return;}
+  const ft=t.closest('[data-filter]');
+  if(ft){state.filter=ft.dataset.filter; renderFilters(); renderList(); return;}
+  const tb=t.closest('.tab');
+  if(tb){document.querySelectorAll('.tab').forEach(x=>{
+    const on=x===tb; x.setAttribute('aria-selected',String(on));
+    document.getElementById(x.getAttribute('aria-controls')).hidden=!on;}); return;}
+});
+document.getElementById('reset').addEventListener('click',()=>{
+  state.done.clear();state.steps.clear();save();render();});
+
+load();
+</script>
+<!-- step-progress-bridge -->
+<script>
+/* Reports route-step ticks into 'hitman-progress-registry' so the index can
+   show them beside the challenge counts. Counts what is on screen rather than
+   any guide-specific state, so one implementation serves every guide. */
+(function(){
+  var RID="pz04", SEL=".step";
+  function isDone(s){
+    var c=s.classList;
+    if(c.contains('done')||c.contains('dn')) return true;
+    if(s.getAttribute('data-done')==='1'||s.getAttribute('aria-pressed')==='true') return true;
+    return !!s.querySelector('.done,.dn,[data-done="1"],[aria-pressed="true"]');
+  }
+  function tally(){
+    var steps=document.querySelectorAll(SEL);
+    if(!steps.length) return null;
+    var n=0;
+    for(var i=0;i<steps.length;i++) if(isDone(steps[i])) n++;
+    return {steps:n,stepTotal:steps.length};
+  }
+  function push(){
+    var t;
+    try{ t=tally(); }catch(err){ return; }
+    if(!t||!t.stepTotal) return;
+    try{
+      var r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');
+      var e=r[RID]||(r[RID]={});
+      /* the guide's own reportProgress() rewrites this entry wholesale, so
+         re-add the step counts whenever they go missing or stale */
+      if(e.steps===t.steps&&e.stepTotal===t.stepTotal) return;
+      e.steps=t.steps; e.stepTotal=t.stepTotal; e.updated=Date.now();
+      localStorage.setItem('hitman-progress-registry',JSON.stringify(r));
+    }catch(err){}
+  }
+  var pending=false;
+  function schedule(){
+    if(pending) return; pending=true;
+    setTimeout(function(){pending=false;push();},120);
+  }
+  try{
+    new MutationObserver(schedule).observe(document.body,
+      {subtree:true,childList:true,attributes:true,attributeFilter:['class','aria-pressed','data-done']});
+  }catch(err){}
+  window.addEventListener('load',schedule);
+  setTimeout(push,600);
+})();
+</script>
+<!-- /step-progress-bridge -->
+</body>
+</html>

@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Another Life — Whittleton Creek · Step Guide</title>
+<style>
+  :root{
+    --bg:#0e1116;--panel:#161b22;--panel2:#1c232d;--line:#2a323d;
+    --ink:#e6edf3;--dim:#9aa7b4;--faint:#6b7684;
+    --gold:#d4a24e;--blood:#b3413a;--teal:#3fae8f;--amber:#d98a2b;
+    --a:#e0a04a;--d:#5fa8e8;--f:#6cc48a;--tc:#a98fe6;--tg:#d97b7b;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;font-size:15px;padding:0 0 5rem}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 20px}
+  header{background:linear-gradient(135deg,#12161d,#1a2028);border-bottom:1px solid var(--line);padding:42px 0 30px;margin-bottom:26px;position:relative;overflow:hidden}
+  header::before{content:"";position:absolute;top:0;right:-60px;width:340px;height:100%;background:radial-gradient(circle at 70% 40%,rgba(212,162,78,.10),transparent 60%)}
+  .eyebrow{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:10px}
+  header h1{font-size:33px;font-weight:700;letter-spacing:-.02em;margin-bottom:6px}
+  header .tag{color:var(--dim);font-size:15px;max-width:680px}
+  .meta-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+  .chip{font-size:12px;font-weight:600;padding:5px 11px;border-radius:20px;background:var(--panel2);border:1px solid var(--line);color:var(--dim)}
+  .chip b{color:var(--ink)}
+  .toc{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+  .toc a{font-size:13px;padding:6px 13px;border-radius:8px;background:var(--panel);border:1px solid var(--line);color:var(--dim);text-decoration:none;transition:.15s}
+  .toc a:hover{color:var(--ink);border-color:var(--gold)}
+  .legend{display:flex;flex-wrap:wrap;gap:14px;padding:13px 18px;background:var(--panel);border:1px solid var(--line);border-radius:12px;margin-bottom:14px;font-size:12.5px}
+  .legend span{display:inline-flex;align-items:center;gap:6px;color:var(--dim)}
+  .dot{width:9px;height:9px;border-radius:50%}
+  .callout{border-radius:12px;padding:14px 18px;margin-bottom:14px;font-size:13.5px;line-height:1.7}
+  .callout.warn{background:rgba(179,65,58,.10);border:1px solid rgba(179,65,58,.35);color:#f0b4b0}
+  .callout.info{background:rgba(79,143,214,.09);border:1px solid rgba(79,143,214,.30);color:#bcd6f0}
+  .callout b{color:#fff}
+  .callout ul{margin:6px 0 0 18px}.callout li{margin-bottom:4px}
+  .run{background:var(--panel);border:1px solid var(--line);border-radius:16px;margin-bottom:22px;overflow:hidden;scroll-margin-top:14px}
+  .run-head{padding:20px 22px 16px;border-bottom:1px solid var(--line);cursor:pointer;position:relative;user-select:none}
+  .run-head:hover{background:var(--panel2)}
+  .run-head::after{content:'\25BE';position:absolute;top:20px;right:22px;color:var(--faint);font-size:13px;transition:transform .15s}
+  .run.collapsed .run-head{border-bottom:none}
+  .run.collapsed .run-head::after{transform:rotate(-90deg)}
+  .run.collapsed .run-body{display:none}
+  .rn{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#0e1116;background:var(--gold);padding:3px 10px;border-radius:6px;margin-bottom:11px}
+  .run-head h2{font-size:21px;font-weight:700;letter-spacing:-.01em;margin-bottom:6px;padding-right:26px}
+  .run-head .goal{color:var(--dim);font-size:14px}
+  .expandbar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+  .expandbar button{font-size:13px;padding:6px 13px;border-radius:8px;background:var(--panel);border:1px solid var(--line);color:var(--dim);cursor:pointer;font-family:inherit;transition:.15s}
+  .expandbar button:hover{color:var(--ink);border-color:var(--gold)}
+  .loadout{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line)}
+  .lo{background:var(--panel2);padding:11px 16px;font-size:13px}
+  .lo .k{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin-bottom:2px}
+  .lo .v{color:var(--ink);font-weight:500}
+  .lo.full{grid-column:1/-1}
+  .step{padding:15px 22px;border-bottom:1px solid rgba(42,50,61,.5)}
+  .step:last-child{border-bottom:none}
+  .st-top{display:flex;align-items:baseline;gap:10px;cursor:pointer;user-select:none}
+  .st-top::after{content:'\25BE';margin-left:auto;color:var(--faint);font-size:11px;transition:transform .15s;flex-shrink:0}
+  .step.collapsed .st-top::after{transform:rotate(-90deg)}
+  .step.collapsed .step-body{display:none}
+  .num{font-size:12px;font-weight:700;color:var(--gold);width:22px;flex-shrink:0}
+  .step h3{font-size:15.5px;font-weight:650;flex:1}
+  .tick{width:19px;height:19px;border-radius:50%;border:2px solid var(--line);background:var(--bg);cursor:pointer;flex-shrink:0;padding:0;display:flex;align-items:center;justify-content:center;font-size:11px;color:transparent}
+  .tick:hover{border-color:var(--gold)}
+  .tick[aria-pressed="true"]{background:var(--gold);border-color:var(--gold);color:#0e1116}
+  .tick[aria-pressed="true"]::after{content:'\2713'}
+  .step.done h3{text-decoration:line-through;color:var(--dim)}
+  .facts{margin:8px 0 0 32px;display:grid;gap:5px}
+  .fact{display:flex;gap:8px;font-size:13px;align-items:baseline}
+  .fact .lab{font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--faint);min-width:74px;flex-shrink:0;padding-top:1px}
+  .fact .txt{color:var(--dim)}
+  .fact .txt b{color:var(--ink);font-weight:600}
+  .badges{display:flex;flex-wrap:wrap;gap:5px;margin:9px 0 0 32px}
+  .bd{font-size:11px;font-weight:600;padding:3px 9px;border-radius:5px;border:1px solid transparent}
+  .bd-a{background:rgba(224,160,74,.13);color:var(--a);border-color:rgba(224,160,74,.28)}
+  .bd-d{background:rgba(95,168,232,.13);color:var(--d);border-color:rgba(95,168,232,.28)}
+  .bd-f{background:rgba(108,196,138,.13);color:var(--f);border-color:rgba(108,196,138,.28)}
+  .bd-tc{background:rgba(169,143,230,.13);color:var(--tc);border-color:rgba(169,143,230,.28)}
+  .bd-tg{background:rgba(217,123,123,.13);color:var(--tg);border-color:rgba(217,123,123,.28)}
+  .flag{margin:9px 0 0 32px;padding:9px 13px;border-radius:9px;font-size:12.5px;line-height:1.6}
+  .flag.warn{background:rgba(179,65,58,.09);border-left:3px solid var(--blood);color:#e8a9a5}
+  .flag.save{background:rgba(217,138,43,.09);border-left:3px solid var(--amber);color:#e6bd82}
+  .flag b{color:#fff}
+  h2.sec{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin:34px 0 14px;font-weight:700}
+  table{width:100%;border-collapse:collapse;font-size:13px;background:var(--panel);border-radius:12px;overflow:hidden;margin-bottom:8px}
+  th{text-align:left;padding:9px 14px;background:var(--panel2);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);font-weight:700}
+  td{padding:9px 14px;border-top:1px solid var(--line);color:var(--dim);vertical-align:top}
+  td b{color:var(--ink);font-weight:600}
+  footer{margin-top:36px;padding-top:20px;border-top:1px solid var(--line);color:var(--faint);font-size:12px;line-height:1.75}
+  footer b{color:var(--dim)}
+  @media(max-width:640px){header h1{font-size:25px}.loadout{grid-template-columns:1fr}.facts,.badges,.flag{margin-left:0}.num{width:auto}.fact{flex-direction:column;gap:1px}.fact .lab{min-width:0}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="eyebrow">Hitman · World of Assassination · Step Format</div>
+    <h1>Another Life — Whittleton Creek</h1>
+    <p class="tag">Built directly from your uploaded in-game challenge file (78 challenges, authoritative) and cross-referenced against detailed community sources for the execution steps. Every step lists where to go, the disguise, the item, the NPC, the action, and any missable warning.</p>
+    <div class="meta-row">
+      <span class="chip"><b>78</b> challenges</span>
+      <span class="chip"><b>22</b> Assassination</span>
+      <span class="chip"><b>17</b> Discovery</span>
+      <span class="chip"><b>32</b> Feats</span>
+      <span class="chip"><b>2</b> Targets</span>
+      <span class="chip"><b>5</b> Classic</span>
+      <span class="chip">7 runs</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="toc">
+    <a href="#r1">1 · Clue Sweep</a>
+    <a href="#r2">2 · Janus &amp; Cassidy Stories</a>
+    <a href="#r3">3 · House For Sale Stack</a>
+    <a href="#r4">4 · Electricity Blackout</a>
+    <a href="#r5">5 · SASO + Sniper</a>
+    <a href="#r6">6 · Chameleon + Discovery</a>
+    <a href="#r7">7 · Feats Cleanup</a>
+  </div>
+
+  <div class="expandbar">
+    <button type="button" id="expandAll">Expand all</button>
+    <button type="button" id="collapseAll">Collapse all</button>
+  </div>
+
+  <div class="legend">
+    <span><span class="dot" style="background:var(--a)"></span>Assassination</span>
+    <span><span class="dot" style="background:var(--d)"></span>Discovery</span>
+    <span><span class="dot" style="background:var(--f)"></span>Feats</span>
+    <span><span class="dot" style="background:var(--tc)"></span>Classic</span>
+    <span><span class="dot" style="background:var(--tg)"></span>Target</span>
+  </div>
+
+  <div class="callout warn">
+    <b>Hard rules that must be obeyed or challenges become impossible:</b>
+    <ul>
+      <li><b>Cameras before recorders.</b> For You Had Me at Bodyguard and the sniper challenges, destroy the 12 <i>cameras</i> — destroying the <i>recordings</i> first stops the count.</li>
+      <li><b>Janus can only die once.</b> Every Janus kill method (Finger on the Pulse, Tea Time, Monster Cookie, Memorabilia, Death from Below, Sneezing Suspicion, electric, sniper) is mutually exclusive within a single run. Same for Cassidy.</li>
+      <li><b>SASO needs the default start.</b> Only the default starting location spawns you in the suit — no other start can earn Silent Assassin, Suit Only.</li>
+      <li><b>Elderly Assistance needs Janus alive</b> through all 7 sub-tasks — do not kill him until it completes.</li>
+      <li><b>Doing the Rounds:</b> all five newspapers must sit in mailboxes at the same time. The jogger empties mailboxes she passes — pacify her first or stay behind her.</li>
+    </ul>
+  </div>
+
+  <!-- ============ RUN 1 ============ -->
+  <div class="run" id="r1">
+    <div class="run-head">
+      <span class="rn">Run 1</span>
+      <h2>Clue Sweep — Master Detective, Providence, Breadcrumb Trail</h2>
+      <p class="goal">Collect every clue and finish the investigation story. Kill both targets at the very end by any method. Keep Janus alive until all clue steps that need him are done.</p>
+    </div>
+    <div class="loadout">
+      <div class="lo full"><div class="k">Start</div><div class="v">Default starting location (Stonybrook Rd)</div></div>
+      <div class="lo"><div class="k">Suit</div><div class="v">Default Suit</div></div>
+      <div class="lo"><div class="k">Item 1</div><div class="v">Lockpick</div></div>
+      <div class="lo"><div class="k">Item 2</div><div class="v">Coins</div></div>
+      <div class="lo"><div class="k">Item 3</div><div class="v">Silenced pistol</div></div>
+      <div class="lo"><div class="k">Item 4</div><div class="v">Lethal poison (for the end kills)</div></div>
+    </div>
+
+    <div class="step">
+      <div class="st-top"><span class="num">1</span><h3>Batty's shed — documents &amp; shovel</h3></div>
+      <div class="facts">
+        <div class="fact"><span class="lab">Go to</span><span class="txt">Batty Property, north-west of the map</span></div>
+        <div class="fact"><span class="lab">Disguise</span><span class="txt">None needed if you sneak; James Batty's outfit optional</span></div>
+        <div class="fact"><span class="lab">NPC</span><span class="txt"><b>James Batty</b> in his garden</span></div>
+        <div class="fact"><span class="lab">Action</span><span class="txt">Pacify Batty for the <b>Lawsuit Documents</b> and his <b>shed key</b>; open the shed and grab the <b>shovel</b> inside</span></div>
+      </div>
+      <div class="badges"><span class="bd bd-d">Become James Batty</span></div>
+    </div>
+
+    <div class="step">
+      <div class="st-top"><span class="num">2</span><h3>Dig the Cigar Box &amp; catch the frog</h3></div>
+      <div class="facts">
+        <div class="fact"><span class="lab">Go to</span><span class="txt">Reservoir / swamp behind the Cassidy Property (east side)</span></div>
+        <div class="fact"><span class="lab">Item</span><span class="txt"><b>Shovel</b> (from Batty's shed)</span></div>
+        <div class="fact"><span class="lab">Action</span><span class="txt">Dig up the <b>Cigar Box</b> clue, then grab the <b>pickerel frog</b> nearby for Battle Frogs</span></div>
+      </div>
+      <div class="badges"><span class="bd bd-f">Battle Frogs</span></div>
+      <div class="flag save"><b>💾 Save.</b> Do this early — once you hold 3 clues the map stops showing clue icons, and the buried box is the hardest to find without one.</div>
+    </div>
+
+    <div class="step">
+      <div class="st-top"><span class="num">3</span><h3>Intercept Janus's letter (Pickpocket)</h3></div>
+      <div class="facts">
+        <div class="fact"><span class="lab">Go to</span><span class="txt">Cassidy Property garage</span></div>
+        <div class="fact"><span class="lab">NPC</span><span class="txt"><b>Spencer "The Hammer" Green</b>, who carries Janus's letter</span></div>
+        <div class="fact"><span class="lab">Action</span><span class="txt">Enter the garage, use the generator to lure Spencer in, pacify him and take the dropped <b>Letter</b> clue before it reaches Cassidy's house</span></div>
+      </div>
+      <div class="badges"><span class="bd bd-f">Pickpocket</span></div>
+    </div>
+
+    <div class="step">
+      <div class="st-top"><span class="num">4</span><h3>Diary, robe &amp; doorbell</h3></div>
+      <div class="facts">
+        <div class="fact"><span class="lab">Go to</span><span class="txt">Garbage-truck bench (SW), then the West Property (Helen's house)</span></div>
+        <div class="fact"><span class="lab">NPC</span><span class="txt">Guard on the bench by the garbage truck; <b>Helen West</b> at her home</span></div>
+        <div class="fact"><span class="lab">Action</span><span class="txt">Take <b>Janus's Diary</b> from the bench guard. At West's house, ring the doorbell and slip in through a side window while she answers, then take and <b>wear the Arkian Robe</b> upstairs</span></div>
+      </div>
+      <div class="badges"><span class="bd bd-f">Ring Whittleton Creek</span><span class="bd bd-d">Wear the Robe</span></div>
+    </div>
+
+    <div class="step">
+      <div class="st-top"><span class="num">5</span><h3>Gramophone, microfilm &amp; photo (Janus alive)</h3></div>
+      <div class="facts">
+        <div class="fact"><span class="lab">Go to</span><span class="txt">Janus Property — 2F study, upstairs library, and basement; then the Wilson attic</span></div>
+        <div class="fact"><span class="lab">Action</span><span class="txt">Play the <b>gramophone</b> upstairs and listen to the full memory; take the <b>microfilm</b> from the library and read it on the projector in the <b>Wilson attic</b>; take the framed <b>photo</b> from the Janus basement</span></div>
+      </div>
+      <div class="flag warn"><b>⚠ Missable order:</b> read the <b>microfilm before</b> Cassidy's tape (next step) or the microfilm won't count. Janus must still be alive for the gramophone memory.</div>
+    </div>
+
+    <div class="step">
+      <div class="st-top"><span class="num">6</span><h3>Surveillance Tape last</h3></div>
+      <div class="facts">
+        <div class="fact"><span class="lab">Go to</span><span class="txt">Cassidy Property kitchen → Lewinsky Property attic across the street</span></div>
+        <div class="fact"><span class="lab">Action</span><span class="txt">Take the <b>Surveillance Tape</b> from Cassidy's kitchen table and play it on the machine in the Lewinsky attic (reached via the scaffolding and window)</span></div>
+      </div>
+      <div class="badges"><span class="bd bd-f">Master Detective</span><span class="bd bd-d">Providence</span><span class="bd bd-f">Mission Story — Breadcrumb Trail</span></div>
+      <div class="flag save"><b>💾 Save</b> after all clues register.</div>
+    </div>
+
+    <div class="step">
+      <div class="st-top"><span class="num">7</span><h3>Underground tunnel + eliminate both targets</h3></div>
+      <div class="facts">
+        <div class="fact"><span class="lab">Go to</span><span class="txt">Griswold basement (called Hanson on PS4/PS5), then wherever the targets are</span></div>
+        <div class="fact"><span class="lab">Action</span><span class="txt">Examine the books on the Griswold basement bookshelf to open the secret passage to Janus's basement (only opens from the Griswold side). Then kill both targets by any means and exit</span></div>
+      </div>
+      <div class="badges"><span class="bd bd-f">Tunnel Ducks Rule!</span><span class="bd bd-tg">The Past</span><span class="bd bd-tg">The Present</span></div>
+    </div>
+  </div>
+
+  <!-- ============ RUN 2 ============ -->
+  <div class="run" id="r2">
+    <div class="run-head">
+      <span class="rn">Run 2</span>
+      <h2>Mission Stories — Apple A Day, Charbroiled, Whack-a-Mole</h2>
+      <p class="goal">Janus via the health-check smother; Cassidy via BBQ poisoning and drowning. Whack-a-Mole is an alternative Janus kill — because Janus dies only once, run it only if you skip the smother.</p>
+    </div>
+    <div class="loadout">
+      <div class="lo full"><div class="k">Start</div><div class="v">Default, or BBQ Party (Server) if unlocked</div></div>
+      <div class="lo"><div class="k">Suit</div><div class="v">Default Suit</div></div>
+      <div class="lo"><div class="k">Item 1</div><div class="v">Coins</div></div>
+      <div class="lo"><div class="k">Item 2</div><div class="v">Lockpick</div></div>
+      <div class="lo"><div class="k">Item 3</div><div class="v">Fiber wire</div></div>
+      <div class="lo"><div class="k">Item 4</div><div class="v">Silenced pistol</div></div>
+    </div>
+
+    <div class="step">
+      <div class="st-top"><span class="num">1</span><h3>Scare the ducks (Early Birdy)</h3></div>
+      <div class="facts">
+        <div class="fact"><span class="lab">Go to</span><span class="txt">Duck pond by the nurse's shed, south edge of the map</span></div>
+        <div class="fact"><span class="lab">NPC</span><span class="txt">The <b>Nurse</b>, watching the ducks</span></div>
+        <div class="fact"><span class="lab">Action</span><span class="txt">Throw any object at the flock of ducks — this sends the nurse off to give Janus his health check</span></div>
+      </div>
+      <div class="badges"><span class="bd bd-f">Early Birdy</span></div>
+    </div>
+
+    <div class="step">
+      <div class="st-top"><span class="num">2</span><h3>An Apple A Day — smother Janus</h3></div>
+      <div class="facts">
+        <div class="fact"><span class="lab">Go to</span><span class="txt">Nurse's shed → Janus Property entrance → upstairs bedroom → upstairs bathroom</span></div>
+        <div class="fact"><span class="lab">Disguise</span><span class="txt"><b>Nurse</b> (pacify the nurse at the shed and take it)</span></div>
+        <div class="fact"><span class="lab">NPC</span><span class="txt"><b>Janus</b>; <b>Gunther Müller</b> (red housecoat bodyguard)</span></div>
+        <div class="fact"><span class="lab">Action</span><span class="txt">Drop weapons that would be found in the frisk. Ring the bell, get searched, go up. Gunther takes you aside on a 5-min timer — leave the room, cross through the <b>attic</b> back to the bedroom, make Janus follow you to the bathroom bench, and smother him with the pillow</span></div>
+      </div>
+      <div class="badges"><span class="bd bd-a">Finger on the Pulse</span><span class="bd bd-f">Mission Story — An Apple A Day</span></div>
+      <div class="flag warn"><b>Tip:</b> pacify Gunther <i>before</i> entering as the nurse to skip the 5-minute timer entirely.</div>
+      <div class="flag save"><b>💾 Save</b> before entering the house.</div>
+    </div>
+
+    <div class="step">
+      <div class="st-top"><span class="num">3</span><h3>Charbroiled setup — propane, poison, Server</h3></div>
+      <div class="facts">
+        <div class="fact"><span class="lab">Go to</span><span class="txt">Griswold garden (or Schmidt kitchen) → Wilson garage → Wilson 2F → BBQ grill</span></div>
+        <div class="fact"><span class="lab">Disguise</span><span class="txt"><b>Server</b> (from the man on the 2nd floor of the Wilson house)</span></div>
+        <div class="fact"><span class="lab">Items</span><span class="txt"><b>Propane tank</b> (Griswold garden / Schmidt kitchen) and <b>rat poison</b> (Wilson garage)</span></div>
+        <div class="fact"><span class="lab">Action</span><span class="txt">Fit the propane to the BBQ grill so the cook starts serving; take the Server outfit. While serving, feed at least 3 guests for <b>Walkthrough</b></span></div>
+      </div>
+      <div class="badges"><span class="bd bd-f">Walkthrough</span><span class="bd bd-d">Server outfit (counts toward Chameleon)</span></div>
+    </div>
+
+    <div class="step">
+      <div class="st-top"><span class="num">4</span><h3>Poison &amp; drown Cassidy</h3></div>
+      <div class="facts">
+        <div class="fact"><span class="lab">Go to</span><span class="txt">BBQ serving station → Wilson bathroom</span></div>
+        <div class="fact"><span class="lab">NPC</span><span class="txt"><b>Nolan Cassidy</b> (arrives at the party)</span></div>
+        <div class="fact"><span class="lab">Action</span><span class="txt">Serve until Cassidy arrives, poison the food and serve it to him; he heads to the Wilson bathroom to vomit. Get there first (or climb through the window) and <b>drown him in the toilet</b></span></div>
+      </div>
+      <div class="badges"><span class="bd bd-a">A Buffet to You, Sir</span><span class="bd bd-a">Hold My Hair</span><span class="bd bd-f">Mission Story — Charbroiled</span><span class="bd bd-tg">The Present</span></div>
+      <div class="flag save"><b>💾 Save</b> after Cassidy is dead.</div>
+    </div>
+
+    <div class="step">
+      <div class="st-top"><span class="num">5</span><h3>Whack-a-Mole (alternative Janus kill — separate save)</h3></div>
+      <div class="facts">
+        <div class="fact"><span class="lab">Go to</span><span class="txt">Exterminator by the Batty house → NW roadworks → Janus's garden</span></div>
+        <div class="fact"><span class="lab">Disguise</span><span class="txt"><b>Exterminator</b> (lure &amp; pacify him at his car after he argues with the officer; take Janus's house key too)</span></div>
+        <div class="fact"><span class="lab">Item</span><span class="txt"><b>Remote explosive</b> from the roadworks; grab a few junk items to fill holes</span></div>
+        <div class="fact"><span class="lab">Action</span><span class="txt">Enter the garden by the side gate (avoid the guard who sees through the disguise), talk to the mole-problem guard, put the explosive in one hole and fill the others, talk to the guard again; when Janus inspects the rigged hole, detonate</span></div>
+      </div>
+      <div class="badges"><span class="bd bd-a">Death from Below</span><span class="bd bd-a">Explosive Potential</span><span class="bd bd-f">Mission Story — Whack-a-Mole</span><span class="bd bd-tg">The Past</span></div>
+      <div class="flag warn"><b>⚠</b> Do not also do the Apple A Day smother in this same run — Janus dies once. Reload a pre-Janus save or split into another run.</div>
+    </div>
+
+    <div class="step">
+      <div class="st-top"><span class="num">6</span><h3>No Smoking Area — oxygen-tank explosion (separate save)</h3></div>
+      <div class="facts">
+        <div class="fact"><span class="lab">Go to</span><span class="txt">Neighbour's bush → Janus's shed → Janus's bedroom (2F)</span></div>
+        <div class="fact"><span class="lab">Item</span><span class="txt"><b>Cigarettes</b> (from the neighbour's bush) and the <b>wrench</b> (Janus's shed)</span></div>
+        <div class="fact"><span class="lab">Action</span><span class="txt">Place the cigarettes on the bedroom table, then loosen the valve on the bedroom oxygen tank with the wrench. Wait for Janus to go upstairs for a smoke — the leaking tank ignites</span></div>
+      </div>
+      <div class="badges"><span class="bd bd-a">Sneezing Suspicion</span><span class="bd bd-a">Explosive Potential</span><span class="bd bd-f">Mission Story — No Smoking Area</span><span class="bd bd-tg">The Past</span></div>
+      <div class="flag warn"><b>⚠</b> Another Janus kill — do it on its own save, not alongside the smother or mole-hole. Pacify Gunther and the bedroom guards first or you'll get non-target kills in the blast.</div>
+    </div>
+  </div>
+
+  <!-- ============ RUN 3 ============ -->
+  <div class="run" id="r3">
+    <div class="run-head">
+      <span class="rn">Run 3</span>
+      <h2>House For Sale Stack + Pest Control + Poison Kills</h2>
+      <p class="goal">The realtor tour packs four challenges into one showing. Then fumigate Cassidy, and take the two poison kills on Janus.</p>
+    </div>
+    <div class="loadout">
+      <div class="lo full"><div class="k">Start</div><div class="v">Default starting location</div></div>
+      <div class="lo"><div class="k">Suit</div><div class="v">Default Suit</div></div>
+      <div class="lo"><div class="k">Item 1</div><div class="v">Lockpick (for the 2F big room)</div></div>
+      <div class="lo"><div class="k">Item 2</div><div class="v">Lethal poison / rat poison</div></div>
+      <div class="lo"><div class="k">Item 3</div><div class="v">Coins</div></div>
+      <div class="lo"><div class="k">Item 4</div><div class="v">Silenced pistol</div></div>
+    </div>
+
+    <div class="step">
+      <div class="st-top"><span class="num">1</span><h3>Muffin seller &amp; realtor outfits</h3></div>
+      <div class="facts">
+        <div class="fact"><span class="lab">Go to</span><span class="txt">Garage opposite the muffin stand → muffin stand → park</span></div>
+        <div class="fact"><span class="lab">Item</span><span class="txt"><b>Rat poison</b> from the garage (open with the button on the garage's side); a <b>muffin</b> from the stand</span></div>
+        <div class="fact"><span class="lab">NPC</span><span class="txt">Muffin seller; the <b>Real Estate Broker</b></span></div>
+        <div class="fact"><span class="lab">Action</span><span class="txt">Lure the muffin seller with a radio and pacify for his outfit. Poison a muffin and give it to the broker — he goes to vomit behind a shed where you pacify him and take the <b>Real Estate Broker</b> disguise</span></div>
+      </div>
+      <div class="badges"><span class="bd bd-d">Become the Real Estate Broker</span></div>
+    </div>
+
+    <div class="step">
+      <div class="st-top"><span class="num">2</span><h3>Stuffed — send the realtor to Cassidy</h3></div>
+      <div class="facts">
+        <div class="fact"><span class="lab">Go to</span><span class="txt">Park, far side, where the realtor eats</span></div>
+        <div class="fact"><span class="lab">Item</span><span class="txt"><b>Muffins</b> from the stand</span></div>
+        <div class="fact"><span class="lab">Action</span><span class="txt">Keep placing muffins on the realtor's plate until he is full — he then leaves to show Cassidy the house himself</span></div>
+      </div>
+      <div class="badges"><span class="bd bd-f">Stuffed</span></div>
+      <div class="flag warn"><b>⚠</b> Stuffed and taking the broker's disguise are two different approaches. If you already pacified the broker in step 1 for the disguise, do Stuffed on a separate save; otherwise skip his disguise here and do Stuffed instead, then use the disguise route in a later run.</div>
+    </div>
+
+    <div class="step">
+      <div class="st-top"><span class="num">3</span><h3>Tour every room + muffin the bodyguard</h3></div>
+      <div class="facts">
+        <div class="fact"><span class="lab">Go to</span><span class="txt">Schmidt "For Sale" house — every room, all three floors</span></div>
+        <div class="fact"><span class="lab">Disguise</span><span class="txt"><b>Real Estate Broker</b></span></div>
+        <div class="fact"><span class="lab">NPC</span><span class="txt"><b>Nolan Cassidy</b> and his bodyguard</span></div>
+        <div class="fact"><span class="lab">Action</span><span class="txt">Lead Cassidy through <b>every</b> room (ground floor, all upstairs rooms + attic, basement) for Extensive Presentation. Drop a muffin in the living room in the bodyguard's sight so he eats it (Just a Bite)</span></div>
+      </div>
+      <div class="badges"><span class="bd bd-f">Extensive Presentation</span><span class="bd bd-f">Just a Bite</span></div>
+      <div class="flag warn"><b>⚠</b> The 2F big room won't open with the realtor's key. Bring a lockpick, or fetch the real key from the West Property basement first.</div>
+    </div>
+
+    <div class="step">
+      <div class="st-top"><span class="num">4</span><h3>Sold! — the vault security system</h3></div>
+      <div class="facts">
+        <div class="fact"><span class="lab">Go to</span><span class="txt">Schmidt house basement, security-system room</span></div>
+        <div class="fact"><span class="lab">Action</span><span class="txt">Lead Cassidy downstairs; he dismisses his bodyguard and enters the vault. Turn the security system back on to kill him</span></div>
+      </div>
+      <div class="badges"><span class="bd bd-a">Sold!</span><span class="bd bd-a">Explosive Potential</span><span class="bd bd-f">Mission Story — House For Sale</span><span class="bd bd-tg">The Present</span></div>
+      <div class="flag save"><b>💾 Save</b> before Cassidy enters the vault.</div>
+    </div>
+
+    <div class="step">
+      <div class="st-top"><span class="num">5</span><h3>Pest Control — fumigate Cassidy (alt Cassidy kill)</h3></div>
+      <div class="facts">
+        <div class="fact"><span class="lab">Go to</span><span class="txt">SE construction area → Cassidy's yard → Cassidy's house</span></div>
+        <div class="fact"><span class="lab">Disguise</span><span class="txt"><b>Exterminator</b> (from the exterminator in front of the Batty house)</span></div>
+        <div class="fact"><span class="lab">Item</span><span class="txt"><b>Insecticide</b> from the SE construction container (crowbar nearby)</span></div>
+        <div class="fact"><span class="lab">Action</span><span class="txt">Put the insecticide in the fumigation machine in Cassidy's yard, make sure Cassidy is inside, and switch it on. The exterminator suit has a gas mask so you can enter</span></div>
+      </div>
+      <div class="badges"><span class="bd bd-a">Pass Gas</span><span class="bd bd-d">Become the Exterminator</span><span class="bd bd-f">Mission Story — Pest Control</span></div>
+      <div class="flag warn"><b>⚠</b> This is an alternative Cassidy kill — do it on a separate save from Sold!. Lethal/rat poison in the machine kills the inside guards too (breaks SA).</div>
+    </div>
+
+    <div class="step">
+      <div class="st-top"><span class="num">6</span><h3>Poison kills on Janus</h3></div>
+      <div class="facts">
+        <div class="fact"><span class="lab">Go to</span><span class="txt">Janus Property, ground-floor kitchen</span></div>
+        <div class="fact"><span class="lab">Item</span><span class="txt"><b>Lethal poison</b> (brought, or the frog / West basement supply); a <b>muffin</b> for Monster Cookie</span></div>
+        <div class="fact"><span class="lab">Action</span><span class="txt"><b>Tea Time:</b> pour and poison a cup of tea — Janus drinks it on his kitchen visit. <b>Monster Cookie:</b> place a poisoned muffin on the kitchen platter. Pacify the kitchen guard first; poison while Gunther is away</span></div>
+      </div>
+      <div class="badges"><span class="bd bd-a">Tea Time</span><span class="bd bd-a">Monster Cookie</span><span class="bd bd-a">Tasteless, Traceless</span><span class="bd bd-tg">The Past</span></div>
+      <div class="flag warn"><b>⚠</b> Tea Time and Monster Cookie both kill Janus — take them on separate saves.</div>
+    </div>
+  </div>
+
+  <!-- ============ RUN 4 ============ -->
+  <div class="run" id="r4">
+    <div class="run-head">
+      <span class="rn">Run 4</span>
+      <h2>Electricity — Blackout + Memorabilia + Versatile</h2>
+      <p class="goal">Both electric kills for Blackout, the basement sculpture kill, and the fiber-wire kill that finishes the Versatile Assassin set.</p>
+    </div>
+    <div class="loadout">
+      <div class="lo full"><div class="k">Start</div><div class="v">Default starting location</div></div>
+      <div class="lo"><div class="k">Suit</div><div class="v">Default Suit</div></div>
+      <div class="lo"><div class="k">Item 1</div><div class="v">Car battery (or Remote Taser)</div></div>
+      <div class="lo"><div class="k">Item 2</div><div class="v">Coins</div></div>
+      <div class="lo"><div class="k">Item 3</div><div class="v">Fiber wire</div></div>
+      <div class="lo"><div class="k">Item 4</div><div class="v">Lockpick</div></div>
+    </div>
+
+    <div class="step">
+      <div class="st-top"><span class="num">1</span><h3>Electrocute Janus</h3></div>
+      <div class="facts">
+        <div class="fact"><span class="lab">Go to</span><span class="txt">Janus's garden (hose + lamp), or his upstairs bathroom (sink)</span></div>
+        <div class="fact"><span class="lab">Item</span><span class="txt"><b>Car battery</b>, or use the garden hose + lamp</span></div>
+        <div class="fact"><span class="lab">Action</span><span class="txt"><b>Garden route:</b> run the hose next to the lamp; Janus walks there during Whack-a-Mole (don't blow him up). <b>Nurse route:</b> during the An Apple A Day health check, overflow the bathroom sink and throw the car battery into the water as he stands in it</span></div>
+      </div>
+      <div class="badges"><span class="bd bd-a">Whittleton Creek Electric</span><span class="bd bd-a">Someone Could Hurt Themselves</span></div>
+      <div class="flag warn"><b>⚠</b> A guard patrols near the garden lamp and may turn the water off — time it when he's away.</div>
+      <div class="flag save"><b>💾 Save</b> after Janus is electrocuted (Cassidy still alive for Blackout).</div>
+    </div>
+
+    <div class="step">
+      <div class="st-top"><span class="num">2</span><h3>Electrocute Cassidy (Blackout)</h3></div>
+      <div class="facts">
+        <div class="fact"><span class="lab">Go to</span><span class="txt">Park (political tent) and Cassidy's mailbox</span></div>
+        <div class="fact"><span class="lab">Item</span><span class="txt"><b>Political flyer</b> from the man at the park; hose + lamp at the tent</span></div>
+        <div class="fact"><span class="lab">Action</span><span class="txt">Put the flyer in Cassidy's mailbox; he walks to the political tent. Run the hose next to the lamp there to electrocute him</span></div>
+      </div>
+      <div class="badges"><span class="bd bd-a">Whittleton Creek Blackout</span><span class="bd bd-tg">The Present</span></div>
+      <div class="flag warn"><b>⚠</b> Other NPCs may turn the water off — wait for Cassidy to be alone at the puddle.</div>
+    </div>
+
+    <div class="step">
+      <div class="st-top"><span class="num">3</span><h3>Memorabilia — impale Janus (separate save)</h3></div>
+      <div class="facts">
+        <div class="fact"><span class="lab">Go to</span><span class="txt">Janus Property 2F (gramophone) → basement</span></div>
+        <div class="fact"><span class="lab">Action</span><span class="txt">Turn on the upstairs gramophone; Janus walks to the basement and stands at the hammer &amp; sickle sculpture on the desk. Push/impale him on it</span></div>
+      </div>
+      <div class="badges"><span class="bd bd-a">Memorabilia</span><span class="bd bd-a">Someone Could Hurt Themselves</span><span class="bd bd-tg">The Past</span></div>
+      <div class="flag warn"><b>⚠</b> Janus must be alive — do this on a save where he wasn't already electrocuted.</div>
+    </div>
+
+    <div class="step">
+      <div class="st-top"><span class="num">4</span><h3>Fiber-wire + finish Versatile Assassin</h3></div>
+      <div class="facts">
+        <div class="fact"><span class="lab">Go to</span><span class="txt">Wherever you can isolate a target</span></div>
+        <div class="fact"><span class="lab">Item</span><span class="txt"><b>Fiber wire</b></span></div>
+        <div class="fact"><span class="lab">Action</span><span class="txt">Garrotte a target for <b>Piano Man</b>. Combined with Straight Shot, Tasteless Traceless, Hold My Hair and Someone Could Hurt Themselves (all earned across earlier runs), this completes the <b>Versatile Assassin</b> meta-challenge</span></div>
+      </div>
+      <div class="badges"><span class="bd bd-a">Piano Man</span><span class="bd bd-a">Versatile Assassin</span></div>
+      <div class="flag warn"><b>Versatile Assassin</b> tracks cumulatively across runs: Piano Man + Someone Could Hurt Themselves + Hold My Hair + Straight Shot + Tasteless Traceless. It ticks off once all five are done in any runs.</div>
+    </div>
+  </div>
+
+  <!-- ============ RUN 5 ============ -->
+  <div class="run" id="r5">
+    <div class="run-head">
+      <span class="rn">Run 5</span>
+      <h2>Silent Assassin, Suit Only + Sniper Challenges</h2>
+      <p class="goal">SASO with only 3 clues required, then the camera + treehouse sniper set on a separate loud attempt. Straight Shot is picked up here too.</p>
+    </div>
+    <div class="loadout">
+      <div class="lo full"><div class="k">Start</div><div class="v">Default starting location — mandatory for SASO</div></div>
+      <div class="lo"><div class="k">Suit</div><div class="v">Default Suit — no disguise changes for SASO</div></div>
+      <div class="lo"><div class="k">Item 1</div><div class="v">Silenced pistol</div></div>
+      <div class="lo"><div class="k">Item 2</div><div class="v">AP sniper (Druzhina 34) for the sniper attempt</div></div>
+      <div class="lo"><div class="k">Item 3</div><div class="v">Coins</div></div>
+      <div class="lo"><div class="k">Item 4</div><div class="v">Lockpick</div></div>
+    </div>
+
+    <div class="step">
+      <div class="st-top"><span class="num">1</span><h3>SASO — three clues only</h3></div>
+      <div class="facts">
+        <div class="fact"><span class="lab">Go to</span><span class="txt">Batty's shed, the reservoir, and Janus's basement</span></div>
+        <div class="fact"><span class="lab">Action</span><span class="txt">The mission needs only 3 clues. Use the easy three: <b>Lawsuit Documents</b> (Batty's shed), <b>Cigar Box</b> (dug from the swamp), and the <b>photo</b> (Janus basement). Stay unseen and in your suit</span></div>
+      </div>
+      <div class="flag warn"><b>⚠</b> Whittleton Creek is full of plain-clothes armed combatants who see through nothing (you're in a suit) but will spot trespassing — move carefully and use Instinct.</div>
+    </div>
+
+    <div class="step">
+      <div class="st-top"><span class="num">2</span><h3>SASO — silent kills + Straight Shot</h3></div>
+      <div class="facts">
+        <div class="fact"><span class="lab">Go to</span><span class="txt">Janus's garden/rooms; Cassidy on his patrol route</span></div>
+        <div class="fact"><span class="lab">Item</span><span class="txt"><b>Silenced pistol</b></span></div>
+        <div class="fact"><span class="lab">Action</span><span class="txt">Isolate each target and take clean silenced kills with no witnesses and no bodies found. A silenced <b>headshot</b> earns Straight Shot. Destroy the recorders (Cassidy 1F security room; Janus basement) for a clean SA</span></div>
+      </div>
+      <div class="badges"><span class="bd bd-a">Straight Shot</span><span class="bd bd-tc">Silent Assassin</span><span class="bd bd-tc">Suit Only</span><span class="bd bd-tc">Silent Assassin, Suit Only</span></div>
+      <div class="flag save"><b>💾 Save</b> before each kill so a single detection doesn't cost the whole run.</div>
+    </div>
+
+    <div class="step">
+      <div class="st-top"><span class="num">3</span><h3>Destroy all 12 cameras (separate attempt)</h3></div>
+      <div class="facts">
+        <div class="fact"><span class="lab">Go to</span><span class="txt">Janus's house (5 cameras) and Cassidy's house (7 cameras)</span></div>
+        <div class="fact"><span class="lab">Item</span><span class="txt"><b>Silenced pistol</b></span></div>
+        <div class="fact"><span class="lab">Action</span><span class="txt">Shoot all 12 cameras. <b>Janus (5):</b> front entrance, south exterior, north exterior, high over the garden, top of stairs. <b>Cassidy (7):</b> front entrance, garage side, living room, security room, back entrance, top of stairs, gun room</span></div>
+      </div>
+      <div class="badges"><span class="bd bd-f">You Had Me at Bodyguard</span></div>
+      <div class="flag warn"><b>⚠ Critical:</b> shoot the <b>cameras</b>, not the recordings. Destroying a recorder first stops the count and the challenge can't complete.</div>
+      <div class="flag save"><b>💾 Save</b> once all 12 are down.</div>
+    </div>
+
+    <div class="step">
+      <div class="st-top"><span class="num">4</span><h3>Treehouse snipe — all scope challenges</h3></div>
+      <div class="facts">
+        <div class="fact"><span class="lab">Go to</span><span class="txt">Tree house in the Schmidt garden (NE)</span></div>
+        <div class="fact"><span class="lab">Item</span><span class="txt"><b>AP sniper rifle</b> (Druzhina 34) that penetrates multiple bodies</span></div>
+        <div class="fact"><span class="lab">Action</span><span class="txt">With all cameras gone, Cassidy walks to Janus's garden to meet him. From the treehouse, line them up and fire one AP shot through both for Unreasonable Scope — this also grants Reasonable and Doable Scope, plus Sniper Assassin</span></div>
+      </div>
+      <div class="badges"><span class="bd bd-a">Unreasonable Scope</span><span class="bd bd-a">Reasonable Scope</span><span class="bd bd-a">Doable Scope</span><span class="bd bd-tc">Sniper Assassin</span><span class="bd bd-tc">The Classics</span></div>
+      <div class="flag warn"><b>⚠</b> An unsilenced rifle brings every disguised combat agent running — use a silenced AP rifle or be ready to flee. <b>The Classics</b> meta completes once Silent Assassin, Silent Assassin Suit Only, Sniper Assassin and Suit Only are all done (across Runs 5).</div>
+    </div>
+  </div>
+
+  <!-- ============ RUN 6 ============ -->
+  <div class="run" id="r6">
+    <div class="run-head">
+      <span class="rn">Run 6</span>
+      <h2>Chameleon + Discovery + Exits</h2>
+      <p class="goal">Collect all 14 disguises, reveal every area, and use each of the four scored exits. No kills required — pure collection.</p>
+    </div>
+    <div class="loadout">
+      <div class="lo full"><div class="k">Start</div><div class="v">Any (default is fine)</div></div>
+      <div class="lo"><div class="k">Suit</div><div class="v">Default Suit at start</div></div>
+      <div class="lo"><div class="k">Item 1</div><div class="v">Coins</div></div>
+      <div class="lo"><div class="k">Item 2</div><div class="v">Lockpick</div></div>
+      <div class="lo"><div class="k">Item 3</div><div class="v">Crowbar (for the manhole exit)</div></div>
+      <div class="lo"><div class="k">Item 4</div><div class="v">Silenced pistol</div></div>
+    </div>
+
+    <div class="step">
+      <div class="st-top"><span class="num">1</span><h3>Reveal every area (Discover Whittleton Creek)</h3></div>
+      <div class="facts">
+        <div class="fact"><span class="lab">Go to</span><span class="txt">Every street and building interior across the map</span></div>
+        <div class="fact"><span class="lab">Action</span><span class="txt">Walk all 4 streets (Crestwood Dr, Highland Park Ave, Mapletree Ln, Stonybrook Rd) and enter every interior — houses, basements, attics — until all 51 areas are revealed. Use Instinct to spot grey (undiscovered) zones</span></div>
+      </div>
+      <div class="badges"><span class="bd bd-d">Discover Whittleton Creek</span></div>
+    </div>
+
+    <div class="step">
+      <div class="st-top"><span class="num">2</span><h3>Collect all 14 disguises (Chameleon)</h3></div>
+      <div class="facts">
+        <div class="fact"><span class="lab">Where each is</span><span class="txt">Nurse (duck pond) · Mailman (walking the streets) · Server &amp; BBQ King Richard Wilson (BBQ party) · Real Estate Broker (muffin stand) · Exterminator (outside Cassidy's) · Garbage Man (by the truck) · Construction Worker (construction area) · Plumber (house for sale) · Politician &amp; Politician's Assistant (near the start) · James Batty (Batty's house) · Arkian Robe (West house)</span></div>
+        <div class="fact"><span class="lab">Action</span><span class="txt">Pacify or interact with each to equip all 14 disguises. The robe is a pickup, not a pacify</span></div>
+      </div>
+      <div class="badges"><span class="bd bd-d">Chameleon</span><span class="bd bd-d">Become the Nurse</span><span class="bd bd-d">Become the Mailman</span><span class="bd bd-d">Become the BBQ King</span><span class="bd bd-d">Become the Politician</span><span class="bd bd-d">Become James Batty</span><span class="bd bd-d">Become the Exterminator</span><span class="bd bd-d">Become the Real Estate Broker</span></div>
+      <div class="flag warn"><b>Note:</b> the file scores 12 individual "Become…" disguises + Wear the Robe + Chameleon. Chameleon needs all 14 outfits equipped even where there's no individual challenge (Garbage Man, Construction Worker, Plumber, Server, Politician's Assistant).</div>
+    </div>
+
+    <div class="step">
+      <div class="st-top"><span class="num">3</span><h3>The four scored exits</h3></div>
+      <div class="facts">
+        <div class="fact"><span class="lab">Raft</span><span class="txt"><b>They See Me Paddlin':</b> take the <b>paddle</b> from the Schmidt house garage, then use the raft at the shed by the river (south)</span></div>
+        <div class="fact"><span class="lab">Manhole</span><span class="txt"><b>Cowabunga!:</b> open a street manhole with a <b>crowbar</b> and climb down</span></div>
+        <div class="fact"><span class="lab">Trash truck</span><span class="txt"><b>Remember to Recycle:</b> in the <b>Garbage Man</b> disguise, exit via the trash truck (SW)</span></div>
+        <div class="fact"><span class="lab">Roadwork gate / van</span><span class="txt"><b>Clocked Out</b> (roadwork gate) and <b>You Must be Trucking</b> (construction van) — each needs a worker's key</span></div>
+      </div>
+      <div class="badges"><span class="bd bd-d">They See Me Paddlin'</span><span class="bd bd-d">Cowabunga!</span><span class="bd bd-d">Remember to Recycle</span><span class="bd bd-d">Clocked Out</span><span class="bd bd-d">You Must be Trucking</span></div>
+      <div class="flag warn"><b>⚠</b> Each exit ends the mission, so each is its own run/attempt. All exits require both targets dead and the mission objectives met first.</div>
+    </div>
+  </div>
+
+  <!-- ============ RUN 7 ============ -->
+  <div class="run" id="r7">
+    <div class="run-head">
+      <span class="rn">Run 7</span>
+      <h2>Feats Cleanup — Elderly Assistance &amp; the neighbourhood</h2>
+      <p class="goal">The 7-part Elderly Assistance feat plus every remaining standalone feat. Janus must stay alive through Elderly Assistance.</p>
+    </div>
+    <div class="loadout">
+      <div class="lo full"><div class="k">Start</div><div class="v">Default starting location</div></div>
+      <div class="lo"><div class="k">Suit</div><div class="v">Default Suit</div></div>
+      <div class="lo"><div class="k">Item 1</div><div class="v">Coins</div></div>
+      <div class="lo"><div class="k">Item 2</div><div class="v">Lockpick</div></div>
+      <div class="lo"><div class="k">Item 3</div><div class="v">Silenced pistol</div></div>
+      <div class="lo"><div class="k">Item 4</div><div class="v">Newspaper (or grab in-map)</div></div>
+    </div>
+
+    <div class="step">
+      <div class="st-top"><span class="num">1</span><h3>Elderly Assistance — the 7 sub-tasks (Janus alive)</h3></div>
+      <div class="facts">
+        <div class="fact"><span class="lab">Go to</span><span class="txt">Janus's kitchen, 2F study, bedroom, garden; then Helen West's house</span></div>
+        <div class="fact"><span class="lab">NPC</span><span class="txt"><b>Janus</b>, <b>Gunther Müller</b> (red bodyguard), the <b>Nurse</b></span></div>
+        <div class="fact"><span class="lab">Action</span><span class="txt">In any order: (1) put a cake on the dish, (2) make a cup of tea, (3) turn on the 2F music, (4) fill the mole holes &amp; talk to the garden guard, (5) put cigarettes on the table by the oxygen tank, (6) have the nurse give the health check, (7) pacify Gunther so Janus goes next door to visit Helen</span></div>
+      </div>
+      <div class="badges"><span class="bd bd-f">Elderly Assistance</span></div>
+      <div class="flag warn"><b>⚠</b> Sub-tasks 6 &amp; 7 are the sticking point: the nurse only visits after the ducks are scared / you do the checkup, and Janus only goes to Helen once Gunther is removed. Do <b>not</b> kill Janus — the feat needs him alive to the end.</div>
+      <div class="flag save"><b>💾 Save</b> after each sub-task ticks up.</div>
+    </div>
+
+    <div class="step">
+      <div class="st-top"><span class="num">2</span><h3>Mailman feats — Snail Mail, Priceless, Friendly Neighborhood</h3></div>
+      <div class="facts">
+        <div class="fact"><span class="lab">Go to</span><span class="txt">Streets (Mailman) → Batty's mailbox → Batty's garden</span></div>
+        <div class="fact"><span class="lab">NPC</span><span class="txt">The <b>Mailman</b>; <b>James Batty</b></span></div>
+        <div class="fact"><span class="lab">Action</span><span class="txt"><b>Snail Mail:</b> take the package from the mailman, put it in Batty's mailbox and ring the doorbell. <b>Priceless:</b> after Batty sets the delivered package on his garden table and leaves, steal it back so he returns furious. With Stuffed + Early Birdy done, this completes <b>Friendly Neighborhood Hitman</b></span></div>
+      </div>
+      <div class="badges"><span class="bd bd-f">Snail Mail</span><span class="bd bd-f">Priceless</span><span class="bd bd-f">Friendly Neighborhood Hitman</span></div>
+    </div>
+
+    <div class="step">
+      <div class="st-top"><span class="num">3</span><h3>Newspaper feats — Doing the Rounds &amp; Breaking News</h3></div>
+      <div class="facts">
+        <div class="fact"><span class="lab">Go to</span><span class="txt">From the default start turn right — a newspaper lies in the grass by a tree; then mailboxes on the map edges</span></div>
+        <div class="fact"><span class="lab">Item</span><span class="txt"><b>5 newspapers</b> (1 by the tree + 4 from pacifying the mailman)</span></div>
+        <div class="fact"><span class="lab">Action</span><span class="txt"><b>Doing the Rounds:</b> place all 5 in edge-house mailboxes at once. <b>Breaking News:</b> pacify any target with a newspaper</span></div>
+      </div>
+      <div class="badges"><span class="bd bd-d">Doing the Rounds</span><span class="bd bd-f">Breaking News</span></div>
+      <div class="flag warn"><b>⚠ Missable:</b> all 5 must be in mailboxes simultaneously. The jogger empties mailboxes she passes — pacify her first or stay behind her. Prefer edge houses with no residents. Mailman disguise is <b>not</b> required.</div>
+    </div>
+
+    <div class="step">
+      <div class="st-top"><span class="num">4</span><h3>Environmental &amp; body feats</h3></div>
+      <div class="facts">
+        <div class="fact"><span class="lab">Propaganda</span><span class="txt">Take a <b>political flyer</b> handed out in the park, drop it in any mailbox</span></div>
+        <div class="fact"><span class="lab">Upscaled</span><span class="txt">Lure any character to the <b>singing fish</b> toy on the 2F hallway of the West house</span></div>
+        <div class="fact"><span class="lab">Old Grudges</span><span class="txt">Dig up the <b>hatchet</b> in the bushes south of the construction site (search for the mini-map icon)</span></div>
+        <div class="fact"><span class="lab">Raking it In</span><span class="txt">Place a <b>rake</b> on a target's path so they step on it and are pacified</span></div>
+        <div class="fact"><span class="lab">Troll Toll / They Must Pie / Wet Bandit</span><span class="txt">Dump a body down the <b>park well</b>; into the <b>West basement oven</b>; and a target down a <b>manhole</b> (use Cassidy while he wanders outside)</span></div>
+      </div>
+      <div class="badges"><span class="bd bd-f">Propaganda</span><span class="bd bd-f">Upscaled</span><span class="bd bd-f">Old Grudges</span><span class="bd bd-f">Raking it In</span><span class="bd bd-f">Troll Toll</span><span class="bd bd-f">They Must Pie</span><span class="bd bd-f">Wet Bandit</span></div>
+    </div>
+
+    <div class="step">
+      <div class="st-top"><span class="num">5</span><h3>Server &amp; guard feats — Sleepy Cake, Sweet Recycling, Public Enemy No. 1</h3></div>
+      <div class="facts">
+        <div class="fact"><span class="lab">Sleepy Cake</span><span class="txt">In the <b>Server</b> disguise, pacify all the servers — but <b>never</b> pacify or kill Helen West (do her house last to be safe)</span></div>
+        <div class="fact"><span class="lab">Sweet Recycling</span><span class="txt">In the <b>Server</b> disguise, eliminate a target with the <b>garbage truck</b> (SW)</span></div>
+        <div class="fact"><span class="lab">Public Enemy No. 1</span><span class="txt">Pacify <b>3 police deputies</b> without their bodies being found — <b>not</b> Sheriff Grant Masterson (he stays in the roadworks and wears long trousers)</span></div>
+      </div>
+      <div class="badges"><span class="bd bd-f">Sleepy Cake</span><span class="bd bd-a">Sweet Recycling</span><span class="bd bd-f">Public Enemy No. 1</span></div>
+      <div class="flag warn"><b>⚠</b> Sweet Recycling requires the Server outfit specifically. Sleepy Cake fails instantly if Helen West is harmed.</div>
+    </div>
+  </div>
+
+  <h2 class="sec">All 14 Chameleon disguises</h2>
+  <table>
+    <tr><th>Disguise</th><th>Location</th><th>Own challenge?</th></tr>
+    <tr><td><b>Nurse</b></td><td>Feeding the ducks, south shed</td><td>Yes</td></tr>
+    <tr><td><b>Mailman</b></td><td>Walking the streets</td><td>Yes</td></tr>
+    <tr><td><b>Server</b></td><td>BBQ party, Wilson house 2F</td><td>No (Chameleon only)</td></tr>
+    <tr><td><b>BBQ King (Richard Wilson)</b></td><td>BBQ party</td><td>Yes</td></tr>
+    <tr><td><b>Real Estate Broker</b></td><td>Muffin stand</td><td>Yes</td></tr>
+    <tr><td><b>Exterminator</b></td><td>Outside Cassidy's house</td><td>Yes</td></tr>
+    <tr><td><b>Garbage Man</b></td><td>Near the garbage truck</td><td>No (Chameleon only)</td></tr>
+    <tr><td><b>Construction Worker</b></td><td>Construction area</td><td>No (Chameleon only)</td></tr>
+    <tr><td><b>Plumber</b></td><td>House for sale</td><td>No (Chameleon only)</td></tr>
+    <tr><td><b>Politician</b></td><td>Near the start location</td><td>Yes</td></tr>
+    <tr><td><b>Politician's Assistant</b></td><td>Near the start location</td><td>No (Chameleon only)</td></tr>
+    <tr><td><b>James Batty</b></td><td>Batty's house</td><td>Yes</td></tr>
+    <tr><td><b>Arkian Robe</b></td><td>West house (pickup, worn)</td><td>Yes (Wear the Robe)</td></tr>
+    <tr><td><b>BBQ Owner</b></td><td>BBQ party</td><td>No (Chameleon only)</td></tr>
+  </table>
+
+  <footer>
+    <p><b>Primary source:</b> your uploaded file <code>12_-_Another_Life.json</code> — the authoritative in-game challenge list (78 challenges: 22 Assassination, 17 Discovery, 32 Feats, 2 Targets, 5 Classic). All challenge names and objective text come directly from it. This resolves the earlier 82-vs-89 count confusion: your challenge set contains 78.</p>
+    <p style="margin-top:8px"><b>Execution steps cross-referenced from:</b> Nindreaus's WoA "Whittleton Creek Challenges" Steam guide (Mar 2025 — assassination methods, camera split, item locations); the "Whittleton Creek Collectables" Steam guide (9-clue list, camera count, clue-icon behaviour); Hitman Wiki (Doing the Rounds jogger warning &amp; newspaper locations, Master Detective clue order); Hitman Forum (Elderly Assistance 7 sub-tasks &amp; Gunther prerequisite); Neoseeker (car-battery electricity method); Steam Chameleon disguise guide (all 14 disguise locations).</p>
+    <p style="margin-top:8px"><b>Flagged UNVERIFIED (not guessed):</b> per-challenge XP values are not in the uploaded file and were not confirmed to a two-source standard, so none are stated. Starting-location mastery-unlock levels for the current WoA build were not retrieved — check in-game. The full 51-area Discover list is not enumerated. Where the uploaded file and older wikis disagreed on which challenges exist (e.g. Muffin Man pack, Breaking &amp; Entering pack, Big Boom, Public Enemy, Cloud Nine), <b>the uploaded file wins</b> — those are not in your set and were excluded.</p>
+    <p style="margin-top:8px"><b>Note:</b> on PS4/PS5 the Griswold Property is the Hanson Property. Whittleton Creek combatants wear civilian clothes but are armed.</p>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  function wrap(container, headSelector, bodyClass){
+    var head = container.querySelector(headSelector);
+    var body = document.createElement('div');
+    body.className = bodyClass;
+    var node = head.nextSibling;
+    var toMove = [];
+    while(node){ toMove.push(node); node = node.nextSibling; }
+    toMove.forEach(function(n){ body.appendChild(n); });
+    container.appendChild(body);
+    return head;
+  }
+  document.querySelectorAll('.run').forEach(function(run){
+    var head = wrap(run, '.run-head', 'run-body');
+    head.addEventListener('click', function(){ run.classList.toggle('collapsed'); });
+  });
+  var doneSteps;
+  try { doneSteps = new Set(JSON.parse(localStorage.getItem('whittleton_steps_v1') || '[]')); } catch(e){ doneSteps = new Set(); }
+  function reportProgress(total){
+    try{
+      var r = JSON.parse(localStorage.getItem('hitman-progress-registry') || '{}');
+      r['m12'] = { done: doneSteps.size, total: total, updated: Date.now() };
+      localStorage.setItem('hitman-progress-registry', JSON.stringify(r));
+    }catch(e){}
+  }
+  function saveSteps(total){
+    try { localStorage.setItem('whittleton_steps_v1', JSON.stringify([...doneSteps])); } catch(e){}
+    reportProgress(total);
+  }
+  var stepEls = document.querySelectorAll('.step');
+  var stepIndex = 0;
+  stepEls.forEach(function(step){
+    var id = 'st' + (stepIndex++);
+    var tick = document.createElement('button');
+    tick.type = 'button';
+    tick.className = 'tick';
+    tick.setAttribute('aria-label', 'Mark step done');
+    if(doneSteps.has(id)){ step.classList.add('done'); tick.setAttribute('aria-pressed','true'); }
+    else { tick.setAttribute('aria-pressed','false'); }
+    tick.addEventListener('click', function(e){
+      e.stopPropagation();
+      if(doneSteps.has(id)){ doneSteps.delete(id); step.classList.remove('done'); tick.setAttribute('aria-pressed','false'); }
+      else { doneSteps.add(id); step.classList.add('done'); tick.setAttribute('aria-pressed','true'); }
+      saveSteps(stepEls.length);
+    });
+    var top = wrap(step, '.st-top', 'step-body');
+    top.insertBefore(tick, top.firstChild);
+    top.addEventListener('click', function(e){
+      if(e.target.closest('.tick')) return;
+      e.stopPropagation();
+      step.classList.toggle('collapsed');
+    });
+  });
+  var expandAll = document.getElementById('expandAll');
+  var collapseAll = document.getElementById('collapseAll');
+  if(expandAll) expandAll.addEventListener('click', function(){
+    document.querySelectorAll('.run, .step').forEach(function(el){ el.classList.remove('collapsed'); });
+  });
+  if(collapseAll) collapseAll.addEventListener('click', function(){
+    document.querySelectorAll('.run').forEach(function(el){ el.classList.add('collapsed'); });
+  });
+  reportProgress(stepEls.length);
+})();
+</script>
+<!-- step-progress-bridge -->
+<script>
+/* Reports route-step ticks into 'hitman-progress-registry' so the index can
+   show them beside the challenge counts. Counts what is on screen rather than
+   any guide-specific state, so one implementation serves every guide. */
+(function(){
+  var RID="m12", SEL=".step";
+  function isDone(s){
+    var c=s.classList;
+    if(c.contains('done')||c.contains('dn')) return true;
+    if(s.getAttribute('data-done')==='1'||s.getAttribute('aria-pressed')==='true') return true;
+    return !!s.querySelector('.done,.dn,[data-done="1"],[aria-pressed="true"]');
+  }
+  function tally(){
+    var steps=document.querySelectorAll(SEL);
+    if(!steps.length) return null;
+    var n=0;
+    for(var i=0;i<steps.length;i++) if(isDone(steps[i])) n++;
+    return {steps:n,stepTotal:steps.length};
+  }
+  function push(){
+    var t;
+    try{ t=tally(); }catch(err){ return; }
+    if(!t||!t.stepTotal) return;
+    try{
+      var r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');
+      var e=r[RID]||(r[RID]={});
+      /* the guide's own reportProgress() rewrites this entry wholesale, so
+         re-add the step counts whenever they go missing or stale */
+      if(e.steps===t.steps&&e.stepTotal===t.stepTotal) return;
+      e.steps=t.steps; e.stepTotal=t.stepTotal; e.updated=Date.now();
+      localStorage.setItem('hitman-progress-registry',JSON.stringify(r));
+    }catch(err){}
+  }
+  var pending=false;
+  function schedule(){
+    if(pending) return; pending=true;
+    setTimeout(function(){pending=false;push();},120);
+  }
+  try{
+    new MutationObserver(schedule).observe(document.body,
+      {subtree:true,childList:true,attributes:true,attributeFilter:['class','aria-pressed','data-done']});
+  }catch(err){}
+  window.addEventListener('load',schedule);
+  setTimeout(push,600);
+})();
+</script>
+<!-- /step-progress-bridge -->
+</body>
+</html>

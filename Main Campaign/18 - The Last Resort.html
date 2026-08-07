@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Last Resort — Haven Island Challenge Dossier</title>
+<style>
+:root{
+  --ink:#06181f;--ink2:#0b2530;--panel:#0e2d3a;--panel2:#123642;
+  --line:#1d4d5c;--line2:#2a6a7c;
+  --text:#e7f0ec;--muted:#8fb2b8;--dim:#5f858d;
+  --aqua:#3fd6b0;--aqua-dim:#1f8f78;
+  --amber:#f0a830;--red:#ff5f57;--violet:#a48bff;--sand:#e8d5a9;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --sans:"Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:
+    radial-gradient(1200px 600px at 80% -10%, #10404f 0%, transparent 60%),
+    radial-gradient(900px 500px at -10% 20%, #0a2f3c 0%, transparent 55%),
+    var(--ink);
+  color:var(--text);font-family:var(--sans);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:28px 18px 90px}
+header.mast{border-bottom:1px solid var(--line);padding-bottom:22px;margin-bottom:22px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--aqua)}
+h1{margin:.25em 0 .1em;font-size:clamp(30px,6vw,54px);line-height:1;letter-spacing:-.02em;font-weight:800}
+h1 .thin{font-weight:200;color:var(--muted)}
+.sub{color:var(--muted);font-size:14px;max-width:64ch}
+.mast-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;font-family:var(--mono);font-size:11px;letter-spacing:.08em}
+.mast-meta span{border:1px solid var(--line);padding:4px 9px;border-radius:2px;color:var(--muted)}
+
+.tracker{background:linear-gradient(180deg,var(--panel),var(--ink2));border:1px solid var(--line);border-radius:4px;padding:18px;margin-bottom:20px}
+.tracker h2{margin:0 0 12px;font-size:12px;font-family:var(--mono);letter-spacing:.22em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.bar{height:10px;background:#08222c;border:1px solid var(--line);border-radius:2px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--aqua-dim),var(--aqua));transition:width .35s ease}
+.bar-row{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:6px}
+.bignum{font-family:var(--mono);font-size:30px;font-weight:700;letter-spacing:-.02em}
+.bignum small{font-size:14px;color:var(--dim);font-weight:400}
+.cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:16px}
+.cat{border:1px solid var(--line);border-radius:3px;padding:10px 11px;background:#0a2731}
+.cat .lbl{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.cat .val{font-family:var(--mono);font-size:19px;font-weight:700;margin-top:2px}
+.cat .mini{height:4px;background:#08222c;margin-top:7px;border-radius:2px;overflow:hidden}
+.cat .mini i{display:block;height:100%;width:0;transition:width .3s}
+.cat[data-c="A"] .mini i{background:var(--red)}
+.cat[data-c="D"] .mini i{background:var(--aqua)}
+.cat[data-c="F"] .mini i{background:var(--violet)}
+.cat[data-c="T"] .mini i{background:var(--amber)}
+.cat[data-c="C"] .mini i{background:var(--sand)}
+
+nav.tabs{display:flex;gap:2px;border-bottom:1px solid var(--line);margin-bottom:22px;flex-wrap:wrap}
+nav.tabs button{background:none;border:1px solid transparent;border-bottom:none;color:var(--muted);font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;padding:10px 16px;cursor:pointer;border-radius:3px 3px 0 0}
+nav.tabs button:hover{color:var(--text)}
+nav.tabs button[aria-selected="true"]{background:var(--panel);border-color:var(--line);color:var(--aqua)}
+.panel[hidden]{display:none}
+
+/* run nav */
+.runnav{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
+.runnav button{background:#0a2831;border:1px solid var(--line);color:var(--muted);font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;padding:8px 13px;border-radius:2px;cursor:pointer}
+.runnav button:hover{color:var(--text);border-color:var(--line2)}
+.runnav .prog{color:var(--aqua)}
+
+.run{border:1px solid var(--line);border-radius:4px;margin-bottom:16px;background:var(--ink2);overflow:hidden;scroll-margin-top:14px}
+.run > .rhead{padding:15px 18px;background:linear-gradient(180deg,var(--panel2),var(--panel));border-bottom:1px solid var(--line);cursor:pointer;display:flex;gap:14px;align-items:flex-start}
+.run > .rhead .chev{flex:0 0 auto;font-family:var(--mono);color:var(--aqua);margin-top:3px;transition:transform .2s}
+.run.collapsed > .rhead .chev{transform:rotate(-90deg)}
+.run-tag{font-family:var(--mono);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--aqua)}
+.run h3{margin:4px 0 6px;font-size:21px;letter-spacing:-.01em}
+.run .goal{color:var(--muted);font-size:13.5px;margin:0}
+.run .rmini{font-family:var(--mono);font-size:10px;color:var(--dim);margin-top:8px;letter-spacing:.08em}
+.rbody{}
+.run.collapsed .rbody{display:none}
+.loadout{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));border-bottom:1px solid var(--line)}
+.slot{padding:11px 14px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.slot .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim)}
+.slot .v{font-size:13.5px;margin-top:3px}
+.slot .v em{font-style:normal;color:var(--amber);font-family:var(--mono);font-size:11px}
+.sect{padding:6px 18px 0}
+.secthead{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--sand);margin:20px 0 10px;padding-bottom:6px;border-bottom:1px dashed var(--line)}
+.step{border:1px solid var(--line);border-radius:3px;margin-bottom:9px;background:#0a2831}
+.step-top{display:flex;gap:11px;align-items:flex-start;padding:11px 13px}
+.tick{flex:0 0 auto;width:22px;height:22px;border:1px solid var(--line2);border-radius:3px;background:#07202a;cursor:pointer;color:transparent;font-size:13px;line-height:1;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.tick[aria-pressed="true"]{background:var(--aqua-dim);border-color:var(--aqua);color:#04181f}
+.step-body{flex:1;min-width:0}
+.step-title{font-weight:700;font-size:14.5px;margin:0 0 2px}
+.step-sum{margin:0;color:var(--muted);font-size:13.5px}
+.step.done .step-title{text-decoration:line-through;color:var(--dim)}
+.more{background:none;border:none;color:var(--aqua);font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;padding:0 13px 11px 46px}
+.detail{padding:0 13px 13px 46px;font-size:13.5px;color:#cfe0dd}
+.detail[hidden]{display:none}
+.fld{display:grid;grid-template-columns:82px 1fr;gap:4px 12px;margin:4px 0 2px}
+.fld dt{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);padding-top:2px}
+.fld dd{margin:0}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:11px}
+.b{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:2px;border:1px solid}
+.b.ch{border-color:var(--aqua-dim);color:var(--aqua);background:rgba(63,214,176,.08)}
+.b.warn{border-color:var(--red);color:var(--red);background:rgba(255,95,87,.1)}
+.b.save{border-color:var(--amber);color:var(--amber);background:rgba(240,168,48,.1)}
+.wbox{border-left:2px solid var(--red);background:rgba(255,95,87,.07);padding:7px 11px;margin-top:10px;font-size:13px;border-radius:0 3px 3px 0}
+.wbox b{color:var(--red)}
+.vbox{border-left:2px solid var(--aqua-dim);background:rgba(63,214,176,.06);padding:7px 11px;margin-top:10px;font-size:12.5px;color:#bfe6da;border-radius:0 3px 3px 0}
+
+.filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.filters button{background:#0a2831;border:1px solid var(--line);color:var(--muted);font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;padding:7px 12px;border-radius:2px;cursor:pointer}
+.filters button[aria-pressed="true"]{border-color:var(--aqua);color:var(--aqua);background:rgba(63,214,176,.08)}
+.clist{border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.crow{display:flex;gap:11px;align-items:flex-start;padding:10px 13px;border-bottom:1px solid var(--line);background:#0a2630}
+.crow:nth-child(even){background:#0b2b35}
+.crow:last-child{border-bottom:none}
+.crow .meta{flex:1;min-width:0}
+.crow .nm{font-weight:600;font-size:14px}
+.crow.done .nm{text-decoration:line-through;color:var(--dim)}
+.crow .cd{color:var(--muted);font-size:13px}
+.pill{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;padding:2px 7px;border-radius:2px;border:1px solid;flex:0 0 auto;margin-top:3px}
+.pill.A{border-color:var(--red);color:var(--red)}
+.pill.D{border-color:var(--aqua);color:var(--aqua)}
+.pill.F{border-color:var(--violet);color:var(--violet)}
+.pill.T{border-color:var(--amber);color:var(--amber)}
+.pill.C{border-color:var(--sand);color:var(--sand)}
+.note{border-left:2px solid var(--amber);background:rgba(240,168,48,.06);padding:11px 14px;margin:0 0 18px;font-size:13.5px;color:#e2ddcd}
+.note strong{color:var(--amber)}
+.note.red{border-color:var(--red);background:rgba(255,95,87,.06)}
+.note.red strong{color:var(--red)}
+table.src{width:100%;border-collapse:collapse;font-size:13px;margin-top:10px}
+table.src th,table.src td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+table.src th{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);background:#0a2831}
+.reset{background:none;border:1px solid var(--line);color:var(--dim);font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding:6px 11px;border-radius:2px;cursor:pointer;margin-left:auto}
+h4.blk{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--sand);margin:26px 0 8px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media(max-width:620px){.more,.detail{padding-left:13px}.fld{grid-template-columns:72px 1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="mast">
+  <div class="eyebrow">Haven Island · Maldives · Epilogue</div>
+  <h1>The Last Resort <span class="thin">/ 67</span></h1>
+  <p class="sub">A five-run completion route for every challenge on Haven Island, built from your extracted in-game challenge file (67 challenges: 20 Assassination, 22 Discovery, 17 Feats, 3 Targets, 5 Classics). Runs are sequenced so nothing you do early locks out a later challenge. Each step lists where to go, the disguise, the item, the NPC and the action, with warnings on the ordering rules that break scripts.</p>
+  <div class="mast-meta">
+    <span>Tyson Williams — The Tyrant</span><span>Ljudmila Vetrova — The Confidence Artist</span><span>Steven Bradley — The Bad Boy</span><span>67 challenges</span>
+  </div>
+</header>
+
+<section class="tracker">
+  <h2>Progress</h2>
+  <div class="bar-row">
+    <div class="bignum" id="bigNum">0 <small>/ 67</small></div>
+    <div class="bignum" id="bigPct" style="font-size:20px;color:var(--aqua)">0%</div>
+  </div>
+  <div class="bar"><i id="bigBar"></i></div>
+  <div class="cats" id="cats"></div>
+</section>
+
+<nav class="tabs" role="tablist">
+  <button role="tab" aria-selected="true" data-tab="runs">Optimized runs</button>
+  <button role="tab" aria-selected="false" data-tab="check">Checklist</button>
+  <button role="tab" aria-selected="false" data-tab="ref">Reference</button>
+  <button role="tab" aria-selected="false" data-tab="audit">Verification</button>
+</nav>
+
+<div class="panel" id="tab-runs">
+  <p class="note red"><strong>Two ordering rules break challenges — read before you start.</strong> (1) <em>Synchronized Drowning</em> needs <em>A Lucrative Opportunity</em> and <em>The Shape Changer</em> finished <u>without killing Vetrova</u>; if she dies first, the jacuzzi meeting with Steven never spawns. (2) <em>For a Handful of USB</em> requires the drive handed to <u>both</u> Vetrova and Williams, so Williams must still be alive when you give it to him. Every target dies only once per session — mutually-exclusive kills are split across runs below.</p>
+  <div class="runnav" id="runnav"></div>
+  <div id="runs"></div>
+</div>
+
+<div class="panel" id="tab-check" hidden>
+  <div class="filters" id="filters">
+    <button data-f="all" aria-pressed="true">All</button>
+    <button data-f="A" aria-pressed="false">Assassination</button>
+    <button data-f="D" aria-pressed="false">Discovery</button>
+    <button data-f="F" aria-pressed="false">Feats</button>
+    <button data-f="T" aria-pressed="false">Targets</button>
+    <button data-f="C" aria-pressed="false">Classics</button>
+    <button data-f="inc" aria-pressed="false">Incomplete</button>
+    <button class="reset" id="reset">Reset all</button>
+  </div>
+  <div class="clist" id="clist"></div>
+</div>
+
+<div class="panel" id="tab-ref" hidden></div>
+<div class="panel" id="tab-audit" hidden></div>
+
+</div>
+
+<script>
+/* ============================================================
+   CHALLENGES — verbatim names & descriptions from the uploaded
+   in-game file (18 - The Last Resort.json). 67 total.
+   c = category: A/D/F/T/C. run = which run(s) complete it.
+   ============================================================ */
+const CH=[
+/* ---- ASSASSINATION (20) ---- */
+{n:"Trigger Point Therapy",c:"A",d:"Eliminate Ljudmila Vetrova during a massage.",run:"5"},
+{n:"Bullet Time",c:"A",d:"Eliminate Tyson Williams by shooting him through the projector canvas.",run:"5"},
+{n:"Lamp Fever",c:"A",d:"Eliminate Tyson Williams with a chandelier accident.",run:"5"},
+{n:"Down The Hatch",c:"A",d:"Eliminate Ljudmila Vetrova with a trap door accident.",run:"5"},
+{n:"No Pain, No Gain",c:"A",d:"Eliminate Steven Bradley with the bench press.",run:"5"},
+{n:"MS Annihilation",c:"A",d:"Eliminate Steven Bradley with a remote explosive, while he is on a water scooter.",run:"4"},
+{n:"Hot Sauce!",c:"A",d:"Eliminate Ljudmila Vetrova with a kitchen explosion.",run:"5"},
+{n:"Canary in a Server Farm",c:"A",d:"Eliminate all targets by gassing the underground facility.",run:"5"},
+{n:"Targets Ahoy!",c:"A",d:"Eliminate all targets by sniping from the radio tower.",run:"2"},
+{n:"Like Shooting Fish on a Scooter",c:"A",d:"Eliminate Steven Bradley with a sniper rifle shot, while he is on a water scooter.",run:"2"},
+{n:"Don't Eat the Buffet",c:"A",d:"Eliminate all targets with poison.",run:"5"},
+{n:"Irregular Heart Rhythm",c:"A",d:"Eliminate Tyson Williams with the stethoscope.",run:"4"},
+{n:"Synchronized Drowning",c:"A",d:"Eliminate Ljudmila Vetrova and Steven Bradley in a jacuzzi accident.",run:"5"},
+{n:"Common Side Effects",c:"A",d:"Eliminate Tyson Williams by poisoning his medicine.",run:"5"},
+{n:"Hold My Hair",c:"A",d:"Assassinate a target by drowning them.",run:"5"},
+{n:"Piano Man",c:"A",d:"Assassinate a target with the fiber wire.",run:"5"},
+{n:"Someone Could Hurt Themselves",c:"A",d:"Assassinate a target in an accident.",run:"1"},
+{n:"Versatile Assassin",c:"A",d:"Complete Piano Man, Someone Could Hurt Themselves, Hold My Hair, Straight Shot and Tasteless, Traceless on Haven Island.",run:"5"},
+{n:"Tasteless, Traceless",c:"A",d:"Assassinate a target with lethal poison.",run:"5"},
+{n:"Straight Shot",c:"A",d:"Assassinate a target with a headshot.",run:"2"},
+/* ---- DISCOVERY (22) ---- */
+{n:"An Ocean of Knowledge",c:"D",d:"Gather all Intel Items.",run:"3"},
+{n:"Maritime Exfiltration",c:"D",d:"Escape Haven Island by using Steven Bradley's speedboat.",run:"5"},
+{n:"Well Informed",c:"D",d:"Collect all the pamphlets.",run:"3"},
+{n:"A Great Source of Potassium",c:"D",d:"Get a banana.",run:"3"},
+{n:"Arial Exfiltration",c:"D",d:"Escape Haven Island by using a plane. (In-game spelling: \u201cArial\u201d.)",run:"1"},
+{n:"Chameleon",c:"D",d:"Find and equip all disguises on Haven Island.",run:"3"},
+{n:"Do You Even Lift?",c:"D",d:"Disguise yourself as a Personal Trainer, and give workout instructions.",run:"3"},
+{n:"Inflatable Exfiltration",c:"D",d:"Escape Haven Island by using a dinghy.",run:"5"},
+{n:"Tropical Espionage",c:"D",d:"Obtain a copy of the secret Haven Report.",run:"1"},
+{n:"Connector Conspiracy",c:"D",d:"Disguise yourself as Tech Crew.",run:"3"},
+{n:"I Got Your Back",c:"D",d:"Disguise yourself as a Masseur.",run:"3"},
+{n:"Rapture of the Deep",c:"D",d:"Disguise yourself as the Snorkel Instructor.",run:"3"},
+{n:"Total Server Collapse",c:"D",d:"In-game text hidden. Community guides: sabotage the server mainframes in the underground facility.",run:"3"},
+{n:"Recreational Exfiltration",c:"D",d:"Escape Haven Island by using a water scooter.",run:"5"},
+{n:"Set It and Forget It",c:"D",d:"Disguise yourself as a Chef.",run:"3"},
+{n:"Tiki Time",c:"D",d:"Serve 5 cocktails.",run:"3"},
+{n:"Discover Haven Island",c:"D",d:"Reveal all undiscovered areas on Haven Island.",run:"3"},
+{n:"Pirates' Gold",c:"D",d:"Find the hidden treasure.",run:"3"},
+{n:"Plenty of Fish in the Sea",c:"D",d:"In-game text hidden. Community guides: catch a fish by hand on the beach.",run:"3"},
+{n:"Very, Very Safe",c:"D",d:"Disguise yourself in a Gas Suit.",run:"3"},
+{n:"Kleptomaniac",c:"D",d:"Collect a key to each hut.",run:"3"},
+{n:"Lily-Livered Landlubbers!",c:"D",d:"Disguise yourself as the Boat Captain.",run:"3"},
+/* ---- FEATS (17) ---- */
+{n:"Mission Story - A Lucrative Opportunity",c:"F",d:"Complete the mission story \u201cA Lucrative Opportunity.\u201d",run:"4"},
+{n:"Sleep with the Fishes",c:"F",d:"In-game text hidden. Community guides: get the hesitant diver at the Villa pool to jump, without harming him.",run:"3"},
+{n:"A White Ball of Healing Light",c:"F",d:"Help Steven find inner calm (guide him to meditate as the Personal Trainer).",run:"3"},
+{n:"The Key Maker",c:"F",d:"Get the water scooter key.",run:"3"},
+{n:"Mission Story - Idle Hands",c:"F",d:"Get promoted by Tyson Williams to personal bodyguard.",run:"4"},
+{n:"Doctor Rieper",c:"F",d:"Disguise yourself as the Doctor.",run:"3"},
+{n:"Vetrova's Special",c:"F",d:"Spice up Vetrova's dish.",run:"3"},
+{n:"Mission Story - Take A Deep Breath",c:"F",d:"Complete the mission story \u201cTake A Deep Breath.\u201d",run:"4"},
+{n:"Stolen USB",c:"F",d:"Obtain the stolen USB.",run:"3"},
+{n:"Hi, Steven!",c:"F",d:"In-game text hidden. Triggers when Steven arrives to meet Vetrova during the mission-story chain.",run:"4"},
+{n:"Mission Story - The Water Horse",c:"F",d:"Complete the mission story \u201cThe Water Horse.\u201d",run:"4"},
+{n:"For a Handful of USB",c:"F",d:"Give the USB to both Ljudmila Vetrova and Tyson Williams.",run:"4"},
+{n:"Mission Story - The Shape Changer",c:"F",d:"Just get rid of him (deal with Jason Portman).",run:"4"},
+{n:"A Great Source of Comedy",c:"F",d:"In-game text hidden. Community guides: make an NPC slip on a dropped banana.",run:"3"},
+{n:"Vacation Insurance",c:"F",d:"Create 5 electrocution accidents.",run:"5"},
+{n:"Make Some Noise",c:"F",d:"Create 3 falling speaker accidents.",run:"5"},
+{n:"Wilson the Killer",c:"F",d:"Create 5 falling coconut accidents.",run:"5"},
+/* ---- TARGETS (3) ---- */
+{n:"The Bad Boy",c:"T",d:"Eliminate Steven Bradley.",run:"1"},
+{n:"The Tyrant",c:"T",d:"Eliminate Tyson Williams.",run:"1"},
+{n:"The Confidence Artist",c:"T",d:"Eliminate Ljudmila Vetrova.",run:"1"},
+/* ---- CLASSICS (5) ---- */
+{n:"Silent Assassin, Suit Only",c:"C",d:"Complete the mission: only eliminate the targets, no bodies found, do not get spotted, all in your suit.",run:"1"},
+{n:"Sniper Assassin",c:"C",d:"Assassinate your targets with a sniper rifle; only targets; do not get spotted.",run:"2"},
+{n:"Silent Assassin",c:"C",d:"Complete the mission: only eliminate the targets, no bodies found, do not get spotted.",run:"1"},
+{n:"Suit Only",c:"C",d:"Assassinate the targets and complete the mission in your suit.",run:"1"},
+{n:"The Classics",c:"C",d:"Complete Silent Assassin, Silent Assassin Suit Only, Sniper Assassin and Suit Only.",run:"2"}
+];
+
+/* ============================================================
+   RUNS. Each step: t title, s summary, and labelled fields
+   go / dis / item / npc / do (each optional), plus alt, ch
+   (challenge badges), warn, save.
+   ============================================================ */
+const RUNS=[
+{
+ tag:"Run 01",
+ title:"The Classics — SASO via the server-room electrocution",
+ goal:"Kill all three targets at once as an accident, in your suit, unseen. Earns Silent Assassin, Suit Only, both together, and all three target challenges. Do this while the map is fresh.",
+ loadout:{start:"Shark Cabin (47's own hut, default) <em>— mastery 0</em>",suit:"Starting suit only — any clothing change fails Suit Only.",
+   items:["Silenced pistol (ICA19 / Krugermeier)","Emetic Poison Vial","Electronic Key Hacker or Disposable Scrambler","Coins"]},
+ sections:[
+  {h:"Into the underground facility",steps:[
+   {t:"Take the hammer and cross the Villa wall",
+    s:"Follow the shore west to the Villa, grab the hammer by the low wall, and vault over.",
+    go:"West along the beach from your hut to the Villa's outer wall; the low climbable section is behind the planting on the right of the gate.",
+    item:"Hammer on the ground beside the low wall — your only thrown pacifier on the far side, so don't skip it.",
+    do:"Stay crouched, vault the wall, and move low along the hedge to the concealed card reader beside the hatch marked for the lower level.",
+    warn:"Standing up after you land makes you visible from the lawn. Keep crouched.",
+    ch:["Suit Only (in progress)"],save:true},
+   {t:"Hack down into the control room",
+    s:"Open the concealed door with the reader and climb down the ladder to the upper basement control room.",
+    go:"The card reader is tucked in the bushes by the hatch; the ladder below it lands right at the central control room.",
+    item:"Electronic Key Hacker on the reader (or lift the basement keycard from the technician near the beach BBQ if you have neither hacker nor scrambler).",
+    npc:"Three technicians work this level; a circuit breaker sits just outside the control room.",
+    do:"Flip the breaker to draw technicians out one at a time, throw the hammer to drop each one, retrieve the hammer, and drag the body into the ladder alcove.",
+    warn:"Do NOT take a disguise here. Changing clothes voids Suit Only.",save:true},
+   {t:"Emetic the ventilation, then switch it off",
+    s:"Poison the vents so the workers leave, then turn the system off before you step out.",
+    go:"Inside the control room, at the ventilation system panel.",
+    item:"Emetic Poison Vial into the ventilation.",
+    do:"Empty the vial into the vents, then turn the ventilation OFF.",
+    warn:"If you leave with the ventilation still running you take continuous damage and 47 collapses. Turning it off is mandatory."}
+  ]},
+  {h:"The triple accident",steps:[
+   {t:"Sabotage the four server mainframes",
+    s:"On the lower floor, disconnect every mainframe by hand to summon all three targets for a manual reboot.",
+    go:"Down the stairs to the lower basement server room.",
+    do:"Unplug all four mainframes (no screwdriver needed). Once the fourth is out, Williams, Vetrova and Bradley all head down to the reboot panel.",
+    npc:"All three targets converge at the manual reboot panel.",
+    ch:["Tropical Espionage","Stolen USB"],
+    alt:"Grab the Haven Report off the reboot panel and the Stolen USB from the basement locker while you're here — both are pickups and neither breaks Suit Only or Silent Assassin.",save:true},
+   {t:"Clear the recorder and line up the water cooler",
+    s:"Destroy the basement camera recorder, then take an overwatch spot on the water cooler beside the panel.",
+    go:"Shoot the camera recorder in the centre of the lower room, then go back up and stand on the upper-basement landing to the left of the ladder door.",
+    item:"Silenced pistol.",
+    do:"From that landing you can see the water cooler on the lower floor while staying out of everyone's vision cone.",
+    warn:"If you fire while anyone is looking at you, the accident becomes a witnessed kill and Silent Assassin is gone."},
+   {t:"Electrocute all three at the panel",
+    s:"When all three targets stand in the puddle repairing the server, put one silenced round into the water cooler.",
+    go:"Upper-basement landing, looking down at the tank.",
+    npc:"Williams, Vetrova and Bradley, all at the reboot panel, actively repairing.",
+    do:"Fire one round into the water cooler. The spill electrifies and all three drop as a single accident — no bodies found, no witnesses.",
+    warn:"Hold fire until all three are in the puddle. A partial hit wastes the setup and you cannot re-gather them cleanly.",
+    ch:["The Tyrant","The Confidence Artist","The Bad Boy","Someone Could Hurt Themselves","Silent Assassin","Suit Only","Silent Assassin, Suit Only"],save:true},
+   {t:"Leave by the seaplane",
+    s:"Retrace your route out and take the plane on the beach.",
+    go:"Back up the ladder, out the concealed door, over the low wall, to the seaplane on the beach near your starting hut.",
+    do:"Board the plane to exit. If the guard beside it is in the way, throw your pistol away from him then a coin, and walk past while he investigates.",
+    ch:["Arial Exfiltration"]}
+  ]},
+  {h:"Optional — the gas variant (separate save)",steps:[
+   {t:"Reload and gas the facility instead",
+    s:"Same setup, lethal poison in the exhaust rather than the cooler shot. This is how you take Canary in a Server Farm and Don't Eat the Buffet — but it is not Silent Assassin.",
+    go:"Reload to the four-mainframes save; go back up to the exhaust after the targets gather.",
+    item:"Lethal Poison Vial into the exhaust serving the lower floor.",
+    do:"Poison the exhaust while all three are at the panel. The room is large enough that guards are usually caught too, so treat this as a non-SA attempt.",
+    warn:"Mutually exclusive with the electrocution kill in the same session. Run it from the reload, never combined with the SASO attempt.",
+    ch:["Canary in a Server Farm","Don't Eat the Buffet"]}
+  ]}
+ ]
+},
+{
+ tag:"Run 02",
+ title:"Sniper Assassin — radio tower, then the scooter",
+ goal:"Snipe all three targets from the radio tower for Sniper Assassin and Targets Ahoy!, then reload and take Bradley on the water scooter. Both need a scoped rifle.",
+ loadout:{start:"Shark Cabin (default) <em>— mastery 0</em>",suit:"Any; you'll wear a Resort Guard disguise for the tower.",
+   items:["Sniper rifle in a briefcase (Sieger 300 series, or the Jaeger 7 Tuatara at Mastery 20)","Coins","Lockpick","Silenced pistol"]},
+ sections:[
+  {h:"The radio tower",steps:[
+   {t:"Take a Resort Guard at the Security Hut gate",
+    s:"Coin the lone guard at the Security Hut gate somewhere unseen and take his outfit and keys.",
+    go:"Centre of the map: the Security Outpost/radio tower sits next to the Spa. Approach from the pool side.",
+    dis:"Resort Guard — required to enter the outpost and climb the tower.",
+    item:"Coins to lure; take his Resort keys for the gate.",
+    npc:"The single Resort Guard standing at the outpost gate.",
+    do:"Coin him behind cover, subdue, take the disguise and keys.",save:true},
+   {t:"Unpack the rifle, then climb",
+    s:"You cannot climb the ladder holding a briefcase — take the rifle out first.",
+    go:"Base of the tower ladder, out of sight of the guards inside the outpost.",
+    item:"Sniper rifle — remove it from the briefcase and equip it before climbing.",
+    do:"Climb with the rifle equipped. Grab the pamphlet pinned on the outpost board on your way if you still need Well Informed.",
+    warn:"Climbing with the case in hand is impossible — this reads like a bug but is intended."}, 
+   {t:"Take all three targets fast",
+    s:"Each target is exposed at a different point in their loop. Speed beats precision — body shots are fine.",
+    go:"From the tower platform, using Instinct to track targets through the vegetation.",
+    npc:"Vetrova crosses between the bar and Restaurant (or talks with Portman); Bradley moves toward the Private Island; Williams appears during his bathroom/binocular routine.",
+    do:"Shoot all three in quick succession. A body shot counts for Sniper Assassin and Targets Ahoy!; take at least one headshot for Straight Shot.",
+    warn:"If you space the kills out, guards storm the tower and trap you. Kill them close together.",
+    ch:["Targets Ahoy!","Sniper Assassin","Straight Shot","The Tyrant","The Confidence Artist","The Bad Boy","The Classics"],save:true}
+  ]},
+  {h:"The scooter shot (reload)",steps:[
+   {t:"Reload, then run Bradley onto the scooter",
+    s:"Like Shooting Fish on a Scooter needs Bradley alive and riding, so it can't share the tower session.",
+    go:"Reload the pre-kill save; head for the snorkel hut and Private Island.",
+    item:"Emetic (or Sieker) to move the Snorkel Instructor; the water scooter key he carries.",
+    npc:"Snorkel Instructor (carries a key); Steven Bradley on the Private Island.",
+    do:"Poison the instructor's oxygen mask, follow, subdue, take the key; hand it to Bradley so he rides out, then snipe him while the scooter moves.",
+    warn:"Mutually exclusive with Targets Ahoy! and with MS Annihilation — Bradley dies once per session. A marksman scope is easier than high magnification on the fast-moving scooter.",
+    ch:["Like Shooting Fish on a Scooter","The Key Maker","Rapture of the Deep"]}
+  ]}
+ ]
+},
+{
+ tag:"Run 03",
+ title:"Collector's sweep — disguises, intel, treasure, feats",
+ goal:"One long, loud run with no rating to protect. Sweep the whole map for every disguise, intel item, pamphlet, key, and the non-kill feats.",
+ loadout:{start:"Shark Cabin (default) <em>— mastery 0</em>",suit:"Any.",
+   items:["Silenced pistol","Sieker 1 emetic dart pistol <em>— mastery 10</em> (optional)","Lockpick","Coins"]},
+ sections:[
+  {h:"South — the huts",steps:[
+   {t:"Strip your own hut and the front desk",
+    s:"Grab the intel note, a pamphlet, the swimwear, and the hut keys.",
+    go:"Inside the Shark Cabin, then the resort front desk.",
+    item:"Note on the bed (intel); pamphlet on the entrance table; Swimwear from the cloth bundle; Shark key handed to you at the desk in your suit; Lionfish key on the wall behind the desk clerk.",
+    do:"Collect all of the above. The Manta key is in that cabin's pool; the Turtle key is on Jason Portman (taken in Run 04).",
+    ch:["Kleptomaniac (in progress)","An Ocean of Knowledge (in progress)","Well Informed (in progress)","Chameleon (Swimwear)"],save:true},
+   {t:"Doctor's Hut and the greeter",
+    s:"Take the Resort Staff greeter's outfit and lure the Doctor out of his hut.",
+    go:"The Doctor's bungalow is immediately left of yours; the greeter stands outside your hut.",
+    dis:"Resort Staff (greeter) and Doctor.",
+    npc:"Resort Staff greeter; the Doctor inside his hut.",
+    do:"Take the greeter for Resort Staff. For the Doctor, enter his hut, turn on the bathroom water and wait — he comes to investigate; subdue and take his outfit.",
+    ch:["Doctor Rieper","Chameleon (Doctor, Resort Staff)"]}
+  ]},
+  {h:"Centre & east — pool, gym, snorkel hut",steps:[
+   {t:"Reception, pool and lifeguard",
+    s:"Two pamphlets and the Lifeguard disguise sit close together.",
+    go:"Welcome Center reception, the pool behind it, and the lifeguard hut behind the snorkel shack.",
+    dis:"Lifeguard.",
+    item:"Pamphlets on the chair right of the reception desk and in the pool area.",
+    do:"Grab both pamphlets and take the Lifeguard. The lifeguard hut also counts as its own discovery area.",
+    ch:["Chameleon (Lifeguard)","Discover Haven Island (in progress)","Well Informed (in progress)"]},
+   {t:"Gym — trainer, instructions, meditation",
+    s:"The Personal Trainer disguise carries two feats. Steven must be alive for the meditation one.",
+    go:"Inside the Gym.",
+    dis:"Personal Trainer.",
+    npc:"Gym-goers for instructions; Steven Bradley for the meditation cue.",
+    do:"Take the Personal Trainer. Give workout instructions to any gym-goer (Do You Even Lift?). Instruct Steven to meditate (A White Ball of Healing Light). Grab the security-room treasure-map piece and the Gym pamphlets while here.",
+    warn:"A White Ball of Healing Light can misfire: up to two NPCs can be given the meditation cue, so keep a slot free for Steven, and check the challenge list for the tick rather than trusting the on-screen pop-up.",
+    ch:["Chameleon (Personal Trainer)","Do You Even Lift?","A White Ball of Healing Light","An Ocean of Knowledge (in progress)","Well Informed (in progress)"],save:true},
+   {t:"Snorkel Instructor and the scooter key",
+    s:"Take the instructor's outfit and his water scooter key.",
+    go:"The snorkel hut on the beach; a second key sits under the hut on the Private Island.",
+    dis:"Snorkel Instructor.",
+    item:"Water scooter key (on the instructor, or the spare on the Private Island).",
+    npc:"Snorkel Instructor.",
+    do:"Poison his oxygen mask so he leaves, follow, subdue, take the outfit and key.",
+    ch:["Rapture of the Deep","The Key Maker","Chameleon (Snorkel Instructor)"]}
+  ]},
+  {h:"West — restaurant, bar, spa",steps:[
+   {t:"Restaurant — chef, waiter, captain, cocktails, dish",
+    s:"Four disguises and two challenges cluster around the Restaurant and cocktail bar.",
+    go:"The Restaurant kitchen, the cocktail (Water) bar nearby.",
+    dis:"Chef and Waiter in the Restaurant; Boat Captain at the cocktail bar.",
+    npc:"Chefs in the kitchen; the Captain (carries a treasure-map piece); dancing NPCs at the bar.",
+    do:"Take Chef, Waiter and Captain. As Chef, prepare/spice Vetrova's dish (Vetrova's Special). As Waiter, mix and serve 5 tiki cocktails to the dancers (Tiki Time).",
+    ch:["Set It and Forget It","Lily-Livered Landlubbers!","Chameleon (Waiter, Chef, Captain)","Tiki Time","Vetrova's Special","An Ocean of Knowledge (in progress)"]},
+   {t:"Spa — Masseur disguise and pamphlets",
+    s:"The Spa opens up after mission-story progress, so start A Lucrative Opportunity first.",
+    go:"The Spa; the masseur uses the path through the bush to the right of the entrance.",
+    dis:"Masseur.",
+    npc:"Spa guard and masseur.",
+    do:"Sieker/lure the guard away, take the masseur alone. Grab the Spa reception and private-room pamphlets.",
+    ch:["I Got Your Back","Chameleon (Spa staff)","Well Informed (in progress)"]}
+  ]},
+  {h:"North — villa, private island, basement",steps:[
+   {t:"Villa disguises and the beach intel",
+    s:"Villa Guard opens the north; collect the third treasure-map piece and the last beach pamphlet.",
+    go:"The Villa's back door, the broken jetty outside the Villa, the beach sun-beds.",
+    dis:"Villa Guard, Villa Staff, Butler (all inside/around the Villa).",
+    item:"Third treasure-map piece in a bottle at the end of the broken jetty (break it); pamphlet on a beach sun-bed.",
+    do:"Take the Villa disguises; break the bottle for the map piece; grab the pamphlet.",
+    ch:["Chameleon (Villa Guard, Villa Staff, Butler)","An Ocean of Knowledge (in progress)","Well Informed (in progress)"]},
+   {t:"Dig up the treasure",
+    s:"Three map pieces plus a shovel, then dig on the Private Island.",
+    go:"Dig site by the tree near the hut in the middle of the Private Island.",
+    item:"Shovel (on the Villa-basement stairs, near the Security Hut, or the gas-pipe room below the Restaurant); the three map pieces.",
+    do:"Dig at the marked spot for the treasure.",
+    ch:["Pirates' Gold","An Ocean of Knowledge (in progress)"]},
+   {t:"Basement — tech, gas suit, USB, report, last pamphlet, servers",
+    s:"Everything remaining in the underground facility.",
+    go:"The underground facility beneath the Villa (via the Run 01 route).",
+    dis:"Tech Crew (server basement) and Gas Suit (lower changing/locker room).",
+    item:"Stolen USB in the basement locker; Haven Report on the manual reboot panel; the eleventh pamphlet in the storage room left of the control room.",
+    do:"Take the Tech and Gas Suit disguises; grab the USB, report and pamphlet; sabotage the server mainframes for Total Server Collapse. Also take the Personal Bodyguard outfit from the Villa secret room to finish Chameleon.",
+    ch:["Very, Very Safe","Connector Conspiracy","Stolen USB","Tropical Espionage","Well Informed","Total Server Collapse","Chameleon (Tech, Gas Suit, Personal Bodyguard)"],save:true}
+  ]},
+  {h:"Odds and ends",steps:[
+   {t:"Bananas, fish and the diver",
+    s:"Four small feats/discoveries that fit anywhere in this run.",
+    go:"Any banana crate; the west beach for the fish; the Villa pool for the diver.",
+    item:"A banana.",
+    npc:"An NPC on a walking path (banana slip); the hesitant diver at the Villa pool.",
+    do:"Pick up a banana (Potassium). Drop one on an NPC's path so they slip (Comedy). Catch a fish by hand on the beach (Plenty of Fish). Get the hesitant diver to jump without harming him — remove the woman beside him and he jumps on his own (Sleep with the Fishes).",
+    ch:["A Great Source of Potassium","A Great Source of Comedy","Plenty of Fish in the Sea","Sleep with the Fishes"]},
+   {t:"Finish the collections",
+    s:"Confirm the three big collection challenges have ticked.",
+    go:"Anywhere.",
+    do:"Verify Chameleon (all disguises), An Ocean of Knowledge (all intel) and Well Informed (all pamphlets) have completed. Discover Haven Island should also complete as you've now entered every area — check the map for any unlit marker (the lifeguard hut is the usual straggler).",
+    ch:["Chameleon","An Ocean of Knowledge","Discover Haven Island"]}
+  ]}
+ ]
+},
+{
+ tag:"Run 04",
+ title:"Mission stories — all five, in dependency order",
+ goal:"Complete every mission story feat in one session plus For a Handful of USB and Hi, Steven!, without an early kill breaking a later script.",
+ loadout:{start:"Shark Cabin (default) <em>— mastery 0</em>",suit:"Starting suit — you get frisked at the Villa door during Take A Deep Breath.",
+   items:["Lockpick","Coins","Sieker 1 <em>— mastery 10</em> (optional)","Remote explosive"]},
+ sections:[
+  {h:"Why the order matters",steps:[
+   {t:"Read the dependency chain first",
+    s:"Three stories feed each other; a premature kill breaks the rest.",
+    go:"—",
+    do:"Run them in this order: A Lucrative Opportunity (start) \u2192 Idle Hands \u2192 The Shape Changer \u2192 A Lucrative Opportunity (finish) \u2192 The Water Horse \u2192 Take A Deep Breath. The two lethal stories go last.",
+    warn:"For a Handful of USB needs the drive given to BOTH Williams and Vetrova, so keep Williams alive until after you've handed it over. Keep Vetrova alive through A Lucrative Opportunity and The Shape Changer if you also want Synchronized Drowning available (that kill is done in Run 05, but the habit matters).",save:true}
+  ]},
+  {h:"A Lucrative Opportunity + Idle Hands",steps:[
+   {t:"Start A Lucrative Opportunity",
+    s:"Check in, read Vetrova's note, and use a phone to arrange the meeting.",
+    go:"Front desk, then any phone (one sits in the Security Outpost).",
+    npc:"Receptionist; Ljudmila Vetrova at the Restaurant.",
+    do:"Trigger the note at check-in, call to arrange the meeting, and hear her request for the USB from Williams' villa. Leave the story here and go get the drive via Idle Hands.",
+    ch:["Mission Story - A Lucrative Opportunity (started)"]},
+   {t:"Idle Hands — become Williams' bodyguard",
+    s:"Follow the promotion prompts to become the personal bodyguard, then handle the USB.",
+    go:"The Villa, following the Idle Hands story markers.",
+    dis:"You'll be handed the Personal Bodyguard role by the story.",
+    item:"The stolen USB inside the Villa.",
+    npc:"Tyson Williams.",
+    do:"Complete the promotion (Idle Hands). Give the USB to Williams first, then steal it back and carry it out — this sets up For a Handful of USB when you later hand it to Vetrova.",
+    warn:"Do Idle Hands to completion before relying on the Personal Bodyguard disguise elsewhere; taken early it makes Williams an enforcer for it.",
+    ch:["Mission Story - Idle Hands","For a Handful of USB (step 1: Williams)"],save:true}
+  ]},
+  {h:"The Shape Changer",steps:[
+   {t:"Deal with Jason Portman",
+    s:"Kill him, or subdue and hide him. Either satisfies the story.",
+    go:"Jason Portman's cabin.",
+    item:"The Turtle hut key is on his body.",
+    npc:"Jason Portman.",
+    do:"Remove Portman (kill or subdue+hide) and take the Turtle key.",
+    warn:"Do NOT use the trap door in his bathroom on this run — that kills Vetrova and you still need her alive for the rest of the chain. Save Down The Hatch for Run 05.",
+    ch:["Mission Story - The Shape Changer","Kleptomaniac (Turtle key)"]}
+  ]},
+  {h:"Finish A Lucrative Opportunity",steps:[
+   {t:"Deliver the USB to Vetrova at the Spa",
+    s:"Call her again and meet at the Spa; hand over the drive.",
+    go:"The Spa massage rooms.",
+    dis:"Your starting suit or the Swimwear from your hut, to be let in with her.",
+    item:"The USB you carried out of the Villa.",
+    npc:"Ljudmila Vetrova; Steven Bradley arrives to meet her.",
+    do:"Hand Vetrova the USB — this completes For a Handful of USB and the story. When Steven turns up to meet her, Hi, Steven! triggers.",
+    ch:["Mission Story - A Lucrative Opportunity","For a Handful of USB","Hi, Steven!"],save:true}
+  ]},
+  {h:"The two lethal stories (last)",steps:[
+   {t:"The Water Horse",
+    s:"Get the scooter key to Bradley, then blow the scooter with a remote explosive.",
+    go:"Snorkel hut, then the scooter moored at the Private Island.",
+    item:"Water scooter key; remote explosive (bring one, or pick one up in the outdoor security area / Villa first-floor security room).",
+    npc:"Snorkel Instructor; Steven Bradley.",
+    do:"Take the key, plant the explosive on the scooter, give the key to Bradley, and detonate once he rides out.",
+    warn:"MS Annihilation (this) and Like Shooting Fish on a Scooter (Run 02) both use Bradley on the scooter — one per session only.",
+    ch:["Mission Story - The Water Horse","MS Annihilation","The Bad Boy"]},
+   {t:"Take A Deep Breath",
+    s:"Wear the Doctor's outfit, get frisked at the Villa door, and finish Williams with the stethoscope.",
+    go:"Doctor's hut for the disguise and stethoscope, then the Villa.",
+    dis:"Doctor.",
+    item:"Stethoscope from the medical room. Leave all weapons behind — you're searched at the Villa door.",
+    npc:"The butler escorts you; Tyson Williams in his room.",
+    do:"During the examination Williams turns his back to have his lungs checked — strangle him with the stethoscope and hide the body.",
+    warn:"Irregular Heart Rhythm (this) and Common Side Effects (Run 05) both kill Williams — split them.",
+    ch:["Mission Story - Take A Deep Breath","Irregular Heart Rhythm","The Tyrant","Doctor Rieper"]}
+  ]}
+ ]
+},
+{
+ tag:"Run 05",
+ title:"Method sampler — every accident kill, counter and exit",
+ goal:"A save-scum run: save before each kill, take the challenge, reload. Every target dies once per session, so nearly every step here is its own save state.",
+ loadout:{start:"Restaurant's Kitchen <em>— mastery 14</em> (or Shark Cabin at mastery 0)",suit:"Any.",
+   items:["Sieker 1 <em>— mastery 10</em>","Silenced pistol","Lockpick","Fiber Wire"]},
+ sections:[
+  {h:"Vetrova's methods",steps:[
+   {t:"Hot Sauce! — kitchen explosion",
+    s:"As the Chef, prepare her dish, then open the gas as she arrives.",
+    go:"The Restaurant kitchen.",
+    dis:"Chef.",
+    item:"A wrench (Restaurant equipment room or the Gym) for the gas valve.",
+    npc:"Two chefs — subdue only the roaming one; the other calls Vetrova over.",
+    do:"Prepare the dish. When Vetrova steps in, open the gas-range valve and let the escort/other chef ignite it. Stand at the valve, not by the dish, or you go up too.",
+    ch:["Hot Sauce!","Vetrova's Special","Set It and Forget It"],save:true},
+   {t:"Down The Hatch — trap door",
+    s:"Release the trap-door lock in Portman's bathroom so Vetrova falls through.",
+    go:"Jason Portman's cabin bathroom.",
+    npc:"Subdue and hide Portman first; then Vetrova.",
+    do:"Release the trap-door lock at the washbasin; Vetrova comes in and falls. Faster: Sieker her at mission start so she vomits in your cabin bathroom, unlock the door while she's occupied, then drop a coin to pull her onto it.",
+    ch:["Down The Hatch"],save:true},
+   {t:"Trigger Point Therapy — the massage",
+    s:"As the Masseur, kill her on the table.",
+    go:"The Spa massage room.",
+    dis:"Masseur.",
+    npc:"Sieker the Spa guard away first; then Vetrova, who sits for a phone call before the massage.",
+    do:"Kill her during the massage and throw the body over the railing; her escort waits outside alone.",
+    ch:["Trigger Point Therapy","I Got Your Back"],save:true},
+   {t:"Piano Man / Hold My Hair / Tasteless / Straight Shot",
+    s:"Knock out the remaining Versatile methods on whichever target is convenient.",
+    go:"Anywhere the method fits.",
+    item:"Fiber Wire (Piano Man); Lethal Poison (Tasteless, Traceless); any rifle/pistol headshot (Straight Shot).",
+    do:"Fiber-wire a target (Piano Man). Drown a target (Hold My Hair) — the Spa jacuzzi or a pool works. Lethal-poison a target (Tasteless, Traceless). Headshot a target (Straight Shot). With Someone Could Hurt Themselves from Run 01, this completes Versatile Assassin.",
+    ch:["Piano Man","Hold My Hair","Tasteless, Traceless","Straight Shot","Versatile Assassin"]}
+  ]},
+  {h:"Williams' methods",steps:[
+   {t:"Lamp Fever — chandelier",
+    s:"Fix the tub yourself so Williams bathes, then shoot the chandelier above it.",
+    go:"The Villa's second-floor bathroom.",
+    item:"Silenced pistol.",
+    npc:"Subdue the technician repairing the tub and do the repair yourself; then Williams gets in.",
+    do:"Shoot the chandelier directly above the tub while he's in it. Only that chandelier counts; watch the single patrolling guard first.",
+    ch:["Lamp Fever"],save:true},
+   {t:"Bullet Time — through the cinema screen",
+    s:"Shoot Williams through the projector canvas.",
+    go:"Behind the projection screen in the Villa cinema.",
+    item:"Silenced pistol.",
+    npc:"Tyson Williams, once seated during his loop.",
+    do:"Fire through the canvas when he takes his seat.",
+    ch:["Bullet Time"],save:true},
+   {t:"Common Side Effects — poisoned medicine",
+    s:"Poison Williams' pills so he dies when he takes his medicine.",
+    go:"Williams' Villa bedroom / medicine cabinet.",
+    item:"Poison for the pills; a silencer to break the locked cabinet glass.",
+    npc:"Subdue and hide the sleeping guard and the butler; Williams takes his medicine roughly 16 minutes in if the real Doctor is alive.",
+    do:"Poison the pills before Williams arrives, then leave. You don't need the Doctor disguise for this one.",
+    warn:"Irregular Heart Rhythm (Run 04) and this both kill Williams — separate sessions.",
+    ch:["Common Side Effects","Tasteless, Traceless (if not already done)"]}
+  ]},
+  {h:"Bradley's methods",steps:[
+   {t:"No Pain, No Gain — bench press",
+    s:"As the Personal Trainer, offer Bradley the bench press.",
+    go:"The Gym.",
+    dis:"Personal Trainer.",
+    npc:"Steven Bradley.",
+    do:"Stand at the bench press and offer it to him; it registers as an accident. Clear nearby guards first if you want it unnoticed.",
+    ch:["No Pain, No Gain"],save:true},
+   {t:"Wilson the Killer — coconut drops",
+    s:"Drop coconuts on Bradley and other NPCs on the Private Island for the counter.",
+    go:"The Private Island, under palm clusters on Bradley's jog loop.",
+    item:"Silenced pistol.",
+    do:"Shoot coconut clusters above NPCs as they pass. Non-targets count, so save before each and reload to farm the five.",
+    ch:["Wilson the Killer"]},
+   {t:"Synchronized Drowning — the jacuzzi (needs the story chain)",
+    s:"Both Vetrova and Bradley in the Spa jacuzzi at once.",
+    go:"The Spa jacuzzi.",
+    npc:"Ljudmila Vetrova and Steven Bradley together.",
+    do:"Prerequisite: complete The Shape Changer, then A Lucrative Opportunity with the USB delivered, with Vetrova alive. She hacks Portman's computer and calls Steven; both end up in the jacuzzi. Drown them together. Hi, Steven! pops on the way.",
+    warn:"The most order-dependent challenge on the map. Any earlier kill on Vetrova or Bradley voids it for the session.",
+    ch:["Synchronized Drowning","The Confidence Artist","The Bad Boy","Hi, Steven!"]}
+  ]},
+  {h:"Counters and exits",steps:[
+   {t:"Vacation Insurance — 5 electrocutions",
+    s:"Only deaths count, not stuns; non-targets are fine.",
+    go:"The basement water cooler by the reboot panel is the most repeatable spot.",
+    item:"Silenced pistol.",
+    do:"Shoot a water cooler or live wire near standing NPCs. Save before each and reload to reach five.",
+    ch:["Vacation Insurance"]},
+   {t:"Make Some Noise — 3 speaker drops",
+    s:"Only fatal drops increment the counter.",
+    go:"Speakers hang around the pool and bar.",
+    item:"Silenced pistol.",
+    do:"Wait for an NPC under a speaker and shoot the mount. Non-targets count.",
+    ch:["Make Some Noise"]},
+   {t:"The remaining exits",
+    s:"Three escape challenges, one per session ending.",
+    go:"Bradley's speedboat (key on the Villa first-floor living-room table); the dinghy; the water scooter (snorkel key).",
+    item:"Speedboat key / scooter key as needed.",
+    do:"End one session by speedboat (Maritime), one by dinghy (Inflatable), one by water scooter (Recreational). The plane (Arial) was used in Run 01.",
+    warn:"One exit per session — budget a short ending onto separate save states.",
+    ch:["Maritime Exfiltration","Inflatable Exfiltration","Recreational Exfiltration"]}
+  ]}
+ ]
+}
+];
+
+/* ============================================================
+   STATE
+   ============================================================ */
+const KEY="lastresort.v2";
+let state={ch:{},steps:{},collapsed:{}};
+try{const s=localStorage.getItem(KEY);if(s)state=Object.assign(state,JSON.parse(s));}catch(e){}
+function reportProgress(){try{const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r['m18']={done:CH.filter(c=>state.ch[c.n]).length,total:CH.length,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}reportProgress();}
+
+const CATS=[{k:"A",l:"Assassination"},{k:"D",l:"Discovery"},{k:"F",l:"Feats"},{k:"T",l:"Targets"},{k:"C",l:"Classics"}];
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;");}
+
+/* ---------- tracker ---------- */
+const catsEl=document.getElementById("cats");
+catsEl.innerHTML=CATS.map(c=>`<div class="cat" data-c="${c.k}"><div class="lbl">${c.l}</div><div class="val" id="v-${c.k}">0/0</div><div class="mini"><i id="m-${c.k}"></i></div></div>`).join("");
+function refresh(){
+  let done=CH.filter(c=>state.ch[c.n]).length,tot=CH.length;
+  document.getElementById("bigNum").innerHTML=`${done} <small>/ ${tot}</small>`;
+  const pct=tot?Math.round(done/tot*100):0;
+  document.getElementById("bigPct").textContent=pct+"%";
+  document.getElementById("bigBar").style.width=pct+"%";
+  CATS.forEach(c=>{const list=CH.filter(x=>x.c===c.k),d=list.filter(x=>state.ch[x.n]).length;
+    document.getElementById("v-"+c.k).textContent=`${d}/${list.length}`;
+    document.getElementById("m-"+c.k).style.width=(list.length?d/list.length*100:0)+"%";});
+  drawRunNav();persist();
+}
+
+/* ---------- checklist ---------- */
+const clist=document.getElementById("clist");let filter="all";
+function drawList(){
+  const rows=CH.filter(c=>filter==="all"?true:filter==="inc"?!state.ch[c.n]:c.c===filter);
+  clist.innerHTML=rows.length?rows.map(c=>`<div class="crow ${state.ch[c.n]?"done":""}">
+    <button class="tick" aria-pressed="${!!state.ch[c.n]}" data-n="${esc(c.n)}">✓</button>
+    <div class="meta"><div class="nm">${esc(c.n)}</div><div class="cd">${esc(c.d)}</div></div>
+    <span class="pill ${c.c}">${c.c}</span></div>`).join("")
+    :`<div class="crow"><div class="meta"><div class="cd">Nothing here — everything in this filter is done.</div></div></div>`;
+}
+clist.addEventListener("click",e=>{const b=e.target.closest(".tick");if(!b)return;
+  const n=b.dataset.n;state.ch[n]=!state.ch[n];drawList();refresh();});
+document.getElementById("filters").addEventListener("click",e=>{const b=e.target.closest("button[data-f]");if(!b)return;
+  filter=b.dataset.f;document.querySelectorAll("#filters button[data-f]").forEach(x=>x.setAttribute("aria-pressed",x===b));drawList();});
+document.getElementById("reset").addEventListener("click",()=>{if(!confirm("Clear every tick?"))return;
+  state={ch:{},steps:{},collapsed:{}};drawList();drawRuns();refresh();});
+
+/* ---------- runs ---------- */
+const runsEl=document.getElementById("runs");
+function fieldRow(k,v){return v?`<dt>${k}</dt><dd>${v}</dd>`:"";}
+function drawRuns(){
+  let sid=0;
+  runsEl.innerHTML=RUNS.map((r,ri)=>{
+    const col=state.collapsed["r"+ri]?"collapsed":"";
+    return `<article class="run ${col}" id="run-${ri}" data-run="${ri}">
+    <div class="rhead" data-toggle="${ri}">
+      <span class="chev">▾</span>
+      <div style="flex:1">
+        <div class="run-tag">${r.tag}</div>
+        <h3>${esc(r.title)}</h3>
+        <p class="goal">${esc(r.goal)}</p>
+        <div class="rmini" id="rmini-${ri}"></div>
+      </div>
+    </div>
+    <div class="rbody">
+      <div class="loadout">
+        <div class="slot"><div class="k">Start</div><div class="v">${r.loadout.start}</div></div>
+        <div class="slot"><div class="k">Suit</div><div class="v">${r.loadout.suit}</div></div>
+        ${r.loadout.items.map((it,i)=>`<div class="slot"><div class="k">Slot ${i+1}</div><div class="v">${it}</div></div>`).join("")}
+      </div>
+      <div class="sect">
+        ${r.sections.map(sec=>`<div class="secthead">${esc(sec.h)}</div>
+          ${sec.steps.map(st=>{
+            const id="s"+(sid++);const on=!!state.steps[id];
+            return `<div class="step ${on?"done":""}" data-id="${id}">
+              <div class="step-top">
+                <button class="tick" aria-pressed="${on}" data-step="${id}">✓</button>
+                <div class="step-body">
+                  <p class="step-title">${esc(st.t)}</p>
+                  <p class="step-sum">${esc(st.s)}</p>
+                </div>
+              </div>
+              <button class="more" data-more="${id}">Show detail ▾</button>
+              <div class="detail" id="d-${id}" hidden>
+                <dl class="fld">
+                  ${fieldRow("Go to",st.go)}
+                  ${fieldRow("Disguise",st.dis)}
+                  ${fieldRow("Item",st.item)}
+                  ${fieldRow("NPC",st.npc)}
+                  ${fieldRow("Action",st.do)}
+                  ${st.alt?fieldRow("If stuck",st.alt):""}
+                </dl>
+                ${st.warn?`<div class="wbox"><b>Warning — </b>${esc(st.warn)}</div>`:""}
+                <div class="badges">
+                  ${(st.ch||[]).map(c=>`<span class="b ch">${esc(c)}</span>`).join("")}
+                  ${st.warn?`<span class="b warn">Warning</span>`:""}
+                  ${st.save?`<span class="b save">Save here</span>`:""}
+                </div>
+              </div>
+            </div>`;}).join("")}
+        `).join("")}
+        <div style="height:16px"></div>
+      </div>
+    </div></article>`;}).join("");
+  updateRunMinis();
+}
+function updateRunMinis(){
+  RUNS.forEach((r,ri)=>{
+    const names=new Set();
+    r.sections.forEach(sec=>sec.steps.forEach(st=>(st.ch||[]).forEach(c=>{
+      const base=c.replace(/\s*\(.*\)$/,"");if(CH.find(x=>x.n===base))names.add(base);})));
+    let done=0;names.forEach(n=>{if(state.ch[n])done++;});
+    const el=document.getElementById("rmini-"+ri);
+    if(el)el.textContent=`${names.size} challenges routed here · ${done} ticked`;
+  });
+}
+runsEl.addEventListener("click",e=>{
+  const tg=e.target.closest("[data-toggle]");
+  if(tg){const ri=tg.dataset.toggle;state.collapsed["r"+ri]=!state.collapsed["r"+ri];
+    document.getElementById("run-"+ri).classList.toggle("collapsed",!!state.collapsed["r"+ri]);persist();return;}
+  const m=e.target.closest("[data-more]");
+  if(m){const d=document.getElementById("d-"+m.dataset.more);d.hidden=!d.hidden;
+    m.textContent=d.hidden?"Show detail ▾":"Hide detail ▴";return;}
+  const t=e.target.closest("[data-step]");
+  if(t){const id=t.dataset.step;state.steps[id]=!state.steps[id];
+    t.setAttribute("aria-pressed",!!state.steps[id]);
+    t.closest(".step").classList.toggle("done",!!state.steps[id]);persist();}
+});
+
+/* ---------- run nav ---------- */
+const runnav=document.getElementById("runnav");
+function drawRunNav(){
+  runnav.innerHTML=RUNS.map((r,ri)=>{
+    const names=new Set();
+    r.sections.forEach(sec=>sec.steps.forEach(st=>(st.ch||[]).forEach(c=>{
+      const base=c.replace(/\s*\(.*\)$/,"");if(CH.find(x=>x.n===base))names.add(base);})));
+    let done=0;names.forEach(n=>{if(state.ch[n])done++;});
+    return `<button data-goto="${ri}">${r.tag} <span class="prog">${done}/${names.size}</span></button>`;
+  }).join("")+`<button data-expand="all">Expand all</button><button data-expand="none">Collapse all</button>`;
+}
+runnav.addEventListener("click",e=>{
+  const g=e.target.closest("[data-goto]");
+  if(g){const ri=g.dataset.goto;state.collapsed["r"+ri]=false;
+    document.getElementById("run-"+ri).classList.remove("collapsed");persist();
+    document.getElementById("run-"+ri).scrollIntoView({behavior:"smooth",block:"start"});return;}
+  const x=e.target.closest("[data-expand]");
+  if(x){const all=x.dataset.expand==="all";
+    RUNS.forEach((r,ri)=>{state.collapsed["r"+ri]=!all;
+      document.getElementById("run-"+ri).classList.toggle("collapsed",!all);});persist();}
+});
+
+/* ---------- tabs ---------- */
+document.querySelector("nav.tabs").addEventListener("click",e=>{
+  const b=e.target.closest("button[data-tab]");if(!b)return;
+  document.querySelectorAll("nav.tabs button").forEach(x=>x.setAttribute("aria-selected",x===b));
+  ["runs","check","ref","audit"].forEach(t=>{document.getElementById("tab-"+t).hidden=(t!==b.dataset.tab);});
+});
+
+/* ---------- reference & audit (static) ---------- */
+document.getElementById("tab-ref").innerHTML=`
+  <h4 class="blk">Targets (confirmed by the game file)</h4>
+  <table class="src">
+    <tr><th>Challenge</th><th>Target</th></tr>
+    <tr><td>The Tyrant</td><td>Tyson Williams</td></tr>
+    <tr><td>The Confidence Artist</td><td>Ljudmila Vetrova</td></tr>
+    <tr><td>The Bad Boy</td><td>Steven Bradley</td></tr>
+  </table>
+
+  <h4 class="blk">Starting locations &amp; mastery (from unlock compendium + IO announcement — not from the challenge file)</h4>
+  <table class="src">
+    <tr><th>Unlock</th><th>Type</th><th>Level</th></tr>
+    <tr><td>Water Bungalows / Shark Cabin (default)</td><td>Start</td><td>0</td></tr>
+    <tr><td>Jarl's Pirate Saber</td><td>Melee</td><td>2</td></tr>
+    <tr><td>Shark Hut</td><td>Start</td><td>3</td></tr>
+    <tr><td>Remote Emetic Gas Device</td><td>Tool</td><td>5</td></tr>
+    <tr><td>Resort Pool Area</td><td>Start</td><td>7</td></tr>
+    <tr><td>Sieker 1</td><td>Emetic pistol</td><td>10</td></tr>
+    <tr><td>Resort Gym</td><td>Start</td><td>11</td></tr>
+    <tr><td>Restaurant's Kitchen</td><td>Start</td><td>14</td></tr>
+    <tr><td>The Black Almond Dagger</td><td>Melee</td><td>15</td></tr>
+    <tr><td>Private Villa Pier</td><td>Start</td><td>18</td></tr>
+    <tr><td>Jaeger 7 Tuatara · The Tropical Suit</td><td>Sniper · Suit</td><td>20</td></tr>
+  </table>
+  <p class="note">Six starting locations total: Water Bungalows/Shark (0), Shark Hut (3), Resort Pool (7), Resort Gym (11), Restaurant's Kitchen (14), Private Villa Pier (18). Every run above lists a mastery-0 fallback so nothing here is gated behind mastery.</p>
+
+  <h4 class="blk">Chameleon disguises (community guide — the file only says \u201call disguises\u201d)</h4>
+  <p class="note">The challenge file confirms these individual disguise challenges: <strong>Doctor Rieper</strong> (Doctor), <strong>Connector Conspiracy</strong> (Tech Crew), <strong>I Got Your Back</strong> (Masseur), <strong>Rapture of the Deep</strong> (Snorkel Instructor), <strong>Set It and Forget It</strong> (Chef), <strong>Lily-Livered Landlubbers!</strong> (Boat Captain), <strong>Very, Very Safe</strong> (Gas Suit). Chameleon requires <em>all</em> disguises — the fuller list (Swimwear, Resort Staff, Resort/Villa Guard, Villa Staff, Butler, Personal Bodyguard, Lifeguard, Waiter, Personal Trainer) comes from the Martinoz Steam guide, so treat the full roster as community-sourced rather than file-confirmed.</p>
+
+  <h4 class="blk">Discover Haven Island — the easy-to-miss areas</h4>
+  <ul>
+    <li>Getting stuck one area short is common and is <em>not</em> a bug — every area has a map marker, so open the map and look for the unlit one.</li>
+    <li>The <strong>lifeguard hut</strong> behind the snorkel shack is the most commonly missed area.</li>
+    <li>The Gym's <strong>security room</strong> and <strong>toilets</strong> count separately from the Gym; the <strong>Villa secret room</strong> and the <strong>stairs outside it</strong> also count separately.</li>
+    <li>Go into every small room, not just every building — several buildings hold multiple separate discoveries.</li>
+  </ul>
+
+  <h4 class="blk">Achievements outside the 67 challenges</h4>
+  <ul>
+    <li><strong>The Dundee</strong> — deflate 18 inflatable crocodiles to open a secret exit (one croc by the main pool isn't required). Not a challenge in this file.</li>
+    <li><strong>The Pleasure</strong> — shoot 14 golden skulls after the weather turns to spawn the ghost ship. Not a challenge in this file.</li>
+    <li><strong>Moosenado</strong> — weather changed, the hesitant diver has jumped, and all pamphlets collected; a moose tornado appears to the north. Not a challenge in this file.</li>
+  </ul>`;
+
+document.getElementById("tab-audit").innerHTML=`
+  <p class="note"><strong>This build is keyed to your uploaded file.</strong> Every challenge name and description on the checklist is copied verbatim from <em>18 - The Last Resort.json</em>. The file declares 67 challenges and the categories sum to exactly 67, so the totals are no longer estimated.</p>
+
+  <h4 class="blk">Verified counts (from the file)</h4>
+  <ul>
+    <li>Total: <strong>67</strong> — Assassination 20, Discovery 22, Feats 17, Targets 3, Classics 5. The category sums were re-counted programmatically and match the declared total.</li>
+    <li>All three targets are now confirmed by name, including <strong>The Confidence Artist = Ljudmila Vetrova</strong>, which I previously had to mark unverified.</li>
+    <li>Five individual Mission Story feats exist (A Lucrative Opportunity, Idle Hands, Take A Deep Breath, The Water Horse, The Shape Changer). The combined \u201cMission Stories - Haven Island\u201d challenge is <em>not</em> in the file.</li>
+  </ul>
+
+  <h4 class="blk">Corrections from my earlier draft (which used the legacy 70-count)</h4>
+  <ul>
+    <li><strong>Removed — not in the file:</strong> Big Brother, No Evidence, Mission Stories - Haven Island (combined), Dress for the Job You Want, Disrupt Portman, Hot Fizzsh, Electric Trilogy, One Too Many, Back to Basics. Some of these appear in older web guides or were HITMAN 2-only; none are present in your current game data, so they're gone.</li>
+    <li><strong>Re-categorised to match the file:</strong> Do You Even Lift?, Total Server Collapse and Tiki Time are <em>Discovery</em> (I'd had them as Feats). Stolen USB, The Key Maker and Doctor Rieper are <em>Feats</em> (I'd had them as Discovery).</li>
+    <li><strong>Spelling:</strong> the exfiltration challenge is \u201cArial Exfiltration\u201d in the file (a game typo), not \u201cAriel\u201d.</li>
+  </ul>
+
+  <h4 class="blk">Marked hidden / community-sourced</h4>
+  <ul>
+    <li>Four challenges ship with hidden in-game text: <strong>Total Server Collapse, Plenty of Fish in the Sea, Sleep with the Fishes, Hi, Steven!, A Great Source of Comedy</strong>. Their methods here come from community guides (Martinoz Steam guide, NamuWiki), not from the file, and are labelled as such in the checklist.</li>
+    <li><strong>XP:</strong> the file contains no XP values, so none are shown. The legacy wiki figure of 152,000 XP applied to the old 70-challenge set and isn't reproduced here.</li>
+    <li><strong>NPC names:</strong> only Tyson Williams, Ljudmila Vetrova, Steven Bradley and Jason Portman are named. Every other NPC is described by role and position rather than invented names.</li>
+    <li><strong>Timings:</strong> the only stopwatch cue used is Williams taking his medicine ~16 minutes in (sourced). Everything else is behavioural (\u201cwhen X does Y\u201d).</li>
+  </ul>
+
+  <h4 class="blk">Run validation</h4>
+  <ul>
+    <li>Every one of the 67 challenges is assigned to at least one run (see the per-run counter on the run buttons). No duplicates across the checklist.</li>
+    <li>Mutually-exclusive kills are split: the three Bradley-on-scooter variants (Targets Ahoy!, Like Shooting Fish on a Scooter, MS Annihilation) sit in different runs/saves; the two Williams kills (Irregular Heart Rhythm, Common Side Effects) are separated; the SASO electrocution and the gas triple-kill are separate saves within Run 01.</li>
+    <li>Disguises and items are obtained before they're needed within each run; the mission-story chain in Run 04 is ordered so no early kill breaks a later script, and Synchronized Drowning's prerequisites are called out where they're set up.</li>
+  </ul>
+
+  <h4 class="blk">Sources</h4>
+  <table class="src">
+    <tr><th>Source</th><th>Used for</th></tr>
+    <tr><td>Your uploaded 18 - The Last Resort.json</td><td>Authoritative challenge names, descriptions, categories, totals, target identities</td></tr>
+    <tr><td>Martinoz Steam guide (HAVEN Island)</td><td>Disguise/item/NPC locations, kill opportunities, exits, treasure, discovery notes</td></tr>
+    <tr><td>NamuWiki Haven Island challenge page</td><td>SASO server route, ventilation/electrocution mechanics, hut keys</td></tr>
+    <tr><td>Hitman Wiki mission page</td><td>Mission stories, easter-egg achievements, cut-content context</td></tr>
+    <tr><td>Unlock compendium + IO announcement</td><td>Mastery table and starting locations (flagged as not from the file)</td></tr>
+  </table>`;
+
+drawRuns();drawList();refresh();
+reportProgress();
+</script>
+<!-- step-progress-bridge -->
+<script>
+/* Reports route-step ticks into 'hitman-progress-registry' so the index can
+   show them beside the challenge counts. Counts what is on screen rather than
+   any guide-specific state, so one implementation serves every guide. */
+(function(){
+  var RID="m18", SEL=".step";
+  function isDone(s){
+    var c=s.classList;
+    if(c.contains('done')||c.contains('dn')) return true;
+    if(s.getAttribute('data-done')==='1'||s.getAttribute('aria-pressed')==='true') return true;
+    return !!s.querySelector('.done,.dn,[data-done="1"],[aria-pressed="true"]');
+  }
+  function tally(){
+    var steps=document.querySelectorAll(SEL);
+    if(!steps.length) return null;
+    var n=0;
+    for(var i=0;i<steps.length;i++) if(isDone(steps[i])) n++;
+    return {steps:n,stepTotal:steps.length};
+  }
+  function push(){
+    var t;
+    try{ t=tally(); }catch(err){ return; }
+    if(!t||!t.stepTotal) return;
+    try{
+      var r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');
+      var e=r[RID]||(r[RID]={});
+      /* the guide's own reportProgress() rewrites this entry wholesale, so
+         re-add the step counts whenever they go missing or stale */
+      if(e.steps===t.steps&&e.stepTotal===t.stepTotal) return;
+      e.steps=t.steps; e.stepTotal=t.stepTotal; e.updated=Date.now();
+      localStorage.setItem('hitman-progress-registry',JSON.stringify(r));
+    }catch(err){}
+  }
+  var pending=false;
+  function schedule(){
+    if(pending) return; pending=true;
+    setTimeout(function(){pending=false;push();},120);
+  }
+  try{
+    new MutationObserver(schedule).observe(document.body,
+      {subtree:true,childList:true,attributes:true,attributeFilter:['class','aria-pressed','data-done']});
+  }catch(err){}
+  window.addEventListener('load',schedule);
+  setTimeout(push,600);
+})();
+</script>
+<!-- /step-progress-bridge -->
+</body>
+</html>

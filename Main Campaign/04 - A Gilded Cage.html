@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A Gilded Cage — Verified Challenge Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Karla:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+/* ═══ MARRAKESH — brass, tilework and keyhole arches ═══
+   Zellige-patterned ground, double-ruled brass frames, ornamental dividers.
+   Every run opens under an arch. */
+:root{
+  --bg:#130e09; --panel:#1d1610; --panel2:#261d14; --ink:#f0e6d4; --dim:#ac9c85; --faint:#786a58;
+  --brass:#c9a24b; --brass-dim:rgba(201,162,75,.34); --tile:#2f8f86;
+  --amber:#d9a441; --rust:#c4553c; --violet:#9b8ede; --sky:#63a8c4; --jade:#c9a24b;
+  --line:rgba(201,162,75,.22); --line-2:rgba(240,230,212,.08);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);
+  background-image:repeating-conic-gradient(from 45deg,rgba(201,162,75,.045) 0% 25%,transparent 0% 50%);
+  background-size:34px 34px;
+  font-family:"Karla",system-ui,sans-serif;font-size:15px;line-height:1.68;
+  -webkit-font-smoothing:antialiased}
+.wrap{max-width:1000px;margin:0 auto;padding:0 22px 90px}
+code{font-family:"Karla",monospace;font-size:.9em;color:var(--brass);
+  border-bottom:1px dotted var(--brass-dim);padding:0 2px}
+
+/* ── masthead under an arch ─────────────────────────────── */
+.backlink{display:inline-block;margin:24px 0 0;font-size:11px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--faint);text-decoration:none}
+.backlink:hover{color:var(--brass)}
+.mast{text-align:center;margin:20px 0 32px;padding:44px 26px 30px;position:relative;
+  background:var(--panel);border:1px solid var(--line);
+  box-shadow:inset 0 0 0 5px var(--bg),inset 0 0 0 6px var(--brass-dim)}
+.mast:before{content:"";position:absolute;top:-19px;left:50%;transform:translateX(-50%);
+  width:44px;height:38px;background:var(--bg);border:1px solid var(--brass-dim);
+  border-radius:50% 50% 4px 4px/70% 70% 4px 4px}
+.mast:after{content:"◆";position:absolute;top:-13px;left:50%;transform:translateX(-50%);
+  color:var(--brass);font-size:13px;line-height:1}
+.eyebrow{font-size:10px;letter-spacing:.36em;text-transform:uppercase;color:var(--brass);
+  margin:0 0 18px;font-weight:500}
+h1{font-family:"Marcellus",Georgia,serif;font-weight:400;font-size:clamp(32px,6.4vw,58px);
+  line-height:1.06;letter-spacing:.01em;margin:0 0 8px}
+h1 em{display:block;font-family:"Karla",sans-serif;font-style:italic;font-size:.30em;
+  color:var(--dim);letter-spacing:.03em;margin-top:12px}
+.hr-orn{display:block;margin:20px auto;width:190px;max-width:70%;text-align:center;
+  color:var(--brass-dim);font-size:11px;letter-spacing:.5em}
+.facts{font-size:12.5px;color:var(--dim);line-height:2.05;margin:0;max-width:660px;
+  margin-left:auto;margin-right:auto}
+.facts b{color:var(--ink);font-weight:700}
+
+/* ── tracker: a brass tray ──────────────────────────────── */
+.tracker{background:var(--panel);border:1px solid var(--line);
+  box-shadow:inset 0 0 0 4px var(--bg),inset 0 0 0 5px var(--brass-dim);
+  padding:20px 22px;margin-bottom:26px}
+.tracker-top{display:flex;justify-content:space-between;align-items:baseline;gap:16px;
+  flex-wrap:wrap;margin-bottom:14px}
+.tracker-top h2{font-size:10px;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--faint);margin:0;font-weight:500}
+.tally{font-size:12px;color:var(--dim);margin:0}
+/* numerals stay in Karla — Marcellus's zero and one read as O and I */
+.tally b{color:var(--brass);font-size:23px;font-weight:700}
+.bar{height:6px;background:var(--bg);border:1px solid var(--brass-dim);overflow:hidden;
+  margin-bottom:20px}
+.bar span{display:block;height:100%;width:0;background:var(--brass);transition:width .4s ease}
+.cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.cat{text-align:center;padding:13px 10px 11px;background:var(--bg);
+  border:1px solid var(--line-2);position:relative}
+.cat:before,.cat:after{content:"◆";position:absolute;top:4px;font-size:7px;color:var(--brass-dim)}
+.cat:before{left:6px}.cat:after{right:6px}
+.cat .n{display:block;font-size:9px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--faint);margin-bottom:7px}
+.cat .v{font-size:24px;line-height:1;font-weight:700}
+.cat .v em{font-style:normal;font-size:13px;color:var(--faint);font-weight:400}
+.cat .mb{display:block;height:2px;background:var(--line-2);margin-top:10px}
+.cat .mb i{display:block;height:100%;width:0;transition:width .3s ease}
+.resetbtn{font-family:inherit;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;
+  background:none;border:1px solid var(--brass-dim);color:var(--faint);padding:4px 11px;
+  cursor:pointer;border-radius:99px}
+.resetbtn:hover{color:var(--rust);border-color:var(--rust)}
+
+/* ── tabs ───────────────────────────────────────────────── */
+.tabs{display:flex;justify-content:center;gap:6px;margin-bottom:26px;flex-wrap:wrap}
+.tab{font-family:"Marcellus",serif;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;
+  background:var(--panel);border:1px solid var(--line);color:var(--dim);padding:9px 20px;
+  cursor:pointer;border-radius:20px 20px 3px 3px}
+.tab:hover{color:var(--ink);border-color:var(--brass)}
+.tab[aria-selected="true"]{color:var(--bg);background:var(--brass);border-color:var(--brass)}
+.panel[hidden]{display:none}
+
+/* ── run nav ────────────────────────────────────────────── */
+.runnav{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:22px;position:sticky;top:0;
+  background:var(--bg);padding:12px 0;z-index:20;border-bottom:1px solid var(--line)}
+.runnav button{font-family:inherit;font-size:10.5px;letter-spacing:.09em;background:var(--panel);
+  border:1px solid var(--line-2);color:var(--dim);padding:7px 13px;cursor:pointer;
+  border-radius:16px 16px 3px 3px}
+.runnav button:hover{color:var(--ink);border-color:var(--brass-dim)}
+.runnav button.hot{color:var(--bg);background:var(--brass);border-color:var(--brass);font-weight:700}
+.runnav .util{margin-left:auto;display:flex;gap:7px}
+
+/* ── runs ───────────────────────────────────────────────── */
+.run{background:var(--panel);border:1px solid var(--line);margin-bottom:32px;
+  scroll-margin-top:70px;box-shadow:inset 0 0 0 4px var(--bg),inset 0 0 0 5px var(--line-2)}
+.run.open{border-color:var(--brass)}
+.run-head{width:100%;text-align:left;background:none;border:0;color:inherit;font:inherit;
+  padding:34px 24px 20px;cursor:pointer;display:block;position:relative}
+.run-head:hover h3{color:var(--brass)}
+.rarch{position:absolute;top:-19px;left:50%;transform:translateX(-50%);width:52px;height:40px;
+  background:var(--bg);border:1px solid var(--brass-dim);
+  border-radius:50% 50% 4px 4px/72% 72% 4px 4px;
+  font-size:13px;font-weight:700;color:var(--brass);
+  display:flex;align-items:flex-end;justify-content:center;padding-bottom:6px;letter-spacing:.06em}
+.run.open .rarch{background:var(--brass);color:var(--bg);border-color:var(--brass)}
+.rh{display:block;text-align:center}
+.run-no{display:block;font-size:9.5px;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--brass);margin-bottom:10px}
+.run-head h3{font-family:"Marcellus",serif;font-size:clamp(21px,3.4vw,30px);font-weight:400;
+  line-height:1.14;margin:0 0 12px;transition:color .18s}
+.run-head p{margin:0 auto;color:var(--dim);font-size:13.5px;max-width:64ch;line-height:1.65}
+.run-prog{display:block;margin-top:14px;font-size:9.5px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--faint)}
+.run-prog:before{content:"◆ ";color:var(--brass-dim)}
+.run-body[hidden]{display:none}
+
+.loadout{margin:0 24px;padding:20px 0 22px;border-top:1px solid var(--line-2);
+  border-bottom:1px solid var(--line-2)}
+.loadout h4{text-align:center;font-family:"Marcellus",serif;font-size:11px;letter-spacing:.3em;
+  text-transform:uppercase;color:var(--brass);margin:0 0 18px;font-weight:400}
+.lo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(195px,1fr));gap:15px 26px}
+.lo-grid div{font-size:12.5px;line-height:1.5;padding-left:13px;border-left:1px solid var(--line-2)}
+.lo-grid div span{display:block;font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--faint);margin-bottom:4px}
+.lo-note{margin:20px 0 0;font-size:12.5px;color:var(--dim);font-style:italic;text-align:center;
+  max-width:70ch;margin-left:auto;margin-right:auto}
+
+.sect{padding:0 24px 22px}
+.sect>h4{font-family:"Marcellus",serif;font-size:14px;font-weight:400;letter-spacing:.1em;
+  color:var(--brass);margin:26px 0 14px;text-align:center;text-transform:uppercase}
+.sect>h4:before{content:"◈ ";opacity:.55}
+.sect>h4:after{content:" ◈";opacity:.55}
+
+/* steps: inlaid panels */
+.step{background:var(--bg);border:1px solid var(--line-2);margin-bottom:10px;position:relative}
+.step.done{border-color:var(--brass-dim);background:rgba(201,162,75,.05)}
+.step-top{display:flex;gap:12px;padding:14px 16px;align-items:flex-start}
+.snum{flex:0 0 auto;color:var(--brass);
+  width:26px;height:26px;border:1px solid var(--brass-dim);display:flex;align-items:center;
+  justify-content:center;transform:rotate(45deg);margin-top:2px}
+.snum b{display:block;transform:rotate(-45deg);font-weight:700;font-size:11px}
+.tick{flex:0 0 auto;width:21px;height:21px;border:1px solid var(--line);background:var(--panel);
+  cursor:pointer;color:transparent;font-size:12px;line-height:1;padding:0;margin-top:4px;
+  border-radius:11px 11px 3px 3px}
+.tick:hover{border-color:var(--brass)}
+.done .tick{background:var(--brass);border-color:var(--brass);color:var(--bg)}
+.step-body{flex:1;min-width:0}
+.step-title{font-family:"Marcellus",serif;font-size:16px;font-weight:400;margin:0 0 8px;
+  letter-spacing:.01em}
+.bul{margin:0;padding:0;list-style:none;font-size:13px}
+.bul li{display:flex;gap:12px;margin-bottom:4px;line-height:1.6}
+.bul k{flex:0 0 70px;font-size:8.5px;letter-spacing:.17em;text-transform:uppercase;
+  color:var(--faint);padding-top:4px}
+.badges{display:flex;flex-wrap:wrap;gap:5px;margin-top:11px}
+.badge{font-size:9px;letter-spacing:.11em;text-transform:uppercase;padding:3px 9px;
+  border:1px solid;display:inline-block;border-radius:99px}
+.b-chal{color:var(--brass);border-color:var(--brass-dim);background:rgba(201,162,75,.09)}
+.b-warn{color:var(--rust);border-color:rgba(196,85,60,.5);background:rgba(196,85,60,.1)}
+.b-save{color:var(--amber);border-color:rgba(217,164,65,.45);background:rgba(217,164,65,.1)}
+.b-unv{color:var(--violet);border-color:rgba(155,142,222,.45);background:rgba(155,142,222,.1)}
+.b-src{color:var(--sky);border-color:rgba(99,168,196,.4);background:rgba(99,168,196,.09)}
+.more{font-family:inherit;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;
+  background:none;border:0;color:var(--faint);cursor:pointer;padding:0 16px 12px 66px}
+.more:hover{color:var(--brass)}
+.detail{padding:0 16px 14px 66px;font-size:12.5px;color:var(--dim)}
+.detail[hidden]{display:none}
+.detail dl{margin:0}
+.detail dt{font-size:8.5px;letter-spacing:.19em;text-transform:uppercase;color:var(--faint);
+  margin-top:13px}
+.detail dd{margin:4px 0 0;line-height:1.68}
+.flag{border-left:2px solid var(--rust);padding-left:12px;margin-top:13px;color:#eab4a5}
+.flag.amber{border-color:var(--amber);color:#efd4a0}
+.flag.unv{border-color:var(--violet);color:#c9c1ea}
+
+/* ── checklist ──────────────────────────────────────────── */
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
+.filters button{font-family:inherit;font-size:10px;letter-spacing:.15em;text-transform:uppercase;
+  background:var(--panel);border:1px solid var(--line-2);color:var(--dim);padding:6px 14px;
+  cursor:pointer;border-radius:99px}
+.filters button:hover{color:var(--ink);border-color:var(--brass-dim)}
+.filters button.on{color:var(--bg);background:var(--brass);border-color:var(--brass);font-weight:700}
+.chal{display:flex;gap:13px;padding:14px 16px;border:1px solid var(--line-2);margin-bottom:8px;
+  background:var(--panel)}
+.chal.done{border-color:var(--brass-dim);background:rgba(201,162,75,.05)}
+.chal-main{flex:1;min-width:0}
+.chal-name{font-family:"Marcellus",serif;font-size:15.5px;font-weight:400;margin:0}
+.chal.done .chal-name{text-decoration:line-through;color:var(--faint)}
+.chal-cond{margin:3px 0 0;font-size:12.5px;color:var(--dim)}
+.chal-meta{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}
+
+/* ── audit ──────────────────────────────────────────────── */
+.audit h3{font-family:"Marcellus",serif;font-size:20px;font-weight:400;margin:30px 0 12px;
+  color:var(--brass);letter-spacing:.02em}
+.audit h3:first-child{margin-top:0}
+.audit p{color:var(--dim)}
+.audit ul{padding-left:0;list-style:none;margin:0 0 16px}
+.audit li{margin-bottom:8px;padding-left:20px;position:relative;color:var(--dim);font-size:13.5px}
+.audit li:before{content:"◈";position:absolute;left:0;color:var(--brass-dim);font-size:9px;top:5px}
+.audit li b{color:var(--ink)}
+table.src{font-size:12px;border-collapse:collapse;width:100%;background:var(--panel);
+  border:1px solid var(--line)}
+table.src th,table.src td{border-bottom:1px solid var(--line-2);padding:10px 12px;
+  text-align:left;vertical-align:top;color:var(--dim)}
+table.src th{color:var(--brass);font-size:9px;letter-spacing:.2em;text-transform:uppercase;
+  font-weight:700;border-bottom:1px solid var(--line)}
+.pass{color:var(--brass)}.fail{color:var(--rust)}.part{color:var(--amber)}
+footer{margin-top:36px;padding-top:20px;border-top:1px solid var(--line);font-size:11.5px;
+  color:var(--faint);line-height:1.9;text-align:center}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (max-width:640px){
+  .more,.detail{padding-left:16px}
+  .bul li{display:block}
+  .bul k{display:block;padding:0 0 2px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="mast">
+  <a class="backlink" href="../index.html">← All guides</a>
+  <p class="eyebrow">Main Campaign 04 · Marrakesh, Morocco · World of Assassination</p>
+  <h1>A Gilded Cage <em>— challenge run planner</em></h1>
+  <span class="hr-orn">◆ ◈ ◆</span>
+  <p class="facts">
+    <b>Targets:</b> Claus Hugo Strandberg (&ldquo;The Banker&rdquo;) · General Reza Zaydan (&ldquo;The General&rdquo;)<br>
+    <b>Challenges:</b> 62 — 24 Assassination · 17 Discovery · 14 Feats · 2 Targets · 5 The Classics<br>
+    <b>Tracked disguises:</b> 17 &nbsp;·&nbsp; <b>Tracked areas:</b> 23 &nbsp;·&nbsp; <b>Mission Stories:</b> 8<br>
+    <b>Runs needed:</b> 8 &nbsp;·&nbsp; <b>Route source:</b> fish's Steam challenge guide, plus new research for the SASO and Sniper runs
+  </p>
+</header>
+
+<section class="tracker">
+  <div class="tracker-top">
+    <h2>Progress</h2>
+    <p class="tally"><b id="tDone">0</b> / 62 challenges complete &nbsp; <button class="resetbtn" id="reset">Reset</button></p>
+  </div>
+  <div class="bar"><span id="tBar"></span></div>
+  <div class="cats" id="cats"></div>
+</section>
+
+<div class="tabs" role="tablist">
+  <button class="tab" role="tab" aria-selected="true" data-panel="runs">Optimized runs</button>
+  <button class="tab" role="tab" aria-selected="false" data-panel="checklist">Checklist</button>
+  <button class="tab" role="tab" aria-selected="false" data-panel="audit">Audit &amp; sources</button>
+</div>
+
+<div class="panel" id="p-runs">
+  <div class="runnav" id="runnav"></div>
+  <div id="runList"></div>
+</div>
+
+<div class="panel" id="p-checklist" hidden>
+  <div class="filters" id="filters"></div>
+  <div id="chalList"></div>
+</div>
+
+<div class="panel audit" id="p-audit" hidden>
+  <h3>Verification result</h3>
+  <p>All 62 challenge names and conditions come verbatim from the in-game challenge data in this repository (<code>missions/04 - A Gilded Cage.json</code>). Runs 1&ndash;6 are a conversion of fish's tested Steam route. Runs 7 and 8 are new — fish left <em>both</em> his "SA/SO" and "Sniper Assassin" sections as videos with no text — and were rebuilt from written sources, with the weaker parts labelled.</p>
+
+  <table class="src">
+    <thead><tr><th>Check</th><th>Result</th><th>Evidence</th></tr></thead>
+    <tbody>
+      <tr><td>Total count (62)</td><td class="pass">Pass</td><td>In-game data: <code>challengeCount: 62</code>, category sum also 62</td></tr>
+      <tr><td>Category split 24/17/14/2/5</td><td class="pass">Pass</td><td>In-game data</td></tr>
+      <tr><td>Runs 1&ndash;6 routes</td><td class="pass">Pass</td><td>fish, Steam guide 3570467006 — a written, tested 6-run route</td></tr>
+      <tr><td>All six loadouts</td><td class="pass">Pass</td><td>Read off the six planning-screen screenshots in that guide</td></tr>
+      <tr><td>Starting-location mastery levels</td><td class="part">Mostly verified</td><td>Hitman Wiki's mastery list uses the older HITMAN 2016 names. Confirmed matches: Undercover in Zaydan's Compound 8 · Lamp Store Rooftop 13 · Consulate Parking Lot 20. <b>Bazaar Entrance</b> is the level-1 default (the wiki lists that slot as "Main Square"). <b>Undercover in the Shisha Café</b> is mastery 3 (the wiki calls it "Undercover in the Courtyard Club"; a Fandom/Neoseeker summary confirms the Courtyard Club <i>is</i> the shisha café and that it unlocks at level 3).</td></tr>
+      <tr><td>SASO route (Run 7)</td><td class="pass">Pass</td><td>Three independent written sources. NamuWiki (poison Zaydan's food, then the consulate parking → vacuum-cleaner room → Strandberg); IBTimes UK (fiber wire on both, consulate first); Steam guide 644994482 (intercom lure at the school, then breach the parking door and drown Strandberg). The <b>poisoned food stall</b> and the <b>sleeping waiter woken by the radio</b> are independently confirmed by fish's own Run 3.</td></tr>
+      <tr><td>Sniper Assassin route (Run 8)</td><td class="part">Single source + summary</td><td>NamuWiki gives two Zaydan sniping positions and states a soldier disguise is needed. A search summary of Neoseeker's Marrakesh challenge page independently says Strandberg should be shot through the school's second-floor window when the targets meet there rather than out by the main gate. <b>No source names an exact rifle stash point</b>, so the run says so rather than inventing one.</td></tr>
+      <tr><td>Per-challenge XP values</td><td class="fail">Unverified</td><td>No source breaks the mission XP down per challenge. Not guessed, so none is shown.</td></tr>
+      <tr><td>Seven Years of Bad Luck · Pipe Dreams</td><td class="part">Not routed</td><td>Both need a custom contract with suitably placed targets — fish says so explicitly. They stay in the checklist, marked "Not routed".</td></tr>
+      <tr><td>Chameleon · Discover Marrakesh</td><td class="part">Not routed</td><td>17 disguises and 23 areas — exploration passes, not route steps.</td></tr>
+      <tr><td>Redacted conditions</td><td class="pass">Pass</td><td>Five challenges are <code>[REDACTED]</code> in the game data: Dance Till You Drop, Floor It!, Slam Dunk, Let's Dance, Begging for It. Conditions are left redacted in the checklist; fish's documented actions appear in the runs.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Run-logic validation (simulated step by step)</h3>
+  <ul>
+    <li><b>58 of 62 challenges are assigned.</b> The four left out are Seven Years of Bad Luck, Pipe Dreams, Chameleon and Discover Marrakesh — see above.</li>
+    <li><b>Prerequisites precede use.</b> Run 1 takes the wrench before the headmaster and the officer outfit before the cell; Run 2 takes the keycard before the double doors and the coins before the fountain; Run 5 takes both safe codes and the car key before either summons; Run 6 takes the truck key before the turret.</li>
+    <li><b>Nothing needed later is destroyed earlier.</b> Run 1 does the toilet drop behind a save and reloads, because Zaydan is needed alive for Personal Vendetta. Run 4 does the dance kill behind a save and reloads, because Zaydan is needed alive for the oil lamp.</li>
+    <li><b>Un-spotted requirements are isolated.</b> Run 1 carries both <i>New Transfer</i> and <i>Uninvited</i>, and they are separated by a long section with two saves between them. No other run carries a no-detection challenge.</li>
+    <li><b>Both targets die every run.</b> Every run below eliminates Strandberg and Zaydan and exits, so nothing is left half-finished and every mission-completion challenge in the run actually banks.</li>
+    <li><b>The Classics capstone lands last.</b> Run 7 delivers Silent Assassin, Silent Assassin Suit Only and Suit Only; Run 8 delivers Sniper Assassin and fires the capstone.</li>
+  </ul>
+
+  <h3>Known conflicts, bugs and ordering rules</h3>
+  <ul>
+    <li><b>Run 4 needs all nine soldiers dismissed.</b> The radio only spawns in the first-floor office once every one of the nine patrolling elite soldiers has been dismissed — four on the ground floor, five upstairs. Miss one and <i>Let's Dance</i> is unreachable that run.</li>
+    <li><b>Run 3, the protester's timing drifts.</b> fish reports that the protester drinks his water at different moments even when everything before it is identical, and believes it is tied to standing close enough to hear his speech. Watch him rather than counting seconds; the news crew waits for you regardless.</li>
+    <li><b>Run 3, get into the shisha stall fast.</b> The stall left of the bar has to be poisoned before the enforcer spots you and before the cameraman walks in. It is a narrow window at the very start of the run.</li>
+    <li><b>Run 1, crouch to poison the intern's drink.</b> Standing while spiking the reception water bottle raises suspicion; crouching does not.</li>
+    <li><b>Run 2, park the two consulate-square NPCs.</b> Trigger the dialogue of the two people by the car before you go for the protester, so they are out of the way later.</li>
+    <li><b>Difficulty:</b> the branch-and-reload structure assumes unlimited manual saves, i.e. Casual. The Classic challenges are no longer difficulty-tiered in World of Assassination.</li>
+  </ul>
+
+  <h3>Sources</h3>
+  <ul>
+    <li><b>In-game challenge data</b> (<code>missions/04 - A Gilded Cage.json</code>) — authoritative for names, conditions and counts.</li>
+    <li><b>fish, <i>HITMAN I — All Marrakesh Challenges</i></b> (Steam guide 3570467006) — the six-run route and all six loadout screenshots. Both his "Sniper Assassin" and "SA/SO" sections contain videos only, no text.</li>
+    <li><b>NamuWiki</b>, <i>Hitman (game) / Challenges / Marrakesh</i> — the primary written SASO route and both Sniper Assassin positions. Machine-translated from Korean.</li>
+    <li><b>IBTimes UK</b>, <i>Hitman: Marrakesh guide — how to complete the Silent Assassin, Suit Only challenge</i> — the independent fiber-wire SASO route recorded in Run 7's notes.</li>
+    <li><b>Steam guide 644994482</b>, <i>Hitman | Silent Assassin, Suit Only</i> — a third SASO route (school intercom, then a breached parking door), also recorded in Run 7's notes.</li>
+    <li><b>Hitman Wiki</b>, <i>List of Mastery Unlocks by Mission</i> — starting locations and agency pickups with their mastery levels.</li>
+  </ul>
+</div>
+
+<footer>
+  Progress is saved in this browser and persists across reloads.<br>
+  Compiled 2 August 2026 against the in-game challenge list. Unverified detail is labelled, never filled in.
+</footer>
+</div>
+
+<script>
+const CH=[
+ {id:'a1',cat:'Assassination',name:'(Un)happy Ending',cond:'Assassinate Claus Hugo Strandberg during a massage while disguised as the Masseur.',run:4},
+ {id:'a2',cat:'Assassination',name:'A Room with a Moose',cond:'Assassinate Claus Hugo Strandberg with the moose.',run:3},
+ {id:'a3',cat:'Assassination',name:'Internal Affairs',cond:'Assassinate Claus Hugo Strandberg with the fiber wire while disguised as the Intern.',run:1},
+ {id:'a4',cat:'Assassination',name:'Dance Till You Drop',cond:'[REDACTED]',run:4},
+ {id:'a5',cat:'Assassination',name:'Poison IV',cond:'Assassinate General Reza Zaydan by poisoning his food.',run:3},
+ {id:'a6',cat:'Assassination',name:'Bathroom Break',cond:'Assassinate General Reza Zaydan by dropping a toilet on him.',run:1},
+ {id:'a7',cat:'Assassination',name:'Drama Queen',cond:'Disguise yourself as a Cameraman. / Assassinate Claus Hugo Strandberg with an explosion during the interview.',run:3},
+ {id:'a8',cat:'Assassination',name:'Personal Vendetta',cond:'Assassinate General Reza Zaydan while disguised as the Prisoner.',run:1},
+ {id:'a9',cat:'Assassination',name:'The Headmaster\'s Revenge',cond:'Assassinate General Reza Zaydan while disguised as the Headmaster.',run:1},
+ {id:'a10',cat:'Assassination',name:'.50 Syndrome',cond:'Assassinate both Claus Hugo Strandberg and General Reza Zaydan with the APC turret.',run:6},
+ {id:'a11',cat:'Assassination',name:'Electri-fried',cond:'Assassinate Claus Hugo Strandberg by electrocuting him.',run:2},
+ {id:'a12',cat:'Assassination',name:'Don’t Blow It',cond:'Arrange for Claus Hugo Strandberg and General Reza Zaydan to meet in the tunnel. / Assassinate both targets with a burning oil drum.',run:5},
+ {id:'a13',cat:'Assassination',name:'Oil Lamp',cond:'Assassinate General Reza Zaydan with the oil lamp.',run:4},
+ {id:'a14',cat:'Assassination',name:'Don’t Use That Tone',cond:'Assassinate General Reza Zaydan by pushing him into the printing press.',run:2},
+ {id:'a15',cat:'Assassination',name:'Drowning Your Sorrows',cond:'Assassinate Claus Hugo Strandberg by drowning him.',run:1},
+ {id:'a16',cat:'Assassination',name:'Tunnel Vision',cond:'Assassinate General Reza Zaydan in the tunnel with a burning oil drum.',run:5},
+ {id:'a17',cat:'Assassination',name:'Straight Shot',cond:'Assassinate a target with a headshot in Marrakesh.',run:4},
+ {id:'a18',cat:'Assassination',name:'Versatile Assassin',cond:'Complete all the Versatile challenges in Marrakesh: / Piano Man / Someone Could Hurt Themselves / Hold My Hair / Straight Shot / Tasteless, Traceless',run:4},
+ {id:'a19',cat:'Assassination',name:'Someone Could Hurt Themselves',cond:'Assassinate a target in an accident in Marrakesh.',run:1},
+ {id:'a20',cat:'Assassination',name:'Hold My Hair',cond:'Assassinate a target by drowning them in Marrakesh.',run:1},
+ {id:'a21',cat:'Assassination',name:'Tasteless, Traceless',cond:'Assassinate a target with lethal poison in Marrakesh.',run:3},
+ {id:'a22',cat:'Assassination',name:'Piano Man',cond:'Assassinate a target with the fiber wire in Marrakesh.',run:1},
+ {id:'a23',cat:'Assassination',name:'Seven Years of Bad Luck',cond:'Assassinate 5 targets in 5 different accidents while disguised as the Fortune Teller.',run:0},
+ {id:'a24',cat:'Assassination',name:'Pipe Dreams',cond:'Assassinate a target by poisoning the shisha pipe.',run:0},
+
+ {id:'d1',cat:'Discovery',name:'Strong Hands',cond:'Disguise yourself as the Masseur.',run:4},
+ {id:'d2',cat:'Discovery',name:'Poster Boy',cond:'Disguise yourself as a Printing Crew Member.',run:2},
+ {id:'d3',cat:'Discovery',name:'Candid Camera',cond:'Disguise yourself as a Cameraman.',run:3},
+ {id:'d4',cat:'Discovery',name:'Dismissed!',cond:'Disguise yourself as an Officer.',run:1},
+ {id:'d5',cat:'Discovery',name:'Is it Safe?',cond:'Find the combination to the school safe.',run:5},
+ {id:'d6',cat:'Discovery',name:'Back to School',cond:'Find the headmaster\'s key.',run:1},
+ {id:'d7',cat:'Discovery',name:'Mole-tiple Choice',cond:'Find the tunnel entrance.',run:6},
+ {id:'d8',cat:'Discovery',name:'New Transfer',cond:'Enter the school without getting spotted.',run:1},
+ {id:'d9',cat:'Discovery',name:'Uninvited',cond:'Enter the Consulate without getting spotted.',run:1},
+ {id:'d10',cat:'Discovery',name:'Discover Marrakesh',cond:'Reveal all undiscovered areas in Marrakesh.',run:0},
+ {id:'d11',cat:'Discovery',name:'Looking Through Walls',cond:'Look through all the peepholes in the school.',run:1},
+ {id:'d12',cat:'Discovery',name:'Chameleon',cond:'Find and equip all disguises in Marrakesh.',run:0},
+ {id:'d13',cat:'Discovery',name:'I\'m a Member',cond:'Find the courtyard club membership card.',run:3},
+ {id:'d14',cat:'Discovery',name:'Floor It!',cond:'[REDACTED]',run:1},
+ {id:'d15',cat:'Discovery',name:'The Scenic Route',cond:'Find a child\'s painting.',run:1},
+ {id:'d16',cat:'Discovery',name:'Get the Truck Out of Here!',cond:'Escape in the army truck.',run:6},
+ {id:'d17',cat:'Discovery',name:'A Tall, Bald Stranger',cond:'Disguise yourself as a Fortune Teller.',run:2},
+
+ {id:'f1',cat:'Feats',name:'Slam Dunk',cond:'[REDACTED]',run:4},
+ {id:'f2',cat:'Feats',name:'Mission Story - Cherry Blossom',cond:'A way to summon General Zaydan to the underground tunnel. Interesting.',run:5},
+ {id:'f3',cat:'Feats',name:'Mission Story - Why We Fight',cond:'The printing crew is in the streets, hanging posters. Could be a way into the school.',run:2},
+ {id:'f4',cat:'Feats',name:'Mission Story - Prime Time',cond:'Infiltrate the Consulate as the missing cameraman and take the interview.',run:3},
+ {id:'f5',cat:'Feats',name:'Mission Story - Down The Rabbit Hole',cond:'Discover the consulate’s secret evacuation plan and escort Claus Hugo Strandberg to freedom.',run:6},
+ {id:'f6',cat:'Feats',name:'Let\'s Dance',cond:'[REDACTED]',run:4},
+ {id:'f7',cat:'Feats',name:'Mission Story - Honeycomb',cond:'Arrange a meeting with Claus Hugo Strandberg.',run:5},
+ {id:'f8',cat:'Feats',name:'Mission Story - Open Sesame',cond:'The school’s old headmaster key still exists. Should be useful.',run:1},
+ {id:'f9',cat:'Feats',name:'Mission Story - Bad Blood',cond:'Infiltrate a hostile army base and help an honest man escape the wrath of General Reza Zaydan.',run:1},
+ {id:'f10',cat:'Feats',name:'Mission Story - Golden Touch',cond:'Strandberg has ordered a massage. Sounds like he could use a specialist.',run:4},
+ {id:'f11',cat:'Feats',name:'Wishing Well',cond:'Hide five bodies in the well.',run:1},
+ {id:'f12',cat:'Feats',name:'Public Sneaker',cond:'Get rid of the protester. / Do not eliminate him.',run:3},
+ {id:'f13',cat:'Feats',name:'Your Luck is Running Out',cond:'Throw six coins into the fountain.',run:2},
+ {id:'f14',cat:'Feats',name:'Begging for It',cond:'[REDACTED]',run:2},
+
+ {id:'t1',cat:'Targets',name:'The Banker',cond:'Assassinate Claus Hugo Strandberg.',run:1},
+ {id:'t2',cat:'Targets',name:'The General',cond:'Assassinate General Reza Zaydan.',run:2},
+
+ {id:'c1',cat:'The Classics',name:'The Classics',cond:'Complete all the Classic challenges for "A Gilded Cage." / Silent Assassin / Silent Assassin, Suit Only / Sniper Assassin / Suit Only',run:8},
+ {id:'c2',cat:'The Classics',name:'Silent Assassin, Suit Only',cond:'Complete "A Gilded Cage." / Only eliminate the targets. / No bodies found. / Do not get spotted. / Do it all in your suit.',run:7},
+ {id:'c3',cat:'The Classics',name:'Suit Only',cond:'Assassinate the targets and complete the mission. / Do it all in your suit.',run:7},
+ {id:'c4',cat:'The Classics',name:'Silent Assassin',cond:'Complete "A Gilded Cage." / Only eliminate the targets. / No bodies found. / Do not get spotted.',run:7},
+ {id:'c5',cat:'The Classics',name:'Sniper Assassin',cond:'Complete "A Gilded Cage." / Assassinate your targets with a sniper rifle. / Only eliminate the targets. / Do not get spotted.',run:8}
+];
+const CAT_COLOR={'Assassination':'var(--rust)','Discovery':'var(--sky)','Feats':'var(--amber)','Targets':'var(--violet)','The Classics':'var(--jade)'};
+
+const RUNS=[
+{
+ id:'r1', tag:'Run 1', title:'The school and the consulate intern',
+ goal:"The biggest run on the map: headmaster, prisoner cell, every peephole, five bodies down the well, then the intern's disguise and Strandberg two ways. Sixteen challenges.",
+ diff:'Casual — you need unlimited manual saves.',
+ loadout:{
+   start:'Bazaar Entrance · Marrakesh mastery level 1 (default)',
+   suit:'Summer Suit',
+   items:['Concealed weapon: Krugermeier 2-2','Gear: Fiber Wire','Gear: Coin ×3','Smuggled item: none']
+ },
+ note:'Two no-detection challenges live in this run — New Transfer at the school and Uninvited at the consulate. They are far apart and each has a save in front of it, but treat both approaches as stealth sections.',
+ sections:[
+ {h:'The headmaster',steps:[
+  {t:'Wrench first, conversation second',
+   b:[['Where','The alleyway left of the spawn — two NPCs are standing outside a shop.'],
+      ['Action','Walk past them to trigger their dialogue, turn around and take the wrench from the nearby alcove while they talk, then come back and listen to the rest to start Open Sesame.']],
+   badges:[['warn','Grab the wrench during the dialogue, not after']],
+   d:{}},
+  {t:'Take the headmaster and his key',
+   b:[['Where','Into that shop and up to the rooftop.'],
+      ['NPC','The headmaster, writing on the roof.'],
+      ['Item','Wrench.'],
+      ['Action','Throw the wrench at him, hide the body, take his disguise and his key.']],
+   badges:[['chal','Back to School']],
+   d:{}},
+  {t:'Slide down and start Bad Blood',
+   b:[['Where','Right-hand side of the rooftop — climb the ledges and use the pipe.'],
+      ['NPC','Two soldiers talking at the bottom.'],
+      ['Action','Slide all the way down and listen to their conversation.']],
+   badges:[],
+   d:{}}
+ ]},
+ {h:'Into the school',steps:[
+  {t:'Through the door and in the window',
+   b:[['Where','The door to the right of the school, then a second door, then a window.'],
+      ['Action','Enter the first door to complete Open Sesame, sneak past the guard, go through the second door and climb the window into the school. Hide behind the crates so the patrols do not see you, then save.'],
+      ['Warning','Being seen at any point before you are inside voids New Transfer.']],
+   badges:[['chal','Mission Story - Open Sesame'],['chal','New Transfer'],['save','Save behind the crates'],['warn','Do not get spotted']],
+   d:{}},
+  {t:'Branch · Drop the toilet on Zaydan',
+   b:[['Where','The school intercom behind the two gossiping soldiers; then up through the ceiling hole into the second-floor bathroom.'],
+      ['Disguise','Headmaster — required for The Headmaster\'s Revenge.'],
+      ['NPC','Reza hears the soldiers and walks down to confront them.'],
+      ['Action','Switch the intercom on, climb up, and push the toilet onto him as he passes underneath.'],
+      ['Then','Reload the save — Zaydan is needed alive.']],
+   badges:[['chal','Bathroom Break'],['chal',"The Headmaster's Revenge"],['chal','Someone Could Hurt Themselves'],['warn','Reload afterwards']],
+   d:{'Why three at once':'The toilet is an accident kill, which covers the generic accident challenge, and you are wearing the headmaster\'s clothes, which covers the disguise one.'}},
+  {t:'Become an officer',
+   b:[['Where','Back through the window into the school alley; lockpick the door right beside it.'],
+      ['NPC','A military officer who rotates around that room; a second soldier watching out of the window.'],
+      ['Action','When the officer is near the door, lure him out with a coin, pacify him and drag the body to a corner where the window soldier cannot see it. Take the officer disguise.']],
+   badges:[['chal','Dismissed!'],['warn','Hide the body out of the window soldier\'s view']],
+   d:{}},
+  {t:'Become the prisoner and kill Zaydan',
+   b:[['Disguise','Officer, then Prisoner.'],
+      ['NPC','The soldier guarding the prisoner; then the prisoner himself; then Reza.'],
+      ['Action','Dismiss the guard, pacify the prisoner and hide him in the locker, put on his clothes and sit down to complete Bad Blood. Reza walks over — kill him as the prisoner.']],
+   badges:[['chal','Mission Story - Bad Blood'],['chal','Personal Vendetta'],['chal','The General']],
+   d:{}}
+ ]},
+ {h:'Peepholes and paintings',steps:[
+  {t:'All five peepholes',
+   b:[['Where','Hide Reza\'s body, change back to the officer, then work through: classroom 1B, classroom 1C, right of the director\'s office upstairs, the room attached to classroom 2A, and the second-floor bathroom.'],
+      ['Action','Look through each one. The fifth completes the challenge. Take the rat poison next to the last peephole while you are there.']],
+   badges:[['chal','Looking Through Walls'],['warn','Take the rat poison at the last peephole — you need it downstairs']],
+   d:{}},
+  {t:'Find the child\'s painting',
+   b:[['Where','Classroom 2A.'],
+      ['Action','Find the children\'s paintings.']],
+   badges:[['chal','The Scenic Route']],
+   d:{}}
+ ]},
+ {h:'The well',steps:[
+  {t:'Five quiet knockouts by the well',
+   b:[['Where','The leftmost alley — the well.'],
+      ['NPC','Two soldiers posted at the well, one civilian who rotates past it, and two patrolling soldiers who also rotate past.'],
+      ['Action','Save first. Pacify all five without being spotted and drag every body behind the well, then save again.'],
+      ['Why now','You are waiting for the intern to walk to the consulate, which takes a long time. This fills the gap.']],
+   badges:[['save','Save before and after'],['warn','Uninvited is still live — do not get spotted']],
+   d:{}},
+  {t:'Branch · Five bodies down the well',
+   b:[['Action','Dump all five into the well.'],
+      ['Then','Reload the save.']],
+   badges:[['chal','Wishing Well']],
+   d:{'Why reload':'You want the consulate approach clean, and five dumped bodies is a lot of noise to leave behind.'}}
+ ]},
+ {h:'The consulate',steps:[
+  {t:'Get inside unseen',
+   b:[['Where','Forward to the consulate building.'],
+      ['Action','Enter without being spotted.']],
+   badges:[['chal','Uninvited'],['warn','This is the second no-detection challenge in the run']],
+   d:{}},
+  {t:'Clear the bathroom and spike the intern\'s water',
+   b:[['Where','The bathrooms left of reception, then the reception desk.'],
+      ['NPC','A security guard in the bathrooms; the intern, who loops back to reception and drinks from the water bottle.'],
+      ['Action','Pacify the guard and hide him in the left stall with the door closed. Spike the intern\'s drink with rat poison — crouch while you do it, or you raise suspicion.'],
+      ['Warning','Also take the consulate car key from the room right of reception now.']],
+   badges:[['chal','Floor It!'],['warn','Crouch to poison the bottle'],['warn','Take the car key while you are here']],
+   d:{'Redacted':'Floor It! is [REDACTED] in the game data. Escaping in the consulate car is fish\'s documented action, which is why the key is collected here.'}},
+  {t:'Become the intern',
+   b:[['Action','Wait for him to be sick, pacify him and take his clothes. Leave your gun in the bathroom too. Talk to the receptionist and head upstairs.'],
+      ['Why leave the gun','You are searched on the way up as the intern.']],
+   badges:[['warn','Leave the pistol behind — you are searched']],
+   d:{}},
+  {t:'Spike the wine and save',
+   b:[['Where','A janitor cart near the second-floor bathroom for more rat poison; then Claus\' office.'],
+      ['Action','Spike the glass of red wine in his office with rat poison. Save when he reaches the toilet.']],
+   badges:[['save','Save once he is at the toilet']],
+   d:{}},
+  {t:'Branch · Drown him',
+   b:[['Action','Drown Claus in the toilet.'],
+      ['Then','Reload.']],
+   badges:[['chal','Drowning Your Sorrows'],['chal','Hold My Hair']],
+   d:{}},
+  {t:'Fiber-wire him as the intern, then drive out',
+   b:[['Disguise','Consulate Intern — required for Internal Affairs.'],
+      ['Item','Fiber wire.'],
+      ['Action','Garrote Claus, then exit the mission in the consulate car.']],
+   badges:[['chal','Internal Affairs'],['chal','Piano Man'],['chal','The Banker'],['chal','Floor It!']],
+   d:{'Run 1 tally':'Back to School · MS Open Sesame · New Transfer · Bathroom Break · The Headmaster\'s Revenge · Someone Could Hurt Themselves · Dismissed! · MS Bad Blood · Personal Vendetta · The General · Looking Through Walls · The Scenic Route · Wishing Well · Uninvited · Drowning Your Sorrows · Hold My Hair · Internal Affairs · Piano Man · The Banker · Floor It!'}}
+ ]}]
+},
+{
+ id:'r2', tag:'Run 2', title:'The stage lamp and the printing press',
+ goal:"Rig the auditorium lamp for Claus, then work the streets — fountain coins, the fortune teller, the printing crew — and push Zaydan into his own press. Eight challenges.",
+ diff:'Casual.',
+ loadout:{
+   start:'Consulate Parking Lot · Marrakesh mastery level 20',
+   suit:'Summer Suit',
+   items:['Concealed weapon: Krugermeier 2-2','Gear: Classic Lockpick','Gear: Coin ×3','Smuggled item: none']
+ },
+ note:'You need eleven coins for the two coin challenges — three from your loadout, two by the blue cars, two by the vending machine, five on the shoe-shop counter. Collect them in that order and nothing is wasted.',
+ sections:[
+ {h:'Electri-fried',steps:[
+  {t:'Lure the elite soldier and take his clothes',
+   b:[['Where','The starting garage. An elite soldier walks toward you.'],
+      ['Action','Let him see you until his suspicion meter is around 80% so he follows, then step into the room in front of the spawn, take the screwdriver there, pacify him, hide the body and take the disguise. Take the consulate keycard from the table where he was walking.']],
+   badges:[['warn','80% suspicion is the sweet spot — any higher and he draws']],
+   d:{}},
+  {t:'Coins by the blue cars, then upstairs',
+   b:[['Action','Go past the soldiers, left, and take the two coins on the ground between the light blue and dark blue cars. Use the keycard on the double doors and go up to the second floor of the consulate.']],
+   badges:[],
+   d:{}},
+  {t:'Rig and fire the stage lamp',
+   b:[['Where','The janitor closet on your left as you reach floor two; then the auditorium control room.'],
+      ['Action','Go through the closet and tamper with the stage lamp overlooking the auditorium, then sneak to the control room and switch the lamp on. Claus is electrocuted the next time he leans over the railing.'],
+      ['Then','Go down and out of the consulate.']],
+   badges:[['chal','Electri-fried'],['chal','The Banker']],
+   d:{}}
+ ]},
+ {h:'The streets',steps:[
+  {t:'Park two NPCs and take a printing crew outfit',
+   b:[['Where','The courtyard, then the alleyway to its left.'],
+      ['NPC','A patrolling soldier; then a printing crew member.'],
+      ['Action','Walk past the courtyard NPCs to trigger their conversation. Then pacify the soldier in the left alley, hide him and his gun in the nearby room, take the two coins by the vending machine, and do the same to the printing crew member when he walks past.']],
+   badges:[['chal','Poster Boy']],
+   d:{}},
+  {t:'Send the printing crew to the school',
+   b:[['Action','Back at the courtyard, talk to the printing crew so they start walking to the school. Then change back to the elite soldier.']],
+   badges:[],
+   d:{}},
+  {t:'Six coins in the shisha café fountain',
+   b:[['Where','The Shisha café fountain.'],
+      ['Action','Throw six coins in.']],
+   badges:[['chal','Your Luck is Running Out']],
+   d:{}},
+  {t:'Posters, shoe shop coins, and the fortune teller',
+   b:[['Where','The alleyway above the shoe shop for the posters; the shop counter for five coins; the end of electronics street nearest the café for the fortune teller.'],
+      ['Action','Read the posters to start Why We Fight, take the five coins, then throw five coins to the fortune teller. Save before you touch him.']],
+   badges:[['chal','Begging for It'],['save','Save before taking his disguise']],
+   d:{'Redacted':'Begging for It is [REDACTED] in the game data. Throwing five coins to the fortune teller is fish\'s documented action.'}},
+  {t:'Branch · Kill him and take his clothes',
+   b:[['Action','Kill the fortune teller and take his disguise.'],
+      ['Then','Reload.']],
+   badges:[['chal','A Tall, Bald Stranger']],
+   d:{'Why reload':'A dead civilian in the middle of electronics street is noise you do not want for the school section.'}}
+ ]},
+ {h:'The printing press',steps:[
+  {t:'Deliver the posters',
+   b:[['Where','Back to the room where you left the printing crew disguise, then the school.'],
+      ['Disguise','Local Printing Crew.'],
+      ['Action','Meet the printing crew at the school to complete the story. Listen to Reza and wait until he and the other soldiers leave the room.']],
+   badges:[['chal','Mission Story - Why We Fight']],
+   d:{}},
+  {t:'Clear the crew and bait the press',
+   b:[['NPC','Three printing crew members — they start wandering the school later, so deal with them now.'],
+      ['Action','Get rid of all three, then switch the printing press off so Reza comes to inspect it. Hide two bodies in the nearby container and the third in the corner behind the stack of desks, well out of the way.'],
+      ['Warning','If Reza spots a body on his way in, he will not go to the press.']],
+   badges:[['warn','Third body must be fully out of Reza\'s line']],
+   d:{}},
+  {t:'Push him in',
+   b:[['Action','When Reza switches the press back on, push him into it.'],
+      ['Then','Exit the mission.']],
+   badges:[['chal',"Don’t Use That Tone"],['chal','The General']],
+   d:{}}
+ ]}]
+},
+{
+ id:'r3', tag:'Run 3', title:'The cameraman and the poisoned plate',
+ goal:"Emetic in the shisha pipe, lethal in Zaydan's dinner, then take the interview as the cameraman and blow Claus up on live television. Seven challenges.",
+ diff:'Casual.',
+ loadout:{
+   start:'Undercover in the Shisha Café · Marrakesh mastery level 3 (starts you as a Waiter)',
+   suit:'Disguise fixed by starting location: Waiter',
+   items:['Concealed weapon: Krugermeier 2-2','Gear: Emetic Poison Vial','Gear: Lethal Poison Vial','Smuggled item: none']
+ },
+ note:'The shisha stall has to be poisoned in the first few seconds, before the enforcer notices you and before the cameraman sits down. Everything else in this run is patient.',
+ sections:[
+ {h:'The cameraman',steps:[
+  {t:'Poison the shisha pipe immediately',
+   b:[['Where','The stall immediately left of the bar — the one the cameraman uses.'],
+      ['Item','Emetic poison vial.'],
+      ['Action','Get in and spike the pipe before the enforcer spots you and before the cameraman arrives.'],
+      ['Warning','This is the tightest window in the run. Restart rather than improvise if you miss it.']],
+   badges:[['warn','Do this in the first seconds of the run']],
+   d:{}},
+  {t:'Fetch rat poison while he gets sick',
+   b:[['Where','The room in the alleyway between the Shisha café and the courtyard — the same room used to hide bodies in Run 2.'],
+      ['Action','Take the rat poison there and come back.']],
+   badges:[],
+   d:{}},
+  {t:'Take his membership card',
+   b:[['NPC','The cameraman, now sick.'],
+      ['Action','Pacify him, hide the body and take the courtyard club membership card. Leave the disguise for now.']],
+   badges:[['chal',"I'm a Member"]],
+   d:{'Why wait':'You need the waiter outfit a little longer; the cameraman disguise is picked up from the café bathroom later.'}}
+ ]},
+ {h:'Zaydan\'s dinner',steps:[
+  {t:'Wake the waiter who carries the food',
+   b:[['Where','The alleyway between the Shisha café and vase street — a radio next to a sleeping waiter.'],
+      ['Action','Switch the radio on and off to wake him. He then starts carrying food to Reza.']],
+   badges:[],
+   d:{}},
+  {t:'Poison the food stall',
+   b:[['Where','The alley connecting the consulate square to the shoe shop — the food stall with the green awning.'],
+      ['Item','Lethal poison vial.'],
+      ['Action','Spike Reza\'s dish. He dies eating it.']],
+   badges:[['chal','Poison IV'],['chal','Tasteless, Traceless'],['chal','The General']],
+   d:{'Also used for SASO':'This exact stall and the same sleeping-waiter trick are the opening of the Silent Assassin Suit Only route in Run 7.'}}
+ ]},
+ {h:'Prime time',steps:[
+  {t:'Set up the protester and start the story',
+   b:[['Where','Consulate square, then the walkway between the consulate square and market square.'],
+      ['Action','Trigger the dialogue of the two people by the car so they leave. Spike the protester\'s drink with rat poison. Then listen to the two people in the main walkway to start Prime Time.']],
+   badges:[],
+   d:{}},
+  {t:'Become the cameraman and take a propane tank',
+   b:[['Where','The Shisha café bathroom for the disguise; a food stand near the café exit in the market square for the propane tank.'],
+      ['Action','Change into the cameraman, take the propane tank, then talk to the news crew and wait for them to enter the consulate.']],
+   badges:[['chal','Candid Camera']],
+   d:{}},
+  {t:'Plant the tank, then deal with the protester',
+   b:[['Where','The auditorium, by the interview chair.'],
+      ['Action','Throw the propane tank next to the interview chair, then go back outside and wait for the protester to be sick. Pacify him when he is.'],
+      ['Warning','Stay close enough to hear his speech — fish reports his drinking timing varies and seems tied to that.']],
+   badges:[['chal','Public Sneaker'],['warn','Do not eliminate him — pacify only']],
+   d:{'Timing note':'The news crew waits for you indefinitely, so it is fine to spend as long as the protester needs.'}},
+  {t:'Start the camera, then blow the tank',
+   b:[['Disguise','Cameraman — required for Drama Queen.'],
+      ['Action','Start the camera to complete the story. Save when the interview starts, then shoot the propane tank.'],
+      ['Then','Reload.']],
+   badges:[['chal','Mission Story - Prime Time'],['chal','Drama Queen'],['save','Save as the interview begins']],
+   d:{}},
+  {t:'The moose',
+   b:[['Where','Upstairs in the auditorium control room.'],
+      ['Action','Kill Claus with the moose.'],
+      ['Then','Exit the mission.']],
+   badges:[['chal','A Room with a Moose'],['chal','The Banker']],
+   d:{}}
+ ]}]
+},
+{
+ id:'r4', tag:'Run 4', title:'Dismissal, dancing and the massage',
+ goal:"Dismiss every soldier in the school so the dance starts, headshot Zaydan mid-dance, then rig the oil lamp and finish Claus on the massage table. Seven challenges plus Versatile Assassin.",
+ diff:'Casual.',
+ loadout:{
+   start:'Undercover in Zaydan\'s Compound · Marrakesh mastery level 8 (starts you as an Elite Soldier)',
+   suit:'Disguise fixed by starting location: Elite Soldier',
+   items:['Concealed weapon: Krugermeier 2-2','Gear: Classic Lockpick','Gear: Coin ×3','Smuggled item: none']
+ },
+ note:'All nine elite soldiers have to be dismissed or the radio never appears. Four are on the ground floor and five upstairs — count them.',
+ sections:[
+ {h:'Clearing the school',steps:[
+  {t:'Wrench and officer outfit',
+   b:[['Where','The table in front of the spawn for the wrench; then downstairs.'],
+      ['Action','Take the wrench, go down and get an officer disguise the same way as Run 1 — coin-lure the officer out of his room, pacify, hide, change.']],
+   badges:[],
+   d:{}},
+  {t:'Dismiss all nine, and shoot a hoop',
+   b:[['Disguise','Military Officer.'],
+      ['NPC','Nine patrolling elite soldiers: four on floor one, five on floor two.'],
+      ['Action','Dismiss every one of them. They all gather in the outdoor area on the left of the school with the basketball hoop. While you wait, throw a pool ball through the hoop.'],
+      ['Warning','Miss even one soldier and the radio will not spawn.']],
+   badges:[['chal','Slam Dunk'],['warn','All nine, no exceptions']],
+   d:{'Redacted':'Slam Dunk is [REDACTED] in the game data. Throwing a pool ball through the basketball hoop is fish\'s documented action.'}},
+  {t:'Branch · Start the dance and headshot him',
+   b:[['Where','The first-floor office, where the radio has now spawned.'],
+      ['Action','Save first. Switch on the radio and the school intercom. Reza walks down to join the dismissed soldiers; when he arrives and starts dancing, headshot him.'],
+      ['Then','Reload — Reza is needed alive for the oil lamp.']],
+   badges:[['chal',"Let's Dance"],['chal','Dance Till You Drop'],['chal','Straight Shot'],['chal','Versatile Assassin'],['save','Save before switching the radio on'],['warn','Reload afterwards']],
+   d:{'Redacted':'Both Let\'s Dance and Dance Till You Drop are [REDACTED] in the game data. Radio plus intercom, then a headshot while he dances, is fish\'s documented action.',
+      'Versatile Assassin':'The set is Piano Man (Run 1), Someone Could Hurt Themselves (Run 1), Hold My Hair (Run 1), Tasteless Traceless (Run 3) and Straight Shot — which lands here.'}}
+ ]},
+ {h:'The oil lamp',steps:[
+  {t:'Rig the director\'s office',
+   b:[['Where','The director\'s office on the second floor.'],
+      ['Action','Turn the oil lamp off and loosen the gas canister valve. Reza comes to inspect the lamp and the room goes up.']],
+   badges:[['chal','Oil Lamp'],['chal','The General']],
+   d:{}}
+ ]},
+ {h:'The massage',steps:[
+  {t:'Become the masseur',
+   b:[['Where','The consulate — the tablet behind the receptionist starts Golden Touch.'],
+      ['Action','Read the tablet, then take the masseur disguise.']],
+   badges:[['chal','Strong Hands']],
+   d:{}},
+  {t:'Finish him on the table',
+   b:[['Disguise','Masseur — required.'],
+      ['Action','Meet Claus in the massage room and kill him during the massage.'],
+      ['Then','Exit the mission.']],
+   badges:[['chal','Mission Story - Golden Touch'],['chal','(Un)happy Ending'],['chal','The Banker']],
+   d:{}}
+ ]}]
+},
+{
+ id:'r5', tag:'Run 5', title:'The tunnel meeting',
+ goal:"Summon both targets to the underground tunnel from two different offices, then take them together with one burning oil drum. Four challenges, short run.",
+ diff:'Casual.',
+ loadout:{
+   start:'Undercover in Zaydan\'s Compound · Marrakesh mastery level 8',
+   suit:'Disguise fixed by starting location: Elite Soldier',
+   items:['Concealed weapon: Krugermeier 2-2','Gear: Classic Lockpick','Gear: The Big One','Smuggled item: none']
+ },
+ note:'Both summons have to be issued before either target reaches the tunnel, so do the school call first and then move straight to the consulate.',
+ sections:[
+ {h:'Two phone calls',steps:[
+  {t:'School safe code, then summon Claus',
+   b:[['Where','The table in front of the spawn for the safe code; then the director\'s office upstairs.'],
+      ['Action','Take the code, get an officer disguise the same way as Run 1, then read the meeting protocol in the director\'s office and call Claus. He starts walking to the underground tunnel.']],
+   badges:[['chal','Is it Safe?'],['chal','Mission Story - Honeycomb']],
+   d:{}},
+  {t:'Consulate kit',
+   b:[['Where','The office just outside the front of the consulate for the security disguise; the room right of reception for the car key; the bathroom left of reception for the consulate safe code.'],
+      ['Action','Collect all three. The consulate car exit is the closest one to where this run ends.']],
+   badges:[],
+   d:{}},
+  {t:'Summon Zaydan',
+   b:[['Where','Claus\' office upstairs.'],
+      ['Action','Lockpick the unguarded double doors when nobody is looking, read the meeting protocol to start Cherry Blossom, pacify the lone guard inside and call Reza. He starts walking to the tunnel too.']],
+   badges:[['chal','Mission Story - Cherry Blossom']],
+   d:{}}
+ ]},
+ {h:'The oil drum',steps:[
+  {t:'Get to the tunnel first',
+   b:[['Where','The consulate garage — the mechanic\'s work area has the tunnel entrance.'],
+      ['Disguise','Change back to Military Officer.'],
+      ['Action','Go to the main room of the tunnel. Claus should already be there.']],
+   badges:[],
+   d:{}},
+  {t:'One drum, two targets',
+   b:[['Action','When nobody is looking, shoot the oil drum right beside Claus to spill it. Wait for Reza to arrive, and once they are standing next to each other, throw The Big One into the oil puddle.'],
+      ['Then','Exit the mission in the consulate car.']],
+   badges:[['chal',"Don’t Blow It"],['chal','Tunnel Vision'],['chal','The Banker'],['chal','The General'],['warn','Both must be beside the puddle when it goes up']],
+   d:{}}
+ ]}]
+},
+{
+ id:'r6', tag:'Run 6', title:'Down the rabbit hole and the turret',
+ goal:"Follow the evacuation plan into the tunnel, then take both targets with the APC turret as they meet outside the school and drive out in an army truck. Four challenges.",
+ diff:'Casual.',
+ loadout:{
+   start:'Lamp Store Rooftop · Marrakesh mastery level 13',
+   suit:'Summer Suit',
+   items:['Concealed weapon: Krugermeier 2-2','Gear: Fish','Gear: Coin ×3','Smuggled item: none']
+ },
+ note:'The turret meeting at the end of this run is the same meeting the Sniper Assassin run in Run 8 uses. If you are going straight on to Run 8, note where the two targets stand.',
+ sections:[
+ {h:'The evacuation plan',steps:[
+  {t:'Clear the rooftop and read the plan',
+   b:[['Where','Turn around at the spawn.'],
+      ['NPC','A soldier and a woman on the rooftop.'],
+      ['Item','Fish — a perfectly good thrown weapon.'],
+      ['Action','Pacify both, then read the evacuation plan to start Down the Rabbit Hole.']],
+   badges:[],
+   d:{}},
+  {t:'Take an elite soldier outfit at the well',
+   b:[['Where','The well by the shoe shop.'],
+      ['NPC','Two elite soldiers.'],
+      ['Action','Pacify both, hide the bodies, drop their guns behind the well and change into an elite soldier.']],
+   badges:[],
+   d:{}},
+  {t:'Follow the soldier into the tunnel',
+   b:[['Where','The shoe shop.'],
+      ['Action','Investigate the shop and listen to the conversation, then follow the soldier to the tunnel entrance.']],
+   badges:[['chal','Mole-tiple Choice']],
+   d:{}},
+  {t:'Read the turret schematics',
+   b:[['Where','The main room in the tunnel — an enforcer stands by the table.'],
+      ['Action','Walk ahead of the soldier, distract the enforcer with a coin, and read the APC turret schematics on the table. Then go back to the first soldier and listen to his next conversation.'],
+      ['Warning','Without the schematics the turret laptop does nothing later.']],
+   badges:[['warn','The schematics are mandatory for .50 Syndrome']],
+   d:{}}
+ ]},
+ {h:'The turret',steps:[
+  {t:'Take the army truck key',
+   b:[['Where','The garage, on one of the tables next to two laptops.'],
+      ['Action','After the fire alarm triggers, take the army truck key. Claus starts running to the shoe shop.']],
+   badges:[['warn','Take the key now — the exit is behind the turret at the end']],
+   d:{}},
+  {t:'Escort Claus',
+   b:[['Where','The shoe shop.'],
+      ['Action','Meet him there to complete the story.']],
+   badges:[['chal','Mission Story - Down The Rabbit Hole']],
+   d:{}},
+  {t:'Fire the turret on both',
+   b:[['Where','The school entrance — the laptop that controls the turret is on the right side.'],
+      ['NPC','Claus and Reza meet outside the school.'],
+      ['Action','Wait until they are together, then fire the turret.'],
+      ['Then','Exit in the army truck right behind you.']],
+   badges:[['chal','.50 Syndrome'],['chal','Get the Truck Out of Here!'],['chal','The Banker'],['chal','The General']],
+   d:{}}
+ ]}]
+},
+{
+ id:'r7', tag:'Run 7', title:'Silent Assassin, Suit Only',
+ goal:"Poison Zaydan's dinner from the street, then go in through the consulate car park and take Strandberg in the vacuum-cleaner room. No disguise, no bodies found, nobody sees you.",
+ diff:'Any. These Classics are no longer difficulty-tiered in World of Assassination.',
+ loadout:{
+   start:'Bazaar Entrance · Marrakesh mastery level 1',
+   suit:'Summer Suit — mandatory. Any disguise voids Suit Only and SASO.',
+   items:['Gear: Lethal Poison Vial — the one thing you must bring','Gear: Coin ×3 for luring','Concealed weapon: optional; a silenced pistol only if you are confident','Smuggled item: none']
+ },
+ note:'fish left the SA/SO section of his guide as a video with no text. This route is NamuWiki\'s, and its first half — the green-awning food stall and the sleeping waiter woken by the radio — is independently confirmed by fish\'s own Run 3. Two further written routes are recorded in the notes on the last step.',
+ sections:[
+ {h:'Zaydan, without ever touching him',steps:[
+  {t:'Poison the food stall',
+   b:[['Where','The food stall with the green awning, in the alley connecting the consulate square to the shoe shop.'],
+      ['NPC','A soldier stands over the dish — distract him first.'],
+      ['Item','Lethal poison vial.'],
+      ['Action','Draw his attention away, then spike Reza\'s dish.'],
+      ['Warning','On the original higher difficulties that soldier does not patrol at all and simply stares at the food, so a badly placed lure gets you caught poisoning.']],
+   badges:[['chal','The General'],['src','NamuWiki, confirmed by fish Run 3'],['warn','Distract the soldier first, then poison']],
+   d:{'Why poison':'It kills Zaydan without you ever entering the school, which is the hardest area on the map to cross in the suit.'}},
+  {t:'Wake the waiter who delivers it',
+   b:[['Where','The alleyway between the Shisha café and vase street — a radio beside a sleeping waiter.'],
+      ['Action','Switch the radio on to wake him. He picks up the poisoned dish and carries it to Reza.'],
+      ['Result','Zaydan dies without you being anywhere near him. Save once he is confirmed dead.']],
+   badges:[['save','Save once Zaydan is confirmed dead'],['src','NamuWiki, confirmed by fish Run 3']],
+   d:{}}
+ ]},
+ {h:'Into the consulate',steps:[
+  {t:'Over the wall into the car park',
+   b:[['Where','The outside wall of the consulate — there is a climbable section.'],
+      ['Action','Watch the CCTV camera at the top of the parking stairs and the guard patrolling near it, then climb over and go down into the underground parking.'],
+      ['Warning','In the suit the consulate is trespassing, so the parking is the only viable way in.']],
+   badges:[['src','NamuWiki'],['warn','Camera at the stairs — check it before you move']],
+   d:{'Higher difficulties':'NamuWiki notes that on the original Professional difficulty there is an extra camera on the keycard door itself, and the parking-stairs camera raises an alarm rather than just recording.'}},
+  {t:'Bait a soldier into giving you the keycard',
+   b:[['Where','The keycard door at the back of the parking.'],
+      ['NPC','The soldier at the entrance to the tunnel passage, then a second soldier who comes up from below.'],
+      ['Action','Take down the first soldier and drop his gun in front of the door, then hide in a cabinet. The second soldier finds the gun, pauses over it, and you take him from behind and lift the keycard.'],
+      ['Warning','Both bodies have to end up hidden — "no bodies found" is a hard requirement.']],
+   badges:[['src','NamuWiki'],['warn','Hide both bodies']],
+   d:{'Why the gun trick':'It puts the second soldier in a fixed, predictable spot with his back turned, which is the only reliable way to take him in the open parking.'}},
+  {t:'Up to the second floor',
+   b:[['Action','Use the keycard, then go up. Guards shuttle between floors one and two on the staircase, so time the climb between them.']],
+   badges:[['src','NamuWiki']],
+   d:{}}
+ ]},
+ {h:'Strandberg',steps:[
+  {t:'The vacuum-cleaner room',
+   b:[['Where','A small room on the second floor containing a vacuum cleaner and a fire extinguisher.'],
+      ['NPC','Two guards near the interview railing where Claus goes.'],
+      ['Action','Run the vacuum to lure and take down the first guard, then lure and take down the second with a thrown object. Hide both.'],
+      ['Note','IBTimes describes the same room and the same trick, and hides the bodies in a recycling crate.']],
+   badges:[['src','NamuWiki + IBTimes UK'],['warn','Hide both guards before Claus arrives']],
+   d:{}},
+  {t:'Take Claus and leave',
+   b:[['NPC','Claus Hugo Strandberg, who comes to the second-floor railing for the interview.'],
+      ['Action','Lure him into the room and finish him there. A screwdriver electrocution also works. Pushing him over the railing works too, but ground-floor NPCs can see it happen.'],
+      ['Then','Retrace your route down through the parking and out.']],
+   badges:[['chal','The Banker'],['chal','Silent Assassin'],['chal','Silent Assassin, Suit Only'],['chal','Suit Only'],['warn','Do not push him over the railing unless the floor below is clear']],
+   d:{'Alternative route A — IBTimes UK':'Bazaar Entrance with coin and fiber wire. Strandberg first: vault the gap between the truck and the dumpster at the protest, in through the left door, down to the car park, coin-distract the lone guard and take the keycard off the table, coin past the door guards, keycard in, upstairs, run the vacuum as cover noise, subdue the guard into a recycling crate, fiber-wire Strandberg when he turns his back and hide him in the same crate. Then Zaydan: up through the headmaster\'s house to the roof terrace, throw the crowbar at the headmaster, take his key, follow the ledge at the back of the terrace and slide the pipe into the military compound, cross crouched to the tank side, unlock the door, take the guard before he reaches the window, and fiber-wire Zaydan when he comes through.',
+      'Alternative route B — Steam guide 644994482':'Take the school masterkey off the headmaster, slide the pipe down, enter the school through the back right corner, switch on the intercom and take Zaydan when he investigates the upstairs bathroom. Then breach the back-right door of the consulate parking, go upstairs, rat-poison the wine glass in his office and drown Strandberg in the bathroom, and leave the way you came.',
+      'Why this route is first':'It is the only one of the three where one of the two targets never has to be approached at all.'}}
+ ]}]
+},
+{
+ id:'r8', tag:'Run 8', title:'Sniper Assassin — the school window',
+ goal:"Both targets through the school's second-floor window. Needs a military disguise, because carrying a rifle in the suit draws suspicion. Fires the Classics capstone on completion.",
+ diff:'Any. Not difficulty-tiered in World of Assassination.',
+ loadout:{
+   start:'Bazaar Entrance (mastery 1) or Undercover in Zaydan\'s Compound (mastery 8) — the compound start hands you the soldier outfit for free',
+   suit:'Any. Sniper Assassin does not require the suit, and a military outfit is what lets you carry the rifle.',
+   items:['A silenced sniper rifle','Gear: Coin ×3','Gear: Classic Lockpick','Smuggled item: the rifle — see the warning below']
+ },
+ note:'fish left the Sniper Assassin section of his guide as a video with no text, and no written source names a specific rifle stash point for this map. The positions and the disguise requirement below come from NamuWiki, with the Strandberg shot independently corroborated. Treat the exact stash choice as yours to make.',
+ sections:[
+ {h:'Before anything else',steps:[
+  {t:'Get a military outfit first',
+   b:[['Why','Carrying a sniper rifle in the suit raises suspicion everywhere on this map, and the rifle also blocks you from entering shops. NamuWiki is explicit that you should farm the uniform before you start moving the rifle.'],
+      ['Action','Either start Undercover in Zaydan\'s Compound, which gives you the Elite Soldier outfit outright, or take an officer or soldier outfit the way Run 1 does.']],
+   badges:[['warn','Uniform before rifle, not the other way round'],['src','NamuWiki']],
+   d:{'Unverified':'No source consulted names which agency pickup or stash point to use for the rifle on this map. Marrakesh\'s pickups are Lamp Shop Alley (mastery 1), Consulate Parking Garage (2), West Bazaar Rooftops (7), Old Headmaster\'s Terrace (12) and School Gate (19). The Old Headmaster\'s Terrace sits at the sniping position described below, but no source states that it is the one to use — this guide will not claim it is.'}}
+ ]},
+ {h:'Position A — the headmaster\'s terrace',steps:[
+  {t:'Climb to the axe ledge',
+   b:[['Where','Inside the rooftop of the headmaster\'s building there is a railing you can climb over.'],
+      ['Action','Go over it and follow round to the sniping spot where the battle axe is embedded.'],
+      ['Result','From there you have a line through the school\'s second-floor window.'],
+      ['Warning','NamuWiki notes that soldiers can sense this position and come out to investigate, so do not linger after a shot.']],
+   badges:[['src','NamuWiki'],['warn','Soldiers can find this spot — move after firing']],
+   d:{}},
+  {t:'Take Zaydan at the window',
+   b:[['NPC','General Reza Zaydan.'],
+      ['Action','He walks down to the prisoner on the first floor periodically and sometimes leans out of the second-floor window. Shoot him at that moment.'],
+      ['Warning','Only the two targets may die and you must never be spotted.']],
+   badges:[['chal','The General'],['src','NamuWiki'],['save','Save before firing']],
+   d:{}},
+  {t:'Take Strandberg at the same window',
+   b:[['NPC','Claus Hugo Strandberg.'],
+      ['Action','Shoot him through the school\'s second-floor window when the targets are at the school, not out by the main gate.'],
+      ['Warning','Shooting him out by the main gate gets you spotted by the soldiers there.']],
+   badges:[['chal','The Banker'],['chal','Sniper Assassin'],['src','NamuWiki + Neoseeker summary'],['warn','Not at the main gate']],
+   d:{'Getting them both to the school':'The one scripted moment that puts both targets together outside the school is the end of <b>Mission Story — Down the Rabbit Hole</b>, which is exactly the meeting Run 6 uses for the APC turret. If you set that story up first, both targets come to you.',
+      'Single source':'The Strandberg window shot is stated by NamuWiki and echoed in a search summary of Neoseeker\'s Marrakesh challenge page. It is not a heavily documented route — expect to adjust.'}}
+ ]},
+ {h:'Position B — the officer route',steps:[
+  {t:'Clear the upper floor as an officer',
+   b:[['Disguise','Military Officer.'],
+      ['Action','Dismiss all the upstairs patrols, put the officer from the entrance into the locker by the blocked stairs, and stow your weapon.'],
+      ['Why','It empties the corridor so nobody walks into your line.']],
+   badges:[['src','NamuWiki']],
+   d:{}},
+  {t:'Shoot from the opposite corridor',
+   b:[['Where','The hallway across from the general\'s room.'],
+      ['Action','Shoot Zaydan from there as he enters his room.'],
+      ['Then','Complete the mission — Sniper Assassin only banks on completion. With Silent Assassin, Silent Assassin Suit Only and Suit Only already done in Run 7, the capstone fires.']],
+   badges:[['chal','Sniper Assassin'],['chal','The Classics'],['src','NamuWiki']],
+   d:{'Capstone':'The Classics requires Silent Assassin, Silent Assassin Suit Only, Sniper Assassin and Suit Only. Run 7 delivers three of the four; this run delivers the fourth.'}}
+ ]}]
+}];
+
+const KEY='gilded_cage_done_v1', RID='m04';
+const SKEY=KEY+':steps', OKEY=KEY+':open';
+const done=new Set(), stepsDone=new Set(), openRuns=new Set();
+function loadSet(k,set,fallback){
+  try{const v=JSON.parse(localStorage.getItem(k));if(Array.isArray(v)){v.forEach(x=>set.add(x));return;}}catch(e){}
+  if(fallback)fallback.forEach(x=>set.add(x));
+}
+loadSet(KEY,done);          /* ticked challenges */
+loadSet(SKEY,stepsDone);    /* ticked route steps */
+loadSet(OKEY,openRuns,['r1']); /* which runs are expanded */
+function reportProgress(){try{const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r[RID]={done:done.size,total:CH.length,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
+/* one writer for all three sets — every toggle below calls this */
+function persist(){
+  try{
+    localStorage.setItem(KEY,JSON.stringify([...done]));
+    localStorage.setItem(SKEY,JSON.stringify([...stepsDone]));
+    localStorage.setItem(OKEY,JSON.stringify([...openRuns]));
+    localStorage.setItem(KEY+':auto',JSON.stringify([...autoDone]));
+  }catch(e){}
+  reportProgress();
+}
+const saveDone=persist;
+
+/* ---- steps -> challenges ----------------------------------------
+   A step's 'chal' badges name the challenges it earns. A challenge counts as
+   done once every step carrying its badge is ticked. Only challenges this
+   code ticked are ever un-ticked here, so manual ticks survive. */
+const AUTO_KEY=KEY+':auto';
+const ID_BY_NAME={}; CH.forEach(c=>{ID_BY_NAME[c.name]=c.id;});
+const STEPS_FOR={};
+RUNS.forEach(r=>r.sections.forEach((sec,si)=>sec.steps.forEach((st,ti)=>{
+  const key=`${r.id}-${si}-${ti}`;
+  (st.badges||[]).forEach(b=>{
+    if(b[0]!=='chal')return;
+    const id=ID_BY_NAME[b[1]];
+    if(!id)return;
+    (STEPS_FOR[id]||(STEPS_FOR[id]=[])).push(key);
+  });
+})));
+const autoDone=new Set();
+loadSet(AUTO_KEY,autoDone);
+function syncChallenges(){
+  Object.keys(STEPS_FOR).forEach(id=>{
+    const earned=STEPS_FOR[id].every(k=>stepsDone.has(k));
+    if(earned){ if(!done.has(id)){ done.add(id); autoDone.add(id); } }
+    else if(autoDone.has(id)){ done.delete(id); autoDone.delete(id); }
+  });
+}
+syncChallenges();
+let filter='All';
+
+/* ---------------- tracker ---------------- */
+function renderTracker(){
+  const cats=['Assassination','Discovery','Feats','Targets','The Classics'];
+  document.getElementById('cats').innerHTML=cats.map(c=>{
+    const all=CH.filter(x=>x.cat===c), d=all.filter(x=>done.has(x.id)).length;
+    return `<div class="cat"><span class="n">${c}</span>
+      <span class="v">${d}<em>&thinsp;/&thinsp;${all.length}</em></span>
+      <span class="mb"><i style="width:${Math.round(d/all.length*100)}%;background:${CAT_COLOR[c]}"></i></span></div>`;
+  }).join('');
+  document.getElementById('tDone').textContent=done.size;
+  document.getElementById('tBar').style.width=(done.size/CH.length*100)+'%';
+}
+
+/* ---------------- run nav ---------------- */
+function renderNav(){
+  document.getElementById('runnav').innerHTML=
+    RUNS.map((r,i)=>`<button data-jump="${r.id}">${String(i+1).padStart(2,'0')} · ${r.title}</button>`).join('')+
+    `<span class="util"><button data-all="open">Expand all</button><button data-all="close">Collapse</button></span>`;
+}
+
+/* ---------------- runs ---------------- */
+function badgeHTML(b){
+  const cls={chal:'b-chal',warn:'b-warn',save:'b-save',unv:'b-unv',src:'b-src'}[b[0]];
+  const pre={warn:'⚠ ',save:'◆ ',unv:'? ',src:'✎ ',chal:''}[b[0]];
+  return `<span class="badge ${cls}">${pre}${b[1]}</span>`;
+}
+function renderRuns(){
+  document.getElementById('runList').innerHTML=RUNS.map((r,ri)=>{
+    const open=openRuns.has(r.id);
+    let n=0;
+    const total=r.sections.reduce((a,s)=>a+s.steps.length,0);
+    const doneCount=r.sections.reduce((a,s,si)=>a+s.steps.filter((_,ti)=>stepsDone.has(`${r.id}-${si}-${ti}`)).length,0);
+    return `<article class="run ${open?'open':''}" id="${r.id}">
+      <button class="run-head" data-toggle="${r.id}" aria-expanded="${open}">
+        <span class="rarch">${String(ri+1).padStart(2,'0')}</span>
+        <span class="rh">
+          <span class="run-no">${r.tag} &nbsp;·&nbsp; ${r.diff.split('.')[0]}</span>
+          <h3>${r.title}</h3>
+          <p>${r.goal}</p>
+          <span class="run-prog">${doneCount} of ${total} steps</span>
+        </span>
+      </button>
+      <div class="run-body" ${open?'':'hidden'}>
+        <div class="loadout">
+          <h4>Loadout</h4>
+          <div class="lo-grid">
+            <div><span>Starting location</span>${r.loadout.start}</div>
+            <div><span>Difficulty</span>${r.diff}</div>
+            <div><span>Suit</span>${r.loadout.suit}</div>
+            ${r.loadout.items.map((it,i)=>`<div><span>Slot ${i+1}</span>${it}</div>`).join('')}
+          </div>
+          ${r.note?`<p class="lo-note">${r.note}</p>`:''}
+        </div>
+        <div class="sect">
+          ${r.sections.map((sec,si)=>`<h4>${sec.h}</h4>`+sec.steps.map((st,ti)=>{
+            const key=`${r.id}-${si}-${ti}`; n++;
+            const hasD=st.d&&Object.keys(st.d).length;
+            return `<div class="step ${stepsDone.has(key)?'done':''}" id="s-${key}">
+              <div class="step-top">
+                <span class="snum"><b>${n}</b></span>
+                <button class="tick" data-step="${key}" aria-label="Mark step complete">✓</button>
+                <div class="step-body">
+                  <p class="step-title">${st.t}</p>
+                  <ul class="bul">${st.b.map(x=>`<li><k>${x[0]}</k><span>${x[1]}</span></li>`).join('')}</ul>
+                  <div class="badges">${st.badges.map(badgeHTML).join('')}</div>
+                </div>
+              </div>
+              ${hasD?`<button class="more" data-more="${key}" aria-expanded="false">+ Notes</button>
+              <div class="detail" id="d-${key}" hidden><dl>${Object.entries(st.d).map(([k,v])=>{
+                const c=k==='Unverified'?'flag unv':(/^(Why the order|Ordering|Order note|Requirement|Warning|Why first|Conflict|Single source|Higher difficulties|Known bug|Bug)/.test(k)?'flag amber':'');
+                return c?`<div class="${c}"><dt style="margin-top:0">${k}</dt><dd>${v}</dd></div>`:`<dt>${k}</dt><dd>${v}</dd>`;
+              }).join('')}</dl></div>`:''}
+            </div>`;
+          }).join('')).join('')}
+        </div>
+      </div>
+    </article>`;
+  }).join('');
+}
+
+/* ---------------- checklist ---------------- */
+function renderFilters(){
+  const opts=['All','Assassination','Discovery','Feats','Targets','The Classics','Incomplete'];
+  document.getElementById('filters').innerHTML=opts.map(o=>`<button class="${o===filter?'on':''}" data-f="${o}">${o}</button>`).join('');
+}
+function renderChecklist(){
+  const list=CH.filter(c=>filter==='All'?true:filter==='Incomplete'?!done.has(c.id):c.cat===filter);
+  document.getElementById('chalList').innerHTML=list.length?list.map(c=>`
+    <div class="chal ${done.has(c.id)?'done':''}">
+      <button class="tick" data-ch="${c.id}" aria-label="Mark ${c.name} complete">✓</button>
+      <div class="chal-main">
+        <p class="chal-name">${c.name}</p>
+        <p class="chal-cond">${c.cond}</p>
+        <div class="chal-meta">
+          <span class="badge" style="color:${CAT_COLOR[c.cat]};border-color:${CAT_COLOR[c.cat]}">${c.cat}</span>
+          ${c.run?`<span class="badge b-chal">Run ${c.run}</span>`:'<span class="badge b-unv">Not routed — see Audit</span>'}
+        </div>
+      </div>
+    </div>`).join(''):'<p style="color:var(--dim)">Nothing matches this filter.</p>';
+}
+
+document.addEventListener('click',e=>{
+  const tab=e.target.closest('.tab');
+  if(tab){
+    document.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-selected',t===tab));
+    document.querySelectorAll('.panel').forEach(p=>p.hidden=p.id!=='p-'+tab.dataset.panel);
+    return;
+  }
+  const jump=e.target.closest('[data-jump]');
+  if(jump){
+    const id=jump.dataset.jump;
+    openRuns.add(id); persist(); renderRuns();
+    document.querySelectorAll('[data-jump]').forEach(b=>b.classList.toggle('hot',b.dataset.jump===id));
+    document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});
+    return;
+  }
+  const all=e.target.closest('[data-all]');
+  if(all){
+    if(all.dataset.all==='open') RUNS.forEach(r=>openRuns.add(r.id)); else openRuns.clear();
+    persist(); renderRuns(); return;
+  }
+  const tg=e.target.closest('[data-toggle]');
+  if(tg){
+    const id=tg.dataset.toggle;
+    openRuns.has(id)?openRuns.delete(id):openRuns.add(id);
+    persist(); renderRuns(); return;
+  }
+  const f=e.target.closest('[data-f]');
+  if(f){ filter=f.dataset.f; renderFilters(); renderChecklist(); return; }
+  const ch=e.target.closest('[data-ch]');
+  if(ch){
+    const id=ch.dataset.ch;
+    done.has(id)?done.delete(id):done.add(id);
+    saveDone(); renderTracker(); renderChecklist(); return;
+  }
+  const sp=e.target.closest('[data-step]');
+  if(sp){
+    const k=sp.dataset.step;
+    stepsDone.has(k)?stepsDone.delete(k):stepsDone.add(k);
+    syncChallenges();
+    persist(); renderRuns(); renderTracker(); renderChecklist(); return;
+  }
+  const rs=e.target.closest('#reset');
+  if(rs){
+    if(confirm('Clear every ticked challenge for this mission?')){
+      done.clear(); stepsDone.clear(); autoDone.clear(); saveDone(); renderTracker(); renderChecklist(); renderRuns();
+    }
+    return;
+  }
+  const m=e.target.closest('[data-more]');
+  if(m){
+    const d=document.getElementById('d-'+m.dataset.more);
+    d.hidden=!d.hidden;
+    m.setAttribute('aria-expanded',String(!d.hidden));
+    m.textContent=d.hidden?'+ Notes':'− Notes';
+  }
+});
+
+renderTracker(); renderNav(); renderFilters(); renderChecklist(); renderRuns();
+reportProgress();
+</script>
+<!-- step-progress-bridge -->
+<script>
+/* Reports route-step ticks into 'hitman-progress-registry' so the index can
+   show them beside the challenge counts. Counts what is on screen rather than
+   any guide-specific state, so one implementation serves every guide. */
+(function(){
+  var RID="m04", SEL=".step";
+  function isDone(s){
+    var c=s.classList;
+    if(c.contains('done')||c.contains('dn')) return true;
+    if(s.getAttribute('data-done')==='1'||s.getAttribute('aria-pressed')==='true') return true;
+    return !!s.querySelector('.done,.dn,[data-done="1"],[aria-pressed="true"]');
+  }
+  function tally(){
+    var steps=document.querySelectorAll(SEL);
+    if(!steps.length) return null;
+    var n=0;
+    for(var i=0;i<steps.length;i++) if(isDone(steps[i])) n++;
+    return {steps:n,stepTotal:steps.length};
+  }
+  function push(){
+    var t;
+    try{ t=tally(); }catch(err){ return; }
+    if(!t||!t.stepTotal) return;
+    try{
+      var r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');
+      var e=r[RID]||(r[RID]={});
+      /* the guide's own reportProgress() rewrites this entry wholesale, so
+         re-add the step counts whenever they go missing or stale */
+      if(e.steps===t.steps&&e.stepTotal===t.stepTotal) return;
+      e.steps=t.steps; e.stepTotal=t.stepTotal; e.updated=Date.now();
+      localStorage.setItem('hitman-progress-registry',JSON.stringify(r));
+    }catch(err){}
+  }
+  var pending=false;
+  function schedule(){
+    if(pending) return; pending=true;
+    setTimeout(function(){pending=false;push();},120);
+  }
+  try{
+    new MutationObserver(schedule).observe(document.body,
+      {subtree:true,childList:true,attributes:true,attributeFilter:['class','aria-pressed','data-done']});
+  }catch(err){}
+  window.addEventListener('load',schedule);
+  setTimeout(push,600);
+})();
+</script>
+<!-- /step-progress-bridge -->
+</body>
+</html>

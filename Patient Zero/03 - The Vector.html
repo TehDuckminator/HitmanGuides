@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Vector — Step Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;500;700&family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#10161C; --panel:#18212A; --panel2:#1F2A35; --raise:#26333F; --line:#2E3D4A;
+  --sand:#E6DECB; --dim:#8B9AA7; --dimmer:#5F6E7B;
+  --amber:#E39B2C; --cyan:#5FA6BE; --red:#C4493C; --moss:#8CA463; --violet:#9484BE;
+  --disp:'Oswald','Arial Narrow','Helvetica Neue',sans-serif;
+  --body:'IBM Plex Sans',system-ui,-apple-system,Segoe UI,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--ink);color:var(--sand);font-family:var(--body);font-size:15px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  background-image:linear-gradient(rgba(255,255,255,.014) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.014) 1px,transparent 1px);
+  background-size:34px 34px;
+}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px 90px}
+
+/* masthead */
+.masthead{border-bottom:1px solid var(--line);padding:32px 0 24px;display:grid;grid-template-columns:160px 1fr;gap:30px;align-items:center}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--dimmer);margin:0 0 8px}
+h1{font-family:var(--disp);font-weight:700;font-size:clamp(36px,6.5vw,62px);line-height:.92;text-transform:uppercase;margin:0 0 10px}
+h1 .thin{font-weight:300;color:var(--dim)}
+.subline{color:var(--dim);max-width:64ch;margin:0 0 16px;font-size:14.5px}
+.dial{position:relative;width:160px;height:160px}
+.dial svg{width:100%;height:100%;display:block}
+.dial .readout{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none}
+.dial .num{font-family:var(--disp);font-weight:700;font-size:38px;line-height:.85}
+.dial .den{font-family:var(--mono);font-size:9.5px;letter-spacing:.2em;color:var(--dimmer);text-transform:uppercase;margin-top:5px}
+.counters{display:flex;flex-wrap:wrap;gap:9px}
+.counter{border:1px solid var(--line);background:var(--panel);padding:8px 12px;min-width:112px}
+.counter .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dimmer);display:block}
+.counter .v{font-family:var(--disp);font-weight:500;font-size:23px;line-height:1.15}
+.counter .v em{font-style:normal;color:var(--dimmer);font-size:13px}
+.counter.lit{border-color:var(--amber)}.counter.lit .v{color:var(--amber)}
+.counter.nil .v{color:var(--dimmer)}
+
+/* tabs */
+.tabs{display:flex;border-bottom:1px solid var(--line);margin:24px 0 26px;overflow-x:auto}
+.tab{appearance:none;background:none;border:0;border-bottom:2px solid transparent;color:var(--dim);
+  font-family:var(--disp);font-weight:500;font-size:15px;letter-spacing:.13em;text-transform:uppercase;
+  padding:12px 18px;cursor:pointer;white-space:nowrap}
+.tab:hover{color:var(--sand)}
+.tab[aria-selected="true"]{color:var(--amber);border-bottom-color:var(--amber)}
+.tab:focus-visible{outline:2px solid var(--cyan);outline-offset:-2px}
+.panel[hidden]{display:none}
+
+/* shared */
+h2.sec{font-family:var(--disp);font-weight:500;font-size:13px;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--dimmer);margin:26px 0 14px;display:flex;align-items:center;gap:12px}
+h2.sec:first-child{margin-top:0}
+h2.sec::after{content:"";flex:1;height:1px;background:var(--line)}
+.note{border-left:2px solid var(--cyan);background:rgba(95,166,190,.06);padding:12px 16px;margin:0 0 20px;font-size:14px}
+.note strong{color:var(--cyan)}
+.note.alarm{border-left-color:var(--red);background:rgba(196,73,60,.07)}
+.note.alarm strong{color:var(--red)}
+.note.unv{border-left-color:var(--violet);background:rgba(148,132,190,.07)}
+.note.unv strong{color:var(--violet)}
+.note.gold{border-left-color:var(--amber);background:rgba(227,155,44,.06)}
+.note.gold strong{color:var(--amber)}
+.note ul{margin:8px 0 0;padding-left:18px}
+.note li{margin-bottom:5px}
+
+.badge{display:inline-block;font-family:var(--mono);font-size:9.5px;font-weight:600;letter-spacing:.13em;
+  text-transform:uppercase;padding:3px 7px;border:1px solid;margin:0 5px 5px 0;vertical-align:middle}
+.b-pop{color:var(--moss);border-color:rgba(140,164,99,.5);background:rgba(140,164,99,.09)}
+.b-warn{color:var(--red);border-color:rgba(196,73,60,.55);background:rgba(196,73,60,.1)}
+.b-save{color:var(--amber);border-color:rgba(227,155,44,.5);background:rgba(227,155,44,.1)}
+.b-unv{color:var(--violet);border-color:rgba(148,132,190,.5);background:rgba(148,132,190,.1)}
+.b-src{color:var(--cyan);border-color:rgba(95,166,190,.45);background:rgba(95,166,190,.08)}
+
+/* run nav */
+.runnav{position:sticky;top:0;z-index:20;background:var(--ink);border-bottom:1px solid var(--line);
+  padding:12px 0;margin:0 0 22px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.runnav .lbl{font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dimmer);margin-right:4px}
+.rbtn{appearance:none;background:var(--panel);border:1px solid var(--line);color:var(--sand);
+  font-family:var(--disp);font-weight:500;font-size:13px;letter-spacing:.08em;text-transform:uppercase;
+  padding:8px 13px;cursor:pointer;display:flex;align-items:center;gap:8px}
+.rbtn:hover{border-color:var(--amber);color:var(--amber)}
+.rbtn:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+.rbtn .n{font-family:var(--mono);font-size:10px;color:var(--dimmer)}
+.rbtn .prog{font-family:var(--mono);font-size:10px;color:var(--dimmer)}
+.rbtn.full{border-color:rgba(140,164,99,.5)}
+.rbtn.full .prog{color:var(--moss)}
+.rbtn.tiny{padding:8px 11px;font-family:var(--mono);font-size:10px;letter-spacing:.14em}
+
+/* run block */
+details.run{border:1px solid var(--line);background:var(--panel);margin:0 0 16px}
+details.run>summary{list-style:none;cursor:pointer;padding:18px 20px;display:block;position:relative}
+details.run>summary::-webkit-details-marker{display:none}
+details.run>summary:hover{background:var(--panel2)}
+details.run>summary::after{content:"OPEN ▸";position:absolute;right:20px;top:20px;font-family:var(--mono);
+  font-size:9.5px;letter-spacing:.16em;color:var(--amber)}
+details.run[open]>summary::after{content:"CLOSE ▾"}
+.run-tag{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink);
+  background:var(--amber);padding:3px 9px;display:inline-block;margin-bottom:10px}
+.run-title{font-family:var(--disp);font-weight:700;font-size:25px;text-transform:uppercase;letter-spacing:.02em;margin:0 0 6px;line-height:1.08}
+.run-goal{color:var(--dim);font-size:14px;margin:0 0 10px;max-width:76ch;padding-right:80px}
+.run-prog{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--dimmer);text-transform:uppercase}
+
+.loadout{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.lo{padding:13px 18px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.lo:last-child{border-right:0}
+.lo .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dimmer);display:block;margin-bottom:5px}
+.lo .v{font-size:13.5px;line-height:1.45}
+.lo .v.locked{color:var(--dimmer);font-style:italic}
+
+.grp{padding:16px 20px 2px}
+.grp h4{font-family:var(--disp);font-weight:500;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--amber);margin:0 0 12px}
+
+/* step block */
+details.step{border:1px solid var(--line);background:var(--panel2);margin:0 0 9px}
+details.step[open]{border-color:var(--raise)}
+details.step.done{border-color:rgba(140,164,99,.45)}
+details.step>summary{list-style:none;cursor:pointer;display:flex;align-items:stretch;gap:0}
+details.step>summary::-webkit-details-marker{display:none}
+details.step>summary:hover{background:var(--raise)}
+.tick{appearance:none;background:none;border:0;border-right:1px solid var(--line);width:44px;flex:0 0 44px;
+  cursor:pointer;color:var(--dimmer);font-family:var(--mono);font-size:16px;display:flex;align-items:center;justify-content:center}
+.tick:hover{color:var(--sand)}
+.tick:focus-visible{outline:2px solid var(--cyan);outline-offset:-2px}
+details.step.done .tick{color:var(--moss)}
+.stepmain{flex:1;padding:12px 16px;min-width:0}
+.stepno{font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--dimmer);display:block;margin-bottom:2px}
+.stepmain h5{font-size:15px;font-weight:600;margin:0 0 4px;line-height:1.35}
+details.step.done .stepmain h5{color:var(--dim);text-decoration:line-through;text-decoration-color:var(--dimmer)}
+.stepsum{color:var(--dim);font-size:14px;margin:0 0 8px}
+.stepbadges{margin-bottom:0}
+.stepdetail{border-top:1px solid var(--line);padding:14px 18px 4px 62px}
+
+/* spec strip */
+.spec{display:grid;grid-template-columns:88px 1fr;gap:0 14px;margin:0 0 12px;font-size:14px}
+.sk{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);padding:5px 0;border-top:1px solid var(--line)}
+.sv{padding:5px 0;border-top:1px solid var(--line)}
+.spec>.sk:first-child,.spec>.sk:first-child+.sv{border-top:0}
+.sv.none{color:var(--dimmer);font-style:italic}
+.stepdetail ul.tips{margin:0 0 12px;padding-left:18px;font-size:14px}
+.stepdetail ul.tips li{margin-bottom:6px}
+
+/* checklist */
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}
+.chip{appearance:none;background:var(--panel);border:1px solid var(--line);color:var(--dim);font-family:var(--mono);
+  font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;padding:7px 13px;cursor:pointer}
+.chip:hover{color:var(--sand);border-color:var(--dim)}
+.chip[aria-pressed="true"]{background:var(--amber);border-color:var(--amber);color:var(--ink);font-weight:600}
+.chip:disabled{opacity:.4;cursor:not-allowed}
+.chip:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+.chal{border:1px solid var(--line);background:var(--panel);margin:0 0 9px;display:flex}
+.chal.done{border-color:rgba(140,164,99,.45);background:rgba(140,164,99,.05)}
+.chalmain{padding:12px 16px;flex:1;min-width:0}
+.chalmain h5{font-family:var(--disp);font-weight:500;font-size:19px;text-transform:uppercase;letter-spacing:.03em;margin:0 0 3px;line-height:1.2}
+.chal.done .chalmain h5{color:var(--dim);text-decoration:line-through;text-decoration-color:var(--dimmer)}
+.chalcond{color:var(--dim);font-size:14px;margin:0 0 8px}
+.chalmeta{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--dimmer)}
+.chalmeta span{margin-right:16px;white-space:nowrap}
+.chalmeta b{color:var(--amber);font-weight:600}
+
+/* codex */
+details.zone{border:1px solid var(--line);background:var(--panel);margin:0 0 14px}
+details.zone>summary{padding:14px 18px;cursor:pointer;font-family:var(--disp);font-weight:500;font-size:17px;
+  text-transform:uppercase;letter-spacing:.06em;list-style:none;display:flex;justify-content:space-between;gap:14px;align-items:baseline}
+details.zone>summary::-webkit-details-marker{display:none}
+details.zone>summary::after{content:"▸";color:var(--amber);font-size:13px}
+details.zone[open]>summary::after{content:"▾"}
+details.zone>summary:hover{background:var(--panel2)}
+.zwho{display:block;margin-top:4px;font-family:var(--mono);font-size:10px;letter-spacing:.15em;color:var(--dimmer);text-transform:uppercase}
+.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
+.tbl th{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--dimmer);
+  text-align:left;padding:9px 14px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-weight:400;background:var(--panel2)}
+.tbl td{padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+.tbl tr:last-child td{border-bottom:0}
+.tbl .who{color:var(--amber);font-weight:600;font-size:13px}
+.tbl .hide{color:var(--moss)}
+.tbl .acc{color:var(--red)}
+
+/* verification */
+.srcgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin-bottom:22px}
+.src{border:1px solid var(--line);background:var(--panel);padding:14px 16px}
+.src h5{font-family:var(--disp);font-weight:500;font-size:15px;text-transform:uppercase;letter-spacing:.05em;margin:0 0 5px}
+.src p{margin:0;font-size:13px;color:var(--dim)}
+.audit{border:1px solid var(--line);background:var(--panel);padding:4px 20px 14px;margin-bottom:22px}
+.audit li{margin-bottom:7px;font-size:14px}
+.audit li b{color:var(--moss)}
+.audit li i{color:var(--violet);font-style:normal}
+.foot{margin-top:36px;padding-top:18px;border-top:1px solid var(--line);color:var(--dimmer);font-size:12.5px;font-family:var(--mono);letter-spacing:.06em}
+
+@media (max-width:720px){
+  .masthead{grid-template-columns:1fr;gap:18px}
+  .dial{width:130px;height:130px}
+  .stepdetail{padding-left:16px}
+  .lo{border-right:0}
+  .spec{grid-template-columns:80px 1fr;gap:0 10px}
+  .run-goal{padding-right:0}
+  details.run>summary::after{position:static;display:block;margin-top:10px}
+}
+@media (prefers-reduced-motion:no-preference){.arc{transition:stroke-dashoffset .5s cubic-bezier(.4,0,.2,1)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="masthead">
+  <div class="dial">
+    <svg viewBox="0 0 200 200" aria-hidden="true">
+      <circle cx="100" cy="100" r="86" fill="none" stroke="#2E3D4A" stroke-width="1"/>
+      <circle cx="100" cy="100" r="74" fill="none" stroke="#2E3D4A" stroke-width="10"/>
+      <circle class="arc" id="arc" cx="100" cy="100" r="74" fill="none" stroke="#E39B2C" stroke-width="10"
+              stroke-dasharray="464.9" stroke-dashoffset="464.9" transform="rotate(-90 100 100)"/>
+      <g stroke="#2E3D4A" stroke-width="1">
+        <line x1="100" y1="14" x2="100" y2="46"/><line x1="100" y1="154" x2="100" y2="186"/>
+        <line x1="14" y1="100" x2="46" y2="100"/><line x1="154" y1="100" x2="186" y2="100"/>
+      </g>
+      <g fill="#3D4E5C"><circle cx="100" cy="52" r="2"/><circle cx="100" cy="148" r="2"/><circle cx="52" cy="100" r="2"/><circle cx="148" cy="100" r="2"/></g>
+    </svg>
+    <div class="readout"><div class="num" id="dialNum">0</div><div class="den">of 7 done</div></div>
+  </div>
+  <div>
+    <p class="eyebrow">Patient Zero · Mission 3 · Colorado</p>
+    <h1>The Vector<br><span class="thin">Step Guide</span></h1>
+    <p class="subline">All 7 challenges in 5 runs, written as numbered steps. Open a run, open a step, tick it off.</p>
+    <div class="counters" id="counters"></div>
+  </div>
+</header>
+
+<div class="tabs" role="tablist">
+  <button class="tab" role="tab" id="t-brief" aria-controls="p-brief" aria-selected="true">Briefing</button>
+  <button class="tab" role="tab" id="t-runs"  aria-controls="p-runs"  aria-selected="false">Runs</button>
+  <button class="tab" role="tab" id="t-check" aria-controls="p-check" aria-selected="false">Checklist</button>
+  <button class="tab" role="tab" id="t-codex" aria-controls="p-codex" aria-selected="false">Target codex</button>
+  <button class="tab" role="tab" id="t-src"   aria-controls="p-src"   aria-selected="false">Verification</button>
+</div>
+
+<!-- ================= BRIEFING ================= -->
+<section class="panel" id="p-brief" role="tabpanel" aria-labelledby="t-brief">
+
+  <div class="note alarm">
+    <strong>What this mission is not.</strong> The Vector is a fixed sniper-nest mission, not a sandbox. Your own
+    mission file confirms it: <span style="font-family:var(--mono);font-size:13px">disguiseCount: 0</span>,
+    <span style="font-family:var(--mono);font-size:13px">areaCount: 0</span>,
+    <span style="font-family:var(--mono);font-size:13px">areas: []</span>. There are no disguises, no Discovery areas,
+    no Feats, no mission stories, no Intelligence, no mastery track, no item slots and one starting location.
+    Every step below says "Disguise: none" because none exist — that is the honest answer, not a gap.
+  </div>
+
+  <h2 class="sec">The job</h2>
+  <p>47 works from a sniper nest overlooking the Shadow Client's militia training camp — the Colorado farm from
+  Freedom Fighters. Dr. Bradley Paine has infected four militia members with the Nabazov virus. Because the virus
+  spreads on contact, everything happens at range.</p>
+  <p><strong>Five targets:</strong> Paine plus four infected. The four are drawn fresh each attempt from a pool of
+  24 candidates, so you identify them every run. Objectives are: eliminate Paine, eliminate the remaining infected
+  patients, locate exit.</p>
+
+  <h2 class="sec">The clue system</h2>
+  <p>Diana gives <strong>three clues per infected target</strong>. Clue #1 is the man's zone or role and always fits
+  more than one person. Clues #2 and #3 are traits or symptoms and arrive in either order. Only after all three does
+  exactly one NPC fit.</p>
+  <p>Six zones, five NPCs each — four possible infected and one wildcard — and no zone ever holds more than one
+  target at a time. The full 24-man table with hide spots and accident props is in the Target codex tab.</p>
+  <div class="note gold">
+    <strong>The fourth, unofficial hint.</strong> If you wait a long time after the final clue, Diana may add a live
+    positional tell — that the man is taking a phone call, tying his shoelaces or smoking right now. It is the safest
+    confirmation in the mission, and using it forfeits Quicker than the Eye by definition.
+  </div>
+
+  <h2 class="sec">Three rules that decide every run</h2>
+  <div class="note">
+    <strong>Panic rule.</strong> An infected target runs for the exit if he registers two nearby bullet impacts, an
+    explosion, or a found body. If a target actually leaves, the mission fails outright. Paine flees to his car,
+    parked in front of the West Bridge.
+  </div>
+  <div class="note">
+    <strong>Only the infected run.</strong> Ordinary militia never flee, so scaring the compound and watching who
+    bolts identifies targets. It also panics the rest, so it is an all-or-nothing play.
+  </div>
+  <div class="note">
+    <strong>Paine identifies them for you.</strong> Paine walks a circuit and stops for a check-up with each infected
+    man. That is why <em>every run below kills Paine last</em> — kill him early and you throw away your best
+    identification tool.
+  </div>
+
+  <h2 class="sec">Which challenges need you to reach the exit</h2>
+  <div class="note gold">
+    <strong>Four require completion, three pop on the spot.</strong> Four challenge descriptions begin
+    "Complete 'The Vector'…" — Silent Assassin, Brain Detail, Where is Everybody? and Unsafe Work Environment. Those
+    need the exit. Environmentalist, Quicker than the Eye and The One That (Almost) Got Away do not use that wording
+    and unlock the moment their condition is met, so those runs can be abandoned as soon as the tile pops.
+    <span class="badge b-src">Wording from your mission file; general rule from RARusk's GameFAQs guide</span>
+    Check your challenge tracker the first time rather than taking it on faith.
+  </div>
+
+  <h2 class="sec">Loadout and start</h2>
+  <p>One start: the sniper nest, a water tower on the outskirts of the farm, available immediately since there is no
+  mastery. One weapon: the <strong>Sieger 300 Advanced</strong>, 47's default for this mission. No item slots, no
+  unlocks. Manual saves are unlimited on Casual and Professional; Master gives you one.</p>
+  <div class="note unv">
+    <strong>UNVERIFIED.</strong> Whether the starting suit can be swapped is not confirmed by any source consulted.
+    The opening cinematic shows a Sieger 300 Ghost while gameplay and the weapon's own wiki entry both give the
+    Advanced — treat the Ghost as set dressing.
+  </div>
+
+  <h2 class="sec">Two footnotes</h2>
+  <p><strong>Jeff.</strong> If Jeff survived The Source and The Author he appears here, walks to an oil barrel, says a
+  prayer, smokes, and burns himself to death with no input from you. <span class="badge b-unv">Unverified</span>
+  Nothing states whether that affects Silent Assassin. If a clean SA run fails for no visible reason, test this first.</p>
+  <p><strong>The Scottish demoman.</strong> If a target is a demolitions expert Diana sometimes notes he's Scottish —
+  a Team Fortress 2 joke. The mission is a deliberate throwback to St. Petersburg Stakeout.</p>
+</section>
+
+<!-- ================= RUNS ================= -->
+<section class="panel" id="p-runs" role="tabpanel" aria-labelledby="t-runs" hidden>
+  <div class="runnav" id="runnav"></div>
+
+  <div class="note alarm">
+    <strong>Mutually exclusive — kept in separate runs.</strong>
+    <ul>
+      <li><b>Environmentalist</b> ✕ <b>Unsafe Work Environment</b> — an explosion is not a ballistic kill.</li>
+      <li><b>Brain Detail</b> ✕ <b>Unsafe Work Environment</b> — an accident kill is not a headshot.</li>
+      <li><b>Environmentalist</b> ✕ <b>The One That (Almost) Got Away</b> — panicking a man costs deliberate near-misses; Environmentalist forbids missing.</li>
+      <li><b>Silent Assassin</b> ✕ <b>The One That (Almost) Got Away</b> — a fleeing target is an alerted target and his body drops in the open.</li>
+      <li><b>Environmentalist</b> ✕ <b>Where is Everybody?</b> — risky rather than impossible. Any target who needs a bell, plate or bottle shot to reach a hide spot costs a sixth bullet.</li>
+      <li><b>Quicker than the Eye</b> ✕ <b>Environmentalist / Where is Everybody? / Unsafe Work Environment</b> — those three need you to wait for a specific beat; Quicker needs you to shoot early.</li>
+    </ul>
+  </div>
+  <div id="runs"></div>
+</section>
+
+<!-- ================= CHECKLIST ================= -->
+<section class="panel" id="p-check" role="tabpanel" aria-labelledby="t-check" hidden>
+  <div class="filters" id="filters"></div>
+  <div id="chals"></div>
+  <div class="note unv" style="margin-top:20px">
+    <strong>On XP.</strong> The seven challenges are worth 19,000 XP in total. Only two individual values are
+    confirmed: The One That (Almost) Got Away at +1,000 and Where is Everybody? at +2,000. The other five are marked
+    UNVERIFIED rather than guessed. The Vector has no mastery track, so none of it unlocks anything here.
+  </div>
+</section>
+
+<!-- ================= CODEX ================= -->
+<section class="panel" id="p-codex" role="tabpanel" aria-labelledby="t-codex" hidden>
+  <div class="note">
+    <strong>How to read this.</strong> Diana's first clue names the zone — that's the header. Her next two clues are
+    the pair in the left column. Cross them and you have your man, his hide spot, and his accident prop.
+  </div>
+  <div id="codex"></div>
+  <div class="note unv" style="margin-top:4px">
+    <strong>Bradley Paine is not in this table.</strong> No source consulted documents a hide spot or an accident prop
+    for Paine. He is the one real unknown in this mission, and Runs 3 and 4 both handle him as such.
+  </div>
+</section>
+
+<!-- ================= VERIFICATION ================= -->
+<section class="panel" id="p-src" role="tabpanel" aria-labelledby="t-src" hidden>
+
+  <h2 class="sec">Challenge count</h2>
+  <div class="note">
+    <strong>7, confirmed three ways.</strong> Your mission file gives
+    <span style="font-family:var(--mono);font-size:13px">challengeCount: 7</span> with six under
+    <span style="font-family:var(--mono);font-size:13px">assassination</span> and one under
+    <span style="font-family:var(--mono);font-size:13px">classic</span>. The Hitman Wiki mission article gives seven
+    worth 19,000 XP split 6 Assassination / 1 The Classics. The wiki's separate challenge-list article names the same
+    seven and records no Discovery, Feats, Target or Extra challenges. All three agree name for name.
+  </div>
+  <div class="note gold">
+    <strong>Two names corrected from the previous build.</strong> Your file gives the in-game spellings
+    <em>Where is Everybody?</em> (the wiki keeps the older stylisation "Where is EveryBODY?") and
+    <em>The One That (Almost) Got Away</em> with a capital T on "That". The file wins — it is the game's own data.
+  </div>
+
+  <h2 class="sec">Run simulation — step-by-step validation</h2>
+  <div class="audit"><ul>
+    <li><b>Every challenge is routed exactly once.</b> Run 1 → 1, Run 2 → 2, Run 3 → 2, Run 4 → 1, Run 5 → 1. Total 7, no duplicates, no omissions.</li>
+    <li><b>No step needs an item or pickup obtained earlier.</b> The only item is the Sieger 300 Advanced, in hand from the first frame. There is nothing to collect, so no run can be broken by a missed pickup.</li>
+    <li><b>No step needs a disguise.</b> Confirmed by the mission file — the mission has none.</li>
+    <li><b>No NPC needed later is removed earlier.</b> Paine is the identification tool for the four infected, so every run that must identify targets kills Paine last. Run 1 never kills him at all. This was the one real ordering trap in the mission and all five runs are ordered around it.</li>
+    <li><b>No scripted event is broken by ordering.</b> There are no mission stories to sequence. The only script is Diana's clue feed, which runs on its own timer and is unaffected by your shots.</li>
+    <li><b>Save points do not break later objectives.</b> Saves are placed before a shot, never mid-alert. Reloading restores NPC positions and the clue state together.</li>
+    <li><b>Completion requirements are respected.</b> Runs 2, 3 and 4 end with an explicit "reach the exit" step because their challenges say "Complete 'The Vector'…". Runs 1 and 5 end with "restart" because theirs unlock on the spot.</li>
+    <li><b>No run sends you back and forth.</b> There is one fixed vantage point, so routing here means shot order — every run takes isolated zones first so that a discovered body panics as few remaining targets as possible.</li>
+    <li><b>Nothing becomes impossible mid-run.</b> The only irreversible action is killing a target, and in each run the challenge condition is applied to every kill from the first shot onward, so no kill can retroactively spoil the run except by miss or misidentification — both of which are flagged with restart instructions.</li>
+    <li><i>Not verified: Bradley Paine's hide spot and accident prop.</i> This affects the last step of Runs 3 and 4 only. Both steps carry the flag, a save instruction and a fallback that still banks Silent Assassin.</li>
+    <li><i>Not verified: individual XP for five of seven challenges.</i> Total confirmed at 19,000.</li>
+    <li><i>Not verified: whether reloading a save clears a missed shot for Environmentalist.</i> Run 2 tells you to restart instead.</li>
+    <li><i>Not verified: whether the starting suit can be changed.</i> Loadout cards say "fixed / unverified" rather than naming one.</li>
+    <li><i>Not verified: whether Jeff's self-inflicted death affects Silent Assassin.</i> Flagged in the briefing.</li>
+    <li><i>Not verified: any patch that added or changed a challenge here.</i> No source records one; the seven appear original to the 2017 GOTY release.</li>
+  </ul></div>
+
+  <h2 class="sec">Sources</h2>
+  <div class="srcgrid">
+    <div class="src"><h5>Your mission file</h5><p>03_-_The_Vector.json — challenge count, category split, exact in-game challenge names and descriptions, disguiseCount 0, areaCount 0.</p></div>
+    <div class="src"><h5>Hitman Wiki — The Vector</h5><p>The 24-NPC clue table with hide spots and accident props, the clue structure, the late positional hint, the Jeff and demoman notes.</p></div>
+    <div class="src"><h5>Hitman Wiki — The Vector/Challenges</h5><p>Independent confirmation of the seven challenges and of the empty Discovery / Feats / Target / Extra categories.</p></div>
+    <div class="src"><h5>Hitman Wiki — per-challenge articles</h5><p>Source of the two confirmed XP values and of the "all five targets" reading of Brain Detail, Where is Everybody? and Unsafe Work Environment.</p></div>
+    <div class="src"><h5>Hitman Wiki — Infected</h5><p>The panic rule, the mission-fail condition, the water-tower nest, the scare-to-identify technique, and blowing up fleeing targets for easy accidents.</p></div>
+    <div class="src"><h5>Hitman Wiki — Bradley Paine</h5><p>His check-up circuit and his escape to the car in front of the West Bridge.</p></div>
+    <div class="src"><h5>RARusk, GameFAQs</h5><p>Challenges unlock the moment their condition is met unless the text says otherwise; save availability per difficulty.</p></div>
+    <div class="src"><h5>Steam community</h5><p>Behaviour confirmation only: hide spots and accidents are deterministic, clue #1 always fits more than one NPC, bullet impacts reposition NPCs, fire extinguishers only knock out.</p></div>
+  </div>
+
+  <div class="note unv">
+    <strong>No NPC in this mission has a name.</strong> They are Militia Soldiers, Elites, Spec Ops, Technicians,
+    Chefs, Hackers and Explosives Specialists, identified by station and behaviour. Bradley Paine is the only named
+    person you will see. Any guide that gives you named patrol characters for The Vector invented them.
+  </div>
+</section>
+
+<p class="foot">Challenge ticks are saved in this browser and persist across reloads. Nothing is sent anywhere.</p>
+</div>
+
+<script>
+/* ============================ DATA ============================ */
+
+const CHALLENGES = [
+  { id:'sa', name:'Silent Assassin', type:'The Classics',
+    cond:'Complete "The Vector." / Only eliminate the targets. / No bodies found.',
+    xp:null, run:'Run 3 (backup in Run 4)', exit:true },
+  { id:'escapee', name:'The One That (Almost) Got Away', type:'Assassination',
+    cond:'Eliminate an escaping target. Paine or any infected militia member counts, while they are trying to leave.',
+    xp:'+1,000 XP', run:'Run 1', exit:false },
+  { id:'brain', name:'Brain Detail', type:'Assassination',
+    cond:'Complete "The Vector" by eliminating every target with a headshot. All five, Paine included.',
+    xp:null, run:'Run 2', exit:true },
+  { id:'env', name:'Environmentalist', type:'Assassination',
+    cond:'Eliminate all targets with ballistic kills using precisely five bullets and without missing a shot.',
+    xp:null, run:'Run 2', exit:false },
+  { id:'quick', name:'Quicker than the Eye', type:'Assassination',
+    cond:'Eliminate each infected target before Diana delivers her last hint about them. The four infected only, not Paine.',
+    xp:null, run:'Run 5', exit:false },
+  { id:'bodies', name:'Where is Everybody?', type:'Assassination',
+    cond:'Complete "The Vector" by hiding the bodies of all targets. All five, Paine included.',
+    xp:'+2,000 XP', run:'Run 3', exit:true },
+  { id:'unsafe', name:'Unsafe Work Environment', type:'Assassination',
+    cond:'Complete "The Vector" by eliminating all targets in accidents. All five, Paine included.',
+    xp:null, run:'Run 4', exit:true }
+];
+
+const LOADOUT = [
+  ['Start','Sniper nest — water tower on the farm outskirts. The only start; no mastery gate.',false],
+  ['Suit','Fixed. Swappability UNVERIFIED — no source confirms suit selection for The Vector.',true],
+  ['Weapon','Sieger 300 Advanced — 47\u2019s default and only weapon here. Suppressed and scoped.',false],
+  ['Slots 1–4','None. The Vector has no loadout screen, no gear slots and no unlocks of its own.',true]
+];
+
+const NO_DISG = 'None — this mission has no disguises.';
+const RIFLE   = 'Sieger 300 Advanced (already in hand).';
+
+const RUNS = [
+  /* ---------------------------- RUN 1 ---------------------------- */
+  {
+    id:'r1', tag:'Run 1 of 5', title:'Recon &amp; The Escapee',
+    goal:'Learn the six zones and Paine\u2019s circuit, then panic one infected man into running and drop him before he clears the compound.',
+    pops:['escapee'],
+    exit:'No. This challenge unlocks on the kill — restart as soon as it pops.',
+    groups:[
+      { name:'Learn the board', steps:[
+        { t:'Scope the six clue zones',
+          s:'Pan across the compound and match each of Diana\u2019s six possible opening clues to a real piece of the farm.',
+          spec:{ where:'Sniper nest, water tower on the farm outskirts — you never leave it.', npc:'None yet. Watch the militia at their stations.',
+                 action:'Zoom across the compound and locate all six zones before Diana starts talking.' },
+          tips:['The six openers are: At the Garage · Outside Main House · Recruited as Spec Ops · Explosives Expert · Central Greenhouse Area · Stationed in the Junk Yard.',
+                'Landmarks in order: garage and its rooftop; main house with front lawn, well and barbecue; shooting range with the chess board at the barn-house entrance; chemistry lab under the windmill plus the Demolition Control area with the red safe; central orchard with the field kitchen stoves; junk yard with the blue tractor, the perimeter shack and the water tower with the "Tonight Only: Live Music" sign.',
+                'Each zone holds five NPCs — four possible infected and one wildcard — and never more than one target at a time. Once a zone is spent, cross it off.'] },
+        { t:'Follow Bradley Paine\u2019s check-up circuit',
+          s:'Paine walks the compound and stops for a check-up with each infected man. Tracking him is the most useful habit in this mission.',
+          spec:{ where:'Wherever Paine walks — he works around the compound rather than doubling back.',
+                 npc:'Bradley Paine, the only named person here. He wears a suit, not fatigues, so he is easy to pick out.',
+                 action:'Keep him in the scope from the first second and note every militiaman he stops to examine.' },
+          tips:['Each stop marks an infected target. It costs nothing — no shots, no noise, no risk.',
+                'If he is compromised he runs to his car parked in front of the West Bridge.',
+                'Losing him is recoverable: pick him back up at a zone you have not yet seen him visit.'],
+          save:true },
+        { t:'Pick a runner with a clean escape lane',
+          s:'Choose one confirmed infected whose route out crosses open ground you can actually see from the nest.',
+          spec:{ where:'Prefer the junk yard, the shooting range or the main house lawn. Avoid the chemistry lab under the windmill — the sightline breaks.',
+                 npc:'One infected target you confirmed off Paine\u2019s circuit.',
+                 action:'Before firing anything, trace in your head where this man would run and confirm you can cover it.' },
+          tips:['This is the only step in Run 1 that can lose you the whole attempt, so do it before you shoot.'],
+          warn:'If a target reaches the exit the mission fails outright — not a rating penalty, a hard fail.' }
+      ]},
+      { name:'Force the runner and take him', steps:[
+        { t:'Panic him with two near misses',
+          s:'Two bullet impacts near an infected man sends him running. Ordinary militia do not react that way.',
+          spec:{ where:'Ground or wall beside your chosen target, close enough to startle, far enough not to hit.',
+                 item:RIFLE, npc:'Your chosen infected target.',
+                 action:'Fire two shots near him and watch him break for the exit.' },
+          tips:['The three panic triggers are two nearby bullet impacts, an explosion, or a body being found. Two impacts is the one you control best.',
+                'Because only the infected flee, this doubles as an identification test if you skipped Paine\u2019s circuit.',
+                'An explosion works too and panics a wider area — louder, less precise, and it can start a cascade.'],
+          save:true },
+        { t:'Shoot him while he is running',
+          s:'Fire while he is actively escaping. The challenge pops on the kill.',
+          spec:{ where:'Open ground along his escape route.', item:RIFLE, npc:'The fleeing target.',
+                 action:'Lead him slightly and put a round into the torso while he is still in flight.' },
+          tips:['He must be actively trying to leave — alarmed and standing still does not count.',
+                'No headshot needed. A torso hit is the lower-risk shot on a moving figure.',
+                'Alternative: shoot a propane flask along his route. That satisfies this challenge and reads as an accident, but it panics further targets.'],
+          pops:['escapee'] },
+        { t:'Restart as soon as the tile pops',
+          s:'The challenge is banked without finishing the mission. Do not try to salvage anything else.',
+          spec:{ action:'Confirm the challenge tile in the tracker, then restart the mission.' },
+          tips:['One runner tends to produce more, and one reaching the gate fails the attempt.',
+                'This run has already voided Silent Assassin, Environmentalist, Where is Everybody? and Unsafe Work Environment. That is intended — this run exists to be spent.'],
+          warn:'Do not chase other challenges here. Four of the remaining six are already impossible in this attempt.' }
+      ]}
+    ]
+  },
+
+  /* ---------------------------- RUN 2 ---------------------------- */
+  {
+    id:'r2', tag:'Run 2 of 5', title:'Five Rounds, Five Skulls',
+    goal:'Exactly five bullets leave the rifle and all five find a target\u2019s head. No lure shots, no ranging shots, no misses.',
+    pops:['env','brain'],
+    exit:'Yes for Brain Detail. Environmentalist pops on the fifth kill; Brain Detail needs you to reach the exit.',
+    groups:[
+      { name:'Set the discipline', steps:[
+        { t:'Count every trigger pull as a target',
+          s:'Environmentalist allows precisely five bullets for five targets, so nothing else may be shot.',
+          spec:{ item:RIFLE, action:'Commit to one round per target and no other shots for the whole run.' },
+          tips:['Shooting a bell, plate or bottle spends one of your five — that is exactly why this run cannot be combined with Where is Everybody?.',
+                'No ranging shots, no test shots, no shooting explosives. An explosion is also not a ballistic kill.',
+                'Since every shot must connect anyway, aim for heads throughout and Brain Detail comes free in the same run.'],
+          pops:['env','brain'] },
+        { t:'Wait for all three clues on every target',
+          s:'Clue #1 always fits more than one man. Only the full set of three leaves exactly one candidate.',
+          spec:{ npc:'The four candidates in whichever zone Diana names.',
+                 action:'Hold fire until clue #3, then cross-reference the codex row for that zone.' },
+          tips:['If you are still unsure, wait longer — Diana may add a live tell such as the man taking a phone call, tying his shoelaces or smoking right now.',
+                'Paine\u2019s check-ups are a free second opinion. If he examined one of your two candidates, that is your man.',
+                'A wrong shot is both a non-target kill and a spent bullet. There is no recovery.'],
+          save:true,
+          warn:'Guessing between two candidates is the most common way this run dies. Wait for clue #3.' }
+      ]},
+      { name:'Fire the five rounds', steps:[
+        { t:'Take the isolated targets first',
+          s:'Bodies will be found in this run. That is fine for the challenges, but a found body panics the survivors.',
+          spec:{ where:'Start with the perimeter shack and blue tractor in the junk yard, the man under the windmill in the chemistry lab, and the sleeper on the garage rooftop.',
+                 npc:'Whichever confirmed targets are standing alone.',
+                 action:'Clear the lonely stations before touching anything near a crowd.' },
+          tips:['Leave the main house front lawn and the field kitchen for last — those have company standing around.',
+                'Once the first body is discovered, treat the rest as a timed sequence rather than a patient hunt.'],
+          save:true },
+        { t:'Fire on a stationary beat, one round to the head',
+          s:'Every candidate has a moment in his loop where he stands still. Take that moment.',
+          spec:{ where:'His own station — no repositioning.', item:RIFLE, npc:'The confirmed infected target.',
+                 action:'Hold the crosshair on the upper head while he is stationary and squeeze.' },
+          tips:['Static beats to look for: tending a plant, checking a laptop, writing on a clipboard, leaning on a post to smoke, napping in a chair.',
+                'Never fire while he walks between stations. If he will not settle, wait a full loop — all 24 candidates return to a stationary beat.',
+                'The rifle is suppressed, so the alarm comes from the body, not the noise.'] },
+        { t:'Paine last, fifth round, head',
+          s:'Take Paine only after all four infected are down.',
+          spec:{ where:'Anywhere on his circuit where he pauses between check-ups.', item:RIFLE, npc:'Bradley Paine.',
+                 action:'One round to the head — your fifth and final bullet.' },
+          tips:['Killing him earlier destroys your identification aid for the remaining infected. This ordering is not optional.',
+                'If he starts running before you are ready, take the shot anyway — a headshot on a fleeing Paine still satisfies both challenges as long as it connects first time.'],
+          pops:['env'] },
+        { t:'Reach the exit to bank Brain Detail',
+          s:'Environmentalist unlocks on the fifth kill. Brain Detail says "Complete \u2018The Vector\u2019…", so finish the mission.',
+          spec:{ action:'Complete the Locate Exit objective and let the mission end normally.' },
+          tips:['Do not restart the moment Environmentalist pops — you would lose Brain Detail.'],
+          pops:['brain'] },
+        { t:'If you miss, restart rather than reload',
+          s:'Whether a reload clears the missed-shot flag is not confirmed. Restarting definitely clears it.',
+          spec:{ action:'Abandon the attempt and restart the mission from the planning screen.' },
+          tips:['A Vector attempt is short. Finishing a run only to find the challenge silently voided costs more time than starting over.',
+                'If you want to test it, do so on an attempt you have already written off.'],
+          warn:'UNVERIFIED — do not assume a save reload resets the shot counter.' }
+      ]}
+    ]
+  },
+
+  /* ---------------------------- RUN 3 ---------------------------- */
+  {
+    id:'r3', tag:'Run 3 of 5', title:'Nothing to Report',
+    goal:'Drop all five bodies into hedges, haystacks or the well so nothing is ever discovered — which banks Silent Assassin in the same pass.',
+    pops:['bodies','sa'],
+    exit:'Yes. Both challenges say "Complete \u2018The Vector\u2019…", so you must reach the exit.',
+    groups:[
+      { name:'Learn the body-hiding grammar', steps:[
+        { t:'Read the codex row before you fire',
+          s:'A hide is timing, not aim. Each candidate has one beat where he stands on or over a container.',
+          spec:{ npc:'Your confirmed infected target.',
+                 action:'Identify the man with all three clues, look up his hide spot, then watch one full loop before shooting.' },
+          tips:['Containers here are hedges (most common), haystacks (chemistry lab and barn house), the well on the main house lawn, and the ledges on the garage rooftop.',
+                'Hide spots and accidents in this mission are deterministic — a failed hide means wrong timing, not bad luck.',
+                'A body can land visually inside a bush and still not register. If the tracker does not tick, reload and fire a beat later when he is deeper in.'],
+          save:true },
+        { t:'Use lure props freely',
+          s:'Bells, plates and beer bottles walk an NPC onto a hideable spot. Extra bullets cost nothing in this run.',
+          spec:{ item:RIFLE, npc:'Any target with no container at his own station.',
+                 action:'Shoot the prop, wait for him to walk over, then fire as he arrives.' },
+          tips:['The classic case is the garage rooftop — no hedges up there. Shoot the bell to wake the sleeper, or the plate to walk the lunch-eater toward the ledge.',
+                'In the field kitchen, the bell above the stoves moves the laptop chef to the hedge on their right.',
+                'Beer bottles work on both junk yard drinkers.'],
+          warn:'Lure props are safe, but two stray bullet impacts near an infected man makes him flee. Aim at the prop, not near the person.' }
+      ]},
+      { name:'Clear the four infected', steps:[
+        { t:'Work the quiet zones first',
+          s:'Take the isolated men early, so a failed hide costs you fewer remaining targets.',
+          spec:{ where:'Perimeter shack and blue tractor in the junk yard, the windmill chemistry lab, the garage rooftop.',
+                 action:'Kill and hide each one, confirming the body registered before moving on.' },
+          tips:['A found body breaks Silent Assassin and panics the survivors at the same time — front-loading the risky ones limits the damage.',
+                'Leave the main house lawn, where an Elite sits at the barbecue on his phone, and the field kitchen for last.'] },
+        { t:'Fire on the hide beat',
+          s:'Shoot while the man is standing at his container so the body drops straight in.',
+          spec:{ item:RIFLE, npc:'The confirmed infected target.',
+                 action:'Fire the instant he is over the hedge, haystack or well.' },
+          tips:['Example beats: the gardener while he tends the plants; the nauseous Elite while bent over the hedge or the well; the sweating Spec Ops man as he enters the barn house into a haystack.',
+                'If the beat is awkward, lure him to a cleaner container instead.'] }
+      ]},
+      { name:'Paine and the exit', steps:[
+        { t:'Paine last — and this is the unknown',
+          s:'No source documents a hide spot for Paine. Save, take him beside a hedge on his circuit, and watch the tracker.',
+          spec:{ where:'A hedge on his route — the main house lawn and the central orchard are the densest.',
+                 item:RIFLE, npc:'Bradley Paine.',
+                 action:'Save, fire while he stands beside the hedge, then check whether Where is Everybody? registers.' },
+          tips:['Confirmed: the challenge covers all five targets, Paine included.',
+                'Not confirmed: which container takes him. Reload and try a different hedge on his route if the first fails.',
+                'Fallback: kill Paine with an accident instead. An accidental death does not invalidate Silent Assassin even when the body is found, so you still bank SA — you just move Where is Everybody? to another attempt.'],
+          save:true,
+          warn:'UNVERIFIED — save before this shot. It is the one step in the mission with no documented solution.' },
+        { t:'Leave with nothing found',
+          s:'Both challenges require finishing. Reach the exit with only targets killed and no body discovered.',
+          spec:{ action:'Complete the Locate Exit objective.' },
+          tips:['Silent Assassin here needs only two things: kill nothing but the five targets, and let no body be found. There are no cameras in this mission and no guard can reach your nest.',
+                'If Jeff is present he burns himself to death on his own. Whether that affects SA is UNVERIFIED — if a clean run fails to tick, this is the variable to test.'],
+          pops:['bodies','sa'] }
+      ]}
+    ]
+  },
+
+  /* ---------------------------- RUN 4 ---------------------------- */
+  {
+    id:'r4', tag:'Run 4 of 5', title:'Occupational Hazards',
+    goal:'All five targets die in accidents. Silent Assassin is available here too if no bystander gets caught in a blast.',
+    pops:['unsafe'],
+    exit:'Yes. Unsafe Work Environment says "Complete \u2018The Vector\u2019…", so you must reach the exit.',
+    groups:[
+      { name:'Know what counts', steps:[
+        { t:'Learn the five accident types on this map',
+          s:'Propane flasks, gas canisters, burning oil drums, water canister plus electrical socket, and one car crush.',
+          spec:{ where:'Every candidate in the codex has a prop within a few metres of his station.',
+                 item:RIFLE, action:'Shoot the prop while the target is beside it and no bystander is in the blast.' },
+          tips:['Explosion: propane flasks and gas canisters — the default, available almost everywhere.',
+                'Burning: the oil drums in the central orchard and beside the perimeter shack chair. Electrocution: a water canister plus a socket, documented at the main house front and near the barn house.',
+                'Crushing: the technician who naps after working under a car in the garage — shoot the button beside the vehicle. Falling: the garage rooftop ledge doubles as a hide and a drop.'],
+          pops:['unsafe'] },
+        { t:'Do not build anything around a fire extinguisher',
+          s:'Extinguishers only knock people out in current builds, and not every explodable prop registers as an accident.',
+          spec:{ action:'Stick to the specific props named in the codex row for your target.' },
+          tips:['Community-reported: extinguishers were changed to pacify rather than kill.',
+                'Players also report other explosive objects producing a body-found result instead of an accident. The propane flasks and gas canisters are the reliable pair.'],
+          warn:'An extinguisher will leave your target alive and the compound alerted.' }
+      ]},
+      { name:'Pick a method', steps:[
+        { t:'Method A — isolation first, one blast at a time',
+          s:'The default. Blow the lonely targets first and let the compound settle between kills.',
+          spec:{ where:'Perimeter shack and blue tractor, then the chemistry lab, then the garage, then the orchard, then the main house.',
+                 item:RIFLE, action:'One prop, one target, then wait for the alert to subside before the next.' },
+          tips:['Every explosion is a panic trigger, so pause between blasts — but not so long that a panicked target reaches the gate.',
+                'Killing a bystander does not void Unsafe Work Environment on its own, but it does void Silent Assassin. Clean blasts get you both.'],
+          save:true },
+        { t:'Method B — ride the panic (optional)',
+          s:'Trigger one blast, let the remaining infected break for the exits, and blow them up as they pass props.',
+          spec:{ item:RIFLE, npc:'All remaining infected at once.',
+                 action:'Set off one explosion, then shoot propane flasks near the men who start running.' },
+          tips:['Shooting explosives near a fleeing infected is a documented easy accident kill, and one blast can cascade into three more.',
+                'It also satisfies The One That (Almost) Got Away, so this can double up if Run 1 went badly.',
+                'Only pick this if Silent Assassin is already banked from Run 3 — escape routes do not reliably pass props.'],
+          warn:'Method B panics targets you may not have identified yet. One reaching the exit fails the mission.' }
+      ]},
+      { name:'Paine and the exit', steps:[
+        { t:'Paine by accident — the second unknown',
+          s:'No source names a specific prop for Paine, but his circuit takes him to the same stations his patients use.',
+          spec:{ where:'Beside a propane flask or gas canister at one of the infected men\u2019s stations.',
+                 item:RIFLE, npc:'Bradley Paine.',
+                 action:'Save, wait for him to pause beside a prop with nobody else nearby, then shoot the prop.' },
+          tips:['Confirmed: the challenge covers all five targets, Paine included.',
+                'Not confirmed: which prop. His check-up stops are the natural candidates because that is where the props are.',
+                'Take him last unless he walks into an ideal setup early — killing him first costs you the identification trail.'],
+          save:true,
+          warn:'UNVERIFIED — no documented accident prop for Paine. Save before the shot.' },
+        { t:'Reach the exit, and bank Silent Assassin if it survived',
+          s:'Accidental deaths do not break Silent Assassin even when the bodies are found, so a clean accident run gives you both.',
+          spec:{ action:'Complete the Locate Exit objective.' },
+          tips:['The only realistic way to lose SA here is catching a bystander in a blast.',
+                'If Paine\u2019s hide spot defeated you in Run 3, this run is where Silent Assassin comes from — use Method A and keep every blast clean.'],
+          pops:['unsafe','sa'] }
+      ]}
+    ]
+  },
+
+  /* ---------------------------- RUN 5 ---------------------------- */
+  {
+    id:'r5', tag:'Run 5 of 5', title:'Quicker than the Eye',
+    goal:'Kill each infected man before Diana finishes describing him. Paine is not part of this challenge, so he stays alive as your identification tool.',
+    pops:['quick'],
+    exit:'No. It unlocks on the fourth qualifying kill — restart once it pops, or carry on if you are also chasing Brain Detail.',
+    groups:[
+      { name:'Beat the clue timer', steps:[
+        { t:'Understand the window you are racing',
+          s:'You must kill before clue #3, which means acting on two clues — and two clues leaves two candidates.',
+          spec:{ npc:'The four candidates in whichever zone Diana names.',
+                 action:'Plan to shoot in the gap between clue #2 and clue #3.' },
+          tips:['The timer is per target, not global. Each man only has to fall before his own third clue.',
+                'Clue #1 narrows you to a zone of four. Clue #2 narrows to two. Clue #3 is the one you must beat.',
+                'This is why the challenge cannot be stacked with Environmentalist, Where is Everybody? or Unsafe Work Environment — all three need patience you do not have.'] },
+        { t:'Start Paine\u2019s trail from the first second',
+          s:'Whichever of your two candidates Paine examined is your target, no third clue needed.',
+          spec:{ where:'Follow him around the compound from the mission\u2019s opening moments.',
+                 npc:'Bradley Paine — suited, unmistakable among the fatigues.',
+                 action:'Note every militiaman he stops for a check-up with, and which zone each is in.' },
+          tips:['This is the mission\u2019s built-in shortcut and costs nothing — no shots, no panic, no risk.',
+                'The earlier you start the trail, the more of it you have banked when the clues arrive.',
+                'Paine must stay alive for the whole run. Do not shoot him until all four infected are dead, if at all.'],
+          save:true },
+        { t:'Fallback — the panic test',
+          s:'Scare the two candidates and watch which one runs. Only the infected flee.',
+          spec:{ where:'Only in zones with open sightlines — junk yard, shooting range, main house lawn.',
+                 item:RIFLE, npc:'Your two candidates.',
+                 action:'Put two shots near them and shoot whoever breaks for the exit.' },
+          tips:['This also satisfies The One That (Almost) Got Away if it is somehow still outstanding.',
+                'Never use it in the chemistry lab under the windmill or inside the barn house — you cannot cover the escape.'],
+          warn:'This deliberately creates an escaping target. A target that reaches the exit fails the mission.' }
+      ]},
+      { name:'Execute', steps:[
+        { t:'Save the instant clue #2 lands',
+          s:'That is the moment the window opens, and a save there lets you retry the identification cheaply.',
+          spec:{ action:'Pause and make a manual save as soon as the second clue is spoken.' },
+          tips:['Manual saves are unlimited on Casual and Professional; Master gives you one. Run this on a lower difficulty — the challenge does not require Master.',
+                'Testing a candidate by shooting him is destructive: Diana calls out the non-target kill and Silent Assassin is gone for that attempt. Only do it from a save you will reload.'],
+          save:true },
+        { t:'Shoot the moment you are confident',
+          s:'The challenge does not care how he dies, only when. Use whatever drops him fastest.',
+          spec:{ where:'His station.', item:RIFLE, npc:'The identified infected target.',
+                 action:'Fire before Diana\u2019s third clue about that man is delivered.' },
+          tips:['Aim for the head if you also want Brain Detail; a torso hit satisfies this challenge equally.',
+                'A propane flask beside him works too if he happens to be standing next to one when you confirm him.',
+                'Repeat for all four infected. The tile pops on the fourth.'],
+          pops:['quick'] },
+        { t:'Decide whether to finish or restart',
+          s:'Quicker than the Eye is already banked. Only continue if you are stacking Brain Detail.',
+          spec:{ npc:'Bradley Paine, still alive.',
+                 action:'Either restart immediately, or headshot Paine and reach the exit to also claim Brain Detail.' },
+          tips:['Brain Detail requires every one of the five to die by headshot, so it only works if all four infected kills in this run were headshots.',
+                'Silent Assassin is possible here in principle but unlikely in practice — get it from Run 3 or Run 4 instead.'],
+          warn:'Do not attempt Environmentalist in this run. Speed and a five-round no-miss limit are opposite disciplines.' }
+      ]}
+    ]
+  }
+];
+
+/* ---------------------------- CODEX ---------------------------- */
+const U = '<span class="badge b-unv">Unverified</span>';
+const CODEX = [
+  { zone:'At the Garage', who:'Militia Technicians', rows:[
+    ['On Break &amp; Eating Lunch','Militia Technician on the right of the garage rooftop. Eats, then smokes near an oil canister.','Shoot his plate to lure him toward the ledge, then fire — the body drops out of sight.','Shoot the oil canister while he stands beside it.'],
+    ['On Break &amp; Symptomatic Narcolepsy','Militia Technician asleep on the garage rooftop.','Wait until he walks to the ledge for a smoke, then fire.','Shoot the propane flask beside the chair he sleeps in.'],
+    ['Repairing a Vehicle &amp; Eating Lunch','Militia Technician repairing a van in front of the garage. Eats from a plate in front of it.','Shoot the plate to lure him to a secluded spot, then fire.','Shoot the gas canister next to the plate.'],
+    ['Repairing a Vehicle &amp; Symptomatic Narcolepsy','Militia Technician working under a car inside the garage, who then naps on a stool beside it.','Fire while he sleeps on the stool — the body falls into the hedge.','Shoot the button next to the car and it drops on him.']
+  ]},
+  { zone:'Outside Main House', who:'Militia Elite', rows:[
+    ['Does Cardio &amp; Boxer','Militia Elite on the left of the main house, running between a gas canister and a bag of soil, shadowboxing.','Fire while he is by the bag of leaves — body drops into the hedge.','Shoot the gas canister.'],
+    ['Does Cardio &amp; Symptomatic Nausea','Militia Elite running laps around the house who vomits into a hedge at the front.','Fire while he is bent over the hedge.','Lure him with the bell at the front of the house and shoot the water canister and electrical outlet to electrocute him — or shoot the propane flask beside the Elite sitting at the barbecue on his phone.'],
+    ['Gardening &amp; Boxer','Militia Elite at the front of the house, raking leaves and shadowboxing.','Fire while he tends the hedge.','Shoot the nearby propane flask.'],
+    ['Gardening &amp; Symptomatic Nausea','Militia Elite raking leaves and trimming a hedge, who goes to the well to throw up.','Fire while he is at a nearby hedge, or while he is over the well.','Shoot the propane flask on the well.']
+  ]},
+  { zone:'Recruited as Spec Ops', who:'Militia Spec Ops — shooting range and barn house', rows:[
+    ['Plays Chess &amp; Limping','Spec Ops limping between a chess board at the barn house entrance and a post beside a gas canister where he smokes.','Lure him to the haystacks while he smokes, then fire.','Shoot the gas canister by the post.'],
+    ['Plays Chess &amp; Symptomatic Sweating','Spec Ops moving between the chess board and the barn house interior, wiping sweat.','Fire as he enters the barn house — body drops into a haystack.','Shoot a nearby water canister and electrical socket to electrocute him.'],
+    ['Practicing Aim &amp; Limping','Spec Ops limping around the shooting range.','Several nearby hedges and haystacks work — fire when he is on one.','Shoot a nearby oil drum or propane flask.'],
+    ['Practicing Aim &amp; Symptomatic Sweating','Spec Ops moving between the shooting range and the trailer beside it, wiping sweat.','Fire while he is inside the trailer.','Shoot a gas canister he walks past.']
+  ]},
+  { zone:'Explosives Expert', who:'Explosives Specialists — chemistry lab and Demolition Control', rows:[
+    ['Assigned to Chemistry Lab &amp; Symptomatic Itching','Explosives Specialist under the windmill in the chemistry lab, scratching himself.','Fire while he checks a laptop — body drops into a haystack.','Shoot a nearby water canister and electrical socket to electrocute him.'],
+    ['Assigned to Chemistry Lab &amp; Using Clipboard','Explosives Specialist under the windmill, writing on a clipboard.','Shoot the nearby bell to move him, then fire him into the haystack.','Shoot the gas canister while he stands beside it.'],
+    ['Assigned to Safecracking &amp; Symptomatic Itching','Explosives Specialist in Demolition Control, scratching himself; checks the red safe, then moves to a laptop on an oil drum.','Fire while he is at the laptop — body drops into the hedge beside it.','Shoot the gas canister by the laptop.'],
+    ['Assigned to Safecracking &amp; Using Clipboard','Explosives Specialist in Demolition Control who checks the red safe and uses a clipboard.','Fire while he is near the safe — body drops into the haystack there.','Use the burning oil drum he stands next to, by the observation area.']
+  ]},
+  { zone:'Central Greenhouse Area', who:'Militia Chefs, Soldier and Hacker — central orchard', rows:[
+    ['Cooking in Field Kitchen &amp; Freezing','Militia Chef in the orchard kitchen nearer to 47, who rubs his hands and warms them over a stove.','A shot nearby lures him to the hedge on the right — fire there.','Shoot the propane flask by the stove.'],
+    ['Cooking in Field Kitchen &amp; Using a Laptop','Militia Chef in the orchard kitchen further from 47, who uses a laptop.','Fire while he is at the laptop, or shoot the bell above the stoves to move him to the hedge on their right.','Use the burning oil drum while he is at the laptop.'],
+    ['Enjoys Gardening &amp; Freezing','Militia Soldier tending plants in the orchard, who warms his hands over a burning oil drum.','Fire while he tends the hedge.','Shoot the propane flask while he stands by the oil drum.'],
+    ['Enjoys Gardening &amp; Using a Laptop','Hacker in the central orchard, tending plants and occasionally using a laptop.','Fire while he tends the hedge.','Shoot the nearby propane flask, or use the burning oil drum while he is at the laptop.']
+  ]},
+  { zone:'Stationed in the Junk Yard', who:'Militia Soldiers — junk yard and water tower', rows:[
+    ['Plays the Guitar &amp; Paranoid Behaviour','Militia Soldier at the southern perimeter shack, far right of the junk yard, playing guitar and looking paranoid.','Fire while he stands by his chair — body drops into the hedge on its right.','Use the burning oil drum beside his chair.'],
+    ['Plays the Guitar &amp; Signs of Alcoholism','Militia Soldier under the water tower on the right, playing guitar by a "Tonight Only: Live Music" sign.','Shoot his beer bottle to lure him to the hedge on the left, then fire.','Shoot the propane flask by the burning oil drum.'],
+    ['Repairing a Tractor &amp; Paranoid Behaviour','Militia Soldier working on a blue tractor at the far right of the junk yard, looking paranoid.','Fire while he stands by the hedge to the right of the tractor.','Shoot the gas canister in front of the tractor.'],
+    ['Repairing a Tractor &amp; Signs of Alcoholism','Militia Soldier on the blue tractor who stops for a drink.','Shoot his beer bottle to lure him to a nearby hedge, then fire.','Shoot the gas canister by the tractor.']
+  ]}
+];
+
+/* ============================ STATE ============================ */
+const doneChal = new Set();
+const doneStep = new Set();
+try{const saved=JSON.parse(localStorage.getItem('the_vector_done_v1')||'[]');saved.forEach(id=>doneChal.add(id));}catch(e){}
+try{const _s=JSON.parse(localStorage.getItem('the_vector_done_v1:steps'));if(Array.isArray(_s))_s.forEach(k=>doneStep.add(k));}catch(e){}
+function reportProgress(){try{const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r['pz03']={done:doneChal.size,total:CHALLENGES.length,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
+function saveDone(){try{localStorage.setItem('the_vector_done_v1',JSON.stringify([...doneChal]));localStorage.setItem('the_vector_done_v1:steps',JSON.stringify([...doneStep]));}catch(e){}reportProgress();}
+let filter = 'all';
+const $ = s => document.querySelector(s);
+const chalById = id => CHALLENGES.find(c=>c.id===id);
+const stepsInRun = r => r.groups.reduce((a,g)=>a+g.steps.length,0);
+const doneInRun = (r,ri) => r.groups.reduce((a,g,gi)=>a+g.steps.filter((s,si)=>doneStep.has(ri+'-'+gi+'-'+si)).length,0);
+const TOTAL_STEPS = RUNS.reduce((a,r)=>a+stepsInRun(r),0);
+
+function popBadges(ids){
+  return (ids||[]).map(i=>'<span class="badge b-pop">Pops: '+chalById(i).name+'</span>').join('');
+}
+
+/* ============================ RENDER ============================ */
+function renderCounters(){
+  const total = CHALLENGES.length;
+  const done = CHALLENGES.filter(c=>doneChal.has(c.id)).length;
+  const ass = CHALLENGES.filter(c=>c.type==='Assassination');
+  const cls = CHALLENGES.filter(c=>c.type==='The Classics');
+  const assD = ass.filter(c=>doneChal.has(c.id)).length;
+  const clsD = cls.filter(c=>doneChal.has(c.id)).length;
+  $('#counters').innerHTML =
+    '<div class="counter '+(done?'lit':'')+'"><span class="k">All challenges</span><span class="v">'+done+'<em> / '+total+'</em></span></div>'+
+    '<div class="counter '+(assD?'lit':'')+'"><span class="k">Assassination</span><span class="v">'+assD+'<em> / '+ass.length+'</em></span></div>'+
+    '<div class="counter '+(clsD?'lit':'')+'"><span class="k">The Classics</span><span class="v">'+clsD+'<em> / '+cls.length+'</em></span></div>'+
+    '<div class="counter nil"><span class="k">Discovery</span><span class="v">0<em> / 0</em></span></div>'+
+    '<div class="counter nil"><span class="k">Feats</span><span class="v">0<em> / 0</em></span></div>'+
+    '<div class="counter '+(doneStep.size?'lit':'')+'"><span class="k">Steps</span><span class="v">'+doneStep.size+'<em> / '+TOTAL_STEPS+'</em></span></div>';
+  const C = 2*Math.PI*74;
+  $('#arc').setAttribute('stroke-dashoffset', String(C - (done/total)*C));
+  $('#dialNum').textContent = done;
+}
+
+function renderRunNav(){
+  let html = '<span class="lbl">Jump to</span>';
+  RUNS.forEach((r,ri)=>{
+    const d = doneInRun(r,ri), t = stepsInRun(r);
+    html += '<button class="rbtn '+(d===t?'full':'')+'" data-jump="'+ri+'">'+
+            '<span class="n">R'+(ri+1)+'</span>'+r.title.replace(/&amp;/g,'&')+
+            '<span class="prog" data-navprog="'+ri+'">'+d+'/'+t+'</span></button>';
+  });
+  html += '<button class="rbtn tiny" data-all="open">Expand all</button>'+
+          '<button class="rbtn tiny" data-all="close">Collapse all</button>';
+  $('#runnav').innerHTML = html;
+}
+
+function specRow(k,v){ return v ? '<span class="sk">'+k+'</span><span class="sv">'+v+'</span>' : ''; }
+
+function renderRuns(){
+  $('#runs').innerHTML = RUNS.map((r,ri)=>{
+    const lo = LOADOUT.map(function(x){
+      return '<div class="lo"><span class="k">'+x[0]+'</span><span class="v '+(x[2]?'locked':'')+'">'+x[1]+'</span></div>';
+    }).join('');
+
+    let n = 0;
+    const groups = r.groups.map((g,gi)=>{
+      const steps = g.steps.map((s,si)=>{
+        n++;
+        const key = ri+'-'+gi+'-'+si;
+        const on = doneStep.has(key);
+        const badges = popBadges(s.pops)
+          + (s.warn ? '<span class="badge b-warn">Warning</span>' : '')
+          + (s.save ? '<span class="badge b-save">Save here</span>' : '');
+        const spec =
+          specRow('Where', s.spec.where) +
+          specRow('Disguise', s.spec.disguise || NO_DISG) +
+          specRow('Item', s.spec.item || 'None needed for this step.') +
+          specRow('NPC', s.spec.npc) +
+          specRow('Action', s.spec.action);
+        const tips = (s.tips && s.tips.length)
+          ? '<ul class="tips">'+s.tips.map(t=>'<li>'+t+'</li>').join('')+'</ul>' : '';
+        const warnBlock = s.warn
+          ? '<div class="note alarm" style="margin:0 0 12px"><strong>Warning.</strong> '+s.warn+'</div>' : '';
+        const saveBlock = s.save
+          ? '<div class="note gold" style="margin:0 0 12px"><strong>Save here.</strong> Manual saves are unlimited on Casual and Professional; Master allows one.</div>' : '';
+        return '<details class="step '+(on?'done':'')+'" data-key="'+key+'">'+
+          '<summary>'+
+            '<button class="tick" data-step="'+key+'" aria-pressed="'+on+'" title="Mark step done">'+(on?'\u2715':'\u25CB')+'</button>'+
+            '<div class="stepmain">'+
+              '<span class="stepno">Step '+(ri+1)+'.'+n+'</span>'+
+              '<h5>'+s.t+'</h5>'+
+              '<p class="stepsum">'+s.s+'</p>'+
+              '<div class="stepbadges">'+badges+'</div>'+
+            '</div>'+
+          '</summary>'+
+          '<div class="stepdetail"><div class="spec">'+spec+'</div>'+tips+warnBlock+saveBlock+'</div>'+
+        '</details>';
+      }).join('');
+      return '<div class="grp"><h4>'+g.name+'</h4>'+steps+'</div>';
+    }).join('');
+
+    return '<details class="run" id="'+r.id+'">'+
+      '<summary>'+
+        '<span class="run-tag">'+r.tag+'</span>'+
+        '<div class="run-title">'+r.title+'</div>'+
+        '<p class="run-goal">'+r.goal+'</p>'+
+        '<div class="stepbadges">'+popBadges(r.pops)+'</div>'+
+        '<div class="run-prog" data-runprog="'+ri+'">'+doneInRun(r,ri)+' of '+stepsInRun(r)+' steps · Reach the exit? '+r.exit+'</div>'+
+      '</summary>'+
+      '<div class="loadout">'+lo+'</div>'+
+      groups+
+    '</details>';
+  }).join('');
+}
+
+function renderFilters(){
+  const c = {
+    all: CHALLENGES.length,
+    Assassination: CHALLENGES.filter(x=>x.type==='Assassination').length,
+    'The Classics': CHALLENGES.filter(x=>x.type==='The Classics').length,
+    incomplete: CHALLENGES.filter(x=>!doneChal.has(x.id)).length
+  };
+  const defs = [
+    ['all','All',c.all,false],
+    ['Assassination','Assassination',c.Assassination,false],
+    ['Discovery','Discovery',0,true],
+    ['Feats','Feats',0,true],
+    ['The Classics','The Classics',c['The Classics'],false],
+    ['incomplete','Incomplete',c.incomplete,false]
+  ];
+  $('#filters').innerHTML = defs.map(d=>
+    '<button class="chip" data-filter="'+d[0]+'" aria-pressed="'+(filter===d[0])+'"'+
+    (d[3]?' disabled title="This mission has none"':'')+'>'+d[1]+' · '+d[2]+'</button>').join('');
+}
+
+function renderChals(){
+  const list = CHALLENGES.filter(c=>{
+    if(filter==='all') return true;
+    if(filter==='incomplete') return !doneChal.has(c.id);
+    return c.type===filter;
+  });
+  $('#chals').innerHTML = list.length ? list.map(c=>{
+    const on = doneChal.has(c.id);
+    const xp = c.xp ? '<b>'+c.xp+'</b>' : '<span class="badge b-unv" style="margin:0">XP unverified</span>';
+    return '<div class="chal '+(on?'done':'')+'">'+
+      '<button class="tick" data-chal="'+c.id+'" aria-pressed="'+on+'" title="Mark challenge done">'+(on?'\u2715':'\u25CB')+'</button>'+
+      '<div class="chalmain"><h5>'+c.name+'</h5><p class="chalcond">'+c.cond+'</p>'+
+      '<div class="chalmeta"><span>'+c.type+'</span><span>'+xp+'</span><span>'+c.run+'</span>'+
+      '<span>'+(c.exit?'Needs exit':'Pops instantly')+'</span></div></div></div>';
+  }).join('') : '<div class="note"><strong>Nothing here.</strong> Every challenge in this filter is ticked.</div>';
+}
+
+function renderCodex(){
+  $('#codex').innerHTML = CODEX.map((z,i)=>
+    '<details class="zone" '+(i===0?'open':'')+'>'+
+      '<summary><span>'+z.zone+'<span class="zwho">'+z.who+'</span></span></summary>'+
+      '<table class="tbl"><thead><tr>'+
+        '<th style="width:22%">Clues #2 and #3</th><th style="width:30%">Who and where</th>'+
+        '<th style="width:24%">Hide the body</th><th style="width:24%">Accident kill</th></tr></thead><tbody>'+
+      z.rows.map(r=>'<tr><td class="who">'+r[0]+'</td><td>'+r[1]+'</td><td class="hide">'+r[2]+'</td><td class="acc">'+r[3]+'</td></tr>').join('')+
+      '</tbody></table></details>').join('');
+}
+
+/* ============================ EVENTS ============================ */
+function refreshProgress(ri){
+  const r = RUNS[ri];
+  const d = doneInRun(r,ri), t = stepsInRun(r);
+  const rp = document.querySelector('[data-runprog="'+ri+'"]');
+  if(rp) rp.textContent = d+' of '+t+' steps · Reach the exit? '+r.exit;
+  const np = document.querySelector('[data-navprog="'+ri+'"]');
+  if(np){ np.textContent = d+'/'+t; np.closest('.rbtn').classList.toggle('full', d===t); }
+}
+
+document.addEventListener('click', function(e){
+  const tab = e.target.closest('.tab');
+  if(tab){
+    document.querySelectorAll('.tab').forEach(function(t){
+      const sel = t===tab;
+      t.setAttribute('aria-selected', sel);
+      document.getElementById(t.getAttribute('aria-controls')).hidden = !sel;
+    });
+    window.scrollTo({top:0,behavior:'smooth'});
+    return;
+  }
+
+  const jump = e.target.closest('[data-jump]');
+  if(jump){
+    const ri = +jump.dataset.jump;
+    const el = document.getElementById(RUNS[ri].id);
+    el.open = true;
+    el.scrollIntoView({behavior:'smooth', block:'start'});
+    return;
+  }
+
+  const all = e.target.closest('[data-all]');
+  if(all){
+    const open = all.dataset.all === 'open';
+    document.querySelectorAll('details.run').forEach(function(d){ d.open = open; });
+    return;
+  }
+
+  const stepBtn = e.target.closest('[data-step]');
+  if(stepBtn){
+    e.preventDefault();              // don't toggle the <details>
+    e.stopPropagation();
+    const k = stepBtn.dataset.step;
+    const on = !doneStep.has(k);
+    if(on) doneStep.add(k); else doneStep.delete(k);
+    saveDone();
+    stepBtn.textContent = on ? '\u2715' : '\u25CB';
+    stepBtn.setAttribute('aria-pressed', on);
+    stepBtn.closest('details.step').classList.toggle('done', on);
+    refreshProgress(+k.split('-')[0]);
+    renderCounters();
+    return;
+  }
+
+  const chalBtn = e.target.closest('[data-chal]');
+  if(chalBtn){
+    const id = chalBtn.dataset.chal;
+    if(doneChal.has(id)) doneChal.delete(id); else doneChal.add(id);
+    saveDone();
+    renderFilters(); renderChals(); renderCounters();
+    return;
+  }
+
+  const chip = e.target.closest('.chip');
+  if(chip && !chip.disabled){
+    filter = chip.dataset.filter;
+    renderFilters(); renderChals();
+  }
+});
+
+/* keyboard: space/enter on the tick shouldn't toggle the details either */
+document.addEventListener('keydown', function(e){
+  if((e.key===' '||e.key==='Enter') && e.target.matches('[data-step]')){ e.preventDefault(); e.target.click(); }
+});
+
+/* ============================ INIT ============================ */
+renderCounters();
+renderRuns();
+renderRunNav();
+renderFilters();
+renderChals();
+renderCodex();
+document.getElementById(RUNS[0].id).open = true;
+reportProgress();
+</script>
+<!-- step-progress-bridge -->
+<script>
+/* Reports route-step ticks into 'hitman-progress-registry' so the index can
+   show them beside the challenge counts. Counts what is on screen rather than
+   any guide-specific state, so one implementation serves every guide. */
+(function(){
+  var RID="pz03", SEL=".step";
+  function isDone(s){
+    var c=s.classList;
+    if(c.contains('done')||c.contains('dn')) return true;
+    if(s.getAttribute('data-done')==='1'||s.getAttribute('aria-pressed')==='true') return true;
+    return !!s.querySelector('.done,.dn,[data-done="1"],[aria-pressed="true"]');
+  }
+  function tally(){
+    var steps=document.querySelectorAll(SEL);
+    if(!steps.length) return null;
+    var n=0;
+    for(var i=0;i<steps.length;i++) if(isDone(steps[i])) n++;
+    return {steps:n,stepTotal:steps.length};
+  }
+  function push(){
+    var t;
+    try{ t=tally(); }catch(err){ return; }
+    if(!t||!t.stepTotal) return;
+    try{
+      var r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');
+      var e=r[RID]||(r[RID]={});
+      /* the guide's own reportProgress() rewrites this entry wholesale, so
+         re-add the step counts whenever they go missing or stale */
+      if(e.steps===t.steps&&e.stepTotal===t.stepTotal) return;
+      e.steps=t.steps; e.stepTotal=t.stepTotal; e.updated=Date.now();
+      localStorage.setItem('hitman-progress-registry',JSON.stringify(r));
+    }catch(err){}
+  }
+  var pending=false;
+  function schedule(){
+    if(pending) return; pending=true;
+    setTimeout(function(){pending=false;push();},120);
+  }
+  try{
+    new MutationObserver(schedule).observe(document.body,
+      {subtree:true,childList:true,attributes:true,attributeFilter:['class','aria-pressed','data-done']});
+  }catch(err){}
+  window.addEventListener('load',schedule);
+  setTimeout(push,600);
+})();
+</script>
+<!-- /step-progress-bridge -->
+</body>
+</html>

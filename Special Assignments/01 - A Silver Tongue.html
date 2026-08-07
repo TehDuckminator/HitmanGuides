@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A Silver Tongue — Step Run Sheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Expanded:wght@600;700&family=Barlow+Condensed:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --deep:#06202B; --panel:#0B2B39; --line:#1A4E62;
+  --aqua:#38E1D4; --flamingo:#FF5C8A; --sun:#FFB627; --danger:#FF4D4D;
+  --violet:#C9A9FF; --sand:#EFEAE0; --muted:#8FB3BE; --radius:3px;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --cond:"Barlow Condensed","Arial Narrow",sans-serif;
+  --disp:"Archivo Expanded","Archivo",Helvetica,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:radial-gradient(1200px 600px at 15% -10%,#10465A 0%,transparent 60%),
+             radial-gradient(900px 500px at 100% 0%,#2A1230 0%,transparent 55%),var(--deep);
+  color:var(--sand);font-family:var(--cond);font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px 90px}
+
+header.masthead{padding:44px 0 18px;border-bottom:1px solid var(--line)}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--aqua);margin:0 0 12px}
+h1{font-family:var(--disp);font-weight:700;font-size:clamp(30px,5.4vw,58px);line-height:.98;margin:0 0 10px}
+h1 .sub{display:block;color:var(--flamingo)}
+.dek{max-width:64ch;color:var(--muted);font-size:19px;margin:0 0 20px}
+.factstrip{display:flex;flex-wrap:wrap;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin-bottom:8px}
+.fact{flex:1 1 150px;padding:10px 14px;border-right:1px solid var(--line);background:rgba(255,255,255,.02)}
+.fact:last-child{border-right:none}
+.fact b{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+.fact span{font-size:18px;font-weight:600}
+
+.verif{margin:22px 0 0;border-left:3px solid var(--sun);background:rgba(255,182,39,.07);padding:14px 18px;border-radius:0 var(--radius) var(--radius) 0}
+.verif h3{margin:0 0 6px;font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--sun)}
+.verif p{margin:0 0 8px;font-size:16px;color:#E4DFD3}
+.verif p:last-child{margin-bottom:0}
+
+.board{margin:28px 0 0;border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(180deg,rgba(56,225,212,.06),rgba(0,0,0,.15));overflow:hidden}
+.board-top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 18px 12px;flex-wrap:wrap}
+.board-title{font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
+.board-count{font-family:var(--disp);font-size:34px;line-height:1}
+.board-count small{font-family:var(--mono);font-size:13px;color:var(--muted)}
+.xp{font-family:var(--mono);font-size:13px;color:var(--aqua)}
+.track{height:10px;background:rgba(0,0,0,.35);position:relative;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.track .fill{height:100%;width:0;background:linear-gradient(90deg,var(--aqua),var(--flamingo));transition:width .45s cubic-bezier(.2,.7,.3,1)}
+.track .ticks{position:absolute;inset:0;display:flex;pointer-events:none}
+.track .ticks i{flex:1;border-right:1px solid rgba(255,255,255,.07)}
+.sectors{display:grid;grid-template-columns:repeat(5,1fr)}
+.sector{padding:12px 14px;border-right:1px solid var(--line)}
+.sector:last-child{border-right:none}
+.sector b{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.sector .num{font-family:var(--disp);font-size:22px;line-height:1}
+.sector .num em{font-style:normal;color:var(--muted);font-size:14px;font-family:var(--mono)}
+.sector.done .num{color:var(--aqua)}
+.btn{background:none;border:1px solid var(--line);color:var(--muted);font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:7px 12px;border-radius:var(--radius);cursor:pointer}
+.btn:hover{border-color:var(--flamingo);color:var(--flamingo)}
+
+nav.tabs{display:flex;margin:30px 0 22px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+nav.tabs button{background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;padding:12px 18px;cursor:pointer}
+nav.tabs button[aria-selected="true"]{color:var(--sand);border-bottom-color:var(--flamingo)}
+nav.tabs button:hover{color:var(--sand)}
+.panel[hidden]{display:none}
+
+/* run jump bar */
+.jumpbar{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px;align-items:center}
+.jumpbar .lab{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-right:4px}
+.jump{background:none;border:1px solid var(--line);color:var(--sand);font-family:var(--cond);font-size:15px;font-weight:600;padding:8px 13px;border-radius:var(--radius);cursor:pointer;display:flex;align-items:center;gap:8px}
+.jump:hover{border-color:var(--aqua)}
+.jump .n{font-family:var(--mono);font-size:10px;color:var(--aqua);letter-spacing:.1em}
+.jump.full{border-color:rgba(56,225,212,.6);background:rgba(56,225,212,.08)}
+.jump.full .n{color:var(--aqua)}
+.expandbar{display:flex;gap:8px;margin:0 0 22px}
+
+/* run cards */
+.run{border:1px solid var(--line);border-radius:var(--radius);margin-bottom:16px;background:rgba(255,255,255,.015);scroll-margin-top:14px}
+.run-head{width:100%;text-align:left;background:none;border:none;color:inherit;padding:18px 22px;cursor:pointer;display:flex;gap:16px;align-items:flex-start}
+.run-head .chev{font-family:var(--mono);color:var(--aqua);font-size:15px;padding-top:4px;transition:transform .2s}
+.run.open .run-head .chev{transform:rotate(90deg)}
+.run-head .meat{flex:1;min-width:0}
+.run-tag{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--flamingo);margin-bottom:7px}
+.run-head h2{font-family:var(--disp);font-size:clamp(19px,2.7vw,26px);margin:0 0 8px;line-height:1.06}
+.run-head p{margin:0;color:var(--muted);max-width:70ch;font-size:16px}
+.run-prog{font-family:var(--mono);font-size:12px;color:var(--aqua);margin-top:10px}
+.run-body[hidden]{display:none}
+
+.loadout{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));border-top:1px solid var(--line)}
+.slot{padding:12px 16px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.slot b{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--aqua);margin-bottom:4px}
+.slot span{font-size:16px;display:block}
+.slot small{display:block;color:var(--muted);font-size:14px;margin-top:2px}
+
+.section-head{padding:14px 22px 4px;font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.step{border-top:1px solid rgba(26,78,98,.55);display:flex}
+.tick{flex:0 0 50px;border:none;border-right:1px solid rgba(26,78,98,.55);background:none;color:var(--line);font-size:19px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.tick:hover{color:var(--aqua);background:rgba(56,225,212,.06)}
+.tick[aria-pressed="true"]{color:var(--aqua);background:rgba(56,225,212,.1)}
+.step-body{flex:1;min-width:0}
+.step-toggle{width:100%;text-align:left;background:none;border:none;color:inherit;padding:13px 20px;cursor:pointer;display:flex;gap:12px;align-items:flex-start}
+.step-toggle .num{font-family:var(--mono);font-size:11px;color:var(--flamingo);padding-top:5px;min-width:26px}
+.step.done .step-title{text-decoration:line-through;opacity:.5}
+.step-title{font-weight:700;font-size:19px;margin:0 0 3px}
+.step-sum{margin:0;color:#CFDDE2;font-size:16px}
+.step-detail{padding:0 20px 16px 58px}
+.step-detail[hidden]{display:none}
+.fields{list-style:none;margin:0 0 10px;padding:0;border-left:2px solid var(--line)}
+.fields li{padding:5px 0 5px 14px;display:grid;grid-template-columns:88px 1fr;gap:12px}
+.fields b{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding-top:3px}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.badge{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:4px 8px;border-radius:var(--radius);border:1px solid}
+.b-pop{color:var(--aqua);border-color:rgba(56,225,212,.5);background:rgba(56,225,212,.08)}
+.b-warn{color:var(--danger);border-color:rgba(255,77,77,.55);background:rgba(255,77,77,.1)}
+.b-save{color:var(--sun);border-color:rgba(255,182,39,.55);background:rgba(255,182,39,.1)}
+.b-unv{color:var(--violet);border-color:rgba(201,169,255,.5);background:rgba(201,169,255,.09)}
+.b-excl{color:var(--flamingo);border-color:rgba(255,92,138,.5);background:rgba(255,92,138,.1)}
+.b-reload{color:#7FD4FF;border-color:rgba(127,212,255,.55);background:rgba(127,212,255,.1)}
+.step-detail .badge{display:inline-block;margin:0 0 6px}
+
+/* chips visible while the step is collapsed */
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 4px}
+.chip{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;padding:2px 7px;border-radius:var(--radius);border:1px solid}
+.chip-save{color:var(--sun);border-color:rgba(255,182,39,.55);background:rgba(255,182,39,.1)}
+.chip-reload{color:#7FD4FF;border-color:rgba(127,212,255,.55);background:rgba(127,212,255,.1)}
+
+/* save-scum explainer */
+.scumnote{border-left:3px solid #7FD4FF;background:rgba(127,212,255,.07);padding:13px 17px;margin:0 0 18px;border-radius:0 var(--radius) var(--radius) 0}
+.scumnote h4{margin:0 0 5px;font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#7FD4FF}
+.scumnote p{margin:0 0 7px;font-size:16px;color:#E4DFD3}
+.scumnote p:last-child{margin:0}
+.scumnote .anchors{font-family:var(--mono);font-size:13px;color:var(--muted);letter-spacing:.02em}
+
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.filters button{background:none;border:1px solid var(--line);color:var(--muted);font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:7px 12px;border-radius:var(--radius);cursor:pointer}
+.filters button[aria-pressed="true"]{border-color:var(--aqua);color:var(--aqua);background:rgba(56,225,212,.08)}
+.clist{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.crow{display:flex;border-bottom:1px solid rgba(26,78,98,.55)}
+.crow:last-child{border-bottom:none}
+.crow .tick{align-self:stretch}
+.crow-body{padding:12px 18px;flex:1;min-width:0}
+.crow-top{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px}
+.crow h4{margin:0;font-size:18px;font-weight:700}
+.crow.done h4{text-decoration:line-through;opacity:.5}
+.type-tag{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;border:1px solid var(--line);padding:2px 6px;border-radius:var(--radius)}
+.type-A{color:var(--flamingo);border-color:rgba(255,92,138,.45)}
+.type-D{color:var(--aqua);border-color:rgba(56,225,212,.45)}
+.type-F{color:var(--sun);border-color:rgba(255,182,39,.45)}
+.type-T{color:#fff;border-color:rgba(255,255,255,.4)}
+.type-TC{color:var(--violet);border-color:rgba(201,169,255,.45)}
+.crow p{margin:5px 0 0;color:#CFDDE2;font-size:16px}
+.crow .meta{margin-top:6px;font-family:var(--mono);font-size:11px;color:var(--muted)}
+.empty{padding:30px;text-align:center;color:var(--muted);font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+
+.audit h2{font-family:var(--disp);font-size:23px;margin:32px 0 10px}
+.audit h2:first-child{margin-top:0}
+.audit p,.audit ul{max-width:76ch}
+.audit p{margin:0 0 12px}
+.audit ul{padding-left:20px;margin:0 0 14px}
+.audit li{margin-bottom:7px}
+table{width:100%;border-collapse:collapse;margin:0 0 20px;font-size:16px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid rgba(26,78,98,.6);vertical-align:top}
+th{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--line)}
+td.ok{color:var(--aqua);font-family:var(--mono);font-size:13px}
+td.no{color:var(--sun);font-family:var(--mono);font-size:13px}
+.src{font-family:var(--mono);font-size:13px;color:var(--muted)}
+footer{margin-top:50px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:15px}
+
+@media (max-width:720px){
+  .sectors{grid-template-columns:repeat(2,1fr)}
+  .sector{border-bottom:1px solid var(--line)}
+  .fields li{grid-template-columns:1fr;gap:2px}
+  .step-detail{padding-left:20px}
+  .tick{flex:0 0 42px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+:focus-visible{outline:2px solid var(--aqua);outline-offset:2px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="masthead">
+  <p class="eyebrow">Special Assignment · Miami · World of Assassination</p>
+  <h1>A Silver Tongue<span class="sub">26 challenges · 6 runs · step format</span></h1>
+  <p class="dek">Every challenge name and unlock condition below is taken from your in-game export and cross-checked against the Hitman Wiki. Each step names the place, the disguise, the item, the NPC and the action — and flags anything the sources don’t actually confirm.</p>
+  <div class="factstrip">
+    <div class="fact"><b>Target</b><span>Ajit “AJ” Krish</span></div>
+    <div class="fact"><b>Location</b><span>Miami, USA</span></div>
+    <div class="fact"><b>Released</b><span>24 Sep 2019</span></div>
+    <div class="fact"><b>Total XP</b><span>64,000</span></div>
+    <div class="fact"><b>Disguise goal</b><span>0 (none)</span></div>
+    <div class="fact"><b>Area goal</b><span>0 (none)</span></div>
+  </div>
+
+  <div class="verif">
+    <h3>Three things your JSON settled</h3>
+    <p><b>1 · No Chameleon, no area discovery — now confirmed twice.</b> Your export reports <code>disguiseCount: 0</code>, <code>areas: []</code>, <code>areaCount: 0</code> and <code>areaGoal: null</code>. Combined with the wiki, that closes the question: this mission has no disguise-collection challenge and no zone-discovery challenges. <code>areasSharedWith: "The Finish Line"</code> confirms the map is the shared Miami sandbox.</p>
+    <p><b>2 · Versatile challenges are Miami-wide, not mission-specific.</b> The in-game text for Versatile Assassin reads “Complete the following Versatile challenges <b>in Miami</b>”. Piano Man, Someone Could Hurt Themselves, Hold My Hair, Straight Shot and Tasteless, Traceless therefore carry over from The Finish Line. If you already cleared them there, they are already ticked here. I had this flagged as unverified last time; it is now confirmed.</p>
+    <p><b>3 · A real conflict between your export and the wiki — read this before Runs 4 and 5.</b> Your in-game text for <b>Silent Assassin</b> lists only “Only eliminate the target / No bodies found”, and omits both “Do not get spotted” and the camera clause. Sniper Assassin and SASO omit the camera clause too. The wiki lists all of them. I have <b>not</b> picked a winner: the guide plays to the stricter wiki wording, because a run that satisfies the strict version also satisfies the loose one. Do not plan around being allowed to get spotted.</p>
+  </div>
+</header>
+
+<section class="board" aria-label="Progress tracker">
+  <div class="board-top">
+    <div>
+      <div class="board-title">Challenges cleared</div>
+      <div class="board-count"><span id="doneCount">0</span><small> / 26</small></div>
+    </div>
+    <div style="text-align:right">
+      <div class="xp" id="xpLine">0 / 64,000 XP</div>
+      <div style="margin-top:8px"><button class="btn" id="resetBtn">Clear all ticks</button></div>
+    </div>
+  </div>
+  <div class="track"><div class="fill" id="fill"></div><div class="ticks" id="ticks"></div></div>
+  <div class="sectors" id="sectors"></div>
+</section>
+
+<nav class="tabs" role="tablist">
+  <button role="tab" id="tab-runs" aria-controls="p-runs" aria-selected="true">Optimized runs</button>
+  <button role="tab" id="tab-list" aria-controls="p-list" aria-selected="false">Checklist</button>
+  <button role="tab" id="tab-audit" aria-controls="p-audit" aria-selected="false">Verification &amp; audit</button>
+</nav>
+
+<div class="panel" id="p-runs" role="tabpanel" aria-labelledby="tab-runs">
+  <div class="scumnote">
+    <h4>How the save anchors work</h4>
+    <p>Krish dies once per attempt, so most kill challenges can’t share a run. The way round it is save-scumming: <b>a challenge is written to your profile the instant it fires, and reloading never takes it back.</b> Kill him five different ways off the same save and you keep all five.</p>
+    <p>Amber <b>SAVE HERE</b> steps create an anchor. Blue <b>RELOAD</b> steps send you back to one — both are chipped on the step header so you can see them without expanding.</p>
+    <p class="anchors">Anchors used: Run 2 → Save A (area untouched) and Save B (forklift staged) · Run 3 → driver-outfit save and pre-drop save · Runs 1, 4, 5, 6 → insurance saves only, no reload required.</p>
+  </div>
+  <div class="jumpbar" id="jumpbar"></div>
+  <div class="expandbar">
+    <button class="btn" id="openAll">Open all runs</button>
+    <button class="btn" id="closeAll">Collapse all</button>
+  </div>
+  <div id="runList"></div>
+</div>
+
+<div class="panel" id="p-list" role="tabpanel" aria-labelledby="tab-list" hidden>
+  <div class="filters" id="filters"></div>
+  <div class="clist" id="clist"></div>
+</div>
+
+<div class="panel audit" id="p-audit" role="tabpanel" aria-labelledby="tab-audit" hidden>
+  <h2>Count audit — in-game export vs. wiki</h2>
+  <p>Both sources agree on every number. Challenge names in this guide use your in-game spelling where the two differ (the wiki title-cases “Against The Rules”, “Oil And Water”, “Here To Serve”, “In Case Of Shortage…”; the game does not).</p>
+  <table>
+    <thead><tr><th>Category</th><th>Your JSON</th><th>Wiki</th><th>XP (wiki)</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>Assassination</td><td>13</td><td>13</td><td>27,000</td><td class="ok">match</td></tr>
+      <tr><td>Discovery</td><td>5</td><td>5</td><td>12,000</td><td class="ok">match</td></tr>
+      <tr><td>Feats</td><td>2</td><td>2</td><td>4,000</td><td class="ok">match</td></tr>
+      <tr><td>Targets</td><td>1</td><td>1</td><td>4,000</td><td class="ok">match</td></tr>
+      <tr><td>The Classics</td><td>5</td><td>5</td><td>17,000</td><td class="ok">match</td></tr>
+      <tr><td><b>Total</b></td><td><b>26</b></td><td><b>26</b></td><td><b>64,000</b></td><td class="ok">match</td></tr>
+    </tbody>
+  </table>
+  <p><b>XP is single-sourced.</b> Your export contains no XP values, so every XP figure here comes from the wiki alone. The per-category sums do add up to the wiki’s stated 64,000 total, which is a decent internal consistency check, but it is not a second source.</p>
+
+  <h2>Source conflicts, logged not resolved</h2>
+  <table>
+    <thead><tr><th>Item</th><th>Your JSON says</th><th>Wiki says</th><th>How this guide handles it</th></tr></thead>
+    <tbody>
+      <tr><td>Silent Assassin conditions</td><td>Only eliminate target; no bodies found</td><td>…plus do not get spotted; erase camera evidence</td><td class="no">Plays to the wiki (stricter)</td></tr>
+      <tr><td>Sniper Assassin conditions</td><td>No camera clause</td><td>Camera clause present</td><td class="no">Plays to the wiki (stricter)</td></tr>
+      <tr><td>SASO conditions</td><td>No camera clause</td><td>Camera clause present</td><td class="no">Plays to the wiki (stricter)</td></tr>
+      <tr><td>Space Program vantage 1</td><td>[REDACTED]</td><td>“Robert Knox’s outdoor laptop”; Steam guide calls it his satellite unit</td><td class="no">Both prop names printed in the step</td></tr>
+      <tr><td>Bottles per vantage</td><td>[REDACTED]</td><td>Wiki: 2 from vantage 1. Steam guide: 1 from vantage 1</td><td class="no">Count three yourself; total is fixed at three</td></tr>
+      <tr><td>Versatile scope</td><td>“in Miami”</td><td>“in Miami”</td><td class="ok">Agreed — location-wide</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Run logic simulation</h2>
+  <p>Each run was walked step by step against six questions: is anything required that hasn’t been obtained; has an NPC needed later been removed; has a scripted event been broken; has a pickup been skipped; has a prerequisite been missed; is the player being sent back across the map for no reason. Four problems were found in the previous version and fixed:</p>
+  <ul>
+    <li><b>Run 1 — order fault.</b> Here to Serve was placed after manning the Atlantide stand. Taking a new outfit would have cost you the stand. Both are now satisfied by one action: subdue the vendor <i>at</i> the Atlantide stand, take his outfit, then man the stand.</li>
+    <li><b>Run 1 — wasted trip.</b> The car explosive was planted on a second visit to the Truck Area. It is now planted during the same pass as the faucet, and detonated later from cover.</li>
+    <li><b>Run 2 — over-staging.</b> Shockingly Pure, the drowning and the explosion need no forklift staging, but were listed after it. The run now uses two save anchors: one before any staging (three attempts) and one after (two attempts), which cuts roughly half the setup work.</li>
+    <li><b>Run 2 — unsourced dependency.</b> The drowning previously depended on manning the Atlantide stand, which belongs to Run 1. It now uses a loadout emetic, with the stand as a fallback.</li>
+  </ul>
+  <p><b>The rule that makes all reloading safe:</b> in World of Assassination a challenge is written to your profile the instant it fires. Reloading a save, restarting the mission or quitting never takes back a challenge you have already popped. Every “reload to your save” instruction in this guide relies on that.</p>
+
+  <h2>Mutual exclusions</h2>
+  <ul>
+    <li><b>Every kill-method challenge excludes every other one</b> — Krish dies once per attempt. Crushed Dreams, Nutjob, Oil and Water, Shockingly Pure, It’s Only Water!, Against the Rules, Unquenchable Thirst, Piano Man, Straight Shot and Sniper Assassin each need their own attempt, hence the save anchors.</li>
+    <li><b>Brokenhearted vs. Against the Rules.</b> Brokenhearted requires the car destroyed and the target <i>alive</i>, then a reaction. Run 2’s car-bomb kill needs the car intact as bait. Never attempt both in one run — they are split into Runs 1 and 2 deliberately.</li>
+    <li><b>Suit Only / SASO vs. every disguise challenge.</b> Here to Serve, Driving Business, Repping Atlantide, Aggressive Advertising, It’s Only Water! and Crushed Dreams all need a disguise, so none can share a run with Run 5.</li>
+    <li><b>Atlantide Space Program vs. any rating.</b> The falling debris is documented as likely to kill everyone in the Truck Area. Run 6 stays isolated.</li>
+    <li><b>Sniper Assassin vs. accidents.</b> The kill must come from the rifle, so it cannot share an attempt with any accident challenge.</li>
+  </ul>
+
+  <h2>Starting locations and mastery</h2>
+  <p>A Silver Tongue uses the shared Miami mastery track, so progress from The Finish Line carries over.</p>
+  <table>
+    <thead><tr><th>Level</th><th>Unlock</th><th>Start disguise</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Event Entrance start · Agency Pickup: Bayside Center Car Park (large item)</td><td>Casual suit</td></tr>
+      <tr><td>2</td><td>Dolphin Fountain start · Lockpick Mk II · <b>all loadout slots</b></td><td>Suit</td></tr>
+      <tr><td>3</td><td>Smuggle: Kronstadt Reception magazine stand (small item)</td><td>—</td></tr>
+      <tr><td>4</td><td>Marina start · Fish</td><td>Suit</td></tr>
+      <tr><td>5</td><td>Smuggle: Stands toilet trash bin · Jaeger 7 Mk II sniper</td><td>—</td></tr>
+      <tr><td>6</td><td>Stands start</td><td>Flamingo Mascot</td></tr>
+      <tr><td>7</td><td>Agency Pickup: Boat Rental Hut · HWK 21 Mk II</td><td>—</td></tr>
+      <tr><td>8</td><td>Food Stand start · Smuggle: Podium Storage bookshelf</td><td><b>Food Vendor</b></td></tr>
+      <tr><td>9</td><td>Overpass start</td><td>Race Marshal</td></tr>
+      <tr><td>10</td><td>ICA Proximity Taser · ICA Briefcase</td><td>—</td></tr>
+      <tr><td>11</td><td>Agency Pickup: Backstage Truck</td><td>—</td></tr>
+      <tr><td>12</td><td>Drivers’ Lounge start</td><td>Bartender</td></tr>
+      <tr><td>13</td><td>Agency Pickup: Parkside Food Stands</td><td>—</td></tr>
+    </tbody>
+  </table>
+  <p><b>Hard gate:</b> at Miami mastery 0–1 you have no loadout slots at all. Reach mastery 2 before starting — every run assumes a suppressed pistol. Run 2’s Against the Rules step is the one exception: it uses a Car Bomb found on the map, so it works with no loadout whatsoever.</p>
+  <p><span class="badge b-unv">UNVERIFIED</span> Whether all seven starts are individually selectable inside A Silver Tongue as opposed to The Finish Line. The Food Stand and Marina starts are confirmed for this mission by the Here to Serve and It’s Only Water! wiki entries; Event Entrance is confirmed by the mission walkthrough. The rest are inferred from the shared mastery table — if one is missing from your planning screen, fall back to Event Entrance.</p>
+
+  <h2>What is still not documented anywhere</h2>
+  <ul>
+    <li><b>Named NPCs.</b> Sources name only Ajit “AJ” Krish, Edwin Schmidtz (the wiki also spells it Schmitz), Robert Knox and Maxwell Rutter. Everyone else is identified by role and post, because that is how the sources identify them — “the security guard at the photocopier”, “the Waiter who passes through the paddock back room”, “Krish’s personal bodyguard”.</li>
+    <li><b>Patrol timings.</b> Not published. Every timing cue in this guide is a trigger to watch for, never a stopwatch figure.</li>
+    <li><b>Item placement.</b> Confirmed only for: Emetic Rat Poison (Thwack Paddock back room), Lethal Pills (Emergency Bay), Evidence Locker Combination note and Car Bomb (Security Area main room and safe room), and the empty bottle plus faucet behind an Atlantide truck. For anything else use the HITMAPS interactive map for this mission.</li>
+    <li><b>CCTV recorder room.</b> Not confirmed for this mission by two sources. Use the in-game camera-recorder marker.</li>
+  </ul>
+
+  <h2>Patch history</h2>
+  <ul>
+    <li>Shipped <b>24 September 2019</b> with the HITMAN 2 Expansion Pass (Special Assignments Pack 2), alongside A Bitter Pill.</li>
+    <li><b>No Evidence</b> (The Classics, +1000 XP) existed in HITMAN 2 and is listed by the wiki as cut in HITMAN III. It does not appear in your export, which independently confirms the removal. Legacy HITMAN 2 players will see 27.</li>
+    <li>No other challenge here is documented as patch-added. <span class="badge b-unv">UNVERIFIED</span> — IOI’s per-patch challenge deltas for 2019 DLC are not itemised in any source I could reach.</li>
+  </ul>
+</div>
+
+<footer>
+  Built from your in-game challenge export, the Hitman Wiki mission, challenge and walkthrough pages, and Steam community redacted-challenge guides. Tick state is stored on this device only. Where two sources disagreed, both readings are printed rather than one being picked silently.
+</footer>
+</div>
+
+<script>
+const TYPES={A:"Assassination",D:"Discovery",F:"Feats",T:"Targets",TC:"The Classics"};
+
+/* Names and descriptions below follow the in-game export. XP is wiki-sourced. */
+const CHALLENGES=[
+ {id:"crushed_dreams",name:"Crushed Dreams",type:"A",xp:4000,desc:"Eliminate Ajit “AJ” Krish by dropping a race car on him."},
+ {id:"hold_my_hair",name:"Hold My Hair",type:"A",xp:1000,desc:"Assassinate a target by drowning them."},
+ {id:"straight_shot",name:"Straight Shot",type:"A",xp:1000,desc:"Assassinate a target with a headshot."},
+ {id:"someone_could_hurt",name:"Someone Could Hurt Themselves",type:"A",xp:1000,desc:"Assassinate a target in an accident."},
+ {id:"unquenchable_thirst",name:"Unquenchable Thirst",type:"A",xp:2000,desc:"Eliminate Ajit “AJ” Krish by drowning him."},
+ {id:"tasteless_traceless",name:"Tasteless, Traceless",type:"A",xp:1000,desc:"Assassinate a target with lethal poison."},
+ {id:"shockingly_pure",name:"Shockingly Pure",type:"A",xp:2000,desc:"Eliminate Ajit “AJ” Krish by electrifying a puddle of Atlantide. Ignore the science."},
+ {id:"its_only_water",name:"It’s Only Water!",type:"A",xp:4000,desc:"Eliminate Ajit “AJ” Krish with a poisoned cup of Atlantide."},
+ {id:"against_the_rules",name:"Against the Rules",type:"A",xp:2000,desc:"Eliminate Ajit “AJ” Krish in an explosion."},
+ {id:"oil_and_water",name:"Oil and Water",type:"A",xp:2000,desc:"Eliminate Ajit “AJ” Krish by setting him on fire."},
+ {id:"versatile_assassin",name:"Versatile Assassin",type:"A",xp:4000,desc:"Complete the following Versatile challenges in Miami: Piano Man, Someone Could Hurt Themselves, Hold My Hair, Straight Shot, Tasteless, Traceless."},
+ {id:"nutjob",name:"Nutjob",type:"A",xp:2000,desc:"Eliminate Ajit “AJ” Krish by dropping coconuts on him."},
+ {id:"piano_man",name:"Piano Man",type:"A",xp:1000,desc:"Assassinate a target with the fiber wire."},
+ {id:"atlantide_space",name:"Atlantide Space Program",type:"D",xp:4000,desc:"[REDACTED in-game] Shoot the three Atlantide bottles on rooftops, then press the launch button by the Atlantide showcase."},
+ {id:"here_to_serve",name:"Here to Serve",type:"D",xp:2000,desc:"Disguise yourself as a Food Server."},
+ {id:"in_case_shortage",name:"In Case of Shortage…",type:"D",xp:2000,desc:"[REDACTED in-game] Turn on the water faucet by the truck storing Atlantide bottles."},
+ {id:"brokenhearted",name:"Brokenhearted",type:"D",xp:2000,desc:"[REDACTED in-game] Destroy Krish’s car, do not eliminate the target, and wait for him to react to it."},
+ {id:"driving_business",name:"Driving Business",type:"D",xp:2000,desc:"Disguise yourself as the Thwack Driver."},
+ {id:"repping_atlantide",name:"Repping Atlantide",type:"F",xp:2000,desc:"Man the Atlantide stand."},
+ {id:"aggressive_advertising",name:"Aggressive Advertising",type:"F",xp:2000,desc:"As the Thwack team’s driver, meet with Ajit “AJ” Krish in the team’s garage."},
+ {id:"the_marketeer",name:"The Marketeer",type:"T",xp:4000,desc:"Eliminate Ajit “AJ” Krish."},
+ {id:"suit_only",name:"Suit Only",type:"TC",xp:1000,desc:"Eliminate the target and complete the mission. Do it all in your suit."},
+ {id:"the_classics",name:"The Classics",type:"TC",xp:4000,desc:"Complete all the Classic challenges: Silent Assassin, Silent Assassin Suit Only, Sniper Assassin, Suit Only."},
+ {id:"sniper_assassin",name:"Sniper Assassin",type:"TC",xp:4000,desc:"Eliminate the target with a sniper rifle. Only eliminate the target. Do not get spotted. (Wiki adds: erase or destroy camera evidence.)"},
+ {id:"silent_assassin",name:"Silent Assassin",type:"TC",xp:4000,desc:"Only eliminate the target. No bodies found. (Wiki adds: do not get spotted; erase or destroy camera evidence.)"},
+ {id:"saso",name:"Silent Assassin, Suit Only",type:"TC",xp:4000,desc:"Only eliminate the target. No bodies found. Do not get spotted. Do it all in your suit. (Wiki adds: erase or destroy camera evidence.)"}
+];
+const byId=Object.fromEntries(CHALLENGES.map(c=>[c.id,c]));
+
+const RUNS=[
+{
+ id:"r1", tag:"Run 1", short:"Vendor",
+ title:"The vendor run — own the Atlantide stand",
+ goal:"One clean pass through the Truck Area: rig the car, tick both harmless discoveries, take over the Atlantide stand, then kill him with his own product. Highest XP per minute on the sheet.",
+ loadout:[
+  {k:"Start",v:"Food Stand",n:"Miami mastery 8 — you begin already wearing the Food Vendor disguise, right between the stands and the paddock street. Below mastery 8, start at Marina (4) or Event Entrance (1) and take a vendor outfit on foot."},
+  {k:"Suit",v:"Irrelevant",n:"Overwritten by the Food Vendor start disguise."},
+  {k:"Slot 1 · Firearm",v:"Krugermeier 2-2",n:"Suppressed. Backup way to destroy the car by shooting its fuel tank."},
+  {k:"Slot 2 · Item",v:"Lethal Poison Vial",n:"Mandatory for the kill. Must be a consumed poison, not a syringe."},
+  {k:"Slot 3 · Item",v:"ICA Remote Micro Explosive",n:"Destroys the car for Brokenhearted. The wiki recommends this specific one — NPCs cannot notice it."},
+  {k:"Slot 4 · Item",v:"Coin",n:"Distraction for the stand vendor if the subdue goes wrong."}
+ ],
+ sections:[
+ {name:"Single pass through the Truck Area",
+  steps:[
+  {t:"Fill the empty bottle at the truck faucet",
+   sum:"Behind one of the Atlantide trucks sits an empty Atlantide bottle next to a faucet. Turn it on.",
+   where:"Truck Area, round the back of one of the two Atlantide-branded trucks.",
+   disguise:"Food Vendor (your starting outfit) is accepted here.",
+   item:"None.",
+   npc:"None — pick a moment when no crew are watching the truck’s back side.",
+   action:"Interact with the faucet to fill the empty bottle with ordinary tap water. Challenge fires on the interaction — no kill, no body, no rating cost.",
+   warn:["Sources don’t say which of the two trucks. Walk the back of both; the prompt is unmistakable."],
+   unv:"which truck",
+   pops:["in_case_shortage"]},
+
+  {t:"Plant the explosive on Krish’s car now, don’t detonate",
+   sum:"His car is parked beside the trucks. Rig it on this pass so you never have to walk back here.",
+   where:"Truck Area, Krish’s sports car parked next to the Atlantide trucks.",
+   disguise:"Food Vendor.",
+   item:"ICA Remote Micro Explosive.",
+   npc:"Krish must not be at the car — plant while he is elsewhere on his loop.",
+   action:"Place the explosive on the car and walk away. Leave it armed and undetonated; you fire it two steps from now.",
+   warn:["Do not detonate yet. If the blast catches Krish, you lose Brokenhearted and gain a challenge that belongs to Run 2."],
+   pops:[]},
+
+  {t:"Take the Atlantide stand vendor’s outfit",
+   sum:"Subdue the Food Vendor manning the Atlantide stand and wear his clothes. This is the one action that satisfies Here to Serve.",
+   where:"The Atlantide stand in the Truck Area.",
+   disguise:"You end this step wearing a Food Vendor outfit taken from a body — that outfit <i>change</i> is what the game counts, which is why starting in the outfit alone doesn’t award it.",
+   item:"None. A coin helps if he won’t leave the counter.",
+   npc:"The Food Vendor manning the Atlantide stand.",
+   action:"Distract him off the counter, subdue him, take his outfit, and hide the body somewhere out of the crowd’s path.",
+   warn:["If you started at Food Stand, do not assume this auto-completed — check the challenge list.","Below mastery 8: start at Marina and lure one of the food vendors near the start instead."],
+   pops:["here_to_serve"]},
+
+  {t:"Man the stand",
+   sum:"Step behind the counter and start serving. With the vendor already subdued, the post is free.",
+   where:"Behind the Atlantide stand counter.",
+   disguise:"Food Vendor. Any other outfit and manning the stand draws attention.",
+   item:"None.",
+   npc:"None left — you removed him last step.",
+   action:"Use the interaction to man the stand.",
+   warn:["Alternative if you’d rather leave no body: turn off the generator beside the Security Area to lure him away, then slip behind the counter while he investigates. He will come back, so work fast."],
+   save:"you are behind the counter",
+   pops:["repping_atlantide"]}
+  ]},
+
+ {name:"Detonate, then serve",
+  steps:[
+  {t:"Blow the car and wait for him to grieve",
+   sum:"Detonate from behind the counter, keep him alive, and hold position until he walks over to look at the wreck.",
+   where:"Stay at the Atlantide stand; the car is in line of sight across the Truck Area.",
+   disguise:"Food Vendor.",
+   item:"The detonator for the explosive you planted.",
+   npc:"Ajit “AJ” Krish — he must survive and must physically come and react.",
+   action:"Detonate while he is clear of the blast, then do nothing. The challenge fires on <b>his reaction</b>, not on the explosion.",
+   warn:["Three conditions, and people fail the third: car destroyed, target alive, reaction witnessed. Do not leave the area.","No remote explosive? Shoot the fuel tank with the suppressed pistol from cover instead — louder, and staff will investigate."],
+   pops:["brokenhearted"]},
+
+  {t:"Poison the cup and serve it to him",
+   sum:"Spike the cup of Atlantide on the counter and hand it over the next time he leaves the Truck Area.",
+   where:"Behind the Atlantide stand counter, in the serving position.",
+   disguise:"Food Vendor, manning the stand.",
+   item:"Lethal Poison Vial (or Lethal Pills, which spawn at the Emergency Bay on the far side of the map).",
+   npc:"Krish, approaching or passing the stand on his way out of the Truck Area.",
+   action:"Interact with the cup of Atlantide to poison it, then serve him when the prompt appears. He drinks, staggers and dies of poisoning.",
+   warn:["Emetic poison makes him vomit, it does not kill. Check you loaded the lethal variant.","Three challenges land on this one action — don’t reload past it."],
+   pops:["its_only_water","tasteless_traceless","the_marketeer"]},
+
+  {t:"Walk out",
+   sum:"Any exit, any outfit. Rating is irrelevant on this run.",
+   where:"Nearest exit.",
+   disguise:"Whatever you are wearing.",
+   item:"None.",
+   npc:"None.",
+   action:"Leave to bank the mission completion cleanly.",
+   warn:[],
+   pops:[]}
+  ]}
+ ]
+},
+
+{
+ id:"r2", tag:"Run 2", short:"Accidents",
+ title:"The accident buffet — two saves, five kills",
+ goal:"Everything here happens inside the Truck Area and the adjoining Security Area. Save before touching anything, burn three attempts, then stage the forklift once and burn two more.",
+ loadout:[
+  {k:"Start",v:"Food Stand (8) or Event Entrance (1)",n:"Food Vendor access makes moving around the Truck Area far quicker. Event Entrance is the start the wiki walkthrough uses for the car-bomb kill."},
+  {k:"Suit",v:"Irrelevant",n:"No rating is being attempted."},
+  {k:"Slot 1 · Firearm",v:"Krugermeier 2-2",n:"The wiki names this one specifically for the Shockingly Pure setup — its Subsonic perk stops the cooler shot pulling a crowd."},
+  {k:"Slot 2 · Item",v:"Sieker 1",n:"Emetic dart for the drowning. Self-contained, so this run needs nothing from Run 1."},
+  {k:"Slot 3 · Item",v:"ICA Remote Micro Explosive",n:"Optional shortcut for the explosion kill — otherwise you take the Car Bomb from the Security Area safe."},
+  {k:"Slot 4 · Item",v:"Coins ×2",n:"Repositioning Krish and his bodyguard without touching either."}
+ ],
+ sections:[
+ {name:"Save A — no staging needed",
+  steps:[
+  {t:"Reach the Truck Area and save immediately",
+   sum:"Get in, find cover behind the generator, and make a hard save before you disturb anything.",
+   where:"Truck Area, behind the generator — it has sight of both the Atlantide water cooler and the wall socket.",
+   disguise:"Food Vendor if you started there; otherwise whatever gets you in without a scene.",
+   item:"None yet.",
+   npc:"None. Do not subdue anybody yet — three of the five attempts below want the area untouched.",
+   action:"Take cover and save. This is Save A, the anchor for the next three attempts.",
+   warn:[],
+   save:"Save A — area untouched",
+   pops:[]},
+
+  {t:"Attempt 1 — electrify the Atlantide puddle",
+   sum:"Shoot the cooler to spill a puddle, then shoot the socket while he is standing in it.",
+   where:"Behind the generator, with the Atlantide water cooler next to the stand in view.",
+   disguise:"Any that lets you loiter in the Truck Area.",
+   item:"Suppressed pistol, ideally subsonic.",
+   npc:"Krish, on his way out of the Truck Area.",
+   action:"Shoot the cooler — it leaks a puddle. Wait for him to path through it as he leaves, then shoot the <b>socket</b>. He convulses and drops: accident kill, no body to hide.",
+   warn:["Shoot the socket, not the puddle. Shooting water does nothing.","If he never crosses the puddle, check it actually formed and nudge his position with a coin."],
+   pops:["shockingly_pure","someone_could_hurt"]},
+
+  {t:"Attempt 2 — emetic, then drown him",
+   reload:"Save A. Attempt 1 spilled the cooler and killed him — none of that can carry over, so go back to the untouched area before you start.",
+   sum:"Reload Save A. Poison him, follow him to the portable restroom, drown him over the bowl.",
+   where:"Truck Area, then the nearby portable restroom he heads for.",
+   disguise:"Any.",
+   item:"Sieker 1 (or an Emetic Grenade, or emetic in the Atlantide stand cup if you have the stand).",
+   npc:"Krish. The wiki notes he keeps a compact routine in an open, populated area, which is why an Emetic Syringe is tedious here.",
+   action:"Poison him at range, follow him into the restroom, and use the drown prompt while he is vomiting.",
+   warn:["Known Miami behaviour: after a patch, sick NPCs often head for a trash bin instead of a toilet, which kills the drown prompt. Players work around it by placing a coin on the toilet and coin-distracting him toward it.","Drowning is an accident, so the body being found later does not break a rating."],
+   unv:"whether the trash-bin behaviour still applies in current builds — the reports are from 2019 Steam threads",
+   pops:["unquenchable_thirst","hold_my_hair"]},
+
+  {t:"Attempt 3 — the Car Bomb from the Security Area safe",
+   reload:"Save A. His car must still be intact and he must still be alive to make the scripted walk to it.",
+   sum:"Reload Save A. Rob the security office for a Car Bomb, then catch him on his scripted walk to his car.",
+   where:"Security Area, then back to Krish’s car in the Truck Area. From Event Entrance: vault the wall hidden by the “Thor Max Power” trailer, keep right, then slip through the window into the Security Area.",
+   disguise:"Security Guard — taken from the guard inspecting the photocopier at the end of the Security Area hallway.",
+   item:"Evidence Locker Combination note from the main room, then the Car Bomb from the safe in the adjoining room.",
+   npc:"The photocopier guard (subdue, take disguise). Then Krish, who walks to his car <b>after asking out a female NPC</b> — that exchange is your cue.",
+   action:"Pacify the guard, take his outfit, read the combination note, open the safe, take the Car Bomb. Return to cover near the car. When he starts walking to the car, throw the bomb a short distance <i>away</i> from the car and detonate.",
+   warn:["Do not destroy the car earlier in this run — it is the bait that makes him walk into the blast. Brokenhearted belongs to Run 1.","This whole step needs no loadout at all, which makes it the low-mastery route to the explosion challenge."],
+   pops:["against_the_rules"]}
+  ]},
+
+ {name:"Save B — forklift staged",
+  steps:[
+  {t:"Clear the forklift zone and remove the bodyguard",
+   reload:"Save A one last time. From here you build Save B — everything after this point needs the staging, and nothing before it did.",
+   sum:"Reload Save A, then empty the area around the forklift and get Krish’s bodyguard out of the way.",
+   where:"Truck Area, around the forklift.",
+   disguise:"Any that lets you work unobserved.",
+   item:"A spare firearm is useful — see below.",
+   npc:"Every NPC standing near the forklift, plus Krish’s personal bodyguard.",
+   action:"Pacify the nearby NPCs and hide them — a container inside one of the trailers holds two bodies. For the bodyguard, either coin him away and subdue him, or drop a firearm where he can see it: guards are scripted to pick up loose weapons and carry them off, which walks him out with no body to hide.",
+   warn:["Both remaining attempts need this staging, so save the moment it is done."],
+   unv:"the individual NPCs — sources describe them only as everyone near the forklift, so no names are given here",
+   save:"Save B — forklift zone clear, bodyguard gone",
+   pops:[]},
+
+  {t:"Attempt 4 — set him on fire",
+   sum:"Leak the red barrel, pull him into the oil with the alarm, then shoot the puddle.",
+   where:"Truck Area, at the forklift.",
+   disguise:"Any.",
+   item:"Suppressed pistol.",
+   npc:"Krish, approaching the forklift.",
+   action:"Shoot the red barrel behind the forklift to start an oil leak. When he approaches, start the alarm to lure him into the oil. Shoot the puddle once both his feet are in the slick.",
+   warn:["Wait for him to be standing <i>in</i> the oil, not beside it.","Fire spreads — don’t be downwind of the slick yourself."],
+   pops:["oil_and_water"]},
+
+  {t:"Attempt 5 — coconuts",
+   reload:"Save B, not Save A. You need the forklift zone cleared and the bodyguard gone, which is exactly what Save B holds.",
+   sum:"Reload Save B. Bring him under a coconut bundle and drop it on his head.",
+   where:"Truck Area, at one of the hanging coconut bundles near the forklift zone.",
+   disguise:"Any.",
+   item:"Coin, or an emetic if you need to move him further.",
+   npc:"Krish, standing directly beneath the bundle.",
+   action:"Lure him onto the spot, confirm he is under the bundle, and drop it.",
+   warn:["The wiki is blunt: none of the coconut spots are on his natural route, so he will never walk under one unprompted. The Save B staging exists precisely so you can manoeuvre him.","Players report a suit-only version using an emetic to move him — plausible, but the specifics are not confirmed."],
+   unv:"which bundle and which lure position — the wiki says only “multiple spots around Ajit”",
+   pops:["nutjob"]}
+  ]}
+ ]
+},
+
+{
+ id:"r3", tag:"Run 3", short:"Thwack driver",
+ title:"The Thwack driver chain — impersonate the man he’s chasing",
+ goal:"Krish came to Miami to sign Team Thwack’s driver. Take that driver’s face, let Krish give you the personal tour, and drop a race car on him in his own garage.",
+ loadout:[
+  {k:"Start",v:"Drivers’ Lounge",n:"Miami mastery 12 — starts you inside the VIP side as a Bartender, which is the cleanest documented way into this area. Otherwise Event Entrance and infiltrate the VIP Area on foot."},
+  {k:"Suit",v:"Irrelevant",n:"Replaced within the first minute."},
+  {k:"Slot 1 · Firearm",v:"Krugermeier 2-2",n:"Emergency only. This chain is designed around zero gunfire."},
+  {k:"Slot 2 · Item",v:"Fiber Wire",n:"Mandatory for the Piano Man reload at the end."},
+  {k:"Slot 3 · Item",v:"Coins ×2",n:"Mandatory. One coin is what turns the bodyguard around at the car drop."},
+  {k:"Slot 4 · Item",v:"Lockpick Mk II",n:"Mastery 2. General access; not strictly required."}
+ ],
+ sections:[
+ {name:"Become Edwin Schmidtz",
+  steps:[
+  {t:"Take the Emetic Rat Poison from the paddock back room",
+   sum:"Get into the VIP Area, into the Thwack Paddock, and grab the rat poison sitting in the back room.",
+   where:"Thwack Paddock, back room — one of only two item spots any source states precisely.",
+   disguise:"Bartender if you started in the Drivers’ Lounge; otherwise whatever gets you through the VIP Area.",
+   item:"Emetic Rat Poison (pick up here). Any emetic in your loadout replaces this entirely.",
+   npc:"None yet.",
+   action:"Enter the back room and take the poison.",
+   warn:["Do this before anything else in the paddock — the room is about to become your workspace."],
+   pops:[]},
+
+  {t:"Take the Waiter’s outfit in that same room",
+   sum:"A Waiter passes through the back room on his route. Wait for him rather than hunting him.",
+   where:"The Thwack Paddock back room you are already standing in.",
+   disguise:"You end this step as a Waiter — the outfit that lets you touch drinks upstairs without suspicion.",
+   item:"None.",
+   npc:"The Waiter who passes through the paddock back room.",
+   action:"Wait for him to walk through, subdue him, take his outfit, hide the body in the back room.",
+   warn:["If this body is found the paddock goes on alert and the champagne step gets much harder. Hide it properly."],
+   unv:"the Waiter’s name and route timing — the source calls him only “the Waiter”",
+   pops:[]},
+
+  {t:"Poison the driver’s champagne, then take his suit",
+   sum:"Spike Edwin Schmidtz’s champagne upstairs. He heads to the bathroom — follow, subdue, change.",
+   where:"Upstairs in the Thwack Paddock, then the downstairs bathroom.",
+   disguise:"Waiter for the poisoning; you leave wearing the Thwack Driver outfit.",
+   item:"The Emetic Rat Poison from step 1.",
+   npc:"Edwin Schmidtz, Team Thwack’s new driver — hiding out in the paddock instead of meeting Krish, which is the whole premise.",
+   action:"Poison his glass of champagne. He drinks, gets sick, and walks downstairs to the bathroom. Follow him in, subdue him while he is over the bowl, take the outfit, hide the body there.",
+   warn:["Subdue, don’t kill — you gain nothing from his death and it risks the escort script.","The wiki spells him both Schmidtz and Schmitz. Same man."],
+   save:"the moment you are wearing the driver’s outfit",
+   pops:["driving_business"]}
+  ]},
+
+ {name:"Let Krish pitch you, then bury him",
+  steps:[
+  {t:"Approach Krish as the driver and let him lead",
+   sum:"Walk up to Krish and interact. He thinks his star signing has finally shown up and starts his routine.",
+   where:"Find Krish on his loop around the Atlantide stand and Truck Area, then follow him to the Thwack garage down the street.",
+   disguise:"Thwack Driver. Nothing else triggers the interaction.",
+   item:"None.",
+   npc:"Krish, plus his personal bodyguard who tags along.",
+   action:"Use the talk prompt on Krish and go with him to the team’s garage. The Feats challenge fires on the meeting <b>in the garage</b>, before any kill.",
+   warn:["Don’t sprint off or take detours — escort scripts drop if you break line of sight too long. (General series behaviour, not something a source states for this mission.)"],
+   pops:["aggressive_advertising"]},
+
+  {t:"Drop the race car on him",
+   sum:"He takes up position under the suspended car during the tour. Turn the bodyguard around, then release it.",
+   where:"Thwack garage, at the lift control.",
+   disguise:"Thwack Driver.",
+   item:"One coin.",
+   npc:"Krish standing directly beneath the raised race car; his bodyguard watching.",
+   action:"Toss a coin to turn the bodyguard away, then operate the lift. The car drops — accident kill, 4000 XP.",
+   warn:["Without the coin the bodyguard sees you use the lift.","If Krish stops short of the mark, reload to the driver-outfit save and re-run the escort — his stopping position is scripted, so a clean re-run usually fixes it."],
+   save:"before releasing the car — you reload here for Piano Man",
+   pops:["crushed_dreams"]},
+
+  {t:"Reload and use the fiber wire instead",
+   reload:"The pre-drop save. Crushed Dreams is already banked and stays banked — you are only reloading to get him back on his feet.",
+   sum:"Load the pre-drop save and garrotte him in the same garage.",
+   where:"Thwack garage.",
+   disguise:"Thwack Driver.",
+   item:"Fiber Wire.",
+   npc:"Krish, with his back to you; the bodyguard coined further away than for the car drop.",
+   action:"Coin the bodyguard well clear, get directly behind Krish with no line of sight on you, and garrotte him.",
+   warn:["The strangle animation is long — a bodyguard coined only a few metres away will walk in on it."],
+   unv:"that the garage is the optimal fiber-wire spot — no source names one. This is routing judgement built on the verified fact that the escort isolates him.",
+   pops:["piano_man"]}
+  ]}
+ ]
+},
+
+{
+ id:"r4", tag:"Run 4", short:"Sniper",
+ title:"The long shot — sniper, headshot, Versatile capstone",
+ goal:"One rifle round from a rooftop, unseen, no collateral. If you have followed the sheet in order, Versatile Assassin completes on this run.",
+ loadout:[
+  {k:"Start",v:"Marina (4) or Event Entrance (1)",n:"Both start you in your own suit with a quiet approach away from the crowd."},
+  {k:"Suit",v:"Signature Suit",n:"Run it suit-only so a perfect attempt also banks Suit Only."},
+  {k:"Slot 1 · Sniper",v:"Jaeger 7 Mk II",n:"Miami mastery 5. Any suppressed sniper works — suppression matters more than the model."},
+  {k:"Slot 2 · Item",v:"Coin",n:"Repositioning without contact."},
+  {k:"Slot 3 · Item",v:"Lockpick Mk II",n:"Roof and service-door access."},
+  {k:"Slot 4 · Pickup",v:"Agency Pickup: Bayside Center Car Park",n:"Mastery 1. Use it if you would rather not carry a rifle case in past the entrance."}
+ ],
+ sections:[
+ {name:"Set up",
+  steps:[
+  {t:"Get the rifle inside",
+   sum:"Bring it in a case, or collect it from an agency pickup once you are through the perimeter.",
+   where:"Bayside Center Car Park (mastery 1), Boat Rental Hut (7) or Backstage Truck (11) — the three large-item drops.",
+   disguise:"Suit.",
+   item:"Jaeger 7 Mk II in a briefcase.",
+   npc:"None.",
+   action:"Collect the case and move to your overlook without opening it in public.",
+   warn:["Below mastery 2 you have no loadout slots in Miami at all, so an agency pickup is your only route to a rifle."],
+   pops:[]},
+
+  {t:"Deal with the cameras before you set up",
+   sum:"Sniper Assassin forgives camera detection only if you erase or destroy the evidence, so handle it first.",
+   where:"On your approach route, and the CCTV recorder if you can find it.",
+   disguise:"Suit.",
+   item:"Suppressed pistol or the rifle.",
+   npc:"None.",
+   action:"Shoot out the cameras covering your route, or find and wipe the recorder.",
+   warn:["Your in-game text omits the camera clause; the wiki includes it. Do it anyway — a run that satisfies the strict version satisfies both."],
+   unv:"the exact CCTV recorder room for this mission — use the in-game camera-recorder marker",
+   pops:[]},
+
+  {t:"Take an overlook covering the Truck Area",
+   sum:"Krish spends his routine in and around the Truck Area, so any elevated position with sight of it works.",
+   where:"Two documented elevated positions: the top-floor outdoor platform of the Expo Center overlooking the race track, and the bathroom next to Maxwell Rutter’s office.",
+   disguise:"Suit — stay off restricted floors where you can.",
+   item:"Rifle, unpacked only once you are in position.",
+   npc:"Clear any civilian sharing your perch with a coin rather than a subdue.",
+   action:"Set up, scope in, and confirm you actually have line of sight on his standing marks before committing.",
+   warn:[],
+   unv:"that either overlook has clean sight of Krish specifically — both are verified as vantage points for the bottle challenge, not as sniper perches for this target",
+   save:"in position, rifle out, before the first shot",
+   pops:[]}
+  ]},
+
+ {name:"Take the shot",
+  steps:[
+  {t:"One headshot, nobody else",
+   sum:"Wait until he is isolated and stationary, then fire once.",
+   where:"From your overlook.",
+   disguise:"Suit.",
+   item:"Sniper rifle.",
+   npc:"Krish only — Sniper Assassin requires that you eliminate no one else.",
+   action:"Fire a single head shot during a pause in his routine. Straight Shot lands alongside Sniper Assassin.",
+   warn:["Miss and target lockdown triggers: he retreats to behind or inside one of the two Truck Area trucks, or to the nearest room in the Security Area. Reload rather than trying to re-acquire.","Bodies found are acceptable for Sniper Assassin — it is Silent Assassin in Run 5 that is stricter."],
+   pops:["sniper_assassin","straight_shot","versatile_assassin"]},
+
+  {t:"Exit unspotted",
+   sum:"Stash or carry the rifle out and leave without being seen.",
+   where:"Any exit away from the alerted area.",
+   disguise:"Suit.",
+   item:"None.",
+   npc:"None.",
+   action:"Leave the map to complete the mission and bank the rating.",
+   warn:["Versatile Assassin fires only once all five Miami Versatile challenges are done. If it hasn’t popped, one of Piano Man, Someone Could Hurt Themselves, Hold My Hair, Straight Shot or Tasteless, Traceless is still outstanding."],
+   pops:[]}
+  ]}
+ ]
+},
+
+{
+ id:"r5", tag:"Run 5", short:"SASO",
+ title:"Suit only, seen by nobody — the Classics sweep",
+ goal:"One disciplined run in your own suit that satisfies Silent Assassin, Suit Only and both together. With Run 4 already banked, this closes The Classics.",
+ loadout:[
+  {k:"Start",v:"Dolphin Fountain (2) or Event Entrance (1)",n:"Both start you in your own suit. Dolphin Fountain is the quieter approach."},
+  {k:"Suit",v:"Signature Suit",n:"Any suit — it just has to not be a disguise."},
+  {k:"Slot 1 · Firearm",v:"Krugermeier 2-2",n:"Two quiet shots is the entire kill. Subsonic keeps the cooler shot from pulling a crowd."},
+  {k:"Slot 2 · Item",v:"Coins ×2",n:"Your only crowd control on a suit-only run."},
+  {k:"Slot 3 · Item",v:"Lockpick Mk II",n:"Mastery 2."},
+  {k:"Slot 4 · Item",v:"Sieker 1 (optional)",n:"Only if you prefer the drowning backup — drowning is an accident, so a found body doesn’t break the rating."}
+ ],
+ sections:[
+ {name:"Approach",
+  steps:[
+  {t:"Clear the cameras on your route first",
+   sum:"Both Silent Assassin variants forgive camera detection only if the evidence is gone.",
+   where:"Along your approach; the recorder if you can locate it.",
+   disguise:"Suit.",
+   item:"Suppressed pistol.",
+   npc:"None.",
+   action:"Shoot the cameras covering your path, or wipe the recorder.",
+   warn:["Doing this after the kill means walking back through an area that may already be alerted."],
+   unv:"the recorder room for this mission",
+   pops:[]},
+
+  {t:"Reach the generator in the Truck Area unseen",
+   sum:"Cross the public side of the map and take cover behind the generator without entering areas you don’t need.",
+   where:"Truck Area, behind the generator — sight of both the Atlantide cooler and the socket.",
+   disguise:"Suit. Every restricted area you cross is trespassing, so cross as few as possible.",
+   item:"Coins for splitting up pairs of NPCs.",
+   npc:"Avoid all of them. You do not need the VIP Area, the Thwack Paddock or the garage on this run.",
+   action:"Move in along the vendor/public side and settle into cover.",
+   warn:["Subdue nobody. Unconscious bodies count as bodies found if discovered.","Save on the way in — the approach is where this run dies, not the kill."],
+   unv:"a step-by-step guard-avoidance path — no source publishes a SASO route for this mission. The kill below is verified; the walk to it is yours to feel out.",
+   save:"in cover behind the generator, unseen",
+   pops:[]}
+  ]},
+
+ {name:"The kill and the exit",
+  steps:[
+  {t:"Electrify the puddle",
+   sum:"Same two shots as Run 2: spill the cooler, wait for him to walk through it, hit the socket.",
+   where:"From behind the generator.",
+   disguise:"Suit.",
+   item:"Suppressed, ideally subsonic pistol.",
+   npc:"Krish, on his way out of the Truck Area.",
+   action:"Shoot the cooler to spill the Atlantide, wait until he is standing in it, then shoot the socket. Accident kill — you never touch him and there is no corpse to move.",
+   warn:["This is the cleanest suit-only option for a structural reason: accident kills leave no body-found problem and need no disguise.","Backup: emetic dart and drown him in the portable restroom. Also an accident, but it costs you a Sieker and puts you in the open."],
+   pops:[]},
+
+  {t:"Exit clean",
+   sum:"Leave unspotted. All three Classics resolve on mission completion.",
+   where:"Any exit.",
+   disguise:"Suit — do not change into anything, ever, on this run.",
+   item:"None.",
+   npc:"None.",
+   action:"Complete the mission with only Krish dead, no bodies found, nobody having spotted you, and camera evidence handled.",
+   warn:["If the rating breaks mid-run, reload rather than finishing — a spoiled Silent Assassin cannot be recovered.","The Classics needs Silent Assassin, SASO, Sniper Assassin and Suit Only. Runs 4 and 5 together cover all four."],
+   pops:["silent_assassin","saso","suit_only","the_classics"]}
+  ]}
+ ]
+},
+
+{
+ id:"r6", tag:"Run 6", short:"Space Program",
+ title:"Atlantide Space Program — the mess you save for last",
+ goal:"Three hidden bottles from two rooftop vantages, then a red button. It ends with bottle-shaped debris raining on the Truck Area, so run it once everything else is banked.",
+ loadout:[
+  {k:"Start",v:"Event Entrance or Marina",n:"Either public start gives a route to the Expo Center upper floor."},
+  {k:"Suit",v:"Irrelevant",n:"This run ends in carnage by design."},
+  {k:"Slot 1 · Sniper",v:"Jaeger 7 Mk II",n:"Mastery 5. Mandatory — the bottles are rooftop-height and need the scope."},
+  {k:"Slot 2 · Item",v:"Lockpick Mk II",n:"Upper floors and the office bathroom."},
+  {k:"Slot 3 · Item",v:"Coin",n:"Clearing witnesses off the vantage points."},
+  {k:"Slot 4 · Pickup",v:"Agency Pickup: Bayside Center Car Park",n:"Mastery 1. Puts the rifle case close to the Expo Center."}
+ ],
+ sections:[
+ {name:"Three bottles, two overlooks",
+  steps:[
+  {t:"Vantage one — the Expo Center overlook",
+   sum:"Top floor of the Expo Center, on the outdoor platform overlooking the race track.",
+   where:"The wiki places you beside Robert Knox’s outdoor laptop; the Steam guide calls the same platform the one holding his satellite unit. Same spot, two prop names.",
+   disguise:"Whatever gets you to the top floor.",
+   item:"Sniper rifle.",
+   npc:"None — coin any civilian off the platform rather than subduing them.",
+   action:"Scope the large building behind the Truck Area, next to the Event Entrance, and shoot the hidden Atlantide bottles you can see. The wiki puts two here: one beside a green oil can, one beside a red oil can.",
+   warn:["Sources disagree on the split — the wiki says two bottles from this vantage, the Steam guide says one. Count them yourself; three total is what matters."],
+   pops:[]},
+
+  {t:"Vantage two — the bathroom by Maxwell Rutter’s office",
+   sum:"Move across and shoot whichever bottles you haven’t hit yet.",
+   where:"The bathroom next to Maxwell Rutter’s office.",
+   disguise:"Whatever gets you into the office floor.",
+   item:"Sniper rifle.",
+   npc:"None.",
+   action:"Shoot the remaining bottles. Three across both positions is the requirement.",
+   warn:["This vantage is single-sourced (Steam redacted-challenge guide). The three-bottle total is confirmed by the wiki’s own challenge description."],
+   save:"after the third bottle, before you go for the button",
+   pops:[]},
+
+  {t:"Press the launch button",
+   sum:"With all three bottles down, a large red button rises from the ground by the Atlantide showcase.",
+   where:"At the Atlantide stand / showcase in the Truck Area — then get out of the Truck Area.",
+   disguise:"Any.",
+   item:"None.",
+   npc:"Everyone in the Truck Area, unfortunately.",
+   action:"Press the button. A giant Atlantide bottle launches like a shuttle, climbs, explodes, and rains bottle-missiles across the map. The challenge fires on the press, not on the debris.",
+   warn:["The wiki notes the debris will most likely kill everyone inside the Truck Area — possibly including Krish. That is why it also counts as a sloppy route to Against the Rules and Someone Could Hurt Themselves.","Press and walk. Do not stand in the Truck Area, and never combine this run with Silent Assassin."],
+   pops:["atlantide_space"]}
+  ]}
+ ]
+}
+];
+
+/* ---------- state ---------- */
+const KEY="ast_done_v2";
+let done=new Set(), stepDone=new Set(), openRuns=new Set(), openSteps=new Set(), memoryOnly=false;
+
+function reportProgress(){try{const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r['sa01']={done:CHALLENGES.filter(c=>done.has(c.id)).length,total:CHALLENGES.length,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
+async function loadState(){
+  try{const r=localStorage.getItem(KEY);
+    if(r){const o=JSON.parse(r);done=new Set(o.c||[]);stepDone=new Set(o.s||[]);}
+  }catch(e){memoryOnly=true;}
+}
+async function saveState(){
+  if(memoryOnly)return;
+  try{localStorage.setItem(KEY,JSON.stringify({c:[...done],s:[...stepDone]}));}catch(e){memoryOnly=true;}
+  reportProgress();
+}
+
+/* ---------- tracker ---------- */
+const CATS=[["A","Assassination",13],["D","Discovery",5],["F","Feats",2],["T","Targets",1],["TC","Classics",5]];
+function renderTracker(){
+  const n=done.size;
+  document.getElementById("doneCount").textContent=n;
+  const xp=CHALLENGES.filter(c=>done.has(c.id)).reduce((a,c)=>a+c.xp,0);
+  document.getElementById("xpLine").textContent=xp.toLocaleString()+" / 64,000 XP";
+  document.getElementById("fill").style.width=(n/CHALLENGES.length*100)+"%";
+  document.getElementById("sectors").innerHTML=CATS.map(([t,l,tot])=>{
+    const d=CHALLENGES.filter(c=>c.type===t&&done.has(c.id)).length;
+    return `<div class="sector${d===tot?" done":""}"><b>${l}</b><div class="num">${d}<em> / ${tot}</em></div></div>`;
+  }).join("");
+}
+document.getElementById("ticks").innerHTML=Array.from({length:26},()=>"<i></i>").join("");
+
+/* ---------- runs ---------- */
+function runIdsOf(run){return run.sections.flatMap(s=>s.steps.flatMap(st=>st.pops));}
+
+function renderJumpbar(){
+  document.getElementById("jumpbar").innerHTML =
+    `<span class="lab">Jump to</span>` + RUNS.map(r=>{
+      const ids=runIdsOf(r), c=ids.filter(i=>done.has(i)).length;
+      return `<button class="jump${c===ids.length?" full":""}" data-jump="${r.id}">
+        <span class="n">${r.tag.toUpperCase()}</span> ${r.short} <span class="n">${c}/${ids.length}</span></button>`;
+    }).join("");
+}
+
+function renderRuns(){
+  let stepNo=0;
+  document.getElementById("runList").innerHTML=RUNS.map(run=>{
+    const ids=runIdsOf(run), cleared=ids.filter(i=>done.has(i)).length;
+    const isOpen=openRuns.has(run.id);
+    const loadout=run.loadout.map(l=>`<div class="slot"><b>${l.k}</b><span>${l.v}</span><small>${l.n}</small></div>`).join("");
+    let n=0;
+    const secs=run.sections.map(sec=>{
+      const steps=sec.steps.map(st=>{
+        n++;
+        const key=run.id+"|"+st.t;
+        const dOn=stepDone.has(key), sOpen=openSteps.has(key);
+        const fields=[
+          ["Where",st.where],["Disguise",st.disguise],["Item",st.item],["NPC",st.npc],["Do",st.action]
+        ].filter(f=>f[1]).map(f=>`<li><b>${f[0]}</b><span>${f[1]}</span></li>`).join("");
+        const warns=(st.warn||[]).map(w=>`<div class="badge b-warn">WARNING</div> <span style="display:block;margin:0 0 8px">${w}</span>`).join("");
+        const unvBlock=st.unv?`<div class="badge b-unv">UNVERIFIED</div> <span style="display:block;margin:0 0 8px" class="src">${st.unv}</span>`:"";
+        const saveBlock=st.save?`<div class="badge b-save">SAVE HERE</div> <span style="display:block;margin:0 0 8px">${st.save}</span>`:"";
+        const reloadBlock=st.reload?`<div class="badge b-reload">RELOAD FIRST</div> <span style="display:block;margin:0 0 10px">${st.reload}</span>`:"";
+        const popBadges=st.pops.length?`<div class="badges">${st.pops.map(i=>`<span class="badge b-pop">POPS: ${byId[i].name}</span>`).join("")}</div>`:"";
+        const chips=[
+          st.reload?`<span class="chip chip-reload">↺ Reload first</span>`:"",
+          st.save?`<span class="chip chip-save">◆ Save here</span>`:""
+        ].filter(Boolean).join("");
+        return `<div class="step${dOn?" done":""}">
+          <button class="tick" data-step="${encodeURIComponent(key)}" aria-pressed="${dOn}" aria-label="Mark step done">${dOn?"✔":"○"}</button>
+          <div class="step-body">
+            <button class="step-toggle" data-stoggle="${encodeURIComponent(key)}" aria-expanded="${sOpen}">
+              <span class="num">${String(n).padStart(2,"0")}</span>
+              <span style="flex:1;min-width:0">
+                ${chips?`<span class="chips">${chips}</span>`:""}
+                <span class="step-title" style="display:block">${st.t}</span>
+                <span class="step-sum" style="display:block">${st.sum}</span>
+              </span>
+              <span class="num">${sOpen?"−":"+"}</span>
+            </button>
+            <div class="step-detail" ${sOpen?"":"hidden"}>
+              ${reloadBlock}
+              <ul class="fields">${fields}</ul>
+              ${saveBlock}${warns}${unvBlock}${popBadges}
+            </div>
+          </div></div>`;
+      }).join("");
+      return `<div class="section-head">${sec.name}</div>${steps}`;
+    }).join("");
+    return `<article class="run${isOpen?" open":""}" id="${run.id}">
+      <button class="run-head" data-run="${run.id}" aria-expanded="${isOpen}">
+        <span class="chev">▶</span>
+        <span class="meat">
+          <span class="run-tag" style="display:block">${run.tag} of 6</span>
+          <h2>${run.title}</h2>
+          <p>${run.goal}</p>
+          <span class="run-prog" style="display:block">${cleared} / ${ids.length} challenges in this run cleared</span>
+        </span>
+      </button>
+      <div class="run-body" ${isOpen?"":"hidden"}>
+        <div class="loadout">${loadout}</div>
+        ${secs}
+      </div>
+    </article>`;
+  }).join("");
+}
+
+/* ---------- checklist ---------- */
+let filter="all";
+const FILTERS=[["all","All"],["A","Assassination"],["D","Discovery"],["F","Feats"],["T","Targets"],["TC","Classics"],["todo","Incomplete"]];
+function renderFilters(){
+  document.getElementById("filters").innerHTML=FILTERS.map(([k,l])=>
+    `<button data-f="${k}" aria-pressed="${filter===k}">${l}</button>`).join("");
+}
+function runOf(id){const r=RUNS.find(run=>runIdsOf(run).includes(id));return r?r.tag+" · "+r.short:"—";}
+function renderList(){
+  const items=CHALLENGES.filter(c=>filter==="all"?true:filter==="todo"?!done.has(c.id):c.type===filter);
+  const el=document.getElementById("clist");
+  if(!items.length){el.innerHTML=`<div class="empty">Nothing here — every challenge in this filter is ticked.</div>`;return;}
+  el.innerHTML=items.map(c=>{
+    const d=done.has(c.id);
+    return `<div class="crow${d?" done":""}">
+      <button class="tick" data-ch="${c.id}" aria-pressed="${d}" aria-label="Mark ${c.name} complete">${d?"✔":"○"}</button>
+      <div class="crow-body">
+        <div class="crow-top"><h4>${c.name}</h4><span class="type-tag type-${c.type}">${TYPES[c.type]}</span></div>
+        <p>${c.desc}</p>
+        <div class="meta">+${c.xp.toLocaleString()} XP · ${runOf(c.id)}</div>
+      </div></div>`;
+  }).join("");
+}
+
+/* ---------- events ---------- */
+document.addEventListener("click",async e=>{
+  const j=e.target.closest("[data-jump]");
+  if(j){const id=j.dataset.jump;openRuns.add(id);renderRuns();
+    document.getElementById(id).scrollIntoView({behavior:"smooth",block:"start"});return;}
+
+  const r=e.target.closest("[data-run]");
+  if(r){const id=r.dataset.run;openRuns.has(id)?openRuns.delete(id):openRuns.add(id);renderRuns();return;}
+
+  const s=e.target.closest("[data-stoggle]");
+  if(s){const k=decodeURIComponent(s.dataset.stoggle);openSteps.has(k)?openSteps.delete(k):openSteps.add(k);renderRuns();return;}
+
+  const ch=e.target.closest("[data-ch]");
+  if(ch){const id=ch.dataset.ch;done.has(id)?done.delete(id):done.add(id);
+    await saveState();renderTracker();renderList();renderRuns();renderJumpbar();return;}
+
+  const st=e.target.closest("[data-step]");
+  if(st){const k=decodeURIComponent(st.dataset.step);stepDone.has(k)?stepDone.delete(k):stepDone.add(k);
+    await saveState();renderRuns();return;}
+
+  const f=e.target.closest("[data-f]");
+  if(f){filter=f.dataset.f;renderFilters();renderList();return;}
+});
+
+document.getElementById("openAll").addEventListener("click",()=>{RUNS.forEach(r=>openRuns.add(r.id));renderRuns();});
+document.getElementById("closeAll").addEventListener("click",()=>{openRuns.clear();openSteps.clear();renderRuns();});
+document.getElementById("resetBtn").addEventListener("click",async()=>{
+  done.clear();stepDone.clear();await saveState();renderTracker();renderList();renderRuns();renderJumpbar();});
+
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    document.querySelectorAll('nav.tabs button').forEach(b=>{
+      const on=b===btn;b.setAttribute("aria-selected",on);
+      document.getElementById(b.getAttribute("aria-controls")).hidden=!on;
+    });
+  });
+});
+
+(async()=>{
+  await loadState();
+  openRuns.add("r1");
+  renderTracker();renderJumpbar();renderRuns();renderFilters();renderList();
+  reportProgress();
+})();
+</script>
+<!-- step-progress-bridge -->
+<script>
+/* Reports route-step ticks into 'hitman-progress-registry' so the index can
+   show them beside the challenge counts. Counts what is on screen rather than
+   any guide-specific state, so one implementation serves every guide. */
+(function(){
+  var RID="sa01", SEL=".step";
+  function isDone(s){
+    var c=s.classList;
+    if(c.contains('done')||c.contains('dn')) return true;
+    if(s.getAttribute('data-done')==='1'||s.getAttribute('aria-pressed')==='true') return true;
+    return !!s.querySelector('.done,.dn,[data-done="1"],[aria-pressed="true"]');
+  }
+  function tally(){
+    var steps=document.querySelectorAll(SEL);
+    if(!steps.length) return null;
+    var n=0;
+    for(var i=0;i<steps.length;i++) if(isDone(steps[i])) n++;
+    return {steps:n,stepTotal:steps.length};
+  }
+  function push(){
+    var t;
+    try{ t=tally(); }catch(err){ return; }
+    if(!t||!t.stepTotal) return;
+    try{
+      var r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');
+      var e=r[RID]||(r[RID]={});
+      /* the guide's own reportProgress() rewrites this entry wholesale, so
+         re-add the step counts whenever they go missing or stale */
+      if(e.steps===t.steps&&e.stepTotal===t.stepTotal) return;
+      e.steps=t.steps; e.stepTotal=t.stepTotal; e.updated=Date.now();
+      localStorage.setItem('hitman-progress-registry',JSON.stringify(r));
+    }catch(err){}
+  }
+  var pending=false;
+  function schedule(){
+    if(pending) return; pending=true;
+    setTimeout(function(){pending=false;push();},120);
+  }
+  try{
+    new MutationObserver(schedule).observe(document.body,
+      {subtree:true,childList:true,attributes:true,attributeFilter:['class','aria-pressed','data-done']});
+  }catch(err){}
+  window.addEventListener('load',schedule);
+  setTimeout(push,600);
+})();
+</script>
+<!-- /step-progress-bridge -->
+</body>
+</html>

@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Source — 20 Challenge Run Sheet (Himmapan Hotel, Bangkok)</title>
+<style>
+:root{
+  --lacquer:#0d1411; --card:#16201b; --teak:#2a201a;
+  --brass:#c8a24a; --brass-dim:#8d723a; --wine:#8e2b36;
+  --bone:#ece4d4; --bone-dim:#a99f8c; --jade:#4e8d74; --amber:#d8a13a; --alarm:#c04a3f;
+  --rule:rgba(200,162,74,.28);
+  --display:"Iowan Old Style","Palatino Linotype","Book Antiqua",Palatino,Georgia,serif;
+  --body:ui-sans-serif,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:radial-gradient(1200px 600px at 80% -10%,rgba(142,43,54,.18),transparent 60%),
+             radial-gradient(900px 500px at -10% 10%,rgba(78,141,116,.12),transparent 55%),var(--lacquer);
+  color:var(--bone);font-family:var(--body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:26px 18px 90px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--brass-dim)}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(32px,5.6vw,54px);line-height:1.03;margin:10px 0 6px}
+h1 em{font-style:italic;color:var(--brass)}
+.deck{max-width:64ch;color:var(--bone-dim);margin:0 0 22px}
+
+.notice{border:1px solid var(--rule);border-left:3px solid var(--jade);
+  background:linear-gradient(180deg,rgba(78,141,116,.10),rgba(78,141,116,.02));
+  padding:15px 17px;margin:0 0 24px;border-radius:2px}
+.notice h3{font-family:var(--display);font-weight:400;font-size:19px;margin:0 0 8px}
+.notice ul{margin:8px 0 0;padding-left:18px}
+.notice li{margin-bottom:6px}
+.notice p{margin:0 0 8px}
+
+.tracker{border:1px solid var(--rule);background:var(--card);border-radius:2px;padding:16px 18px;margin-bottom:22px}
+.tracker-top{display:flex;flex-wrap:wrap;gap:14px;align-items:baseline;justify-content:space-between}
+.tracker-count{font-family:var(--display);font-size:38px;line-height:1}
+.tracker-count small{font-size:14px;color:var(--bone-dim);font-family:var(--mono);letter-spacing:.08em}
+.bar{height:8px;background:rgba(236,228,212,.09);border-radius:99px;overflow:hidden;margin:13px 0 15px}
+.bar span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--brass-dim),var(--brass));transition:width .35s ease}
+.pills{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:9px}
+.pill{border:1px solid var(--rule);border-radius:2px;padding:9px 11px;background:rgba(0,0,0,.18)}
+.pill b{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--bone-dim);margin-bottom:3px}
+.pill span{font-family:var(--display);font-size:21px}
+.btn{background:none;border:1px solid var(--rule);color:var(--bone-dim);font-family:var(--mono);
+  font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:8px 12px;border-radius:2px;cursor:pointer}
+.btn:hover{color:var(--bone);border-color:var(--brass)}
+
+.tabs{display:flex;border-bottom:1px solid var(--rule);margin-bottom:20px;flex-wrap:wrap}
+.tab{background:none;border:0;border-bottom:2px solid transparent;color:var(--bone-dim);font-family:var(--mono);
+  font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;padding:12px 15px;cursor:pointer}
+.tab[aria-selected="true"]{color:var(--bone);border-bottom-color:var(--brass)}
+.panel[hidden]{display:none}
+:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+
+/* run jump bar */
+.jump{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+.jbtn{background:rgba(0,0,0,.2);border:1px solid var(--rule);color:var(--bone);border-radius:2px;cursor:pointer;
+  padding:9px 12px;text-align:left;font-family:var(--body);font-size:13px;line-height:1.25}
+.jbtn b{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--brass);text-transform:uppercase}
+.jbtn:hover{border-color:var(--brass)}
+.jbtn.on{border-color:var(--brass);background:rgba(200,162,74,.12)}
+.jhint{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--bone-dim);text-transform:uppercase;margin:0 0 18px}
+
+/* runs */
+.run{border:1px solid var(--rule);border-radius:2px;background:var(--card);margin-bottom:20px;overflow:hidden;scroll-margin-top:12px}
+.run>summary{list-style:none;cursor:pointer;padding:16px 20px;display:block}
+.run>summary::-webkit-details-marker{display:none}
+.run>summary:hover{background:rgba(200,162,74,.05)}
+.plate{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--brass);text-transform:uppercase}
+.run h2{font-family:var(--display);font-weight:400;font-size:clamp(20px,3.2vw,27px);margin:7px 0 5px}
+.run summary p{margin:0;color:var(--bone-dim);max-width:74ch;font-size:14.5px}
+.chev{float:right;font-family:var(--mono);font-size:11px;color:var(--brass-dim);letter-spacing:.1em}
+.run[open]>summary .chev::after{content:"CLOSE"}
+.run:not([open])>summary .chev::after{content:"OPEN"}
+.runbody{border-top:1px solid var(--rule)}
+.loadout{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));border-bottom:1px solid var(--rule)}
+.slot{padding:12px 16px;border-right:1px solid var(--rule)}
+.slot:last-child{border-right:0}
+.slot b{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--brass-dim);margin-bottom:4px}
+.slot span{font-size:14px}
+.sec{padding:15px 20px 3px;font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--brass-dim)}
+
+.step{border-top:1px solid rgba(200,162,74,.14);display:flex;gap:12px;padding:11px 18px 11px 16px;align-items:flex-start}
+.step.done{background:rgba(78,141,116,.07)}
+.check{flex:0 0 auto;width:25px;height:25px;margin-top:4px;border:1px solid var(--rule);background:transparent;color:var(--jade);border-radius:2px;cursor:pointer;font-size:14px;line-height:1}
+.check[aria-pressed="true"]{border-color:var(--jade);background:rgba(78,141,116,.16)}
+.sbody{flex:1 1 auto;min-width:0}
+.sbody>details>summary{list-style:none;cursor:pointer}
+.sbody>details>summary::-webkit-details-marker{display:none}
+.stitle{font-family:var(--display);font-size:18px;margin:0}
+.stitle .num{font-family:var(--mono);font-size:11px;color:var(--brass);letter-spacing:.12em;margin-right:8px}
+.stitle .tog{font-family:var(--mono);font-size:10px;color:var(--brass-dim);letter-spacing:.1em;margin-left:8px}
+details[open]>summary .tog::after{content:"▾"}
+details:not([open])>summary .tog::after{content:"▸"}
+ul.bul{margin:9px 0 0;padding:0;list-style:none}
+ul.bul li{margin:0 0 5px;padding-left:0;font-size:14.5px}
+ul.bul k{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--brass);margin-right:7px}
+.badges{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px}
+.badge{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;padding:3px 7px;border-radius:2px;border:1px solid}
+.b-assassination{color:#e6b98f;border-color:rgba(230,185,143,.5);background:rgba(230,185,143,.08)}
+.b-discovery{color:#8fc7e6;border-color:rgba(143,199,230,.5);background:rgba(143,199,230,.08)}
+.b-feats{color:#b6e08f;border-color:rgba(182,224,143,.5);background:rgba(182,224,143,.08)}
+.b-classic{color:#dcc7f0;border-color:rgba(220,199,240,.5);background:rgba(220,199,240,.08)}
+.flag{display:block;font-size:13.5px;margin-top:9px;padding:7px 10px;border-radius:2px}
+.f-warn{background:rgba(192,74,63,.13);border:1px solid rgba(192,74,63,.55)}
+.f-save{background:rgba(216,161,58,.11);border:1px solid rgba(216,161,58,.5)}
+.f-unver{background:rgba(236,228,212,.05);border:1px dashed var(--bone-dim);color:var(--bone-dim)}
+.flag b{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;margin-right:7px}
+.f-warn b{color:#e79187}.f-save b{color:var(--amber)}
+.src{margin:9px 0 0;font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:var(--bone-dim)}
+
+/* checklist */
+.filters{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:16px}
+.filter{background:none;border:1px solid var(--rule);color:var(--bone-dim);border-radius:99px;font-family:var(--mono);
+  font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;padding:7px 13px;cursor:pointer}
+.filter[aria-pressed="true"]{color:var(--lacquer);background:var(--brass);border-color:var(--brass)}
+.clist{border:1px solid var(--rule);border-radius:2px;background:var(--card)}
+.crow{display:flex;gap:12px;padding:13px 17px;border-top:1px solid rgba(200,162,74,.14);align-items:flex-start}
+.crow:first-child{border-top:0}
+.crow.done .cname{color:var(--bone-dim);text-decoration:line-through}
+.cname{font-family:var(--display);font-size:17px;margin:0 0 3px}
+.ccond{margin:0;color:var(--bone-dim);font-size:14px}
+.cmeta{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px;align-items:center}
+.tagrun{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;color:var(--brass);border:1px solid var(--rule);padding:3px 7px;border-radius:2px}
+
+/* verification */
+.vblock{border:1px solid var(--rule);background:var(--card);border-radius:2px;padding:18px 20px;margin-bottom:20px}
+.vblock h3{font-family:var(--display);font-weight:400;font-size:21px;margin:0 0 9px}
+.vblock h4{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--brass-dim);margin:17px 0 6px}
+.vblock ul{margin:6px 0 0;padding-left:18px}.vblock li{margin-bottom:7px}
+table{width:100%;border-collapse:collapse;margin-top:9px;font-size:13.5px}
+th,td{text-align:left;padding:7px 9px;border-bottom:1px solid rgba(200,162,74,.16);vertical-align:top}
+th{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--brass-dim);font-weight:400}
+footer{color:var(--bone-dim);font-size:13px;margin-top:32px;border-top:1px solid var(--rule);padding-top:15px}
+@media (max-width:640px){.slot{border-right:0;border-bottom:1px solid var(--rule)}.step{padding:11px 13px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="eyebrow">Patient Zero · Mission 01 · Himmapan Hotel, Bangkok</p>
+  <h1>The Source — <em>20 challenges</em> in five runs</h1>
+  <p class="deck">Built from your exported mission data (20 challenges, 11 disguises, exact tile wording) and cross-checked against community sources for the parts the export doesn't cover: where each disguise sits, where the vodka and the pills are, and which kills cancel each other out.</p>
+
+  <div class="notice">
+    <h3>Four things that shape every run below</h3>
+    <ul>
+      <li><b>Play on Professional.</b> The Sniper Assassin tile explicitly requires Professional difficulty. Master limits saves, which would break the reload runs; Casual won't award the tile.</li>
+      <li><b>No Mission Stories exist in this mission</b> (Hitman Wiki), so there is no story order to protect and no "Hero of Bangkok" tile. Nothing here depends on story triggers.</li>
+      <li><b>Challenges bank the instant they pop.</b> Reloading or quitting does not take them back, which is what makes the save-scum runs work.</li>
+      <li><b>Starting locations are unverified.</b> Your export lists disguises and challenges but no starting locations, and no source consulted documents any for The Source. Each loadout card says so; read your own planning screen.</li>
+    </ul>
+  </div>
+
+  <div class="tracker">
+    <div class="tracker-top">
+      <div>
+        <p class="eyebrow" style="margin:0 0 5px">Progress</p>
+        <div class="tracker-count"><span id="t-done">0</span> <small>/ 20 challenges</small></div>
+      </div>
+      <button class="btn" id="reset">Reset all ticks</button>
+    </div>
+    <div class="bar"><span id="t-bar"></span></div>
+    <div class="pills">
+      <div class="pill"><b>Assassination</b><span id="p-assassination">0/12</span></div>
+      <div class="pill"><b>Discovery</b><span id="p-discovery">0/3</span></div>
+      <div class="pill"><b>Feats</b><span id="p-feats">0/1</span></div>
+      <div class="pill"><b>Classics</b><span id="p-classic">0/4</span></div>
+      <div class="pill"><b>Run steps</b><span id="p-steps">0/0</span></div>
+    </div>
+  </div>
+
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" aria-selected="true" data-panel="runs">Runs</button>
+    <button class="tab" role="tab" aria-selected="false" data-panel="checklist">Checklist</button>
+    <button class="tab" role="tab" aria-selected="false" data-panel="verify">Verification log</button>
+  </div>
+
+  <div class="panel" id="panel-runs">
+    <div class="jump" id="jump"></div>
+    <p class="jhint">Tap a run to open it and jump to it · <button class="btn" id="expand-all" style="padding:4px 9px">Open all</button> <button class="btn" id="collapse-all" style="padding:4px 9px">Close all</button></p>
+    <div id="runs"></div>
+  </div>
+
+  <div class="panel" id="panel-checklist" hidden>
+    <div class="filters" id="filters"></div>
+    <div class="clist" id="clist"></div>
+  </div>
+
+  <div class="panel" id="panel-verify" hidden></div>
+
+  <footer>
+    Ticks persist where browser storage is available, otherwise they last for the session. Sources: your exported mission file (challenge names, tile wording, 11-disguise roster); Hitman Wiki (challenge and outfit pages, mission page); Steam guide "HITMAN 2 | Chameleon | All Disguises" by Artoriaz (per-disguise locations for The Source); Steam guide "HITMAN I — All Bangkok Challenges" by fish (Bangkok layout, challenges bank immediately); Shacknews (Divine Intervention setup); whatchaa.com (suit-only route, knife kill, vodka); Steam Community discussions (sniper wall penetration, Discover-area bug).
+  </footer>
+</div>
+
+<script>
+/* ================= CHALLENGES — wording copied from the exported mission file ================= */
+const CH = [
+  {id:"twobirds", n:"Two Birds with One Sniper Rifle", t:"assassination", d:"Snipe both targets from the opposite penthouse suite.", run:"C"},
+  {id:"weapon",   n:"Weapon of Choice",                t:"assassination", d:"Eliminate Sister Yulduz with one of the exhibition pieces.", run:"D"},
+  {id:"purgatory",n:"Purgatory",                       t:"assassination", d:"Eliminate both targets with poison.", run:"A"},
+  {id:"incense",  n:"Deadly Incense",                  t:"assassination", d:"Eliminate Oybek Nabazov with an explosion in the exhibition room.", run:"D"},
+  {id:"divine",   n:"Divine Intervention",             t:"assassination", d:"Eliminate Oybek Nabazov during the fire séance.", run:"D"},
+  {id:"penetrate",n:"Penetrating Art",                 t:"assassination", d:"Snipe Oybek Nabazov from the opposite penthouse suite.", run:"C"},
+  {id:"piano",    n:"Piano Man",                       t:"assassination", d:"Assassinate a target with the fiber wire in Bangkok.", run:"A"},
+  {id:"straight", n:"Straight Shot",                   t:"assassination", d:"Assassinate a target with a headshot in Bangkok.", run:"A"},
+  {id:"hurt",     n:"Someone Could Hurt Themselves",   t:"assassination", d:"Assassinate a target in an accident in Bangkok.", run:"D"},
+  {id:"versatile",n:"Versatile Assassin",              t:"assassination", d:"Complete all the Versatile challenges in Bangkok: Piano Man / Someone Could Hurt Themselves / Hold My Hair / Straight Shot / Tasteless, Traceless.", run:"A"},
+  {id:"tasteless",n:"Tasteless, Traceless",            t:"assassination", d:"Assassinate a target with lethal poison in Bangkok.", run:"A"},
+  {id:"hair",     n:"Hold My Hair",                    t:"assassination", d:"Assassinate a target by drowning them in Bangkok.", run:"E"},
+  {id:"inner",    n:"Inner Circle",                    t:"discovery", d:"Attend the private ceremony as a cult member.", run:"D"},
+  {id:"discover", n:"Discover Bangkok",                t:"discovery", d:"Reveal all undiscovered areas in Bangkok.", run:"E"},
+  {id:"atease",   n:"At Ease, Soldier",                t:"discovery", d:"Pacify five members of the militia as the exterminator.", run:"E"},
+  {id:"chameleon",n:"Chameleon",                       t:"feats", d:"Find and equip all disguises in Bangkok (11 in this mission).", run:"E"},
+  {id:"sa",       n:"Silent Assassin",                 t:"classic", d:"Complete \"The Source.\" Only eliminate the targets. No bodies found. Do not get spotted. If you are detected by cameras, erase or destroy the evidence.", run:"B"},
+  {id:"suit",     n:"Suit Only",                       t:"classic", d:"Assassinate the targets and complete the mission. Do it all in your suit.", run:"B"},
+  {id:"saso",     n:"Silent Assassin, Suit Only",      t:"classic", d:"As Silent Assassin, plus: do it all in your suit.", run:"B"},
+  {id:"sniper",   n:"Sniper Assassin",                 t:"classic", d:"Complete \"The Source\" on Professional difficulty. Assassinate your targets with a sniper rifle. Only eliminate the targets. Do not get spotted. If you are detected by cameras, erase or destroy the evidence.", run:"C"}
+];
+
+/* ================= RUNS ================= */
+const RUNS = [
+{
+ key:"E", plate:"Run 1 of 5 · do this first",
+ title:"Wardrobe sweep — all 11 disguises, the militia, and the whole map",
+ goal:"No stealth rating to protect and only one kill at the very end. You learn the building, bank Chameleon, Discover Bangkok, At Ease Soldier and Hold My Hair, and every later run gets easier.",
+ load:{start:"UNVERIFIED — not documented by any source; use whatever your planning screen offers.",
+   suit:"Any suit",
+   items:["Coins — luring single NPCs away from groups","Emetic Poison Vial — sends a target to a toilet for Hold My Hair","Concealable melee item (baton/screwdriver) for quiet pacifies","Free slot"]},
+ secs:[
+  {n:"Basement — four disguises in two rooms",
+   steps:[
+    {t:"Laundry room: Kitchen Staff and Groundskeeper",
+     b:[["Go","Down to the hotel basement, then into the laundry room."],
+        ["Disguise","Take both Kitchen Staff and Groundskeeper here — they are the two easiest disguises in the mission and both sit in this room."],
+        ["Do","Equip one, then equip the other. Both register separately for Chameleon."]],
+     badges:["chameleon"], src:"Disguise locations: Artoriaz Steam disguise guide, The Source section."},
+    {t:"Staff room: Waiter",
+     b:[["Go","Through the basement corridor from the laundry room into the staff room."],
+        ["Disguise","Waiter is here. Kitchen Staff or Groundskeeper both let you walk the basement without being challenged."],
+        ["Watch out","Cameras cover the basement entrances. Being recorded costs you nothing in this run, but shoot or avoid them if you want to practise the SASO route."]],
+     badges:["chameleon"], src:"Artoriaz guide; basement camera positions from fish's Bangkok guide."}
+   ]},
+  {n:"Service floor — the stock room trio",
+   steps:[
+    {t:"Stock room: Hotel Security, Hotel Staff, Exterminator",
+     b:[["Go","Up from the basement to the service area, then into the stock room."],
+        ["Disguise","All three of these live here. Take Hotel Security and Hotel Staff first, and finish on Exterminator — you need to be wearing it for the next step."],
+        ["Do","Equip each one in turn so all three tick off, then leave in the Exterminator."]],
+     badges:["chameleon"],
+     warn:"Leave this room in the Exterminator, not the Militia or staff outfits. At Ease, Soldier only counts pacifies made while you are dressed as the exterminator.",
+     src:"Artoriaz guide (Hotel Security / Hotel Staff / Exterminator all listed at the stock room); tile wording from your mission export."}
+   ]},
+  {n:"Delivery area — the militia",
+   steps:[
+    {t:"Pacify five militia while wearing the Exterminator",
+     b:[["Go","Out to the delivery area at the rear of the hotel, where the militia are posted."],
+        ["Disguise","Exterminator — required, not optional."],
+        ["Do","Separate them one at a time with a thrown coin, pacify, and stash the body out of sight before the next one. Five pacifies total."],
+        ["Watch out","Do not arrive in your suit or a hotel outfit — the militia challenge the wrong clothing here."]],
+     badges:["atease"], save:true,
+     unver:"The number of militia standing in the delivery area at once is not documented. If fewer than five are present, patrol more of the rear service area rather than restarting.",
+     src:"Militia location: Artoriaz guide lists the Militia Soldier disguise in the delivery area. Challenge wording: mission export."},
+    {t:"Take the Militia Soldier disguise",
+     b:[["Go","Stay in the delivery area."],
+        ["Disguise","Strip one of the five you just pacified for the Militia Soldier outfit."],
+        ["Do","Equip it — that is disguise seven of eleven."]],
+     badges:["chameleon"], src:"Artoriaz guide."}
+   ]},
+  {n:"North wing — the studio pair",
+   steps:[
+    {t:"Recording studio: Recording Crew and Jordan Cross' Bodyguard",
+     b:[["Go","Back inside and up to the recording studio in the north wing."],
+        ["Disguise","Both remaining studio outfits are here: Recording Crew and Jordan Cross' Bodyguard."],
+        ["NPC","The Class's crew are still packing up in this mission, so crew members are plentiful; the bodyguards stand closer to the booth."],
+        ["Do","Isolate one of each with a coin, pacify, equip. Keep Recording Crew on — it is the outfit you will want in Run 4."]],
+     badges:["chameleon"], src:"Artoriaz guide; wiki notes The Class's recording crew and Cross' bodyguards are present in The Source."}
+   ]},
+  {n:"Exhibition floor and roof garden — the cult pair",
+   steps:[
+    {t:"Cult Initiate from the suite next to 47's",
+     b:[["Go","To the guest floor, into the suite immediately next to 47's own room."],
+        ["Item","Nothing needed — the outfit is lying in the suite."],
+        ["Do","Equip it. Initiates get no staff access at all, so use it only for the roof garden."]],
+     badges:["chameleon"],
+     unver:"A second source (whatchaa.com) instead describes following the cultist who argues in the exhibition bathroom back to his suite and taking his outfit. Both routes end in the same disguise; use whichever you find first.",
+     src:"Artoriaz guide (\"Cult Initiate — suite next to 47's\"); access rules from the wiki's Cult Initiate outfit page."},
+    {t:"Cult Bodyguard at the roof garden",
+     b:[["Go","Up to the cult's roof garden above the Queen Penthouse."],
+        ["NPC","A cult bodyguard is posted by the garden entrance."],
+        ["Item","Coin — throw it into the empty suite opposite the entrance and take him down inside, out of sight."],
+        ["Do","Equip it. Disguise eleven of eleven — Chameleon pops here."]],
+     badges:["chameleon"], save:true,
+     warn:"If you started the mission already wearing one of these outfits, that one will not count until you change into something else and back into it.",
+     src:"Artoriaz guide; coin-lure method from Shacknews; \"switch away and back\" rule stated in both Steam disguise guides."}
+   ]},
+  {n:"Map sweep and the drowning",
+   steps:[
+    {t:"Walk every named area on every floor",
+     b:[["Go","Sweep the whole building bottom to top: cellar and laundry, staff areas, delivery area, kitchen and restaurant, terraces and atrium, both wings, the studio, both penthouses, and the roof garden."],
+        ["Do","Watch the area name appear at the top of the screen as you cross each threshold — that is what Discover Bangkok counts."],
+        ["Watch out","Bangkok's areas are shared with Club 27, so anything you reveal here also credits progress made in that mission."]],
+     badges:["discover"],
+     warn:"Steam players report that areas revealed inside Contracts or Escalations may not count toward the Discover challenge. Do your sweep inside this mission, not in a contract.",
+     src:"Shared-area relationship: your mission export (\"areasSharedWith: Club 27\"). Bug reports: HITMAN 2 Steam discussion \"Bangkok Explore challenge Bugged\"."},
+    {t:"Drown Sister Yulduz for Hold My Hair",
+     b:[["Go","To the exhibition floor once the sweep is done. Save first."],
+        ["NPC","Sister Yulduz sips from a glass of red wine in the exhibition hall."],
+        ["Item","Emetic Poison Vial — spike the wine while her nearby bodyguard is looking away, then follow her when she leaves to be sick."],
+        ["Do","Drown her at the toilet. The tile only asks for a drowning, so any target and any water will do."]],
+     badges:["hair"], save:true,
+     warn:"A patch made sickened NPCs on some maps walk to a trash can instead of a toilet, which blocks the drowning. If she heads for a bin, reload and use coins to park her beside a toilet before you poison the wine.",
+     src:"Tile wording: mission export. Wine glass and its guard: whatchaa.com. Trash-can behaviour: HITMAN 2 Steam thread \"How do you get Hold My Hair in Bangkok?\"."}
+   ]}
+ ]
+},
+{
+ key:"D", plate:"Run 2 of 5",
+ title:"The cult — ceremony, display knife, and both of Nabazov's set-piece deaths",
+ goal:"Five challenges in one run by banking the two that don't kill anyone first, then taking Nabazov twice around a single save. Order is unusually strict here.",
+ load:{start:"UNVERIFIED — read your planning screen.",
+  suit:"Any suit",
+  items:["Coins — the guard lure at the roof garden","Remote Breaching Charge — the explosion for Deadly Incense","Silenced pistol (optional) — a backup detonator for gas props","Free slot"]},
+ secs:[
+  {n:"Fetch the vodka before you change into cult clothing",
+   steps:[
+    {t:"Kitchen Staff from the laundry room",
+     b:[["Go","Basement laundry room."],
+        ["Disguise","Kitchen Staff — this is what gets you into the restaurant's show kitchen without being challenged."],
+        ["Do","Equip it and head up to the restaurant."]],
+     badges:[], src:"Artoriaz guide; Kitchen Staff access rules from the wiki's Kitchen Staff outfit page (as Club 27, minus backyard access)."},
+    {t:"Take the vodka bottle from the show kitchen",
+     b:[["Go","The restaurant's show kitchen."],
+        ["Item","Vodka bottle — this is the sabotage item for the fire séance later."],
+        ["Do","Pocket it and go up to the exhibition floor."]],
+     badges:[],
+     warn:"Do this now. The Cult Bodyguard outfit you take later has no access to staff areas at all, so coming back down for the vodka afterwards means trespassing through the whole service wing.",
+     src:"Vodka location: whatchaa.com and Shacknews. Cult bodyguard access limits: wiki Cult Bodyguard outfit page."}
+   ]},
+  {n:"Cult disguises and the sabotage",
+   steps:[
+    {t:"Cult Initiate, then Cult Bodyguard",
+     b:[["Go","Suite next to 47's for the Cult Initiate outfit, then up to the roof garden."],
+        ["NPC","The cult bodyguard posted by the garden entrance."],
+        ["Item","Coin — lure him into the suite opposite and take him down there."],
+        ["Do","Keep the Initiate outfit in mind: you will need to switch back into it for the ceremony."]],
+     badges:[], save:true, src:"Artoriaz guide; Shacknews coin-lure route."},
+    {t:"Pour the vodka into the fire-retardant liquid",
+     b:[["Go","The ritual prep area just off the roof garden — the sabotage prompt is straight ahead as you leave the guard's suite."],
+        ["Disguise","Cult Bodyguard — it covers the whole Queen Penthouse except the lower-floor office."],
+        ["Item","The vodka bottle from the show kitchen."],
+        ["Do","Sabotage the bowl of fire-retardant liquid Nabazov dips into during his trick. He now burns for real when the séance starts."]],
+     badges:[], save:true,
+     warn:"Set the sabotage up now but do not let the ceremony start yet — Deadly Incense needs Nabazov alive and inside the exhibition room, which happens beforehand.",
+     src:"Shacknews (\"Sabotage Fire Retardant Liquid\" directly outside the guard's room); whatchaa.com describes the same bowl."}
+   ]},
+  {n:"Sister Yulduz — bank her before anything happens to Nabazov",
+   steps:[
+    {t:"Take a display knife from the exhibition",
+     b:[["Go","The exhibition room in the Queen Penthouse."],
+        ["Disguise","Cult Bodyguard — picking up a display piece as a guest is a hostile act in front of the whole room."],
+        ["Item","Amputation Knife or Circumcision Knife. Either one satisfies the challenge."],
+        ["Do","Pocket it and move to the office on the lower floor."]],
+     badges:[], src:"Wiki Weapon of Choice page (either knife counts); whatchaa.com (take it only while disguised as a bodyguard)."},
+    {t:"Kill Yulduz in the lower-floor office",
+     b:[["Go","The office across from the exhibition bathroom, on the penthouse's lower floor."],
+        ["NPC","Yulduz walks into this office alone as part of her routine."],
+        ["Do","Wait inside with the door shut, then kill her with the display knife once she is in and the door closes."],
+        ["Watch out","The Cult Bodyguard outfit is not permitted in this office, so you are trespassing while you wait — stay out of the doorway's sightline."]],
+     badges:["weapon"], save:true,
+     warn:"Do this before either Nabazov kill. Once he dies the floor panics and her routine stops taking her into the office.",
+     src:"Wiki Cult Bodyguard outfit page (office excluded); whatchaa.com reports this as an unnoticed kill."}
+   ]},
+  {n:"Nabazov twice, around one save",
+   steps:[
+    {t:"Save, then blow him up inside the exhibition room",
+     b:[["Go","Back up to the exhibition room while Nabazov is doing his round of the art."],
+        ["NPC","Nabazov enters the exhibition room before the ceremony — a guest by the entrance complaining about the atrium and \"that rockstar\" is your cue that he has arrived."],
+        ["Item","Remote Breaching Charge, planted where he stops, and detonated while he is still in that room."],
+        ["Do","Make a manual save first. Detonate, take the tile, then reload that save."]],
+     badges:["incense"], save:true,
+     warn:"The explosion must happen in the exhibition room specifically. Killing him with the same charge out on the landing or in the garden does not count.",
+     src:"Challenge wording: mission export and wiki Deadly Incense page. Arrival cue: wiki The Source page."},
+    {t:"Attend the ceremony as an initiate and let him burn",
+     b:[["Go","Back to the roof garden after reloading, in the Cult Initiate outfit."],
+        ["Item","Nothing — you are frisked at the garden entrance. Leave every weapon and tool in the room with the knocked-out bodyguard."],
+        ["Do","Join the private ceremony (Inner Circle pops on attending), then watch Nabazov perform the fire trick with the sabotaged liquid."],
+        ["Watch out","Your reload restored the charge to your inventory — drop it before the frisk or you will be stopped at the entrance."]],
+     badges:["inner","divine","hurt"], save:true,
+     unver:"Someone Could Hurt Themselves asks for an accident kill, and the burning is the mission's signature accident, so it is expected to pop here alongside Divine Intervention. If it doesn't, it is still available on any other accident later.",
+     src:"Shacknews (leave weapons with the knocked-out guard, then re-enter as an initiate); Inner Circle wording: mission export and wiki; Cult Initiate admission: wiki outfit page."}
+   ]}
+ ]
+},
+{
+ key:"A", plate:"Run 3 of 5",
+ title:"Poison run — four Versatile kills on one save, then both targets by poison",
+ goal:"Every kill method here is mutually exclusive, so the run is built around one save point at Yulduz's office. The reloads happen first; the two poison kills are what you leave standing.",
+ load:{start:"UNVERIFIED — read your planning screen.",
+  suit:"Any suit",
+  items:["Silenced pistol (ICA19 Silverballer) — Straight Shot","Fiber Wire — Piano Man","Lethal Poison Syringe — Nabazov's dose","Coins — the roof-garden guard lure"]},
+ secs:[
+  {n:"Setup",
+   steps:[
+    {t:"Collect the lethal pills from the exhibition bathroom",
+     b:[["Go","Up to the exhibition, then into the bathroom in the far corner of the hall."],
+        ["Item","Jar of lethal pills — this is Yulduz's dose, so your syringe stays free for Nabazov."],
+        ["NPC","A cultist couple are arguing in here. Neither will stop you in a suit."]],
+     badges:[],
+     unver:"The pill jar in this bathroom is described by one source (whatchaa.com) and matches the poison-jar art on the Purgatory tile. If it isn't there, restart with a Lethal Poison Vial in place of the coins.",
+     src:"whatchaa.com; wiki Purgatory page notes the tile shows the lethal poison pill jar."},
+    {t:"Take the Cult Bodyguard for penthouse access",
+     b:[["Go","Roof garden entrance."],
+        ["Item","Coin — lure the posted guard into the suite opposite."],
+        ["Disguise","Cult Bodyguard. Nothing in this run needs a stealth rating, so take it the fastest way you like."]],
+     badges:[], src:"Artoriaz guide; Shacknews coin lure."}
+   ]},
+  {n:"One save, three reloads, at Yulduz's office",
+   steps:[
+    {t:"Save with Yulduz about to enter the office",
+     b:[["Go","The lower-floor office across from the exhibition bathroom."],
+        ["Do","Wait inside with the door closed and make a manual save while she is on her way in."],
+        ["Watch out","Everything below reloads to this exact save, so make it before you touch her."]],
+     badges:[], save:true, src:"Office routine: whatchaa.com."},
+    {t:"Fiber wire her, then reload",
+     b:[["Item","Fiber Wire."],
+        ["Do","Garrote her once the door has closed behind her. Piano Man pops, then load the save."]],
+     badges:["piano"], src:"Tile wording: mission export; wiki Piano Man page (2,000 XP in HITMAN 2 / III)."},
+    {t:"Headshot her, then reload",
+     b:[["Item","Silenced pistol."],
+        ["Do","One shot to the head. Straight Shot pops, then load the save again."],
+        ["Watch out","Witnesses and noise cost you nothing this run — but do not let the reload happen before the tile appears on screen."]],
+     badges:["straight"], src:"Tile wording: mission export."}
+   ]},
+  {n:"The two kills you keep",
+   steps:[
+    {t:"Poison Yulduz's wine with the lethal pills",
+     b:[["Go","Out of the office and back into the exhibition hall."],
+        ["NPC","Yulduz returns to a glass of red wine, watched by a cult bodyguard standing beside it."],
+        ["Item","The lethal pills from the bathroom."],
+        ["Do","Flip off the exhibition sound system — the switch is in the same section as the bathroom — to pull the guard away, then spike the glass and walk off."]],
+     badges:["tasteless"], save:true,
+     warn:"No reloads after this point. Purgatory only counts if both targets are dead from poison when the run ends.",
+     src:"Wine glass, its guard, and the sound-system lure: whatchaa.com."},
+    {t:"Inject Nabazov with the lethal syringe",
+     b:[["Go","The little prep area beside the ceremony space, behind the statue."],
+        ["NPC","Nabazov arrives there ahead of his séance and turns his back."],
+        ["Item","Lethal Poison Syringe."],
+        ["Do","Inject him from behind cover. With Yulduz already poisoned, Purgatory and Versatile Assassin both land here."],
+        ["Watch out","There is a dumpster to the right by the windows if you want the body out of sight — not required for these tiles, but it costs three seconds."]],
+     badges:["purgatory","versatile"], save:true,
+     src:"Ambush spot, the turn-away moment, and the dumpster: whatchaa.com, which names poisoning both targets as what awards Purgatory."}
+   ]}
+ ]
+},
+{
+ key:"C", plate:"Run 4 of 5 · Professional difficulty",
+ title:"Emperor Suite — three tiles from one firing position",
+ goal:"Both targets die to the same rifle from the penthouse opposite. Short run, one long wait, and the only run whose tile names a difficulty.",
+ load:{start:"UNVERIFIED — read your planning screen.",
+  suit:"Any suit",
+  items:["Jaeger 7 Lancer — confirmed to punch through the exhibition's interior art walls","Alternative: Sieger 300 Ghost — silenced, also reported to penetrate the art walls","Coins","Free slot"]},
+ secs:[
+  {n:"Position",
+   steps:[
+    {t:"Set the difficulty to Professional",
+     b:[["Do","Sniper Assassin's tile requires Professional. Casual will not award it, and Master's save limit would wreck the other runs."]],
+     badges:[], warn:"Check this on the planning screen before you launch, not after the shot.",
+     src:"Tile wording: mission export."},
+    {t:"Get Recording Crew and enter the Emperor Suite",
+     b:[["Go","Recording studio in the north wing, then across to the Emperor Suite — the penthouse opposite the cult's."],
+        ["Disguise","Recording Crew, which is permitted in the Emperor Suite everywhere except the bedrooms."],
+        ["Item","Your rifle case."],
+        ["Watch out","Kitchen Staff also reaches the suite's lower floor but gets frisked, which loses you the rifle. Use the crew outfit."]],
+     badges:[], save:true,
+     src:"Disguise location: Artoriaz guide. Access rules: wiki Recording Crew and Kitchen Staff outfit pages."}
+   ]},
+  {n:"The shot",
+   steps:[
+    {t:"Wait for both targets to stop at the exhibition notebook",
+     b:[["Go","The window overlooking the exhibition."],
+        ["NPC","Nabazov and Yulduz stop and talk together at the exhibition notebook — from the Emperor Suite this lines them up behind the thin interior art walls."],
+        ["Do","Save here. Shoot Nabazov first for Penetrating Art, then Yulduz; both dying to the same rifle from this suite gives Two Birds."],
+        ["Watch out","Two Birds does not need one bullet. Players confirm firing twice is fine as long as the same rifle kills both."]],
+     badges:["penetrate","twobirds"], save:true,
+     warn:"Ordinary rifles stop in the art wall. Bring the Lancer or the Ghost, or the setup is wasted.",
+     src:"Firing spot, wall penetration, and the two-shot allowance: HITMAN Steam discussion \"New weapons\"; tile wording: mission export."},
+    {t:"Leave without being seen",
+     b:[["Go","Straight back out the way you came, weapon stowed."],
+        ["Do","Sniper Assassin allows disguise changes and found bodies — it only fails on being spotted, on extra kills, and on camera footage you leave behind."],
+        ["Watch out","If a camera caught you, delete the recording in the security room before you exit."]],
+     badges:["sniper"], save:false,
+     src:"Tile wording: mission export. Security room / camera erasure: Club 27 wiki challenge notes for the same building."}
+   ]}
+ ]
+},
+{
+ key:"B", plate:"Run 5 of 5 · save this for last",
+ title:"Suit only, unseen — the three Classics",
+ goal:"One run in your own clothes with nothing else riding on it. Do it after the other four, when you know both targets' routines by heart.",
+ load:{start:"UNVERIFIED — read your planning screen.",
+  suit:"Signature Suit (any suit — the rule is that you never change out of it)",
+  items:["Emetic Poison Vial — moves Yulduz somewhere private","Lethal Poison Syringe — Nabazov","Coins","Free slot"]},
+ secs:[
+  {n:"Ground rules for this run",
+   steps:[
+    {t:"Know exactly what fails the run",
+     b:[["Do","Only the two targets may die. No body may be found. You may not be spotted. Any camera footage of you must be erased. You may never change clothes."],
+        ["Watch out","A target who drops dead in the middle of the exhibition is a body that gets found. Both kills below happen somewhere private for that reason."]],
+     badges:[],
+     warn:"Pacified staff count too — a knocked-out NPC discovered by a colleague breaks Silent Assassin just as a corpse would. Suit Only alone survives it, so if the run goes wrong, finish anyway and keep that tile.",
+     src:"Full condition list: mission export tile text for Silent Assassin, Suit Only and Silent Assassin, Suit Only."},
+    {t:"Collect the lethal pills as your backup",
+     b:[["Go","Exhibition bathroom, far corner of the hall."],
+        ["Item","The jar of lethal pills — a spare dose in case you lose the syringe approach."],
+        ["Disguise","None. You are a hotel guest; the exhibition is public ground."]],
+     badges:[], src:"whatchaa.com, whose suit-only route starts with this pickup."}
+   ]},
+  {n:"Sister Yulduz",
+   steps:[
+    {t:"Spike her wine with emetic and follow her out",
+     b:[["Go","The exhibition hall, near her wine glass."],
+        ["NPC","The cult bodyguard beside the glass — pull him off station by switching off the exhibition sound system in the same section as the bathroom."],
+        ["Item","Emetic Poison Vial."],
+        ["Do","Spike the glass, then follow at a distance when she leaves the crowd to be sick, and take her out of sight of everyone."]],
+     badges:[], save:true,
+     unver:"Whether a body container is available where she ends up is not documented. Check for one; if there isn't one, use the office instead — she also walks into the lower-floor office alone, which is the isolation whatchaa.com reports as an unnoticed kill.",
+     src:"Wine glass, guard, sound-system lure and office routine: whatchaa.com."}
+   ]},
+  {n:"Oybek Nabazov",
+   steps:[
+    {t:"Ambush him behind the statue and hide the body",
+     b:[["Go","The small prep area beside the ceremony space; wait behind the statue."],
+        ["NPC","Nabazov arrives ahead of the séance and turns his back on that spot."],
+        ["Item","Lethal Poison Syringe (or the fiber wire, if you prefer)."],
+        ["Do","Take him from behind, then put the body in the dumpster to the right by the windows so it is never found."],
+        ["Watch out","In a suit this area is trespassing. Move only while the initiates are facing the ceremony space."]],
+     badges:[], save:true,
+     src:"Ambush position, the turn-away, and the dumpster by the windows: whatchaa.com."},
+    {t:"Clear the cameras and walk out",
+     b:[["Go","The security room, if any camera saw you at any point."],
+        ["Do","Delete the recording, then exit. All three Classics land at the results screen."],
+        ["Watch out","Do the camera check before you leave — the tiles explicitly fail on evidence you left behind."]],
+     badges:["sa","suit","saso"], save:false,
+     src:"Camera clause: mission export tile text. Security room in this building: Club 27 wiki challenge notes."}
+   ]}
+ ]
+}
+];
+
+/* ================= STATE ================= */
+const state={done:{},steps:{},filter:"all"};
+let storageOK=true;
+function reportProgress(){try{const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r['pz01']={done:CH.filter(c=>state.done[c.id]).length,total:CH.length,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
+async function save(){ if(!storageOK) return; try{ localStorage.setItem("source20:v1",JSON.stringify(state)); }catch(e){ storageOK=false; } reportProgress(); }
+async function load(){ try{ const r=localStorage.getItem("source20:v1"); if(r){const d=JSON.parse(r); state.done=d.done||{}; state.steps=d.steps||{};} }catch(e){} }
+
+/* ================= RENDER ================= */
+const TYPE={assassination:"Assassination",discovery:"Discovery",feats:"Feats",classic:"Classics"};
+const byId=Object.fromEntries(CH.map(c=>[c.id,c]));
+const esc=s=>String(s).replace(/[&<>]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[m]));
+const badges=ids=>!ids||!ids.length?"":`<div class="badges">${ids.map(i=>byId[i]?`<span class="badge b-${byId[i].t}">${esc(byId[i].n)}</span>`:"").join("")}</div>`;
+
+function renderJump(){
+  document.getElementById("jump").innerHTML=RUNS.map((r,i)=>
+    `<button class="jbtn" data-jump="run-${r.key}"><b>${esc(r.plate.split("·")[0].trim())}</b>${esc(r.title.split("—")[0].trim())}</button>`).join("");
+}
+
+function renderRuns(){
+  document.getElementById("runs").innerHTML=RUNS.map((run,ri)=>{
+    const secs=run.secs.map(sec=>{
+      const steps=sec.steps.map((st,si)=>{
+        const key=`${run.key}-${sec.n}-${si}`, on=!!state.steps[key];
+        return `<div class="step ${on?"done":""}">
+          <button class="check" aria-pressed="${on}" aria-label="Mark step done" data-step="${esc(key)}">${on?"✓":""}</button>
+          <div class="sbody"><details>
+            <summary><p class="stitle"><span class="num">STEP</span>${esc(st.t)}<span class="tog"></span></p></summary>
+            <ul class="bul">${st.b.map(([k,v])=>`<li><k>${esc(k)}</k>${esc(v)}</li>`).join("")}</ul>
+            ${badges(st.badges)}
+            ${st.warn?`<div class="flag f-warn"><b>Warning</b>${esc(st.warn)}</div>`:""}
+            ${st.save?`<div class="flag f-save"><b>Save here</b>Manual save before this step — it is the cheapest place to retry from.</div>`:""}
+            ${st.unver?`<div class="flag f-unver"><b>Unverified</b>${esc(st.unver)}</div>`:""}
+            ${st.src?`<p class="src">Source — ${esc(st.src)}</p>`:""}
+          </details></div></div>`;
+      }).join("");
+      return `<p class="sec">${esc(sec.n)}</p>${steps}`;
+    }).join("");
+    return `<details class="run" id="run-${run.key}" ${ri===0?"open":""}>
+      <summary>
+        <span class="chev"></span>
+        <p class="plate">${esc(run.plate)}</p>
+        <h2>${esc(run.title)}</h2>
+        <p>${esc(run.goal)}</p>
+      </summary>
+      <div class="runbody">
+        <div class="loadout">
+          <div class="slot"><b>Starting location</b><span>${esc(run.load.start)}</span></div>
+          <div class="slot"><b>Suit</b><span>${esc(run.load.suit)}</span></div>
+          ${run.load.items.map((it,i)=>`<div class="slot"><b>Slot ${i+1}</b><span>${esc(it)}</span></div>`).join("")}
+        </div>
+        ${secs}
+      </div>
+    </details>`;
+  }).join("");
+}
+
+function renderChecklist(){
+  const f=[["all","All"],["assassination","Assassination"],["discovery","Discovery"],["feats","Feats"],["classic","Classics"],["incomplete","Incomplete"]];
+  document.getElementById("filters").innerHTML=f.map(([k,l])=>`<button class="filter" data-filter="${k}" aria-pressed="${state.filter===k}">${l}</button>`).join("");
+  const rows=CH.filter(c=>state.filter==="all"?true:state.filter==="incomplete"?!state.done[c.id]:c.t===state.filter).map(c=>{
+    const on=!!state.done[c.id];
+    const label={E:"Run 1",D:"Run 2",A:"Run 3",C:"Run 4",B:"Run 5"}[c.run];
+    return `<div class="crow ${on?"done":""}">
+      <button class="check" aria-pressed="${on}" aria-label="Mark challenge done" data-ch="${c.id}">${on?"✓":""}</button>
+      <div class="cmain">
+        <p class="cname">${esc(c.n)}</p>
+        <p class="ccond">${esc(c.d)}</p>
+        <div class="cmeta">
+          <span class="badge b-${c.t}">${TYPE[c.t]}</span>
+          <span class="tagrun">${label}</span>
+        </div>
+      </div></div>`;
+  }).join("");
+  document.getElementById("clist").innerHTML=rows||`<div class="crow"><div class="cmain"><p class="ccond">Nothing matches this filter.</p></div></div>`;
+}
+
+function renderVerify(){
+  document.getElementById("panel-verify").innerHTML=`
+  <div class="vblock">
+    <h3>What changed once you supplied the mission file</h3>
+    <p>Three things from the earlier draft were wrong or unresolved and are now settled by your export.</p>
+    <table>
+      <tr><th>Item</th><th>Settled position</th></tr>
+      <tr><td>Total</td><td>20 — 12 Assassination, 3 Discovery, 1 Feats, 4 Classics. Every one is assigned to exactly one run.</td></tr>
+      <tr><td>Slam Dunk</td><td>Absent. Not in the mission file, consistent with reports that it was cut in HITMAN 3. Removed from the guide.</td></tr>
+      <tr><td>No Evidence</td><td>Not a separate challenge. The camera-evidence clause is folded into the Silent Assassin and Sniper Assassin tiles instead.</td></tr>
+      <tr><td>Discover Bangkok</td><td>Exists, and was missing from the earlier draft. Now Run 1. Areas are shared with Club 27.</td></tr>
+      <tr><td>At Ease, Soldier</td><td>Full wording confirmed: pacify five members of the militia <i>as the exterminator</i>. The disguise requirement is why Run 1's stock-room step ends on the Exterminator.</td></tr>
+      <tr><td>Chameleon</td><td>11 disguises, all named in the file and all located by the Artoriaz Steam guide. Full roster below.</td></tr>
+      <tr><td>Sniper Assassin</td><td>Requires Professional difficulty — the only tile that names one.</td></tr>
+    </table>
+  </div>
+
+  <div class="vblock">
+    <h3>All 11 disguises and where they are</h3>
+    <table>
+      <tr><th>Disguise</th><th>Location</th><th>Run</th></tr>
+      <tr><td>Kitchen Staff</td><td>Laundry room, basement</td><td>1, 2</td></tr>
+      <tr><td>Groundskeeper</td><td>Laundry room, basement</td><td>1</td></tr>
+      <tr><td>Waiter</td><td>Staff room, basement</td><td>1</td></tr>
+      <tr><td>Hotel Security</td><td>Stock room</td><td>1</td></tr>
+      <tr><td>Hotel Staff</td><td>Stock room</td><td>1</td></tr>
+      <tr><td>Exterminator</td><td>Stock room</td><td>1 — required for At Ease, Soldier</td></tr>
+      <tr><td>Militia Soldier</td><td>Delivery area</td><td>1</td></tr>
+      <tr><td>Recording Crew</td><td>Recording studio</td><td>1, 4</td></tr>
+      <tr><td>Jordan Cross' Bodyguard</td><td>Recording studio</td><td>1</td></tr>
+      <tr><td>Cult Initiate</td><td>Suite next to 47's</td><td>1, 2</td></tr>
+      <tr><td>Cult Bodyguard</td><td>Cult roof garden</td><td>1, 2, 3</td></tr>
+    </table>
+    <p style="margin-top:10px">Access rules worth knowing: Cult Initiate gets no staff access but is the only outfit admitted to the ceremony. Cult Bodyguard covers the whole Queen Penthouse <i>except</i> the lower-floor office. Recording Crew covers the Emperor Suite except its bedrooms. Kitchen Staff is frisked entering the Emperor Suite's lower floor.</p>
+  </div>
+
+  <div class="vblock">
+    <h3>Run logic check — what was simulated before publishing</h3>
+    <h4>Exclusive kills, separated</h4>
+    <ul>
+      <li>Nabazov dies once per run: poison syringe (Run 3), rifle (Run 4), explosion then reload then fire (Run 2). Run 5 kills him quietly with no other tile attached.</li>
+      <li>Yulduz dies once per run: wire / headshot behind reloads then wine poison (Run 3), rifle (Run 4), display knife (Run 2), drowning (Run 1).</li>
+    </ul>
+    <h4>Ordering rules that would otherwise break a run</h4>
+    <ul>
+      <li><b>Run 2:</b> vodka is fetched <i>before</i> the Cult Bodyguard outfit, because that outfit has no staff access and the show kitchen is a staff area.</li>
+      <li><b>Run 2:</b> Weapon of Choice is banked before either Nabazov kill — his death panics the floor and stops her office routine.</li>
+      <li><b>Run 2:</b> Deadly Incense goes before the ceremony, because it needs him alive in the exhibition room; the fire kill goes after the reload.</li>
+      <li><b>Run 2:</b> the reload restores the breaching charge to your inventory, so it must be dropped again before the ceremony frisk.</li>
+      <li><b>Run 3:</b> all reloads happen before the two poison kills. Poisoning first and reloading afterwards would undo Purgatory.</li>
+      <li><b>Run 1:</b> the Exterminator is worn out of the stock room, since At Ease, Soldier only counts pacifies made in it; the Militia Soldier disguise is taken from one of the five you pacify.</li>
+      <li><b>Run 1:</b> the drowning is last, so a dead target cannot interfere with the disguise sweep or the area sweep.</li>
+    </ul>
+    <h4>Routing</h4>
+    <ul>
+      <li>Runs 1 and 2 both move bottom to top — basement, service floor, delivery area, studio, guest floor, roof garden — with no backtracking.</li>
+      <li>Runs 3, 4 and 5 stay inside one wing each.</li>
+      <li>Every item is picked up before the step that spends it; every disguise is taken before the area that needs it.</li>
+    </ul>
+  </div>
+
+  <div class="vblock">
+    <h3>Known bugs and things that can silently cost you a tile</h3>
+    <ul>
+      <li><b>Hold My Hair:</b> after a patch, sickened NPCs on some maps walk to a trash can rather than a toilet. Park the target beside a toilet with coins first.</li>
+      <li><b>Discover Bangkok:</b> areas revealed inside Contracts or Escalations have been reported not to count. Sweep inside the mission.</li>
+      <li><b>Chameleon:</b> a disguise you started the mission wearing does not register until you change out of it and back into it.</li>
+      <li><b>Sniper wall penetration:</b> only certain rifles pass through the exhibition's interior art walls — the Jaeger 7 Lancer is the confirmed one, with the Sieger 300 Ghost also reported to work.</li>
+      <li><b>Challenge lists reset after patches:</b> players saw Bangkok tiles, Chameleon and the Versatile set reappear as incomplete after a 2019 update. A vanished tick may be a list change, not lost progress.</li>
+      <li><b>Patient Zero and global challenges:</b> one forum report says runs of The Source did not count toward the trilogy-wide SASO challenge. Single source, flagged.</li>
+    </ul>
+  </div>
+
+  <div class="vblock">
+    <h3>Still unverified — stated rather than guessed</h3>
+    <ul>
+      <li>Starting locations for The Source, and whether any mastery track exists for it.</li>
+      <li>How many militia stand in the delivery area at once, for the five pacifies.</li>
+      <li>Whether a body container sits near where Yulduz goes when sickened (Run 5).</li>
+      <li>Whether the fire séance registers as the accident for Someone Could Hurt Themselves. It is the expected source; a fallback is noted on the step.</li>
+      <li>The individual XP values of these 20 tiles. Only Purgatory (2,000), Piano Man (2,000) and Versatile Assassin (4,000) could be confirmed, so no XP figures are printed on the checklist.</li>
+      <li>Individual guard names and patrol timings. Confirmed named NPCs in this mission are few — Mookjai the exterminator, the civilian Daniella Coppola, and Julian in Jackie Carrington's suite — so steps describe posts and routines instead.</li>
+    </ul>
+  </div>`;
+}
+
+/* ================= TRACKER ================= */
+function updateTracker(){
+  const done=CH.filter(c=>state.done[c.id]).length;
+  document.getElementById("t-done").textContent=done;
+  document.getElementById("t-bar").style.width=(done/CH.length*100)+"%";
+  for(const t of ["assassination","discovery","feats","classic"]){
+    const l=CH.filter(c=>c.t===t);
+    document.getElementById("p-"+t).textContent=`${l.filter(c=>state.done[c.id]).length}/${l.length}`;
+  }
+  let tot=0; RUNS.forEach(r=>r.secs.forEach(s=>tot+=s.steps.length));
+  document.getElementById("p-steps").textContent=`${Object.values(state.steps).filter(Boolean).length}/${tot}`;
+}
+
+/* ================= EVENTS ================= */
+document.querySelectorAll(".tab").forEach(tab=>tab.addEventListener("click",()=>{
+  document.querySelectorAll(".tab").forEach(t=>t.setAttribute("aria-selected",String(t===tab)));
+  ["runs","checklist","verify"].forEach(p=>document.getElementById("panel-"+p).hidden=(p!==tab.dataset.panel));
+}));
+
+document.addEventListener("click",e=>{
+  const j=e.target.closest("[data-jump]");
+  if(j){
+    const el=document.getElementById(j.dataset.jump);
+    el.open=true; el.scrollIntoView({behavior:"smooth",block:"start"});
+    document.querySelectorAll(".jbtn").forEach(b=>b.classList.toggle("on",b===j));
+    return;
+  }
+  const c=e.target.closest("[data-ch]");
+  if(c){ state.done[c.dataset.ch]=!state.done[c.dataset.ch]; renderChecklist(); updateTracker(); save(); return; }
+  const s=e.target.closest("[data-step]");
+  if(s){
+    const k=s.dataset.step; state.steps[k]=!state.steps[k];
+    s.setAttribute("aria-pressed",String(!!state.steps[k]));
+    s.textContent=state.steps[k]?"✓":"";
+    s.closest(".step").classList.toggle("done",!!state.steps[k]);
+    updateTracker(); save(); return;
+  }
+  const f=e.target.closest("[data-filter]");
+  if(f){ state.filter=f.dataset.filter; renderChecklist(); }
+});
+
+document.getElementById("reset").addEventListener("click",()=>{
+  state.done={}; state.steps={}; renderRuns(); renderChecklist(); updateTracker(); save();
+});
+document.getElementById("expand-all").addEventListener("click",()=>document.querySelectorAll(".run").forEach(r=>r.open=true));
+document.getElementById("collapse-all").addEventListener("click",()=>document.querySelectorAll(".run").forEach(r=>r.open=false));
+
+(async function(){ await load(); renderJump(); renderRuns(); renderChecklist(); renderVerify(); updateTracker(); reportProgress(); })();
+</script>
+<!-- step-progress-bridge -->
+<script>
+/* Reports route-step ticks into 'hitman-progress-registry' so the index can
+   show them beside the challenge counts. Counts what is on screen rather than
+   any guide-specific state, so one implementation serves every guide. */
+(function(){
+  var RID="pz01", SEL=".step";
+  function isDone(s){
+    var c=s.classList;
+    if(c.contains('done')||c.contains('dn')) return true;
+    if(s.getAttribute('data-done')==='1'||s.getAttribute('aria-pressed')==='true') return true;
+    return !!s.querySelector('.done,.dn,[data-done="1"],[aria-pressed="true"]');
+  }
+  function tally(){
+    var steps=document.querySelectorAll(SEL);
+    if(!steps.length) return null;
+    var n=0;
+    for(var i=0;i<steps.length;i++) if(isDone(steps[i])) n++;
+    return {steps:n,stepTotal:steps.length};
+  }
+  function push(){
+    var t;
+    try{ t=tally(); }catch(err){ return; }
+    if(!t||!t.stepTotal) return;
+    try{
+      var r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');
+      var e=r[RID]||(r[RID]={});
+      /* the guide's own reportProgress() rewrites this entry wholesale, so
+         re-add the step counts whenever they go missing or stale */
+      if(e.steps===t.steps&&e.stepTotal===t.stepTotal) return;
+      e.steps=t.steps; e.stepTotal=t.stepTotal; e.updated=Date.now();
+      localStorage.setItem('hitman-progress-registry',JSON.stringify(r));
+    }catch(err){}
+  }
+  var pending=false;
+  function schedule(){
+    if(pending) return; pending=true;
+    setTimeout(function(){pending=false;push();},120);
+  }
+  try{
+    new MutationObserver(schedule).observe(document.body,
+      {subtree:true,childList:true,attributes:true,attributeFilter:['class','aria-pressed','data-done']});
+  }catch(err){}
+  window.addEventListener('load',schedule);
+  setTimeout(push,600);
+})();
+</script>
+<!-- /step-progress-bridge -->
+</body>
+</html>

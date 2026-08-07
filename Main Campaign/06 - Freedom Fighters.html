@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Freedom Fighters — Verified Challenge Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ═══ COLORADO — militia field manual ═══
+   Stencilled condensed caps, caution stripes, dashed rules, [ ] checkboxes and
+   ASCII block meters. Reads like an operation order, not a web page. */
+:root{
+  --bg:#101208; --panel:#181b0f; --panel2:#212516; --ink:#dcd8c2; --dim:#948f76; --faint:#5f5c4a;
+  --alert:#e2732f; --olive:#8b9c46; --red:#cf4433;
+  --amber:#d9a441; --rust:#cf4433; --violet:#a394d6; --sky:#6f9fb5; --jade:#8b9c46;
+  --line:#2c3018; --line-2:#232711;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:"Saira Condensed",system-ui,sans-serif;
+  font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1060px;margin:0 auto;padding:0 20px 90px}
+code{font-family:"JetBrains Mono",monospace;font-size:.82em;background:var(--panel2);
+  border:1px dashed var(--line);padding:1px 5px;color:var(--olive)}
+.stripe{height:9px;background:repeating-linear-gradient(45deg,var(--alert) 0 9px,var(--bg) 9px 18px)}
+
+/* ── masthead: an operation order header ────────────────── */
+.backlink{display:inline-block;margin:20px 0 0;font-family:"JetBrains Mono",monospace;
+  font-size:11px;letter-spacing:.08em;color:var(--faint);text-decoration:none}
+.backlink:before{content:"<< "}
+.backlink:hover{color:var(--alert)}
+.mast{border:2px solid var(--line);background:var(--panel);margin:14px 0 20px;padding:0}
+.eyebrow{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--alert);margin:0;padding:9px 18px;
+  border-bottom:2px dashed var(--line);display:block}
+.eyebrow:before{content:"[ CLASSIFIED ] ";color:var(--faint)}
+h1{font-size:clamp(34px,7.4vw,66px);font-weight:800;letter-spacing:.01em;line-height:.95;
+  margin:0;padding:20px 18px 0;text-transform:uppercase}
+h1 em{display:block;font-family:"JetBrains Mono",monospace;font-style:normal;font-weight:400;
+  font-size:.19em;letter-spacing:.16em;color:var(--faint);margin-top:12px;text-transform:none}
+.facts{font-family:"JetBrains Mono",monospace;font-size:11.5px;color:var(--dim);margin:18px 0 0;
+  padding:14px 18px 18px;line-height:1.95;border-top:2px dashed var(--line)}
+.facts b{color:var(--ink);font-weight:500}
+
+/* ── tracker: a typewriter readout ─────────────────────── */
+.tracker{border:2px solid var(--line);background:var(--panel);margin-bottom:18px}
+.tracker-top{display:flex;justify-content:space-between;align-items:center;gap:14px;
+  flex-wrap:wrap;padding:10px 16px;background:var(--panel2);border-bottom:2px dashed var(--line)}
+.tracker-top h2{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--faint);margin:0;font-weight:500}
+.tally{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--dim);margin:0}
+.tally b{font-family:"Saira Condensed",sans-serif;color:var(--alert);font-size:24px;font-weight:800}
+.bar{height:14px;background:var(--bg);border-bottom:2px dashed var(--line);overflow:hidden}
+.bar span{display:block;height:100%;width:0;
+  background:repeating-linear-gradient(45deg,var(--alert) 0 6px,rgba(226,115,47,.35) 6px 12px);
+  transition:width .35s ease}
+.cats{display:block;padding:12px 16px}
+.cat{display:flex;align-items:baseline;gap:12px;padding:5px 0;
+  border-bottom:1px dotted var(--line);font-family:"JetBrains Mono",monospace;font-size:12px}
+.cat:last-child{border-bottom:0}
+.cat .n{flex:0 0 auto;width:118px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--dim)}
+.cat .mb{flex:1;min-width:0;letter-spacing:-.06em;overflow:hidden;white-space:nowrap;
+  font-size:12.5px}
+.cat .v{flex:0 0 auto;width:54px;text-align:right;color:var(--ink);font-size:12px}
+.cat .v em{font-style:normal;color:var(--faint)}
+.resetbtn{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.08em;
+  text-transform:uppercase;background:var(--bg);border:1px dashed var(--line);color:var(--faint);
+  padding:4px 9px;cursor:pointer}
+.resetbtn:hover{color:var(--red);border-color:var(--red)}
+
+/* ── tabs ───────────────────────────────────────────────── */
+.tabs{display:flex;gap:0;margin-bottom:18px;flex-wrap:wrap;border-bottom:2px solid var(--line)}
+.tab{font-family:"Saira Condensed",sans-serif;font-size:15px;font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;background:none;border:2px solid transparent;border-bottom:0;
+  color:var(--faint);padding:8px 18px;cursor:pointer;margin-bottom:-2px}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected="true"]{color:var(--alert);border-color:var(--line);background:var(--panel)}
+.panel[hidden]{display:none}
+
+/* ── run nav ────────────────────────────────────────────── */
+.runnav{display:flex;gap:0;flex-wrap:wrap;margin-bottom:16px;position:sticky;top:0;
+  background:var(--bg);padding:10px 0;z-index:20;border-bottom:2px dashed var(--line)}
+.runnav button{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.04em;
+  background:var(--panel);border:1px solid var(--line);color:var(--dim);padding:6px 10px;
+  cursor:pointer;margin:0 -1px -1px 0}
+.runnav button:hover{color:var(--ink);background:var(--panel2)}
+.runnav button.hot{color:var(--bg);background:var(--alert);border-color:var(--alert);font-weight:700}
+.runnav .util{margin-left:auto;display:flex}
+
+/* ── runs: operation orders ─────────────────────────────── */
+.run{border:2px solid var(--line);background:var(--panel);margin-bottom:12px;scroll-margin-top:64px}
+.run.open{border-color:var(--alert)}
+.run>.stripe{display:none}
+.run.open>.stripe{display:block}
+.run-head{width:100%;text-align:left;background:none;border:0;color:inherit;font:inherit;
+  padding:14px 16px;cursor:pointer;display:flex;gap:14px;align-items:flex-start}
+.run-head:hover{background:var(--panel2)}
+.rnum{flex:0 0 auto;font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:700;
+  color:var(--bg);background:var(--dim);padding:3px 7px;margin-top:3px;white-space:nowrap}
+.run.open .rnum{background:var(--alert)}
+.rh{flex:1;min-width:0}
+.run-no{display:block;font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--olive);margin-bottom:4px}
+.run-head h3{font-size:clamp(21px,3.4vw,30px);font-weight:800;letter-spacing:.005em;
+  line-height:1.05;margin:0 0 7px;text-transform:uppercase}
+.run-head p{margin:0;color:var(--dim);font-size:14px;max-width:80ch;line-height:1.5}
+.run-prog{flex:0 0 auto;font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--faint);
+  white-space:nowrap;border:1px dashed var(--line);padding:2px 7px;margin-top:3px}
+.run-body[hidden]{display:none}
+
+.loadout{border-top:2px dashed var(--line);background:var(--bg)}
+.loadout h4{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--alert);margin:0;padding:8px 16px;
+  border-bottom:1px dotted var(--line)}
+.loadout h4:before{content:"1. "}
+.lo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+.lo-grid div{font-family:"JetBrains Mono",monospace;font-size:11px;padding:9px 16px;
+  border-right:1px dotted var(--line);border-bottom:1px dotted var(--line);line-height:1.5}
+.lo-grid div span{display:block;color:var(--faint);font-size:9px;letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:3px}
+.lo-note{margin:0;padding:11px 16px;font-size:13.5px;color:var(--dim);background:var(--panel2);
+  border-bottom:1px dotted var(--line)}
+.lo-note:before{content:"NOTE — ";font-family:"JetBrains Mono",monospace;font-size:10px;
+  letter-spacing:.12em;color:var(--alert)}
+
+.sect{padding:4px 16px 16px}
+.sect>h4{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--olive);margin:20px 0 10px;padding-bottom:5px;
+  border-bottom:1px dashed var(--line)}
+.sect>h4:before{content:"// "}
+
+/* steps: field-manual paragraphs */
+.step{border-bottom:1px dotted var(--line);padding:11px 0}
+.step.done{background:rgba(139,156,70,.07)}
+.step-top{display:flex;gap:11px;align-items:flex-start}
+.snum{flex:0 0 auto;font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--faint);
+  padding-top:3px;width:24px}
+.tick{flex:0 0 auto;font-family:"JetBrains Mono",monospace;width:24px;height:22px;
+  border:1px dashed var(--line);background:var(--bg);cursor:pointer;color:var(--faint);
+  font-size:12px;line-height:1;padding:0;margin-top:1px}
+.tick:hover{border-color:var(--olive);color:var(--olive)}
+.done .tick{background:var(--olive);border-color:var(--olive);border-style:solid;color:var(--bg)}
+.step-body{flex:1;min-width:0}
+.step-title{font-size:17.5px;font-weight:700;margin:0 0 6px;text-transform:uppercase;
+  letter-spacing:.01em;line-height:1.15}
+.bul{margin:0;padding:0;list-style:none;font-size:14px}
+.bul li{display:flex;gap:10px;margin-bottom:3px;line-height:1.5}
+.bul li:before{content:"▸";color:var(--olive);flex:0 0 auto}
+.bul k{flex:0 0 62px;font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--faint);padding-top:4px}
+.badges{display:flex;flex-wrap:wrap;gap:4px;margin-top:9px}
+.badge{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.04em;
+  text-transform:uppercase;padding:2px 6px;border:1px dashed;display:inline-block}
+.b-chal{color:var(--olive);border-color:rgba(139,156,70,.5);background:rgba(139,156,70,.09)}
+.b-warn{color:var(--red);border-color:rgba(207,68,51,.55);background:rgba(207,68,51,.1);
+  border-style:solid}
+.b-save{color:var(--amber);border-color:rgba(217,164,65,.5);background:rgba(217,164,65,.09)}
+.b-unv{color:var(--violet);border-color:rgba(163,148,214,.5);background:rgba(163,148,214,.09)}
+.b-src{color:var(--sky);border-color:rgba(111,159,181,.45);background:rgba(111,159,181,.08)}
+.more{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.1em;
+  text-transform:uppercase;background:none;border:0;color:var(--faint);cursor:pointer;
+  padding:8px 0 0 46px}
+.more:hover{color:var(--alert)}
+.detail{padding:2px 0 4px 46px;font-size:13.5px;color:var(--dim)}
+.detail[hidden]{display:none}
+.detail dl{margin:0}
+.detail dt{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--faint);margin-top:11px}
+.detail dd{margin:2px 0 0;line-height:1.55}
+.flag{border-left:3px solid var(--red);padding-left:11px;margin-top:11px;color:#e9a79b}
+.flag.amber{border-color:var(--amber);color:#eed5a2}
+.flag.unv{border-color:var(--violet);color:#cdc4e8}
+
+/* ── checklist ──────────────────────────────────────────── */
+.filters{display:flex;gap:0;flex-wrap:wrap;margin-bottom:14px}
+.filters button{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.08em;
+  text-transform:uppercase;background:var(--panel);border:1px solid var(--line);
+  color:var(--faint);padding:6px 11px;cursor:pointer;margin:0 -1px -1px 0}
+.filters button:hover{color:var(--ink)}
+.filters button.on{color:var(--bg);background:var(--olive);border-color:var(--olive);font-weight:700}
+.chal{display:flex;gap:11px;padding:10px 13px;border-bottom:1px dotted var(--line);
+  background:none}
+.chal.done{background:rgba(139,156,70,.07)}
+.chal-main{flex:1;min-width:0}
+.chal-name{font-size:16px;font-weight:700;margin:0;text-transform:uppercase;letter-spacing:.01em}
+.chal.done .chal-name{text-decoration:line-through;color:var(--faint)}
+.chal-cond{margin:2px 0 0;font-size:13.5px;color:var(--dim)}
+.chal-meta{display:flex;gap:4px;flex-wrap:wrap;margin-top:7px}
+
+/* ── audit ──────────────────────────────────────────────── */
+.audit h3{font-size:21px;font-weight:800;margin:26px 0 10px;text-transform:uppercase;
+  color:var(--alert);letter-spacing:.02em}
+.audit h3:before{content:"■ "}
+.audit h3:first-child{margin-top:0}
+.audit p{color:var(--dim)}
+.audit ul{padding-left:0;list-style:none;margin:0 0 14px}
+.audit li{margin-bottom:6px;padding-left:20px;position:relative;color:var(--dim);font-size:14px}
+.audit li:before{content:"▸";position:absolute;left:2px;color:var(--olive)}
+.audit li b{color:var(--ink)}
+table.src{font-family:"JetBrains Mono",monospace;font-size:11px;border-collapse:collapse;
+  width:100%;border:2px solid var(--line)}
+table.src th,table.src td{border-bottom:1px dotted var(--line);padding:8px 10px;
+  text-align:left;vertical-align:top;color:var(--dim)}
+table.src th{color:var(--alert);font-size:9px;letter-spacing:.13em;text-transform:uppercase;
+  font-weight:700;background:var(--panel2);border-bottom:2px dashed var(--line)}
+.pass{color:var(--olive)}.fail{color:var(--red)}.part{color:var(--amber)}
+footer{margin-top:32px;padding:14px 16px;border:2px dashed var(--line);
+  font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--faint);line-height:1.8}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (max-width:640px){
+  .more,.detail{padding-left:0}
+  .cat{flex-wrap:wrap}
+  .cat .mb{flex:1 1 100%;order:3}
+  .bul li{flex-wrap:wrap}
+  .bul k{flex:1 1 100%;padding:0}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="mast">
+  <a class="backlink" href="../index.html">← All guides</a>
+  <p class="eyebrow">Main Campaign 06 · Hope, Colorado · World of Assassination</p>
+  <h1>Freedom Fighters <em>— challenge run planner</em></h1>
+  <p class="facts">
+    <b>Targets:</b> Sean Rose (&ldquo;The Commander&rdquo;) · Maya Parvati (&ldquo;The Instructor&rdquo;) · Ezra Berg (&ldquo;The Interrogator&rdquo;) · Penelope Graves (&ldquo;The Analyst&rdquo;)<br>
+    <b>Extra objective:</b> destroy the evidence in the farmhouse &nbsp;·&nbsp; <b>Four targets</b> — the only mission in the trilogy with this many<br>
+    <b>Challenges:</b> 61 — 23 Assassination · 13 Discovery · 16 Feats · 4 Targets · 5 The Classics<br>
+    <b>Tracked disguises:</b> 9 &nbsp;·&nbsp; <b>Tracked areas:</b> 21 &nbsp;·&nbsp; <b>Runs needed:</b> 9
+  </p>
+</header>
+
+<section class="tracker">
+  <div class="tracker-top">
+    <h2>Progress</h2>
+    <p class="tally"><b id="tDone">0</b> / 61 challenges complete &nbsp; <button class="resetbtn" id="reset">Reset</button></p>
+  </div>
+  <div class="bar"><span id="tBar"></span></div>
+  <div class="cats" id="cats"></div>
+</section>
+
+<div class="tabs" role="tablist">
+  <button class="tab" role="tab" aria-selected="true" data-panel="runs">Optimized runs</button>
+  <button class="tab" role="tab" aria-selected="false" data-panel="checklist">Checklist</button>
+  <button class="tab" role="tab" aria-selected="false" data-panel="audit">Audit &amp; sources</button>
+</div>
+
+<div class="panel" id="p-runs">
+  <div class="runnav" id="runnav"></div>
+  <div id="runList"></div>
+</div>
+
+<div class="panel" id="p-checklist" hidden>
+  <div class="filters" id="filters"></div>
+  <div id="chalList"></div>
+</div>
+
+<div class="panel audit" id="p-audit" hidden>
+  <h3>Verification result</h3>
+  <p>All 61 challenge names and conditions come verbatim from the in-game challenge data in this repository (<code>missions/06 - Freedom Fighters.json</code>). Runs 1&ndash;7 are a conversion of fish's tested Steam route. Runs 8 and 9 are new: fish's Colorado guide has <b>no</b> Sniper Assassin or SA/SO section at all, so both were built from written sources.</p>
+  <p>Colorado is the hardest map in the trilogy for both of those Classics. The entire map is hostile territory, there are four targets rather than two, and every NPC except the hackers and the targets is militia. Neither of the new runs is a short one.</p>
+
+  <table class="src">
+    <thead><tr><th>Check</th><th>Result</th><th>Evidence</th></tr></thead>
+    <tbody>
+      <tr><td>Total count (61)</td><td class="pass">Pass</td><td>In-game data: <code>challengeCount: 61</code>, category sum also 61</td></tr>
+      <tr><td>Category split 23/13/16/4/5</td><td class="pass">Pass</td><td>In-game data</td></tr>
+      <tr><td>Runs 1&ndash;7 routes</td><td class="pass">Pass</td><td>fish, Steam guide 3712064474 — a written, tested 7-run route</td></tr>
+      <tr><td>All seven loadouts</td><td class="pass">Pass</td><td>Read off the five planning-screen screenshots in that guide (runs 1&ndash;3 share one screenshot)</td></tr>
+      <tr><td>Starting-location mastery levels</td><td class="pass">Pass</td><td>Hitman Wiki, <i>List of Mastery Unlocks by Mission</i>: Southern Farm Perimeter 1 · Undercover in the Garage 6 · Undercover on the Demolition Range 8 · Undercover by the Greenhouse 11 · Water Tower 16 · Undercover in the Farm House 18</td></tr>
+      <tr><td>Smuggle points (Runs 5, 6, 7, 8)</td><td class="pass">Pass</td><td>Same wiki list: Water Tower is the Agency Pickup at mastery 2; Ground Floor Laundry Room is the Hidden Stash at mastery 19</td></tr>
+      <tr><td>Sniper Assassin route (Run 8)</td><td class="pass">Pass</td><td>NamuWiki gives the full written route including the warning about starting <em>at</em> the Water Tower, the three roof guards, the kill order, and the Penelope sightline. A Steam discussion thread and a published video both independently identify the water tower as the all-four-targets sniping platform.</td></tr>
+      <tr><td>SASO route (Run 9)</td><td class="pass">Pass</td><td>Two independent written sources describe the same shape of route. NamuWiki: hay-bale accident on Maya, Ezra at the shed, wall-climb to the farmhouse second floor, grandfather clock for the other two, out through the basement. Steam guide 644994482: "hide in the upstairs bathroom for target #1 … mess with the clock downstairs to get target #2 to enter … break into the basement and distract the two guards surrounding target #3 … break the winch to the hay bale in the front as the target walks under it … use the basement door to finish."</td></tr>
+      <tr><td>Water-tower ladder patch note</td><td class="part">Single source</td><td>NamuWiki states that patch 3.270.1 on 12 June 2026 added a ladder from the water tower straight to the ground. No second source found. Flagged in Run 8 rather than relied on.</td></tr>
+      <tr><td>Per-challenge XP values</td><td class="fail">Unverified</td><td>No source breaks the mission XP down per challenge. Not guessed, so none is shown.</td></tr>
+      <tr><td>Chameleon · Discover Colorado</td><td class="part">Not routed</td><td>9 disguises and 21 areas — exploration passes, not route steps. fish excludes both.</td></tr>
+      <tr><td>Right in the Pie Hole</td><td class="fail">Not in dataset</td><td>fish's Run 5 throws pumpkins at three targets as the militia cook for a challenge by this name. It does not appear anywhere in this repository's challenge data — not in the mission file and not in the Colorado location file. The step is kept; the name is deliberately not added to the 61-item checklist.</td></tr>
+      <tr><td>Redacted conditions</td><td class="pass">Pass</td><td>Eight challenges are <code>[REDACTED]</code>: The Long Way Out, Plot Twist, Body Double, Rep Tires, Wicker Man, No Birds Here, Howdy Partner, and (in the Feats list) the ones above. Conditions stay redacted in the checklist; fish's documented actions appear in the runs.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Run-logic validation (simulated step by step)</h3>
+  <ul>
+    <li><b>59 of 61 challenges are assigned.</b> The two left out are Chameleon and Discover Colorado.</li>
+    <li><b>All four targets die in every run.</b> Colorado does not let you leave one alive, so each run below eliminates Sean, Maya, Ezra and Penelope and then exits.</li>
+    <li><b>Prerequisites precede use.</b> Run 1 takes the rat poison before the technician and the Interpol badge before Penelope; Run 2 takes the wrench and loosens the valve before Maya arrives; Run 5 stages the weapon that lures the cook before it needs his outfit; Runs 6 and 7 take the stashed coins out of the laundry room early.</li>
+    <li><b>Nothing needed later is destroyed earlier.</b> Every run's kills are ordered so that a target still needed for a later challenge in the same run is not killed first — Run 3 keeps Ezra alive until after the drugs are administered, and Run 4 keeps Sean and Penelope alive until they are standing close enough for the watch to take both.</li>
+    <li><b>Un-spotted requirements are isolated.</b> Run 3 carries <i>They Scream, They Cry</i>, which is the opposite — it <em>requires</em> being spotted — and no other no-detection challenge shares that run.</li>
+    <li><b>The Classics capstone lands last.</b> Run 8 delivers Sniper Assassin; Run 9 delivers Silent Assassin, Silent Assassin Suit Only and Suit Only, and the capstone fires on Run 9's completion.</li>
+  </ul>
+
+  <h3>Known conflicts, bugs and ordering rules</h3>
+  <ul>
+    <li><b>Run 4, Ezra can freeze.</b> fish reports a bug during testing where Ezra stopped moving at that point in the run. Stand next to him until his dialogue with another NPC triggers and he resumes.</li>
+    <li><b>Run 4, grab the fallen weapons.</b> Pacified NPCs' guns sometimes clip into the floor. Pick them up anyway — leaving weapons lying about starts investigations.</li>
+    <li><b>Run 3, ignore the cameras when lacing the cigarettes.</b> fish says explicitly to accept being seen by the cameras there; the evidence is destroyed later in the same run.</li>
+    <li><b>Run 5, the scarecrow burns people.</b> Once <i>Wicker Man</i> fires, NPCs burst into flames as you walk past them. That is the intended effect and is what makes the body-count challenges in that run easy — but it also means you cannot walk anywhere quietly afterwards.</li>
+    <li><b>Run 5, dump bodies before they are bagged.</b> A target's body must reach the slurry pit before the militia bag it, so kill each target near the pit: Penelope and Maya are already close, and Ezra is close when he walks to the chemistry shed.</li>
+    <li><b>The whole map is hostile territory.</b> There is no neutral ground anywhere in Colorado, and the only camera recorder is on the ground floor of the farmhouse. On a suit-only run, cameras must be shot on sight rather than cleaned up afterwards.</li>
+    <li><b>Difficulty:</b> the branch-and-reload structure assumes unlimited manual saves, i.e. Casual. The Classic challenges are no longer difficulty-tiered in World of Assassination, so Casual costs nothing — though NamuWiki notes the map still plays like the old Professional difficulty because every zone is hostile regardless.</li>
+  </ul>
+
+  <h3>Sources</h3>
+  <ul>
+    <li><b>In-game challenge data</b> (<code>missions/06 - Freedom Fighters.json</code>) — authoritative for names, conditions and counts.</li>
+    <li><b>fish, <i>HITMAN I — All Colorado Challenges</i></b> (Steam guide 3712064474) — the seven-run route and the five loadout screenshots. This guide has no Sniper Assassin or SA/SO section at all.</li>
+    <li><b>NamuWiki</b>, <i>Hitman (game) / Challenges / Colorado</i> — the written Sniper Assassin and SASO routes used for Runs 8 and 9, plus the difficulty notes. Machine-translated from Korean.</li>
+    <li><b>Steam guide 644994482</b>, <i>Hitman | Silent Assassin, Suit Only</i> — the independent SASO description that corroborates Run 9.</li>
+    <li><b>Hitman Wiki</b>, <i>List of Mastery Unlocks by Mission</i> — starting locations, agency pickups and hidden stashes with their mastery levels.</li>
+  </ul>
+</div>
+
+<footer>
+  Progress is saved in this browser and persists across reloads.<br>
+  Compiled 2 August 2026 against the in-game challenge list. Unverified detail is labelled, never filled in.
+</footer>
+</div>
+
+<script>
+const CH=[
+ {id:'a1',cat:'Assassination',name:'Just Pointless',cond:'Assassinate Maya Parvati with the ram.',run:1},
+ {id:'a2',cat:'Assassination',name:'Scorched Earth',cond:'Assassinate Maya Parvati with a burning fuel tank.',run:2},
+ {id:'a3',cat:'Assassination',name:'Bouncing Betty',cond:'Assassinate Sean Rose by making him blow himself up.',run:2},
+ {id:'a4',cat:'Assassination',name:'Mowed Down',cond:'Assassinate Ezra Berg with the lawn mower.',run:1},
+ {id:'a5',cat:'Assassination',name:'Name Your Poison',cond:'Assassinate Sean Rose, Ezra Berg, Penelope Graves and Maya Parvati with lethal poison.',run:7},
+ {id:'a6',cat:'Assassination',name:'Carpet Bombing',cond:'Assassinate Penelope Graves with a chandelier.',run:3},
+ {id:'a7',cat:'Assassination',name:'Cleaning Up',cond:'Assassinate Sean Rose by drowning him in the water basin.',run:3},
+ {id:'a8',cat:'Assassination',name:'Killing Time',cond:'Assassinate Sean Rose with the exploding watch.',run:4},
+ {id:'a9',cat:'Assassination',name:'Crushed It',cond:'Assassinate Maya Parvati with the car lift.',run:4},
+ {id:'a10',cat:'Assassination',name:'String Quartet',cond:'Assassinate Sean Rose, Ezra Berg, Penelope Graves and Maya Parvati with the fiber wire.',run:6},
+ {id:'a11',cat:'Assassination',name:'Watch Your Six',cond:'Assassinate both Sean Rose and Maya Parvati with the ram.',run:1},
+ {id:'a12',cat:'Assassination',name:'The Perfect Alibi',cond:'Assassinate Sean Rose, Ezra Berg, Penelope Graves and Maya Parvati in accidents.',run:1},
+ {id:'a13',cat:'Assassination',name:'Oh, Burn!',cond:'Assassinate Ezra Berg with a gas explosion.',run:2},
+ {id:'a14',cat:'Assassination',name:'Wild Rose',cond:'Assassinate Penelope Graves by pushing her into the slurry pit.',run:1},
+ {id:'a15',cat:'Assassination',name:'Chemical Warfare',cond:'Assassinate Penelope Graves with a gas explosion.',run:2},
+ {id:'a16',cat:'Assassination',name:'They Scream, They Cry',cond:'Assassinate 1 target with a lethal throw using the axe while disguised as the Scarecrow. / The assassination must be seen. / You must be spotted in the disguise. / Return to an unseen state without changing your disguise.',run:3},
+ {id:'a17',cat:'Assassination',name:'Straight Shot',cond:'Assassinate a target with a headshot.',run:4},
+ {id:'a18',cat:'Assassination',name:'Versatile Assassin',cond:'Complete all the Versatile challenges in Colorado: / Piano Man / Someone Could Hurt Themselves / Hold My Hair / Straight Shot / Tasteless, Traceless',run:7},
+ {id:'a19',cat:'Assassination',name:'Piano Man',cond:'Assassinate a target with the fiber wire.',run:6},
+ {id:'a20',cat:'Assassination',name:'Hold My Hair',cond:'Assassinate a target by drowning them.',run:3},
+ {id:'a21',cat:'Assassination',name:'Someone Could Hurt Themselves',cond:'Assassinate a target in an accident.',run:1},
+ {id:'a22',cat:'Assassination',name:'Scare Tactics',cond:'Assassinate a target with a hay bale while disguised as the scarecrow.',run:3},
+ {id:'a23',cat:'Assassination',name:'Tasteless, Traceless',cond:'Assassinate a target with lethal poison.',run:7},
+
+ {id:'d1',cat:'Discovery',name:'Blasted',cond:'Get the nitroglycerin.',run:2},
+ {id:'d2',cat:'Discovery',name:'Factory Recall',cond:'Get the explosive battery.',run:4},
+ {id:'d3',cat:'Discovery',name:'Badge of Dishonor',cond:'Get the Interpol badge.',run:1},
+ {id:'d4',cat:'Discovery',name:'Face Off',cond:'Get Sean Rose\'s face mask.',run:1},
+ {id:'d5',cat:'Discovery',name:'Quite Technical',cond:'Disguise yourself as a Technician.',run:1},
+ {id:'d6',cat:'Discovery',name:'Assume Position',cond:'Disguise yourself as a Member of the Militia Elite.',run:1},
+ {id:'d7',cat:'Discovery',name:'Take Point',cond:'Disguise yourself as the Point Man.',run:1},
+ {id:'d8',cat:'Discovery',name:'Pill Pusher',cond:'Get the drugs.',run:3},
+ {id:'d9',cat:'Discovery',name:'The Long Way Out',cond:'[REDACTED]',run:1},
+ {id:'d10',cat:'Discovery',name:'Chameleon',cond:'Find and equip all disguises in Colorado.',run:0},
+ {id:'d11',cat:'Discovery',name:'Discover Colorado',cond:'Reveal all undiscovered areas in Colorado.',run:0},
+ {id:'d12',cat:'Discovery',name:'All Terrain Exit',cond:'Escape with the quad bike.',run:2},
+ {id:'d13',cat:'Discovery',name:'Not Exactly Ulcer Pills',cond:'Play the video game.',run:5},
+
+ {id:'f1',cat:'Feats',name:'Plot Twist',cond:'[REDACTED]',run:1},
+ {id:'f2',cat:'Feats',name:'Mission Story - Overpowered',cond:'Increase the power of the demolition mixture for an explosive surprise for Sean Rose.',run:2},
+ {id:'f3',cat:'Feats',name:'Swamp Thing',cond:'Dump all 4 targets in the slurry pit.',run:5},
+ {id:'f4',cat:'Feats',name:'Mission Story - Doomsday Watch',cond:'Swap the battery in Sean Rose\'s watch.',run:4},
+ {id:'f5',cat:'Feats',name:'Mission Story - The Audition',cond:'Pose as a fake Interpol agent and meet with Penelope Graves.',run:1},
+ {id:'f6',cat:'Feats',name:'Mission Story - Point Man',cond:'Infiltrate the barn as the point man and find out what the Militia are planning.',run:1},
+ {id:'f7',cat:'Feats',name:'Mission Story - Tongue Tied',cond:'So. The legendary Ezra Berg. Sounds like an overdose waiting to happen.',run:3},
+ {id:'f8',cat:'Feats',name:'Body Double',cond:'[REDACTED]',run:6},
+ {id:'f9',cat:'Feats',name:'Mission Story - Unclean',cond:'Trigger Sean Rose\'s OCD.',run:3},
+ {id:'f10',cat:'Feats',name:'Gunslinger',cond:'Shoot all the green bottles on the moose antlers in 5 seconds.',run:1},
+ {id:'f11',cat:'Feats',name:'Lending a Hand',cond:'Pacify 10 militia with the mannequin arm.',run:7},
+ {id:'f12',cat:'Feats',name:'Rep Tires',cond:'[REDACTED]',run:5},
+ {id:'f13',cat:'Feats',name:'Wicker Man',cond:'[REDACTED]',run:5},
+ {id:'f14',cat:'Feats',name:'No Birds Here',cond:'[REDACTED]',run:5},
+ {id:'f15',cat:'Feats',name:'Hay There!',cond:'Bale 4 bodies in the hay baler.',run:5},
+ {id:'f16',cat:'Feats',name:'Howdy, Partner',cond:'[REDACTED]',run:6},
+
+ {id:'t1',cat:'Targets',name:'The Commander',cond:'Assassinate Sean Rose.',run:1},
+ {id:'t2',cat:'Targets',name:'The Instructor',cond:'Assassinate Maya Parvati.',run:1},
+ {id:'t3',cat:'Targets',name:'The Interrogator',cond:'Assassinate Ezra Berg.',run:1},
+ {id:'t4',cat:'Targets',name:'The Analyst',cond:'Assassinate Penelope Graves.',run:1},
+
+ {id:'c1',cat:'The Classics',name:'Silent Assassin, Suit Only',cond:'Complete "Freedom Fighters." / Only eliminate the targets. / No bodies found. / Do not get spotted. / Do it all in your suit.',run:9},
+ {id:'c2',cat:'The Classics',name:'Silent Assassin',cond:'Complete "Freedom Fighters." / Only eliminate the targets. / No bodies found. / Do not get spotted.',run:9},
+ {id:'c3',cat:'The Classics',name:'Sniper Assassin',cond:'Complete "Freedom Fighters." / Assassinate your targets with a sniper rifle. / Only eliminate the targets. / Do not get spotted.',run:8},
+ {id:'c4',cat:'The Classics',name:'The Classics',cond:'Complete all the Classic challenges for "Freedom Fighters". / Silent Assassin / Silent Assassin, Suit Only / Sniper Assassin / Suit Only',run:9},
+ {id:'c5',cat:'The Classics',name:'Suit Only',cond:'Assassinate the targets and complete the mission. / Do it all in your suit.',run:9}
+];
+const CAT_COLOR={'Assassination':'var(--rust)','Discovery':'var(--sky)','Feats':'var(--amber)','Targets':'var(--violet)','The Classics':'var(--jade)'};
+
+const RUNS=[
+{
+ id:'r1', tag:'Run 1', title:'Point man, the ram and the tornado shelter',
+ goal:"Take the point man's place, fire the battering ram at Sean and Maya together, mow Ezra down, push Penelope into the slurry pit, and walk out through the shelter. Fourteen challenges and all four accident kills in one run.",
+ diff:'Casual.',
+ loadout:{
+   start:'Southern Farm Perimeter · Colorado mastery level 1 (default)',
+   suit:'Tactical Gear',
+   items:['Concealed weapon: Krugermeier 2-2','Gear: Coin ×3','Gear: Classic Lockpick','Smuggled item: none']
+ },
+ note:'Every kill in this run is an accident, which is why The Perfect Alibi lands here. Do not substitute a shot or a garrote for any of them.',
+ sections:[
+ {h:'Becoming the point man',steps:[
+  {t:'Demolition specialist first',
+   b:[['Where','Across the junk yard to the hay-bale area, right of demolition control.'],
+      ['NPC','A demolition specialist near the hay baler.'],
+      ['Action','Switch on the radio next to the baler to draw him over, pacify him, hide the body and take the disguise.']],
+   badges:[],
+   d:{}},
+  {t:'Start Point Man',
+   b:[['Where','The shooting range — stay outside the restricted-access area for now.'],
+      ['Action','Listen to the conversation.']],
+   badges:[],
+   d:{}},
+  {t:'Flood the barracks bathroom',
+   b:[['Where','The barracks — the rat poison is on the shelf right by the bathroom door.'],
+      ['NPC','Point Man and one other militiaman.'],
+      ['Action','Take the rat poison, overflow the bathroom sink, then bump into the NPC who is <em>not</em> the point man so he is distracted and the point man investigates first. Take the point man\'s place.'],
+      ['Warning','Bump the wrong one and the wrong NPC walks into the bathroom.']],
+   badges:[['chal','Take Point'],['warn','Distract the other one, not the point man']],
+   d:{}}
+ ]},
+ {h:'The barn',steps:[
+  {t:'Take the briefing and grab a gun',
+   b:[['NPC','Maya Parvati.'],
+      ['Disguise','Point Man.'],
+      ['Action','Talk to Maya so you can enter the restricted area, listen to her briefing, then take the crowbar and a gun off the table behind you. The middle gun is the best one for what comes next.']],
+   badges:[],
+   d:{}},
+  {t:'Green bottles in five seconds',
+   b:[['Action','Finish the training routine and disable the safety system, then shoot every green bottle on the moose antlers within five seconds.']],
+   badges:[['chal','Gunslinger']],
+   d:{}},
+  {t:'Fire the ram at both of them',
+   b:[['NPC','Sean Rose walks over to stand next to Maya during the debriefing.'],
+      ['Action','Listen to the debriefing to complete Point Man, and fire the battering ram when Sean is beside Maya.'],
+      ['Result','Two targets, one accident, three challenges.']],
+   badges:[['chal','Mission Story - Point Man'],['chal','Just Pointless'],['chal','Watch Your Six'],['chal','Someone Could Hurt Themselves'],['chal','The Commander'],['chal','The Instructor'],['warn','Wait until they are side by side']],
+   d:{}}
+ ]},
+ {h:'Ezra and Penelope',steps:[
+  {t:'Make the technician sick',
+   b:[['Where','The technician area left of the north orchard.'],
+      ['Item','Rat poison from the barracks.'],
+      ['Action','Spike the technician\'s coffee, then go and start The Audition at the slurry pit while he works on it.']],
+   badges:[],
+   d:{}},
+  {t:'Badge and technician disguise',
+   b:[['Action','Come back once he is sick, pacify him, hide the body, take the Interpol badge and take his clothes.']],
+   badges:[['chal','Badge of Dishonor'],['chal','Quite Technical']],
+   d:{}},
+  {t:'The lawn mower',
+   b:[['Where','A wrench on some boxes near the bridge exit left of the farmhouse; the mower is in front of the farmhouse.'],
+      ['NPC','Ezra Berg.'],
+      ['Action','Take the wrench, tamper with the mower without being detected, and let Ezra walk into it.'],
+      ['Then','Talk to Penelope when she comes out of the farmhouse.']],
+   badges:[['chal','Mowed Down'],['chal','The Interrogator']],
+   d:{}},
+  {t:'Push Penelope into the slurry pit',
+   b:[['Where','The slurry pit.'],
+      ['Disguise','Militia Technician, carrying the Interpol badge.'],
+      ['Action','Meet Penelope at the pit to complete The Audition, wait for her to be alone by the edge, and push her in.'],
+      ['Result','All four targets are now dead by accident, which is what The Perfect Alibi wants.']],
+   badges:[['chal','Mission Story - The Audition'],['chal','Wild Rose'],['chal','The Perfect Alibi'],['chal','The Analyst']],
+   d:{}}
+ ]},
+ {h:'Out through the shelter',steps:[
+  {t:'Militia elite and the face mask',
+   b:[['Where','The truck between the shooting range and the farmhouse with the open door; then the hacker room in the farmhouse.'],
+      ['Action','Take the militia elite disguise from the truck. In the hacker room, start the 3D printer, wait for the alerted hackers to settle, and take Sean Rose\'s face mask.']],
+   badges:[['chal','Assume Position'],['chal','Face Off']],
+   d:{}},
+  {t:'Scan out through the tornado shelter',
+   b:[['Where','The farmhouse basement.'],
+      ['Action','Pacify the NPC down there, use Sean\'s face mask on the tornado shelter door, and exit through it.']],
+   badges:[['chal','The Long Way Out'],['chal','Plot Twist']],
+   d:{'Redacted':'Both The Long Way Out and Plot Twist are [REDACTED] in the game data. Exiting via the tornado shelter is fish\'s documented action for both.'}}
+ ]}]
+},
+{
+ id:'r2', tag:'Run 2', title:'Everything explodes',
+ goal:"Four targets, four fires: a burning fuel tank, an over-mixed demolition charge, and two gas canisters. Then ride out on the quad bike. Seven challenges.",
+ diff:'Casual.',
+ loadout:{
+   start:'Southern Farm Perimeter · Colorado mastery level 1',
+   suit:'Tactical Gear',
+   items:['Concealed weapon: Krugermeier 2-2','Gear: Coin ×3','Gear: Classic Lockpick','Smuggled item: none']
+ },
+ note:'Two of the four kills need you to shoot a canister twice, and both are done from cover with an NPC nearby. Line the shot up before the target arrives.',
+ sections:[
+ {h:'Maya and Sean',steps:[
+  {t:'Loosen the fuel tank valve',
+   b:[['Where','The garage with the car lift — the wrench is on the table; the fuel tank is just outside.'],
+      ['Action','Take the demolition specialist disguise the same way as Run 1, take the wrench, coin-distract the NPC in the garage and loosen the valve while he is not looking.']],
+   badges:[],
+   d:{}},
+  {t:'Start Overpowered',
+   b:[['Where','The trucks between the shooting range and the farmhouse — a note on some crates.'],
+      ['Action','Read it.']],
+   badges:[],
+   d:{}},
+  {t:'Light the oil puddle under Maya',
+   b:[['NPC','Maya Parvati, who walks near the oil puddle.'],
+      ['Action','Go back to the tank and shoot the puddle as she passes.']],
+   badges:[['chal','Scorched Earth'],['chal','The Instructor']],
+   d:{}},
+  {t:'Nitroglycerin, then the gel mixture',
+   b:[['Action','Coin-distract the NPC guarding the nitroglycerin and take it. Then over-power the explosive gel mixture — crouch when you interact if the other demolition specialist is beside you. Sean blows himself up with it.']],
+   badges:[['chal','Blasted'],['chal','Mission Story - Overpowered'],['chal','Bouncing Betty'],['chal','The Commander'],['warn','Crouch if another specialist is next to you']],
+   d:{}}
+ ]},
+ {h:'Ezra and Penelope',steps:[
+  {t:'Gas canister at the chemistry shed',
+   b:[['Where','The chemistry shed, once Ezra has arrived.'],
+      ['NPC','One NPC inside the shed, one outside.'],
+      ['Action','Pacify the outside one while the inside one is looking away, and hide the body. Turn the fuse box off to draw the other one out. When the shed is clear, shoot the gas canister next to Ezra twice.']],
+   badges:[['chal','Oh, Burn!'],['chal','The Interrogator'],['warn','Two shots — one does not set it off']],
+   d:{}},
+  {t:'Gas canister in the north orchard',
+   b:[['Where','The chef area in the north orchard.'],
+      ['NPC','Penelope Graves walks past the gas canister next to the chefs.'],
+      ['Action','Hide behind the fruit crates and shoot the canister twice as she passes.']],
+   badges:[['chal','Chemical Warfare'],['chal','The Analyst']],
+   d:{}},
+  {t:'Quad bike exit',
+   b:[['Where','The shed south of the south orchard for the keys; the quad bike exit is to the right of the garages.'],
+      ['Action','Take the keys and ride out.']],
+   badges:[['chal','All Terrain Exit']],
+   d:{}}
+ ]}]
+},
+{
+ id:'r3', tag:'Run 3', title:'The scarecrow',
+ goal:"Overdose Ezra's prisoner, trigger Sean's OCD, drop the chandelier on Penelope, and then be seen killing Ezra as a scarecrow — the one challenge in the game that requires being spotted. Nine challenges.",
+ diff:'Casual.',
+ loadout:{
+   start:'Southern Farm Perimeter · Colorado mastery level 1',
+   suit:'Tactical Gear',
+   items:['Concealed weapon: Krugermeier 2-2','Gear: Coin ×3','Gear: Classic Lockpick','Smuggled item: none']
+ },
+ note:'They Scream, They Cry inverts the usual rules: the kill must be seen, you must be spotted in the scarecrow disguise, and then you must get back to an unseen state without changing clothes.',
+ sections:[
+ {h:'Setup',steps:[
+  {t:'Tongue Tied and a demolition outfit',
+   b:[['Where','The junkyard for the conversation; then the hay-bale radio as in Run 1.'],
+      ['Action','Listen to the junkyard conversation, then take a demolition specialist disguise. Take the wrench from the car-lift garage and the axe from the tree beside the slurry-pit shack.']],
+   badges:[],
+   d:{}},
+  {t:'Stage the axe and clear the chemistry shed',
+   b:[['Where','The chemistry shed.'],
+      ['Action','Drop the axe here first. Then, when the NPC inside turns, throw the wrench at the one outside, hide him and take his weapon; switch off the fuse box, pacify the second, hide him and take his weapon too. Leave the fuse box off so Ezra stays distracted.'],
+      ['Then','Take the basement key and the hallucinogenic drugs from inside, and pick the axe back up.']],
+   badges:[['chal','Pill Pusher'],['warn','Leave the fuse box off or Ezra goes back inside']],
+   d:{}}
+ ]},
+ {h:'Sean and Penelope',steps:[
+  {t:'Lace the cigarettes and trigger the OCD',
+   b:[['Where','The greenhouse in the north orchard for the note; then the trucks for a militia elite disguise; then the farmhouse.'],
+      ['Action','Read the greenhouse note to start Unclean, bump into Penelope near the greenhouse to delay her, change into a militia elite, lace Sean\'s cigarettes, and trigger his OCD inside the farmhouse.'],
+      ['Note','fish says to ignore being seen by the cameras here — the evidence is destroyed later in this run.'],
+      ['Warning','Watch the enforcer patrolling the second floor.']],
+   badges:[['chal','Mission Story - Unclean'],['warn','Second-floor enforcer']],
+   d:{}},
+  {t:'Prepare the basement and drop the chandelier',
+   b:[['Where','The farmhouse basement, then the second-floor hallway.'],
+      ['Action','Pacify the basement NPC, hide him, take his weapon and leave the axe down there out of sight of the exit door. Then go up to the second-floor hallway and save. When Penelope walks underneath, shoot the chandelier.']],
+   badges:[['chal','Carpet Bombing'],['chal','The Analyst'],['save','Save in the hallway in case you miss her']],
+   d:{}},
+  {t:'Destroy the camera evidence',
+   b:[['Action','Out of the second-floor window, back to the foyer, and when the alerted NPC is not watching, go to the server room, switch on the vacuum to pull the NPC away from the camera recorder, and destroy the evidence.']],
+   badges:[],
+   d:{}}
+ ]},
+ {h:'Ezra, in public',steps:[
+  {t:'Overdose the hostage',
+   b:[['Action','Coin-lure the enforcer outside the basement exit inside, pacify him, hide him and take his weapon. Then administer the overdose to the hostage. Ezra starts walking to the basement.']],
+   badges:[['chal','Mission Story - Tongue Tied']],
+   d:{}},
+  {t:'Become the scarecrow and be seen',
+   b:[['Where','The technician area left of the north orchard for the scarecrow disguise; then back into the basement.'],
+      ['Disguise','Scarecrow — mandatory, and you may not change out of it afterwards.'],
+      ['Item','The axe you left in the basement.'],
+      ['Action','Take the axe, let Ezra see you, and then kill him with a lethal axe throw.'],
+      ['Warning','The kill must be witnessed and you must be spotted in the disguise — then you have to get back to unseen without changing clothes.']],
+   badges:[['chal','They Scream, They Cry'],['chal','The Interrogator'],['warn','This challenge REQUIRES being spotted']],
+   d:{}},
+  {t:'Drown Sean, then the hay bale',
+   b:[['Action','Change back to militia elite. Sean should be at his cigarettes; when he goes to the water basin, drown him there. Then go back to the basement and change to the scarecrow again.'],
+      ['Where','Coin your way to the area outside the shooting-range barn — the same spot as the Run 2 fuel tank.'],
+      ['Then','Save, and when Maya walks underneath, shoot the hay bale. Exit the mission.']],
+   badges:[['chal','Cleaning Up'],['chal','Hold My Hair'],['chal','The Commander'],['chal','Scare Tactics'],['chal','The Instructor'],['save','Save before the hay bale in case you miss her']],
+   d:{'Scarecrow required':'Scare Tactics only registers while you are wearing the scarecrow, which is why you change back before crossing the map.'}}
+ ]}]
+},
+{
+ id:'r4', tag:'Run 4', title:'The car lift and the exploding watch',
+ goal:"Crush Maya under a car, then rig Sean's watch so it takes both him and Penelope at once. Five challenges, plus a headshot on Ezra in the basement.",
+ diff:'Casual.',
+ loadout:{
+   start:'Undercover on the Demolition Range · Colorado mastery level 8 (starts you as an Explosives Specialist)',
+   suit:'Disguise fixed by starting location: Explosives Specialist',
+   items:['Concealed weapon: Krugermeier 2-2','Gear: Coin ×3','Gear: Classic Lockpick','Smuggled item: none']
+ },
+ note:'The coin lure on Maya is a two-coin trick: one to bring her over, one already lying under the lift so she bends down in exactly the right spot.',
+ sections:[
+ {h:'Maya under the lift',steps:[
+  {t:'Clear the two barns',
+   b:[['Where','The barn on your left, then the one next to it.'],
+      ['Action','Take the two coins on the table in front of you and the wrench in the first barn. Pacify the two NPCs there, hide them and take their weapons — sometimes a dropped weapon clips into the floor, take it anyway. In the second barn, read the note to start Doomsday Watch.']],
+   badges:[['warn','Pick up dropped weapons even when they clip into the floor']],
+   d:{}},
+  {t:'Two coins and a car',
+   b:[['Where','The garage with the car lift.'],
+      ['NPC','One NPC in the garage; then Maya, leaving the barn.'],
+      ['Action','Coin-lure the garage NPC toward the right-hand door, pacify him and drag him into the small room. Place a coin directly under the car lift. When Maya walks by, use a second coin to pull her toward the lift — she takes that one and then goes for the one underneath. Release the suspension while she is under it.']],
+   badges:[['chal','Crushed It'],['chal','The Instructor']],
+   d:{}}
+ ]},
+ {h:'The watch',steps:[
+  {t:'Explosive battery and hacker phone',
+   b:[['Where','The trucks between the shooting range and the farmhouse for a militia elite disguise; then the farmhouse.'],
+      ['Action','Take the explosive battery and the hacker\'s phone, then go back to the trucks and change back to the demolition specialist.']],
+   badges:[['chal','Factory Recall']],
+   d:{}},
+  {t:'Swap the battery',
+   b:[['Where','The demolition control area.'],
+      ['Disguise','Explosives Specialist.'],
+      ['Action','Swap the battery in Sean Rose\'s watch, then go back to the trucks and change to militia elite again.']],
+   badges:[['chal','Mission Story - Doomsday Watch']],
+   d:{}},
+  {t:'Headshot Ezra in the basement',
+   b:[['NPC','Ezra Berg should be near you. If he freezes in place, stand next to him until his dialogue with another NPC fires.'],
+      ['Action','Go to the basement and wait. When he arrives, cut the fuse box to pull one guard away, pacify him, then throw the wrench at the other. Stay out of Ezra\'s line and headshot him.'],
+      ['Warning','fish reports a bug where Ezra stops moving at this point in the run.']],
+   badges:[['chal','Straight Shot'],['chal','The Interrogator'],['warn','Known bug: Ezra can freeze — wait out his dialogue']],
+   d:{}},
+  {t:'Detonate on both',
+   b:[['NPC','Sean in the farmhouse; Penelope walking to it.'],
+      ['Action','When they are within a couple of feet of each other, send the email to Sean\'s watch. Both die.'],
+      ['Then','Exit the mission.']],
+   badges:[['chal','Killing Time'],['chal','The Commander'],['chal','The Analyst']],
+   d:{}}
+ ]}]
+},
+{
+ id:'r5', tag:'Run 5', title:'Wicker man',
+ goal:"Ring four bells with a sniper rifle to set the scarecrow on fire, then sweep the whole map: six scarecrow posts, four bodies in the baler, all four targets into the slurry pit, ten apricots for a toy dinosaur. Seven challenges and the longest run here.",
+ diff:'Casual.',
+ loadout:{
+   start:'Undercover by the Greenhouse · Colorado mastery level 11 (starts you as a Militia Soldier)',
+   suit:'Disguise fixed by starting location: Militia Soldier',
+   items:['Concealed weapon: Krugermeier 2-2','Gear: Coin ×3','Gear: Emetic Poison Vial','Smuggled item: Sieger 300 Advanced → Water Tower (Agency Pickup, mastery 2)']
+ },
+ note:'Once Wicker Man fires, militia burst into flames as you walk past them. That is what makes the body-count challenges here trivial — and what makes quiet movement impossible afterwards, so do everything quiet first.',
+ sections:[
+ {h:'The cook',steps:[
+  {t:'Clear the barracks and collect pumpkins',
+   b:[['Where','The barracks, then the chef area in the north orchard.'],
+      ['Action','Pacify both barracks NPCs, hide them and take their weapons. Take the rat poison and the pumpkin there, then take the two more pumpkins in the chef area.']],
+   badges:[],
+   d:{}},
+  {t:'Lure the cook and take his clothes',
+   b:[['NPC','The militia cook.'],
+      ['Action','Place one of the weapons you took in front of him. He notices it and carries it to the barracks — pacify him there, hide the body and take the disguise.'],
+      ['Then','Go to the technician area left of the north orchard and save.']],
+   badges:[['save','Save at the technician area']],
+   d:{}},
+  {t:'Branch · Three pumpkins',
+   b:[['Disguise','Militia Cook.'],
+      ['Action','Throw pumpkins at three targets.'],
+      ['Then','Reload.']],
+   badges:[['src','fish\'s guide']],
+   d:{'Extra':'fish calls this <i>Right in the Pie Hole</i>. That name does not appear anywhere in this repository\'s challenge data, so it is not on the checklist — but the throws cost nothing.'}}
+ ]},
+ {h:'Getting the rifle',steps:[
+  {t:'Technician outfit and the barracks roof',
+   b:[['Action','Spike the technician\'s coffee with rat poison. Coin-distract Maya and the others and change into the scarecrow, then sneak back to the barracks and take the militia technician disguise inside. Go up to the barracks roof, pacify the two NPCs there and drag them to the middle of the roof so they are not spotted.']],
+   badges:[],
+   d:{}},
+  {t:'Badge and Penelope\'s route',
+   b:[['Action','Go back to the technician when he is sick, pacify him and take the Interpol badge. Talk to Penelope so she walks to the slurry pit.']],
+   badges:[],
+   d:{}},
+  {t:'Four bells from the water tower',
+   b:[['Where','Back at the barracks, change to the scarecrow, then climb the water tower and take the stashed sniper rifle.'],
+      ['Action','There are four bells in the distance — shoot them in order.'],
+      ['Result','Militia now catch fire when you walk past them.']],
+   badges:[['chal','Wicker Man'],['src','Bell positions: fish\'s video only']],
+   d:{'Redacted':'Wicker Man is [REDACTED] in the game data. Shooting four distant bells in order is fish\'s documented action; the exact positions are shown only in his video.'}}
+ ]},
+ {h:'The sweep',steps:[
+  {t:'Apricots, scarecrow posts, hay baler',
+   b:[['Action','Travel the map killing militia but leaving the targets alone. Collect ten apricots from the orchards. Blend in on all six scarecrow posts — five around the map plus the one the disguise came from. Take the quad bike keys while you are in the south orchard, and bale four bodies at demolition control.']],
+   badges:[['chal','No Birds Here'],['chal','Hay There!'],['src','Post positions: fish\'s video only']],
+   d:{'Redacted':'No Birds Here is [REDACTED] in the game data. Blending in on all six scarecrow posts is fish\'s documented action; the five extra positions are shown only in his video.'}},
+  {t:'All four into the slurry pit',
+   b:[['Action','Kill each target near the pit and dump the body in before the militia bag it. Penelope and Maya are already close to the pit, and Ezra passes it on his way to the chemistry shed — take the hallucinogenic drugs while you are there.'],
+      ['Warning','A bagged body cannot be dumped. Kill each one within carrying distance.']],
+   badges:[['chal','Swamp Thing'],['chal','The Commander'],['chal','The Instructor'],['chal','The Interrogator'],['chal','The Analyst'],['warn','Dump each body before it is bagged']],
+   d:{}},
+  {t:'Mr. Raptor',
+   b:[['Where','The play room on the second floor of the farmhouse.'],
+      ['Disguise','Hacker.'],
+      ['Action','Blend in on the couch to play the video game. On the dresser next to it there is a toy dinosaur called Mr. Raptor — feed him the ten apricots.'],
+      ['Then','Exit on the quad bike, which is now Mr. Raptor.']],
+   badges:[['chal','Not Exactly Ulcer Pills'],['chal','Rep Tires']],
+   d:{'Redacted':'Rep Tires is [REDACTED] in the game data. Feeding Mr. Raptor ten apricots and then exiting on the quad bike is fish\'s documented action.'}}
+ ]}]
+},
+{
+ id:'r6', tag:'Run 6', title:'Four fiber wires',
+ goal:"All four targets garroted in one run, plus the radio prank in the backyard and a body-double exit. Four challenges.",
+ diff:'Casual.',
+ loadout:{
+   start:'Undercover in the Farmhouse · Colorado mastery level 18 (starts you as a Hacker)',
+   suit:'Disguise fixed by starting location: Hacker',
+   items:['Concealed weapon: Krugermeier 2-2','Gear: Fiber Wire','Gear: Classic Lockpick','Smuggled item: Coin ×3 → Ground Floor Laundry Room (Hidden Stash, mastery 19)']
+ },
+ note:'Maya is the awkward one — she has to be pulled behind the truck at the shooting range with a suspicion lure, because there is nowhere quiet on her route.',
+ sections:[
+ {h:'Inside the house',steps:[
+  {t:'Ezra and Penelope',
+   b:[['Where','The baseball bat is around the corner in the hallway; the basement holds two guards.'],
+      ['Item','Fiber wire.'],
+      ['Action','Take the bat, pacify both basement guards, and garrote Ezra there. Back upstairs, tamper with the grandfather clock so Sean comes to it later and destroy the camera evidence. Penelope walks through the foyer — garrote her and hide the body.'],
+      ['Then','Go back down, hide the two guards properly, take their weapons, and take the stashed coins from the laundry room.']],
+   badges:[['chal','Piano Man'],['chal','The Interrogator'],['chal','The Analyst']],
+   d:{'Order':'The clock is tampered with early so Sean\'s lure is already running while you deal with Maya.'}}
+ ]},
+ {h:'Maya',steps:[
+  {t:'Pull her behind the truck',
+   b:[['Where','The shooting-range back area where the scarecrow post is.'],
+      ['NPC','Maya Parvati, walking to the shooting range.'],
+      ['Action','Place a coin on the ground behind the truck, then let her see you until her suspicion meter is around 80% so she comes over. Use spare coins to make her notice the one on the ground. Garrote her behind the truck — the body can stay there.']],
+   badges:[['chal','The Instructor'],['warn','80% suspicion, no higher']],
+   d:{}}
+ ]},
+ {h:'Sean, and out',steps:[
+  {t:'The radio in the backyard',
+   b:[['Where','The farmhouse backyard.'],
+      ['Action','Take the apricot next to the radio, throw it at the drill leader, then switch the radio on.']],
+   badges:[['chal','Howdy, Partner']],
+   d:{'Redacted':'Howdy, Partner is [REDACTED] in the game data. Hitting the drill leader with an apricot and then turning the radio on is fish\'s documented action.'}},
+  {t:'Garrote Sean at the clock and scan him out',
+   b:[['NPC','Sean Rose, coming to investigate the grandfather clock.'],
+      ['Action','Garrote him there, then drag his body downstairs to the tornado-shelter door and scan his face on it.'],
+      ['Then','Exit.']],
+   badges:[['chal','String Quartet'],['chal','The Commander'],['chal','Body Double']],
+   d:{'Redacted':'Body Double is [REDACTED] in the game data. Scanning Sean Rose\'s actual face at the shelter door — rather than using the printed mask — is fish\'s documented action.'}}
+ ]}]
+},
+{
+ id:'r7', tag:'Run 7', title:'Four poisons',
+ goal:"All four targets killed with lethal poison, and ten militia knocked out with a mannequin arm on the way. Three challenges, and the one that closes Versatile Assassin.",
+ diff:'Casual.',
+ loadout:{
+   start:'Undercover in the Farmhouse · Colorado mastery level 18',
+   suit:'Disguise fixed by starting location: Hacker',
+   items:['Concealed weapon: Krugermeier 2-2','Gear: Modern Lethal Syringe','Gear: Classic Lockpick','Smuggled item: Coin ×3 → Ground Floor Laundry Room (Hidden Stash, mastery 19)']
+ },
+ note:'You only bring one syringe. The rest of the poison is found on site: a second syringe in the basement, the pills Ezra drops, and more pills on the barracks TV table.',
+ sections:[
+ {h:'Ezra first, for his pills',steps:[
+  {t:'Basement syringe',
+   b:[['Where','The basement — the lethal poison syringe is on top of the shelves left of the fuse box.'],
+      ['Action','Take the baseball bat from the hallway on the way, pacify the two basement guards, then kill Ezra with a poison syringe and take the lethal poison pills he drops.'],
+      ['Then','Destroy the camera evidence upstairs and take the stashed coins from the laundry room.']],
+   badges:[['chal','Tasteless, Traceless'],['chal','Versatile Assassin'],['chal','The Interrogator']],
+   d:{'Versatile Assassin':'The set is Piano Man (Run 6), Someone Could Hurt Themselves (Run 1), Hold My Hair (Run 3), Straight Shot (Run 4) and Tasteless Traceless — which lands here.'}}
+ ]},
+ {h:'The other three',steps:[
+  {t:'More pills as the point man',
+   b:[['Where','The barracks — pills on the table with the TV.'],
+      ['Action','Take the point man disguise, then the pills.']],
+   badges:[],
+   d:{}},
+  {t:'Spike both water bottles',
+   b:[['Where','The greenhouse in the north orchard for Penelope\'s water; the table by the battering ram in the barn for Maya\'s.'],
+      ['Action','Spike both with the poison pills.']],
+   badges:[['chal','The Analyst']],
+   d:{}},
+  {t:'Ten with the mannequin arm',
+   b:[['Where','The second floor of the barn — the mannequin arm is on the beds.'],
+      ['Action','Pacify ten militia with it.']],
+   badges:[['chal','Lending a Hand']],
+   d:{}},
+  {t:'Time the last two',
+   b:[['NPC','Sean Rose and Maya Parvati, both in the barn.'],
+      ['Action','Wait until Maya is about to drink her poisoned water, and at that moment kill Sean with the poison syringe. All four then die to lethal poison.'],
+      ['Then','Exit the mission.']],
+   badges:[['chal','Name Your Poison'],['chal','The Commander'],['chal','The Instructor'],['warn','Both have to land — time the syringe to her drink']],
+   d:{}}
+ ]}]
+},
+{
+ id:'r8', tag:'Run 8', title:'Sniper Assassin — the water tower',
+ goal:"All four targets from one platform. The water tower is the only spot on the map that sees every one of them — but it is also a dead end, so the ladder has to be safe before you climb.",
+ diff:'Any. Not difficulty-tiered in World of Assassination.',
+ loadout:{
+   start:'Undercover in the Garage (mastery 6, militia technician) or Undercover by the Greenhouse (mastery 11, militia soldier) — <b>not</b> the Water Tower itself',
+   suit:'Any militia disguise. Sniper Assassin does not require the suit, and on Casual any militia outfit can carry a rifle without suspicion.',
+   items:['A silenced sniper rifle with at least a 2–3× scope','Gear: Coin ×3','Gear: free choice','Smuggled item: the rifle → Water Tower (Agency Pickup, mastery 2)']
+ },
+ note:'fish\'s Colorado guide has no Sniper Assassin section at all. This route is NamuWiki\'s, and its central claim — that the water tower sees all four targets — is independently supported by a Steam discussion thread and a published all-four-targets video.',
+ sections:[
+ {h:'Before you climb',steps:[
+  {t:'Do not start at the Water Tower',
+   b:[['Why','Three roof guards sit under the tower ladder. Starting up there means you cannot get down without going through them.'],
+      ['Action','Start in the garage as a technician or by the greenhouse as a militia soldier, and smuggle the rifle to the Water Tower pickup instead.']],
+   badges:[['warn','The Water Tower start is a trap'],['src','NamuWiki']],
+   d:{'Patch note':'NamuWiki records that patch 3.270.1 on 12 June 2026 added a ladder from the water tower straight to the ground, which would soften this. No second source was found for that, so it is repeated here as a single-source claim rather than relied on.'}},
+  {t:'Clear the barracks roof',
+   b:[['Where','The barracks building the tower stands on.'],
+      ['NPC','Three guards on the roof, under the ladder.'],
+      ['Action','Take all three out and hide them in a box, then climb the ladder and collect the rifle.'],
+      ['Warning','Hiding them matters — a discovered body brings people to the base of your only way down.']],
+   badges:[['src','NamuWiki'],['warn','All three, and hidden'],['save','Save once you are up with the rifle']],
+   d:{}}
+ ]},
+ {h:'Four shots',steps:[
+  {t:'Maya first',
+   b:[['NPC','Maya Parvati.'],
+      ['Why','After her conversation she moves somewhere that cannot be sniped for a long stretch, so she is the one with a deadline.'],
+      ['Action','Take her as soon as you have the angle.']],
+   badges:[['chal','The Instructor'],['src','NamuWiki']],
+   d:{'Two approaches':'Either take one target at a time, climbing down and hiding until the alert fades before going back up, or take all four quickly, throw the rifle away and climb down. The fast version is what NamuWiki recommends.'}},
+  {t:'Then Sean, then Penelope and Ezra',
+   b:[['Action','Take Sean Rose as he walks past, then Penelope Graves and Ezra Berg as they come out of the building.'],
+      ['Warning','Everyone except Maya is walking, so lead your shots. A 2–3× scope is recommended.'],
+      ['Note','Watch Penelope in particular — her route runs from the north orchard past the water tower, and she and her escort can see the tower ladder while they move.']],
+   badges:[['chal','The Commander'],['chal','The Analyst'],['chal','The Interrogator'],['src','NamuWiki'],['warn','Penelope\'s route passes your ladder']],
+   d:{}},
+  {t:'Get out through the shelter',
+   b:[['Action','Drop the rifle, climb down, go to the second floor of the farmhouse and take Sean Rose\'s face mask, then down to the basement and out through the tornado shelter.'],
+      ['Warning','Even in a militia disguise, watch the suspicion meter on the way — the whole map is hostile ground.'],
+      ['Result','Only the four targets died and you were never spotted, so the challenge banks on completion.']],
+   badges:[['chal','Sniper Assassin'],['src','NamuWiki']],
+   d:{'Only the targets':'Pacifying the three roof guards is fine — the challenge forbids killing anyone but the targets, not knocking people out.'}}
+ ]}]
+},
+{
+ id:'r9', tag:'Run 9', title:'Silent Assassin, Suit Only — the hardest run in the trilogy',
+ goal:"Four targets, no disguise, no bodies found, nobody sees you, on a map where every square metre is hostile territory. One accident, one shed ambush, and two lures to the grandfather clock.",
+ diff:'Any. These Classics are no longer difficulty-tiered in World of Assassination — but the map plays the same regardless, because the hostility is built into the level, not the difficulty.',
+ loadout:{
+   start:'Southern Farm Perimeter · Colorado mastery level 1',
+   suit:'Tactical Gear — mandatory. Any disguise voids Suit Only and SASO.',
+   items:['Gear: Classic Lockpick','Gear: Coin ×3','Concealed weapon: silenced pistol — needed for the hay-bale rope and for cameras','Smuggled item: a claw hammer or an audio distraction is useful but not required']
+ },
+ note:'fish has no SASO section for Colorado. This route is NamuWiki\'s, and Steam guide 644994482 independently describes the same shape: hay-bale accident on Maya, Ezra ambushed at his shed, the grandfather clock used to draw the other two, and out through the basement.',
+ sections:[
+ {h:'Maya, by accident',steps:[
+  {t:'Cross the outer wall and shoot the rope',
+   b:[['Where','Over the outer wall on the right of the start, round to the garage and barn area where Maya stops.'],
+      ['NPC','Maya Parvati.'],
+      ['Action','Get behind the barn wall, stay low, and shoot the rope holding the hay bale as she walks under it.'],
+      ['Warning','It is a long shot and easy to miss. Practise it before you commit the run.'],
+      ['Note','The alternative NamuWiki gives is to operate the car lift to clear the aggro, coin-lure her into the small room inside and take her there — but that leaves a body.']],
+   badges:[['chal','The Instructor'],['src','NamuWiki + Steam 644994482'],['save','Save before the shot']],
+   d:{'Why an accident':'An accident kill does not break Silent Assassin when the body is found, which is the only reason a target out in the open is survivable here.'}},
+  {t:'Kill cameras as you go',
+   b:[['Action','Three cameras sit on this stretch. Shoot each one on sight with the silenced pistol.'],
+      ['Why','The only camera recorder in the mission is on the ground floor of the farmhouse, and you do not want to make a second trip for it.']],
+   badges:[['warn','Shoot cameras on sight — the recorder is a long way away'],['src','NamuWiki']],
+   d:{}}
+ ]},
+ {h:'Ezra at the shed',steps:[
+  {t:'Work counter-clockwise round the outside',
+   b:[['Where','Past the two guards leaning on the swamp fence, then anti-clockwise round the outside of the base to the shed Ezra visits in front of the main building.'],
+      ['Action','Move crouched. Two perimeter guards patrol clockwise on this stretch, so time your movement against them.'],
+      ['Warning','Do not cut through the middle of the base. The outside loop is longer and much safer.']],
+   badges:[['src','NamuWiki'],['warn','Two clockwise perimeter patrols on this loop']],
+   d:{}},
+  {t:'Take the shed, then take Ezra',
+   b:[['NPC','One NPC inside the shed and one outside; then Ezra Berg.'],
+      ['Action','Subdue both and hide them, then wait and take Ezra when he arrives. Take his key.'],
+      ['Warning','Both bodies have to be properly hidden — "no bodies found" is a hard requirement.']],
+   badges:[['chal','The Interrogator'],['src','NamuWiki + Steam 644994482'],['warn','Hide both, then hide Ezra']],
+   d:{'Master-difficulty variant':'NamuWiki\'s harder variant does Ezra in the basement instead, with the poison needle from the wall left of the prisoner and the fuse box used to pull the guard away. Either works; the shed is simpler.'}}
+ ]},
+ {h:'The grandfather clock',steps:[
+  {t:'Climb into the farmhouse second floor',
+   b:[['Where','The outside of the farmhouse is crowded, so climb the wall to the second floor rather than walking in.'],
+      ['Action','Get in, destroy the camera in there, then go down to the basement, subdue the guard and hide him.'],
+      ['Note','Save here if you can. This is the halfway point.']],
+   badges:[['src','NamuWiki'],['save','Save once the basement guard is hidden']],
+   d:{}},
+  {t:'Draw Sean and Penelope to the clock',
+   b:[['Where','The grandfather clock in the ground-floor foyer.'],
+      ['NPC','Sean Rose and Penelope Graves.'],
+      ['Action','Tamper with the clock so each of them comes to inspect it, and take them one at a time as they do.'],
+      ['Note','Penelope can instead be killed by shooting the chandelier above the clock, which is an accident and means one less body to hide.'],
+      ['Warning','Do not try to take both at once. Deal with one, hide the body, wait for the second.']],
+   badges:[['chal','The Commander'],['chal','The Analyst'],['src','NamuWiki + Steam 644994482'],['warn','One at a time']],
+   d:{'Why Sean at the clock':'NamuWiki notes that Sean can also be taken alone on the second floor, but killing him downstairs means his body is already next to the shelter door — so you never have to build the 3D-printed mask.'}},
+  {t:'Scan Sean\'s face and leave',
+   b:[['Action','Drag Sean Rose\'s body to the tornado-shelter door and interact with it to open the shelter, then escape through the basement.'],
+      ['Result','Completing the mission banks Silent Assassin, Silent Assassin Suit Only and Suit Only. With Sniper Assassin already done in Run 8, the capstone fires too.']],
+   badges:[['chal','Silent Assassin'],['chal','Silent Assassin, Suit Only'],['chal','Suit Only'],['chal','The Classics'],['src','NamuWiki + Steam 644994482']],
+   d:{'Alternative wording':'Steam guide 644994482 describes the same run as: hide in the upstairs bathroom for the first target, mess with the clock downstairs to bring the second in and hide her in the foyer chest, wait out the guards, break into the basement and distract the two guards around the third, and break the winch on the hay bale as the fourth walks under it — then create the mask with the 3D printer upstairs and use the basement door to finish. Using Sean\'s own body instead of the printed mask saves that last detour.',
+      'Capstone':'The Classics requires Silent Assassin, Silent Assassin Suit Only, Sniper Assassin and Suit Only. Run 8 delivers Sniper Assassin; this run delivers the other three.'}}
+ ]}]
+}];
+
+const KEY='freedom_fighters_done_v1', RID='m06';
+const SKEY=KEY+':steps', OKEY=KEY+':open';
+const done=new Set(), stepsDone=new Set(), openRuns=new Set();
+function loadSet(k,set,fallback){
+  try{const v=JSON.parse(localStorage.getItem(k));if(Array.isArray(v)){v.forEach(x=>set.add(x));return;}}catch(e){}
+  if(fallback)fallback.forEach(x=>set.add(x));
+}
+loadSet(KEY,done);          /* ticked challenges */
+loadSet(SKEY,stepsDone);    /* ticked route steps */
+loadSet(OKEY,openRuns,['r1']); /* which runs are expanded */
+function reportProgress(){try{const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r[RID]={done:done.size,total:CH.length,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
+/* one writer for all three sets — every toggle below calls this */
+function persist(){
+  try{
+    localStorage.setItem(KEY,JSON.stringify([...done]));
+    localStorage.setItem(SKEY,JSON.stringify([...stepsDone]));
+    localStorage.setItem(OKEY,JSON.stringify([...openRuns]));
+    localStorage.setItem(KEY+':auto',JSON.stringify([...autoDone]));
+  }catch(e){}
+  reportProgress();
+}
+const saveDone=persist;
+
+/* ---- steps -> challenges ----------------------------------------
+   A step's 'chal' badges name the challenges it earns. A challenge counts as
+   done once every step carrying its badge is ticked. Only challenges this
+   code ticked are ever un-ticked here, so manual ticks survive. */
+const AUTO_KEY=KEY+':auto';
+const ID_BY_NAME={}; CH.forEach(c=>{ID_BY_NAME[c.name]=c.id;});
+const STEPS_FOR={};
+RUNS.forEach(r=>r.sections.forEach((sec,si)=>sec.steps.forEach((st,ti)=>{
+  const key=`${r.id}-${si}-${ti}`;
+  (st.badges||[]).forEach(b=>{
+    if(b[0]!=='chal')return;
+    const id=ID_BY_NAME[b[1]];
+    if(!id)return;
+    (STEPS_FOR[id]||(STEPS_FOR[id]=[])).push(key);
+  });
+})));
+const autoDone=new Set();
+loadSet(AUTO_KEY,autoDone);
+function syncChallenges(){
+  Object.keys(STEPS_FOR).forEach(id=>{
+    const earned=STEPS_FOR[id].every(k=>stepsDone.has(k));
+    if(earned){ if(!done.has(id)){ done.add(id); autoDone.add(id); } }
+    else if(autoDone.has(id)){ done.delete(id); autoDone.delete(id); }
+  });
+}
+syncChallenges();
+let filter='All';
+
+/* ---------------- tracker: ASCII block meters ---------------- */
+function meter(frac,width){
+  const n=Math.round(frac*width);
+  return '<span style="color:var(--olive)">'+'█'.repeat(n)+'</span>'+
+         '<span style="color:rgba(148,143,118,.42)">'+'░'.repeat(width-n)+'</span>';
+}
+function renderTracker(){
+  const cats=['Assassination','Discovery','Feats','Targets','The Classics'];
+  document.getElementById('cats').innerHTML=cats.map(c=>{
+    const all=CH.filter(x=>x.cat===c), d=all.filter(x=>done.has(x.id)).length;
+    return `<div class="cat"><span class="n">${c}</span>
+      <span class="mb">${meter(d/all.length,34)}</span>
+      <span class="v">${String(d).padStart(2,'0')}<em>/${String(all.length).padStart(2,'0')}</em></span></div>`;
+  }).join('');
+  document.getElementById('tDone').textContent=done.size;
+  document.getElementById('tBar').style.width=(done.size/CH.length*100)+'%';
+}
+
+/* ---------------- run nav ---------------- */
+function renderNav(){
+  document.getElementById('runnav').innerHTML=
+    RUNS.map((r,i)=>`<button data-jump="${r.id}">OPORD ${String(i+1).padStart(2,'0')}</button>`).join('')+
+    `<span class="util"><button data-all="open">Expand all</button><button data-all="close">Collapse</button></span>`;
+}
+
+/* ---------------- runs ---------------- */
+function badgeHTML(b){
+  const cls={chal:'b-chal',warn:'b-warn',save:'b-save',unv:'b-unv',src:'b-src'}[b[0]];
+  const pre={warn:'⚠ ',save:'◆ ',unv:'? ',src:'✎ ',chal:'+ '}[b[0]];
+  return `<span class="badge ${cls}">${pre}${b[1]}</span>`;
+}
+function renderRuns(){
+  document.getElementById('runList').innerHTML=RUNS.map((r,ri)=>{
+    const open=openRuns.has(r.id);
+    let n=0;
+    const total=r.sections.reduce((a,s)=>a+s.steps.length,0);
+    const doneCount=r.sections.reduce((a,s,si)=>a+s.steps.filter((_,ti)=>stepsDone.has(`${r.id}-${si}-${ti}`)).length,0);
+    return `<article class="run ${open?'open':''}" id="${r.id}">
+      <div class="stripe"></div>
+      <button class="run-head" data-toggle="${r.id}" aria-expanded="${open}">
+        <span class="rnum">OPORD ${String(ri+1).padStart(2,'0')}</span>
+        <span class="rh">
+          <span class="run-no">${r.tag} // ${r.diff.split('.')[0]}</span>
+          <h3>${r.title}</h3>
+          <p>${r.goal}</p>
+        </span>
+        <span class="run-prog">${doneCount}/${total}</span>
+      </button>
+      <div class="run-body" ${open?'':'hidden'}>
+        <div class="loadout">
+          <h4>Loadout</h4>
+          <div class="lo-grid">
+            <div><span>Starting location</span>${r.loadout.start}</div>
+            <div><span>Difficulty</span>${r.diff}</div>
+            <div><span>Suit</span>${r.loadout.suit}</div>
+            ${r.loadout.items.map((it,i)=>`<div><span>Slot ${i+1}</span>${it}</div>`).join('')}
+          </div>
+          ${r.note?`<p class="lo-note">${r.note}</p>`:''}
+        </div>
+        <div class="sect">
+          ${r.sections.map((sec,si)=>`<h4>${sec.h}</h4>`+sec.steps.map((st,ti)=>{
+            const key=`${r.id}-${si}-${ti}`; n++;
+            const hasD=st.d&&Object.keys(st.d).length;
+            const dn=stepsDone.has(key);
+            return `<div class="step ${dn?'done':''}" id="s-${key}">
+              <div class="step-top">
+                <span class="snum">${String(n).padStart(2,'0')}.</span>
+                <button class="tick" data-step="${key}" aria-label="Mark step complete">${dn?'[x]':'[ ]'}</button>
+                <div class="step-body">
+                  <p class="step-title">${st.t}</p>
+                  <ul class="bul">${st.b.map(x=>`<li><k>${x[0]}</k><span>${x[1]}</span></li>`).join('')}</ul>
+                  <div class="badges">${st.badges.map(badgeHTML).join('')}</div>
+                </div>
+              </div>
+              ${hasD?`<button class="more" data-more="${key}" aria-expanded="false">+ Notes</button>
+              <div class="detail" id="d-${key}" hidden><dl>${Object.entries(st.d).map(([k,v])=>{
+                const c=k==='Unverified'?'flag unv':(/^(Why the order|Ordering|Order|Order note|Requirement|Warning|Why first|Conflict|Patch note|Master|Known bug|Bug)/.test(k)?'flag amber':'');
+                return c?`<div class="${c}"><dt style="margin-top:0">${k}</dt><dd>${v}</dd></div>`:`<dt>${k}</dt><dd>${v}</dd>`;
+              }).join('')}</dl></div>`:''}
+            </div>`;
+          }).join('')).join('')}
+        </div>
+      </div>
+    </article>`;
+  }).join('');
+}
+
+/* ---------------- checklist ---------------- */
+function renderFilters(){
+  const opts=['All','Assassination','Discovery','Feats','Targets','The Classics','Incomplete'];
+  document.getElementById('filters').innerHTML=opts.map(o=>`<button class="${o===filter?'on':''}" data-f="${o}">${o}</button>`).join('');
+}
+function renderChecklist(){
+  const list=CH.filter(c=>filter==='All'?true:filter==='Incomplete'?!done.has(c.id):c.cat===filter);
+  document.getElementById('chalList').innerHTML=list.length?list.map(c=>`
+    <div class="chal ${done.has(c.id)?'done':''}">
+      <button class="tick" data-ch="${c.id}" aria-label="Mark ${c.name} complete">${done.has(c.id)?'[x]':'[ ]'}</button>
+      <div class="chal-main">
+        <p class="chal-name">${c.name}</p>
+        <p class="chal-cond">${c.cond}</p>
+        <div class="chal-meta">
+          <span class="badge" style="color:${CAT_COLOR[c.cat]};border-color:${CAT_COLOR[c.cat]}">${c.cat}</span>
+          ${c.run?`<span class="badge b-chal">Run ${c.run}</span>`:'<span class="badge b-unv">Not routed — see Audit</span>'}
+        </div>
+      </div>
+    </div>`).join(''):'<p style="color:var(--dim)">Nothing matches this filter.</p>';
+}
+
+document.addEventListener('click',e=>{
+  const tab=e.target.closest('.tab');
+  if(tab){
+    document.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-selected',t===tab));
+    document.querySelectorAll('.panel').forEach(p=>p.hidden=p.id!=='p-'+tab.dataset.panel);
+    return;
+  }
+  const jump=e.target.closest('[data-jump]');
+  if(jump){
+    const id=jump.dataset.jump;
+    openRuns.add(id); persist(); renderRuns();
+    document.querySelectorAll('[data-jump]').forEach(b=>b.classList.toggle('hot',b.dataset.jump===id));
+    document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});
+    return;
+  }
+  const all=e.target.closest('[data-all]');
+  if(all){
+    if(all.dataset.all==='open') RUNS.forEach(r=>openRuns.add(r.id)); else openRuns.clear();
+    persist(); renderRuns(); return;
+  }
+  const tg=e.target.closest('[data-toggle]');
+  if(tg){
+    const id=tg.dataset.toggle;
+    openRuns.has(id)?openRuns.delete(id):openRuns.add(id);
+    persist(); renderRuns(); return;
+  }
+  const f=e.target.closest('[data-f]');
+  if(f){ filter=f.dataset.f; renderFilters(); renderChecklist(); return; }
+  const ch=e.target.closest('[data-ch]');
+  if(ch){
+    const id=ch.dataset.ch;
+    done.has(id)?done.delete(id):done.add(id);
+    saveDone(); renderTracker(); renderChecklist(); return;
+  }
+  const sp=e.target.closest('[data-step]');
+  if(sp){
+    const k=sp.dataset.step;
+    stepsDone.has(k)?stepsDone.delete(k):stepsDone.add(k);
+    syncChallenges();
+    persist(); renderRuns(); renderTracker(); renderChecklist(); return;
+  }
+  const rs=e.target.closest('#reset');
+  if(rs){
+    if(confirm('Clear every ticked challenge for this mission?')){
+      done.clear(); stepsDone.clear(); autoDone.clear(); saveDone(); renderTracker(); renderChecklist(); renderRuns();
+    }
+    return;
+  }
+  const m=e.target.closest('[data-more]');
+  if(m){
+    const d=document.getElementById('d-'+m.dataset.more);
+    d.hidden=!d.hidden;
+    m.setAttribute('aria-expanded',String(!d.hidden));
+    m.textContent=d.hidden?'+ Notes':'− Notes';
+  }
+});
+
+renderTracker(); renderNav(); renderFilters(); renderChecklist(); renderRuns();
+reportProgress();
+</script>
+<!-- step-progress-bridge -->
+<script>
+/* Reports route-step ticks into 'hitman-progress-registry' so the index can
+   show them beside the challenge counts. Counts what is on screen rather than
+   any guide-specific state, so one implementation serves every guide. */
+(function(){
+  var RID="m06", SEL=".step";
+  function isDone(s){
+    var c=s.classList;
+    if(c.contains('done')||c.contains('dn')) return true;
+    if(s.getAttribute('data-done')==='1'||s.getAttribute('aria-pressed')==='true') return true;
+    return !!s.querySelector('.done,.dn,[data-done="1"],[aria-pressed="true"]');
+  }
+  function tally(){
+    var steps=document.querySelectorAll(SEL);
+    if(!steps.length) return null;
+    var n=0;
+    for(var i=0;i<steps.length;i++) if(isDone(steps[i])) n++;
+    return {steps:n,stepTotal:steps.length};
+  }
+  function push(){
+    var t;
+    try{ t=tally(); }catch(err){ return; }
+    if(!t||!t.stepTotal) return;
+    try{
+      var r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');
+      var e=r[RID]||(r[RID]={});
+      /* the guide's own reportProgress() rewrites this entry wholesale, so
+         re-add the step counts whenever they go missing or stale */
+      if(e.steps===t.steps&&e.stepTotal===t.stepTotal) return;
+      e.steps=t.steps; e.stepTotal=t.stepTotal; e.updated=Date.now();
+      localStorage.setItem('hitman-progress-registry',JSON.stringify(r));
+    }catch(err){}
+  }
+  var pending=false;
+  function schedule(){
+    if(pending) return; pending=true;
+    setTimeout(function(){pending=false;push();},120);
+  }
+  try{
+    new MutationObserver(schedule).observe(document.body,
+      {subtree:true,childList:true,attributes:true,attributeFilter:['class','aria-pressed','data-done']});
+  }catch(err){}
+  window.addEventListener('load',schedule);
+  setTimeout(push,600);
+})();
+</script>
+<!-- /step-progress-bridge -->
+</body>
+</html>
