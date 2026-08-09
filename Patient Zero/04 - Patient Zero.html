@@ -207,7 +207,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);font-si
     <span>GAMA Private Hospital · Hokkaido</span>
   </div>
   <h1>Patient <em>Zero</em></h1>
-  <p class="sub">6-run challenge route · Owen Cage &amp; Klaus Liebleid · 18 challenges, all accounted for</p>
+  <p class="sub">6-run challenge route · Owen Cage &amp; Klaus Liebleid · 19 challenges, all accounted for</p>
 
   <div class="tracker">
     <div class="ttop">
@@ -402,6 +402,8 @@ const CH = [
   cond:'Complete the mission without any additional infected.'},
  {id:'chameleon',name:'Chameleon',cat:'feats',run:5,xp:null,conf:'verified',scope:'Hokkaido-wide',
   cond:'Find and equip all disguises in Hokkaido. 16 are listed for Patient Zero.'},
+ {id:'patient-47',name:'Patient 47',cat:'feats',run:4,xp:null,conf:'verified',
+  cond:'Become infected by the virus. / Lie down on a morgue table while infected. / Complete the mission.'},
 
  {id:'suit-only',name:'Suit Only',cat:'classic',run:1,xp:null,conf:'verified',
   cond:'Assassinate the targets and complete the mission. Do it all in your suit.'},
@@ -678,7 +680,7 @@ const RUNS=[
 {
  n:'Run 04', short:'Outbreak', title:'Outbreak — You Know the Number and Lucky Shot',
  goal:'The mirror image of Run 01. Interfere with nothing, let the virus take the building, kill everyone infected, and cure yourself at the last possible second.',
- chips:['you-know','lucky-shot'],
+ chips:['you-know','lucky-shot','patient-47'],
  loadout:{
   start:'GAMA facility arrival point beside the helipad',
   mastery:'No Mastery track. Nothing is gated.',
@@ -754,7 +756,17 @@ const RUNS=[
     ['Note','Route it this way and you satisfy all three published readings of You Know the Number at once: 47+ concurrent infections witnessed, 47+ infected eliminated, and the mission completed.']],
    warn:'You must have used the antidote before leaving. Exiting while still infected does not complete the mission.',
    save:false, badges:['you-know'],
-   conf:'Objectives verified from the wiki. The must-cure-before-leaving rule is stated on the wiki Vaccine article.'}
+   conf:'Objectives verified from the wiki. The must-cure-before-leaving rule is stated on the wiki Vaccine article.'},
+
+  {id:'r4s8',title:'Patient 47 — lie on a morgue table while infected',
+   bullets:[
+    ['Where','The morgue, on any of the body tables — the same room this run already finishes beside.'],
+    ['Action','While you are still infected, lie down on a morgue table. Then cure yourself and complete the mission as normal.'],
+    ['Order','Infected first, table second, antidote third, exit last. The lie-down has to happen while the infection is still on you, but the mission still cannot be completed until you have cured it.'],
+    ['Reward','The Subject 47 suit, usable as a starting suit on any mission.']],
+   warn:'This run is the only one that deliberately leaves you infectable, so it is the natural place for this. Do not wear the Bio Suit.',
+   save:true, badges:['patient-47'],
+   conf:'Condition is taken verbatim from the game data: become infected, lie down on a morgue table while infected, complete the mission. The step order is a reading of that text against the cure-before-exit rule already established in this run, not a separately sourced route.'}
  ]}]
 },
 {

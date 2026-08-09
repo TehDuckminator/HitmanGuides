@@ -229,7 +229,7 @@ footer{margin-top:32px;padding:14px 16px;border:2px dashed var(--line);
   <p class="facts">
     <b>Targets:</b> Sean Rose (&ldquo;The Commander&rdquo;) · Maya Parvati (&ldquo;The Instructor&rdquo;) · Ezra Berg (&ldquo;The Interrogator&rdquo;) · Penelope Graves (&ldquo;The Analyst&rdquo;)<br>
     <b>Extra objective:</b> destroy the evidence in the farmhouse &nbsp;·&nbsp; <b>Four targets</b> — the only mission in the trilogy with this many<br>
-    <b>Challenges:</b> 61 — 23 Assassination · 13 Discovery · 16 Feats · 4 Targets · 5 The Classics<br>
+    <b>Challenges:</b> 62 — 23 Assassination · 13 Discovery · 17 Feats · 4 Targets · 5 The Classics<br>
     <b>Tracked disguises:</b> 9 &nbsp;·&nbsp; <b>Tracked areas:</b> 21 &nbsp;·&nbsp; <b>Runs needed:</b> 9
   </p>
 </header>
@@ -237,7 +237,7 @@ footer{margin-top:32px;padding:14px 16px;border:2px dashed var(--line);
 <section class="tracker">
   <div class="tracker-top">
     <h2>Progress</h2>
-    <p class="tally"><b id="tDone">0</b> / 61 challenges complete &nbsp; <button class="resetbtn" id="reset">Reset</button></p>
+    <p class="tally"><b id="tDone">0</b> / 62 challenges complete &nbsp; <button class="resetbtn" id="reset">Reset</button></p>
   </div>
   <div class="bar"><span id="tBar"></span></div>
   <div class="cats" id="cats"></div>
@@ -261,14 +261,14 @@ footer{margin-top:32px;padding:14px 16px;border:2px dashed var(--line);
 
 <div class="panel audit" id="p-audit" hidden>
   <h3>Verification result</h3>
-  <p>All 61 challenge names and conditions come verbatim from the in-game challenge data in this repository (<code>missions/06 - Freedom Fighters.json</code>). Runs 1&ndash;7 are a conversion of fish's tested Steam route. Runs 8 and 9 are new: fish's Colorado guide has <b>no</b> Sniper Assassin or SA/SO section at all, so both were built from written sources.</p>
+  <p>All 62 challenge names and conditions come verbatim from the in-game challenge data in this repository (<code>missions/06 - Freedom Fighters.json</code>, re-extracted from Peacock v8.7.0). Runs 1&ndash;7 are a conversion of fish's tested Steam route. Runs 8 and 9 are new: fish's Colorado guide has <b>no</b> Sniper Assassin or SA/SO section at all, so both were built from written sources.</p>
   <p>Colorado is the hardest map in the trilogy for both of those Classics. The entire map is hostile territory, there are four targets rather than two, and every NPC except the hackers and the targets is militia. Neither of the new runs is a short one.</p>
 
   <table class="src">
     <thead><tr><th>Check</th><th>Result</th><th>Evidence</th></tr></thead>
     <tbody>
-      <tr><td>Total count (61)</td><td class="pass">Pass</td><td>In-game data: <code>challengeCount: 61</code>, category sum also 61</td></tr>
-      <tr><td>Category split 23/13/16/4/5</td><td class="pass">Pass</td><td>In-game data</td></tr>
+      <tr><td>Total count (62)</td><td class="pass">Pass</td><td>In-game data: <code>challengeCount: 62</code>, category sum also 62</td></tr>
+      <tr><td>Category split 23/13/17/4/5</td><td class="pass">Pass</td><td>In-game data</td></tr>
       <tr><td>Runs 1&ndash;7 routes</td><td class="pass">Pass</td><td>fish, Steam guide 3712064474 — a written, tested 7-run route</td></tr>
       <tr><td>All seven loadouts</td><td class="pass">Pass</td><td>Read off the five planning-screen screenshots in that guide (runs 1&ndash;3 share one screenshot)</td></tr>
       <tr><td>Starting-location mastery levels</td><td class="pass">Pass</td><td>Hitman Wiki, <i>List of Mastery Unlocks by Mission</i>: Southern Farm Perimeter 1 · Undercover in the Garage 6 · Undercover on the Demolition Range 8 · Undercover by the Greenhouse 11 · Water Tower 16 · Undercover in the Farm House 18</td></tr>
@@ -278,14 +278,14 @@ footer{margin-top:32px;padding:14px 16px;border:2px dashed var(--line);
       <tr><td>Water-tower ladder patch note</td><td class="part">Single source</td><td>NamuWiki states that patch 3.270.1 on 12 June 2026 added a ladder from the water tower straight to the ground. No second source found. Flagged in Run 8 rather than relied on.</td></tr>
       <tr><td>Per-challenge XP values</td><td class="fail">Unverified</td><td>No source breaks the mission XP down per challenge. Not guessed, so none is shown.</td></tr>
       <tr><td>Chameleon · Discover Colorado</td><td class="part">Not routed</td><td>9 disguises and 21 areas — exploration passes, not route steps. fish excludes both.</td></tr>
-      <tr><td>Right in the Pie Hole</td><td class="fail">Not in dataset</td><td>fish's Run 5 throws pumpkins at three targets as the militia cook for a challenge by this name. It does not appear anywhere in this repository's challenge data — not in the mission file and not in the Colorado location file. The step is kept; the name is deliberately not added to the 61-item checklist.</td></tr>
+      <tr><td>Right in the Pie Hole</td><td class="pass">Resolved — now in dataset</td><td>Previously excluded because it was absent from the challenge data. The re-extraction from <b>Peacock v8.7.0</b> carries it as a Feat on this mission, contract-scoped to Freedom Fighters, with the condition "Knockdown three targets by throwing a Small Pumpkin while disguised as a Militia Cook." That matches fish's Run 5 step (throw pumpkins at three targets as the militia cook) on both the disguise and the count, so the step is now a checklist entry (<b>f17</b>) rather than a free extra.</td></tr>
       <tr><td>Redacted conditions</td><td class="pass">Pass</td><td>Eight challenges are <code>[REDACTED]</code>: The Long Way Out, Plot Twist, Body Double, Rep Tires, Wicker Man, No Birds Here, Howdy Partner, and (in the Feats list) the ones above. Conditions stay redacted in the checklist; fish's documented actions appear in the runs.</td></tr>
     </tbody>
   </table>
 
   <h3>Run-logic validation (simulated step by step)</h3>
   <ul>
-    <li><b>59 of 61 challenges are assigned.</b> The two left out are Chameleon and Discover Colorado.</li>
+    <li><b>60 of 62 challenges are assigned.</b> The two left out are Chameleon and Discover Colorado.</li>
     <li><b>All four targets die in every run.</b> Colorado does not let you leave one alive, so each run below eliminates Sean, Maya, Ezra and Penelope and then exits.</li>
     <li><b>Prerequisites precede use.</b> Run 1 takes the rat poison before the technician and the Interpol badge before Penelope; Run 2 takes the wrench and loosens the valve before Maya arrives; Run 5 stages the weapon that lures the cook before it needs his outfit; Runs 6 and 7 take the stashed coins out of the laundry room early.</li>
     <li><b>Nothing needed later is destroyed earlier.</b> Every run's kills are ordered so that a target still needed for a later challenge in the same run is not killed first — Run 3 keeps Ezra alive until after the drugs are administered, and Run 4 keeps Sean and Penelope alive until they are standing close enough for the watch to take both.</li>
@@ -376,6 +376,7 @@ const CH=[
  {id:'f14',cat:'Feats',name:'No Birds Here',cond:'[REDACTED]',run:5},
  {id:'f15',cat:'Feats',name:'Hay There!',cond:'Bale 4 bodies in the hay baler.',run:5},
  {id:'f16',cat:'Feats',name:'Howdy, Partner',cond:'[REDACTED]',run:6},
+ {id:'f17',cat:'Feats',name:'Right in the Pie Hole',cond:'Knockdown three targets by throwing a Small Pumpkin while disguised as a Militia Cook.',run:5},
 
  {id:'t1',cat:'Targets',name:'The Commander',cond:'Assassinate Sean Rose.',run:1},
  {id:'t2',cat:'Targets',name:'The Instructor',cond:'Assassinate Maya Parvati.',run:1},
@@ -667,12 +668,12 @@ const RUNS=[
       ['Then','Go to the technician area left of the north orchard and save.']],
    badges:[['save','Save at the technician area']],
    d:{}},
-  {t:'Branch · Three pumpkins',
+  {t:'Branch · Three pumpkins — Right in the Pie Hole',
    b:[['Disguise','Militia Cook.'],
-      ['Action','Throw pumpkins at three targets.'],
+      ['Action','Throw a Small Pumpkin at three targets, knocking each one down.'],
       ['Then','Reload.']],
-   badges:[['src','fish\'s guide']],
-   d:{'Extra':'fish calls this <i>Right in the Pie Hole</i>. That name does not appear anywhere in this repository\'s challenge data, so it is not on the checklist — but the throws cost nothing.'}}
+   badges:[['src','fish\'s guide'],['chal','Right in the Pie Hole']],
+   d:{'Extra':'The challenge wants a <b>knockdown</b>, not a kill, on three targets, and the Militia Cook disguise must be worn for it to count. Peacock v8.7.0 confirms the condition verbatim: "Knockdown three targets by throwing a Small Pumpkin while disguised as a Militia Cook." Reload afterwards — the knockdowns are not wanted in the run that banks the kills.'}}
  ]},
  {h:'Getting the rifle',steps:[
   {t:'Technician outfit and the barracks roof',

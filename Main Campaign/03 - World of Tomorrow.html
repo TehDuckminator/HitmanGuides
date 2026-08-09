@@ -229,7 +229,7 @@ footer{margin-top:32px;padding:14px 16px;border:1px solid var(--line);background
   <h1>World of Tomorrow <em>— challenge run planner</em></h1>
   <p class="facts">
     <b>Targets:</b> Silvio Caruso (&ldquo;The Genius&rdquo;) · Francesca De Santis (&ldquo;The Scientist&rdquo;) &nbsp;·&nbsp; <b>Third objective:</b> destroy the virus<br>
-    <b>Challenges:</b> 77 — 31 Assassination · 19 Discovery · 20 Feats · 2 Targets · 5 The Classics<br>
+    <b>Challenges:</b> 80 — 32 Assassination · 19 Discovery · 22 Feats · 2 Targets · 5 The Classics<br>
     <b>Tracked disguises:</b> 25 &nbsp;·&nbsp; <b>Tracked areas:</b> 47 &nbsp;·&nbsp; <b>Mission Stories:</b> 9<br>
     <b>Runs needed:</b> 10 &nbsp;·&nbsp; <b>Route source:</b> fish's Steam challenge guide, plus new research for the SASO run
   </p>
@@ -238,7 +238,7 @@ footer{margin-top:32px;padding:14px 16px;border:1px solid var(--line);background
 <section class="tracker">
   <div class="tracker-top">
     <h2>Progress</h2>
-    <p class="tally"><b id="tDone">0</b> / 77 challenges complete &nbsp; <button class="resetbtn" id="reset">Reset</button></p>
+    <p class="tally"><b id="tDone">0</b> / 80 challenges complete &nbsp; <button class="resetbtn" id="reset">Reset</button></p>
   </div>
   <div class="bar"><span id="tBar"></span></div>
   <div class="cats" id="cats"></div>
@@ -262,13 +262,14 @@ footer{margin-top:32px;padding:14px 16px;border:1px solid var(--line);background
 
 <div class="panel audit" id="p-audit" hidden>
   <h3>Verification result</h3>
-  <p>All 77 challenge names and conditions come verbatim from the in-game challenge data in this repository (<code>missions/03 - World of Tomorrow.json</code>). Runs 1&ndash;9 are a conversion of fish's tested Steam route. Run 10 (Silent Assassin, Suit Only) is new — fish's SA/SO section is a video with no text — and was rebuilt from two written sources.</p>
+  <p>All 80 challenge names and conditions come verbatim from the in-game challenge data in this repository (<code>missions/03 - World of Tomorrow.json</code>, re-extracted from Peacock v8.7.0). Runs 1&ndash;9 are a conversion of fish's tested Steam route. Run 10 (Silent Assassin, Suit Only) is new — fish's SA/SO section is a video with no text — and was rebuilt from two written sources.</p>
 
   <table class="src">
     <thead><tr><th>Check</th><th>Result</th><th>Evidence</th></tr></thead>
     <tbody>
-      <tr><td>Total count (77)</td><td class="pass">Pass</td><td>In-game data: <code>challengeCount: 77</code>, category sum also 77</td></tr>
-      <tr><td>Category split 31/19/20/2/5</td><td class="pass">Pass</td><td>In-game data</td></tr>
+      <tr><td>Total count (80)</td><td class="pass">Pass</td><td>In-game data: <code>challengeCount: 81</code>, of which 80 are real in-game challenges (32 + 19 + 22 + 2 + 5). The 81st is <i>Hone Your Cleaver Skills</i>, a Peacock-added challenge-pack entry — see the row below.</td></tr>
+      <tr><td>Hone Your Cleaver Skills</td><td class="part">Excluded — not a game challenge</td><td>The v8.7.0 mission file carries this under a <code>cheesecake-pack</code> category. Its localisation key is <code>UI_PEACOCK_CHALLENGEPACK_…</code> and its text comes from Peacock's own <code>locale.json</code>, not from the game's LOCR resources — it is invented by the server, not something IOI ships. Kept off the checklist so the count stays a count of real challenges.</td></tr>
+      <tr><td>Category split 32/19/22/2/5</td><td class="pass">Pass</td><td>In-game data</td></tr>
       <tr><td>Runs 1&ndash;9 routes</td><td class="pass">Pass</td><td>fish, Steam guide 3548528503 — a written, tested 9-run route</td></tr>
       <tr><td>All nine loadouts</td><td class="pass">Pass</td><td>Read off the nine planning-screen screenshots in that guide</td></tr>
       <tr><td>Starting-location mastery levels</td><td class="pass">Pass</td><td>Hitman Wiki, <i>List of Mastery Unlocks by Mission</i>: Main Square 1 · ICA Safe House 2 · Mansion Kitchen 7 · Security Staff 9 · Harbor 13 · Main Square Tower 16 · Sapienza Ruins 18</td></tr>
@@ -280,13 +281,14 @@ footer{margin-top:32px;padding:14px 16px;border:1px solid var(--line);background
       <tr><td>Per-challenge XP values</td><td class="fail">Unverified</td><td>No source breaks the mission XP down per challenge. Not guessed, so none is shown.</td></tr>
       <tr><td>The Bells are Ringing · Get What You Wish For</td><td class="part">Not routed</td><td>Both need a custom contract with an appropriately placed target, which fish says explicitly. They stay in the checklist, marked "Not routed".</td></tr>
       <tr><td>Chameleon · Discover Sapienza</td><td class="part">Not routed</td><td>25 disguises and 47 areas — exploration passes, not route steps. fish excludes both and points at his separate disguise guide.</td></tr>
-      <tr><td>Bend It Like 47 · Sapienza Sports Club · Surgical Procedure</td><td class="fail">Not in dataset</td><td>fish's route unlocks these three, but none of them appears anywhere in this repository's challenge data — not in the mission file and not in the Sapienza location file. The steps that earn them are kept in the runs; they are deliberately <b>not</b> added to the 77-item checklist, because inventing checklist entries the game data does not have would corrupt the count.</td></tr>
+      <tr><td>Bend It Like 47 · Sapienza Sports Club · Surgical Procedure</td><td class="pass">Resolved — now in dataset</td><td>All three were previously excluded for being absent from the challenge data. The re-extraction from <b>Peacock v8.7.0</b> carries all three on this mission, contract-scoped to World of Tomorrow, so they are now checklist entries <b>a32</b>, <b>f21</b> and <b>f22</b>. <i>Sapienza Sports Club</i> (Run 9) and <i>Surgical Procedure</i> (Run 6) matched fish's steps exactly on both method and disguise. <i>Bend It Like 47</i> needed a route fix — see the row below.</td></tr>
+      <tr><td><i>Bend It Like 47</i> — route corrected</td><td class="part">Corrected</td><td>The old Run 1 wording shot only <b>one</b> of the four beach balls, because the step existed to collect crocodiles for <i>Investigator</i>. Following fish, the two balls visible from the safe-house rooftop are now shot from the roof, and the fourth — in the water against the rocks at the dock left of the church — is shot in the sewers step that already walks past it. The game data gives the condition as [REDACTED]; the count of four is fish's (he tracks 2/4, 3/4, then the finish) and is independently confirmed by Shacknews' FC-Sanguine Boot guide.</td></tr>
     </tbody>
   </table>
 
   <h3>Run-logic validation (simulated step by step)</h3>
   <ul>
-    <li><b>73 of 77 challenges are assigned.</b> The four left out are The Bells are Ringing, Get What You Wish For, Chameleon and Discover Sapienza — see the table above.</li>
+    <li><b>76 of 80 challenges are assigned.</b> The four left out are The Bells are Ringing, Get What You Wish For, Chameleon and Discover Sapienza — see the table above.</li>
     <li><b>Prerequisites precede use.</b> Run 1 takes the biolab keycard before the lab, the priest before the church, the flowers before the grave; Run 4 takes the explosive golf ball out of the safe house before crossing to the mansion; Run 9 collects both joints and the crowbar before it needs any of them.</li>
     <li><b>The virus is handled every run.</b> Every run that is not Run 1 ends with "destroy the virus and exit" — the mission cannot be completed without it, and an unfinished mission banks nothing that requires completion.</li>
     <li><b>Keycard shortcut.</b> After Run 1, fish notes that Francesca drops a biolab keycard when she dies, so later runs never repeat the morgue sequence.</li>
@@ -333,7 +335,7 @@ const CH=[
  {id:'a6',cat:'Assassination',name:'Silence of the Man',cond:'Assassinate Silvio Caruso by smothering him while disguised as Dr. Oscar Lafayette.',run:2},
  {id:'a7',cat:'Assassination',name:'Caving In',cond:'Assassinate Francesca De Santis by dropping a stalactite on her.',run:1},
  {id:'a8',cat:'Assassination',name:'Weeding the Garden',cond:'Assassinate Silvio Caruso. / Hide the body in the garden shredder. / Destroy the body with the shredder. / Do not get spotted.',run:1},
- {id:'a9',cat:'Assassination',name:'Getting Your Hands Dirty',cond:'Become the Detective. / Assassinate Francesca De Santis during the meeting the on pier. / Do not get spotted.',run:3},
+ {id:'a9',cat:'Assassination',name:'Getting Your Hands Dirty',cond:'Become the Detective. / Assassinate Francesca De Santis during the meeting on the pier. / Do not get spotted.',run:3},
  {id:'a10',cat:'Assassination',name:'I\'m on Fire',cond:'Assassinate both Silvio Caruso and Francesca De Santis using a single propane flask.',run:2},
  {id:'a11',cat:'Assassination',name:'What\'s Your Poison?',cond:'Assassinate Silvio Caruso by poisoning his food.',run:3},
  {id:'a12',cat:'Assassination',name:'My Name is Hurl',cond:'Assassinate Francesca De Santis by drowning her.',run:5},
@@ -355,6 +357,7 @@ const CH=[
  {id:'a28',cat:'Assassination',name:'Tasteless, Traceless',cond:'Assassinate a target with lethal poison in Sapienza.',run:3},
  {id:'a29',cat:'Assassination',name:'The Bells are Ringing',cond:'Eliminate a target with the church bell.',run:0},
  {id:'a30',cat:'Assassination',name:'Someone Could Hurt Themselves',cond:'Assassinate a target in an accident in Sapienza.',run:1},
+ {id:'a32',cat:'Assassination',name:'Sapienza Sports Club',cond:'Eliminate Francesca De Santis with an explosive golf ball / Eliminate Silvio Caruso with an explosive baseball / Prepare and add the baseball to your loadout when planning. / The baseball can be unlocked by getting Mastery Level 10 on Whittleton Creek.',run:9},
  {id:'a31',cat:'Assassination',name:'I Aim to Please',cond:'Assassinate a target from the church tower with a sniper rifle. / Do it all in your suit.',run:8},
 
  {id:'d1',cat:'Discovery',name:'Employee of the Day',cond:'Disguise yourself as a Kitchen Assistant.',run:3},
@@ -397,6 +400,8 @@ const CH=[
  {id:'f18',cat:'Feats',name:'Get What You Wish For',cond:'Push a target into the wishing well.',run:0},
  {id:'f19',cat:'Feats',name:'Luck Alone is Worthless',cond:'[REDACTED]',run:1},
  {id:'f20',cat:'Feats',name:'Pipe Down',cond:'Disguise yourself as either the Red or Green Plumber. / Pacify 10 individuals with a lead pipe. / Do not get spotted.',run:4},
+ {id:'f21',cat:'Feats',name:'Bend It Like 47',cond:'[REDACTED]',run:1},
+ {id:'f22',cat:'Feats',name:'Surgical Procedure',cond:'Eliminate three guards in Sapienza with the amputation knife dressed as the Plague Doctor.',run:6},
 
  {id:'t1',cat:'Targets',name:'The Genius',cond:'Assassinate Silvio Caruso.',run:1},
  {id:'t2',cat:'Targets',name:'The Scientist',cond:'Assassinate Francesca De Santis.',run:1},
@@ -412,7 +417,7 @@ const CAT_COLOR={'Assassination':'var(--rust)','Discovery':'var(--sky)','Feats':
 const RUNS=[
 {
  id:'r1', tag:'Run 1', title:'The long one — town, church, mansion, biolab',
- goal:"One pass that sweeps the whole map: crocodiles, the priest, the morgue, the flower shop, the grave, the shredder, the lab, and both targets on the fiber wire. Clears 22 challenges.",
+ goal:"One pass that sweeps the whole map: crocodiles, the priest, the morgue, the flower shop, the grave, the shredder, the lab, and both targets on the fiber wire. Clears 24 challenges.",
  diff:'Casual — you need unlimited manual saves.',
  loadout:{
    start:'Main Square · Sapienza mastery level 1 (default)',
@@ -430,17 +435,17 @@ const RUNS=[
    d:{'Note':'The rooftop behind that apartment is used by four of the nine runs — learn the route now.'}},
   {t:'Shoot the crocodiles and the beach balls',
    b:[['Where','From the safe-house rooftop you can see two beach balls and two inflatable crocodiles on the beach; more are in the buildings below.'],
-      ['Action','Shoot the two crocodiles from the roof, drop to the landing on the right, shoot the beach ball outside that apartment, then go down through the next building and shoot the crocodile in the foyer.'],
-      ['Note','This is crocodiles 3 of 6 so far.']],
-   badges:[['src','fish\'s guide']],
-   d:{'Extra':'The four beach balls also feed a challenge called <i>Bend It Like 47</i> in fish\'s guide. That name does not exist anywhere in this repository\'s challenge data, so it is not on the checklist — but shooting them costs nothing.'}},
+      ['Action','Shoot both crocodiles <b>and both beach balls</b> from the roof, drop to the landing on the right, shoot the beach ball outside that apartment, then go down through the next building and shoot the crocodile in the foyer.'],
+      ['Note','Crocodiles 3 of 6, beach balls 3 of 4. The fourth ball is at the dock in the next step.']],
+   badges:[['src','fish\'s guide'],['chal','Bend It Like 47 (3/4)']],
+   d:{'Redacted':'<i>Bend It Like 47</i> is [REDACTED] in the game data. Four beach balls is fish\'s documented count — he tracks them as (2/4), (3/4) and then the finish — and it is corroborated by Shacknews\' Sapienza FC-Sanguine Boot guide, which also states four. The two balls visible from this roof are easy to skip: shoot them before dropping down.'}},
   {t:'Sewers, plumber and the catacombs',
    b:[['Where','The dock to the far left of the church, then the beach sewers.'],
       ['Item','A crowbar near the sewer entrance — a faster, quieter knockout.'],
       ['NPC','The red plumber.'],
-      ['Action','Take the crowbar, lockpick the gate while he is looking away and pacify him. Past the gate on the right, shoot crocodile 4, then take the three coins beside it.']],
-   badges:[['warn','Take all three coins — they are needed for the flower shop']],
-   d:{}},
+      ['Action','At the dock, shoot the last beach ball — it lies in the water against the rocks — to finish <b>Bend It Like 47</b>. Then take the crowbar, lockpick the gate while he is looking away and pacify him. Past the gate on the right, shoot crocodile 4, then take the three coins beside it.']],
+   badges:[['warn','Take all three coins — they are needed for the flower shop'],['chal','Bend It Like 47 (4/4)']],
+   d:{'Note':'The fourth ball sits in the water by the dock to the far left of the church, which this step already walks past on the way to the sewers.'}},
   {t:'Take the priest outfit and wipe the camera',
    b:[['Where','Through the catacombs, first door on the right.'],
       ['Disguise','Priest — hanging in the room, nobody needs to be touched.'],
@@ -771,7 +776,7 @@ const RUNS=[
 },
 {
  id:'r6', tag:'Run 6', title:'The safe, the séance and the plague doctor',
- goal:"Crack Silvio's safe for the DNA sample, electrocute Francesca on the patio, then become the plague doctor and take Silvio twice. Seven challenges.",
+ goal:"Crack Silvio's safe for the DNA sample, electrocute Francesca on the patio, then become the plague doctor and take Silvio twice. Eight challenges.",
  diff:'Casual.',
  loadout:{
    start:'Undercover as Security Staff · Sapienza mastery level 9 (starts you as Mansion Security)',
@@ -816,8 +821,8 @@ const RUNS=[
   {t:'Branch · Solar system, and knives',
    b:[['Action','Subdue Silvio — do not kill him — drag him under the solar system display and shoot it down. While you are here, kill three guards with the amputation knife.'],
       ['Then','Reload.']],
-   badges:[['chal','Bring Down the Sky']],
-   d:{'Extra':'The three-guard knife kill is <i>Surgical Procedure</i> in fish\'s guide. That name does not appear anywhere in this repository\'s challenge data, so it is not on the checklist — but it costs nothing to do here.'}},
+   badges:[['chal','Bring Down the Sky'],['chal','Surgical Procedure']],
+   d:{'Extra':'<i>Surgical Procedure</i> wants "three guards in Sapienza with the amputation knife dressed as the Plague Doctor" — you are already in the costume from Memory Lane, so the disguise half is satisfied by this point in the run. Do the three kills before reloading; the reload is only there to undo the subdue on Silvio.'}},
   {t:'Kill him with the knife as the plague doctor',
    b:[['Disguise','Plague Doctor — required.'],
       ['Item','Amputation knife.'],
@@ -926,7 +931,7 @@ const RUNS=[
 },
 {
  id:'r9', tag:'Run 9', title:'Joints, bells and the long shots',
- goal:"Pacify both targets with cannabis joints, then ring the ship's bells from the mansion roof. Three challenges and a lot of walking.",
+ goal:"Pacify both targets with cannabis joints, ring the ship's bells from the mansion roof, then finish both with the explosive golf ball and baseball. Four challenges and a lot of walking.",
  diff:'Casual.',
  loadout:{
    start:'Main Square Tower · Sapienza mastery level 16',
@@ -976,9 +981,10 @@ const RUNS=[
   {t:'Clear the guard and finish',
    b:[['NPC','A guard who waits by the outdoor seating area near Francesca.'],
       ['Action','Throw the crowbar at him when the coast is clear, then wait for Francesca to smoke her joint.'],
+      ['Action','Throw the explosive golf ball at the pacified Francesca, then the explosive baseball at the pacified Silvio from the roof overlooking the mansion backyard — that is <b>Sapienza Sports Club</b>.'],
       ['Then','Destroy the virus and exit.']],
-   badges:[],
-   d:{'Extra':'fish also throws the explosive golf ball at the pacified Francesca and the explosive baseball at the pacified Silvio, for a challenge he calls <i>Sapienza Sports Club</i>. That name does not appear anywhere in this repository\'s challenge data, so it is not on the checklist — but the throws cost nothing, and throwing the golf ball from outside the room at an angle avoids being spotted.'}}
+   badges:[['chal','Sapienza Sports Club']],
+   d:{'Extra':'Throw the golf ball from outside the room at an angle and you can do it without being spotted. Both targets must already be pacified, which this run has done with the joints. The Explosive Baseball is a loadout item and needs Whittleton Creek mastery 10; the golf ball is picked up in-mission at the safe house earlier in this run.'}}
  ]}]
 },
 {
