@@ -139,9 +139,9 @@ h4.blk{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform
 <header class="mast">
   <div class="eyebrow">Haven Island · Maldives · Epilogue</div>
   <h1>The Last Resort <span class="thin">/ 67</span></h1>
-  <p class="sub">A five-run completion route for every challenge on Haven Island, built from your extracted in-game challenge file (67 challenges: 20 Assassination, 22 Discovery, 17 Feats, 3 Targets, 5 Classics). Runs are sequenced so nothing you do early locks out a later challenge. Each step lists where to go, the disguise, the item, the NPC and the action, with warnings on the ordering rules that break scripts.</p>
+  <p class="sub">A five-run completion route for every challenge on Haven Island, built from your extracted in-game challenge file (70 challenges: 20 Assassination, 22 Discovery, 17 Feats, 3 Targets, 5 Classics). Runs are sequenced so nothing you do early locks out a later challenge. Each step lists where to go, the disguise, the item, the NPC and the action, with warnings on the ordering rules that break scripts.</p>
   <div class="mast-meta">
-    <span>Tyson Williams — The Tyrant</span><span>Ljudmila Vetrova — The Confidence Artist</span><span>Steven Bradley — The Bad Boy</span><span>67 challenges</span>
+    <span>Tyson Williams — The Tyrant</span><span>Ljudmila Vetrova — The Confidence Artist</span><span>Steven Bradley — The Bad Boy</span><span>70 challenges</span>
   </div>
 </header>
 
@@ -206,6 +206,9 @@ const CH=[
 {n:"Targets Ahoy!",c:"A",d:"Eliminate all targets by sniping from the radio tower.",run:"2"},
 {n:"Like Shooting Fish on a Scooter",c:"A",d:"Eliminate Steven Bradley with a sniper rifle shot, while he is on a water scooter.",run:"2"},
 {n:"Don't Eat the Buffet",c:"A",d:"Eliminate all targets with poison.",run:"5"},
+{n:"One Too Many",c:"A",d:"Eliminate all three targets while they are poisoned.",run:"5"},
+{n:"Electric Trilogy",c:"A",d:"Eliminate Tyson Williams, Steven Bradley and Ljudmila Vetrova via Electrocution.",run:"1"},
+{n:"Hot Fizzsh",c:"F",d:"Put a fish in the mansion jacuzzi while wearing the Tropical Islander Suit.",run:"4"},
 {n:"Irregular Heart Rhythm",c:"A",d:"Eliminate Tyson Williams with the stethoscope.",run:"4"},
 {n:"Synchronized Drowning",c:"A",d:"Eliminate Ljudmila Vetrova and Steven Bradley in a jacuzzi accident.",run:"5"},
 {n:"Common Side Effects",c:"A",d:"Eliminate Tyson Williams by poisoning his medicine.",run:"5"},
@@ -323,7 +326,7 @@ const RUNS=[
     npc:"Williams, Vetrova and Bradley, all at the reboot panel, actively repairing.",
     do:"Fire one round into the water cooler. The spill electrifies and all three drop as a single accident — no bodies found, no witnesses.",
     warn:"Hold fire until all three are in the puddle. A partial hit wastes the setup and you cannot re-gather them cleanly.",
-    ch:["The Tyrant","The Confidence Artist","The Bad Boy","Someone Could Hurt Themselves","Silent Assassin","Suit Only","Silent Assassin, Suit Only"],save:true},
+    ch:["The Tyrant","The Confidence Artist","The Bad Boy","Electric Trilogy","Someone Could Hurt Themselves","Silent Assassin","Suit Only","Silent Assassin, Suit Only"],save:true},
    {t:"Leave by the seaplane",
     s:"Retrace your route out and take the plane on the beach.",
     go:"Back up the ladder, out the concealed door, over the low wall, to the seaplane on the beach near your starting hut.",
@@ -337,7 +340,7 @@ const RUNS=[
     item:"Lethal Poison Vial into the exhaust serving the lower floor.",
     do:"Poison the exhaust while all three are at the panel. The room is large enough that guards are usually caught too, so treat this as a non-SA attempt.",
     warn:"Mutually exclusive with the electrocution kill in the same session. Run it from the reload, never combined with the SASO attempt.",
-    ch:["Canary in a Server Farm","Don't Eat the Buffet"]}
+    ch:["Canary in a Server Farm","Don't Eat the Buffet","One Too Many"]}
   ]}
  ]
 },
@@ -551,7 +554,13 @@ const RUNS=[
     npc:"The butler escorts you; Tyson Williams in his room.",
     do:"During the examination Williams turns his back to have his lungs checked — strangle him with the stethoscope and hide the body.",
     warn:"Irregular Heart Rhythm (this) and Common Side Effects (Run 05) both kill Williams — split them.",
-    ch:["Mission Story - Take A Deep Breath","Irregular Heart Rhythm","The Tyrant","Doctor Rieper"]}
+    ch:["Mission Story - Take A Deep Breath","Irregular Heart Rhythm","The Tyrant","Doctor Rieper"]},
+   {t:"Hot Fizzsh — a fish in the mansion jacuzzi",
+    s:"A no-kill feat that only works while you are still in the suit you started the mission in.",
+    go:"Williams' Villa, the mansion jacuzzi. Pick the fish up on the way: one is in the water under the cocktail bar, where the sea meets the wooden pier supports.",
+    do:"Carry the fish into the Villa and put it in the jacuzzi — throwing it in works, you do not have to climb in. This run already enters the Villa in the starting suit for Take A Deep Breath, which is exactly the condition.",
+    warn:"The condition names the Tropical Islander Suit, which is Haven Island's own starting outfit — so it is satisfied automatically as long as you have not changed clothes. If you have taken a disguise earlier in the run, change back before the jacuzzi. Reward is the suit itself, usable on other maps, plus 2000 XP (XP confirmed from the game data).",
+    ch:["Hot Fizzsh"]}
   ]}
  ]
 },
@@ -855,7 +864,7 @@ document.getElementById("tab-ref").innerHTML=`
     <li>Go into every small room, not just every building — several buildings hold multiple separate discoveries.</li>
   </ul>
 
-  <h4 class="blk">Achievements outside the 67 challenges</h4>
+  <h4 class="blk">Achievements outside the 70 challenges</h4>
   <ul>
     <li><strong>The Dundee</strong> — deflate 18 inflatable crocodiles to open a secret exit (one croc by the main pool isn't required). Not a challenge in this file.</li>
     <li><strong>The Pleasure</strong> — shoot 14 golden skulls after the weather turns to spawn the ghost ship. Not a challenge in this file.</li>
@@ -863,18 +872,18 @@ document.getElementById("tab-ref").innerHTML=`
   </ul>`;
 
 document.getElementById("tab-audit").innerHTML=`
-  <p class="note"><strong>This build is keyed to your uploaded file.</strong> Every challenge name and description on the checklist is copied verbatim from <em>18 - The Last Resort.json</em>. The file declares 67 challenges and the categories sum to exactly 67, so the totals are no longer estimated.</p>
+  <p class="note"><strong>This build is keyed to your uploaded file.</strong> Every challenge name and description on the checklist is copied verbatim from <em>18 - The Last Resort.json</em>. The file declares 70 challenges and the categories sum to exactly 67, so the totals are no longer estimated.</p>
 
   <h4 class="blk">Verified counts (from the file)</h4>
   <ul>
-    <li>Total: <strong>67</strong> — Assassination 20, Discovery 22, Feats 17, Targets 3, Classics 5. The category sums were re-counted programmatically and match the declared total.</li>
+    <li>Total: <strong>70</strong> — Assassination 20, Discovery 22, Feats 17, Targets 3, Classics 5. The category sums were re-counted programmatically and match the declared total.</li>
     <li>All three targets are now confirmed by name, including <strong>The Confidence Artist = Ljudmila Vetrova</strong>, which I previously had to mark unverified.</li>
     <li>Five individual Mission Story feats exist (A Lucrative Opportunity, Idle Hands, Take A Deep Breath, The Water Horse, The Shape Changer). The combined \u201cMission Stories - Haven Island\u201d challenge is <em>not</em> in the file.</li>
   </ul>
 
   <h4 class="blk">Corrections from my earlier draft (which used the legacy 70-count)</h4>
   <ul>
-    <li><strong>Removed — not in the file:</strong> Big Brother, No Evidence, Mission Stories - Haven Island (combined), Dress for the Job You Want, Disrupt Portman, Hot Fizzsh, Electric Trilogy, One Too Many, Back to Basics. Some of these appear in older web guides or were HITMAN 2-only; none are present in your current game data, so they're gone.</li>
+    <li><strong>Removed — not in the file:</strong> Big Brother, No Evidence, Mission Stories - Haven Island (combined), Dress for the Job You Want, Disrupt Portman, Back to Basics. These appear in older web guides or were HITMAN 2-only and are not in the v8.7.0 challenge data. <b>Three names have moved off this list:</b> <i>Hot Fizzsh</i>, <i>Electric Trilogy</i> and <i>One Too Many</i> <b>are</b> in the v8.7.0 data and are now tracked — Electric Trilogy on the Run 1 server-room electrocution that already drops all three targets, One Too Many alongside Don't Eat the Buffet on the poison branch of the same setup, and Hot Fizzsh as a new step in the Villa run.</li>
     <li><strong>Re-categorised to match the file:</strong> Do You Even Lift?, Total Server Collapse and Tiki Time are <em>Discovery</em> (I'd had them as Feats). Stolen USB, The Key Maker and Doctor Rieper are <em>Feats</em> (I'd had them as Discovery).</li>
     <li><strong>Spelling:</strong> the exfiltration challenge is \u201cArial Exfiltration\u201d in the file (a game typo), not \u201cAriel\u201d.</li>
   </ul>
@@ -889,7 +898,7 @@ document.getElementById("tab-audit").innerHTML=`
 
   <h4 class="blk">Run validation</h4>
   <ul>
-    <li>Every one of the 67 challenges is assigned to at least one run (see the per-run counter on the run buttons). No duplicates across the checklist.</li>
+    <li>Every one of the 70 challenges is assigned to at least one run (see the per-run counter on the run buttons). No duplicates across the checklist.</li>
     <li>Mutually-exclusive kills are split: the three Bradley-on-scooter variants (Targets Ahoy!, Like Shooting Fish on a Scooter, MS Annihilation) sit in different runs/saves; the two Williams kills (Irregular Heart Rhythm, Common Side Effects) are separated; the SASO electrocution and the gas triple-kill are separate saves within Run 01.</li>
     <li>Disguises and items are obtained before they're needed within each run; the mission-story chain in Run 04 is ordered so no early kill breaks a later script, and Synchronized Drowning's prerequisites are called out where they're set up.</li>
   </ul>
