@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Situs Inversus — 60-Challenge Run Guide (GAMA Private Hospital, Hokkaido)</title>
+<title>Situs Inversus — 61-Challenge Run Guide (GAMA Private Hospital, Hokkaido)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -189,10 +189,10 @@ footer{border-top:1px solid var(--rule);margin-top:40px;padding-top:18px;font-si
   <div class="wrap">
     <p class="eyebrow">HITMAN: World of Assassination · Hokkaido, Japan · Evening</p>
     <h1>Situs Inversus<span class="jp">GAMA PRIVATE HOSPITAL</span></h1>
-    <p class="sub">Seven runs, 60 challenges, every step written for someone who has never seen this map. Challenge names, descriptions, counts, disguises and areas come from your mission data file. Route detail is cross-referenced from guides — anything a source could not confirm is marked <span class="badge b-unver">UNVERIFIED</span> rather than guessed.</p>
+    <p class="sub">Seven runs, 61 challenges, every step written for someone who has never seen this map. Challenge names, descriptions, counts, disguises and areas come from your mission data file. Route detail is cross-referenced from guides — anything a source could not confirm is marked <span class="badge b-unver">UNVERIFIED</span> rather than guessed.</p>
 
     <dl class="meta">
-      <div><dt>Challenges</dt><dd>60</dd></div>
+      <div><dt>Challenges</dt><dd>61</dd></div>
       <div><dt>Chameleon disguises</dt><dd>16</dd></div>
       <div><dt>Areas</dt><dd>31 of 32 needed</dd></div>
       <div><dt>Targets</dt><dd>Soders · Yamazaki</dd></div>
@@ -203,7 +203,7 @@ footer{border-top:1px solid var(--rule);margin-top:40px;padding-top:18px;font-si
       <div class="vitals-top">
         <div>
           <div class="vlabel">Challenges cleared</div>
-          <div class="vnum"><span id="doneCount">0</span><small> / 60</small></div>
+          <div class="vnum"><span id="doneCount">0</span><small> / 61</small></div>
         </div>
         <button class="resetbtn" type="button" id="reset">Reset progress</button>
         <svg class="ecg" viewBox="0 0 600 56" preserveAspectRatio="none" aria-hidden="true">
@@ -256,7 +256,7 @@ footer{border-top:1px solid var(--rule);margin-top:40px;padding-top:18px;font-si
 </main>
 
 <script>
-/* ============ CHALLENGES: 60, verbatim from mission data ============ */
+/* ============ CHALLENGES: 61, verbatim from mission data ============ */
 const CH=[
 /* CLASSIC 5 */
 {id:'c1',cat:'Classic',n:'Silent Assassin',d:'Complete "Situs Inversus." / Only eliminate the targets. / No bodies found. / Do not get spotted.',run:1},
@@ -322,6 +322,7 @@ const CH=[
 {id:'f13',cat:'Feats',n:'Namaste',d:'[REDACTED] — make the people in the spa area meditate.',run:6},
 {id:'f14',cat:'Feats',n:'Techman',d:'[REDACTED] — play the DDR machine as 47.',run:6},
 {id:'f15',cat:'Feats',n:'Guardian Angel',d:'[REDACTED] — stop the Curator taking his own life and finish the mission with him alive.',run:6},
+{id:'f17',cat:'Feats',n:'Hanami Hitman',d:'[REDACTED]',run:6},
 {id:'f16',cat:'Feats',n:'The Groom',d:'Complete a contract. / Eliminate all targets with the katana while disguised as the Motorcyclist. / Only eliminate the targets. / No bodies found. / Do not get spotted. / If detected by cameras, erase or destroy the evidence.',run:7}
 ];
 const CATS=['Classic','Assassination','Discovery','Feats','Targets'];
@@ -762,7 +763,7 @@ const RUNS=[
 {
  id:'run6', tag:'Run 6 of 7', title:'Wardrobe, map and easter eggs',
  sum:'No kill pressure until the very end. All 16 disguises, 31 areas, the four scripted oddities, and the timed Portman opportunity. Must be completed for Guardian Angel.',
- pops:['Kick Back Kimono','Fresh Faced','Armed and Dangerous','Mission Story - Makeover','Chameleon','Discover Hokkaido','Namaste','Techman','Mood Alteration','Guardian Angel'],
+ pops:['Kick Back Kimono','Fresh Faced','Armed and Dangerous','Mission Story - Makeover','Chameleon','Discover Hokkaido','Namaste','Techman','Mood Alteration','Hanami Hitman','Guardian Angel'],
  loadout:{start:"47's Suite (default) — you begin in the VIP Patient kimono", suit:'VIP Patient kimono (the mission default)',
   items:[
    {n:'Smuggled',v:'—',s:'Not needed'},
@@ -859,6 +860,13 @@ const RUNS=[
     act:'Change back into the kimono. Enter the morgue through the staff accommodation route. Lie on the table in front of the entrance door when both guards face the same way, then the one directly behind them, then the one by the stairs, then the one near the Organ Storage entrance when the two doctors are not facing each other.',
     warn:'VIP Patient is trespassing in the morgue, so every table is a timing problem. Save before each one.',
     badges:[{t:'chal',l:'Kick Back Kimono'},{t:'save',l:'SAVE HERE — before each table'}]},
+   {id:'r6s11',t:'Hanami Hitman — the five sits',
+    s:'A self-guided easter egg: sit at the cherry blossom, wait for the lamp to flash pink, follow the pink lights to the next bonsai, repeat. Four stations, five sits.',
+    where:'Restaurant/bar → main-floor security room → morgue security room → staff showers → back to the restaurant.',
+    disg:'None. The default suit works — no disguise is part of the condition. Some guides route it in the Patient outfit; that is convenience for getting through doors, not a requirement.',
+    act:'1) Sit on the sofa by the cherry blossom tree in the restaurant and wait about twenty seconds for the lamp on the table to turn pink. 2) Go to the security room on the main floor, just past the restaurant bathroom, where a small cherry blossom has spawned — sit and wait for the light to blink pink twice (1/4). 3) Repeat at the security room by the morgue (2/4). 4) Repeat at the staff showers, down by the break room near the Nero chip room (3/4). 5) Return to the restaurant tree — Cherry Blossom Baller pistols are hanging in the branches — and sit once more for 4/4.',
+    warn:'KNOWN BUG: the counter can reset to 0/4 if you load an autosave partway through. Do all five sits in one go without loading.',
+    badges:[{t:'chal',l:'Hanami Hitman'},{t:'info',l:'No disguise required — SA is unaffected'},{t:'warn',l:'Do not load a save mid-sequence — the counter resets'}]},
    {id:'r6s10',t:'Kill both targets and exit',
     s:'Guardian Angel only unlocks on mission completion, so you have to finish.',
     where:'Organ Storage — already unguarded thanks to the Curator — then any exit.',
@@ -1123,20 +1131,22 @@ function renderAudit(){
   const assigned=CH.filter(c=>c.run>0).length;
   document.getElementById('audit').innerHTML=
   '<div class="callout jade"><b>Count reconciled against the mission data file</b>'
-  +'The file states <b>challengeCount: 60</b>. Its five categories hold 27 Assassination + 10 Discovery + 16 Feats + 2 Targets + 5 Classic = <b>60</b>. Every one is in the checklist and assigned to exactly one run: <b>'+assigned+'/60 assigned</b>, no duplicates, no orphans.</div>'
+  +'The file states <b>challengeCount: 62</b>. Of those, 61 are real in-game challenges — 27 Assassination + 10 Discovery + 17 Feats + 2 Targets + 5 Classic = <b>61</b> — and the 62nd is the Art of Revenge pack entry <i>Nothing but Clear KAIs</i>, excluded below. Every one is in the checklist and assigned to exactly one run: <b>'+assigned+'/60 assigned</b>, no duplicates, no orphans.</div>'
 
   +'<div class="callout ice"><b>What the data file corrected in the previous draft</b><ul style="margin:6px 0 0;padding-left:18px">'
   +'<li><b>Chameleon is 16 disguises.</b> The plain white Patient gown, the default VIP Patient kimono and the Ninja outfit are excluded. That closes the open question from the last version.</li>'
   +'<li><b>The Classics = Silent Assassin + SASO + Sniper Assassin + Suit Only.</b> There is no "Master Assassin" challenge on this mission.</li>'
   +'<li><b>Cut Throat and Bye-Cicle are Assassination, not Feats.</b> Cut Throat is one target, not five.</li>'
-  +'<li><b>Removed entirely as not part of this mission:</b> Crazy 8, Young Hiro, Hon-Rui Da, Playing with Fire, Hanami Hitman, Nothing but Clear KAIs, Mission Stories - Hokkaido, No Evidence, the Art of Revenge pack, and the twelve legacy start/exit Discovery challenges.</li>'
+  +'<li><b>Removed entirely as not part of this mission:</b> Crazy 8, Young Hiro, Hon-Rui Da, Playing with Fire, Mission Stories - Hokkaido, No Evidence, and the twelve legacy start/exit Discovery challenges.</li>'
+  +'<li><b>Nothing but Clear KAIs</b> is a real challenge but belongs to the <i>Art of Revenge</i> challenge pack, not to this mission\'s own categories. It stays off the 61-item count for the same reason the rest of the pack does.</li>'
+  +'<li><b>Hanami Hitman was previously listed here as removed.</b> That was correct against the old challenge data and is now wrong: the re-extraction from Peacock v8.7.0 carries it as a Feat contract-scoped to Situs Inversus, so it is checklist entry <b>f17</b> and is routed in Run 6. Its in-game condition is [REDACTED]; the five-sit sequence below comes from three independent sources that agree on the rooms and the order.</li>'
   +'<li><b>Discover Hokkaido needs 31 of 32 areas</b>, not all of them.</li>'
   +'<li><b>Mission Story - Malpractice is "Impersonate the role of the Head Surgeon"</b> — wearing Laurent\'s gown. That directly conflicts with (Not) Malpractice, which needs him conscious and operating. Run 5 is split into Branch A and Branch B for exactly this reason.</li>'
   +'</ul></div>'
 
   +'<h4>Run logic validation</h4>'
   +'<table><thead><tr><th>Check</th><th>Result</th></tr></thead><tbody>'
-  +'<tr><td>Every challenge assigned to a run</td><td>60 / 60, no duplicates</td></tr>'
+  +'<tr><td>Every challenge assigned to a run</td><td>61 / 61, no duplicates</td></tr>'
   +'<tr><td>Items picked up before they are used</td><td>Pass — cigarettes before the pack swap (4.1→4.3); wrench before the gas lamp and the cold-water valve; kill list and pilot outfit before Laurent walks (5.1→5.5); neurochip remote before the Curator (5.14, 6.8); screwdriver before the defibrillator and the DDR pad</td></tr>'
   +'<tr><td>Disguises obtained before they are needed</td><td>Pass — Bodyguard before Yamazaki\'s suite; Chef before the sushi; Yoga Instructor before the lesson; Director before Watch Your Back; Surgeon before the kill-list upload; Pilot before the Laurent walk; Chief Surgeon before the robot console; Dexter last, immediately before the final kill and exit</td></tr>'
   +'<tr><td>NPCs still alive when needed later</td><td>Pass — Run 2 explicitly forbids touching the Curator; Run 5 forbids touching Laurent until Branch B; Run 6 requires the Curator alive at mission end</td></tr>'
@@ -1172,7 +1182,7 @@ function renderAudit(){
   +'</ul>'
 
   +'<h4>Sources</h4><ol>'
-  +'<li><b>Supplied mission data file</b> — authoritative for challenge names, descriptions, category split, the 60 total, the 16 disguises and the 32 areas.</li>'
+  +'<li><b>Supplied mission data file</b> — authoritative for challenge names, descriptions, category split, the 61 total, the 16 disguises and the 32 areas.</li>'
   +'<li>Steam Community, "HITMAN: WoA Redacted Challenges Guide" (updated Aug 2025) — the redacted set: A Personal Goodbye, I Think He is Dead Now, Overkill, Namaste, Techman, Guardian Angel, Impossible Heights, We Meet Again.</li>'
   +'<li>Gamepressure Hitman guide — Hokkaido disguises, important items, hospital exploration, and the Yamazaki and Soders kill pages.</li>'
   +'<li>Neoseeker Hitman walkthrough — Hokkaido challenge list, hints (fugu, icicle, cable car), the Silent Ninja route, and the challenge contract setups.</li>'

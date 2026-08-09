@@ -105,7 +105,7 @@ h3.rh{font-family:var(--disp);font-size:28px;text-transform:uppercase;margin:28p
   <div class="meter" role="progressbar" aria-label="Overall completion" aria-valuemin="0" aria-valuemax="100" id="meter">
     <div class="water" id="water" style="height:0%"></div>
     <div class="meter-txt"><div><b id="pctBig">0%</b></div>
-      <div style="text-align:right"><small id="meterLbl">0 of 49 challenges logged</small></div></div>
+      <div style="text-align:right"><small id="meterLbl">0 of 53 challenges logged</small></div></div>
   </div>
   <div class="cats" id="cats"></div>
 </header>
@@ -131,6 +131,10 @@ h3.rh{font-family:var(--disp);font-size:28px;text-transform:uppercase;margin:28p
 const CH=[
 {id:'a1',c:'Assassination',n:'... I Thought About It',d:'[REDACTED] Win the slapping contest so Crest recruits you, then burn him at the oil drum during his private job offer.',run:'Run 2'},
 {id:'a2',c:'Assassination',n:'Ingenuity',d:'Eliminate Crest with a spark of ingenuity — the repaired workshop boat engine.',run:'Run 2'},
+{id:'a18',c:'Assassination',n:'Adding Fuel to the Fire',d:'Eliminate Akka with fire. — Puncture an oil barrel on her route at the pirate base and ignite the oil as she walks through. UNVERIFIED: no source names which barrel.',run:'Run 5'},
+{id:'f10',c:'Feats',n:'Forged in Fire',d:'Light all four braziers while disguised as a metal worker.',run:'Run 4'},
+{id:'f11',c:'Feats',n:'Rotten Fruit',d:'Poison Sinhi “Akka” Venthan with a Durian.',run:'Run 5'},
+{id:'f12',c:'Feats',n:'Maneki-Hitman',d:'[REDACTED] — shoot the five Maneki-neko statues around the island, then use the fishing spot on the pier north of the village.',run:'Run 4'},
 {id:'a3',c:'Assassination',n:'A Kill to Treasure',d:'[REDACTED] Make Akka kick Crest off the lookout cliff.',run:'Run 3'},
 {id:'a4',c:'Assassination',n:'Another for Good Measure',d:'[REDACTED] Blow up Akka with the leaking gas canister while she smokes, right after she kills Crest.',run:'Run 3'},
 {id:'a5',c:'Assassination',n:'Jump Start',d:'[REDACTED] Electrocute Akka in the flooded prison cell at the Pirate Camp.',run:'Run 2'},
@@ -313,8 +317,11 @@ const RUNS=[
     li:[['go','Go to','the treasure chest by the militia-cave entrance (same cave as the satellite unit) \u2014 enter, go right to the small beach, check the dead-end'],['act','Do','open the chest for The Buccaneer outfit (also holds cannonball/gunpowder)'],['dis','Grants','The Buccaneer \u2014 counts toward Chameleon, gives suit-level access'],['warn','Source note','one guide instead places a "Pirate Disguise" chest in the cave northwest of the village \u2014 if the beach chest is empty, check there']],
     ch:['Chameleon (The Buccaneer)'],save:''},
    {t:'Light four braziers, then dig up the Saber',
-    li:[['go','Go to','the four braziers: (1) rocky ledge north of the militia cave, (2) old fort north of the radio tower, (3) beside the rope bridge on the Colonial Ruins side, (4) next to the gravestone on the east beach'],['dis','Wear','Metal Worker if you also want the (patch) Forged in Fire challenge \u2014 not in your file, optional'],['item','Use','a Shovel on the gravestone once all four are lit'],['act','Do','shoot or torch each brazier, then dig for Jarl\u2019s Pirate Saber'],['warn','Skip option','bringing the Saber in your loadout removes the need to light braziers at all']],
-    ch:[],save:'Save after the Saber is in hand.'}
+    li:[['go','Go to','the four braziers: (1) rocky ledge north of the militia cave, (2) old fort north of the radio tower, (3) beside the rope bridge on the Colonial Ruins side, (4) next to the gravestone on the east beach'],['dis','Wear','Metal Worker \u2014 now required, not optional: this is how <b>Forged in Fire</b> banks, and the challenge text names the disguise explicitly'],['item','Use','a Shovel on the gravestone once all four are lit'],['act','Do','pick up a Wooden Torch at the Western Beach start and light all four braziers with it, then dig for Jarl\u2019s Pirate Saber'],['warn','Torch rules','do not throw the torch or pacify anyone with it \u2014 either puts it out. Dropping it is safe, and it can be relit at any brazier already burning'],['warn','Do all four','an old bug let this complete with only three braziers. It was fixed in patch 3.260.1, the build installed here, so all four are genuinely required'],['warn','Skip option','bringing the Saber in your loadout skips the <i>dig</i>, but you still have to light all four braziers for Forged in Fire']],
+    ch:['Forged in Fire'],save:'Save after the Saber is in hand.'},
+   {t:'Maneki-Hitman — five lucky cats, then go fishing',
+    li:[['go','Go to','the five Maneki-neko statues: (1) a small hut in the village, (2) beside the waterfall between the wooden bridge and the Colonial Ruins, (3) on the shrine near the tourist who asks about bio-chemistry, (4) below the water tower on the roof of a village hut, (5) on a rock near the boat exit'],['act','Do','shoot each statue — it bursts in a puff of yellow smoke. They spawn one at a time, so the next only appears once the last is destroyed and the order looks after itself'],['item','Then','use the fishing blend-in at the end of the pier on the beach north of the main village. A giant Maneki-neko rises out of the water, meows, and drops five fish'],['warn','Single source','the five statue positions come from one guide only — the mechanic and the fishing spot are corroborated twice, the positions are not. Treat them as a search list rather than exact coordinates'],['warn','No rod needed','the fishing spot is an existing blend-in prop; nothing goes in your loadout for this']],
+    ch:['Maneki-Hitman'],save:''}
   ]},
   {h:'The prop kills (reload between them)',steps:[
    {t:'Saber both targets in the Buccaneer outfit',
@@ -340,6 +347,14 @@ const RUNS=[
    {t:'Coconut Farah',
     li:[['go','Go to','Farah at her bar'],['item','Use','a coconut from the jungle path off West Beach'],['act','Do','throw it at her to knock her out \u2014 no fetch quest needed, just walk up and throw']],
     ch:['Get It Yourself'],save:''}
+  ]},
+  {h:'Akka, two more ways (reload between them)',steps:[
+   {t:'Rotten Fruit — poison Akka with a Durian',
+    li:[['go','Go to','the pirate village; Akka stands on the balcony above'],['dis','Wear','Chef — subdue the chef and hide him in the kitchen storage container. Recommended by the source route, not required by the challenge'],['item','Carry','a Durian. Two are on the map: in a crate in the food warehouse at Farah’s Place, and on the floor near the submarine exit'],['act','Do','throw the Durian next to Akka on the balcony — it bursts on the railing and poisons her'],['warn','Wording','the challenge says <i>poison</i>, not <i>eliminate</i>. If the poison kills her it also uses up her death for this attempt, so do it on its own reload']],
+    ch:['Rotten Fruit'],save:'Save before the throw.'},
+   {t:'Adding Fuel to the Fire — burn Akka',
+    li:[['go','Go to','the pirate base, on Akka’s patrol route'],['act','Do','puncture an oil barrel on her route and ignite the spilled oil as she walks through it'],['warn','UNVERIFIED','the single source for this says only that there are “several barrels on her route” and names none of them. Which barrel, where her patrol crosses the spill, and what ignites it are not sourced — scout the base and expect to experiment'],['warn','Unlocks','the Oil Canister, which is a large item: to bring it back to another map you need a briefcase, and it has to come in as an agency pickup rather than a hidden stash']],
+    ch:['Adding Fuel to the Fire'],save:'Save before the ignition.'}
   ]}
  ]},
 
@@ -373,15 +388,21 @@ const RUNS=[
 const REF=`
 <div class="notice">
 <h4>How this version was built</h4>
-<p><b>Count.</b> Your mission file lists exactly <b>49 challenges</b> (17 Assassination, 16 Discovery, 9 Feats, 2 Targets, 5 Classics) and the numbers sum cleanly. This planner matches that file one-to-one \u2014 no invented entries, no difficulty-tier duplicates. The earlier "53" and "62" figures are discarded.</p>
-<p><b>Four live challenges are NOT in your file</b> and are therefore excluded from the checklist and progress count: Forged in Fire, Rotten Fruit, Adding Fuel to the Fire, and Maneki-Hitman. These verifiably exist in the current game (added by patch between Apr 2024 and Jan 2025) but are absent from your file, so per your "never assume" instruction they are listed here only, not counted. If your in-game total is 53, these four plus your 49 would be the likely source \u2014 confirm in-game.</p>
+<p><b>Count.</b> The v8.7.0 challenge data lists <b>53 challenges</b> (18 Assassination, 16 Discovery, 12 Feats, 2 Targets, 5 Classics) and the numbers sum cleanly. This planner matches that file one-to-one \u2014 no invented entries, no difficulty-tier duplicates. The earlier "53" and "62" figures are discarded.</p>
+<p><b>Those four challenges are now in the data and are counted.</b> Forged in Fire, Rotten Fruit, Adding Fuel to the Fire and Maneki-Hitman were previously excluded for being absent from the challenge file. The re-extraction from <b>Peacock v8.7.0</b> carries all four on this mission, taking the total from 49 to <b>53</b> &mdash; exactly the in-game number this section previously predicted. They are routed in Runs 4 and 5.</p>
+<p><b>What is still unverified about them.</b> Two are solid: <i>Forged in Fire</i> (four braziers, Metal Worker, wooden torch) and <i>Rotten Fruit</i> (Durian thrown at Akka on the pirate-village balcony) are each carried by two independent sources, and Rotten Fruit additionally by IOI's own announcement. Two are not:</p>
+<ul>
+<li><b>Adding Fuel to the Fire</b> &mdash; every source traces back to one guide, which says only that you puncture an oil barrel at the pirate base and light it as Akka passes, and explicitly declines to name a barrel because “there are several on her route”. Which barrel, where her patrol crosses it, and what ignites the oil are all <b>UNVERIFIED</b>. The step says what is sourced and nothing more.</li>
+<li><b>Maneki-Hitman</b> &mdash; the mechanic and the fishing spot are corroborated twice, but <b>the five statue locations rest on a single guide</b> and are marked as such. The statues spawn one at a time, so the order looks after itself.</li>
+</ul>
+<p><b>One conflict on the braziers.</b> The tombstone brazier is placed on the <b>east</b> beach by one source and <b>west / south-west</b> by three others. The route below keeps the wording already here; if it is not on the east side, sweep west of the Western Beach start.</p>
 <p><b>Mission Stories.</b> Ambrose Island has none (it is one of three WoA maps without them). There is no "Hero of Ambrose Island" challenge and no mandatory story order. The ordering rules below are scripted-event constraints, not Mission-Story chains.</p>
 <p><b>XP.</b> Omitted \u2014 no per-challenge XP figure could be verified against two sources, so none are invented.</p>
 </div>
 
 <h3 class="rh">Run validation (simulated before output)</h3>
 <div class="detail"><dl>
-<dt>Coverage</dt><dd>All 49 challenges are assigned. 46 sit in a run; Versatile Assassin, The Ronin, and The Corsair are cumulative (they complete as their component kills happen across Runs 2\u20135).</dd>
+<dt>Coverage</dt><dd>All 53 challenges are assigned. 46 sit in a run; Versatile Assassin, The Ronin, and The Corsair are cumulative (they complete as their component kills happen across Runs 2\u20135).</dd>
 <dt>Satellite pair</dt><dd>Elegant Neutralization (overload) is in Run 1; Destructive Neutralization (destroy) is in Run 4. Separated \u2014 they cannot coexist in one run.</dd>
 <dt>Summit pair</dt><dd>Two Birds vs A Kill to Treasure + Another for Good Measure share one meeting. Both are in Run 3, split by a hard-save reload. Verified separable.</dd>
 <dt>Crest kills</dt><dd>All six Crest methods are in Run 2 (plus saber/hook/wire/sniper elsewhere), each reached from one anchor save. He dies once per reload.</dd>

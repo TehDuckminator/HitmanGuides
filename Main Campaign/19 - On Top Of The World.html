@@ -176,7 +176,7 @@ a{color:var(--sand)}
 <section class="tracker" id="tracker">
   <div class="tracker-top">
     <div><div class="eyebrow">Progress</div>
-    <div class="bigcount"><span id="tDone">0</span><small> / <span id="tTotal">58</span> challenges</small></div></div>
+    <div class="bigcount"><span id="tDone">0</span><small> / <span id="tTotal">60</span> challenges</small></div></div>
     <button class="reset" id="reset">Reset all</button>
   </div>
   <div class="bar"><i id="tBar"></i></div>
@@ -201,7 +201,7 @@ a{color:var(--sand)}
 <div class="panel" id="p-ref" role="tabpanel" aria-labelledby="tab-ref" hidden></div>
 
 <footer>
-  Ground truth: the in-game challenge export supplied by the user (58 challenges, official descriptions). Method detail cross-referenced from PowerPyx, SegmentNext, Gamepressure, Neoseeker, GameActuality, GoSuNoob, Gamepur, GamesRadar, Shacknews, TheGamer, ScreenRant, GamerJournalist, Gamers Heroes, PCGamesN, Gameranx; mastery table from TheSixthAxis + Attack of the Fanboy + DBLTAP (three-way agreement); save/reload mechanic and consumable counts from Steam community threads (labelled where used). Guard names and full XP tables are not published and are not invented here.
+  Ground truth: the in-game challenge export supplied by the user (60 challenges, official descriptions). Method detail cross-referenced from PowerPyx, SegmentNext, Gamepressure, Neoseeker, GameActuality, GoSuNoob, Gamepur, GamesRadar, Shacknews, TheGamer, ScreenRant, GamerJournalist, Gamers Heroes, PCGamesN, Gameranx; mastery table from TheSixthAxis + Attack of the Fanboy + DBLTAP (three-way agreement); save/reload mechanic and consumable counts from Steam community threads (labelled where used). Guard names and full XP tables are not published and are not invented here.
 </footer>
 </div>
 
@@ -218,6 +218,8 @@ const CHALLENGES = [
  ["conserv","Conserving Ammunition","Assassination","Eliminate both targets with a single bullet using a sniper rifle.","",""],
  ["steep","Steep Task","Assassination","Eliminate Carl Ingram by pushing, dumping or pulling him over a ledge or railing.","",""],
  ["icarus","Icarus","Assassination","Electrocute Marcus Stuyvesant using the sun at the art installation.","4000",""],
+ ["skyhigh","Sky-High Voltage","Assassination","Simultaneously eliminate Carl Ingram and Marcus Stuyvesant by electrocution.","","Both must die by electrocution within a few seconds of each other; they can be in different rooms."],
+ ["dagger","Dagger! Dagger!","Assassination","Eliminate Carl Ingram and Marcus Stuyvesant with a Janbiya Knife. / Prepare and add the knife to your loadout when planning. / The Janbiya knife can be unlocked by getting Mastery Level 10 on Marrakesh.","",""],
  ["piano","Piano Man","Assassination","Assassinate a target with the fiber wire.","",""],
  ["versatile","Versatile Assassin","Assassination","Complete these Versatile challenges: Piano Man, Someone Could Hurt Themselves, Hold My Hair, Straight Shot, Tasteless Traceless.","",""],
  ["tasteless","Tasteless, Traceless","Assassination","Assassinate a target with lethal poison.","",""],
@@ -646,9 +648,27 @@ const RUNS=[
     where:"Anywhere with a clean shot or a behind-the-back approach.",item:"Fiber wire (Piano Man); any firearm (Straight Shot)",npc:"Either target",
     action:"If not already banked in Runs 4\u20135: fiber-wire a target for Piano Man and headshot one for Straight Shot. Versatile Assassin fires once Piano Man, Someone Could Hurt Themselves, Hold My Hair, Straight Shot and Tasteless, Traceless are all done — it does not need them in one run.",
     badges:[{c:"ch",x:"Piano Man"},{c:"ch",x:"Straight Shot"},{c:"ch",x:"Versatile Assassin"}]}
+  ]},
+  {name:"Both targets, one method — two more reloads", steps:[
+   {floor:"any",t:"Sky-High Voltage — both targets electrocuted at once",
+    sum:"Two electrocution kills that land within a few seconds of each other. They do not have to be in the same room.",
+    where:"Anywhere you can rig water and current for each target. Ingram's penthouse and Stuyvesant's gallery floor both have usable setups.",
+    item:"Any electrocution method — a wet floor plus a live wire, or the RFID Triggered Taser once you own it.",
+    npc:"Carl Ingram and Marcus Stuyvesant",
+    action:"“Simultaneously” is generous here: the rule is that both deaths register within a few seconds, not that they happen in the same place. Prepare one electrocution trap for each target, then set them off back to back. Completing this unlocks the RFID Triggered Taser.",
+    warn:"Both targets die in this attempt by one specific method, so it cannot share a run with Icarus, Steep Task, the sniper Classics or Dagger! Dagger!. Reload afterwards.",
+    badges:[{c:"ch",x:"Sky-High Voltage"},{c:"ch",x:"Eliminate Carl Ingram"},{c:"ch",x:"Eliminate Marcus Stuyvesant"},{c:"save",x:"SAVE HERE — both traps set"}]},
+   {floor:"any",t:"Dagger! Dagger! — both targets with the Janbiya Knife",
+    sum:"Bring the Janbiya and knife both targets. Nothing else about the route matters.",
+    where:"Anywhere you can get behind or beside each target.",
+    item:"Janbiya Knife — a loadout item, added when planning. Unlocked at Marrakesh Mastery 10.",
+    npc:"Carl Ingram and Marcus Stuyvesant",
+    action:"Add the Janbiya to your loadout before starting — it cannot be found on this map. Kill Ingram and Stuyvesant with it, in either order.",
+    warn:"If you do not have Marrakesh Mastery 10, this challenge is simply not attemptable yet; the game states the unlock in the challenge text itself. Mutually exclusive with the other kill-method challenges above.",
+    badges:[{c:"ch",x:"Dagger! Dagger!"},{c:"ch",x:"Eliminate Carl Ingram"},{c:"ch",x:"Eliminate Marcus Stuyvesant"}]}
   ]}
  ],
- pops:["icarus","cashing","steep","night","meetstuy","precious","palette","poison","tasteless","hotone","hold","disturb","angry","piano","straight","versatile","t_ingram","t_stuy"],
+ pops:["icarus","cashing","steep","night","meetstuy","precious","palette","poison","tasteless","hotone","hold","disturb","angry","piano","straight","versatile","skyhigh","dagger","t_ingram","t_stuy"],
  excl:"Icarus, Cashing Out and Steep Task each need the opening minutes — separate attempts. All Ingram kill methods here are mutually exclusive; reload between each."
 }
 ];

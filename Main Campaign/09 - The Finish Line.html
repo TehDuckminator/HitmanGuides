@@ -144,7 +144,7 @@ body{background:var(--bg);color:var(--tx);font-family:'Inter',sans-serif;font-si
     <div>
       <div class="eyebrow">ICA Dossier · Miami, Florida · Mission 02</div>
       <div class="ttl">The Finish Line</div>
-      <div class="sub">Built from the game's own challenge manifest · 78 challenges</div>
+      <div class="sub">Built from the game's own challenge manifest · 77 challenges</div>
     </div>
     <div class="stamp">Manifest-Sourced</div>
   </div>
@@ -167,7 +167,7 @@ body{background:var(--bg);color:var(--tx);font-family:'Inter',sans-serif;font-si
     <div class="sblk">
       <div class="slbl">View</div>
       <button class="nb on" id="b-r" onclick="tab('r')"><span>Optimized Runs</span><span class="nbc">6</span></button>
-      <button class="nb" id="b-c" onclick="tab('c')"><span>Challenge Roster</span><span class="nbc">78</span></button>
+      <button class="nb" id="b-c" onclick="tab('c')"><span>Challenge Roster</span><span class="nbc">77</span></button>
       <button class="nb" id="b-a" onclick="tab('a')"><span>Audit &amp; Notes</span><span class="nbc">i</span></button>
     </div>
     <div class="sblk"><div class="slbl">By Category</div><div id="cats"></div></div>
@@ -246,7 +246,7 @@ const CH=[
 {c:"D",n:"Mr. Tambourine Man",d:"",redacted:true,hint:"Earlier research: take the street musician's outfit in the undercrossing left of the default start, then play the drums."},
 {c:"D",n:"Discover Miami",d:"Reveal all undiscovered areas in Miami."},
 {c:"D",n:"Coconut Balls",d:"Disguise yourself as Florida Man.",hint:"Part of Mission Story - The Munchies."},
-{c:"D",n:"Dolphin (localized name)",d:"",redacted:true,hint:"Manifest stores this as UI_PEACOCK_CHALLENGES_MIAMI_DOLPHIN_NAME with a redacted description — a real 21st Discovery challenge whose display name did not resolve in the file. This is the entry that explains why your game shows Discovery 21 while the wiki said 20."},
+
 // FEATS (21) — includes the 8 Mission Stories
 {c:"F",n:"Mission Story - Intravenous",d:"Sierra Knox is due for an intravenous revitalization treatment at the emergency area. Interesting, 47.",ms:true},
 {c:"F",n:"Mission Story - The Munchies",d:"Robert Knox's favorite street food vendor has a stand at the race. Sounds promising.",ms:true},
@@ -456,7 +456,8 @@ return '<div class="cwrap"><div class="crow" onclick="tab(\'c\')">'+
 const redCount=CH.filter(x=>x.redacted).length;
 const msCount=CH.filter(x=>x.ms).length;
 document.getElementById('audit').innerHTML=
-'<div class="conf"><b>Counts reconcile exactly with the manifest.</b> 29 Assassination + 21 Discovery + 21 Feats + 2 Targets + 5 Classics = <b>78</b>, matching the file\'s challengeCount. Every name and category on this page is verbatim from the manifest.</div>'+
+'<div class="conf"><b>The 78th entry is not a game challenge.</b> The manifest carries <i>Call of the Blue</i> on Miami under the key <code>UI_PEACOCK_CHALLENGES_MIAMI_DOLPHIN_NAME</code>. That name appears nowhere in the 28,063 English localisation strings shipped with the retail game, the text for it exists only in the locale file belonging to the Peacock server, and its description field borrows the key of an unrelated Sapienza challenge. The Peacock release history records adding it, and the challenge object is tagged <code>peacock</code> — a tag carried by only six of the thousands of entries in the data. A PS5 player who asked about it on Reddit was told the same thing. The underlying <b>dolphin exit is real</b> and can still be used; the challenge attached to it is not something IO Interactive ships, so it has been dropped from this roster rather than left as a target that cannot be completed.</div>'+
+'<div class="conf"><b>Counts reconcile exactly with the manifest.</b> 29 Assassination + 20 Discovery + 21 Feats + 2 Targets + 5 Classics = <b>77</b>. The manifest reports 78, but one of those entries is not a game challenge (see the note below). This reconciles against the file\'s challengeCount. Every name and category on this page is verbatim from the manifest.</div>'+
 '<div class="sec"><div class="sh"><span class="st2 clF">Corrections this manifest forced</span></div>'+
 '<div class="cd2" style="line-height:1.9">'+
 '<b>Hold My Hair</b> is <b>drowning</b>, not a fiber-wire kill — every earlier build had this wrong.<br>'+

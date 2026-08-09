@@ -173,7 +173,7 @@ footer{border-top:1px solid #3a4742;margin-top:50px;padding-top:20px;color:var(-
 
 <header class="mast">
   <p class="eyebrow">Thornbridge Manor · Devon · Case File 02</p>
-  <h1>Death in the Family<em>All 58 challenges, routed into seven runs</em></h1>
+  <h1>Death in the Family<em>All 59 challenges, routed into seven runs</em></h1>
   <p class="mast-note">A multi-run completion guide for Dartmoor in HITMAN World of Assassination, rebuilt against the mission's own challenge export. Every step lists where to go, what to wear, what to carry, who's involved and what to do. Uncertain claims are tagged, not guessed.</p>
 </header>
 
@@ -207,7 +207,7 @@ footer{border-top:1px solid #3a4742;margin-top:50px;padding-top:20px;color:var(-
 <div class="panel prose" id="p-audit"></div>
 
 <footer>
-  Primary source: the mission's in-game challenge export (58 challenges). Corroborating sources: Hitman Wiki (<em>Death in the Family/Challenges</em>, <em>It's a Fhammerly Affair</em>, <em>Voyeurism</em>); PowerPyx Dartmoor challenge / area / shortcut / mission-story / SASO pages; DBLTAP mastery list; Gamepur; TheGamer; ScreenRant; a community Steam walkthrough. Progress lives only in this page and resets on reload.
+  Primary source: the mission's in-game challenge export (59 challenges). Corroborating sources: Hitman Wiki (<em>Death in the Family/Challenges</em>, <em>It's a Fhammerly Affair</em>, <em>Voyeurism</em>); PowerPyx Dartmoor challenge / area / shortcut / mission-story / SASO pages; DBLTAP mastery list; Gamepur; TheGamer; ScreenRant; a community Steam walkthrough. Progress lives only in this page and resets on reload.
 </footer>
 
 </div>
@@ -219,7 +219,7 @@ footer{border-top:1px solid #3a4742;margin-top:50px;padding-top:20px;color:var(-
    gave it; [REDACTED] entries use the community-documented method.
    ============================================================ */
 const CH = [
-/* ASSASSINATION (12) */
+/* ASSASSINATION (13) */
 {id:'adf',cat:'ass',name:'Another Death in the Family',cond:'Let Emma poison Alexa herself (official text redacted in-game).',xp:'4,000'},
 {id:'ota',cat:'ass',name:'One for the Ages',cond:'Electrocute Alexa Carlisle during the photo shoot.',xp:''},
 {id:'amoose',cat:'ass',name:'I Find This Amoosing',cond:'Kill Alexa with the antler chandelier (official text redacted in-game).',xp:''},
@@ -232,6 +232,7 @@ const CH = [
 {id:'ssh',cat:'ass',name:'Straight Shot',cond:'Assassinate the target with a headshot.',xp:''},
 {id:'piano',cat:'ass',name:'Piano Man',cond:'Assassinate the target with the fiber wire.',xp:''},
 {id:'tt',cat:'ass',name:'Tasteless, Traceless',cond:'Assassinate the target with lethal poison.',xp:''},
+{id:'fullbodied',cat:'ass',name:'Full-Bodied',cond:'Eliminate 3 targets with the open grave. — CONTRACTS MODE ONLY: this mission has one target, so three requires a custom contract.',xp:''},
 
 /* DISCOVERY (19) */
 {id:'tup',cat:'dis',name:'Tuppence',cond:'Obtain both Milton-Fitzpatrick bank tokens.',xp:''},
@@ -1092,20 +1093,25 @@ document.getElementById('p-audit').innerHTML = `
 <p>This version is rebuilt around the mission's own challenge export you supplied, which is the strongest source available and replaces the earlier web-guide counts.</p>
 
 <h3>Count reconciliation</h3>
-<p>The in-game export lists <strong>58</strong> challenges:</p>
+<p>The v8.7.0 challenge data lists <strong>59</strong> challenges:</p>
 <table>
 <tr><th>Category</th><th>Count</th><th>Running total</th></tr>
-<tr><td>Assassination</td><td>12</td><td>12</td></tr>
-<tr><td>Discovery</td><td>19</td><td>31</td></tr>
-<tr><td>Feats</td><td>21</td><td>52</td></tr>
-<tr><td>Targets</td><td>1</td><td>53</td></tr>
-<tr><td>The Classics</td><td>5</td><td><strong>58</strong></td></tr>
+<tr><td>Assassination</td><td>13</td><td>13</td></tr>
+<tr><td>Discovery</td><td>19</td><td>32</td></tr>
+<tr><td>Feats</td><td>21</td><td>53</td></tr>
+<tr><td>Targets</td><td>1</td><td>54</td></tr>
+<tr><td>The Classics</td><td>5</td><td><strong>59</strong></td></tr>
 </table>
 <div class="callout"><b>Correction from the previous draft (59 &rarr; 58)</b>
 The earlier draft used web guides that predate the Season of Envy update. Two errors are now fixed against the export:
 <br>&bull; <strong>The two "Percival Passage" feats were removed.</strong> They belong to a separate escalation contract, not this mission's challenge list. PowerPyx counted them as mission feats (giving 22); the export does not (giving 21).
 <br>&bull; <strong>"It's a Fhammerly Affair" was added.</strong> It is in the export's feats and was missing from the older guides. Net feats: 21, net total 58.
 <br><br>If your in-game screen shows a different number, trust the game &mdash; category counts can shift with updates.</div>
+
+<div class="callout"><b>Update (58 &rarr; 59): <i>Full-Bodied</i> added, and it is Contracts Mode only</b>
+The re-extraction from Peacock v8.7.0 carries a thirteenth Assassination challenge on this mission: <strong>Full-Bodied</strong>, "Eliminate 3 targets with the open grave."
+<br><br><strong>It cannot be done in the campaign.</strong> Death In The Family has exactly one target, so a challenge naming three can only be satisfied in Contracts Mode with a custom contract. Two independent sources describe the same route: search Contracts Mode for a "Full-Bodied" contract targeting <strong>Leonard Parsons and the two gardeners</strong>, take a gardener disguise, and use coins at the lip of the open grave to lure each target close enough to kick in. Players report an easy Silent Assassin on it.
+<br><br>It is on the checklist for completeness but is deliberately <strong>not routed</strong>, in the same way as the other challenges here that need a custom contract. The exact contract you find will vary, so no contract ID is given.</div>
 
 <h3>Descriptions corrected against the export</h3>
 <ul>
