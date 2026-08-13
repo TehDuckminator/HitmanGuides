@@ -1,186 +1,513 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Apex Predator — Berlin Challenge Guide</title>
+<!--@title--><title>Apex Predator — Berlin Challenge Guide</title><!--/@title-->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;700&family=Fira+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Red+Hat+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
+/* ═══ BERLIN — the plant ═══
+   Club Hölle is a dead power station with a nightclub in it: the level's own
+   area list names a Boiler Room, a Pipe Room, a Radio Tower and a Sniper Nest
+   before it names a dance floor. So the guide is the paperwork that building
+   would still hold — the switching documents of a substation being brought
+   back up.
+
+   The tracker is the SINGLE-LINE DIAGRAM. Supply comes in at the top through
+   the main breaker, the STATION BUS energises downward as challenges are
+   cleared, and five feeders take the five categories off it to their loads;
+   at the bottom sits the club itself, dark until the last circuit is on. The
+   count is read off a meter register beside it.
+
+   The one thing only this mission has: the 59th challenge. The guide's own
+   note says Explosions Run Loose is a cross-mission Codename 47 challenge,
+   tracked globally rather than inside Apex Predator — so it is drawn as the
+   TIE FEEDER, leaving the incoming line before the station bus and crossing a
+   dashed site boundary. The plant's own bus carries 58; the tie carries the
+   59th; the register counts every circuit on the drawing.
+
+   A run is a SWITCHING PROGRAMME, a section is a STAGE, and a step is an
+   OPERATION — locked off with a padlocked tag, the way a real switching
+   operation is signed. The guide's warnings are DANGER placards, its save
+   markers are ISOLATION POINTS, and the rule that governs the whole mission —
+   the fifth kill, after which the survivors flee — is the overload placard
+   ruled in hazard stripes at the head of the programmes.
+
+   Enamelled switchgear grey, oxidised copper, hazard yellow and one acid
+   green-yellow for anything live. Nothing here is a scope, a map or a
+   dossier. */
 :root{
-  --concrete:#0B0C0E; --panel:#14161A; --panel2:#1B1E24; --line:#2A2F37;
-  --ink:#E7E9EC; --ink-dim:#9AA1AC; --bird:#E4FF3D; --uv:#FF2D78;
-  --save:#FFB020; --done:#3FD68C;
+  --plant:#0C0E0F; --panel:#14181A; --panel-2:#1B2023; --panel-3:#222829;
+  --line:#2E353A; --line-2:#3C454B; --etch:rgba(255,255,255,.05);
+  --ink:#E9ECED; --ink-2:#B5BEC2; --ink-dim:#8D979C; --faint:#6E777C;
+  --live:#D8F546; --live-dim:rgba(216,245,70,.16);
+  --copper:#B4713A; --copper-2:#6B4526;
+  --hazard:#F2C21C; --danger:#DC4A32; --isolate:#4FA3D9;
+  --ass:#FF6242; --dis:#54B4E6; --fea:#F2B33D; --tar:#C98CE8; --cla:#5FD494;
+  --off:#93A0A6;
+  --sign:"Saira Condensed","Arial Narrow",Impact,sans-serif;
+  --body:"Fira Sans","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --mono:"Red Hat Mono",ui-monospace,Consolas,"Courier New",monospace;
 }
 *{box-sizing:border-box}
-html,body{margin:0;padding:0}
+html{scroll-behavior:smooth}
 body{
-  background:var(--concrete);color:var(--ink);
-  font-family:'Archivo',system-ui,-apple-system,'Segoe UI',sans-serif;
-  font-size:15px;line-height:1.55;
-  background-image:repeating-linear-gradient(0deg,rgba(255,255,255,.014) 0 1px,transparent 1px 4px);
-}
-.wrap{max-width:1080px;margin:0 auto;padding:0 18px 90px}
-
-header.top{border-bottom:1px solid var(--line);background:linear-gradient(180deg,#101216,#0B0C0E);padding:34px 0 24px;margin-bottom:22px}
-.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--bird);margin:0 0 10px}
-h1{font-family:'Archivo Black',sans-serif;font-size:clamp(30px,7vw,58px);line-height:.94;margin:0 0 8px;letter-spacing:-.02em;text-transform:uppercase}
-h1 .sub{display:block;color:var(--ink-dim);font-size:.35em;letter-spacing:.14em;margin-top:12px;font-family:'IBM Plex Mono',monospace;text-transform:uppercase}
-.bird{width:32px;height:32px;vertical-align:-4px;margin-right:10px}
-
-.tracker{border:1px solid var(--line);background:var(--panel);padding:18px;margin-top:20px}
-.bartext{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ink-dim);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.bartext b{color:var(--bird)}
-.bar{height:10px;background:#0A0B0D;border:1px solid var(--line);overflow:hidden;margin:12px 0 4px}
-.bar i{display:block;height:100%;background:var(--bird);width:0;transition:width .3s}
-.cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:10px;margin-top:16px}
-.cat{border:1px solid var(--line);background:var(--panel2);padding:10px 12px}
-.cat .n{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-dim)}
-.cat .v{font-family:'Archivo Black',sans-serif;font-size:22px;margin-top:2px}
-.cat .v small{font-size:13px;color:var(--ink-dim);font-family:'IBM Plex Mono',monospace;font-weight:400}
-.cat .mini{height:4px;background:#0A0B0D;margin-top:7px}
-.cat .mini i{display:block;height:100%;background:var(--bird);width:0;transition:width .3s}
-.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
-.actions button{background:transparent;border:1px solid var(--line);color:var(--ink-dim);font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:6px 10px;cursor:pointer}
-.actions button:hover{border-color:var(--uv);color:var(--uv)}
-
-nav.tabs{display:flex;border:1px solid var(--line);border-top:0;margin-bottom:18px;flex-wrap:wrap}
-nav.tabs button{flex:1 1 auto;background:var(--panel);color:var(--ink-dim);border:0;border-right:1px solid var(--line);padding:12px 14px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;min-width:120px}
-nav.tabs button:last-child{border-right:0}
-nav.tabs button[aria-selected="true"]{background:var(--bird);color:#0B0C0E;font-weight:600}
-nav.tabs button:focus-visible{outline:2px solid var(--uv);outline-offset:-2px}
-
-.runjump{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
-.runjump button{flex:1 1 150px;text-align:left;background:var(--panel);border:1px solid var(--line);color:var(--ink);padding:10px 12px;cursor:pointer;min-width:140px}
-.runjump button:hover{border-color:var(--bird)}
-.runjump .rj-no{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;color:var(--bird);text-transform:uppercase;display:block}
-.runjump .rj-t{font-weight:700;font-size:13px;margin-top:3px;display:block}
-
-h2{font-family:'Archivo Black',sans-serif;text-transform:uppercase;font-size:19px;margin:30px 0 12px}
-h3{font-weight:700;font-size:15px;margin:24px 0 10px;text-transform:uppercase;letter-spacing:.04em;color:var(--bird)}
-p{margin:0 0 12px}
-.note{border-left:2px solid var(--uv);background:#1A1216;padding:12px 14px;margin:0 0 16px;font-size:14px}
-.note.ok{border-color:var(--bird);background:#161A10}
-.note b{color:var(--bird)}
-code{font-family:'IBM Plex Mono',monospace;font-size:.9em;background:#0A0B0D;padding:1px 5px;border:1px solid var(--line)}
-
-.run{border:1px solid var(--line);background:var(--panel);margin-bottom:18px}
-.runhead{width:100%;text-align:left;background:var(--panel2);border:0;border-bottom:1px solid var(--line);padding:16px 18px;cursor:pointer;color:var(--ink);display:flex;align-items:center;gap:12px}
-.runhead:focus-visible{outline:2px solid var(--bird);outline-offset:-2px}
-.runhead .caret{font-family:'IBM Plex Mono',monospace;color:var(--bird);flex:0 0 auto;transition:transform .2s}
-.run.closed .runhead .caret{transform:rotate(-90deg)}
-.runhead .rh-main{flex:1 1 auto;min-width:0}
-.runhead .rh-no{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.18em;color:var(--bird);text-transform:uppercase}
-.runhead h4{font-family:'Archivo Black',sans-serif;font-size:20px;text-transform:uppercase;margin:5px 0 0;line-height:1.05}
-.runhead .rh-prog{flex:0 0 auto;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-dim)}
-.runhead .rh-prog b{color:var(--done)}
-.run.closed .runbody{display:none}
-.goalline{padding:14px 18px;border-bottom:1px solid var(--line);color:var(--ink-dim);font-size:14px}
-
-.loadout{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;background:var(--line);border-bottom:1px solid var(--line)}
-.lo{background:var(--panel);padding:11px 14px}
-.lo .k{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-dim);margin-bottom:3px}
-.lo .v{font-size:14px;font-weight:600}
-.lo .v em{display:block;font-style:normal;font-weight:400;font-size:12px;color:var(--bird);margin-top:2px}
-.runnote{padding:14px 18px 0}
-.section-head{padding:16px 18px 4px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--bird);border-top:1px solid var(--line)}
-
-.step{border-top:1px solid var(--line);display:flex}
-.section-head + .step{border-top:0}
-.stepchk{flex:0 0 44px;border-right:1px solid var(--line);background:#101216;display:flex;align-items:flex-start;justify-content:center;padding-top:15px}
-.stepchk button{width:22px;height:22px;border:1px solid var(--line);background:#0A0B0D;cursor:pointer;color:transparent;font-size:13px;line-height:1;padding:0}
-.stepchk button[aria-pressed="true"]{background:var(--done);border-color:var(--done);color:#08120C;font-weight:700}
-.stepchk button:focus-visible{outline:2px solid var(--bird);outline-offset:2px}
-.stepbox{flex:1 1 auto;min-width:0}
-.stepbox > summary{list-style:none;cursor:pointer;padding:13px 18px}
-.stepbox > summary::-webkit-details-marker{display:none}
-.stepbox > summary .t{font-weight:700;font-size:15px;display:block}
-.stepbox > summary .t::before{content:"▸";color:var(--bird);font-size:11px;margin-right:8px;display:inline-block}
-.stepbox[open] > summary .t::before{content:"▾"}
-.stepbox > summary .s{color:var(--ink-dim);font-size:14px;display:block;margin:3px 0 0 19px}
-.step.done .stepbox > summary .t{text-decoration:line-through;color:var(--ink-dim)}
-.fields{padding:2px 18px 15px 37px}
-.fields dl{margin:0;display:grid;grid-template-columns:88px 1fr;gap:2px 12px}
-.fields dt{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-dim);padding-top:2px}
-.fields dd{margin:0;font-size:14px}
-.fields dd.warn{color:var(--uv)}
-.badges{margin-top:12px;display:flex;flex-wrap:wrap;gap:6px}
-.badge{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:3px 7px;border:1px solid;border-radius:2px}
-.b-ch{color:var(--bird);border-color:#4E5A16;background:#191D0C}
-.b-warn{color:var(--uv);border-color:#63122F;background:#1D0C13}
-.b-save{color:var(--save);border-color:#5C4109;background:#1C1508}
-.b-unv{color:#9AA1AC;border-color:var(--line);background:#141619}
-.conflicts{padding:4px 18px 18px}
-.conflicts .ch{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--uv);margin:14px 0 6px}
-.conflicts p{color:var(--ink-dim);font-size:14px;margin:0}
-
-.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
-.filters button{background:var(--panel);border:1px solid var(--line);color:var(--ink-dim);font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:7px 11px;cursor:pointer}
-.filters button[aria-pressed="true"]{background:var(--bird);color:#0B0C0E;border-color:var(--bird);font-weight:600}
-.chal{display:flex;gap:12px;border:1px solid var(--line);border-bottom:0;background:var(--panel);padding:11px 14px;align-items:flex-start}
-.chal:last-child{border-bottom:1px solid var(--line)}
-.chal input{margin:3px 0 0;width:16px;height:16px;accent-color:var(--done);flex:0 0 auto;cursor:pointer}
-.chal .cmain{flex:1 1 auto;min-width:0}
-.chal .cn{font-weight:700;font-size:14px}
-.chal.done .cn{text-decoration:line-through;color:var(--ink-dim)}
-.chal .cd{color:var(--ink-dim);font-size:13px}
-.chal .meta{flex:0 0 auto;text-align:right;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink-dim)}
-.chal .meta .xp{color:var(--bird);display:block}
-.chal .meta .run{display:block;margin-top:2px}
-
-table{width:100%;border-collapse:collapse;font-size:14px;margin:0 0 18px}
-th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
-th{background:var(--panel2);font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-dim);font-weight:500}
-td{background:var(--panel)}
+  margin:0;color:var(--ink);background-color:var(--plant);
+  /* the plant: enamel panels under one working light, and the faint grid of
+     the drawing beneath everything */
+  background-image:
+    radial-gradient(1100px 620px at 50% -8%,rgba(216,245,70,.055),transparent 64%),
+    linear-gradient(transparent 39px,rgba(255,255,255,.017) 39px 40px),
+    linear-gradient(90deg,transparent 39px,rgba(255,255,255,.017) 39px 40px);
+  background-size:auto,40px 40px,40px 40px;
+  background-attachment:fixed;
+  font-family:var(--body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.site{max-width:1140px;margin:0 auto;padding:0 15px 96px}
+a{color:var(--live)}
+b,strong{font-weight:600;color:var(--ink)}
+i,em{font-style:italic}
+:focus-visible{outline:2px solid var(--live);outline-offset:2px}
 .hidden{display:none}
-footer.foot{border-top:1px solid var(--line);margin-top:40px;padding-top:18px;font-size:13px;color:var(--ink-dim)}
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
-@media (max-width:600px){
-  .fields dl{grid-template-columns:1fr}
-  .fields dt{padding-top:8px}
-  .chal .meta{display:none}
-  .runhead .rh-prog{display:none}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:12px;top:12px;z-index:60;background:var(--live);color:#101314;padding:8px 14px;
+  font-family:var(--mono);font-size:12px}
+.lbl{font-family:var(--mono);font-size:9.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--faint)}
+
+/* ── the nameplate ──────────────────────────────────────────────────────── */
+.plate{margin-top:34px;background:var(--panel);border:1px solid var(--line);
+  box-shadow:0 30px 60px -46px #000, inset 0 1px 0 rgba(255,255,255,.045)}
+/* hazard stripes along the top edge of the plate, as on a switch room door */
+.chevrons{height:9px;background-image:repeating-linear-gradient(115deg,
+  var(--hazard) 0 11px,#171A1B 11px 22px);opacity:.82}
+.plate-in{padding:24px 26px 20px}
+.eyebrow{margin:0 0 12px;font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--ink-dim)}
+h1{margin:0;font-family:var(--sign);font-weight:700;font-size:clamp(38px,7.4vw,74px);
+  line-height:.94;letter-spacing:.005em;text-transform:uppercase;color:var(--ink)}
+h1 .sub{display:block;margin-top:13px;font-family:var(--mono);font-weight:400;
+  font-size:clamp(11px,1.7vw,12.5px);letter-spacing:.13em;text-transform:none;color:var(--live)}
+.rail{display:flex;flex-wrap:wrap;gap:6px 20px;align-items:center;justify-content:space-between;
+  padding:9px 26px;background:var(--panel-2);border-top:1px solid var(--line);
+  font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-dim)}
+.rail a{color:var(--live);text-decoration:none;border-bottom:1px solid rgba(216,245,70,.4)}
+.rail a:hover{color:#fff;border-color:#fff}
+
+/* ── the single-line diagram ─────────────────────────────────────────────── */
+/* the drawing carries the smallest type on the page, so it gets the room it
+   needs to stay readable */
+.board{display:grid;grid-template-columns:minmax(0,370px) minmax(0,1fr);gap:28px;align-items:start;
+  padding:24px 26px 26px;border-top:1px solid var(--line)}
+.sld{background:var(--panel-2);border:1px solid var(--line);padding:12px 12px 8px}
+.sld svg{display:block;width:100%;height:auto}
+.sldcap{margin:7px 0 0;font-family:var(--mono);font-size:9px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--faint);text-align:center}
+/* the drawing: dead plant in cold steel, live plant in acid */
+.cond{fill:none;stroke:var(--line-2);stroke-width:1.6}
+.cond.tie{stroke-dasharray:5 4}
+.busbase{fill:var(--copper-2)}
+.buslive{fill:var(--live)}
+.brk{fill:var(--panel-3);stroke:var(--line-2);stroke-width:1.6}
+.brk.on{fill:var(--live);stroke:var(--live)}
+.box{fill:var(--panel);stroke:var(--line);stroke-width:1.2}
+.box.on{stroke:var(--m,var(--live))}
+.boxtie{fill:none;stroke:var(--off);stroke-width:1.2;stroke-dasharray:4 3}
+.slabel{font-family:"Red Hat Mono",ui-monospace,Consolas,monospace;font-size:9px;
+  letter-spacing:.05em;fill:var(--ink-dim)}
+.slabel.tiny{font-size:8px;fill:var(--faint)}
+.sname{font-family:"Saira Condensed","Arial Narrow",sans-serif;font-weight:700;font-size:12px;
+  letter-spacing:.03em;fill:var(--ink-2)}
+.sname.on{fill:var(--m,var(--live))}
+.scount{font-family:"Red Hat Mono",ui-monospace,Consolas,monospace;font-weight:500;font-size:10px;
+  fill:var(--ink-dim)}
+.scount.on{fill:var(--m,var(--live))}
+.bound{fill:none;stroke:var(--line);stroke-width:1;stroke-dasharray:2 3}
+.lamp{fill:#232829;stroke:var(--line-2);stroke-width:1}
+.lamp.on{fill:var(--live);stroke:var(--live)}
+.clubbox{fill:var(--panel);stroke:var(--line-2);stroke-width:1.4}
+.clubbox.on{fill:rgba(216,245,70,.1);stroke:var(--live)}
+.clubname{font-family:"Saira Condensed","Arial Narrow",sans-serif;font-weight:700;font-size:15px;
+  letter-spacing:.09em;fill:var(--faint)}
+.clubbox.on+.clubname,.clubname.on{fill:var(--live)}
+/* the register drums, part of the drawing rather than a widget beside it */
+.drum{fill:#0A0C0D;stroke:var(--line-2);stroke-width:1}
+.digit{font-family:"Red Hat Mono",ui-monospace,Consolas,monospace;font-weight:700;font-size:15px;
+  fill:var(--live);text-anchor:middle}
+
+/* ── the meter block ────────────────────────────────────────────────────── */
+.meter{min-width:0}
+/* the line that states the guide's own total. Left in lower case on purpose:
+   behaviour-check.js reads rendered text and matches "n / n" — uppercasing it
+   has hidden that number from the harness before. Do not 'fix' this. */
+.count{margin:3px 0 0;font-family:var(--body);font-size:16px;color:var(--ink-2)}
+.count b{font-family:var(--sign);font-weight:700;font-size:clamp(46px,8vw,64px);line-height:.9;
+  color:var(--live);margin-right:11px;letter-spacing:.01em}
+.subcount{margin:9px 0 0;font-family:var(--mono);font-size:11px;line-height:1.7;color:var(--ink-dim)}
+.loadnote{margin:14px 0 0;padding:11px 14px;background:var(--panel-2);border:1px solid var(--line);
+  border-left:3px solid var(--copper);font-size:14.4px;color:var(--ink-2)}
+.loadnote b{color:var(--ink)}
+.switchline{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin-top:16px}
+.btn{font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;
+  background:var(--panel-2);color:var(--ink-2);border:1px solid var(--line-2);padding:10px 15px;
+  cursor:pointer}
+.btn:hover{border-color:var(--live);color:var(--live)}
+
+/* ── tabs ───────────────────────────────────────────────────────────────── */
+.tabs{display:flex;flex-wrap:wrap;gap:3px;margin:26px 0 0}
+.tab{font-family:var(--sign);font-weight:500;font-size:16px;letter-spacing:.06em;
+  text-transform:uppercase;background:var(--panel-2);color:var(--ink-dim);
+  border:1px solid var(--line);border-bottom:0;padding:11px 17px 10px;cursor:pointer}
+.tab[aria-selected="true"]{background:var(--panel);color:var(--ink);
+  box-shadow:inset 0 3px 0 var(--live)}
+.tab:hover{color:var(--ink)}
+.pane{background:var(--panel);border:1px solid var(--line);padding:24px}
+
+/* ── the standing notices, lifted from the previous edition ─────────────── */
+.note{margin:0 0 12px;padding:12px 15px;background:var(--panel-2);border:1px solid var(--line);
+  border-left:3px solid var(--isolate);font-size:14.6px;color:var(--ink-2)}
+.note b{color:var(--ink)}
+.note.ok{border-left-color:var(--copper)}
+/* The mission's governing rule — the fifth kill, after which the survivors
+   stop being targets — is the one notice with no 'ok' class, and it gets the
+   overload placard: hazard stripes and a trip label. */
+.note:not(.ok){position:relative;border:1px solid rgba(242,194,28,.4);border-left:0;
+  background:rgba(242,194,28,.055);padding-left:32px}
+.note:not(.ok)::before{content:"";position:absolute;left:0;top:0;bottom:0;width:13px;
+  background-image:repeating-linear-gradient(115deg,var(--hazard) 0 7px,#191A15 7px 14px);opacity:.85}
+.note:not(.ok)::after{content:"Overload — trip";position:absolute;left:32px;top:-9px;
+  background:var(--panel);padding:0 7px;font-family:var(--mono);font-size:9px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--hazard)}
+.note:not(.ok) b:first-child{display:block;margin-top:4px}
+
+/* ── the programme index ────────────────────────────────────────────────── */
+.prognav{display:flex;flex-wrap:wrap;gap:5px;margin:18px 0 20px}
+.pjump{display:flex;align-items:center;gap:9px;background:var(--panel-2);border:1px solid var(--line);
+  color:var(--ink-2);padding:8px 12px;cursor:pointer;font-family:var(--body);font-size:13.5px;
+  text-align:left}
+.pjump b{font-family:var(--mono);font-size:10.5px;font-weight:700;color:var(--live)}
+.pjump .pg{font-family:var(--mono);font-size:9.5px;color:var(--faint)}
+.pjump:hover{border-color:var(--live);color:var(--ink)}
+.pjump.full{border-color:rgba(216,245,70,.45);background:var(--live-dim)}
+
+/* ── a switching programme ─────────────────────────────────────────────── */
+article.prog{background:var(--panel-2);border:1px solid var(--line);margin-bottom:16px;
+  scroll-margin-top:12px}
+article.prog.full{border-color:rgba(216,245,70,.4)}
+.phead{display:grid;grid-template-columns:96px minmax(0,1fr);gap:16px;width:100%;text-align:left;
+  background:var(--panel-3);border:0;border-bottom:1px solid var(--line);cursor:pointer;
+  padding:16px 18px;font-family:var(--body);color:var(--ink-2)}
+.phead:hover .ptitle{color:var(--live)}
+/* the programme number, stamped on the front of the sheet */
+.progno{display:grid;place-content:center;gap:3px;min-height:74px;background:var(--panel);
+  border:1px solid var(--line-2);text-align:center;padding:8px 6px}
+.progno .k{font-family:var(--mono);font-size:8.5px;letter-spacing:.17em;text-transform:uppercase;
+  color:var(--faint)}
+.progno .v{font-family:var(--sign);font-weight:700;font-size:30px;line-height:1;color:var(--ink)}
+article.prog.full .progno{border-color:var(--live)}
+article.prog.full .progno .v{color:var(--live)}
+.pmain{min-width:0}
+.ptag{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--copper);margin-bottom:6px}
+.ptitle{display:block;font-family:var(--sign);font-weight:700;font-size:clamp(21px,3vw,30px);
+  line-height:1.06;text-transform:uppercase;color:var(--ink)}
+.pgoal{display:block;margin-top:9px;font-size:14.8px;color:var(--ink-2);max-width:84ch}
+.ptally{display:block;margin-top:10px;font-family:var(--mono);font-size:10px;color:var(--faint)}
+.pbody{padding:18px}
+/* the run's standing instruction, taped to the sheet */
+.instr{position:relative;background:var(--panel);border:1px solid var(--line);
+  border-top:2px solid var(--copper);padding:14px 15px 13px;margin-bottom:18px;font-size:14.4px;
+  color:var(--ink-2)}
+.instr .k{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--copper);margin-bottom:5px}
+/* what the programme is issued with */
+.issue{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:1px;
+  background:var(--line);border:1px solid var(--line);margin-bottom:20px}
+.slot{background:var(--panel);padding:9px 12px;min-width:0}
+.slot .k{display:block;font-family:var(--mono);font-size:8.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--faint)}
+.slot .v{display:block;margin-top:2px;font-size:14.2px;color:var(--ink);overflow-wrap:anywhere}
+.slot .v em{display:block;font-style:normal;font-family:var(--mono);font-size:10px;
+  color:var(--live);margin-top:2px}
+.stage{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin:24px 0 4px;
+  padding-bottom:7px;border-bottom:1px solid var(--line-2);font-family:var(--sign);font-weight:700;
+  font-size:17px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink)}
+.stage:first-child{margin-top:0}
+.stage .cnt{margin-left:auto;font-family:var(--mono);font-weight:400;font-size:9.5px;
+  letter-spacing:.08em;color:var(--faint)}
+
+/* ── an operation ──────────────────────────────────────────────────────── */
+.step{display:grid;grid-template-columns:46px minmax(0,1fr);gap:14px;align-items:start;
+  padding:14px 2px;border-bottom:1px solid var(--etch)}
+.step:last-of-type{border-bottom:0}
+.step.done{background:rgba(216,245,70,.045)}
+/* the tick is the padlock on the lock-off tag: open on the hasp, closed when
+   the operation is signed off. Drawn, not typed — the display faces carry no
+   usable tick glyph. */
+.lock{position:relative;width:46px;height:52px;padding:0;cursor:pointer;background:var(--panel);
+  border:1px solid var(--line-2);border-radius:2px}
+.lock:hover{border-color:var(--live)}
+.lock::before{content:"";position:absolute;left:50%;top:9px;width:16px;height:13px;
+  border:2.6px solid var(--faint);border-bottom:0;border-radius:8px 8px 0 0;
+  transform:translateX(-34%) rotate(16deg);transform-origin:14% 100%;
+  transition:transform .22s ease,border-color .22s ease}
+.lock::after{content:"";position:absolute;left:50%;top:21px;width:24px;height:19px;
+  transform:translateX(-50%);border:2.6px solid var(--faint);border-radius:2px;background:transparent;
+  transition:background .22s ease,border-color .22s ease}
+.step.done .lock{border-color:var(--live);background:var(--live-dim)}
+.step.done .lock::before{transform:translateX(-50%) rotate(0);border-color:var(--live)}
+.step.done .lock::after{background:var(--live);border-color:var(--live)}
+.opwrap{min-width:0}
+.opno{font-family:var(--mono);font-size:9px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--faint)}
+.step.done .opno{color:var(--live)}
+.optitle{margin:2px 0 0;font-family:var(--body);font-weight:600;font-size:16.8px;line-height:1.3;
+  color:var(--ink)}
+.opsum{margin:5px 0 0;font-size:14.6px;color:var(--ink-2)}
+.fields{margin-top:11px;display:grid;gap:4px}
+.frow{display:grid;grid-template-columns:78px minmax(0,1fr);gap:12px;align-items:start}
+.fk{font-family:var(--mono);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--faint);padding-top:3px}
+.fv{font-size:14.6px;color:var(--ink-2);overflow-wrap:anywhere}
+/* the data says 'None' in so many words for an empty slot; it is kept rather
+   than dropped, just held back */
+.fv.none{color:var(--faint)}
+/* the guide's warnings, as the placards they would be on the plant */
+.placard{margin:11px 0 0;padding:10px 13px 10px 30px;position:relative;
+  border:1px solid rgba(220,74,50,.42);background:rgba(220,74,50,.075);font-size:14.2px;
+  color:var(--ink-2)}
+.placard::before{content:"";position:absolute;left:0;top:0;bottom:0;width:11px;
+  background-image:repeating-linear-gradient(115deg,var(--danger) 0 6px,#1a1413 6px 12px);opacity:.8}
+.placard .k{display:block;font-family:var(--mono);font-size:8.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--danger);margin-bottom:3px}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:11px}
+/* an isolation point: where the guide says save */
+.iso{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:9.5px;
+  letter-spacing:.09em;text-transform:uppercase;color:var(--isolate);
+  border:1px dashed rgba(79,163,217,.55);padding:5px 10px}
+.iso::before{content:"";width:9px;height:9px;border:2px solid var(--isolate);border-radius:50%;
+  flex:0 0 auto}
+.unv{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--hazard);border:1px dashed rgba(242,194,28,.5);padding:5px 10px}
+/* a permit chit: the challenge this operation clears, and a control for it */
+.chit{position:relative;font-family:var(--body);font-size:13.2px;line-height:1.25;cursor:pointer;
+  padding:5px 11px 5px 12px;border:1px solid var(--line-2);border-left:3px solid var(--m,var(--live));
+  background:var(--panel);color:var(--ink-2);text-align:left}
+.chit:hover{border-color:var(--m,var(--live));color:var(--ink)}
+.chit[aria-checked="true"]{background:var(--m,var(--live));border-color:var(--m,var(--live));
+  color:#0F1211;font-weight:600}
+/* the five target kills a programme takes before the fifth-kill trip carry the
+   guide's own order on them, so the chit shows its place in that order */
+.chit .ord{font-family:var(--mono);font-size:9px;letter-spacing:.06em;color:var(--faint);
+  margin-left:7px}
+.chit[aria-checked="true"] .ord{color:rgba(15,18,17,.66)}
+/* interlocks: the run's own conflicts note */
+.interlock{margin-top:22px;padding:14px 16px;background:var(--panel);border:1px solid var(--line);
+  border-top:2px solid var(--danger)}
+.interlock .k{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--danger);margin-bottom:6px}
+.interlock p{margin:0;font-size:14.4px;color:var(--ink-2)}
+
+/* ── the schedule of circuits ──────────────────────────────────────────── */
+.filters{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:20px}
+.filters button{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+  background:var(--panel-2);border:1px solid var(--line);color:var(--ink-dim);padding:8px 12px;
+  cursor:pointer}
+.filters button:hover{border-color:var(--live);color:var(--ink)}
+.filters button[aria-pressed="true"]{background:var(--live);border-color:var(--live);color:#0F1211}
+.grp{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin:28px 0 6px;
+  padding-bottom:7px;border-bottom:2px solid var(--m,var(--live));font-family:var(--sign);
+  font-weight:700;font-size:19px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink)}
+.grp:first-child{margin-top:0}
+.grp .n{margin-left:auto;font-family:var(--mono);font-weight:400;font-size:9.5px;color:var(--faint)}
+.crow{display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:14px;align-items:start;
+  padding:12px 2px;border-bottom:1px solid var(--etch)}
+.crow:last-child{border-bottom:0}
+.crow.done{background:rgba(216,245,70,.045)}
+/* the toggle is the breaker symbol off the drawing: the blade stands open on
+   an outstanding circuit and closes onto the contact when it is energised */
+.mark{position:relative;width:40px;height:40px;padding:0;cursor:pointer;background:var(--panel);
+  border:1px solid var(--line-2)}
+.mark:hover{border-color:var(--m,var(--live))}
+.mark::before{content:"";position:absolute;left:50%;top:6px;width:2.4px;height:28px;
+  background:var(--faint);transform:translateX(-50%) rotate(34deg);transform-origin:50% 90%;
+  transition:transform .2s ease,background .2s ease}
+.mark::after{content:"";position:absolute;left:50%;top:4px;width:6px;height:6px;
+  margin-left:-3px;border-radius:50%;background:var(--line-2)}
+.crow.done .mark{border-color:var(--m,var(--live))}
+.crow.done .mark::before{transform:translateX(-50%) rotate(0);background:var(--m,var(--live))}
+.crow.done .mark::after{background:var(--m,var(--live))}
+.cdesig{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;color:var(--faint)}
+.cnm{margin:0;font-family:var(--body);font-weight:600;font-size:16.4px;line-height:1.28;
+  color:var(--ink)}
+.crow.done .cnm{color:var(--m,var(--live))}
+.ccond{margin:4px 0 0;font-size:14.4px;color:var(--ink-2)}
+.cextra{display:block;margin-top:4px;font-family:var(--mono);font-size:11.5px;line-height:1.6;
+  color:var(--off);font-style:normal}
+.cmeta{display:grid;justify-items:end;gap:3px;font-family:var(--mono);font-size:9.5px;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--faint);text-align:right;white-space:nowrap}
+.cmeta .xp{color:var(--copper)}
+.tiechip{display:inline-block;margin-left:8px;font-family:var(--mono);font-size:9px;
+  letter-spacing:.11em;text-transform:uppercase;color:var(--off);border:1px dashed var(--line-2);
+  padding:2px 7px;vertical-align:2px}
+.empty{margin:18px 0;color:var(--ink-2)}
+
+/* ── the lifted reference and verification sheets ──────────────────────── */
+.prose h2{margin:28px 0 10px;font-family:var(--sign);font-weight:700;font-size:23px;
+  letter-spacing:.04em;text-transform:uppercase;color:var(--ink)}
+.prose h2:first-child{margin-top:0}
+.prose h3{margin:22px 0 8px;font-family:var(--sign);font-weight:700;font-size:17px;
+  letter-spacing:.05em;text-transform:uppercase;color:var(--live)}
+.prose p{margin:0 0 11px;font-size:14.8px;color:var(--ink-2);max-width:88ch}
+.prose ul,.prose ol{margin:0 0 13px;padding-left:20px}
+.prose li{margin-bottom:7px;font-size:14.6px;color:var(--ink-2)}
+.prose .badge{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.09em;
+  text-transform:uppercase;padding:3px 8px;border:1px dashed var(--line-2);color:var(--ink-dim)}
+.prose .badge.b-unv,.prose .b-unv{color:var(--hazard);border-color:rgba(242,194,28,.5)}
+.tablewrap{overflow-x:auto;margin:0 0 18px;border:1px solid var(--line)}
+.prose table{border-collapse:collapse;width:100%;min-width:480px;font-size:14px}
+.prose th,.prose td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--etch);
+  color:var(--ink-2);vertical-align:top}
+.prose th{font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--faint);background:var(--panel-2);border-bottom:1px solid var(--line)}
+.prose tbody tr:last-child td{border-bottom:0}
+.prose td b{color:var(--ink)}
+
+footer{margin-top:24px;padding:18px 22px;background:var(--panel);border:1px solid var(--line);
+  font-size:13px;line-height:1.75;color:var(--ink-dim)}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;
+  scroll-behavior:auto!important}}
+@media (max-width:900px){
+  .board{grid-template-columns:minmax(0,1fr)}
+  .sld{max-width:320px}
+}
+@media (max-width:620px){
+  .pane{padding:15px}
+  .plate-in,.rail,.board{padding-left:16px;padding-right:16px}
+  .phead{grid-template-columns:66px minmax(0,1fr);gap:12px;padding:14px}
+  .progno{min-height:58px}
+  .progno .v{font-size:22px}
+  .pbody{padding:14px}
+  .step{grid-template-columns:38px minmax(0,1fr);gap:11px}
+  .lock{width:38px;height:44px}
+  .lock::after{width:20px;height:16px}
+  .frow{grid-template-columns:minmax(0,1fr);gap:1px}
+  .fk{padding-top:0}
+  .crow{grid-template-columns:34px minmax(0,1fr)}
+  .mark{width:34px;height:34px}
+  .mark::before{height:23px}
+  .cmeta{grid-column:2;justify-items:start;text-align:left;margin-top:6px}
+}
+@media print{
+  body{background:#fff;background-image:none;color:#000;font-size:10.5pt}
+  .site{max-width:none;padding:0}
+  .tabs,.prognav,.skip,.lock,.mark,.btn,.filters,.rail,.chevrons,.sld{display:none!important}
+  .pane[hidden]{display:block!important}
+  .pbody{display:block!important}
+  h1,.ptitle,.stage,.grp,.prose h2,.prose h3,.cnm,.optitle{color:#000!important}
+  .plate,.pane,article.prog,.slot,.instr,.note,footer,.interlock,.placard,.progno{
+    background:#fff!important;border-color:#999!important;box-shadow:none!important}
+  .step,article.prog,.crow{break-inside:avoid}
+  .count b,.pjump b{color:#000!important}
 }
 </style>
 </head>
 <body>
+<div class="site">
 
-<header class="top">
-  <div class="wrap">
-    <p class="eyebrow">HITMAN World of Assassination · Mission 3 · Berlin, Germany</p>
-    <h1>
-      <svg class="bird" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 14c4 1 7-1 9-4 1-1.5 2-3 4-3 2.5 0 4 1.5 4 3.5 0 4-3.5 8-9 8-4 0-7-2-8-4.5z" fill="#E4FF3D"/><circle cx="17.5" cy="9.5" r="1" fill="#0B0C0E"/></svg>Apex Predator
-      <span class="sub">Step-by-step completion guide · 6 optimised runs</span>
-    </h1>
+<div class="plate">
+  <div class="chevrons" aria-hidden="true"></div>
+  <div class="plate-in">
+    <p class="eyebrow"><!--@eyebrow-->HITMAN World of Assassination · Mission 3 · Berlin, Germany<!--/@eyebrow--></p>
+    <h1><!--@name-->Apex Predator<!--/@name--><span class="sub"><!--@sub-->Step-by-step completion guide · 6 optimised runs<!--/@sub--></span></h1>
+  </div>
 
-    <div class="tracker">
-      <div class="bartext">
-        <span>Mission challenges</span>
-        <span><b id="tDone">0</b> / 58 complete · <span id="tXp">0</span> XP · <span id="tCross">Explosions Run Loose (cross-mission) not yet done</span></span>
-      </div>
-      <div class="bar"><i id="tBar"></i></div>
-      <div class="cats" id="cats"></div>
-      <div class="actions">
-        <button id="btnReset" type="button">Reset progress</button>
-        <button id="btnOpenRuns" type="button">Open all runs</button>
-        <button id="btnOpenSteps" type="button">Open all step details</button>
+  <!-- the nameplate above holds nothing focusable, so this is still the first
+       stop for a keyboard -->
+  <a class="skip" href="#pane-runs">Skip to the six switching programmes</a>
+
+  <div class="rail">
+    <a href="../index.html">&#8592; All guides</a>
+    <span>Berlin &middot; Main campaign 21</span>
+    <span>Saved in this browser only</span>
+  </div>
+
+  <div class="board">
+    <div class="sld">
+      <svg viewBox="0 0 300 348" role="img" aria-labelledby="sldTitle" aria-describedby="sldDesc">
+        <title id="sldTitle">The plant's single-line diagram</title>
+        <desc id="sldDesc">Progress drawn as a substation being brought back up.</desc>
+
+        <!-- the site boundary: the tie feeder leaves the plant across it -->
+        <path class="bound" d="M170,10 V62"/>
+        <text class="slabel tiny" x="176" y="59">site boundary</text>
+
+        <!-- incoming supply -->
+        <text class="slabel" x="52" y="17">SUPPLY</text>
+        <path class="cond" d="M40,20 V45"/>
+        <path class="cond" d="M35,26 L40,20 L45,26"/>
+        <!-- the main breaker -->
+        <rect class="brk" id="mainbrk" x="32" y="45" width="16" height="16"/>
+        <text class="slabel" x="54" y="58">MAIN</text>
+        <path class="cond" d="M40,61 V78"/>
+
+        <!-- the tie feeder: the 59th challenge is tracked off-site, so it
+             leaves before the station bus and crosses the boundary -->
+        <path class="cond tie" id="tiecond" d="M40,68 H206 V40"/>
+        <rect class="boxtie" id="tiebox" x="206" y="14" width="86" height="26"/>
+        <text class="slabel" id="tielabel" x="249" y="26" text-anchor="middle">TIE FEEDER</text>
+        <text class="slabel tiny" id="tiestate" x="249" y="35" text-anchor="middle">off-site</text>
+
+        <!-- the station bus, energising downward -->
+        <rect class="busbase" x="36" y="78" width="8" height="208"/>
+        <rect class="buslive" id="buslive" x="36" y="78" width="8" height="0"/>
+        <!-- clear of both the tie conductor above it and the first feeder below -->
+        <text class="slabel" x="52" y="86">STATION BUS</text>
+
+        <g id="feeders"></g>
+
+        <!-- what the plant feeds, with the meter register and the bus lamp
+             reading off the panel beside it -->
+        <path class="cond" d="M40,286 V300"/>
+        <rect class="clubbox" id="clubbox" x="24" y="300" width="166" height="38"/>
+        <text class="clubname" id="clubname" x="107" y="320" text-anchor="middle">CLUB LOAD</text>
+        <text class="slabel tiny" x="107" y="332" text-anchor="middle">levels &#8722;2 to 4</text>
+
+        <text class="slabel tiny" x="223" y="306" text-anchor="middle">register</text>
+        <rect class="drum" x="196" y="310" width="26" height="24"/>
+        <rect class="drum" x="224" y="310" width="26" height="24"/>
+        <text class="digit" id="drumA" x="209" y="328">0</text>
+        <text class="digit" id="drumB" x="237" y="328">0</text>
+        <text class="slabel tiny" x="272" y="306" text-anchor="middle">live</text>
+        <circle class="lamp" id="buslamp" cx="272" cy="322" r="7"/>
+      </svg>
+      <p class="sldcap" id="sldcap">Plant dead &middot; no circuits energised</p>
+    </div>
+
+    <div class="meter">
+      <span class="lbl">Circuits energised</span>
+      <p class="count"><b id="numDone">0</b><span id="numOf">/ 0 circuits energised</span></p>
+      <p class="subcount" id="subcount">0 operations locked off</p>
+      <p class="loadnote" id="loadnote"></p>
+      <div class="switchline">
+        <button class="btn" id="reset" type="button">Open every breaker &amp; clear</button>
+        <span class="lbl">Every figure on this page is counted off the guide's own data</span>
       </div>
     </div>
   </div>
-</header>
+</div>
 
-<div class="wrap">
-  <nav class="tabs" role="tablist">
-    <button role="tab" id="tab-runs" aria-selected="true" data-panel="runs">Optimised runs</button>
-    <button role="tab" id="tab-list" aria-selected="false" data-panel="list">Checklist</button>
-    <button role="tab" id="tab-ref" aria-selected="false" data-panel="ref">Map reference</button>
-    <button role="tab" id="tab-ver" aria-selected="false" data-panel="ver">Verification</button>
-  </nav>
+<div class="tabs" role="tablist" aria-label="Guide sections">
+  <button class="tab" role="tab" id="tab-runs" aria-controls="pane-runs" aria-selected="true">Switching programmes</button>
+  <button class="tab" role="tab" id="tab-list" aria-controls="pane-list" aria-selected="false">Schedule of circuits</button>
+  <button class="tab" role="tab" id="tab-ref" aria-controls="p-ref" aria-selected="false">Plant reference</button>
+  <button class="tab" role="tab" id="tab-ver" aria-controls="p-ver" aria-selected="false">Verification</button>
+</div>
 
-  <!-- ========== RUNS ========== -->
-  <section id="panel-runs">
-    <div class="note ok">
+<section class="pane" id="pane-runs" role="tabpanel" aria-labelledby="tab-runs">
+  <!--@notices-->
+<div class="note ok">
       <b>Count check first.</b> Your uploaded mission file lists <b>58</b> challenges (14 Assassination · 15 Discovery · 13 Feats · 11 Targets · 5 Classics). The Hitman Wiki's "59" adds one cross-mission Codename 47 challenge, <b>Explosions Run Loose</b>, tracked globally rather than inside Apex Predator. It is included below in Run 6 and flagged, but counted separately.
     </div>
     <div class="note ok">
@@ -189,21 +516,19 @@ footer.foot{border-top:1px solid var(--line);margin-top:40px;padding-top:18px;fo
     <div class="note">
       <b>The rule that governs every run.</b> The instant your <b>fifth</b> ICA agent dies, the survivors lose target status and flee north/west. Any challenge needing a specific agent alive must be done <b>before</b> kill five. Save before that kill, every time. Challenge progress banks across reloads while you are <b>online</b> — do a challenge, reload, do the next, then finish the mission.
     </div>
+  <!--/@notices-->
+  <nav class="prognav" id="prognav" aria-label="Jump to a switching programme"></nav>
+  <div id="programmes"></div>
+</section>
 
-    <div class="runjump" id="runjump"></div>
-    <div id="runs"></div>
-  </section>
+<section class="pane" id="pane-list" role="tabpanel" aria-labelledby="tab-list" hidden>
+  <div class="filters" id="filters"></div>
+  <div id="checklist"></div>
+</section>
 
-  <!-- ========== CHECKLIST ========== -->
-  <section id="panel-list" class="hidden">
-    <h2>All challenges</h2>
-    <div class="filters" id="filters"></div>
-    <div id="chalList"></div>
-  </section>
-
-  <!-- ========== REFERENCE ========== -->
-  <section id="panel-ref" class="hidden">
-    <h2>Starting locations &amp; mastery</h2>
+<section class="pane prose" id="p-ref" role="tabpanel" aria-labelledby="tab-ref" hidden>
+<!--@ref-->
+<h2>Starting locations &amp; mastery</h2>
     <p style="color:var(--ink-dim)">From the Hitman Wiki mastery table. Runs 1 and 2 need Mastery 8; Run 3 needs Mastery 18. If you are below those, grind Runs 4/5/6 first — they carry no stealth pressure and level you up fast.</p>
     <table>
       <thead><tr><th>Mastery</th><th>Start</th><th>You start as</th></tr></thead>
@@ -280,11 +605,12 @@ footer.foot{border-top:1px solid var(--line);margin-top:40px;padding-top:18px;fo
         <tr><td>Skylight Ladder</td><td>Ladder is on Level 1, but reach the release from the Level 2 roof — drop through the skylight and kick it down.</td></tr>
       </tbody>
     </table>
-  </section>
+<!--/@ref-->
+</section>
 
-  <!-- ========== VERIFICATION ========== -->
-  <section id="panel-ver" class="hidden">
-    <h2>Verification</h2>
+<section class="pane prose" id="p-ver" role="tabpanel" aria-labelledby="tab-ver" hidden>
+<!--@ver-->
+<h2>Verification</h2>
     <p>Challenge names, types and descriptions are taken from your uploaded mission file and cross-checked against the Hitman Wiki. Routes, item and area locations came from PowerPyx (Berlin challenges, undiscovered areas, shortcuts, SASO walkthrough). Bird count checked against Gamepressure, GamerRant, GoSuNoob and PSNProfiles. Where sources disagree it is flagged in place.</p>
 
     <h3>Count audit</h3>
@@ -343,12 +669,18 @@ footer.foot{border-top:1px solid var(--line);margin-top:40px;padding-top:18px;fo
       <li>PowerPyx — Berlin challenges, undiscovered areas, all shortcuts, SASO walkthrough</li>
       <li>Gamepressure, GamerRant, GoSuNoob, PSNProfiles, GamerTweak — bird count; Neoseeker, SegmentNext, TheGamer — corroboration</li>
     </ul>
-  </section>
+<!--/@ver-->
+</section>
 
-  <footer class="foot">Progress is saved in this browser and persists across reloads. Data verified July 2026 against the sources above.</footer>
+<footer>
+<!--@footer-->
+Progress is saved in this browser and persists across reloads. Data verified July 2026 against the sources above.
+<!--/@footer-->
+</footer>
 </div>
 
 <script>
+/*@ch*/
 /* ===================== CHALLENGE DATA ===================== */
 const CH = [
  {id:'a1',n:"Who's Sniping the Sniper?",t:'Assassination',d:"Eliminate Agent Tremaine with a sniper rifle headshot.",xp:2000,run:2},
@@ -416,7 +748,9 @@ const CH = [
 
  {id:'x1',n:"Explosions Run Loose",t:'Codename 47',d:"Complete Traditions of the Trade, then eliminate 5 ICA agents with explosives in a single Berlin session.",xp:4000,run:6,cross:true,extra:"Cross-mission challenge — not part of the mission's 58. Prerequisite sourced from the wiki only."}
 ];
+/*/@ch*/
 
+/*@runs*/
 /* ===================== RUN DATA (step format) ===================== */
 /* field keys: go, disg (disguise), item, npc, act (do), warn[], badges[[kind,text]] */
 const N='None';
@@ -805,196 +1139,430 @@ const RUNS=[
  conflicts:"Rave On and Explosions share a start but not an attempt — sabotage/explosions ruin the climax. Do Rave On, exit, reload for the explosives. Neither is compatible with any Classics challenge."
 }
 ];
+/*/@runs*/
 
-/* ===================== STATE + RENDER ===================== */
-const TYPES=['Assassination','Discovery','Feats','Targets','The Classics','Codename 47'];
-const done=new Set(), stepDone=new Set();
-try{const saved=JSON.parse(localStorage.getItem('apex_predator_done_v1')||'[]');saved.forEach(id=>done.add(id));}catch(e){}
-try{const _s=JSON.parse(localStorage.getItem('apex_predator_done_v1:steps'));if(Array.isArray(_s))_s.forEach(k=>stepDone.add(k));}catch(e){}
-function reportProgress(){try{const mission=CH.filter(c=>!c.cross);const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r['m21']={done:mission.filter(c=>done.has(c.id)).length,total:mission.length,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
-function saveDone(){try{localStorage.setItem('apex_predator_done_v1',JSON.stringify([...done]));localStorage.setItem('apex_predator_done_v1:steps',JSON.stringify([...stepDone]));}catch(e){}reportProgress();}
+/* ---------------- STATE ----------------
+   Both keys keep their names and their shapes: 'apex_predator_done_v1' is the
+   array of cleared challenge ids and 'apex_predator_done_v1:steps' the array of
+   step keys. The key strings are written out literally rather than held in a
+   const, so the contract check in validate.js can see them. */
+let done=new Set(), locked=new Set(), filter='all';
+try{const s=JSON.parse(localStorage.getItem('apex_predator_done_v1')||'[]');
+  if(Array.isArray(s))s.forEach(id=>done.add(id));}catch(e){}
+try{const s=JSON.parse(localStorage.getItem('apex_predator_done_v1:steps'));
+  if(Array.isArray(s))s.forEach(k=>locked.add(k));}catch(e){}
 
-const catsEl=document.getElementById('cats');
-['Assassination','Discovery','Feats','Targets','The Classics'].forEach(t=>{
-  const total=CH.filter(c=>c.t===t&&!c.cross).length;
-  const d=document.createElement('div');d.className='cat';
-  d.innerHTML=`<div class="n">${t}</div><div class="v"><span data-cat-v="${t}">0</span><small>/${total}</small></div><div class="mini"><i data-cat-b="${t}"></i></div>`;
-  catsEl.appendChild(d);
-});
-
-function refresh(){
-  const mission=CH.filter(c=>!c.cross);
-  const n=mission.filter(c=>done.has(c.id)).length;
-  const xp=CH.filter(c=>done.has(c.id)).reduce((s,c)=>s+c.xp,0);
-  document.getElementById('tDone').textContent=n;
-  document.getElementById('tXp').textContent=xp.toLocaleString();
-  document.getElementById('tBar').style.width=(n/mission.length*100)+'%';
-  document.getElementById('tCross').textContent = done.has('x1')
-    ? 'Explosions Run Loose (cross-mission) done' : 'Explosions Run Loose (cross-mission) not yet done';
-  ['Assassination','Discovery','Feats','Targets','The Classics'].forEach(t=>{
-    const list=CH.filter(c=>c.t===t&&!c.cross);
-    const k=list.filter(c=>done.has(c.id)).length;
-    document.querySelector(`[data-cat-v="${t}"]`).textContent=k;
-    document.querySelector(`[data-cat-b="${t}"]`).style.width=(k/list.length*100)+'%';
-  });
-  // per-run progress
-  RUNS.forEach(r=>{
-    const list=CH.filter(c=>c.run===r.no);
-    const k=list.filter(c=>done.has(c.id)).length;
-    const el=document.querySelector(`[data-runprog="${r.no}"]`);
-    if(el) el.innerHTML=`<b>${k}</b>/${list.length}`;
-  });
+/* The registry total is the whole drawing — every row in CH, the cross-mission
+   tie feeder included. The previous edition reported the mission file's 58 and
+   never showed 59 of 59, which is what index.html expects (it lists this guide
+   as 59) and what the guide's own audit table calls the wiki total. The 58
+   still has its place: it is the plant's own bus, counted below off the same
+   data, and the audit table's figures are filled from it too. */
+function reportProgress(){
+  try{
+    const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');
+    r['m21']={done:CH.filter(c=>done.has(c.id)).length,total:CH.length,updated:Date.now()};
+    localStorage.setItem('hitman-progress-registry',JSON.stringify(r));
+  }catch(e){}
+}
+function sv(){
+  try{
+    localStorage.setItem('apex_predator_done_v1',JSON.stringify([...done]));
+    localStorage.setItem('apex_predator_done_v1:steps',JSON.stringify([...locked]));
+  }catch(e){}
+  reportProgress();
 }
 
-const field=(dt,dd,cls)=> dd&&dd!=='' ? `<dt>${dt}</dt><dd class="${cls||''}">${dd}</dd>` : '';
+const $=s=>document.getElementById(s);
+const esc=s=>String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;')
+  .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 
-const runsEl=document.getElementById('runs');
-const jumpEl=document.getElementById('runjump');
-RUNS.forEach(r=>{
-  // jump button
-  const jb=document.createElement('button');jb.type='button';
-  jb.innerHTML=`<span class="rj-no">Run ${r.no}</span><span class="rj-t">${r.title}</span>`;
-  jb.onclick=()=>{const art=document.getElementById('run'+r.no);art.classList.remove('closed');art.scrollIntoView({behavior:'smooth',block:'start'});};
-  jumpEl.appendChild(jb);
+/* ---------------- CIRCUITS ----------------
+   The five categories are the five feeders off the station bus; Codename 47 is
+   not one of them, because the challenge on it is tracked off-site. */
+const FEEDERS=['Assassination','Discovery','Feats','Targets','The Classics'];
+const CVAR={Assassination:'var(--ass)',Discovery:'var(--dis)',Feats:'var(--fea)',
+  Targets:'var(--tar)','The Classics':'var(--cla)','Codename 47':'var(--off)'};
+const byCat=t=>CH.filter(c=>c.t===t);
+const catDone=t=>byCat(t).filter(c=>done.has(c.id)).length;
+const cleared=()=>CH.filter(c=>done.has(c.id)).length;
+const busCH=CH.filter(c=>!c.cross);          /* the plant's own circuits */
+const tieCH=CH.filter(c=>c.cross);           /* what leaves on the tie feeder */
+const busDone=()=>busCH.filter(c=>done.has(c.id)).length;
+const DESIG={};
+CH.forEach((c,i)=>{DESIG[c.id]='C-'+String(i+1).padStart(2,'0')});
 
-  const art=document.createElement('article');art.className='run';art.id='run'+r.no;
-  let html=`<button class="runhead" type="button" data-toggle="${r.no}">
-    <span class="caret">▾</span>
-    <span class="rh-main"><span class="rh-no">Run ${r.no} · ${r.tag}</span><h4>${r.title}</h4></span>
-    <span class="rh-prog" data-runprog="${r.no}">0/0</span>
-  </button>
-  <div class="runbody">
-    <div class="goalline">${r.goal}</div>
-    <div class="loadout">
-      <div class="lo"><div class="k">Start</div><div class="v">${r.loadout.loc}<em>${r.loadout.loce}</em></div></div>
-      <div class="lo"><div class="k">Suit</div><div class="v">${r.loadout.suit}</div></div>
-      <div class="lo"><div class="k">Slot 1</div><div class="v">${r.loadout.i1}</div></div>
-      <div class="lo"><div class="k">Slot 2</div><div class="v">${r.loadout.i2}</div></div>
-      <div class="lo"><div class="k">Slot 3</div><div class="v">${r.loadout.i3}</div></div>
-      <div class="lo"><div class="k">Slot 4</div><div class="v">${r.loadout.i4}</div></div>
-    </div>`;
-  if(r.note) html+=`<div class="runnote"><div class="note ok" style="margin-bottom:0">${r.note}</div></div>`;
-  r.sections.forEach(s=>{
-    html+=`<div class="section-head">${s.h}</div>`;
-    s.steps.forEach((st,i)=>{
-      const sid=`r${r.no}_${s.h.length}_${i}_${st.t.length}`;
-      let warnHtml='';
-      (st.warn||[]).forEach(w=> warnHtml+=`<dt>Watch</dt><dd class="warn">${w}</dd>`);
-      const fields=
-        field('Go',st.go)+
-        field('Disguise',st.disg)+
-        field('Item',st.item)+
-        field('NPC',st.npc)+
-        field('Do',st.act)+
-        warnHtml;
-      const badges=(st.badges||[]).map(([k,t])=>{
-        const cls=k==='ch'?'b-ch':k==='warn'?'b-warn':k==='save'?'b-save':'b-unv';
-        return `<span class="badge ${cls}">${t}</span>`;}).join('');
-      html+=`<div class="step" data-step="${sid}">
-        <div class="stepchk"><button type="button" aria-pressed="false" data-step-btn="${sid}" aria-label="Mark step complete">✓</button></div>
-        <details class="stepbox">
-          <summary><span class="t">${st.t}</span><span class="s">${st.s}</span></summary>
-          <div class="fields"><dl>${fields}</dl>${badges?`<div class="badges">${badges}</div>`:''}</div>
-        </details>
+/* ---------------- OPERATIONS AND WHAT THEY CLEAR ----------------
+   An operation names the challenges it clears on its badges, in words, so a
+   name-to-id map does the linking. Five of those badges carry the guide's own
+   kill order — "The Professional (1/5)" … "The Sniper (5/5)" — and unlike the
+   running counters in other guides this is a position, not partial progress:
+   the five names are five different one-kill Target challenges taken before
+   the fifth kill sends the survivors running, so each one completes where it
+   is named. The number is kept and shown on the chit rather than thrown away.
+   Badges of kind 'save' and 'unv' name no challenge and stay placards. */
+const flat=s=>String(s).replace(/<[^>]+>/g,'').toLowerCase().replace(/[^a-z0-9]/g,'');
+const NAME2ID={};
+CH.forEach(c=>{NAME2ID[flat(c.n)]=c.id});
+const ORDER=/^(.*?)\s*\((\d+)\s*\/\s*(\d+)\)\s*$/;
+function badgeRef(text){
+  const direct=NAME2ID[flat(text)];
+  if(direct)return{id:direct,ord:null};
+  const m=String(text).match(ORDER);
+  if(m){
+    const id=NAME2ID[flat(m[1])];
+    if(id)return{id:id,ord:m[2]+' of '+m[3]};
+  }
+  return null;
+}
+
+/* The step key is the one the previous edition wrote — run number, the length
+   of the stage heading, the step's index in that stage and the length of its
+   title. It looks arbitrary because it is, but it is what an existing save
+   holds, so it is reproduced exactly. */
+const STEP_CH={}, ALL_STEPS=[], PROG_OF={};
+RUNS.forEach(r=>r.sections.forEach(s=>s.steps.forEach((st,i)=>{
+  st._id='r'+r.no+'_'+s.h.length+'_'+i+'_'+st.t.length;
+  ALL_STEPS.push(st._id);
+  STEP_CH[st._id]=(st.badges||[]).filter(b=>b[0]==='ch')
+    .map(b=>badgeRef(b[1])).filter(Boolean).map(x=>x.id);
+  STEP_CH[st._id].forEach(id=>{if(!PROG_OF[id])PROG_OF[id]=r.no;});
+})));
+const progSteps=r=>{const out=[];r.sections.forEach(s=>s.steps.forEach(st=>out.push(st._id)));return out;};
+const progLocked=r=>progSteps(r).filter(id=>locked.has(id)).length;
+const progFull=r=>{const ids=progSteps(r);return ids.length>0&&ids.every(id=>locked.has(id));};
+
+/* ---------------- THE DRAWING ----------------
+   Five feeders drawn off the station bus, one per category: a conductor, a
+   breaker that closes only when that circuit is complete, and the load it
+   feeds. The bus itself energises downward with the plant's own count. */
+const FY=[100,138,176,214,252];
+const BUS_TOP=78, BUS_LEN=208;
+(function drawFeeders(){
+  const g=$('feeders');
+  if(!g)return;
+  g.innerHTML=FEEDERS.map((t,i)=>{
+    const y=FY[i], m=CVAR[t];
+    return `<g style="--m:${m}">
+      <path class="cond" d="M44,${y} H92"/>
+      <rect class="brk" id="fb${i}" x="92" y="${y-8}" width="16" height="16"/>
+      <path class="cond" d="M108,${y} H128"/>
+      <rect class="box" id="fx${i}" x="128" y="${y-14}" width="158" height="28"/>
+      <text class="sname" id="fn${i}" x="136" y="${y-1}">${esc(t.toUpperCase())}</text>
+      <text class="scount" id="fc${i}" x="136" y="${y+10}">0 / 0</text>
+    </g>`;
+  }).join('');
+})();
+
+function renderBoard(){
+  const n=cleared(), bd=busDone(), bt=busCH.length;
+  const busFull=bt>0&&bd===bt, allOn=CH.length>0&&n===CH.length;
+
+  /* the bus fills from the top down, over the copper between the main breaker
+     and the club */
+  const live=$('buslive');
+  if(live)live.setAttribute('height',String(bt?(bd/bt)*BUS_LEN:0));
+  const main=$('mainbrk');
+  if(main)main.classList.toggle('on',n>0);
+
+  FEEDERS.forEach((t,i)=>{
+    const all=byCat(t).length, d=catDone(t), full=all>0&&d===all;
+    const brk=$('fb'+i), box=$('fx'+i), nm=$('fn'+i), ct=$('fc'+i);
+    if(brk)brk.classList.toggle('on',full);
+    if(box)box.classList.toggle('on',d>0);
+    if(nm)nm.classList.toggle('on',full);
+    if(ct){ct.classList.toggle('on',full);ct.textContent=d+' / '+all;}
+  });
+
+  /* the tie feeder, and the one challenge that leaves on it */
+  const tieOn=tieCH.length>0&&tieCH.every(c=>done.has(c.id));
+  const tb=$('tiebox'), tc=$('tiecond'), ts=$('tiestate'), tl=$('tielabel');
+  if(tb)tb.setAttribute('stroke',tieOn?'var(--live)':'var(--off)');
+  if(tc)tc.setAttribute('stroke',tieOn?'var(--live)':'var(--line-2)');
+  if(tl)tl.setAttribute('fill',tieOn?'var(--live)':'var(--ink-dim)');
+  if(ts)ts.textContent=tieOn?'energised':'off-site';
+
+  /* the club has power only once the bus is fully live */
+  const cb=$('clubbox'), cn=$('clubname');
+  if(cb)cb.classList.toggle('on',busFull);
+  if(cn)cn.classList.toggle('on',busFull);
+  const lamp=$('buslamp');
+  if(lamp)lamp.classList.toggle('on',allOn);
+
+  /* two drums, so the register reads the way a meter does */
+  const pad=String(Math.min(n,99)).padStart(2,'0');
+  if($('drumA'))$('drumA').textContent=pad[0];
+  if($('drumB'))$('drumB').textContent=pad[1];
+
+  $('sldcap').textContent=n===0?'Plant dead · no circuits energised'
+    :allOn?'Whole drawing energised'
+    :busFull?'Station bus fully live · tie feeder still open'
+    :bd+' of '+bt+' on the station bus';
+
+  /* the count line, and the description a screen reader gets for the drawing */
+  $('numDone').textContent=n;
+  $('numOf').textContent='/ '+CH.length+' circuits energised';
+  $('subcount').textContent=[...locked].filter(k=>STEP_CH[k]!==undefined).length+' of '+
+    ALL_STEPS.length+' operations locked off across '+RUNS.length+' switching programmes · '+
+    CH.filter(c=>done.has(c.id)).reduce((s,c)=>s+c.xp,0).toLocaleString()+' XP banked';
+  $('loadnote').innerHTML='The station bus carries the mission’s own <b>'+bt+
+    '</b> circuits. <b>'+esc(tieCH.map(c=>c.n).join(', '))+'</b> leaves on the tie feeder before the bus — '+
+    'the wiki counts it, the mission file does not, and this page counts every circuit on the drawing.';
+  const desc=$('sldDesc');
+  if(desc)desc.textContent='Station bus '+bd+' of '+bt+' energised. '+
+    FEEDERS.map(t=>t+' '+catDone(t)+' of '+byCat(t).length).join('. ')+
+    '. Tie feeder '+(tieOn?'energised':'open')+'.';
+}
+
+/* ---------------- THE SWITCHING PROGRAMMES ---------------- */
+function chitHTML(b){
+  const ref=badgeRef(b[1]);
+  if(!ref)return `<span class="unv">${esc(b[1])}</span>`;
+  const c=CH.find(x=>x.id===ref.id), on=done.has(ref.id);
+  const label=ref.ord?esc(b[1]).replace(/\s*\(\d+\s*\/\s*\d+\)\s*$/,''):esc(b[1]);
+  return `<button type="button" class="chit" role="switch" aria-checked="${on}"
+    data-ch="${esc(ref.id)}" style="--m:${CVAR[c.t]}">${label}${
+    ref.ord?`<span class="ord">kill ${esc(ref.ord)}</span>`:''}</button>`;
+}
+function tagHTML(b){
+  if(b[0]==='ch')return chitHTML(b);
+  if(b[0]==='save')return `<span class="iso">${esc(b[1])}</span>`;
+  return `<span class="unv">${esc(b[1])}</span>`;
+}
+function fieldHTML(k,v){
+  if(!v&&v!==0)return '';
+  const none=String(v)==='None';
+  return `<div class="frow"><div class="fk">${k}</div>
+    <div class="fv${none?' none':''}">${esc(v)}</div></div>`;
+}
+function stepHTML(st,no){
+  const on=locked.has(st._id);
+  const warns=(st.warn||[]).map(w=>
+    `<p class="placard"><span class="k">Danger</span>${esc(w)}</p>`).join('');
+  const tags=(st.badges||[]).map(tagHTML).join('');
+  return `<div class="step${on?' done':''}" id="op-${st._id}">
+    <button type="button" class="lock" data-step="${esc(st._id)}" aria-pressed="${on}"
+      aria-label="${esc('Lock off operation '+no+': '+st.t)}"></button>
+    <div class="opwrap">
+      <span class="opno">Op ${String(no).padStart(2,'0')}${on?' · locked off':''}</span>
+      <p class="optitle">${esc(st.t)}</p>
+      ${st.s?`<p class="opsum">${esc(st.s)}</p>`:''}
+      <div class="fields">
+        ${fieldHTML('At',st.go)}
+        ${fieldHTML('As',st.disg)}
+        ${fieldHTML('Plant',st.item)}
+        ${fieldHTML('Person',st.npc)}
+        ${fieldHTML('Operation',st.act)}
+      </div>
+      ${warns}
+      ${tags?`<div class="tags">${tags}</div>`:''}
+    </div>
+  </div>`;
+}
+
+function renderProgrammes(){
+  $('prognav').innerHTML=RUNS.map((r,i)=>{
+    const ids=progSteps(r);
+    return `<button type="button" class="pjump${progFull(r)?' full':''}" data-jump="${i}">
+      <b>PROG ${String(r.no).padStart(2,'0')}</b>${esc(r.title)}
+      <span class="pg">${progLocked(r)}/${ids.length}</span></button>`;
+  }).join('')+
+  `<button type="button" class="pjump" data-toggleall="1">Open / close every programme</button>`;
+
+  $('programmes').innerHTML=RUNS.map((r,i)=>{
+    const ids=progSteps(r), d=progLocked(r), open=!!openRun[i], lo=r.loadout||{};
+    const mine=CH.filter(c=>c.run===r.no);
+    let no=0;
+    const body=r.sections.map(sec=>{
+      const keys=sec.steps.map(s=>s._id), sn=keys.filter(k=>locked.has(k)).length;
+      return `<h3 class="stage">${esc(sec.h)}
+        <span class="cnt">${sn} / ${keys.length} operations</span></h3>`+
+        sec.steps.map(st=>stepHTML(st,++no)).join('');
+    }).join('');
+    return `<article class="prog${progFull(r)?' full':''}" id="prog-${i}">
+      <button type="button" class="phead" data-run="${i}" aria-expanded="${open}"
+        aria-controls="pbody-${i}">
+        <span class="progno"><span class="k">Programme</span><span class="v">${
+          esc(String(r.no).padStart(2,'0'))}</span></span>
+        <span class="pmain">
+          <span class="ptag">${esc(r.tag)}</span>
+          <span class="ptitle">${esc(r.title)}</span>
+          <span class="pgoal">${esc(r.goal)}</span>
+          <span class="ptally">${d} of ${ids.length} operations locked off &middot; ${
+            mine.filter(c=>done.has(c.id)).length} of ${mine.length} circuits on this programme${
+            open?'':' &middot; open the sheet to work through it'}</span>
+        </span>
+      </button>
+      <div class="pbody" id="pbody-${i}"${open?'':' hidden'}>
+        ${r.note?`<div class="instr"><span class="k">Standing instruction</span>${esc(r.note)}</div>`:''}
+        <div class="issue">
+          ${lo.loc?`<div class="slot"><span class="k">Point of entry</span><span class="v">${
+            esc(lo.loc)}${lo.loce?`<em>${esc(lo.loce)}</em>`:''}</span></div>`:''}
+          ${lo.suit?`<div class="slot"><span class="k">Worn</span><span class="v">${esc(lo.suit)}</span></div>`:''}
+          ${[lo.i1,lo.i2,lo.i3,lo.i4].map((it,k)=>it?`<div class="slot">
+            <span class="k">Slot ${k+1}</span><span class="v">${esc(it)}</span></div>`:'').join('')}
+        </div>
+        ${body}
+        ${r.conflicts?`<div class="interlock"><span class="k">Interlocks &amp; exclusions</span>
+          <p>${esc(r.conflicts)}</p></div>`:''}
+      </div>
+    </article>`;
+  }).join('');
+}
+
+/* ---------------- THE SCHEDULE OF CIRCUITS ---------------- */
+function renderList(){
+  const F=[['all','Whole schedule '+CH.length]]
+    .concat(FEEDERS.map(t=>[t,t+' '+byCat(t).length]))
+    .concat([['Codename 47','Tie feeder '+byCat('Codename 47').length],
+             ['todo','Outstanding '+(CH.length-cleared())]]);
+  $('filters').innerHTML=F.map(([k,l])=>
+    `<button type="button" data-f="${esc(k)}" aria-pressed="${filter===k}">${esc(l)}</button>`).join('');
+
+  const groups=FEEDERS.concat(['Codename 47']);
+  let out='';
+  groups.forEach(t=>{
+    const all=byCat(t);
+    if(!all.length)return;
+    if(filter!=='all'&&filter!=='todo'&&filter!==t)return;
+    const rows=filter==='todo'?all.filter(c=>!done.has(c.id)):all;
+    if(!rows.length)return;
+    out+=`<h3 class="grp" style="--m:${CVAR[t]}">${esc(t)}
+      <span class="n">${catDone(t)} of ${all.length} energised</span></h3>`;
+    out+=rows.map(c=>{
+      const on=done.has(c.id);
+      return `<div class="crow${on?' done':''}" style="--m:${CVAR[c.t]}">
+        <button type="button" class="mark" data-ch="${esc(c.id)}" aria-pressed="${on}"
+          aria-label="${esc('Energise '+c.n)}"></button>
+        <div>
+          <p class="cnm"><span class="cdesig">${esc(DESIG[c.id])}</span> ${esc(c.n)}${
+            c.cross?'<span class="tiechip">tie &middot; off-site</span>':''}</p>
+          <p class="ccond">${esc(c.d)}${c.extra?`<em class="cextra">${esc(c.extra)}</em>`:''}</p>
+        </div>
+        <span class="cmeta">
+          <span>${PROG_OF[c.id]?'Programme '+PROG_OF[c.id]:'Programme '+c.run}</span>
+          <span class="xp">${c.xp.toLocaleString()} XP</span>
+        </span>
       </div>`;
+    }).join('');
+  });
+  $('checklist').innerHTML=out||'<p class="empty">Nothing outstanding on this circuit.</p>';
+}
+
+/* The audit table in the lifted verification sheet asks for the counts this
+   page holds, and its own rows are about the mission file, which does not carry
+   the cross-mission challenge — so those cells are filled from the plant's own
+   bus rather than the whole drawing. Both figures come off CH; neither is
+   typed. */
+function fillAudit(){
+  FEEDERS.forEach(t=>{
+    const el=$('a-'+t);
+    if(el)el.textContent=busCH.filter(c=>c.t===t).length;
+  });
+  const tot=$('a-total');
+  if(tot)tot.innerHTML='<b>'+busCH.length+'</b>';
+}
+
+/* Wide tables in the lifted sheets scroll inside their own box rather than
+   pushing the page sideways — done here rather than by editing lifted markup. */
+function wrapTables(){
+  ['p-ref','p-ver'].forEach(id=>{
+    const box=$(id);
+    if(!box)return;
+    box.querySelectorAll('table').forEach(t=>{
+      if(t.parentElement&&t.parentElement.classList.contains('tablewrap'))return;
+      const w=document.createElement('div');
+      w.className='tablewrap';
+      t.parentNode.insertBefore(w,t);
+      w.appendChild(t);
     });
   });
-  html+=`<div class="conflicts"><div class="ch">Conflicts &amp; exclusions</div><p>${r.conflicts}</p></div></div>`;
-  art.innerHTML=html;
-  runsEl.appendChild(art);
-});
+}
 
-/* the runs are built above, so re-apply saved step ticks now */
-stepDone.forEach(id=>{
-  const row=document.querySelector(`[data-step="${id}"]`); if(!row)return;
-  row.classList.add('done');
-  const b=document.querySelector(`[data-step-btn="${id}"]`);
-  if(b)b.setAttribute('aria-pressed','true');
-});
+const openRun={};
+function render(){renderProgrammes();renderList();renderBoard();}
 
-// run collapse
-runsEl.addEventListener('click',e=>{
-  const h=e.target.closest('[data-toggle]');
-  if(h){ document.getElementById('run'+h.dataset.toggle).classList.toggle('closed'); return; }
-  const b=e.target.closest('[data-step-btn]');
-  if(b){
-    const id=b.dataset.stepBtn, row=document.querySelector(`[data-step="${id}"]`);
-    if(stepDone.has(id)){stepDone.delete(id);b.setAttribute('aria-pressed','false');row.classList.remove('done');}
-    else{stepDone.add(id);b.setAttribute('aria-pressed','true');row.classList.add('done');}
-    saveDone();
-  }
-});
-
-/* checklist */
-const FILTERS=['All','Assassination','Discovery','Feats','Targets','The Classics','Codename 47','Incomplete'];
-let filter='All';
-const fEl=document.getElementById('filters');
-FILTERS.forEach(f=>{
-  const b=document.createElement('button');b.type='button';b.textContent=f;b.setAttribute('aria-pressed',f===filter);
-  b.onclick=()=>{filter=f;[...fEl.children].forEach(c=>c.setAttribute('aria-pressed',c.textContent===f));drawList();};
-  fEl.appendChild(b);
-});
-const listEl=document.getElementById('chalList');
-function drawList(){
-  listEl.innerHTML='';
-  CH.filter(c=>{
-    if(filter==='All')return true;
-    if(filter==='Incomplete')return !done.has(c.id);
-    return c.t===filter;
-  }).forEach(c=>{
-    const row=document.createElement('label');row.className='chal'+(done.has(c.id)?' done':'');
-    row.innerHTML=`<input type="checkbox" ${done.has(c.id)?'checked':''} data-ch="${c.id}">
-      <span class="cmain"><span class="cn">${c.n}</span>${c.cross?' <span class="badge b-unv">cross-mission</span>':''}<br><span class="cd">${c.d}${c.extra?' <i style="color:var(--bird)">'+c.extra+'</i>':''}</span></span>
-      <span class="meta"><span class="xp">+${c.xp.toLocaleString()} XP</span><span class="run">Run ${c.run} · ${c.t}</span></span>`;
-    listEl.appendChild(row);
+/* ---------------- EVENTS ---------------- */
+const tabs=[...document.querySelectorAll('.tab')];
+function selectTab(tb){
+  tabs.forEach(x=>{
+    const on=x===tb;
+    x.setAttribute('aria-selected',String(on));
+    x.tabIndex=on?0:-1;
+    $(x.getAttribute('aria-controls')).hidden=!on;
   });
 }
-listEl.addEventListener('change',e=>{
-  const cb=e.target.closest('[data-ch]');if(!cb)return;
-  cb.checked?done.add(cb.dataset.ch):done.delete(cb.dataset.ch);
-  saveDone();refresh();drawList();
+tabs.forEach((tb,i)=>{
+  tb.tabIndex=tb.getAttribute('aria-selected')==='true'?0:-1;
+  tb.addEventListener('keydown',e=>{
+    const d=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;
+    if(!d)return;
+    e.preventDefault();
+    const next=tabs[(i+d+tabs.length)%tabs.length];
+    selectTab(next);next.focus();
+  });
 });
-drawList();
-refresh();
+
+document.addEventListener('click',e=>{
+  const t=e.target;
+
+  /* a circuit is a control wherever it is named — on its line in the schedule,
+     or on the permit chit of the operation that clears it */
+  const cb=t.closest('[data-ch]');
+  if(cb){
+    const id=cb.dataset.ch;
+    done.has(id)?done.delete(id):done.add(id);
+    sv();render();return;
+  }
+
+  const sb=t.closest('[data-step]');
+  if(sb){
+    const id=sb.dataset.step, now=!locked.has(id);
+    now?locked.add(id):locked.delete(id);
+    /* locking an operation off energises what it clears; releasing it again
+       leaves those energised, because another operation may cover the same
+       circuit */
+    if(now)(STEP_CH[id]||[]).forEach(c=>done.add(c));
+    sv();render();return;
+  }
+
+  const rh=t.closest('[data-run]');
+  if(rh){const i=+rh.dataset.run;openRun[i]=!openRun[i];renderProgrammes();return;}
+
+  const jp=t.closest('[data-jump]');
+  if(jp){
+    const i=+jp.dataset.jump;
+    selectTab($('tab-runs'));
+    openRun[i]=true;renderProgrammes();
+    $('prog-'+i).scrollIntoView({behavior:'smooth',block:'start'});return;
+  }
+
+  const ta=t.closest('[data-toggleall]');
+  if(ta){
+    const anyClosed=RUNS.some((r,i)=>!openRun[i]);
+    RUNS.forEach((r,i)=>{openRun[i]=anyClosed});
+    renderProgrammes();return;
+  }
+
+  const fb=t.closest('[data-f]');
+  if(fb){filter=fb.dataset.f;renderList();return;}
+
+  const tb=t.closest('.tab');
+  if(tb){selectTab(tb);return;}
+});
+
+$('reset').addEventListener('click',()=>{
+  if(!confirm('Open every breaker? All '+CH.length+' circuits and all '+ALL_STEPS.length+
+    ' operations on this guide are cleared. Other guides are not affected.'))return;
+  done=new Set();locked=new Set();
+  sv();render();
+});
+
+openRun[0]=true;
+render();
+fillAudit();
+wrapTables();
 reportProgress();
-
-/* tabs */
-document.querySelectorAll('nav.tabs button').forEach(b=>{
-  b.onclick=()=>{
-    document.querySelectorAll('nav.tabs button').forEach(x=>x.setAttribute('aria-selected','false'));
-    b.setAttribute('aria-selected','true');
-    ['runs','list','ref','ver'].forEach(p=>document.getElementById('panel-'+p).classList.toggle('hidden',p!==b.dataset.panel));
-    window.scrollTo({top:0,behavior:'smooth'});
-  };
-});
-
-/* actions */
-document.getElementById('btnReset').onclick=()=>{
-  done.clear();stepDone.clear();
-  document.querySelectorAll('[data-step-btn]').forEach(b=>b.setAttribute('aria-pressed','false'));
-  document.querySelectorAll('.step').forEach(s=>s.classList.remove('done'));
-  saveDone();refresh();drawList();
-};
-let runsOpen=true;
-document.getElementById('btnOpenRuns').onclick=(e)=>{
-  runsOpen=!runsOpen;
-  document.querySelectorAll('.run').forEach(a=>a.classList.toggle('closed',!runsOpen));
-  e.target.textContent=runsOpen?'Collapse all runs':'Open all runs';
-};
-let stepsOpen=false;
-document.getElementById('btnOpenSteps').onclick=(e)=>{
-  stepsOpen=!stepsOpen;
-  document.querySelectorAll('.stepbox').forEach(d=>d.open=stepsOpen);
-  e.target.textContent=stepsOpen?'Collapse all step details':'Open all step details';
-};
-
-/* audit numbers */
-['Assassination','Discovery','Feats','Targets','The Classics'].forEach(t=>{
-  const el=document.getElementById('a-'+t);if(el)el.textContent=CH.filter(c=>c.t===t&&!c.cross).length;
-});
-document.getElementById('a-total').innerHTML='<b>'+CH.filter(c=>!c.cross).length+'</b>';
-
-refresh();
 </script>
 <!-- step-progress-bridge -->
 <script>

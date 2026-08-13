@@ -1,133 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Shadows in the Water — Run Planner</title>
+<!--@title--><title>Shadows in the Water — Run Planner</title><!--/@title-->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@400;600;800&family=Spline+Sans:wght@400;500;600&family=Spline+Sans+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Vollkorn:ital,wght@0,400;0,500;0,600;1,400&family=Cousine:wght@400;700&display=swap" rel="stylesheet">
 <style>
+/* ═══ AMBROSE ISLAND — the chart ═══
+   Pirates hold an island in the Andaman Sea and everything on it is somebody
+   else's, taken and re-used: a colonial ruin for a jail, a fishing village for
+   a camp, a cave for a submarine. The paperwork that fits is the oldest thing
+   on a ship — a plotting sheet, worked in pencil over the watch.
+
+   The tracker is THE TRACK. A dead-reckoning course runs across the sheet in
+   five legs, one for each of the guide's five runs, and it inks its way along
+   as challenges are logged: each leg's end is a charted fix that fills as the
+   track reaches it, and the last leg ends on the cross. It is deliberately not
+   a map of the island — the grid is open water and the course is progress, and
+   the caption says so, because a guide has no business inventing geography.
+
+   The previous edition filled a tank with rising water, and Haven Island — the
+   library's other tropical map — is a sun crossing a lagoon. Neither the water
+   nor the sun is available here, which is why this one is paper and pencil.
+
+   A run is a VOYAGE, a section is a LEG, a step is a WAYPOINT, and logging one
+   fills its triangle the way a fix is charted. A save is DROP ANCHOR. The
+   checklist is THE LOG.
+
+   The one thing only this mission has: four of its challenges are named by no
+   single waypoint at all — Versatile Assassin, The Ronin and The Corsair are
+   cumulative in the guide's own data, and Chameleon is only ever referred to as
+   "Chameleon (Hippie)", "(Engineer)", "(Cook)", "(The Buccaneer)" as each
+   disguise is taken. Those four are marked STANDING on the log and their
+   part-references stay plain text, because taking one disguise does not
+   complete Chameleon.
+
+   Iron-gall ink on foxed tan paper, over a night sea. */
 :root{
-  --ink:#07131a; --hull:#0d2028; --deck:#132c36; --line:#20444f;
-  --verdigris:#5fc9a8; --brass:#d1972f; --coral:#e2573f; --bone:#e9e4d5; --dim:#7d9aa3;
-  --disp:'Big Shoulders Display',sans-serif; --body:'Spline Sans',system-ui,sans-serif; --mono:'Spline Sans Mono',ui-monospace,monospace;
+  --sea:#0A1519; --sea-2:#060F12;
+  --chart:#E9DDC1; --chart-2:#DED0AE; --chart-3:#D0BF98;
+  --ink:#22201A; --ink-2:#4B4536; --ink-dim:#7A7157; --faint:#9A9075;
+  --rose:#8C3B22; --verd:#3E6B57; --indigo:#2C4A6B; --gold:#8A6A22; --plum:#6B4A7A;
+  --rule:rgba(34,32,26,.26); --rule-2:rgba(34,32,26,.14); --rule-3:rgba(34,32,26,.07);
+  --disp:"IM Fell English",Georgia,"Times New Roman",serif;
+  --body:Vollkorn,Georgia,"Times New Roman",serif;
+  --mono:Cousine,ui-monospace,Consolas,"Courier New",monospace;
 }
 *{box-sizing:border-box}
-body{margin:0;background:radial-gradient(1100px 500px at 12% -8%,#14343f 0%,transparent 62%),linear-gradient(180deg,#07131a 0%,#050d12 100%);
-  color:var(--bone);font-family:var(--body);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;min-height:100vh}
-.wrap{max-width:1080px;margin:0 auto;padding:28px 20px 90px}
-a{color:var(--verdigris)}
-.mast{border-bottom:1px solid var(--line);padding-bottom:18px;margin-bottom:22px}
-.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--brass)}
-h1{font-family:var(--disp);font-weight:800;font-size:clamp(40px,8vw,74px);line-height:.9;margin:6px 0 4px;letter-spacing:-.01em;text-transform:uppercase}
-h1 span{color:var(--verdigris)}
-.sub{color:var(--dim);font-size:14px;max-width:64ch}
-.meter{position:relative;margin:20px 0 8px;border:1px solid var(--line);background:var(--hull);border-radius:3px;overflow:hidden;height:74px}
-.water{position:absolute;left:0;bottom:0;width:100%;background:linear-gradient(180deg,rgba(95,201,168,.55),rgba(95,201,168,.18));transition:height .5s cubic-bezier(.4,0,.2,1)}
-.water::before{content:"";position:absolute;top:-3px;left:0;right:0;height:3px;background:var(--verdigris);box-shadow:0 0 14px rgba(95,201,168,.8)}
-.meter-txt{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;height:100%;padding:0 18px}
-.meter-txt b{font-family:var(--disp);font-size:44px;font-weight:800;line-height:1}
-.meter-txt small{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--bone)}
-.cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:8px;margin-bottom:26px}
-.cat{border:1px solid var(--line);background:var(--hull);padding:10px 12px;border-radius:3px}
-.cat u{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);text-decoration:none;margin-bottom:4px}
-.cat b{font-family:var(--disp);font-size:26px;font-weight:600}
-.cat i{font-style:normal;color:var(--dim);font-size:13px;font-family:var(--mono)}
-.bar{height:3px;background:#0a1c23;margin-top:7px;border-radius:2px;overflow:hidden}
-.bar>div{height:100%;background:var(--brass);transition:width .4s}
-.tabs{display:flex;gap:2px;border-bottom:1px solid var(--line);margin-bottom:24px;flex-wrap:wrap}
-.tab{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;background:none;border:0;border-bottom:2px solid transparent;color:var(--dim);padding:11px 16px;cursor:pointer}
-.tab:hover{color:var(--bone)}
-.tab[aria-selected=true]{color:var(--verdigris);border-bottom-color:var(--verdigris)}
-.tab:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
-.panel[hidden]{display:none}
-.notice{border:1px solid var(--brass);background:rgba(209,151,47,.08);padding:14px 16px;border-radius:3px;margin-bottom:24px}
-.notice h4{margin:0 0 6px;font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--brass)}
-.notice p{margin:0 0 8px;font-size:13.5px;color:#efe6d2}.notice p:last-child{margin:0}
-.run{border:1px solid var(--line);background:var(--hull);border-radius:3px;margin-bottom:20px;overflow:hidden}
-.run>header{padding:18px 20px;border-bottom:1px solid var(--line);background:var(--deck)}
-.run-no{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--brass);text-transform:uppercase}
-.run h3{font-family:var(--disp);font-weight:600;font-size:31px;margin:2px 0 6px;text-transform:uppercase;letter-spacing:.01em}
-.run header p{margin:0;color:var(--dim);font-size:14px;max-width:74ch}
-.loadout{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;background:var(--line);border-bottom:1px solid var(--line)}
-.slot{background:var(--hull);padding:11px 14px}
-.slot u{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--brass);text-decoration:none;margin-bottom:3px}
-.slot span{font-size:13.5px;display:block}
-.slot em{font-style:normal;color:var(--dim);font-size:11.5px;font-family:var(--mono);display:block;margin-top:2px}
-.sect{padding:6px 20px 14px}
-.sect>h5{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--verdigris);margin:18px 0 8px;padding-bottom:6px;border-bottom:1px dashed var(--line)}
-.step{border-left:2px solid var(--line);padding:2px 0 2px 14px;margin-bottom:14px}
-.step.done{border-left-color:var(--verdigris)}
-.step-head{display:flex;gap:11px;align-items:flex-start}
-.num{flex:0 0 auto;font-family:var(--mono);font-size:12px;color:var(--brass);margin-top:3px;min-width:26px}
-.tick{flex:0 0 auto;width:21px;height:21px;margin-top:1px;border:1px solid var(--line);background:#0a1c23;border-radius:3px;cursor:pointer;color:transparent;font-size:12px;line-height:1;padding:0}
-.tick.on{background:var(--verdigris);border-color:var(--verdigris);color:var(--ink);font-weight:700}
-.step-body{flex:1;min-width:0}
-.step-body b{display:block;font-size:15px;font-weight:600}
-.step.done .step-body b{text-decoration:line-through;color:var(--dim)}
-.bl{margin:7px 0 0;padding:0;list-style:none}
-.bl li{position:relative;padding-left:15px;margin:4px 0;font-size:13.7px;color:#c3d4d9}
-.bl li::before{content:"";position:absolute;left:2px;top:8px;width:5px;height:5px;background:var(--line);border-radius:50%}
-.bl li b{display:inline;font-weight:600;color:var(--bone)}
-.bl li.go b,.bl li.dis b,.bl li.item b,.bl li.npc b,.bl li.act b,.bl li.warn b{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase}
-.bl li.go::before{background:var(--verdigris)}
-.bl li.warn::before{background:var(--coral)}
-.bl li.warn{color:#ffd9d0}
-.bl li.warn b{color:#ffb3a4}
-.badges{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px}
-.b{font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;padding:3px 8px;border-radius:2px;border:1px solid}
-.b.ch{color:var(--verdigris);border-color:rgba(95,201,168,.5);background:rgba(95,201,168,.09)}
-.b.warn{color:#ffd9d0;border-color:var(--coral);background:rgba(226,87,63,.2)}
-.b.save{color:#ffe9bd;border-color:var(--brass);background:rgba(209,151,47,.18)}
-.b.unv{color:#c9b8ff;border-color:#7b6bd6;background:rgba(123,107,214,.15)}
-.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
-.f{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:6px 12px;border:1px solid var(--line);background:var(--hull);color:var(--dim);border-radius:2px;cursor:pointer}
-.f[aria-pressed=true]{background:var(--verdigris);color:var(--ink);border-color:var(--verdigris);font-weight:600}
-.grp{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--brass);margin:22px 0 8px;padding-bottom:6px;border-bottom:1px solid var(--line)}
-.row{display:flex;gap:11px;align-items:flex-start;padding:9px 11px;border:1px solid transparent;border-radius:3px}
-.row:hover{background:var(--hull);border-color:var(--line)}
-.row.done b{text-decoration:line-through;color:var(--dim)}
-.row b{font-weight:600;font-size:14.5px}
-.row p{margin:1px 0 0;color:var(--dim);font-size:13px}
-.tagrow{display:flex;gap:5px;flex-wrap:wrap;margin-top:5px}
-.reset{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;background:none;border:1px solid var(--line);color:var(--dim);padding:7px 13px;border-radius:2px;cursor:pointer}
-.reset:hover{border-color:var(--coral);color:var(--coral)}
-.detail{border:1px solid var(--line);border-radius:3px;background:#0a1c23;padding:13px 15px;margin:10px 0;font-size:13.5px}
-.detail dl{margin:0}.detail dt{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--brass);margin-top:12px}.detail dt:first-child{margin-top:0}.detail dd{margin:2px 0 0}
-h3.rh{font-family:var(--disp);font-size:28px;text-transform:uppercase;margin:28px 0 10px}
-.foot{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);color:var(--dim);font-size:12.5px}
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+html{scroll-behavior:smooth}
+body{
+  margin:0;color:var(--ink);background-color:var(--sea);
+  /* the water the sheet is being worked over */
+  background-image:
+    radial-gradient(900px 520px at 50% -6%,rgba(120,170,180,.10),transparent 66%),
+    radial-gradient(700px 460px at 90% 108%,rgba(62,107,87,.14),transparent 70%);
+  background-attachment:fixed;
+  font-family:var(--body);font-size:16.5px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.deck{max-width:1080px;margin:0 auto;padding:0 15px 96px}
+a{color:var(--rose)}
+b,strong{font-weight:600;color:var(--ink)}
+i,em{font-style:italic}
+:focus-visible{outline:2px solid var(--rose);outline-offset:2px}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:12px;top:12px;z-index:60;background:var(--rose);color:var(--chart);padding:8px 14px;
+  font-family:var(--mono);font-size:12px}
+.lbl{font-family:var(--mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--faint)}
+
+/* ── the sheet ──────────────────────────────────────────────────────────── */
+.sheet{margin-top:36px;background:var(--chart);
+  /* foxing, and the fold the sheet is kept in */
+  background-image:
+    radial-gradient(340px 200px at 8% 4%,rgba(140,59,34,.05),transparent 70%),
+    radial-gradient(300px 220px at 96% 88%,rgba(138,106,34,.06),transparent 72%);
+  box-shadow:0 30px 64px -44px #000, inset 0 0 0 1px var(--rule)}
+.mast{padding:30px 32px 24px;border-bottom:1px solid var(--rule-2)}
+.eyebrow{margin:0 0 14px;font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--ink-dim)}
+h1{margin:0;font-family:var(--disp);font-weight:400;font-size:clamp(38px,7.2vw,72px);line-height:1.02;
+  color:var(--ink)}
+h1 span{color:var(--rose)}
+.sub{margin:18px 0 0;max-width:80ch;font-size:16px;color:var(--ink-2)}
+.rail{display:flex;flex-wrap:wrap;gap:6px 20px;align-items:center;justify-content:space-between;
+  padding:9px 32px;background:var(--chart-2);border-bottom:1px solid var(--rule-2);
+  font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-dim)}
+.rail a{color:var(--rose);text-decoration:none;border-bottom:1px solid rgba(140,59,34,.4)}
+.rail a:hover{color:var(--ink);border-color:var(--ink)}
+
+/* ── the track ──────────────────────────────────────────────────────────── */
+.chartblock{padding:24px 32px 8px}
+.chartbox{max-width:760px;margin:0 auto;border:1px solid var(--rule);background:var(--chart-2);
+  padding:10px}
+.chartbox svg{display:block;width:100%;height:auto}
+.gridline{stroke:rgba(34,32,26,.13);stroke-width:.6}
+.gridline.major{stroke:rgba(34,32,26,.24);stroke-width:.9}
+.rhumb{stroke:rgba(44,74,107,.18);stroke-width:.7;stroke-dasharray:3 4}
+/* the course as intended, and the part of it actually run */
+.course{fill:none;stroke:rgba(34,32,26,.3);stroke-width:1.2;stroke-dasharray:2 4}
+.run-in{fill:none;stroke:var(--rose);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+/* a charted fix: an open triangle until the track reaches it */
+.fix{fill:var(--chart-2);stroke:var(--ink-2);stroke-width:1.3}
+.fix.made{fill:var(--rose);stroke:var(--rose)}
+.fixno{font-family:Cousine,ui-monospace,monospace;font-size:8.5px;fill:var(--ink-dim)}
+.fixno.made{fill:var(--rose)}
+.startmark{fill:none;stroke:var(--ink-2);stroke-width:1.3}
+.cross{stroke:var(--rose);stroke-width:2.2;stroke-linecap:round}
+.crossring{fill:none;stroke:var(--rose);stroke-width:1.2;opacity:0}
+.crossring.made{opacity:1}
+.sounding{font-family:Cousine,ui-monospace,monospace;font-size:7.5px;fill:rgba(44,74,107,.5)}
+.rose-line{stroke:var(--ink-2);stroke-width:.8}
+.rose-pt{fill:var(--ink-2)}
+.rose-pt.alt{fill:var(--chart-2);stroke:var(--ink-2);stroke-width:.7}
+.rose-n{font-family:"IM Fell English",Georgia,serif;font-size:11px;fill:var(--rose);
+  text-anchor:middle}
+.chartcap{margin:9px 0 0;text-align:center;font-family:var(--mono);font-size:10px;
+  letter-spacing:.11em;text-transform:uppercase;color:var(--faint)}
+
+/* the five categories, ruled down the margin the way a chart carries its notes */
+.marks{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:1px;
+  background:var(--rule-3);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+  margin:22px 32px 0}
+.mk{background:var(--chart);padding:10px 13px;min-width:0}
+.mk .k{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--faint)}
+.mk .v{display:block;margin-top:3px;font-family:var(--disp);font-size:20px;color:var(--ink)}
+.mk.full .v{color:var(--m,var(--rose))}
+.mk .bar{display:block;height:3px;margin-top:6px;background:var(--chart-3)}
+.mk .bar i{display:block;height:100%;width:0;background:var(--m,var(--rose));transition:width .45s ease}
+
+.tally{display:flex;flex-wrap:wrap;gap:14px 24px;align-items:flex-end;justify-content:space-between;
+  padding:20px 32px 26px}
+/* the count line. Left in lower case on purpose: behaviour-check.js reads
+   rendered text and matches "n / n" — uppercasing it has hidden that number
+   from the harness before. Do not 'fix' this. */
+.count{margin:0;font-size:16px;color:var(--ink-2)}
+.count b{font-family:var(--disp);font-weight:400;font-size:clamp(42px,7vw,58px);line-height:1;
+  color:var(--rose);margin-right:10px}
+.subcount{margin:7px 0 0;font-family:var(--mono);font-size:11px;color:var(--faint)}
+.btn{font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;
+  background:transparent;color:var(--ink-2);border:1px solid var(--rule);padding:10px 15px;
+  cursor:pointer}
+.btn:hover{border-color:var(--rose);color:var(--rose)}
+
+/* ── tabs ───────────────────────────────────────────────────────────────── */
+.tabs{display:flex;flex-wrap:wrap;gap:4px;margin:26px 0 0}
+.tab{font-family:var(--disp);font-size:19px;background:var(--chart-2);color:var(--ink-dim);
+  border:1px solid var(--rule-2);border-bottom:0;padding:9px 18px 8px;cursor:pointer}
+.tab[aria-selected="true"]{background:var(--chart);color:var(--ink);
+  box-shadow:inset 0 3px 0 var(--rose)}
+.tab:hover{color:var(--ink)}
+.pane{background:var(--chart);padding:26px 30px;box-shadow:inset 0 0 0 1px var(--rule)}
+
+/* ── the voyage index ───────────────────────────────────────────────────── */
+.vnav{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:22px}
+.vjump{display:flex;align-items:baseline;gap:9px;background:var(--chart-2);border:1px solid var(--rule-2);
+  color:var(--ink-2);padding:8px 13px;cursor:pointer;font-family:var(--body);font-size:15px;
+  text-align:left}
+.vjump b{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--rose)}
+.vjump .pg{font-family:var(--mono);font-size:9.5px;color:var(--faint)}
+.vjump:hover{border-color:var(--rose);color:var(--ink)}
+.vjump.full{background:rgba(140,59,34,.08);border-color:rgba(140,59,34,.4)}
+
+/* ── a voyage ───────────────────────────────────────────────────────────── */
+article.voyage{border:1px solid var(--rule-2);background:var(--chart-2);margin-bottom:18px;
+  scroll-margin-top:12px}
+article.voyage.full{border-color:rgba(140,59,34,.42)}
+.vhead{display:grid;grid-template-columns:78px minmax(0,1fr);gap:18px;width:100%;text-align:left;
+  background:var(--chart);border:0;border-bottom:1px solid var(--rule-2);cursor:pointer;
+  padding:17px 19px;font-family:var(--body);color:var(--ink-2)}
+.vhead:hover .vtitle{color:var(--rose)}
+/* the voyage's number, set in a box the way a chart numbers its legs */
+.vno{display:grid;place-content:center;gap:2px;min-height:70px;background:var(--chart-2);
+  border:1px solid var(--rule);text-align:center;padding:8px 4px}
+.vno .k{font-family:var(--mono);font-size:8px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--faint)}
+.vno .v{font-family:var(--disp);font-size:26px;line-height:1;color:var(--ink)}
+article.voyage.full .vno{border-color:var(--rose)}
+article.voyage.full .vno .v{color:var(--rose)}
+.vmain{min-width:0}
+.vtitle{display:block;font-family:var(--disp);font-size:clamp(23px,3.2vw,32px);line-height:1.1;
+  color:var(--ink)}
+.vgoal{display:block;margin-top:10px;font-size:15.4px;color:var(--ink-2);max-width:84ch}
+.vtally{display:block;margin-top:10px;font-family:var(--mono);font-size:10px;color:var(--faint)}
+.vbody{padding:19px}
+/* what is carried: the guide gives each slot a note of its own */
+.stowed{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:1px;
+  background:var(--rule-3);border:1px solid var(--rule-3);margin-bottom:22px}
+.slot{background:var(--chart);padding:10px 13px;min-width:0}
+.slot .k{display:block;font-family:var(--mono);font-size:8.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--faint)}
+.slot .v{display:block;margin-top:2px;font-size:15px;color:var(--ink);overflow-wrap:anywhere}
+.slot .n{display:block;margin-top:2px;font-size:13.4px;font-style:italic;color:var(--ink-dim)}
+.leg{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin:26px 0 4px;
+  padding-bottom:8px;border-bottom:1px solid var(--rule);font-family:var(--disp);font-size:20px;
+  color:var(--ink)}
+.leg:first-of-type{margin-top:0}
+.leg .cnt{margin-left:auto;font-family:var(--mono);font-size:9.5px;color:var(--faint)}
+
+/* ── a waypoint ─────────────────────────────────────────────────────────── */
+.step{display:grid;grid-template-columns:44px minmax(0,1fr);gap:15px;align-items:start;
+  padding:15px 2px;border-bottom:1px solid var(--rule-3)}
+.step:last-of-type{border-bottom:0}
+.step.done{background:rgba(140,59,34,.045)}
+/* the tick is the triangle a fix is charted with: open while the waypoint is
+   ahead, inked once it is logged. Drawn, because these faces carry no usable
+   tick glyph — and a triangle, so it reads as nothing else in this set. */
+.tri{position:relative;width:44px;height:44px;padding:0;cursor:pointer;background:transparent;
+  border:0}
+.tri::before{content:"";position:absolute;left:50%;top:50%;width:0;height:0;
+  transform:translate(-50%,-58%);
+  border-left:13px solid transparent;border-right:13px solid transparent;
+  border-bottom:22px solid var(--chart-3);
+  transition:border-bottom-color .2s ease}
+.tri::after{content:"";position:absolute;left:50%;top:50%;width:0;height:0;
+  transform:translate(-50%,-58%);
+  border-left:9px solid transparent;border-right:9px solid transparent;
+  border-bottom:15px solid var(--chart);
+  transition:opacity .2s ease}
+.tri:hover::before{border-bottom-color:var(--rose)}
+.step.done .tri::before{border-bottom-color:var(--rose)}
+.step.done .tri::after{opacity:0}
+.wwrap{min-width:0}
+.wno{font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--faint)}
+.step.done .wno{color:var(--rose)}
+.wtitle{margin:3px 0 0;font-family:var(--body);font-weight:600;font-size:17.2px;line-height:1.28;
+  color:var(--ink)}
+.lines{margin-top:11px;display:grid;gap:4px}
+.line{display:grid;grid-template-columns:88px minmax(0,1fr);gap:12px;align-items:start}
+.lk{font-family:var(--mono);font-size:9px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--faint);padding-top:4px}
+.lv{font-size:15.2px;color:var(--ink-2);overflow-wrap:anywhere}
+/* the guide's own warnings, in the margin in red pencil */
+.line.warn{grid-template-columns:minmax(0,1fr);gap:2px;margin:6px 0;padding:9px 12px;
+  border-left:3px solid var(--rose);background:rgba(140,59,34,.06)}
+.line.warn .lk{color:var(--rose);padding-top:0}
+/* where the guide says save */
+.anchor{margin:11px 0 0;padding:9px 13px;border-left:3px solid var(--indigo);
+  background:rgba(44,74,107,.07);font-size:15px;color:var(--ink-2)}
+.anchor .k{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--indigo);margin-bottom:3px}
+/* what a waypoint logs, and a control for each */
+.claims{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.claim{font-family:var(--body);font-size:14.2px;line-height:1.25;cursor:pointer;padding:4px 11px;
+  border:1px solid var(--rule-2);border-left:3px solid var(--m,var(--rose));background:var(--chart);
+  color:var(--ink-2);text-align:left}
+.claim:hover{border-color:var(--m,var(--rose));color:var(--ink)}
+.claim[aria-checked="true"]{background:var(--m,var(--rose));border-color:var(--m,var(--rose));
+  color:var(--chart);font-weight:500}
+/* a part-reference — "Chameleon (Hippie)" — names no challenge on its own and
+   is not a control */
+.part{font-family:var(--body);font-size:14.2px;line-height:1.25;padding:4px 11px;
+  border:1px dashed var(--rule-2);color:var(--ink-dim);font-style:italic}
+
+/* ── the log ────────────────────────────────────────────────────────────── */
+.filters{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:22px}
+.filters button{font-family:var(--mono);font-size:10px;letter-spacing:.07em;text-transform:uppercase;
+  background:var(--chart-2);border:1px solid var(--rule-2);color:var(--ink-dim);padding:8px 12px;
+  cursor:pointer}
+.filters button:hover{border-color:var(--rose);color:var(--ink)}
+.filters button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--chart)}
+.grp{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin:30px 0 4px;
+  padding-bottom:7px;border-bottom:2px solid var(--m,var(--rose));font-family:var(--disp);
+  font-size:22px;color:var(--ink)}
+.grp:first-child{margin-top:0}
+.grp .n{margin-left:auto;font-family:var(--mono);font-size:9.5px;color:var(--faint)}
+.crow{display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:15px;align-items:start;
+  padding:12px 2px;border-bottom:1px solid var(--rule-3)}
+.crow:last-child{border-bottom:0}
+.crow.done{background:rgba(140,59,34,.045)}
+.mark{position:relative;width:40px;height:40px;padding:0;cursor:pointer;background:transparent;border:0}
+.mark::before{content:"";position:absolute;left:50%;top:50%;width:0;height:0;
+  transform:translate(-50%,-58%);border-left:12px solid transparent;border-right:12px solid transparent;
+  border-bottom:20px solid var(--chart-3);transition:border-bottom-color .2s ease}
+.mark::after{content:"";position:absolute;left:50%;top:50%;width:0;height:0;
+  transform:translate(-50%,-58%);border-left:8px solid transparent;border-right:8px solid transparent;
+  border-bottom:13px solid var(--chart);transition:opacity .2s ease}
+.mark:hover::before{border-bottom-color:var(--m,var(--rose))}
+.crow.done .mark::before{border-bottom-color:var(--m,var(--rose))}
+.crow.done .mark::after{opacity:0}
+.cn{margin:0;font-family:var(--body);font-weight:600;font-size:17px;line-height:1.28;color:var(--ink)}
+.crow.done .cn{color:var(--m,var(--rose))}
+.cd{margin:4px 0 0;font-size:15px;color:var(--ink-2)}
+.cmeta{display:grid;justify-items:end;gap:3px;font-family:var(--mono);font-size:9.5px;
+  letter-spacing:.05em;text-transform:uppercase;color:var(--faint);text-align:right;white-space:nowrap}
+/* the four the guide never pins to one waypoint */
+.standing{color:var(--verd)}
+.empty{margin:18px 0;color:var(--ink-2)}
+
+/* ── the lifted reference sheet ─────────────────────────────────────────── */
+.ref .notice{margin:0 0 18px;padding:16px 18px;background:var(--chart-2);border:1px solid var(--rule-2);
+  border-left:3px solid var(--indigo)}
+.ref h3{margin:24px 0 9px;font-family:var(--disp);font-size:22px;color:var(--ink)}
+.ref h4{margin:0 0 9px;font-family:var(--disp);font-size:19px;color:var(--ink)}
+.ref p{margin:0 0 10px;font-size:15.4px;color:var(--ink-2);max-width:86ch}
+.ref p:last-child{margin-bottom:0}
+.ref ul,.ref ol{margin:0 0 12px;padding-left:20px}
+.ref li{margin-bottom:6px;font-size:15.2px;color:var(--ink-2);max-width:86ch}
+.ref dl{margin:0 0 12px;display:grid;grid-template-columns:minmax(120px,180px) minmax(0,1fr);
+  gap:5px 16px}
+.ref dt{font-family:var(--mono);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--faint);padding-top:4px}
+.ref dd{margin:0;font-size:15.2px;color:var(--ink-2)}
+.ref .rh{font-family:var(--disp);font-size:22px;color:var(--ink);margin:24px 0 9px}
+.ref .detail{font-size:15px;color:var(--ink-2)}
+.tablewrap{overflow-x:auto;margin:0 0 16px;border:1px solid var(--rule-2)}
+.ref table{border-collapse:collapse;width:100%;min-width:460px;font-size:14.8px}
+.ref th,.ref td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--rule-3);
+  color:var(--ink-2);vertical-align:top}
+.ref th{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--faint);background:var(--chart-2)}
+
+.foot{margin:22px 0 0;padding:17px 22px;background:var(--chart);font-size:13.8px;line-height:1.7;
+  color:var(--ink-dim);box-shadow:inset 0 0 0 1px var(--rule)}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;
+  scroll-behavior:auto!important}}
+@media (max-width:620px){
+  .sheet{background-image:none}
+  .mast{padding:22px 16px 18px}
+  .rail,.chartblock,.tally{padding-left:16px;padding-right:16px}
+  .marks{margin-left:16px;margin-right:16px}
+  .pane{padding:16px}
+  .vhead{grid-template-columns:56px minmax(0,1fr);gap:12px;padding:14px}
+  .vno{min-height:52px}
+  .vno .v{font-size:20px}
+  .vbody{padding:14px}
+  .step{grid-template-columns:36px minmax(0,1fr);gap:12px}
+  .tri{width:36px;height:36px}
+  .line{grid-template-columns:minmax(0,1fr);gap:1px}
+  .lk{padding-top:0}
+  .ref dl{grid-template-columns:minmax(0,1fr);gap:1px}
+  .ref dt{padding-top:8px}
+  .crow{grid-template-columns:34px minmax(0,1fr)}
+  .mark{width:34px;height:34px}
+  .cmeta{grid-column:2;justify-items:start;text-align:left;margin-top:6px}
+}
+@media print{
+  body{background:#fff;background-image:none;font-size:10.5pt}
+  .deck{max-width:none;padding:0}
+  .tabs,.vnav,.skip,.tri,.mark,.btn,.filters,.rail,.chartbox,.marks{display:none!important}
+  .pane[hidden]{display:block!important}
+  .vbody{display:block!important}
+  .sheet,.pane,article.voyage,.slot,.foot,.ref .notice{background:#fff!important;
+    background-image:none!important;box-shadow:none!important;border-color:#999!important}
+  .step,article.voyage,.crow{break-inside:avoid}
+}
 </style>
+</head>
+<body>
+<div class="deck">
 
-<div class="wrap">
-<header class="mast">
-  <div class="eyebrow">Ambrose Island · Andaman Sea · Shadows in the Water</div>
-  <h1>Shadows in<br><span>the Water</span></h1>
-  <p class="sub">A 49-challenge completion planner built from your mission file. Five runs, ordered so that mutually exclusive kills are separated by reloads rather than whole extra playthroughs. Every step names where to go, what to wear, what to carry, and what to watch for.</p>
-  <div class="meter" role="progressbar" aria-label="Overall completion" aria-valuemin="0" aria-valuemax="100" id="meter">
-    <div class="water" id="water" style="height:0%"></div>
-    <div class="meter-txt"><div><b id="pctBig">0%</b></div>
-      <div style="text-align:right"><small id="meterLbl">0 of 53 challenges logged</small></div></div>
+<div class="sheet">
+  <div class="mast">
+    <p class="eyebrow"><!--@eyebrow-->Ambrose Island · Andaman Sea · Shadows in the Water<!--/@eyebrow--></p>
+    <h1><!--@h1-->Shadows in<br><span>the Water</span><!--/@h1--></h1>
+    <p class="sub"><!--@sub-->A completion planner built from your mission file. Five runs, ordered so that mutually exclusive kills are separated by reloads rather than whole extra playthroughs. Every step names where to go, what to wear, what to carry, and what to watch for.<!--/@sub--></p>
   </div>
-  <div class="cats" id="cats"></div>
-</header>
 
-<div class="tabs" role="tablist">
-  <button class="tab" role="tab" aria-selected="true" data-p="runs">Optimized runs</button>
-  <button class="tab" role="tab" aria-selected="false" data-p="list">Challenge checklist</button>
-  <button class="tab" role="tab" aria-selected="false" data-p="ref">Reference &amp; sourcing</button>
+  <!-- the head of the sheet holds nothing focusable, so this is still the
+       first stop for a keyboard -->
+  <a class="skip" href="#pane-runs">Skip to the five voyages</a>
+
+  <div class="rail">
+    <a href="../index.html">&#8592; All guides</a>
+    <span>Ambrose Island, Andaman Sea &middot; Main campaign 25</span>
+    <span>Saved in this browser only</span>
+  </div>
+
+  <div class="chartblock">
+    <div class="chartbox">
+      <svg viewBox="0 0 340 210" role="img" aria-labelledby="chartTitle" aria-describedby="chartDesc">
+        <title id="chartTitle">The track</title>
+        <desc id="chartDesc">A dead-reckoning course inked in as challenges are logged.</desc>
+        <defs>
+          <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+            <path class="gridline" d="M20,0 V20 M0,20 H20" fill="none"/>
+          </pattern>
+        </defs>
+        <rect x="0" y="0" width="340" height="210" fill="url(#grid)"/>
+        <path class="gridline major" d="M100,0 V210 M200,0 V210 M300,0 V210 M0,100 H340 M0,200 H340"/>
+        <!-- rhumb lines, as a plotting sheet carries -->
+        <path class="rhumb" d="M20,196 L320,44 M20,44 L320,196 M20,120 L320,120"/>
+        <!-- soundings, so the sheet reads as open water. None sits under the
+             rose, which occupies x 26–70, y 36–80. -->
+        <text class="sounding" x="90" y="98">14</text>
+        <text class="sounding" x="118" y="52">21</text>
+        <text class="sounding" x="164" y="150">9</text>
+        <text class="sounding" x="232" y="188">27</text>
+        <text class="sounding" x="286" y="128">33</text>
+        <text class="sounding" x="86" y="176">6</text>
+
+        <!-- the course as intended, then the part of it run -->
+        <path class="course" id="course" d=""/>
+        <path class="run-in" id="runin" pathLength="100" d=""/>
+        <g id="fixes"></g>
+        <circle class="startmark" id="startmark" cx="0" cy="0" r="5"/>
+        <g id="endcross"></g>
+
+        <!-- the rose, drawn rather than fetched -->
+        <g id="rose"></g>
+      </svg>
+      <p class="chartcap" id="chartcap">Not a map of the island &middot; the track is progress</p>
+    </div>
+  </div>
+
+  <div class="marks" id="marks"></div>
+
+  <div class="tally">
+    <div>
+      <span class="lbl">Logged</span>
+      <p class="count"><b id="numDone">0</b><span id="numOf">/ 0 challenges logged</span></p>
+      <p class="subcount" id="subcount">0 waypoints logged</p>
+    </div>
+    <button class="btn" id="reset" type="button">Rub out the track</button>
+  </div>
 </div>
 
-<section class="panel" id="p-runs"></section>
-<section class="panel" id="p-list" hidden>
-  <div class="filters" id="filters"></div>
-  <div id="listBody"></div>
-  <p style="margin-top:22px"><button class="reset" id="reset">Clear all progress</button></p>
+<div class="tabs" role="tablist" aria-label="Guide sections">
+  <button class="tab" role="tab" id="tab-runs" aria-controls="pane-runs" aria-selected="true">The voyages</button>
+  <button class="tab" role="tab" id="tab-list" aria-controls="pane-list" aria-selected="false">The log</button>
+  <button class="tab" role="tab" id="tab-ref" aria-controls="p-ref" aria-selected="false">Reference &amp; sourcing</button>
+</div>
+
+<section class="pane" id="pane-runs" role="tabpanel" aria-labelledby="tab-runs">
+  <nav class="vnav" id="vnav" aria-label="Jump to a voyage"></nav>
+  <div id="voyages"></div>
 </section>
-<section class="panel" id="p-ref" hidden></section>
-<p class="foot">Progress is saved in this browser and persists across reloads. Nothing is sent anywhere.</p>
+
+<section class="pane" id="pane-list" role="tabpanel" aria-labelledby="tab-list" hidden>
+  <div class="filters" id="filters"></div>
+  <div id="checklist"></div>
+</section>
+
+<section class="pane ref" id="p-ref" role="tabpanel" aria-labelledby="tab-ref" hidden></section>
+
+<p class="foot">
+<!--@foot-->
+Progress is saved in this browser and persists across reloads. Nothing is sent anywhere.
+<!--/@foot-->
+</p>
 </div>
 
 <script>
-/* ===== 49 CHALLENGES — verbatim names/descriptions from your mission file ===== */
+/*@ch*/
 const CH=[
 {id:'a1',c:'Assassination',n:'... I Thought About It',d:'[REDACTED] Win the slapping contest so Crest recruits you, then burn him at the oil drum during his private job offer.',run:'Run 2'},
 {id:'a2',c:'Assassination',n:'Ingenuity',d:'Eliminate Crest with a spark of ingenuity — the repaired workshop boat engine.',run:'Run 2'},
@@ -183,7 +503,9 @@ const CH=[
 {id:'c4',c:'The Classics',n:'The Classics',d:'Complete Silent Assassin, SASO, Sniper Assassin, and Suit Only.',run:'Run 5'},
 {id:'c5',c:'The Classics',n:'Sniper Assassin',d:'Assassinate both targets with a sniper rifle, only the targets, without being spotted.',run:'Run 5'}
 ];
+/*/@ch*/
 
+/*@runs*/
 /* ===== RUNS — step format ===== */
 const RUNS=[
 {no:'Run 01',title:'The Long Walk',
@@ -383,7 +705,16 @@ const RUNS=[
   ]}
  ]}
 ];
+/*/@runs*/
 
+/*@cats*/
+const CATS=['Assassination','Discovery','Feats','Targets','The Classics'];
+/*/@cats*/
+
+/* The reference sheet, lifted whole out of the previous edition as the
+   statement that builds it — never retyped, and fenced with HTML comments
+   so the assembler finds it again on the next run. */
+<!--@ref-->
 /* ===== REFERENCE ===== */
 const REF=`
 <div class="notice">
@@ -445,72 +776,388 @@ const REF=`
 <p style="margin:0">Your uploaded mission file (<span style="font-family:var(--mono)">25_-_Shadows_in_the_Water.json</span>) \u2014 authoritative for challenge names, descriptions, categories, and count.</p>
 <p style="margin:8px 0 0">Cross-referenced for step detail: Gameranx (assassination, SASO, Two Birds guides), TheGamer and GameRant SASO walkthroughs, the Ambrose Island Challenges Steam guide, the Hitman Wiki disguise-access table, NamuWiki challenge tables. Where two sources conflicted (e.g. the Buccaneer chest, the third diary entry) the conflict is noted inline rather than resolved by guesswork.</p></div>
 `;
+<!--/@ref-->
 
-/* ===== RENDER ===== */
+/* ---------------- STATE ----------------
+   Both keys keep their names and their shapes: 'ambrose_done_v1' is the array of
+   logged challenge ids and 'ambrose_done_v1:steps' the array of waypoint keys,
+   which are still "<run index>-<section index>-<step index>". The key strings
+   stay literal so the contract check in validate.js can see them. */
 const state={done:new Set(),steps:new Set(),filter:'All'};
-try{const saved=JSON.parse(localStorage.getItem('ambrose_done_v1')||'[]');saved.forEach(id=>state.done.add(id));}catch(e){}
-try{const _s=JSON.parse(localStorage.getItem('ambrose_done_v1:steps'));if(Array.isArray(_s))_s.forEach(k=>state.steps.add(k));}catch(e){}
-function reportProgress(){try{const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r['m25']={done:state.done.size,total:CH.length,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
-function saveDone(){try{localStorage.setItem('ambrose_done_v1',JSON.stringify([...state.done]));localStorage.setItem('ambrose_done_v1:steps',JSON.stringify([...state.steps]));}catch(e){}reportProgress();}
-const CATS=['Assassination','Discovery','Feats','Targets','The Classics'];
-const esc=s=>String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+try{const s=JSON.parse(localStorage.getItem('ambrose_done_v1')||'[]');
+  if(Array.isArray(s))s.forEach(id=>state.done.add(id));}catch(e){}
+try{const s=JSON.parse(localStorage.getItem('ambrose_done_v1:steps')||'[]');
+  if(Array.isArray(s))s.forEach(k=>state.steps.add(k));}catch(e){}
 
-function renderStats(){
-  const total=CH.length,done=state.done.size,pct=total?Math.round(done/total*100):0;
-  water.style.height=pct+'%';pctBig.textContent=pct+'%';
-  meterLbl.textContent=done+' of '+total+' challenges logged';
-  meter.setAttribute('aria-valuenow',pct);
-  cats.innerHTML=CATS.map(c=>{const inC=CH.filter(x=>x.c===c),d=inC.filter(x=>state.done.has(x.id)).length,p=inC.length?Math.round(d/inC.length*100):0;
-    return `<div class="cat"><u>${esc(c)}</u><b>${d}</b><i>/${inC.length}</i><div class="bar"><div style="width:${p}%"></div></div></div>`}).join('');
+function reportProgress(){
+  try{
+    const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');
+    r['m25']={done:CH.filter(c=>state.done.has(c.id)).length,total:CH.length,updated:Date.now()};
+    localStorage.setItem('hitman-progress-registry',JSON.stringify(r));
+  }catch(e){}
 }
-function renderRuns(){
-  document.getElementById('p-runs').innerHTML=RUNS.map((r,ri)=>`
-  <article class="run"><header><div class="run-no">${esc(r.no)}</div><h3>${esc(r.title)}</h3><p>${esc(r.goal)}</p></header>
-    <div class="loadout">${r.load.map(l=>`<div class="slot"><u>${esc(l[0])}</u><span>${esc(l[1])}</span><em>${esc(l[2])}</em></div>`).join('')}</div>
-    <div class="sect">${r.sections.map((s,si)=>`<h5>${esc(s.h)}</h5>${s.steps.map((st,ti)=>{
-      const key=ri+'-'+si+'-'+ti,on=state.steps.has(key);
-      return `<div class="step ${on?'done':''}"><div class="step-head">
-        <button class="tick ${on?'on':''}" data-step="${key}" aria-pressed="${on}" aria-label="Mark step done">\u2713</button>
-        <div class="step-body"><b>${esc(st.t)}</b>
-          <ul class="bl">${st.li.map(x=>`<li class="${x[0]}"><b>${esc(x[1])}:</b> ${esc(x[2])}</li>`).join('')}</ul>
-          <div class="badges">
-            ${(st.ch||[]).map(c=>`<span class="b ch">${esc(c)}</span>`).join('')}
-            ${st.save?`<span class="b save">\u25c6 Save \u2014 ${esc(st.save)}</span>`:''}
-          </div>
-        </div></div></div>`;
-    }).join('')}`).join('')}</div>
-  </article>`).join('');
+function sv(){
+  try{
+    localStorage.setItem('ambrose_done_v1',JSON.stringify([...state.done]));
+    localStorage.setItem('ambrose_done_v1:steps',JSON.stringify([...state.steps]));
+  }catch(e){}
+  reportProgress();
 }
+
+const $=s=>document.getElementById(s);
+const esc=s=>String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;')
+  .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+/* two of the route's detail lines were written with markup in them, so line
+   text is printed as it stands; attribute values are escaped either way */
+const raw=s=>String(s==null?'':s);
+const byId=Object.fromEntries(CH.map(c=>[c.id,c]));
+
+const CVAR={'Assassination':'var(--rose)','Discovery':'var(--indigo)','Feats':'var(--gold)',
+  'Targets':'var(--verd)','The Classics':'var(--plum)'};
+const byCat=k=>CH.filter(c=>c.c===k);
+const catDone=k=>byCat(k).filter(c=>state.done.has(c.id)).length;
+const logged=()=>CH.filter(c=>state.done.has(c.id)).length;
+
+/* ---------------- WAYPOINTS AND WHAT THEY LOG ----------------
+   A waypoint names what it logs in words, and every name that matches a
+   challenge exactly is a control for it. Four names never appear on their own:
+   the guide refers to Chameleon only as "Chameleon (Hippie)", "(Engineer)",
+   "(Cook)" and "(The Buccaneer)" as each disguise is taken, and taking one
+   disguise does not complete it — so a part-reference like that stays plain
+   text rather than becoming a tick. The other three the routes never name are
+   marked Cumulative in the guide's own data. */
+const flat=s=>String(s).replace(/<[^>]+>/g,'').toLowerCase().replace(/[^a-z0-9]/g,'');
+const NAME2ID={};
+CH.forEach(c=>{NAME2ID[flat(c.n)]=c.id});
+const claimId=n=>NAME2ID[flat(n)]||null;
+
+const WP_CH={}, ALL_WP=[], VOYAGE_OF={};
+RUNS.forEach((r,ri)=>r.sections.forEach((sec,si)=>sec.steps.forEach((st,x)=>{
+  st._id=ri+'-'+si+'-'+x;
+  st._no=(si+1)+'.'+(x+1);
+  ALL_WP.push(st._id);
+  WP_CH[st._id]=(st.ch||[]).map(claimId).filter(Boolean);
+  WP_CH[st._id].forEach(id=>{if(VOYAGE_OF[id]===undefined)VOYAGE_OF[id]=ri+1;});
+})));
+/* the challenges no single waypoint logs — read off the data rather than listed
+   by hand, so the page cannot drift from it */
+const STANDING=CH.filter(c=>!Object.values(WP_CH).some(ids=>ids.indexOf(c.id)>=0));
+const voyageWP=r=>{const o=[];r.sections.forEach(s=>s.steps.forEach(st=>o.push(st._id)));return o;};
+const voyageLogged=r=>voyageWP(r).filter(id=>state.steps.has(id)).length;
+const voyageFull=r=>{const w=voyageWP(r);return w.length>0&&w.every(id=>state.steps.has(id));};
+
+/* ---------------- THE TRACK ----------------
+   One leg per voyage, so the course has as many turns as the guide has runs.
+   The inked part is a fraction of the whole path, and each turn carries a
+   charted fix that fills when the track reaches it. */
+const LEGS=[[26,190],[80,146],[142,172],[198,108],[252,146],[308,58]];
+(function drawTrack(){
+  const pts=LEGS.slice(0,RUNS.length+1);
+  const d='M'+pts.map(p=>p[0]+','+p[1]).join(' L');
+  const c=$('course'), r=$('runin');
+  if(c)c.setAttribute('d',d);
+  if(r)r.setAttribute('d',d);
+
+  const s=$('startmark');
+  if(s){s.setAttribute('cx',String(pts[0][0]));s.setAttribute('cy',String(pts[0][1]));}
+
+  /* a fix at the end of every leg but the last, which is the cross */
+  const g=$('fixes');
+  if(g){
+    g.innerHTML=pts.slice(1,-1).map((p,i)=>{
+      const [x,y]=p;
+      return `<polygon class="fix" id="fix${i}" points="${x},${y-7} ${x-6.5},${y+5} ${x+6.5},${y+5}"/>
+        <text class="fixno" id="fixno${i}" x="${x+10}" y="${y+7}">${i+1}</text>`;
+    }).join('');
+  }
+  const e=$('endcross'), last=pts[pts.length-1];
+  if(e){
+    const [x,y]=last;
+    e.innerHTML=`<path class="cross" d="M${x-7},${y-7} L${x+7},${y+7} M${x+7},${y-7} L${x-7},${y+7}"/>
+      <circle class="crossring" id="crossring" cx="${x}" cy="${y}" r="12"/>`;
+  }
+
+  /* the compass rose: eight points, north in red */
+  const g2=$('rose');
+  if(g2){
+    const cx=48, cy=58, R=22;
+    let out=`<circle class="rose-line" fill="none" cx="${cx}" cy="${cy}" r="${R}"/>`;
+    for(let i=0;i<8;i++){
+      const a=(i*45-90)*Math.PI/180;
+      const x=cx+R*Math.cos(a), y=cy+R*Math.sin(a);
+      out+=`<polygon class="rose-pt${i%2?' alt':''}" points="${x.toFixed(1)},${y.toFixed(1)} `+
+        `${(cx+5*Math.cos(a+2.2)).toFixed(1)},${(cy+5*Math.sin(a+2.2)).toFixed(1)} `+
+        `${(cx+5*Math.cos(a-2.2)).toFixed(1)},${(cy+5*Math.sin(a-2.2)).toFixed(1)}"/>`;
+    }
+    out+=`<text class="rose-n" x="${cx}" y="${cy-R-4}">N</text>`;
+    g2.innerHTML=out;
+  }
+})();
+
+/* how far along the whole path each turn sits, so a fix fills at the right time */
+const LEGFRAC=(function(){
+  const pts=LEGS.slice(0,RUNS.length+1), seg=[];
+  let total=0;
+  for(let i=1;i<pts.length;i++){
+    const dx=pts[i][0]-pts[i-1][0], dy=pts[i][1]-pts[i-1][1];
+    const len=Math.sqrt(dx*dx+dy*dy);
+    seg.push(len);total+=len;
+  }
+  let run=0;
+  return seg.map(l=>{run+=l;return run/total;});
+})();
+
+function renderTrack(){
+  const n=logged(), total=CH.length, frac=total?n/total:0, all=total>0&&n===total;
+  const r=$('runin');
+  /* pathLength is 100, so the dash pattern is a percentage of the course */
+  if(r){
+    r.setAttribute('stroke-dasharray',(frac*100).toFixed(2)+' 100');
+    /* a round cap paints a dot even at zero length, which reads as progress
+       that has not been made — so hide the path until there is some */
+    r.style.display=n>0?'':'none';
+  }
+  LEGFRAC.slice(0,-1).forEach((f,i)=>{
+    const made=frac>=f;
+    const t=$('fix'+i), lab=$('fixno'+i);
+    if(t)t.classList.toggle('made',made);
+    if(lab)lab.classList.toggle('made',made);
+  });
+  const ring=$('crossring');
+  if(ring)ring.classList.toggle('made',all);
+
+  $('numDone').textContent=n;
+  $('numOf').textContent='/ '+total+' challenges logged';
+  $('subcount').textContent=[...state.steps].filter(k=>WP_CH[k]!==undefined).length+' of '+
+    ALL_WP.length+' waypoints logged across '+RUNS.length+' voyages';
+  $('chartcap').textContent=all?'The track runs out to the cross'
+    :'Not a map of the island · the track is progress';
+
+  $('marks').innerHTML=CATS.map(k=>{
+    const t=byCat(k).length, d=catDone(k), full=t>0&&d===t;
+    return `<div class="mk${full?' full':''}" style="--m:${CVAR[k]||'var(--rose)'}">
+      <span class="k">${esc(k)}</span>
+      <span class="v">${d} / ${t}</span>
+      <span class="bar"><i style="width:${t?d/t*100:0}%"></i></span></div>`;
+  }).join('');
+
+  const desc=$('chartDesc');
+  if(desc)desc.textContent='Course run '+Math.round(frac*100)+' per cent. '+
+    CATS.map(k=>k+' '+catDone(k)+' of '+byCat(k).length).join('. ')+'.';
+}
+
+/* ---------------- THE VOYAGES ---------------- */
+function claimHTML(name){
+  const id=claimId(name);
+  if(!id)return `<span class="part">${esc(name)}</span>`;
+  const c=byId[id], on=state.done.has(id);
+  return `<button type="button" class="claim" role="switch" aria-checked="${on}"
+    data-ch="${esc(id)}" style="--m:${CVAR[c.c]||'var(--rose)'}"
+    title="${esc(c.d)}">${esc(name)}</button>`;
+}
+function lineHTML(l){
+  const kind=l[0], label=l[1], text=l[2];
+  return `<div class="line${kind==='warn'?' warn':''}"><span class="lk">${esc(label)}</span>
+    <span class="lv">${raw(text)}</span></div>`;
+}
+function wpHTML(st){
+  const on=state.steps.has(st._id);
+  const claims=(st.ch||[]).map(claimHTML).join('');
+  return `<div class="step${on?' done':''}" id="wp-${esc(st._id)}">
+    <button type="button" class="tri" data-step="${esc(st._id)}" aria-pressed="${on}"
+      aria-label="${esc('Log waypoint '+st._no+': '+st.t)}"></button>
+    <div class="wwrap">
+      <span class="wno">Waypoint ${esc(st._no)}${on?' &middot; logged':''}</span>
+      <p class="wtitle">${esc(st.t)}</p>
+      ${(st.li||[]).length?`<div class="lines">${st.li.map(lineHTML).join('')}</div>`:''}
+      ${st.save?`<p class="anchor"><span class="k">Drop anchor</span>${raw(st.save)}</p>`:''}
+      ${claims?`<div class="claims">${claims}</div>`:''}
+    </div>
+  </div>`;
+}
+
+function renderVoyages(){
+  $('vnav').innerHTML=RUNS.map((r,i)=>{
+    const w=voyageWP(r);
+    return `<button type="button" class="vjump${voyageFull(r)?' full':''}" data-jump="${i}">
+      <b>${esc(r.no)}</b>${esc(r.title)}
+      <span class="pg">${voyageLogged(r)}/${w.length}</span></button>`;
+  }).join('')+
+  `<button type="button" class="vjump" data-toggleall="1">Open / close every voyage</button>`;
+
+  $('voyages').innerHTML=RUNS.map((r,ri)=>{
+    const w=voyageWP(r), d=voyageLogged(r), open=!!openRun[ri];
+    const mine=CH.filter(c=>VOYAGE_OF[c.id]===ri+1);
+    const body=r.sections.map(sec=>{
+      const keys=sec.steps.map(s=>s._id), sn=keys.filter(k=>state.steps.has(k)).length;
+      return `<h3 class="leg">${esc(sec.h)}
+        <span class="cnt">${sn} / ${keys.length} logged</span></h3>`+
+        sec.steps.map(wpHTML).join('');
+    }).join('');
+    return `<article class="voyage${voyageFull(r)?' full':''}" id="voyage-${ri}">
+      <button type="button" class="vhead" data-run="${ri}" aria-expanded="${open}"
+        aria-controls="vbody-${ri}">
+        <span class="vno"><span class="k">Voyage</span><span class="v">${
+          esc(String(ri+1).padStart(2,'0'))}</span></span>
+        <span class="vmain">
+          <span class="vtitle">${esc(r.title)}</span>
+          <span class="vgoal">${esc(r.goal)}</span>
+          <span class="vtally">${esc(r.no)} &middot; ${d} of ${w.length} waypoints logged${
+            mine.length?' &middot; '+mine.filter(c=>state.done.has(c.id)).length+' of '+
+            mine.length+' challenges first logged here':''}${
+            open?'':' &middot; open the voyage to work through it'}</span>
+        </span>
+      </button>
+      <div class="vbody" id="vbody-${ri}"${open?'':' hidden'}>
+        <div class="stowed">
+          ${(r.load||[]).map(s=>`<div class="slot"><span class="k">${esc(s[0])}</span>
+            <span class="v">${esc(s[1])}</span>${s[2]?`<span class="n">${esc(s[2])}</span>`:''}</div>`).join('')}
+        </div>
+        ${body}
+      </div>
+    </article>`;
+  }).join('');
+}
+
+/* ---------------- THE LOG ---------------- */
 function renderList(){
-  const F=['All','Assassination','Discovery','Feats','Targets','The Classics','Incomplete'];
-  filters.innerHTML=F.map(f=>`<button class="f" data-f="${f}" aria-pressed="${state.filter===f}">${esc(f)}</button>`).join('');
-  let rows=CH.slice();
-  if(state.filter==='Incomplete')rows=rows.filter(x=>!state.done.has(x.id));
-  else if(state.filter!=='All')rows=rows.filter(x=>x.c===state.filter);
-  const g={};rows.forEach(x=>{(g[x.c]=g[x.c]||[]).push(x)});
-  listBody.innerHTML=Object.keys(g).map(k=>`<div class="grp">${esc(k)} \u2014 ${g[k].length}</div>`+g[k].map(x=>{
-    const on=state.done.has(x.id);
-    return `<div class="row ${on?'done':''}"><button class="tick ${on?'on':''}" data-ch="${x.id}" aria-pressed="${on}" aria-label="Mark ${esc(x.n)} done">\u2713</button>
-      <div><b>${esc(x.n)}</b><p>${esc(x.d)}</p><div class="tagrow">${x.run&&x.run!=='\u2014'?`<span class="b ch">${esc(x.run)}</span>`:''}</div></div></div>`;
-  }).join('')).join('')||'<p style="color:var(--dim)">Nothing left in this filter.</p>';
+  const f=state.filter;
+  const F=[['All','Whole log '+CH.length]]
+    .concat(CATS.map(k=>[k,k+' '+byCat(k).length]))
+    .concat([['Incomplete','Still to log '+(CH.length-logged())]]);
+  $('filters').innerHTML=F.map(([k,l])=>
+    `<button type="button" data-f="${esc(k)}" aria-pressed="${f===k}">${esc(l)}</button>`).join('');
+
+  const standing=new Set(STANDING.map(c=>c.id));
+  let out='';
+  CATS.forEach(k=>{
+    const all=byCat(k);
+    if(!all.length)return;
+    if(f!=='All'&&f!=='Incomplete'&&f!==k)return;
+    const rows=f==='Incomplete'?all.filter(c=>!state.done.has(c.id)):all;
+    if(!rows.length)return;
+    out+=`<h3 class="grp" style="--m:${CVAR[k]||'var(--rose)'}">${esc(k)}
+      <span class="n">${catDone(k)} of ${all.length} logged</span></h3>`;
+    out+=rows.map(c=>{
+      const on=state.done.has(c.id);
+      return `<div class="crow${on?' done':''}" style="--m:${CVAR[c.c]||'var(--rose)'}">
+        <button type="button" class="mark" data-ch="${esc(c.id)}" aria-pressed="${on}"
+          aria-label="${esc('Log '+c.n)}"></button>
+        <div>
+          <p class="cn">${esc(c.n)}</p>
+          <p class="cd">${esc(c.d)}</p>
+        </div>
+        <span class="cmeta">
+          <span>${esc(c.run)}</span>
+          ${standing.has(c.id)?'<span class="standing">standing &middot; no one waypoint</span>':''}
+        </span>
+      </div>`;
+    }).join('');
+  });
+  $('checklist').innerHTML=out||'<p class="empty">Nothing left under this heading.</p>';
 }
-document.addEventListener('click',e=>{
-  const tab=e.target.closest('.tab');
-  if(tab){document.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-selected',t===tab));
-    ['runs','list','ref'].forEach(p=>document.getElementById('p-'+p).hidden=(p!==tab.dataset.p));return;}
-  const ch=e.target.closest('[data-ch]');
-  if(ch){const id=ch.dataset.ch;state.done.has(id)?state.done.delete(id):state.done.add(id);saveDone();renderStats();renderList();return;}
-  const st=e.target.closest('[data-step]');
-  if(st){const k=st.dataset.step;state.steps.has(k)?state.steps.delete(k):state.steps.add(k);saveDone();renderRuns();return;}
-  const f=e.target.closest('[data-f]');
-  if(f){state.filter=f.dataset.f;renderList();return;}
-  if(e.target.id==='reset'){state.done.clear();state.steps.clear();saveDone();renderStats();renderList();renderRuns();}
+
+/* Wide tables in the lifted reference sheet scroll inside their own box rather
+   than pushing the page sideways. */
+function wrapTables(){
+  const box=$('p-ref');
+  if(!box)return;
+  box.querySelectorAll('table').forEach(t=>{
+    if(t.parentElement&&t.parentElement.classList.contains('tablewrap'))return;
+    const w=document.createElement('div');
+    w.className='tablewrap';
+    t.parentNode.insertBefore(w,t);
+    w.appendChild(t);
+  });
+}
+
+const openRun={};
+function render(){renderVoyages();renderList();renderTrack();}
+
+/* ---------------- EVENTS ---------------- */
+const tabs=[...document.querySelectorAll('.tab')];
+function selectTab(tb){
+  tabs.forEach(x=>{
+    const on=x===tb;
+    x.setAttribute('aria-selected',String(on));
+    x.tabIndex=on?0:-1;
+    $(x.getAttribute('aria-controls')).hidden=!on;
+  });
+}
+tabs.forEach((tb,i)=>{
+  tb.tabIndex=tb.getAttribute('aria-selected')==='true'?0:-1;
+  tb.addEventListener('keydown',e=>{
+    const d=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;
+    if(!d)return;
+    e.preventDefault();
+    const next=tabs[(i+d+tabs.length)%tabs.length];
+    selectTab(next);next.focus();
+  });
 });
-document.getElementById('p-ref').innerHTML=REF;
-renderStats();renderRuns();renderList();
+
+document.addEventListener('click',e=>{
+  const t=e.target;
+
+  /* a challenge is a control wherever it is named — on its line in the log, or
+     on the waypoint that logs it */
+  const cb=t.closest('[data-ch]');
+  if(cb){
+    const id=cb.dataset.ch;
+    state.done.has(id)?state.done.delete(id):state.done.add(id);
+    sv();render();return;
+  }
+
+  /* logging a waypoint logs what it names; rubbing it out again leaves those
+     logged, because another waypoint may name the same challenge */
+  const sb=t.closest('[data-step]');
+  if(sb){
+    const id=sb.dataset.step, now=!state.steps.has(id);
+    now?state.steps.add(id):state.steps.delete(id);
+    if(now)(WP_CH[id]||[]).forEach(c=>state.done.add(c));
+    sv();render();return;
+  }
+
+  const rh=t.closest('[data-run]');
+  if(rh){const i=+rh.dataset.run;openRun[i]=!openRun[i];renderVoyages();return;}
+
+  const jp=t.closest('[data-jump]');
+  if(jp){
+    const i=+jp.dataset.jump;
+    selectTab($('tab-runs'));
+    openRun[i]=true;renderVoyages();
+    $('voyage-'+i).scrollIntoView({behavior:'smooth',block:'start'});return;
+  }
+
+  const ta=t.closest('[data-toggleall]');
+  if(ta){
+    const anyClosed=RUNS.some((r,i)=>!openRun[i]);
+    RUNS.forEach((r,i)=>{openRun[i]=anyClosed});
+    renderVoyages();return;
+  }
+
+  const fb=t.closest('[data-f]');
+  if(fb){state.filter=fb.dataset.f;renderList();return;}
+
+  const tb=t.closest('.tab');
+  if(tb){selectTab(tb);return;}
+});
+
+$('reset').addEventListener('click',()=>{
+  if(!confirm('Rub out the track? All '+CH.length+' challenges and all '+ALL_WP.length+
+    ' waypoints on this guide are cleared. Other guides are not affected.'))return;
+  state.done=new Set();state.steps=new Set();
+  sv();render();
+});
+
+/* the reference sheet is a template literal in the guide's own script, so it is
+   written in rather than lifted into the markup */
+$('p-ref').innerHTML=REF;
+
+openRun[0]=true;
+render();
+wrapTables();
 reportProgress();
 </script>
-
 <!-- step-progress-bridge -->
 <script>
 /* Reports route-step ticks into 'hitman-progress-registry' so the index can
@@ -559,3 +1206,5 @@ reportProgress();
 })();
 </script>
 <!-- /step-progress-bridge -->
+</body>
+</html>

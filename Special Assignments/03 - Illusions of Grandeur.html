@@ -3,259 +3,371 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Illusions of Grandeur — Verified Step Guide</title>
+<title>Illusions of Grandeur — the bill of wonders</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Rozha+One&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bevan&family=Lora:ital,wght@0,400;0,600;1,400&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
 <style>
+/* ═══ MUMBAI — the bill of wonders ═══
+   Basil Carnaby is a street mentalist who robs the volunteers he pulls out of
+   his own crowd, and the fastest way into his private room is to put your hand
+   up. So the guide is his handbill: a letterpress showbill pasted to a chawl
+   wall, stacked wood-type blocks, an ornamental border, and a marquee of
+   sixteen bulbs — one a challenge — that light as the act goes right. Three
+   runs become three acts. Steps are cues, and each one ticks by opening a
+   sealed prediction envelope, because that is the only trick a mentalist has.
+   Warm poster stock and printer's ink; nothing of the neon this library
+   already spent on Bangkok. */
 :root{
-  --ink:#0D0B14; --panel:#171525; --panel2:#1F1C31; --panel3:#282343;
-  --line:#332E4D; --line-soft:#262238;
-  --brass:#D9A93E; --saffron:#F0803C; --jade:#35B79A; --crimson:#D64550; --violet:#9B7BD4;
-  --text:#E9E5F2; --muted:#9A93B5; --dim:#6F6890; --r:10px;
+  --stock:#f2e6cd; --stock-2:#e9dbbc; --stock-3:#dfd0ac; --card:#f7eeda;
+  --ink:#1f140e; --ink-2:#4a3728; --faint:#7d6a53;
+  --indigo:#26326d; --magenta:#a01d4c; --gold:#a3792a; --green:#4d6b34;
+  --bulb:#d9c8a2; --lit:#ffcf5c;
+  --rule:rgba(31,20,14,.3); --rule-2:rgba(31,20,14,.16); --rule-3:rgba(31,20,14,.08);
+  --wood:"Bevan",Rockwell,"Courier New",Georgia,serif;
+  --orn:"Playfair Display",Georgia,"Times New Roman",serif;
+  --body:"Lora",Georgia,"Times New Roman",serif;
 }
 *{box-sizing:border-box}
-html,body{margin:0;padding:0}
+html{scroll-behavior:smooth}
 body{
-  background:
-    radial-gradient(1100px 520px at 78% -8%, rgba(155,123,212,.16), transparent 62%),
-    radial-gradient(900px 460px at 8% 4%, rgba(217,169,62,.10), transparent 60%),
-    var(--ink);
-  color:var(--text);font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
-  font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;
-}
-.wrap{max-width:1080px;margin:0 auto;padding:0 20px 80px}
-a{color:var(--brass)}
+  margin:0;color:var(--ink);background-color:var(--stock);
+  /* paste-up stock: coarse fibre, foxed at the edges, ink halo behind the bill */
+  background-image:
+    radial-gradient(760px 420px at 50% 0%,rgba(160,29,76,.10),transparent 64%),
+    radial-gradient(620px 460px at 96% 84%,rgba(38,50,109,.09),transparent 60%),
+    repeating-linear-gradient(0deg,rgba(31,20,14,.028) 0 1px,transparent 1px 3px),
+    repeating-linear-gradient(90deg,rgba(31,20,14,.02) 0 1px,transparent 1px 4px);
+  background-attachment:fixed;
+  font-family:var(--body);font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1000px;margin:0 auto;padding:0 16px 90px}
+a{color:var(--magenta)}
+b,strong{font-weight:600}
+:focus-visible{outline:2px solid var(--magenta);outline-offset:2px}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:12px;top:12px;z-index:60;background:var(--ink);color:var(--stock);padding:8px 13px}
+.orn{font-family:var(--orn);font-style:italic}
+.sc{font-family:var(--orn);font-size:12.5px;letter-spacing:.22em;text-transform:uppercase}
 
-.mast{padding:44px 0 22px;border-bottom:1px solid var(--line-soft)}
-.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--brass);margin:0 0 12px}
-h1{font-family:"Rozha One",Georgia,serif;font-weight:400;font-size:clamp(38px,7.5vw,68px);line-height:.98;letter-spacing:-.01em;margin:0 0 6px}
-.sub{color:var(--muted);margin:0;max-width:64ch}
-.mast-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
-.chip{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.06em;border:1px solid var(--line);border-radius:999px;padding:5px 11px;color:var(--muted);background:rgba(255,255,255,.02)}
-.chip b{color:var(--text);font-weight:600}
+/* ── the bill ──────────────────────────────────────────────────────────────
+   Double keyline, printer's ornaments at the corners, everything centred the
+   way a handbill is. */
+header.bill{position:relative;margin-top:20px;background:var(--card);
+  border:3px double var(--ink);padding:0 0 18px;text-align:center;
+  box-shadow:0 12px 30px -22px rgba(31,20,14,.8)}
+header.bill::before{content:"";position:absolute;inset:6px;border:1px solid var(--rule-2);pointer-events:none}
+.bill-top{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;justify-content:space-between;
+  padding:9px 18px;border-bottom:1px solid var(--rule-2);background:var(--ink);color:var(--stock);
+  font-family:var(--orn);font-size:12px;letter-spacing:.18em;text-transform:uppercase;text-align:left}
+.bill-top a{color:var(--stock);text-decoration:none;border-bottom:1px solid rgba(242,230,205,.45)}
+.bill-top a:hover{color:var(--lit);border-color:var(--lit)}
+.bill-top .house{color:var(--lit)}
+.bill-body{padding:20px 22px 0}
+.rule-orn{display:flex;align-items:center;gap:10px;justify-content:center;margin:12px 0;
+  font-family:var(--orn);font-size:13px;color:var(--gold)}
+.rule-orn::before,.rule-orn::after{content:"";flex:1;max-width:230px;height:3px;
+  border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.line-1{font-family:var(--orn);font-weight:700;font-size:clamp(12px,2vw,15px);letter-spacing:.42em;
+  text-transform:uppercase;color:var(--magenta);margin:0}
+.line-2{font-family:var(--orn);font-style:italic;font-size:clamp(15px,2.6vw,21px);color:var(--ink-2);margin:6px 0 2px}
+h1.title{font-family:var(--wood);font-weight:400;font-size:clamp(29px,6.6vw,64px);line-height:.96;
+  margin:6px 0 4px;text-transform:uppercase;letter-spacing:-.005em;color:var(--ink);
+  text-shadow:2px 2px 0 var(--stock-3)}
+h1.title em{display:block;font-style:normal;color:var(--magenta);font-size:.62em;letter-spacing:.02em}
+.sub{max-width:70ch;margin:10px auto 0;color:var(--ink-2);font-size:15.5px}
 
-.deck-block{margin:26px 0 8px}
-.deck{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:14px}
-.pip{width:26px;height:38px;border-radius:4px;border:1px solid var(--line);background:var(--panel);
-  transition:transform .28s ease,background .28s ease,border-color .28s ease,box-shadow .28s ease;
-  display:flex;align-items:center;justify-content:center;font-family:"IBM Plex Mono",monospace;font-size:10px;color:var(--dim)}
-.pip[data-done="1"]{background:linear-gradient(160deg,#E2B94D,#B98A26);border-color:#EBCB76;color:#2A1F06;transform:translateY(-4px) rotate(-3deg);box-shadow:0 6px 16px rgba(217,169,62,.28)}
-.bar{height:8px;border-radius:99px;background:var(--panel2);overflow:hidden;border:1px solid var(--line-soft)}
-.bar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--saffron),var(--brass));transition:width .4s ease}
-.bar-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;gap:12px;flex-wrap:wrap}
-.bar-row .big{font-family:"Rozha One",serif;font-size:30px;line-height:1}
-.bar-row .big small{font-size:14px;color:var(--muted);font-family:"IBM Plex Mono",monospace}
+/* the marquee: sixteen bulbs, one a challenge, lit in the order they land */
+.marquee{margin:16px auto 0;padding:11px 14px;max-width:760px;border:1px solid var(--rule-2);
+  background:linear-gradient(180deg,var(--stock-2),var(--card))}
+.bulbs{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;padding:0;margin:0;list-style:none}
+.bulbs li{width:17px;height:17px;border-radius:50%;background:var(--bulb);
+  border:1px solid rgba(31,20,14,.34);box-shadow:inset 0 -2px 3px rgba(31,20,14,.18)}
+.bulbs li.on{background:radial-gradient(circle at 38% 32%,#fff3cd,var(--lit) 62%,#c99418);
+  border-color:#8a6410;box-shadow:0 0 9px rgba(255,207,92,.85),inset 0 -1px 2px rgba(140,96,10,.4)}
+.marquee-read{margin-top:10px;font-family:var(--wood);font-size:26px;line-height:1;color:var(--ink)}
+.marquee-read small{font-family:var(--orn);font-size:14px;color:var(--faint)}
+.marquee-read span.of{font-family:var(--orn);font-size:15px;font-style:italic;color:var(--faint)}
 
-.cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:18px 0 6px}
-.cat{border:1px solid var(--line-soft);border-radius:var(--r);background:var(--panel);padding:12px 14px}
-.cat .lbl{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-.cat .num{font-family:"Rozha One",serif;font-size:26px;line-height:1.2;margin-top:2px}
-.cat .num em{font-style:normal;color:var(--dim);font-size:15px}
-.cat[data-c="assassination"]{border-left:3px solid var(--crimson)}
-.cat[data-c="targets"]{border-left:3px solid var(--saffron)}
-.cat[data-c="classic"]{border-left:3px solid var(--brass)}
-.cat[data-c="feats"]{border-left:3px solid var(--jade)}
+.meta{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin:16px 0 0}
+.meta .chip{font-family:var(--orn);font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;
+  border:1px solid var(--rule-2);background:var(--stock-2);padding:4px 11px;color:var(--ink-2)}
+.meta .chip b{color:var(--ink);font-weight:700}
 
-.tabs{display:flex;gap:2px;margin:28px 0 22px;border-bottom:1px solid var(--line);flex-wrap:wrap}
-.tab{appearance:none;background:none;border:0;border-bottom:2px solid transparent;color:var(--muted);
-  font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;padding:11px 14px;cursor:pointer}
-.tab:hover{color:var(--text)}
-.tab[aria-selected="true"]{color:var(--brass);border-bottom-color:var(--brass)}
-.tab:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
-.panel[hidden]{display:none}
+/* the programme: a ruled bill of fare with dot leaders */
+.programme{max-width:640px;margin:18px auto 0;text-align:left;border-top:1px solid var(--rule);
+  border-bottom:1px solid var(--rule);padding:10px 0}
+.prow{display:grid;grid-template-columns:auto minmax(24px,1fr) auto;gap:8px;align-items:baseline;
+  padding:5px 4px;font-family:var(--orn)}
+.prow .pn{font-size:15.5px;letter-spacing:.04em}
+.prow .dots{border-bottom:2px dotted var(--rule-2);transform:translateY(-4px)}
+.prow .pv{font-size:15.5px;color:var(--ink-2);white-space:nowrap}
+.prow.full .pn,.prow.full .pv{color:var(--green)}
+.bill-foot{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;
+  max-width:640px;margin:14px auto 0;text-align:left}
 
-.notice{border:1px solid var(--line);border-left:3px solid var(--violet);background:var(--panel);border-radius:var(--r);padding:14px 16px;margin:0 0 20px}
-.notice h4{margin:0 0 6px;font-size:13px;letter-spacing:.06em;text-transform:uppercase;font-family:"IBM Plex Mono",monospace;color:var(--violet)}
-.notice p{margin:0 0 8px;color:var(--muted)}
+.btn{font-family:var(--orn);font-size:13px;letter-spacing:.16em;text-transform:uppercase;
+  background:var(--ink);color:var(--stock);border:0;padding:8px 16px;cursor:pointer}
+.btn:hover{background:var(--magenta)}
+.btn-plain{font-family:var(--orn);font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+  background:transparent;color:var(--ink-2);border:1px solid var(--rule-2);padding:6px 12px;cursor:pointer}
+.btn-plain:hover{border-color:var(--magenta);color:var(--magenta)}
+
+/* ── stubs ─────────────────────────────────────────────────────────────── */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:22px 0 0;justify-content:center}
+.tab{font-family:var(--orn);font-weight:700;font-size:12.5px;letter-spacing:.18em;text-transform:uppercase;
+  background:var(--stock-2);color:var(--ink-2);border:1px solid var(--rule-2);padding:10px 18px;cursor:pointer;
+  /* a torn perforation down each edge */
+  -webkit-mask-image:radial-gradient(circle 4px at 0 50%,transparent 98%,#000 100%),radial-gradient(circle 4px at 100% 50%,transparent 98%,#000 100%);
+  -webkit-mask-composite:source-in;mask-image:radial-gradient(circle 4px at 0 50%,transparent 98%,#000 100%),radial-gradient(circle 4px at 100% 50%,transparent 98%,#000 100%);
+  mask-composite:intersect}
+.tab[aria-selected="true"]{background:var(--ink);color:var(--stock);border-color:var(--ink)}
+.tab:hover{color:var(--magenta)}
+.tab[aria-selected="true"]:hover{color:var(--lit)}
+.panel{background:var(--card);border:1px solid var(--rule-2);padding:20px;margin-top:14px}
+
+/* ── the acts ──────────────────────────────────────────────────────────── */
+.notice{border:1px solid var(--rule-2);border-left:6px solid var(--magenta);background:var(--stock-2);
+  padding:14px 18px;margin:0 0 18px}
+.notice h4{margin:0 0 8px;font-family:var(--wood);font-size:16px;text-transform:uppercase;letter-spacing:.01em}
+.notice p{margin:0 0 8px;color:var(--ink-2);font-size:14.5px}
 .notice p:last-child{margin-bottom:0}
-.notice.warn{border-left-color:var(--crimson)}
-.notice.warn h4{color:var(--crimson)}
 
-/* run nav */
-.runnav{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 22px;padding:14px;border:1px solid var(--line-soft);border-radius:12px;background:var(--panel)}
-.rbtn{appearance:none;cursor:pointer;text-align:left;flex:1 1 200px;background:var(--panel2);border:1px solid var(--line);
-  border-radius:9px;padding:10px 13px;color:var(--text);transition:border-color .18s ease,transform .18s ease}
-.rbtn:hover{border-color:var(--brass);transform:translateY(-1px)}
-.rbtn:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
-.rbtn .rn{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--saffron)}
-.rbtn .rt{font-weight:600;margin-top:2px}
-.rbtn .rc{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--dim);margin-top:2px}
-.navtools{display:flex;gap:8px;flex-wrap:wrap;width:100%;margin-top:2px}
-.mini{appearance:none;cursor:pointer;background:none;border:1px solid var(--line);border-radius:999px;color:var(--muted);
-  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;padding:5px 11px}
-.mini:hover{color:var(--text);border-color:var(--brass)}
-.mini:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
+.runnav{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin-bottom:16px}
+.runnav .jl{font-family:var(--orn);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
+.jump{display:flex;align-items:baseline;gap:9px;background:var(--stock-2);border:1px solid var(--rule-2);
+  padding:6px 13px;font-family:var(--body);font-size:14.5px;color:var(--ink);cursor:pointer}
+.jump b{font-family:var(--wood);font-size:13px;color:var(--magenta);letter-spacing:.04em}
+.jump .pg{font-family:var(--orn);font-size:12.5px;color:var(--faint)}
+.jump:hover{border-color:var(--magenta)}
+.jump.full{background:rgba(77,107,52,.14);border-color:rgba(77,107,52,.45)}
 
-/* collapsible run */
-details.run{border:1px solid var(--line-soft);border-radius:14px;background:var(--panel);margin:0 0 18px;overflow:hidden;scroll-margin-top:14px}
-details.run>summary{list-style:none;cursor:pointer;padding:18px 22px;background:linear-gradient(180deg,rgba(155,123,212,.07),transparent)}
-details.run>summary::-webkit-details-marker{display:none}
-details.run>summary::after{content:"▾ Collapse";float:right;font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
-details.run:not([open])>summary::after{content:"▸ Expand"}
-details.run>summary:hover{background:linear-gradient(180deg,rgba(155,123,212,.13),transparent)}
-details.run>summary:focus-visible{outline:2px solid var(--violet);outline-offset:-2px}
-.run-no{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.2em;color:var(--saffron);text-transform:uppercase}
-details.run h2{font-family:"Rozha One",serif;font-weight:400;font-size:29px;line-height:1.1;margin:6px 0 8px;display:inline-block}
-.run-goal{margin:0;color:var(--muted);max-width:70ch}
-.run-count{margin-top:12px;display:flex;gap:6px;flex-wrap:wrap}
-.run-inner{border-top:1px solid var(--line-soft)}
+article.act{border:1px solid var(--rule-2);background:var(--stock-2);margin-bottom:16px}
+article.act.open{background:var(--card);border-color:var(--rule)}
+.ahead{display:block;width:100%;text-align:left;background:none;border:0;cursor:pointer;padding:16px 18px;
+  font-family:var(--body);color:var(--ink)}
+.aplate{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;margin-bottom:8px}
+.anum{font-family:var(--wood);font-size:13px;letter-spacing:.16em;text-transform:uppercase;
+  border:2px solid var(--ink);padding:3px 11px;color:var(--ink);background:var(--card)}
+article.act.full .anum{background:var(--green);border-color:var(--green);color:var(--card)}
+.arun{font-family:var(--orn);font-size:12.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--magenta)}
+.acues{font-family:var(--orn);font-size:12.5px;letter-spacing:.1em;color:var(--faint)}
+.atally{margin-left:auto;font-family:var(--wood);font-size:15px;color:var(--ink-2)}
+.atitle{display:block;font-family:var(--wood);font-size:clamp(20px,3.4vw,32px);line-height:1.1;
+  text-transform:uppercase;margin-bottom:7px}
+.agoal{display:block;color:var(--ink-2);font-size:15px;max-width:76ch}
+.achips{display:flex;flex-wrap:wrap;gap:6px;padding:0 18px 14px}
+.abody{padding:0 18px 18px}
+.curtain{border:1px dashed var(--rule);background:rgba(38,50,109,.06);padding:9px 14px;margin:0 0 14px;
+  font-size:14.5px;color:var(--ink-2)}
+.curtain b{font-family:var(--orn);letter-spacing:.16em;text-transform:uppercase;font-size:12px;color:var(--indigo)}
 
-.loadout{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));border-bottom:1px solid var(--line-soft);background:var(--panel2)}
-.slot{padding:13px 18px;border-right:1px solid var(--line-soft)}
-.slot:last-child{border-right:0}
-.slot .k{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
-.slot .v{margin-top:3px;font-weight:500}
-.slot .n{margin-top:3px;font-size:12.5px;color:var(--muted)}
+.props{border:1px solid var(--rule-2);background:var(--card);padding:13px 15px;margin-bottom:16px}
+.props h5{margin:0 0 10px;font-family:var(--orn);font-size:12px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--faint);font-weight:700}
+.props dl{display:grid;grid-template-columns:96px minmax(0,1fr);gap:5px 14px;margin:0 0 10px}
+.props dt{font-family:var(--orn);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);padding-top:3px}
+.props dd{margin:0;font-size:14.5px;color:var(--ink-2)}
+.props dd b{color:var(--ink)}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:9px}
+.pslot{border:1px solid var(--rule-3);background:var(--stock-2);padding:9px 11px;min-width:0}
+.pslot .k{display:block;font-family:var(--orn);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+.pslot .v{display:block;font-weight:600;font-size:14.5px;margin:1px 0 3px;overflow-wrap:anywhere}
+.pslot .n{display:block;color:var(--ink-2);font-size:13px;line-height:1.45}
 
-.sec{padding:4px 22px 16px}
-.sec>h3{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--brass);margin:20px 0 8px;padding-bottom:8px;border-bottom:1px dashed var(--line)}
+.turn{display:flex;align-items:center;gap:10px;margin:20px 0 8px;font-family:var(--orn);font-weight:700;
+  font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--magenta)}
+.turn::before,.turn::after{content:"";height:1px;background:var(--rule-2)}
+.turn::before{width:16px}
+.turn::after{flex:1}
 
-/* steps */
-.step{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--line-soft)}
+/* ── a cue ─────────────────────────────────────────────────────────────────
+   The tick is a sealed prediction envelope. It opens when the cue is played —
+   the only tick mark a mentalist would accept, and no display face has to
+   supply a glyph for it. */
+.step{display:grid;grid-template-columns:36px 26px minmax(0,1fr);gap:11px;align-items:start;
+  padding:11px 10px;border-bottom:1px solid var(--rule-3)}
 .step:last-child{border-bottom:0}
-.tick{flex:0 0 auto;width:26px;height:26px;margin-top:2px;border-radius:7px;border:1px solid var(--line);background:var(--panel2);
-  color:var(--dim);cursor:pointer;font-size:14px;line-height:1;display:flex;align-items:center;justify-content:center;transition:all .18s ease}
-.tick:hover{border-color:var(--brass);color:var(--brass)}
-.tick[aria-pressed="true"]{background:var(--jade);border-color:var(--jade);color:#08201B}
-.tick:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
-.step-body{flex:1 1 auto;min-width:0}
-.step-body[data-done="1"]{opacity:.6}
-.step-body[data-done="1"] .st{text-decoration:line-through;text-decoration-color:var(--dim)}
-.st{font-weight:600;margin:0}
-.st .num{font-family:"IBM Plex Mono",monospace;color:var(--saffron);font-size:12px;margin-right:7px}
-.req{display:flex;gap:6px;flex-wrap:wrap;margin:7px 0 0}
-.rq{font-family:"IBM Plex Mono",monospace;font-size:10.5px;padding:3px 9px;border-radius:5px;border:1px solid var(--line-soft);background:var(--panel2);color:var(--muted)}
-.rq b{color:var(--text);font-weight:600}
-.rq.none{opacity:.6}
-ul.pts{margin:8px 0 0;padding-left:18px}
-ul.pts li{margin-bottom:3px;color:#D6D0E6}
-ul.pts li.w{color:#FFC9CC}
-ul.pts li.w::marker{color:var(--crimson)}
+.step.done{background:rgba(255,207,92,.13)}
+.tick{position:relative;width:36px;height:26px;padding:0;cursor:pointer;border-radius:2px;
+  background-color:#fbf5e6;border:1.5px solid rgba(31,20,14,.6);
+  /* the two seams on the back of a sealed envelope */
+  background-image:linear-gradient(135deg,transparent 46%,rgba(31,20,14,.22) 47%,transparent 49%),
+    linear-gradient(-135deg,transparent 46%,rgba(31,20,14,.22) 47%,transparent 49%);
+  box-shadow:0 1px 0 rgba(31,20,14,.2)}
+.tick::before{content:"";position:absolute;left:-1.5px;right:-1.5px;top:-1.5px;height:14px;
+  background:#e4d4ac;border:1.5px solid rgba(31,20,14,.6);
+  clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top center;transition:transform .22s ease}
+.tick::after{content:"";position:absolute;left:50%;top:11px;width:10px;height:10px;margin-left:-5px;
+  border-radius:50%;background:radial-gradient(circle at 36% 32%,#c33a5f,#7d1236 72%);
+  box-shadow:0 0 0 1px rgba(31,20,14,.35);opacity:0;transition:opacity .2s}
+.tick:hover{border-color:var(--magenta)}
+.step.done .tick::before{transform:rotateX(178deg)}
+.step.done .tick::after{opacity:1}
+.step.done .tick{background-color:var(--lit);border-color:#8a6410}
+.cnum{font-family:var(--wood);font-size:13px;color:var(--faint);text-align:right;padding-top:5px}
+.step.done .cnum{color:var(--magenta)}
+.swrap{min-width:0}
+.shead{display:block;width:100%;text-align:left;background:none;border:0;padding:2px 0;cursor:pointer;
+  font-family:var(--orn);font-weight:700;font-size:17px;line-height:1.3;color:var(--ink)}
+.shead:hover{color:var(--magenta)}
+.step.done .shead{color:var(--ink-2)}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
+.chip-ch{font-family:var(--orn);font-size:12.5px;letter-spacing:.03em;cursor:pointer;
+  border:1px solid var(--rule-2);background:var(--card);color:var(--ink-2);padding:3px 10px}
+.chip-ch:hover{border-color:var(--magenta);color:var(--magenta)}
+.chip-ch.on{background:var(--ink);border-color:var(--ink);color:var(--lit)}
+.mark{display:inline-block;font-family:var(--orn);font-size:12px;letter-spacing:.08em;padding:3px 9px;
+  border:1px solid}
+.m-save{color:#7d5a10;border-color:rgba(163,121,42,.6);background:rgba(255,207,92,.2)}
+.m-warn{color:var(--magenta);border-color:rgba(160,29,76,.45);background:rgba(160,29,76,.08)}
+.m-unver{color:var(--indigo);border-color:rgba(38,50,109,.4);background:rgba(38,50,109,.07)}
+.sbody{margin-top:9px;padding-top:9px;border-top:1px dotted var(--rule-2)}
+.sbody dl{display:grid;grid-template-columns:88px minmax(0,1fr);gap:4px 14px;margin:0 0 10px}
+.sbody dt{font-family:var(--orn);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--faint);padding-top:3px}
+.sbody dd{margin:0;font-size:14.5px;color:var(--ink-2)}
+.beats{margin:0 0 10px;padding-left:20px}
+.beats li{margin-bottom:5px;font-size:14.5px;color:var(--ink-2)}
+.wings{border-left:3px solid var(--indigo);background:rgba(38,50,109,.05);padding:8px 13px;margin:0 0 10px}
+.wings p{margin:0 0 6px;font-size:14px;color:var(--ink-2)}
+.wings p:last-child{margin-bottom:0}
+.wings b{font-family:var(--orn);font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--indigo)}
+.warnline{border:1px solid rgba(160,29,76,.4);background:rgba(160,29,76,.07);padding:8px 13px;
+  font-size:14px;color:var(--ink)}
+.warnline b{display:block;font-family:var(--orn);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--magenta);margin-bottom:3px}
 
-details.det{margin-top:9px;border:1px solid var(--line-soft);border-radius:8px;background:var(--panel2)}
-details.det>summary{cursor:pointer;list-style:none;padding:7px 12px;font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-details.det>summary::-webkit-details-marker{display:none}
-details.det>summary::before{content:"▸ ";color:var(--brass)}
-details.det[open]>summary::before{content:"▾ "}
-details.det>summary:hover{color:var(--text)}
-details.det>summary:focus-visible{outline:2px solid var(--violet);outline-offset:-2px}
-.det-in{padding:2px 14px 13px;border-top:1px solid var(--line-soft)}
-.det-in dt{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--saffron);margin-top:11px}
-.det-in dd{margin:3px 0 0;color:#CFC9E0}
-
-.badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
-.b{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.05em;padding:3px 9px;border-radius:999px;border:1px solid;white-space:nowrap}
-.b.assassination{color:#F09098;border-color:rgba(214,69,80,.5);background:rgba(214,69,80,.11)}
-.b.targets{color:#F5AE7E;border-color:rgba(240,128,60,.5);background:rgba(240,128,60,.11)}
-.b.classic{color:#EBCB76;border-color:rgba(217,169,62,.5);background:rgba(217,169,62,.11)}
-.b.feats{color:#79D6C2;border-color:rgba(53,183,154,.5);background:rgba(53,183,154,.11)}
-.b.warn{color:#FFD3D6;border-color:var(--crimson);background:rgba(214,69,80,.28);font-weight:600}
-.b.save{color:#2A1F06;border-color:#E2B94D;background:#E2B94D;font-weight:600}
-.b.unver{color:#C7BEE6;border-color:rgba(155,123,212,.55);background:rgba(155,123,212,.14)}
-.b[data-done="1"]::before{content:"✓ "}
-
-.filters{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 18px}
-.f{appearance:none;background:var(--panel);border:1px solid var(--line);border-radius:999px;color:var(--muted);
-  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:7px 13px;cursor:pointer}
-.f:hover{color:var(--text);border-color:var(--brass)}
-.f[aria-pressed="true"]{background:var(--brass);border-color:var(--brass);color:#2A1F06;font-weight:600}
-.f:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
-.clist{border:1px solid var(--line-soft);border-radius:14px;overflow:hidden}
-.crow{display:flex;gap:13px;padding:14px 16px;border-bottom:1px solid var(--line-soft);background:var(--panel);align-items:flex-start}
+/* ── the bill of wonders ───────────────────────────────────────────────── */
+.filters{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:16px}
+.filters button{font-family:var(--orn);font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+  background:var(--stock-2);border:1px solid var(--rule-2);color:var(--ink-2);padding:6px 12px;cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--lit)}
+.clist-h{display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:space-between;align-items:baseline;
+  border-bottom:3px double var(--ink);padding-bottom:7px;margin-bottom:6px}
+.clist-h b{font-family:var(--wood);font-size:19px;text-transform:uppercase}
+.crow{display:grid;grid-template-columns:36px minmax(0,1fr) auto;gap:12px;align-items:start;
+  padding:10px 2px;border-bottom:1px dotted var(--rule-2)}
 .crow:last-child{border-bottom:0}
-.crow[hidden]{display:none}
-.crow input{appearance:none;flex:0 0 auto;width:20px;height:20px;margin-top:3px;border-radius:5px;border:1px solid var(--line);background:var(--panel2);cursor:pointer;position:relative}
-.crow input:checked{background:var(--jade);border-color:var(--jade)}
-.crow input:checked::after{content:"✓";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#08201B;font-size:13px;font-weight:700}
-.crow input:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
-.cmain{flex:1 1 auto;min-width:0}
-.cname{font-weight:600;margin:0}
-.crow[data-done="1"] .cname{text-decoration:line-through;text-decoration-color:var(--dim)}
-.crow[data-done="1"]{opacity:.6}
-.cdesc{margin:2px 0 0;color:var(--muted);font-size:13.5px}
-.cmeta{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px;align-items:center}
-.xp{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--dim)}
+.crow.done .cn{color:var(--ink-2);text-decoration:line-through}
+.cn{margin:0;font-family:var(--orn);font-weight:700;font-size:17px;line-height:1.25}
+.cn i{font-style:normal;color:var(--faint);font-weight:400;font-size:13px}
+.cc{margin:2px 0 0;color:var(--ink-2);font-size:14px}
+.cbill{font-family:var(--orn);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);
+  white-space:nowrap;text-align:right;padding-top:5px}
+.empty{margin:16px 0;color:var(--ink-2);font-style:italic}
 
-.vcard{border:1px solid var(--line-soft);border-radius:14px;background:var(--panel);padding:20px 22px;margin-bottom:18px}
-.vcard h3{font-family:"Rozha One",serif;font-weight:400;font-size:23px;margin:0 0 10px}
-.vcard h4{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--brass);margin:18px 0 6px}
-.vcard p,.vcard li{color:#CFC9E0}
-.vcard ul{margin:6px 0;padding-left:20px}
-.vcard li{margin-bottom:5px}
-table{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:8px}
-th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line-soft);vertical-align:top}
-th{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);font-weight:500}
-td.ok{color:var(--jade)}
-.foot{margin-top:36px;padding-top:18px;border-top:1px solid var(--line-soft);color:var(--dim);font-size:12.5px}
+/* ── the affidavit ─────────────────────────────────────────────────────── */
+.vcard h3{font-family:var(--wood);font-size:19px;text-transform:uppercase;margin:0 0 8px}
+.vcard h4{font-family:var(--orn);font-weight:700;font-size:15px;letter-spacing:.05em;margin:22px 0 7px;
+  text-transform:uppercase;color:var(--magenta)}
+.vcard p,.vcard li{color:var(--ink-2);font-size:14.5px}
+.vcard ul{padding-left:20px}
+.vcard li{margin-bottom:7px}
+.tablewrap{overflow-x:auto;margin-bottom:8px}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:420px}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--rule-2);vertical-align:top;color:var(--ink-2)}
+th{font-family:var(--orn);font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--faint);white-space:nowrap}
+td.ok{color:var(--green);font-weight:600}
+.foot{margin-top:26px;padding-top:14px;border-top:1px solid var(--rule-2);color:var(--faint);
+  font-size:13.5px;font-style:italic;text-align:center}
 
-@media (max-width:640px){
-  .slot{border-right:0;border-bottom:1px solid var(--line-soft)}
-  .sec{padding:4px 15px 14px}
-  details.run>summary{padding:16px}
-  .wrap{padding:0 14px 60px}
-  details.run>summary::after{float:none;display:block;margin-top:8px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important;animation:none!important}}
+@media (max-width:720px){
+  .bill-body{padding:16px 14px 0}
+  .props dl,.sbody dl{grid-template-columns:minmax(0,1fr);gap:0}
+  .props dt,.sbody dt{padding-top:9px}
+  .step{grid-template-columns:36px minmax(0,1fr)}
+  .cnum{display:none}
+  .crow{grid-template-columns:36px minmax(0,1fr)}
+  .cbill{grid-column:2;text-align:left;padding-top:4px}
+  .prow{grid-template-columns:auto auto;justify-content:space-between}
+  .prow .dots{display:none}
 }
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media print{
+  body{background:#fff;background-image:none;color:#000;font-size:10.5pt}
+  .tabs,.runnav,.skip,.tick,.btn,.btn-plain,.marquee{display:none!important}
+  .panel[hidden]{display:block!important}
+  .abody,.sbody{display:block!important}
+  header.bill,.panel,article.act,.notice{background:none;box-shadow:none;border-color:#999}
+  .step,article.act{break-inside:avoid}
+}
 </style>
 </head>
 <body>
+<a class="skip" href="#p-runs">Skip to the acts</a>
 <div class="wrap">
 
-<header class="mast">
-  <p class="eyebrow">Mumbai · Special Assignment · World of Assassination</p>
-  <h1>Illusions of Grandeur</h1>
-  <p class="sub">One target, one chawl, sixteen challenges, zero disguises to collect. Basil Carnaby robs his own volunteers — so the fastest way into his private room is to volunteer. Three runs clear the mission.</p>
-  <div class="mast-meta">
-    <span class="chip">Target: <b>Basil Carnaby</b></span>
+<header class="bill">
+  <div class="bill-top">
+    <a href="../index.html">&#8592; All guides</a>
+    <span><!--@eyebrow-->Mumbai · Special Assignment · World of Assassination<!--/@eyebrow--></span>
+    <span class="house">Mumbai Central Square &middot; admission free</span>
+  </div>
+
+  <div class="bill-body">
+    <p class="line-1">For one engagement only</p>
+    <p class="line-2">The chawl entrance presents the celebrated mentalist</p>
+    <h1 class="title">Basil Carnaby<em>Illusions of Grandeur</em></h1>
+    <div class="rule-orn">&#10087; &nbsp;a bill of sixteen wonders in three acts&nbsp; &#10087;</div>
+    <p class="sub"><!--@sub-->One target, one chawl, sixteen challenges, zero disguises to collect. Basil Carnaby robs his own volunteers — so the fastest way into his private room is to volunteer. Three runs clear the mission.<!--/@sub--></p>
+
+    <!-- the marquee: one bulb a challenge, lit as the act goes right -->
+    <div class="marquee">
+      <ul class="bulbs" id="bulbs" aria-hidden="true"></ul>
+      <p class="marquee-read"><span id="doneN">0</span> <span class="of">of</span> <span id="totN">0</span>
+        <small>wonders performed</small></p>
+    </div>
+
+    <div class="meta">
+<!--@meta-->
+<span class="chip">Target: <b>Basil Carnaby</b></span>
     <span class="chip">Challenges: <b>16</b></span>
     <span class="chip">Total XP: <b>47,000</b></span>
     <span class="chip">Disguise challenges: <b>0</b></span>
     <span class="chip">Discovery areas: <b>0</b></span>
     <span class="chip">Mission Stories: <b>0</b></span>
     <span class="chip">Start: <b>Outside Chawl</b></span>
-  </div>
-
-  <div class="deck-block">
-    <div class="bar-row">
-      <div class="big"><span id="doneN">0</span><small> / 16 challenges</small></div>
-      <div class="chip">XP banked: <b id="xpN">0</b> <span style="color:var(--dim)">of 14,000 confirmed-value XP</span></div>
+<!--/@meta-->
     </div>
-    <div class="bar"><i id="barFill"></i></div>
-    <div class="deck" id="deck" aria-hidden="true"></div>
-  </div>
 
-  <div class="cats" id="cats"></div>
+    <div class="programme" id="cats"></div>
+    <div class="bill-foot">
+      <span class="sc" id="stepRead">Cues played 0 of 0</span>
+      <button class="btn" id="reset" type="button">Strike the bill</button>
+    </div>
+  </div>
 </header>
 
-<div class="tabs" role="tablist">
-  <button class="tab" role="tab" id="t-runs" aria-controls="p-runs" aria-selected="true">Optimized runs</button>
-  <button class="tab" role="tab" id="t-list" aria-controls="p-list" aria-selected="false">Challenge checklist</button>
-  <button class="tab" role="tab" id="t-ver" aria-controls="p-ver" aria-selected="false">Verification &amp; audit</button>
+<div class="tabs" role="tablist" aria-label="Guide sections">
+  <button class="tab" role="tab" id="t-runs" aria-controls="p-runs" aria-selected="true">The acts</button>
+  <button class="tab" role="tab" id="t-list" aria-controls="p-list" aria-selected="false">Bill of wonders</button>
+  <button class="tab" role="tab" id="t-ver" aria-controls="p-ver" aria-selected="false">The affidavit</button>
 </div>
 
 <section class="panel" id="p-runs" role="tabpanel" aria-labelledby="t-runs">
-
   <div class="notice">
-    <h4>Read this once before your first run</h4>
+<!--@notice-->
+<h4>Read this once before your first run</h4>
     <p><b>Basil is the only target on the map</b>, so no two elimination challenges can pop in one uninterrupted timeline. Every run below is built on <b>save → kill → challenge pops → reload → kill differently</b>. Unlocks are banked the instant they fire and survive a reload.</p>
     <p><b>Do not play these on Master.</b> Master allows a single manual save, which breaks the reload loop. Use Casual or Professional.</p>
     <p><b>Run 1 must come before Run 2.</b> Two challenges are meta-challenges that only fire once their components are all done: <i>Versatile Assassin</i> and <i>The Classics</i>. Both complete their final component in Run 2, but only if Run 1 was finished first.</p>
     <p><b>There are no Mission Stories, no Discovery areas and no disguise challenges here</b> — the mission file lists 0 of each. Rangan Tower is sealed and empty, so Dawood Rangan and the Bollywood crew are not on the map.</p>
+<!--/@notice-->
   </div>
-
   <div class="runnav" id="runnav"></div>
-  <div id="runs"></div>
+  <div id="acts"></div>
 </section>
 
 <section class="panel" id="p-list" role="tabpanel" aria-labelledby="t-list" hidden>
   <div class="filters" id="filters"></div>
-  <div class="clist" id="clist"></div>
+  <div class="clist-h"><b>The bill of wonders</b><span class="sc" id="listMeta"></span></div>
+  <div id="clist"></div>
 </section>
 
-<section class="panel" id="p-ver" role="tabpanel" aria-labelledby="t-ver" hidden>
-  <div class="vcard">
-    <h3>What changed after the mission file arrived</h3>
+<section class="panel vcard" id="p-ver" role="tabpanel" aria-labelledby="t-ver" hidden>
+<!--@verify-->
+<h3>What changed after the mission file arrived</h3>
     <p>The uploaded mission JSON is in-game challenge data and outranks every web source. It corrected two things in the previous draft, both of which had been flagged as uncertain rather than asserted:</p>
     <ul>
       <li><b>Hold My Hair is not in this mission.</b> The previous draft carried it on the strength of the Hitman Wiki's challenge category index. The mission file has no such challenge, and its version of <i>Versatile Assassin</i> requires only four components — Piano Man, Someone Could Hurt Themselves, Straight Shot, Tasteless Traceless — with no drowning entry. That is consistent: there is no documented drowning kill on Basil anywhere, and now there is no challenge asking for one. <b>Removed.</b></li>
@@ -319,13 +431,18 @@ td.ok{color:var(--jade)}
       <li><b>Backtracking:</b> Runs 1 and 2 never leave the chawl. Run 3 branch B moves from the street to the third-floor window, one short climb. No run crosses the map.</li>
       <li><b>Mutual exclusivity:</b> every elimination challenge is separated by an explicit reload, because a single target makes them all mutually exclusive by definition.</li>
     </ul>
-  </div>
+<!--/@verify-->
 </section>
 
-<p class="foot">Progress saves in this session. Not affiliated with IO Interactive. Challenge names and descriptions are taken from the supplied mission file; anything sources did not confirm is labelled rather than guessed.</p>
+<p class="foot">
+<!--@footer-->
+Progress saves in this session. Not affiliated with IO Interactive. Challenge names and descriptions are taken from the supplied mission file; anything sources did not confirm is labelled rather than guessed.
+<!--/@footer-->
+</p>
 </div>
 
 <script>
+/*@data*/
 /* ===================== DATA (names/descriptions verbatim from mission file) ===================== */
 const CATS=[
  {id:"assassination",label:"Assassination",total:9},
@@ -631,148 +748,261 @@ const RUNS=[
 ];
 
 /* ===================== STATE ===================== */
+/*/@data*/
+
+/* ---------------- STATE ---------------- */
 const KEY="iog-progress-v2";
+/* the shape the previous edition wrote — {ch:{id:true},steps:{key:true}} with
+   step keys of the form r0s1t2 — is kept exactly, so nobody loses a tick */
 let state={ch:{},steps:{}}, memOnly=false;
+const view={filter:"all",openRuns:new Set([0]),openSteps:new Set()};
+
 function reportProgress(){try{const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r['sa03']={done:CH.filter(c=>state.ch[c.id]).length,total:CH.length,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
-async function load(){try{const r=localStorage.getItem(KEY);if(r)state=Object.assign({ch:{},steps:{}},JSON.parse(r));}catch(e){memOnly=true;}}
-async function save(){if(memOnly)return;try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){memOnly=true;}reportProgress();}
+function load(){
+  try{const r=localStorage.getItem(KEY);if(r)state=Object.assign({ch:{},steps:{}},JSON.parse(r));}catch(e){memOnly=true;}
+  render();reportProgress();
+}
+function save(){
+  if(!memOnly){try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){memOnly=true;}}
+  reportProgress();
+}
+
+const $=id=>document.getElementById(id);
 const byId=Object.fromEntries(CH.map(c=>[c.id,c]));
+const CATL=Object.fromEntries(CATS.map(c=>[c.id,c.label]));
 const esc=s=>String(s).replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));
+const ACT=["I","II","III","IV","V","VI"];
 
-/* ===================== RENDER ===================== */
-function buildDeck(){document.getElementById("deck").innerHTML=CH.map((c,i)=>`<span class="pip" data-ch="${c.id}" data-done="0">${String(i+1).padStart(2,"0")}</span>`).join("");}
-function buildCats(){document.getElementById("cats").innerHTML=CATS.map(c=>`<div class="cat" data-c="${c.id}"><div class="lbl">${c.label}</div><div class="num"><span data-count="${c.id}">0</span><em> / ${c.total}</em></div></div>`).join("");}
-function badgeHTML(b){
- if(b.id){const c=byId[b.id];return `<span class="b ${c.c}" data-badge="${b.id}" data-done="0">${esc(c.n)}</span>`;}
- return `<span class="b ${b.k}">${esc(b.t)}</span>`;
+/* cue key → the challenges that cue performs, so playing it performs them */
+const STEP_CH={};
+RUNS.forEach((r,ri)=>r.sections.forEach((sec,si)=>sec.steps.forEach((st,ti)=>{
+  st._key="r"+ri+"s"+si+"t"+ti;
+  STEP_CH[st._key]=(st.badges||[]).filter(b=>b.id).map(b=>b.id);
+})));
+const TOTAL_CUES=RUNS.reduce((a,r)=>a+r.sections.reduce((b,s)=>b+s.steps.length,0),0);
+
+const done=id=>!!state.ch[id];
+function chip(id){
+  const c=byId[id];if(!c)return"";
+  const on=done(id);
+  return `<button type="button" class="chip-ch${on?" on":""}" data-ch="${id}" aria-pressed="${on}" `+
+    `title="${esc(CATL[c.c]||c.c)}">${esc(c.n)}</button>`;
+}
+const xpText=c=>c.xp?c.xp.toLocaleString()+" XP":"XP unverified";
+
+/* ---------------- THE MARQUEE ---------------- */
+function renderTracker(){
+  const d=CH.filter(c=>done(c.id)).length, tot=CH.length;
+  $('doneN').textContent=d;
+  $('totN').textContent=tot;
+  $('bulbs').innerHTML=CH.map(c=>`<li class="${done(c.id)?'on':''}" title="${esc(c.n)}"></li>`).join('');
+
+  $('cats').innerHTML=CATS.map(cat=>{
+    const all=CH.filter(c=>c.c===cat.id), dn=all.filter(c=>done(c.id)).length;
+    return `<div class="prow${dn===all.length?' full':''}">
+      <span class="pn">${esc(cat.label)}</span><span class="dots"></span>
+      <span class="pv">${dn} of ${all.length}</span></div>`;
+  }).join('');
+
+  const cues=Object.keys(state.steps).filter(k=>state.steps[k]).length;
+  $('stepRead').textContent='Cues played '+cues+' of '+TOTAL_CUES;
+  $('listMeta').textContent=d+' of '+tot+' performed';
 }
 
-function buildNav(){
- const nav=document.getElementById("runnav");
- nav.innerHTML = RUNS.map((r,i)=>`<button class="rbtn" data-goto="${i}">
-   <div class="rn">${esc(r.no)}</div><div class="rt">${esc(r.title)}</div>
-   <div class="rc">${r.ch.length} challenge${r.ch.length>1?"s":""}</div></button>`).join("")
- + `<div class="navtools"><button class="mini" data-all="open">Expand all runs</button><button class="mini" data-all="close">Collapse all runs</button></div>`;
+function renderNav(){
+  $('runnav').innerHTML=`<span class="jl">The programme</span>`+
+    RUNS.map((r,i)=>{
+      const dn=r.ch.filter(id=>done(id)).length;
+      return `<button type="button" class="jump${dn===r.ch.length?' full':''}" data-jump="${i}">`+
+        `<b>Act ${ACT[i]||i+1}</b>${esc(r.title)}<span class="pg">${dn}/${r.ch.length}</span></button>`;
+    }).join('')+
+    `<button type="button" class="btn-plain" data-toggleall="1" style="margin-left:auto">Raise / drop every curtain</button>`;
 }
 
-function buildRuns(){
- document.getElementById("runs").innerHTML = RUNS.map((r,ri)=>{
-  const chips=r.ch.map(id=>`<span class="b ${byId[id].c}" data-badge="${id}" data-done="0">${esc(byId[id].n)}</span>`).join("");
-  const slots=r.loadout.items.map(it=>`<div class="slot"><div class="k">${esc(it.k)}</div><div class="v">${esc(it.v)}</div><div class="n">${esc(it.n)}</div></div>`).join("");
-  let n=0;
-  const secs=r.sections.map((s,si)=>`<div><h3>${esc(s.h)}</h3>${s.steps.map((st,ti)=>{
-    n++;
-    const key=`r${ri}s${si}t${ti}`;
-    const req=[
-      st.disguise?`<span class="rq${/^none/i.test(st.disguise)?" none":""}">Disguise: <b>${esc(st.disguise)}</b></span>`:"",
-      st.item?`<span class="rq${/^none/i.test(st.item)?" none":""}">Item: <b>${esc(st.item)}</b></span>`:"",
-      st.npc?`<span class="rq${/^none/i.test(st.npc)?" none":""}">NPC: <b>${esc(st.npc)}</b></span>`:""
-    ].join("");
-    const pts=[st.where?`<li><b>Where:</b> ${esc(st.where)}</li>`:""]
-      .concat((st.pts||[]).map(p=>`<li>${esc(p)}</li>`))
-      .concat(st.warn?[`<li class="w"><b>Warning:</b> ${esc(st.warn)}</li>`]:[]).join("");
-    const dets=Object.entries(st.det||{}).map(([k,v])=>`<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("");
-    const bd=(st.badges||[]).map(badgeHTML).join("");
-    return `<div class="step">
-      <button class="tick" data-step="${key}" aria-pressed="false" aria-label="Mark step ${n} complete">✓</button>
-      <div class="step-body" data-body="${key}" data-done="0">
-        <p class="st"><span class="num">${String(n).padStart(2,"0")}</span>${esc(st.t)}</p>
-        ${req?`<div class="req">${req}</div>`:""}
-        <ul class="pts">${pts}</ul>
-        ${dets?`<details class="det"><summary>More detail &amp; fallbacks</summary><div class="det-in"><dl>${dets}</dl></div></details>`:""}
-        ${bd?`<div class="badges">${bd}</div>`:""}
-      </div></div>`;
-  }).join("")}</div>`).join("");
+/* ---------------- THE ACTS ---------------- */
+function renderRuns(){
+  $('acts').innerHTML=RUNS.map((r,ri)=>{
+    const open=view.openRuns.has(ri);
+    const dn=r.ch.filter(id=>done(id)).length;
+    const cues=r.sections.reduce((a,s)=>a+s.steps.length,0);
+    const played=r.sections.reduce((a,s)=>a+s.steps.filter(st=>state.steps[st._key]).length,0);
 
-  return `<details class="run" id="run-${ri}"${ri===0?" open":""}>
-    <summary>
-      <div class="run-no">${esc(r.no)} · ${r.ch.length} challenge${r.ch.length>1?"s":""}</div>
-      <h2>${esc(r.title)}</h2>
-      <p class="run-goal">${esc(r.goal)}</p>
-      <p class="run-goal" style="margin-top:6px;color:var(--dim);font-size:13px"><b style="color:var(--saffron)">Prerequisite:</b> ${esc(r.pre)}</p>
-      <div class="run-count">${chips}</div>
-    </summary>
-    <div class="run-inner">
-      <div class="loadout">
-        <div class="slot"><div class="k">Starting location</div><div class="v">${esc(r.loadout.start)}</div><div class="n">${esc(r.loadout.startNote)}</div></div>
-        <div class="slot"><div class="k">Suit</div><div class="v">${esc(r.loadout.suit)}</div><div class="n">${esc(r.loadout.suitNote)}</div></div>
+    /* the chips are buttons, so they sit under the header rather than inside
+       it — a button inside a button tears the header apart */
+    return `<article class="act${open?' open':''}${dn===r.ch.length?' full':''}" id="act-${ri}">
+      <button type="button" class="ahead" data-run="${ri}" aria-expanded="${open}">
+        <span class="aplate">
+          <span class="anum">Act ${ACT[ri]||ri+1}</span>
+          <span class="arun">${esc(r.no)}</span>
+          <span class="acues">${cues} cues &middot; ${played} played</span>
+          <span class="atally">${dn} / ${r.ch.length}</span>
+        </span>
+        <span class="atitle">${esc(r.title)}</span>
+        <span class="agoal">${esc(r.goal)}</span>
+      </button>
+      <div class="achips">${r.ch.map(chip).join('')}</div>
+      <div class="abody"${open?'':' hidden'}>
+        <p class="curtain"><b>Before the curtain &mdash;</b> ${esc(r.pre)}</p>
+        <div class="props">
+          <h5>The props</h5>
+          <dl>
+            <dt>Enters from</dt><dd><b>${esc(r.loadout.start)}</b> &mdash; ${esc(r.loadout.startNote)}</dd>
+            <dt>Costume</dt><dd><b>${esc(r.loadout.suit)}</b> &mdash; ${esc(r.loadout.suitNote)}</dd>
+          </dl>
+          <div class="pgrid">${r.loadout.items.map(it=>
+            `<div class="pslot"><span class="k">${esc(it.k)}</span><span class="v">${esc(it.v)}</span><span class="n">${esc(it.n)}</span></div>`).join('')}
+          </div>
+        </div>
+        ${r.sections.map((sec,si)=>`<div class="turn">${esc(sec.h)}</div>`+
+          sec.steps.map(st=>cueHTML(r,st)).join('')).join('')}
       </div>
-      <div class="loadout">${slots}</div>
-      <div class="sec">${secs}</div>
-    </div></details>`;
- }).join("");
+    </article>`;
+  }).join('');
 }
 
-const FILTERS=[{id:"all",label:"All"},{id:"assassination",label:"Assassination"},{id:"feats",label:"Feats"},{id:"targets",label:"Targets"},{id:"classic",label:"Classic"},{id:"incomplete",label:"Incomplete"}];
-let activeFilter="all";
-function buildList(){
- document.getElementById("filters").innerHTML=FILTERS.map(f=>`<button class="f" data-f="${f.id}" aria-pressed="${f.id===activeFilter}">${f.label}</button>`).join("");
- document.getElementById("clist").innerHTML=CH.map(c=>{
-  const ri=RUNS.findIndex(r=>r.ch.includes(c.id));
-  const rl=ri>=0?`${RUNS[ri].no} — ${RUNS[ri].title}`:"Unassigned";
-  return `<label class="crow" data-cat="${c.c}" data-ch="${c.id}" data-done="0">
-    <input type="checkbox" data-check="${c.id}">
-    <div class="cmain">
-      <p class="cname">${esc(c.n)}</p>
-      <p class="cdesc">${esc(c.d)}</p>
-      <div class="cmeta">
-        <span class="b ${c.c}">${esc(CATS.find(x=>x.id===c.c).label)}</span>
-        <span class="b ${c.c}" style="opacity:.72">${esc(rl)}</span>
-        <span class="xp">${c.xp?`+${c.xp.toLocaleString()} XP (confirmed)`:"XP unverified"}</span>
-      </div></div></label>`;
- }).join("");
+function cueNumber(run,key){
+  let n=0;
+  for(const sec of run.sections) for(const st of sec.steps){n++; if(st._key===key) return n;}
+  return '';
 }
 
-function sync(){
- let done=0,xp=0;const per=Object.fromEntries(CATS.map(c=>[c.id,0]));
- CH.forEach(c=>{
-  const on=!!state.ch[c.id];
-  if(on){done++;per[c.c]++;if(c.xp)xp+=c.xp;}
-  document.querySelectorAll(`[data-badge="${c.id}"]`).forEach(b=>b.dataset.done=on?"1":"0");
-  const pip=document.querySelector(`.pip[data-ch="${c.id}"]`);if(pip)pip.dataset.done=on?"1":"0";
-  const row=document.querySelector(`.crow[data-ch="${c.id}"]`);
-  if(row){row.dataset.done=on?"1":"0";row.querySelector("input").checked=on;}
- });
- document.getElementById("doneN").textContent=done;
- document.getElementById("xpN").textContent=xp.toLocaleString();
- document.getElementById("barFill").style.width=(done/CH.length*100).toFixed(1)+"%";
- CATS.forEach(c=>{document.querySelector(`[data-count="${c.id}"]`).textContent=per[c.id];});
- Object.keys(state.steps).forEach(k=>{
-  const btn=document.querySelector(`[data-step="${k}"]`),body=document.querySelector(`[data-body="${k}"]`);
-  if(btn)btn.setAttribute("aria-pressed",state.steps[k]?"true":"false");
-  if(body)body.dataset.done=state.steps[k]?"1":"0";
- });
- applyFilter();
-}
-function applyFilter(){
- document.querySelectorAll(".crow").forEach(row=>{
-  const c=row.dataset.cat,d=row.dataset.done==="1";
-  let show=true;
-  if(activeFilter==="incomplete")show=!d;
-  else if(activeFilter!=="all")show=(c===activeFilter);
-  row.hidden=!show;
- });
- document.querySelectorAll(".f").forEach(b=>b.setAttribute("aria-pressed",b.dataset.f===activeFilter));
+function cueHTML(run,st){
+  const on=!!state.steps[st._key], open=view.openSteps.has(st._key);
+  const num=cueNumber(run,st._key);
+  const badges=st.badges||[];
+  return `<div class="step${on?' done':''}">
+    <button type="button" class="tick" data-tick="${st._key}" aria-pressed="${on}"
+      aria-label="Open the prediction for cue ${num}${STEP_CH[st._key].length?' and perform the wonders it performs':''}"></button>
+    <span class="cnum">${String(num).padStart(2,'0')}</span>
+    <div class="swrap">
+      <button type="button" class="shead" data-open="${st._key}" aria-expanded="${open}">${esc(st.t)}</button>
+      <div class="badges">
+        ${badges.map(b=>b.id?chip(b.id):`<span class="mark m-${b.k}">${esc(b.t)}</span>`).join('')}
+      </div>
+      <div class="sbody"${open?'':' hidden'}>
+        <dl>
+          ${st.where?`<dt>Where</dt><dd>${esc(st.where)}</dd>`:''}
+          ${st.disguise?`<dt>Costume</dt><dd>${esc(st.disguise)}</dd>`:''}
+          ${st.item?`<dt>Prop</dt><dd>${esc(st.item)}</dd>`:''}
+          ${st.npc?`<dt>Company</dt><dd>${esc(st.npc)}</dd>`:''}
+        </dl>
+        ${(st.pts||[]).length?`<ol class="beats">${st.pts.map(p=>`<li>${esc(p)}</li>`).join('')}</ol>`:''}
+        ${Object.keys(st.det||{}).length?`<div class="wings">${Object.entries(st.det).map(([k,v])=>
+          `<p><b>${esc(k)}</b><br>${esc(v)}</p>`).join('')}</div>`:''}
+        ${st.warn?`<p class="warnline"><b>Mind the trick</b>${esc(st.warn)}</p>`:''}
+      </div>
+    </div>
+  </div>`;
 }
 
-document.addEventListener("click",e=>{
- const tab=e.target.closest(".tab");
- if(tab){document.querySelectorAll(".tab").forEach(t=>{const on=t===tab;t.setAttribute("aria-selected",on);document.getElementById(t.getAttribute("aria-controls")).hidden=!on;});return;}
- const go=e.target.closest("[data-goto]");
- if(go){const d=document.getElementById("run-"+go.dataset.goto);d.open=true;d.scrollIntoView({behavior:"smooth",block:"start"});return;}
- const all=e.target.closest("[data-all]");
- if(all){document.querySelectorAll("details.run").forEach(d=>d.open=(all.dataset.all==="open"));return;}
- const tick=e.target.closest(".tick");
- if(tick){state.steps[tick.dataset.step]=!state.steps[tick.dataset.step];save();sync();return;}
- const f=e.target.closest(".f");
- if(f){activeFilter=f.dataset.f;applyFilter();return;}
+/* ---------------- THE BILL OF WONDERS ---------------- */
+const FILTERS=[{id:"all",label:"All"}].concat(CATS.map(c=>({id:c.id,label:c.label}))).concat([{id:"incomplete",label:"Not yet performed"}]);
+function renderFilters(){
+  $('filters').innerHTML=FILTERS.map(f=>
+    `<button type="button" data-filter="${f.id}" aria-pressed="${view.filter===f.id}">${esc(f.label)}</button>`).join('');
+}
+/* which act performs a wonder — read off the runs, never typed */
+const ACT_OF={};
+RUNS.forEach((r,i)=>r.ch.forEach(id=>{if(!ACT_OF[id])ACT_OF[id]='Act '+(ACT[i]||i+1)+' &middot; '+esc(r.no);}));
+
+function renderList(){
+  let rows=CH.slice();
+  if(view.filter==="incomplete") rows=rows.filter(c=>!done(c.id));
+  else if(view.filter!=="all") rows=rows.filter(c=>c.c===view.filter);
+  const el=$('clist');
+  if(!rows.length){el.innerHTML=`<p class="empty">Nothing left on this bill &mdash; the house is dark.</p>`;return;}
+  el.innerHTML=rows.map((c,i)=>{
+    const on=done(c.id);
+    return `<div class="crow${on?' done':''}">
+      <button type="button" class="tick" data-chal="${c.id}" aria-pressed="${on}" aria-label="Perform ${esc(c.n)}"></button>
+      <div>
+        <p class="cn">${esc(c.n)} <i>&mdash; ${esc(CATL[c.c]||c.c)}</i></p>
+        <p class="cc">${esc(c.d)}</p>
+      </div>
+      <span class="cbill">${xpText(c)}<br>${ACT_OF[c.id]||'Unbilled'}</span>
+    </div>`;
+  }).join('');
+}
+
+function render(){renderTracker();renderNav();renderRuns();renderFilters();renderList();}
+
+/* ---------------- EVENTS ---------------- */
+const tabs=[...document.querySelectorAll('.tab')];
+function selectTab(tb){
+  tabs.forEach(x=>{
+    const on=x===tb;
+    x.setAttribute('aria-selected',String(on));
+    x.tabIndex=on?0:-1;
+    $(x.getAttribute('aria-controls')).hidden=!on;
+  });
+}
+tabs.forEach((tb,i)=>{
+  tb.tabIndex=tb.getAttribute('aria-selected')==='true'?0:-1;
+  tb.addEventListener('keydown',e=>{
+    const d=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;
+    if(!d)return;
+    e.preventDefault();
+    const next=tabs[(i+d+tabs.length)%tabs.length];
+    selectTab(next);next.focus();
+  });
 });
-document.addEventListener("change",e=>{
- const cb=e.target.closest("[data-check]");
- if(cb){state.ch[cb.dataset.check]=cb.checked;save();sync();}
+
+function toggleCh(id){state.ch[id]?delete state.ch[id]:state.ch[id]=true;save();render();}
+
+document.addEventListener('click',e=>{
+  const t=e.target;
+
+  /* a wonder named on a cue or an act is a control: press it and it is performed */
+  const cb=t.closest('[data-ch]');
+  if(cb){toggleCh(cb.dataset.ch);return;}
+
+  const tk=t.closest('[data-tick]');
+  if(tk){
+    const k=tk.dataset.tick, now=!state.steps[k];
+    now?state.steps[k]=true:delete state.steps[k];
+    /* opening a prediction performs the wonders that cue performs; closing it
+       leaves them performed, because another cue may cover the same one */
+    if(now)(STEP_CH[k]||[]).forEach(id=>{state.ch[id]=true;});
+    save();render();return;
+  }
+  const so=t.closest('[data-open]');
+  if(so){const k=so.dataset.open;
+    view.openSteps.has(k)?view.openSteps.delete(k):view.openSteps.add(k);
+    renderRuns();return;}
+  const rh=t.closest('[data-run]');
+  if(rh){const i=+rh.dataset.run;
+    view.openRuns.has(i)?view.openRuns.delete(i):view.openRuns.add(i);
+    renderRuns();return;}
+  const ch=t.closest('[data-chal]');
+  if(ch){toggleCh(ch.dataset.chal);return;}
+  const jp=t.closest('[data-jump]');
+  if(jp){const i=+jp.dataset.jump;
+    view.openRuns.add(i);renderRuns();
+    $('act-'+i).scrollIntoView({behavior:'smooth',block:'start'});return;}
+  const ta=t.closest('[data-toggleall]');
+  if(ta){
+    if(view.openRuns.size===RUNS.length){view.openRuns.clear();view.openSteps.clear();}
+    else RUNS.forEach((r,i)=>view.openRuns.add(i));
+    renderRuns();return;}
+  const ft=t.closest('[data-filter]');
+  if(ft){view.filter=ft.dataset.filter;renderFilters();renderList();return;}
+  const tb=t.closest('.tab');
+  if(tb){selectTab(tb);return;}
 });
 
-(async function(){buildDeck();buildCats();buildNav();buildRuns();buildList();await load();sync();reportProgress();})();
+$('reset').addEventListener('click',()=>{
+  if(!confirm('Strike the bill? Every mark on this guide is cleared. Other guides are not affected.'))return;
+  state={ch:{},steps:{}};save();render();
+});
+
+/* the affidavit's tables scroll inside themselves on a phone */
+document.querySelectorAll('#p-ver table').forEach(t=>{
+  if(t.parentNode.classList.contains('tablewrap'))return;
+  const w=document.createElement('div');w.className='tablewrap';
+  t.parentNode.insertBefore(w,t);w.appendChild(t);
+});
+
+load();
 </script>
 <!-- step-progress-bridge -->
 <script>

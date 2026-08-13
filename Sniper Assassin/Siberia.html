@@ -3,194 +3,313 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Perm-14 — Crime and Punishment Challenge Guide</title>
+<title>Crime and Punishment — the Perm-14 record</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cutive+Mono&family=PT+Sans+Narrow:wght@400;700&family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
+/* ═══ PERM-14 — the prisoner's own record ═══
+   A Soviet penal colony in the snow, named after Dostoevsky, where the whole
+   route is about a riot, a sentence and who gets out. So the guide is the
+   record a man in that place would keep himself: prison paper, stick-and-poke
+   ink, and the two things such a record always carries.
+
+   The first is the cathedral. In Russian prison tattooing a dome is a term
+   served, and this route is six terms — so the tracker is a six-domed church,
+   and a dome is inked solid the moment its run is complete. The second is the
+   wall: the days are kept in five-bar gates, so a run's steps are scratches,
+   struck one at a time, five to a gate. The twenty-seven challenges are the
+   counts of the sentence, ruled through as each is served.
+
+   Cold concrete and blue-black ink, one rust-red institutional stamp, frost
+   along the top edge of every plate. Nothing of the range card, nothing of a
+   snowfield: this is paper and ink, indoors, at a table. */
 :root{
-  --ink:#070C0F; --panel:#0F1A21; --panel2:#152530; --line:#223946;
-  --frost:#DDE9EE; --mute:#7F97A3; --ice:#8FC7DD; --rust:#C86A31;
-  --blood:#B23B36; --moss:#83A85C; --gold:#D9A441;
+  --concrete:#c6c6bf; --concrete-2:#b9b9b1;
+  --sheet:#dedcd3; --sheet-2:#d3d1c7; --sheet-3:#c7c5ba;
+  --ink:#1a2130; --ink-2:#3a4457; --faint:#6d7484;
+  --blue:#2a3d68; --blue-2:#47598a; --blue-lo:rgba(42,61,104,.16);
+  --rust:#933a2a; --green:#3a6650; --frost:#8fa8b6; --amber:#8a6a1c;
+  --rule:rgba(26,33,48,.3); --rule-2:rgba(26,33,48,.16); --rule-3:rgba(26,33,48,.08);
+  --disp:"PT Sans Narrow","Arial Narrow",Impact,sans-serif;
+  --body:"PT Serif",Georgia,"Times New Roman",serif;
+  --mono:"Cutive Mono","Courier New",ui-monospace,monospace;
 }
 *{box-sizing:border-box}
-html,body{margin:0;padding:0}
+html{scroll-behavior:smooth}
 body{
-  background:radial-gradient(1100px 600px at 50% -10%, #16303D 0%, transparent 60%), var(--ink);
-  color:var(--frost); font-family:"IBM Plex Sans",system-ui,sans-serif;
-  font-size:15px; line-height:1.55; -webkit-font-smoothing:antialiased;
+  margin:0;color:var(--ink);background-color:var(--concrete);
+  /* raw concrete, and the cold coming in off the yard */
+  background-image:
+    radial-gradient(760px 460px at 50% -6%,rgba(255,255,255,.5),transparent 62%),
+    radial-gradient(620px 500px at 6% 92%,rgba(42,61,104,.09),transparent 60%),
+    repeating-linear-gradient(37deg,rgba(26,33,48,.022) 0 1px,transparent 1px 5px),
+    repeating-linear-gradient(-37deg,rgba(255,255,255,.05) 0 1px,transparent 1px 6px);
+  background-attachment:fixed;
+  font-family:var(--body);font-size:16px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1040px;margin:0 auto;padding:0 16px 96px}
+a{color:var(--blue)}
+b,strong{font-weight:700}
+code{font-family:var(--mono);font-size:14px;background:var(--sheet-2);padding:1px 5px}
+:focus-visible{outline:2px solid var(--rust);outline-offset:2px}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:12px;top:12px;z-index:60;background:var(--ink);color:var(--sheet);padding:8px 14px}
+.stamped{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--faint)}
+/* every plate in this guide takes the frost along its top edge */
+.frosted{box-shadow:inset 0 1px 0 rgba(255,255,255,.65)}
+
+/* ── the record ────────────────────────────────────────────────────────── */
+header.record{position:relative;margin-top:20px;background:var(--sheet);border:1px solid var(--rule-2);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 18px 40px -32px rgba(26,33,48,.9);overflow:hidden}
+.rec-top{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center;justify-content:space-between;
+  padding:8px 16px;border-bottom:1px solid var(--rule-3);background:var(--sheet-2);
+  font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:var(--ink-2)}
+.rec-top a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(42,61,104,.4)}
+.rec-top a:hover{color:var(--rust);border-color:var(--rust)}
+.rec-body{padding:26px 22px 6px}
+.eyebrow{margin:0 0 12px;font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;color:var(--rust)}
+h1{margin:0;font-family:var(--disp);font-weight:700;font-size:clamp(40px,8.2vw,82px);line-height:.92;
+  text-transform:uppercase;letter-spacing:.01em;color:var(--ink)}
+h1 span{color:var(--blue);display:block}
+.sub{margin:14px 0 0;max-width:70ch;color:var(--ink-2);font-size:15.5px}
+/* the institution's stamp, struck at an angle across the corner */
+.stamp{position:absolute;right:-14px;top:78px;width:172px;height:96px;border:3px solid var(--rust);
+  color:var(--rust);opacity:.4;transform:rotate(-11deg);display:grid;place-content:center;text-align:center;
+  font-family:var(--disp);font-weight:700;letter-spacing:.14em;text-transform:uppercase;line-height:1.35;
+  pointer-events:none}
+.stamp b{display:block;font-size:24px}
+.stamp span{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.1em}
+
+/* the header notice, lifted whole from the previous edition */
+.notice{margin:20px 0 0;border-top:1px solid var(--rule-3);padding-top:16px}
+.notice h3{margin:0 0 8px;font-family:var(--disp);font-weight:700;font-size:19px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--ink)}
+.notice p{margin:0 0 9px;color:var(--ink-2);font-size:15px}
+.notice ul{margin:0;padding-left:20px}
+.notice li{margin-bottom:7px;color:var(--ink-2);font-size:15px}
+
+/* ── the cathedral: one dome a term ────────────────────────────────────── */
+.church{display:grid;grid-template-columns:auto minmax(0,1fr);gap:26px;align-items:center;
+  margin:20px 22px 0;padding:18px 0 20px;border-top:1px solid var(--rule-3)}
+.domes{width:290px}
+.domes svg{display:block;width:100%;height:auto}
+.dome-body{fill:none;stroke:var(--blue);stroke-width:2.4}
+.dome-body.served{fill:var(--blue);stroke:var(--blue)}
+.dome-cross{stroke:var(--blue);stroke-width:2}
+.dome-num{font-family:"PT Sans Narrow","Arial Narrow",sans-serif;font-size:13px;fill:var(--faint)}
+.dome-num.served{fill:var(--sheet)}
+.counts{min-width:0}
+.counts h2{margin:0 0 4px;font-family:var(--disp);font-weight:700;font-size:15px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--rust)}
+/* the guide's own "n of n": left in lower case so it can be read as written */
+.served{margin:0 0 12px;font-size:20px;color:var(--ink)}
+.served b{font-family:var(--disp);font-weight:700;font-size:34px;line-height:1;color:var(--blue);
+  margin-right:6px}
+.bars{display:grid;grid-template-columns:repeat(auto-fit,minmax(146px,1fr));gap:1px;background:var(--rule-3);
+  border:1px solid var(--rule-3)}
+.barcell{background:var(--sheet);padding:8px 12px;min-width:0}
+.barcell .k{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.04em;color:var(--faint)}
+.barcell .v{display:block;font-family:var(--disp);font-weight:700;font-size:23px;line-height:1.15}
+.barcell .v small{font-family:var(--body);font-size:13px;font-weight:400;color:var(--faint)}
+.barcell .b{display:block;height:4px;margin-top:5px;background:var(--rule-3)}
+.barcell .b i{display:block;height:100%;background:var(--blue-2)}
+.barcell.full .v{color:var(--green)}
+.barcell.full .b i{background:var(--green)}
+.rec-foot{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;
+  margin:0 22px;padding:0 0 18px}
+.btn{font-family:var(--disp);font-weight:700;font-size:15px;letter-spacing:.12em;text-transform:uppercase;
+  background:var(--rust);color:var(--sheet);border:0;padding:9px 17px;cursor:pointer}
+.btn:hover{background:var(--ink)}
+.btn-plain{font-family:var(--mono);font-size:11px;letter-spacing:.04em;
+  background:transparent;color:var(--ink-2);border:1px solid var(--rule-2);padding:6px 12px;cursor:pointer}
+.btn-plain:hover{border-color:var(--rust);color:var(--rust)}
+
+/* ── tabs ──────────────────────────────────────────────────────────────── */
+.tabs{display:flex;gap:5px;flex-wrap:wrap;margin:24px 0 0}
+.tab{font-family:var(--disp);font-weight:700;font-size:15px;letter-spacing:.13em;text-transform:uppercase;
+  background:var(--sheet-2);color:var(--ink-2);border:1px solid var(--rule-3);border-bottom:0;
+  padding:10px 18px;cursor:pointer}
+.tab[aria-selected="true"]{background:var(--sheet);color:var(--ink);box-shadow:inset 0 3px 0 var(--blue)}
+.tab:hover{color:var(--rust)}
+.panel{background:var(--sheet);border:1px solid var(--rule-3);padding:20px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.65)}
+
+/* ── the terms ─────────────────────────────────────────────────────────── */
+.runnav{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:0 0 18px}
+.runnav .nl{font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;color:var(--faint);margin-right:4px}
+.runjump{display:flex;align-items:center;gap:9px;background:var(--sheet-2);border:1px solid var(--rule-3);
+  padding:6px 12px;font-family:var(--body);font-size:14.5px;color:var(--ink);cursor:pointer}
+.runjump b{font-family:var(--disp);font-weight:700;font-size:12px;letter-spacing:.09em;color:var(--blue)}
+.runjump .pg{font-family:var(--mono);font-size:10.5px;color:var(--faint)}
+.runjump:hover{border-color:var(--rust)}
+.runjump.full{background:rgba(58,102,80,.12);border-color:rgba(58,102,80,.45)}
+.runjump.full b{color:var(--green)}
+
+article.term{position:relative;border:1px solid var(--rule-3);background:var(--sheet-2);margin-bottom:14px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.6)}
+article.term.open{background:var(--sheet);border-color:var(--rule-2)}
+article.term.full{border-color:rgba(58,102,80,.45)}
+.thead{display:grid;grid-template-columns:64px minmax(0,1fr);gap:15px;width:100%;text-align:left;
+  background:none;border:0;cursor:pointer;padding:16px 18px 12px;font-family:var(--body);color:var(--ink)}
+/* the term's own dome, inked when the term is served */
+.tdome{width:60px}
+.tdome svg{display:block;width:100%;height:auto}
+.tmain{min-width:0}
+.tlabel{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:var(--rust)}
+.ttitle{display:block;font-family:var(--disp);font-weight:700;font-size:clamp(21px,3.4vw,31px);
+  line-height:1.08;text-transform:uppercase;margin:4px 0 6px}
+.tgoal{display:block;color:var(--ink-2);font-size:15px;max-width:76ch}
+.ttally{display:block;margin-top:9px;font-family:var(--mono);font-size:11px;color:var(--faint)}
+.tchips{display:flex;flex-wrap:wrap;gap:6px;padding:0 18px 14px 97px}
+.tbody{padding:0 18px 18px 97px}
+
+.loadout{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;
+  background:var(--rule-3);border:1px solid var(--rule-3);margin-bottom:18px}
+.slot{background:var(--sheet);padding:9px 12px;min-width:0}
+.slot .k{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.04em;color:var(--faint)}
+.slot .v{display:block;font-family:var(--disp);font-weight:700;font-size:16px;line-height:1.25;
+  margin:2px 0 2px;overflow-wrap:anywhere}
+.slot .v em{display:block;font-family:var(--body);font-style:normal;font-weight:400;font-size:13.5px;
+  color:var(--ink-2);line-height:1.45}
+
+/* a section of the wall, with its five-bar gates */
+.sect{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin:20px 0 4px;
+  font-family:var(--disp);font-weight:700;font-size:15px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--blue)}
+.sect .rule{flex:1;height:1px;background:var(--rule-3);min-width:20px}
+/* the gate: one scratch a step, struck through at every fifth */
+.gate{display:flex;gap:9px;align-items:flex-end}
+.five{position:relative;display:flex;gap:3px;height:19px}
+.five i{width:2px;height:19px;background:var(--rule-2);border-radius:1px}
+.five i.on{background:var(--ink)}
+.five i.cross{position:absolute;left:7px;top:-2px;width:2px;height:23px;transform:rotate(-64deg);
+  transform-origin:center}
+
+.step{display:grid;grid-template-columns:30px 32px minmax(0,1fr);gap:12px;align-items:start;
+  padding:11px 4px;border-bottom:1px solid var(--rule-3)}
+.step:last-child{border-bottom:0}
+.step.done{background:rgba(58,102,80,.1);box-shadow:inset 3px 0 0 var(--green)}
+/* the tick is a single scratch, cut into the wall */
+.tick{position:relative;width:30px;height:30px;padding:0;cursor:pointer;background:transparent;
+  border:1px solid var(--rule-2)}
+.tick:hover{border-color:var(--rust)}
+.tick::before{content:"";position:absolute;left:14px;top:4px;width:2px;height:22px;background:var(--ink);
+  opacity:0;transform:rotate(11deg)}
+.step.done .tick,.crow.done .tick{border-color:rgba(26,33,48,.4);background:rgba(26,33,48,.05)}
+.step.done .tick::before,.crow.done .tick::before{opacity:.85}
+.sno{font-family:var(--mono);font-size:12px;color:var(--faint);padding-top:5px;text-align:right}
+.step.done .sno{color:var(--green)}
+.swrap{min-width:0}
+.shead{display:block;width:100%;text-align:left;background:none;border:0;padding:2px 0;cursor:pointer;
+  font-family:var(--body);font-weight:700;font-size:16px;line-height:1.35;color:var(--ink)}
+.shead:hover{color:var(--rust)}
+.shead .more{display:block;font-family:var(--mono);font-weight:400;font-size:10.5px;letter-spacing:.04em;
+  color:var(--faint);margin-top:4px}
+.step.done .shead{color:var(--ink-2)}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chip{font-family:var(--body);font-size:13.5px;cursor:pointer;border:1px solid var(--rule-2);
+  background:var(--sheet);color:var(--ink-2);padding:3px 10px}
+.chip:hover{border-color:var(--rust);color:var(--rust)}
+.chip.assn{border-left:3px solid var(--rust)}
+.chip.feat{border-left:3px solid var(--blue)}
+.chip.on{background:var(--ink);border-color:var(--ink);color:var(--sheet)}
+.badge{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;
+  padding:3px 8px;border:1px solid var(--rule-2);color:var(--faint);background:var(--sheet)}
+.sbody{margin-top:10px;padding-top:10px;border-top:1px dashed var(--rule-2)}
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:9px;margin-bottom:11px}
+.meta>div{border-left:2px solid var(--rule-2);padding-left:10px;min-width:0}
+.meta span{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.04em;color:var(--faint)}
+.meta p{margin:1px 0 0;font-size:14.5px;color:var(--ink-2)}
+.acts{margin:0 0 11px;padding-left:19px}
+.acts li{margin-bottom:7px;color:var(--ink-2);font-size:15px}
+.commit,.warn{margin:10px 0 0;padding:10px 13px;font-size:14.5px;color:var(--ink-2);border-left:3px solid}
+.commit{border-left-color:var(--amber);background:rgba(138,106,28,.09)}
+.warn{border-left-color:var(--rust);background:rgba(147,58,42,.07)}
+.commit strong{color:var(--amber)}.warn strong{color:var(--rust)}
+
+/* ── the sentence ──────────────────────────────────────────────────────── */
+.lede{margin-top:0;color:var(--ink-2);font-size:15px}
+.filters{display:flex;flex-wrap:wrap;gap:6px;margin:16px 0 18px}
+.filters button{font-family:var(--mono);font-size:11px;letter-spacing:.04em;
+  background:var(--sheet-2);border:1px solid var(--rule-3);color:var(--ink-2);padding:7px 12px;cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--sheet)}
+.crow{display:grid;grid-template-columns:30px 48px minmax(0,1fr) auto;gap:13px;align-items:start;
+  padding:12px 2px;border-bottom:1px solid var(--rule-3)}
+.crow:last-child{border-bottom:0}
+.crow.done{background:rgba(58,102,80,.06)}
+.art{font-family:var(--mono);font-size:11px;color:var(--faint);padding-top:6px}
+.cn{margin:0;font-family:var(--disp);font-weight:700;font-size:20px;line-height:1.2;text-transform:uppercase}
+/* a served count is ruled through, the way a sentence is */
+.crow.done .cn{color:var(--ink-2);text-decoration:line-through;text-decoration-thickness:2px}
+.cd{margin:3px 0 0;color:var(--ink-2);font-size:14.5px}
+.cmeta{display:flex;flex-direction:column;align-items:flex-end;gap:3px;text-align:right;
+  font-family:var(--mono);font-size:10.5px;color:var(--faint)}
+.cmeta .kind{color:var(--rust)}
+.cmeta .kind.feat{color:var(--blue)}
+.empty{margin:18px 0;color:var(--ink-2)}
+
+/* ── the case file ─────────────────────────────────────────────────────── */
+.srcbox{border:1px solid var(--rule-3);background:var(--sheet-2);padding:15px 18px;margin-bottom:14px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.6)}
+.srcbox h3{margin:0 0 9px;font-family:var(--disp);font-weight:700;font-size:18px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--rust)}
+.srcbox ul,.srcbox ol{margin:0;padding-left:20px}
+.srcbox li{margin-bottom:8px;color:var(--ink-2);font-size:14.5px}
+.srcbox li:last-child{margin-bottom:0}
+footer{margin-top:26px;padding-top:14px;border-top:1px solid var(--rule-2);color:var(--faint);font-size:13.5px}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important;animation:none!important}}
+@media (max-width:820px){
+  .church{grid-template-columns:minmax(0,1fr);gap:16px;margin:16px 16px 0}
+  .domes{width:100%;max-width:300px}
+  .rec-body{padding:22px 16px 6px}
+  .rec-foot{margin:0 16px}
+  .stamp{top:auto;bottom:-10px;right:-18px;opacity:.28}
+  .thead{grid-template-columns:46px minmax(0,1fr);gap:12px;padding:14px 15px 10px}
+  .tdome{width:44px}
+  .tchips,.tbody{padding-left:15px;padding-right:15px}
 }
-.wrap{max-width:1080px;margin:0 auto;padding:0 18px 80px}
-
-header{padding:32px 0 18px;border-bottom:1px solid var(--line)}
-.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.24em;
-  text-transform:uppercase;color:var(--ice);margin:0 0 10px}
-h1{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:clamp(38px,8vw,66px);
-  line-height:.92;text-transform:uppercase;margin:0 0 6px}
-h1 span{color:var(--ice)}
-.sub{color:var(--mute);max-width:64ch;margin:0}
-
-.notice{margin:20px 0 0;border:1px solid var(--rust);border-left-width:4px;
-  background:rgba(200,106,49,.09);padding:14px 16px;border-radius:3px}
-.notice h3{font-family:"Barlow Condensed",sans-serif;text-transform:uppercase;
-  letter-spacing:.08em;font-size:17px;margin:0 0 6px;color:var(--rust)}
-.notice p{margin:0 0 8px}
-.notice ul{margin:6px 0 0;padding-left:18px}
-.notice li{margin-bottom:4px}
-.notice :last-child{margin-bottom:0}
-
-.tracker{display:grid;grid-template-columns:150px 1fr;gap:26px;align-items:center;
-  background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:22px;margin:24px 0}
-.reticle{position:relative;width:150px;height:150px}
-.reticle svg{transform:rotate(-90deg);display:block}
-.reticle .core{position:absolute;inset:0;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;text-align:center}
-.reticle .pct{font-family:"Barlow Condensed",sans-serif;font-size:42px;font-weight:700;line-height:1}
-.reticle .of{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--mute);letter-spacing:.1em}
-.cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px}
-.cat{border:1px solid var(--line);border-radius:3px;padding:12px 14px;background:var(--panel2)}
-.cat .label{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.18em;
-  text-transform:uppercase;color:var(--mute)}
-.cat .num{font-family:"Barlow Condensed",sans-serif;font-size:30px;font-weight:700;line-height:1.1}
-.cat .num small{font-size:16px;color:var(--mute);font-weight:400}
-.bar{height:4px;background:#0A1318;border-radius:2px;margin-top:8px;overflow:hidden}
-.bar i{display:block;height:100%;width:0;background:var(--ice);transition:width .35s ease}
-.cat.feat .bar i{background:var(--gold)}
-.cat.assn .bar i{background:var(--blood)}
-.cat.stp .bar i{background:var(--moss)}
-
-.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:20px;flex-wrap:wrap}
-.tab{background:none;border:0;border-bottom:2px solid transparent;color:var(--mute);
-  font-family:"Barlow Condensed",sans-serif;text-transform:uppercase;letter-spacing:.1em;
-  font-size:17px;padding:10px 16px;cursor:pointer}
-.tab[aria-selected="true"]{color:var(--frost);border-bottom-color:var(--ice)}
-.tab:focus-visible,.runjump:focus-visible,.tick:focus-visible,.filter:focus-visible,
-.runtoggle:focus-visible,.steptoggle:focus-visible,.navutil:focus-visible{outline:2px solid var(--ice);outline-offset:2px}
-.pane[hidden]{display:none}
-
-.runnav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px;align-items:stretch}
-.runjump{background:var(--panel2);border:1px solid var(--line);color:var(--frost);
-  border-radius:3px;padding:9px 14px;cursor:pointer;text-align:left;
-  font-family:"Barlow Condensed",sans-serif;text-transform:uppercase;letter-spacing:.06em;font-size:15px}
-.runjump b{color:var(--ice);font-family:"IBM Plex Mono",monospace;font-size:11px;
-  letter-spacing:.14em;display:block;font-weight:500}
-.runjump.full{border-color:var(--moss)}
-.runjump:hover{border-color:var(--ice)}
-.navutil{background:none;border:1px solid var(--line);color:var(--mute);border-radius:3px;
-  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.12em;
-  text-transform:uppercase;padding:9px 12px;cursor:pointer}
-.navutil:hover{color:var(--frost);border-color:var(--frost)}
-
-.run{border:1px solid var(--line);border-radius:4px;background:var(--panel);
-  margin-bottom:20px;overflow:hidden;scroll-margin-top:14px}
-.runtoggle{width:100%;text-align:left;background:var(--panel2);border:0;
-  border-bottom:1px solid var(--line);padding:18px 22px;cursor:pointer;color:var(--frost);
-  display:flex;gap:14px;align-items:flex-start;font-family:inherit}
-.runtoggle .chev{font-size:13px;color:var(--ice);margin-top:6px;flex:0 0 auto}
-.runtoggle .rt{flex:1;min-width:0}
-.run-idx{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.2em;
-  color:var(--ice);text-transform:uppercase}
-.runtoggle h2{font-family:"Barlow Condensed",sans-serif;text-transform:uppercase;font-weight:700;
-  font-size:clamp(22px,4.2vw,31px);line-height:1;margin:5px 0 7px}
-.runtoggle p{margin:0;color:var(--mute);font-size:14px;max-width:72ch}
-.runcount{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--mute);
-  border:1px solid var(--line);border-radius:2px;padding:4px 8px;flex:0 0 auto;margin-top:2px}
-.runbody[hidden]{display:none}
-
-.loadout{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));
-  border-bottom:1px solid var(--line)}
-.slot{padding:13px 18px;border-right:1px solid var(--line)}
-.slot:last-child{border-right:0}
-.slot .k{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--mute);display:block;margin-bottom:3px}
-.slot .v{font-weight:500;font-size:14px}
-.slot .v em{color:var(--mute);font-style:normal;font-size:12.5px;display:block}
-
-.sect{font-family:"Barlow Condensed",sans-serif;text-transform:uppercase;letter-spacing:.14em;
-  font-size:14px;color:var(--ice);padding:16px 22px 2px;border-top:1px solid var(--line)}
-
-.step{border-top:1px solid rgba(34,57,70,.55)}
-.step-head{display:flex;gap:10px;align-items:flex-start;padding:12px 22px}
-.tick{flex:0 0 auto;width:24px;height:24px;border:1px solid var(--line);border-radius:3px;
-  background:#0A1318;color:transparent;cursor:pointer;font-size:14px;line-height:1;
-  display:flex;align-items:center;justify-content:center;margin-top:3px}
-.tick[aria-pressed="true"]{background:var(--moss);border-color:var(--moss);color:#08110A}
-.steptoggle{flex:1;min-width:0;background:none;border:0;color:var(--frost);text-align:left;
-  cursor:pointer;padding:0;display:flex;gap:10px;align-items:flex-start;font-family:inherit;font-size:15px}
-.stepno{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ice);
-  margin-top:4px;flex:0 0 auto;letter-spacing:.04em}
-.stepttl{font-weight:600;margin:2px 0 0}
-.stepchev{color:var(--mute);font-size:12px;margin-top:5px;flex:0 0 auto}
-.step.done .stepttl{text-decoration:line-through;color:var(--mute)}
-
-.stepbody{padding:0 22px 16px 66px}
-.stepbody[hidden]{display:none}
-.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;
-  border:1px solid var(--line);border-radius:3px;background:#0B141A;padding:10px 12px;margin-bottom:11px}
-.meta div span{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--ice);display:block}
-.meta div p{margin:1px 0 0;font-size:13.5px}
-.acts{margin:0;padding-left:18px}
-.acts li{margin-bottom:5px;font-size:14.5px}
-.warn{margin:10px 0 0;padding:9px 12px;border-left:3px solid var(--rust);
-  background:rgba(200,106,49,.09);font-size:13.5px}
-.commit{margin:8px 0 0;padding:9px 12px;border-left:3px solid var(--gold);
-  background:rgba(217,164,65,.08);font-size:13.5px}
-.badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:11px}
-.badge{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.1em;
-  text-transform:uppercase;padding:4px 8px;border-radius:2px;border:1px solid}
-.b-ch{border-color:var(--blood);color:#F0AFAC;background:rgba(178,59,54,.14)}
-.b-ft{border-color:var(--gold);color:#F2D291;background:rgba(217,164,65,.12)}
-.b-unv{border-color:var(--mute);color:var(--mute);background:rgba(127,151,163,.08)}
-
-.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
-.filter{background:var(--panel2);border:1px solid var(--line);color:var(--mute);
-  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.12em;
-  text-transform:uppercase;padding:7px 13px;border-radius:2px;cursor:pointer}
-.filter[aria-pressed="true"]{color:var(--ink);background:var(--ice);border-color:var(--ice)}
-.crow{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;
-  border:1px solid var(--line);border-radius:3px;background:var(--panel);margin-bottom:8px}
-.crow.done{opacity:.55}
-.cname{font-weight:600}
-.cname .type{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.14em;
-  text-transform:uppercase;margin-left:8px;padding:2px 6px;border-radius:2px;vertical-align:2px}
-.type.assn{background:rgba(178,59,54,.2);color:#F0AFAC}
-.type.feat{background:rgba(217,164,65,.16);color:#F2D291}
-.cdesc{color:var(--mute);font-size:14px;margin-top:2px}
-.cwhere{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--ice);
-  letter-spacing:.08em;margin-top:5px}
-
-.srcbox{border:1px solid var(--line);background:var(--panel);border-radius:4px;
-  padding:20px 22px;margin-bottom:18px}
-.srcbox h3{font-family:"Barlow Condensed",sans-serif;text-transform:uppercase;
-  letter-spacing:.1em;font-size:20px;margin:0 0 10px}
-.srcbox ul,.srcbox ol{padding-left:18px;margin:0}
-.srcbox li{margin-bottom:7px}
-code{font-family:"IBM Plex Mono",monospace;font-size:12.5px;background:#0A1318;padding:1px 5px;border-radius:2px}
-.reset{background:none;border:1px solid var(--line);color:var(--mute);border-radius:3px;
-  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.12em;
-  text-transform:uppercase;padding:8px 14px;cursor:pointer;margin-top:14px}
-.reset:hover{color:var(--frost);border-color:var(--frost)}
-
-@media (max-width:640px){
-  .tracker{grid-template-columns:1fr;justify-items:center}
-  .cats{width:100%}
-  .slot{border-right:0;border-bottom:1px solid var(--line)}
-  .stepbody{padding-left:22px}
+@media (max-width:600px){
+  .panel{padding:15px}
+  .step{grid-template-columns:30px minmax(0,1fr)}
+  .sno{display:none}
+  .crow{grid-template-columns:30px minmax(0,1fr)}
+  .art{grid-row:2;grid-column:1;padding-top:0}
+  .cmeta{grid-column:2;align-items:flex-start;text-align:left;flex-direction:row;flex-wrap:wrap;
+    gap:4px 12px;margin-top:6px}
+  .stamp{display:none}
 }
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media print{
+  body{background:#fff;background-image:none;color:#000;font-size:10.5pt}
+  .tabs,.runnav,.skip,.tick,.btn,.btn-plain,.church,.filters,.stamp{display:none!important}
+  .panel[hidden]{display:block!important}
+  .tbody,.sbody{display:block!important}
+  header.record,.panel,article.term,.srcbox,.slot{background:none;border-color:#999;box-shadow:none}
+  .tchips,.tbody{padding-left:0}
+  .step,article.term{break-inside:avoid}
+}
 </style>
 </head>
 <body>
+<a class="skip" href="#pane-runs">Skip to the terms</a>
 <div class="wrap">
 
-<header>
-  <p class="eyebrow">Sniper Assassin · Perm-14, Siberia · 27 challenges · 6 runs</p>
-  <h1>Crime and <span>Punishment</span></h1>
-  <p class="sub">Every challenge in step format, in an order that actually works. Names and descriptions are taken verbatim from the mission's own data file.</p>
+<header class="record">
+  <div class="rec-top">
+    <a href="../index.html">&#8592; All guides</a>
+    <span>Perm-14 &middot; Siberia &middot; Sniper Assassin</span>
+    <span>Kept by hand &middot; nothing leaves this device</span>
+  </div>
 
-  <div class="notice">
-    <h3>What this mission has, and what it doesn't</h3>
+  <div class="rec-body">
+    <div class="stamp" aria-hidden="true"><b>Perm-14</b><span>Strict regime</span></div>
+    <p class="eyebrow"><!--@eyebrow-->Sniper Assassin · Perm-14, Siberia · 27 challenges · 6 runs<!--/@eyebrow--></p>
+    <h1><!--@h1-->Crime and <span>Punishment</span><!--/@h1--></h1>
+    <p class="sub"><!--@sub-->Every challenge in step format, in an order that actually works. Names and descriptions are taken verbatim from the mission's own data file.<!--/@sub--></p>
+
+    <div class="notice">
+<!--@notice-->
+<h3>What this mission has, and what it doesn't</h3>
     <p>Your mission file reports <code>disguiseCount: 0</code> and <code>areaCount: 0</code>. That confirms what the map implies: this is a <strong>Sniper Assassin</strong> mission and 47 never leaves the perch.</p>
     <ul>
       <li><strong>Disguise on every step: none.</strong> No disguises exist, so there is no Chameleon challenge.</li>
@@ -198,62 +317,46 @@ code{font-family:"IBM Plex Mono",monospace;font-size:12.5px;background:#0A1318;p
       <li><strong>No Mission Stories and no Discovery areas.</strong> The 27 split 13 Assassination / 14 Feats.</li>
       <li><strong>No mid-mission saving.</strong> Sniper Assassin has no manual or quick save, so save-scumming between challenges is impossible. Anything that must be done before an irreversible moment is flagged in a gold <em>point of no return</em> box.</li>
     </ul>
+<!--/@notice-->
+    </div>
+  </div>
+
+  <div class="church">
+    <div class="domes" id="domes"></div>
+    <div class="counts">
+      <h2>The sentence, as it stands</h2>
+      <p class="served"><b id="numTotal">0</b><span id="ofTotal">of 0 counts served</span></p>
+      <div class="bars" id="bars"></div>
+    </div>
+  </div>
+
+  <div class="rec-foot">
+    <span class="stamped">One dome a term &middot; six terms in this record</span>
+    <button class="btn" id="reset" type="button">Strike the whole record</button>
   </div>
 </header>
 
-<section class="tracker" aria-label="Progress">
-  <div class="reticle">
-    <svg width="150" height="150" viewBox="0 0 150 150" aria-hidden="true">
-      <circle cx="75" cy="75" r="62" fill="none" stroke="#152530" stroke-width="7"/>
-      <circle id="ring" cx="75" cy="75" r="62" fill="none" stroke="#8FC7DD" stroke-width="7"
-              stroke-dasharray="389.6" stroke-dashoffset="389.6"/>
-      <line x1="75" y1="4" x2="75" y2="20" stroke="#223946" stroke-width="2"/>
-      <line x1="75" y1="130" x2="75" y2="146" stroke="#223946" stroke-width="2"/>
-      <line x1="4" y1="75" x2="20" y2="75" stroke="#223946" stroke-width="2"/>
-      <line x1="130" y1="75" x2="146" y2="75" stroke="#223946" stroke-width="2"/>
-    </svg>
-    <div class="core">
-      <div class="pct" id="pctTotal">0%</div>
-      <div class="of"><span id="numTotal">0</span>/27 CHALLENGES</div>
-    </div>
-  </div>
-  <div class="cats">
-    <div class="cat assn"><div class="label">Assassination</div>
-      <div class="num"><span id="numAssn">0</span><small>/13</small></div>
-      <div class="bar"><i id="barAssn"></i></div></div>
-    <div class="cat feat"><div class="label">Feats</div>
-      <div class="num"><span id="numFeat">0</span><small>/14</small></div>
-      <div class="bar"><i id="barFeat"></i></div></div>
-    <div class="cat stp"><div class="label">Route steps done</div>
-      <div class="num"><span id="numStep">0</span><small>/<span id="stepTotal">0</span></small></div>
-      <div class="bar"><i id="barStep"></i></div></div>
-  </div>
+<div class="tabs" role="tablist" aria-label="Guide sections">
+  <button class="tab" role="tab" id="tab-runs" aria-controls="pane-runs" aria-selected="true">The terms</button>
+  <button class="tab" role="tab" id="tab-list" aria-controls="pane-list" aria-selected="false">The sentence</button>
+  <button class="tab" role="tab" id="tab-val" aria-controls="pane-val" aria-selected="false">The case file</button>
+</div>
+
+<section class="panel" id="pane-runs" role="tabpanel" aria-labelledby="tab-runs">
+  <nav class="runnav" id="runnav" aria-label="Jump to a term"></nav>
+  <div id="runsBody"></div>
 </section>
 
-<div class="tabs" role="tablist">
-  <button class="tab" role="tab" id="tab-runs" aria-selected="true" aria-controls="pane-runs">Runs</button>
-  <button class="tab" role="tab" id="tab-list" aria-selected="false" aria-controls="pane-list">Checklist</button>
-  <button class="tab" role="tab" id="tab-val" aria-selected="false" aria-controls="pane-val">Validation &amp; sources</button>
-</div>
+<section class="panel" id="pane-list" role="tabpanel" aria-labelledby="tab-list" hidden>
+  <p class="lede">Twenty-seven counts, each served in exactly one term. A count is ruled through when
+    it is done &mdash; here, on its term, or on the scratch that earns it.</p>
+  <div class="filters" id="filters"></div>
+  <div id="checklist"></div>
+</section>
 
-<div class="pane" id="pane-runs" role="tabpanel" aria-labelledby="tab-runs">
-  <nav class="runnav" id="runnav" aria-label="Jump to run"></nav>
-  <div id="runsBody"></div>
-</div>
-
-<div class="pane" id="pane-list" role="tabpanel" aria-labelledby="tab-list" hidden>
-  <div class="filters" id="filters">
-    <button class="filter" data-f="all" aria-pressed="true">All (27)</button>
-    <button class="filter" data-f="assn" aria-pressed="false">Assassination (13)</button>
-    <button class="filter" data-f="feat" aria-pressed="false">Feats (14)</button>
-    <button class="filter" data-f="todo" aria-pressed="false">Incomplete</button>
-  </div>
-  <div id="listBody"></div>
-  <button class="reset" id="resetAll">Reset all progress</button>
-</div>
-
-<div class="pane" id="pane-val" role="tabpanel" aria-labelledby="tab-val" hidden>
-  <div class="srcbox">
+<section class="panel" id="pane-val" role="tabpanel" aria-labelledby="tab-val" hidden>
+<!--@val-->
+<div class="srcbox">
     <h3>Count audit</h3>
     <ul>
       <li>Mission file: <code>challengeCount: 27</code> — 13 assassination, 14 feats. Independently matched by the Hitman Wiki and PSNProfiles.</li>
@@ -313,41 +416,45 @@ code{font-family:"IBM Plex Mono",monospace;font-size:12.5px;background:#0A1318;p
       <li>HITMAN III <strong>update 3.11</strong> fixed an ammo-switching bug involving the rifle's Wall-Piercing and Shockwave ammo.</li>
     </ul>
   </div>
-</div>
+<!--/@val-->
+</section>
 
+<footer>Names and descriptions come from the mission's own data file. Everything else is sourced in
+the case file, and where sources disagreed the disagreement is recorded rather than settled.</footer>
 </div>
 
 <script>
-const CH = {
-  pink:{n:"Pink Mist",t:"assn",d:"Eliminate all targets with headshots.",r:5},
-  hold:{n:"Hold Your Fire",t:"assn",d:"Eliminate all targets without shooting them.",r:6},
-  foam:{n:"Foam Party",t:"assn",d:"Eliminate Vitaly Reznikov with an exploding fire extinguisher.",r:3},
-  wish:{n:"Wish Upon a Star",t:"assn",d:"Eliminate any target by dropping the Soviet star on them.",r:6},
-  boog:{n:"Electric Boogaloo",t:"assn",d:"Eliminate three targets by electrocution.",r:3},
-  fine:{n:"This is Fine",t:"assn",d:"Cause a fire that eliminates both Vitaly Reznikov and Roman Khabko.",r:2},
-  coll:{n:"Collapse of the Union",t:"assn",d:"Eliminate Vitaly Reznikov and Roman Khabko by dropping the Soviet star on them.",r:6},
-  froth:{n:"Frothy Blanket",t:"assn",d:"Eliminate any target with an exploding fire extinguisher while they are carrying it.",r:3},
-  tigerh:{n:"Tiger Hunter",t:"assn",d:"Eliminate all of the Siberian Tigers after starting the evacuation.",r:5},
-  hidden:{n:"Hidden Tiger",t:"assn",d:"Eliminate and hide all members of the Siberian Tigers.",r:4},
-  shank:{n:"Shanked",t:"assn",d:"Eliminate any target with an icicle.",r:3},
-  cut:{n:"In the Cut",t:"assn",d:"Hide the bodies of both Roman Khabko and Vitaly Reznikov.",r:2},
-  shock:{n:"Shocking Violence",t:"assn",d:"Eliminate Roman Khabko with a car battery.",r:3},
+/*@data*/
+const CH = [
+  {id:"pink",n:"Pink Mist",t:"assn",d:"Eliminate all targets with headshots.",r:5},
+  {id:"hold",n:"Hold Your Fire",t:"assn",d:"Eliminate all targets without shooting them.",r:6},
+  {id:"foam",n:"Foam Party",t:"assn",d:"Eliminate Vitaly Reznikov with an exploding fire extinguisher.",r:3},
+  {id:"wish",n:"Wish Upon a Star",t:"assn",d:"Eliminate any target by dropping the Soviet star on them.",r:6},
+  {id:"boog",n:"Electric Boogaloo",t:"assn",d:"Eliminate three targets by electrocution.",r:3},
+  {id:"fine",n:"This is Fine",t:"assn",d:"Cause a fire that eliminates both Vitaly Reznikov and Roman Khabko.",r:2},
+  {id:"coll",n:"Collapse of the Union",t:"assn",d:"Eliminate Vitaly Reznikov and Roman Khabko by dropping the Soviet star on them.",r:6},
+  {id:"froth",n:"Frothy Blanket",t:"assn",d:"Eliminate any target with an exploding fire extinguisher while they are carrying it.",r:3},
+  {id:"tigerh",n:"Tiger Hunter",t:"assn",d:"Eliminate all of the Siberian Tigers after starting the evacuation.",r:5},
+  {id:"hidden",n:"Hidden Tiger",t:"assn",d:"Eliminate and hide all members of the Siberian Tigers.",r:4},
+  {id:"shank",n:"Shanked",t:"assn",d:"Eliminate any target with an icicle.",r:3},
+  {id:"cut",n:"In the Cut",t:"assn",d:"Hide the bodies of both Roman Khabko and Vitaly Reznikov.",r:2},
+  {id:"shock",n:"Shocking Violence",t:"assn",d:"Eliminate Roman Khabko with a car battery.",r:3},
 
-  nazd:{n:"Na Zdorovje",t:"feat",d:"Destroy all five bottles of alcohol.",r:1},
-  lull:{n:"Lullaby of Birdland",t:"feat",d:"Hit all 10 rubber ducks.",r:1},
-  food:{n:"Prison Food",t:"feat",d:"Poison Roman Khabko.",r:4},
-  snitch:{n:"Snitches Get Stitches",t:"feat",d:"Eliminate all 6 rats.",r:1},
-  fusil:{n:"Fusil for Everyone",t:"feat",d:"Hide a Siberian Tiger in the rioting crowd.",r:2},
-  cold:{n:"Cold War",t:"feat",d:"Hide five bodies in snow piles.",r:4},
-  porc:{n:"Porcelain King",t:"feat",d:"Hide three bodies in worker camp toilets.",r:4},
-  esc:{n:"The Great Escape",t:"feat",d:"Cause a large prison escape.",r:2},
-  inst:{n:"Instigator",t:"feat",d:"Spread the riot to every part of the prison.",r:2},
-  burn:{n:"Burning Down the House",t:"feat",d:"Set all five prison buildings on fire.",r:2},
-  pants:{n:"Where Are My Pants?",t:"feat",d:"Destroy Roman Khabko's clothes.",r:1},
-  flag:{n:"False Flag",t:"feat",d:"Lower the flag to trigger Roman Khabko's release.",r:2},
-  crows:{n:"A Feat for Crows",t:"feat",d:"Shoot all 8 crows.",r:1},
-  lamps:{n:"Black Site",t:"feat",d:"Shoot 10 small lamps.",r:1}
-};
+  {id:"nazd",n:"Na Zdorovje",t:"feat",d:"Destroy all five bottles of alcohol.",r:1},
+  {id:"lull",n:"Lullaby of Birdland",t:"feat",d:"Hit all 10 rubber ducks.",r:1},
+  {id:"food",n:"Prison Food",t:"feat",d:"Poison Roman Khabko.",r:4},
+  {id:"snitch",n:"Snitches Get Stitches",t:"feat",d:"Eliminate all 6 rats.",r:1},
+  {id:"fusil",n:"Fusil for Everyone",t:"feat",d:"Hide a Siberian Tiger in the rioting crowd.",r:2},
+  {id:"cold",n:"Cold War",t:"feat",d:"Hide five bodies in snow piles.",r:4},
+  {id:"porc",n:"Porcelain King",t:"feat",d:"Hide three bodies in worker camp toilets.",r:4},
+  {id:"esc",n:"The Great Escape",t:"feat",d:"Cause a large prison escape.",r:2},
+  {id:"inst",n:"Instigator",t:"feat",d:"Spread the riot to every part of the prison.",r:2},
+  {id:"burn",n:"Burning Down the House",t:"feat",d:"Set all five prison buildings on fire.",r:2},
+  {id:"pants",n:"Where Are My Pants?",t:"feat",d:"Destroy Roman Khabko's clothes.",r:1},
+  {id:"flag",n:"False Flag",t:"feat",d:"Lower the flag to trigger Roman Khabko's release.",r:2},
+  {id:"crows",n:"A Feat for Crows",t:"feat",d:"Shoot all 8 crows.",r:1},
+  {id:"lamps",n:"Black Site",t:"feat",d:"Shoot 10 small lamps.",r:1}
+];
 
 const RIFLE = "Druzhina 34 ICA Arctic (the only weapon — no loadout slots exist)";
 
@@ -745,174 +852,278 @@ const RUNS = [
   ]
 }
 ];
+/*/@data*/
 
+/* ---------------- STATE ----------------
+   Both keys the previous edition wrote are spelled out in full below, and the
+   step ids keep their running `s1 … sN` shape in the same order, so an
+   existing record survives the rebuild intact. */
 const done={}, stepDone={}, stepOpen={}, runOpen={};
 try{Object.assign(done,JSON.parse(localStorage.getItem('siberia_done_v1')||'{}'));}catch(e){}
 try{Object.assign(stepDone,JSON.parse(localStorage.getItem('siberia_done_v1:steps')||'{}'));}catch(e){}
-function reportProgress(){try{const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r['m17']={done:Object.keys(CH).filter(k=>done[k]).length,total:Object.keys(CH).length,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
+function reportProgress(){try{const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r['m17']={done:CH.filter(c=>done[c.id]).length,total:CH.length,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
 function saveDone(){try{localStorage.setItem('siberia_done_v1',JSON.stringify(done));localStorage.setItem('siberia_done_v1:steps',JSON.stringify(stepDone));}catch(e){}reportProgress();}
+
 let filter="all";
-const $=s=>document.querySelector(s);
-const badge=(c,t)=>`<span class="badge ${c}">${t}</span>`;
-const runChallenges=id=>Object.keys(CH).filter(k=>CH[k].r===id);
+const $=s=>document.getElementById(s);
+const byId=Object.fromEntries(CH.map(c=>[c.id,c]));
+const ASSN=CH.filter(c=>c.t==="assn"), FEAT=CH.filter(c=>c.t==="feat");
+const runChallenges=id=>CH.filter(c=>c.r===id);
+
+/* every step gets its running id up front, so the numbering is fixed once and
+   every view agrees about which scratch is which */
+let stepIds=[];
+/* scratch id → the counts that scratch serves */
+const STEP_CH={};
+RUNS.forEach(r=>{r._steps=[];r.sections.forEach(sec=>sec.steps.forEach(st=>{
+  st._id="s"+(stepIds.length+1);stepIds.push(st._id);r._steps.push(st._id);
+  STEP_CH[st._id]=(st.pops||[]).filter(k=>byId[k]);
+}));});
+const TOTAL_STEPS=stepIds.length;
+
+/* ---------------- THE CATHEDRAL ----------------
+   One dome a term. A dome is inked solid when every count in that term has
+   been served — the convention the tattoo itself follows. */
+function dome(bx,by,scale,served,label){
+  const s=scale, w=13*s, h=16*s, bulb=52*s, cross=64*s;
+  return `<path class="dome-body${served?' served':''}" d="
+    M${bx-w},${by} L${bx-w},${by-h}
+    C${bx-w-7*s},${by-34*s} ${bx-11*s},${by-40*s} ${bx},${by-bulb}
+    C${bx+11*s},${by-40*s} ${bx+w+7*s},${by-34*s} ${bx+w},${by-h}
+    L${bx+w},${by} Z"/>
+    <line class="dome-cross" x1="${bx}" y1="${by-bulb}" x2="${bx}" y2="${by-cross}"/>
+    <line class="dome-cross" x1="${bx-5*s}" y1="${by-cross+6*s}" x2="${bx+5*s}" y2="${by-cross+6*s}"/>
+    ${label?`<text class="dome-num${served?' served':''}" x="${bx}" y="${by-6*s}" text-anchor="middle">${label}</text>`:''}`;
+}
+
+function renderChurch(){
+  const n=RUNS.length, W=300, base=118, gap=(W-52)/(n-1), x0=26;
+  let svg=`<svg viewBox="0 0 ${W} 148" role="img" aria-label="One dome a term: ${
+    RUNS.filter(r=>termFull(r)).length} of ${n} terms served">`;
+  RUNS.forEach((r,i)=>{
+    const lift=Math.round(20*Math.sin(Math.PI*(i+0.5)/n));
+    svg+=dome(x0+i*gap,base-lift,1,termFull(r),r.id);
+  });
+  /* the wall the domes stand on */
+  svg+=`<rect x="12" y="118" width="276" height="24" fill="none" stroke="#2a3d68" stroke-width="2.4"/>
+    <line x1="12" y1="130" x2="288" y2="130" stroke="#2a3d68" stroke-width="1" opacity=".5"/>
+    <rect x="138" y="126" width="24" height="16" fill="none" stroke="#2a3d68" stroke-width="2"/></svg>`;
+  $('domes').innerHTML=svg;
+}
+const termFull=r=>{const ks=runChallenges(r.id);return ks.length>0&&ks.every(c=>done[c.id]);};
+
+function renderStats(){
+  const tot=CH.filter(c=>done[c.id]).length;
+  $('numTotal').textContent=tot;
+  $('ofTotal').textContent='of '+CH.length+' counts served';
+  const steps=stepIds.filter(k=>stepDone[k]).length;
+  const rows=[
+    ['Assassination',ASSN.filter(c=>done[c.id]).length,ASSN.length],
+    ['Feats',FEAT.filter(c=>done[c.id]).length,FEAT.length],
+    ['Scratches on the wall',steps,TOTAL_STEPS],
+    ['Terms served',RUNS.filter(termFull).length,RUNS.length]
+  ];
+  $('bars').innerHTML=rows.map(r=>{
+    const pct=r[2]?r[1]/r[2]*100:0;
+    return `<div class="barcell${r[2]&&r[1]===r[2]?' full':''}"><span class="k">${r[0]}</span>
+      <span class="v">${r[1]}<small> / ${r[2]}</small></span>
+      <span class="b"><i style="width:${pct}%"></i></span></div>`;
+  }).join('');
+  renderChurch();
+}
+
+/* ---------------- THE TERMS ---------------- */
+const chip=id=>{const c=byId[id];if(!c)return"";
+  const on=!!done[id];
+  return `<button type="button" class="chip ${c.t}${on?' on':''}" data-ch="${id}" aria-pressed="${on}">${c.n}</button>`;};
+
+/* the wall is kept in fives: one scratch a step, struck through at every fifth */
+function gate(total,doneN){
+  let h="";
+  for(let g=0;g*5<total;g++){
+    const inGroup=Math.min(5,total-g*5);
+    let bars="";
+    for(let k=0;k<inGroup;k++){
+      bars+=`<i class="${g*5+k<doneN?'on':''}${k===4?' cross':''}"></i>`;
+    }
+    h+=`<span class="five">${bars}</span>`;
+  }
+  return `<span class="gate" aria-hidden="true">${h}</span>`;
+}
 
 function renderNav(){
-  let nav=RUNS.map(r=>{
-    const ks=runChallenges(r.id), got=ks.filter(k=>done[k]).length;
-    return `<button class="runjump ${got===ks.length?"full":""}" data-jump="${r.id}">
-      <b>Run ${r.id} · ${got}/${ks.length}</b>${r.short}</button>`;
-  }).join("");
-  nav+=`<button class="navutil" id="expandAll">Expand all</button>
-        <button class="navutil" id="collapseAll">Collapse all</button>`;
-  $("#runnav").innerHTML=nav;
+  $('runnav').innerHTML=`<span class="nl">Terms</span>`+
+    RUNS.map(r=>{
+      const ks=runChallenges(r.id),got=ks.filter(c=>done[c.id]).length;
+      return `<button type="button" class="runjump ${got===ks.length?"full":""}" data-jump="${r.id}">
+        <b>${r.id}</b>${r.short}<span class="pg">${got}/${ks.length}</span></button>`;
+    }).join("")+
+    `<button type="button" class="btn-plain" data-toggleall="1" style="margin-left:auto">Open / close every term</button>`;
 }
 
 function renderRuns(){
   renderNav();
-  let html="", n=0;
-  RUNS.forEach(r=>{
-    const ks=runChallenges(r.id), got=ks.filter(k=>done[k]).length;
-    const open=!!runOpen[r.id];
-    html+=`<article class="run" id="run${r.id}">
-      <button class="runtoggle" data-run="${r.id}" aria-expanded="${open}">
-        <span class="chev">${open?"▾":"▸"}</span>
-        <span class="rt"><span class="run-idx">Run ${r.id} of 6</span>
-          <h2>${r.title}</h2><p>${r.goal}</p></span>
-        <span class="runcount">${got}/${ks.length}</span>
+  $('runsBody').innerHTML=RUNS.map(r=>{
+    const ks=runChallenges(r.id),got=ks.filter(c=>done[c.id]).length;
+    const open=!!runOpen[r.id],full=termFull(r);
+    const scratched=r._steps.filter(k=>stepDone[k]).length;
+    let n=0;
+    const body=r.sections.map(sec=>{
+      const ids=sec.steps.map(st=>st._id);
+      const secDone=ids.filter(k=>stepDone[k]).length;
+      return `<div class="sect">${sec.name}<span class="rule"></span>${gate(ids.length,secDone)}</div>`+
+        sec.steps.map(st=>stepHTML(st,++n)).join("");
+    }).join("");
+
+    return `<article class="term${open?' open':''}${full?' full':''}" id="run${r.id}">
+      <button type="button" class="thead" data-run="${r.id}" aria-expanded="${open}">
+        <span class="tdome" aria-hidden="true"><svg viewBox="0 0 40 78">${
+          dome(20,72,0.62,full,'')}</svg></span>
+        <span class="tmain">
+          <span class="tlabel">Term ${r.id} of ${RUNS.length} &middot; Run ${r.id} &middot; ${r.short}</span>
+          <span class="ttitle">${r.title}</span>
+          <span class="tgoal">${r.goal}</span>
+          <span class="ttally">${got} of ${ks.length} counts served &middot; ${scratched} of ${r._steps.length} scratches cut</span>
+        </span>
       </button>
-      <div class="runbody"${open?"":" hidden"}>
-        <div class="loadout">`+
-        r.load.map(([k,v,e])=>`<div class="slot"><span class="k">${k}</span>
-          <span class="v">${v}${e?`<em>${e}</em>`:""}</span></div>`).join("")+`</div>`;
-
-    r.sections.forEach(sec=>{
-      html+=`<div class="sect">${sec.name}</div>`;
-      sec.steps.forEach(st=>{
-        const id="s"+(++n), o=!!stepOpen[id];
-        const bd=(st.pops||[]).map(k=>badge(CH[k].t==="assn"?"b-ch":"b-ft",CH[k].n)).join("");
-        html+=`<div class="step${stepDone[id]?" done":""}" id="${id}">
-          <div class="step-head">
-            <button class="tick" data-step="${id}" aria-pressed="${!!stepDone[id]}" aria-label="Mark step done">✓</button>
-            <button class="steptoggle" data-open="${id}" aria-expanded="${o}" aria-controls="${id}-b">
-              <span class="stepno">${String(n).padStart(2,"0")}</span>
-              <span style="flex:1"><span class="stepttl">${st.t}</span></span>
-              <span class="stepchev">${o?"▾":"▸"}</span>
-            </button>
-          </div>
-          <div class="stepbody" id="${id}-b"${o?"":" hidden"}>
-            <div class="meta">
-              <div><span>Where</span><p>${st.where}</p></div>
-              <div><span>Disguise</span><p>None</p></div>
-              <div><span>Item</span><p>${st.item}</p></div>
-              <div><span>NPC</span><p>${st.npc}</p></div>
-            </div>
-            <ul class="acts">${st.acts.map(a=>`<li>${a}</li>`).join("")}</ul>
-            ${st.commit?`<p class="commit"><strong>Point of no return —</strong> ${st.commit}</p>`:""}
-            ${st.warn?`<p class="warn"><strong>Warning —</strong> ${st.warn}</p>`:""}
-            <div class="badges">${bd}${st.unv?badge("b-unv","Single-source detail"):""}</div>
-          </div></div>`;
-      });
-    });
-    html+=`</div></article>`;
-  });
-  $("#runsBody").innerHTML=html;
-  $("#stepTotal").textContent=n;
-}
-
-function renderList(){
-  const rows=Object.keys(CH).filter(k=>{
-    if(filter==="all")return true;
-    if(filter==="todo")return !done[k];
-    return CH[k].t===filter;
-  }).map(k=>{
-    const c=CH[k];
-    return `<div class="crow${done[k]?" done":""}">
-      <button class="tick" data-ch="${k}" aria-pressed="${!!done[k]}" aria-label="Mark ${c.n} complete">✓</button>
-      <div><div class="cname">${c.n}<span class="type ${c.t}">${c.t==="assn"?"Assassination":"Feat"}</span></div>
-      <div class="cdesc">${c.d}</div>
-      <div class="cwhere">Run ${c.r} — ${RUNS[c.r-1].title}</div></div></div>`;
+      <div class="tchips">${ks.map(c=>chip(c.id)).join("")}</div>
+      <div class="tbody"${open?"":" hidden"}>
+        <div class="loadout">${r.load.map(([k,v,e])=>
+          `<div class="slot"><span class="k">${k}</span>
+            <span class="v">${v}${e?`<em>${e}</em>`:""}</span></div>`).join("")}
+        </div>
+        ${body}
+      </div>
+    </article>`;
   }).join("");
-  $("#listBody").innerHTML=rows||`<p style="color:var(--mute)">Nothing left in this filter. All clear.</p>`;
 }
 
-function updateStats(){
-  const ks=Object.keys(CH);
-  const a=ks.filter(k=>CH[k].t==="assn"&&done[k]).length;
-  const f=ks.filter(k=>CH[k].t==="feat"&&done[k]).length;
-  const tot=a+f;
-  const steps=Object.values(stepDone).filter(Boolean).length;
-  const stepTot=+$("#stepTotal").textContent||1;
-  $("#numAssn").textContent=a; $("#numFeat").textContent=f;
-  $("#numTotal").textContent=tot; $("#numStep").textContent=steps;
-  $("#pctTotal").textContent=Math.round(tot/27*100)+"%";
-  $("#barAssn").style.width=(a/13*100)+"%";
-  $("#barFeat").style.width=(f/14*100)+"%";
-  $("#barStep").style.width=(steps/stepTot*100)+"%";
-  $("#ring").setAttribute("stroke-dashoffset",389.6-(389.6*tot/27));
+function stepHTML(st,n){
+  const id=st._id,o=!!stepOpen[id],on=!!stepDone[id];
+  const bd=(st.pops||[]).map(k=>chip(k)).join("");
+  return `<div class="step${on?" done":""}" id="${id}">
+    <button type="button" class="tick" data-step="${id}" aria-pressed="${on}"
+      aria-label="Cut scratch ${n}${(st.pops||[]).length?' and serve the counts it covers':''}"></button>
+    <span class="sno">${String(n).padStart(2,"0")}</span>
+    <div class="swrap">
+      <button type="button" class="shead" data-open="${id}" aria-expanded="${o}" aria-controls="${id}-b">${st.t}
+        <span class="more">${o?"Hide the account":"Read the account"}</span></button>
+      <div class="badges">${bd}${st.unv?`<span class="badge">Single-source detail</span>`:""}</div>
+      <div class="sbody" id="${id}-b"${o?"":" hidden"}>
+        <div class="meta">
+          <div><span>Where</span><p>${st.where}</p></div>
+          <div><span>Disguise</span><p>None</p></div>
+          <div><span>Item</span><p>${st.item}</p></div>
+          <div><span>NPC</span><p>${st.npc}</p></div>
+        </div>
+        <ul class="acts">${st.acts.map(a=>`<li>${a}</li>`).join("")}</ul>
+        ${st.commit?`<p class="commit"><strong>Point of no return —</strong> ${st.commit}</p>`:""}
+        ${st.warn?`<p class="warn"><strong>Warning —</strong> ${st.warn}</p>`:""}
+      </div>
+    </div>
+  </div>`;
 }
 
-document.addEventListener("click",e=>{
-  const jump=e.target.closest("[data-jump]");
-  if(jump){
-    const id=+jump.dataset.jump; runOpen[id]=true;
-    renderRuns(); updateStats();
-    document.getElementById("run"+id).scrollIntoView({behavior:"smooth",block:"start"});
-    return;
-  }
-  if(e.target.id==="expandAll"||e.target.id==="collapseAll"){
-    const v=e.target.id==="expandAll";
-    RUNS.forEach(r=>runOpen[r.id]=v);
-    renderRuns(); updateStats(); return;
-  }
-  const rt=e.target.closest("[data-run]");
-  if(rt){ const id=+rt.dataset.run; runOpen[id]=!runOpen[id]; renderRuns(); updateStats(); return; }
+/* ---------------- THE SENTENCE ---------------- */
+function renderList(){
+  const inc=CH.filter(c=>!done[c.id]).length;
+  const F=[["all","All counts",CH.length],["assn","Assassination",ASSN.length],
+           ["feat","Feats",FEAT.length],["todo","Still to serve",inc]];
+  $('filters').innerHTML=F.map(f=>
+    `<button type="button" data-f="${f[0]}" aria-pressed="${filter===f[0]}">${f[1]} &middot; ${f[2]}</button>`).join("");
 
-  const so=e.target.closest("[data-open]");
-  if(so){
-    const id=so.dataset.open;
-    stepOpen[id]=!stepOpen[id];
-    document.getElementById(id+"-b").hidden=!stepOpen[id];
-    so.setAttribute("aria-expanded",String(stepOpen[id]));
-    so.querySelector(".stepchev").textContent=stepOpen[id]?"▾":"▸";
-    return;
-  }
-  const tk=e.target.closest("[data-step]");
+  const list=CH.filter(c=>filter==="all"?true:filter==="todo"?!done[c.id]:c.t===filter);
+  const el=$('checklist');
+  if(!list.length){el.innerHTML=`<p class="empty">Nothing left under this heading. All clear.</p>`;return;}
+  el.innerHTML=list.map((c,i)=>{
+    const on=!!done[c.id],run=RUNS.find(r=>r.id===c.r);
+    return `<div class="crow${on?" done":""}">
+      <button type="button" class="tick" data-ch="${c.id}" aria-pressed="${on}" aria-label="Serve ${c.n}"></button>
+      <span class="art" aria-hidden="true">${String(CH.findIndex(x=>x.id===c.id)+1).padStart(2,"0")}</span>
+      <div>
+        <p class="cn">${c.n}</p>
+        <p class="cd">${c.d}</p>
+      </div>
+      <span class="cmeta">
+        <span class="kind ${c.t}">${c.t==="assn"?"Assassination":"Feat"}</span>
+        <span>Term ${c.r}</span>
+        <span>${run?run.title:""}</span>
+      </span>
+    </div>`;
+  }).join("");
+}
+
+function render(){renderRuns();renderList();renderStats();}
+
+/* ---------------- EVENTS ---------------- */
+const tabs=[...document.querySelectorAll('.tab')];
+function selectTab(tb){
+  tabs.forEach(x=>{
+    const on=x===tb;
+    x.setAttribute('aria-selected',String(on));
+    x.tabIndex=on?0:-1;
+    $(x.getAttribute('aria-controls')).hidden=!on;
+  });
+}
+tabs.forEach((tb,i)=>{
+  tb.tabIndex=tb.getAttribute('aria-selected')==='true'?0:-1;
+  tb.addEventListener('keydown',e=>{
+    const d=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;
+    if(!d)return;
+    e.preventDefault();
+    const next=tabs[(i+d+tabs.length)%tabs.length];
+    selectTab(next);next.focus();
+  });
+});
+
+document.addEventListener('click',e=>{
+  const t=e.target;
+
+  /* a count named on a scratch or under a term is a control */
+  const cb=t.closest('[data-ch]');
+  if(cb){const id=cb.dataset.ch;
+    done[id]=!done[id];saveDone();render();return;}
+
+  const tk=t.closest('[data-step]');
   if(tk){
-    const id=tk.dataset.step;
-    stepDone[id]=!stepDone[id];saveDone();
-    tk.setAttribute("aria-pressed",String(stepDone[id]));
-    document.getElementById(id).classList.toggle("done",stepDone[id]);
-    updateStats(); return;
+    const id=tk.dataset.step,now=!stepDone[id];
+    stepDone[id]=now;
+    /* cutting a scratch serves the counts it covers; rubbing it out leaves
+       them served, because another scratch may cover the same one */
+    if(now)(STEP_CH[id]||[]).forEach(k=>done[k]=true);
+    saveDone();render();return;
   }
-  const cb=e.target.closest("[data-ch]");
-  if(cb){ done[cb.dataset.ch]=!done[cb.dataset.ch]; saveDone(); renderList(); renderNav(); updateStats(); return; }
+  const so=t.closest('[data-open]');
+  if(so){const id=so.dataset.open;
+    stepOpen[id]=!stepOpen[id];renderRuns();return;}
+  const rt=t.closest('[data-run]');
+  if(rt){const id=+rt.dataset.run;
+    runOpen[id]=!runOpen[id];renderRuns();return;}
+  const jp=t.closest('[data-jump]');
+  if(jp){const id=+jp.dataset.jump;
+    runOpen[id]=true;renderRuns();
+    $('run'+id).scrollIntoView({behavior:'smooth',block:'start'});return;}
+  const ta=t.closest('[data-toggleall]');
+  if(ta){
+    const anyClosed=RUNS.some(r=>!runOpen[r.id]);
+    RUNS.forEach(r=>runOpen[r.id]=anyClosed);
+    renderRuns();return;}
+  const fb=t.closest('[data-f]');
+  if(fb){filter=fb.dataset.f;renderList();return;}
+  const tb=t.closest('.tab');
+  if(tb){selectTab(tb);return;}
+});
 
-  const fb=e.target.closest(".filter");
-  if(fb){
-    filter=fb.dataset.f;
-    document.querySelectorAll(".filter").forEach(b=>b.setAttribute("aria-pressed",String(b===fb)));
-    renderList(); return;
-  }
-  const tab=e.target.closest(".tab");
-  if(tab){
-    document.querySelectorAll(".tab").forEach(t=>{
-      const on=t===tab;
-      t.setAttribute("aria-selected",String(on));
-      document.getElementById(t.getAttribute("aria-controls")).hidden=!on;
-    });
-    return;
-  }
-  if(e.target.id==="resetAll"){
-    Object.keys(done).forEach(k=>delete done[k]);
-    Object.keys(stepDone).forEach(k=>delete stepDone[k]);
-    Object.keys(stepOpen).forEach(k=>delete stepOpen[k]);
-    saveDone();
-    renderRuns(); renderList(); updateStats();
-  }
+$('reset').addEventListener('click',()=>{
+  if(!confirm('Strike the whole record? Every served count and every scratch on this guide is cleared. Other guides are not affected.'))return;
+  Object.keys(done).forEach(k=>delete done[k]);
+  Object.keys(stepDone).forEach(k=>delete stepDone[k]);
+  Object.keys(stepOpen).forEach(k=>delete stepOpen[k]);
+  saveDone();render();
 });
 
 RUNS.forEach(r=>runOpen[r.id]=(r.id===1));
-renderRuns(); renderList(); updateStats();
+render();
 reportProgress();
 </script>
 <!-- step-progress-bridge -->

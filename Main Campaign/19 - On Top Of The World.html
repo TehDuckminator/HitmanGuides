@@ -1,159 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>On Top of the World — Dubai Challenge Route (v3)</title>
+<!--@title--><title>On Top of the World — Dubai Challenge Route (v3)</title><!--/@title-->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
+/* ═══ DUBAI — the lift hall ═══
+   Every step of this guide already knows what floor it is on: the route data
+   labels each one L-1, L0, L3, Roof, "L1 → L3". The mission is a building, and
+   the building is the puzzle — which is why the guide is the lift hall at the
+   bottom of it.
+
+   The tracker is the FLOOR INDICATOR: a brass half-dial over the doors whose
+   needle sweeps from nothing to the whole export. Beside it stands THE TOWER,
+   a stack of level plates built from the floors the route names, each showing
+   how much of that level is still owed. A run is an ASCENT; a step is a STOP,
+   and its tick is the floor plate itself — press the level and it lights.
+
+   The categories are the hall directory. The guide's own tags come through as
+   they were written: a corroboration mark where sources agree, a save marker,
+   and an unverified flag where the export redacted the official wording.
+
+   Indigo and brushed gold at dusk, over pale desert stone. Nothing here is a
+   glass elevation with lit windows — that is the beach house at Hawke's Bay —
+   and nothing is a gate that opens at the end; the Isle of Sgàil took that. */
 :root{
-  --glass:#0c1418;--glass-2:#111d23;--glass-3:#17272f;
-  --sand:#c9a227;--sand-dim:#8a7326;
-  --paper:#e6ecec;--paper-dim:#8ea3a8;
-  --ica:#c0392b;--amber:#e0a53a;--jade:#3f9e7c;
-  --line:rgba(201,162,39,.22);
+  --night:#0a0f1e; --deep:#101827; --panel:#151f36; --panel-2:#1c2743; --raise:#243257;
+  --line:rgba(230,220,194,.14); --line-2:rgba(230,220,194,.07);
+  --gold:#d9b46a; --gold-2:#a8843c; --sand:#e6dcc2; --text:#b6c0d6; --dim:#8590ab; --faint:#6b7592;
+  --a:#d9584f; --d:#4aa6c9; --f:#d9b46a; --t:#c96fb0; --c:#7fd1a8;
+  --disp:Syne,"Trebuchet MS",system-ui,sans-serif;
+  --body:Manrope,system-ui,-apple-system,"Segoe UI",Helvetica,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Consolas,"Courier New",monospace;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--glass);color:var(--paper);
-  font-family:Inter,system-ui,sans-serif;font-size:15px;line-height:1.55;
-  background-image:linear-gradient(180deg,#0c1418 0%,#0e1a20 60%,#0c1418 100%)}
-h1,h2,h3,h4{font-family:"Barlow Condensed",Oswald,Impact,sans-serif;letter-spacing:.02em;text-transform:uppercase;font-weight:600;margin:0}
-.wrap{max-width:1080px;margin:0 auto;padding:0 20px 80px}
+body{
+  margin:0;color:var(--text);background-color:var(--night);
+  /* the light at the top of the tower: sun off the desert, night below */
+  background-image:
+    radial-gradient(1000px 620px at 74% -12%,rgba(217,180,106,.20),transparent 62%),
+    radial-gradient(760px 520px at 8% 4%,rgba(74,166,201,.10),transparent 60%);
+  background-attachment:fixed;
+  font-family:var(--body);font-size:16px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.hall{max-width:1140px;margin:0 auto;padding:0 15px 100px}
+a{color:var(--gold)}
+b,strong{font-weight:600;color:var(--sand)}
+em,i{font-style:italic}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:12px;top:12px;z-index:60;background:var(--gold);color:var(--night);padding:8px 14px;
+  font-family:var(--mono);font-size:12px}
+.lbl{font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
 
-header.hero{border-bottom:1px solid var(--line);padding:34px 0 22px}
-.eyebrow{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.22em;color:var(--sand);text-transform:uppercase}
-h1{font-size:clamp(34px,6vw,62px);line-height:.94;margin:8px 0 6px}
-h1 span{color:var(--sand)}
-.sub{color:var(--paper-dim);max-width:64ch;font-size:14px}
+/* ── the plate over the doors ───────────────────────────────────────────── */
+header.plate{margin-top:20px;background:linear-gradient(180deg,var(--panel-2),var(--panel));
+  border:1px solid var(--line-2);box-shadow:0 30px 60px -50px #000}
+.plate-in{padding:32px 26px 26px;border-bottom:1px solid var(--line-2)}
+.eyebrow{margin:0 0 14px;font-family:var(--mono);font-size:10.5px;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--gold)}
+h1{margin:0;font-family:var(--disp);font-weight:800;font-size:clamp(34px,7vw,72px);line-height:.98;
+  letter-spacing:-.015em;color:var(--sand)}
+h1 span{color:var(--gold)}
+.sub{margin:18px 0 0;max-width:76ch;font-size:15.4px;color:var(--text);font-weight:300}
+.rail{display:flex;flex-wrap:wrap;gap:6px 20px;align-items:center;justify-content:space-between;
+  padding:9px 26px;background:var(--night);border-bottom:1px solid var(--line-2);
+  font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.rail a{color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(217,180,106,.4)}
+.rail a:hover{color:var(--sand);border-color:var(--sand)}
 
-.note{border:1px solid var(--jade);background:rgba(63,158,124,.08);border-radius:4px;padding:15px 17px;margin:20px 0}
-.note.warn{border-color:var(--ica);background:rgba(192,57,43,.09)}
-.note h3{font-size:16px;margin-bottom:5px;color:#6fd4ab}
-.note.warn h3{color:#ff8b7d}
-.note ul{margin:7px 0 0;padding-left:18px}
-.note li{font-size:13.5px;margin-bottom:6px;color:#cfe6dd}
-.note.warn li{color:#e9d4d0}
-.note b{color:#fff}
+/* ── the indicator and the tower ────────────────────────────────────────── */
+.hallgrid{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr) minmax(0,190px);
+  gap:24px;padding:24px 26px 28px;align-items:start}
+.dial{min-width:0}
+.dial svg{display:block;width:100%;height:auto}
+/* the rotation centre is in the transform attribute itself — setting a CSS
+   transform-origin as well applies it twice and throws the needle off the dial */
+.needle{transition:transform .6s cubic-bezier(.3,.8,.3,1)}
+.arcfill{transition:stroke-dashoffset .6s ease}
+/* the count, in lower case so the number reads as written */
+.count{margin:6px 0 0;text-align:center;font-size:15px;color:var(--dim);font-weight:300}
+.count b{display:block;font-family:var(--disp);font-weight:800;font-size:50px;line-height:1;color:var(--sand)}
+.readout{min-width:0}
+.stopline{margin:0 0 14px;font-family:var(--mono);font-size:10.5px;color:var(--faint)}
+/* the hall directory: one line per category */
+.directory{display:grid;gap:1px;background:var(--line-2);border:1px solid var(--line-2)}
+.dirrow{display:grid;grid-template-columns:12px minmax(0,1fr) auto;gap:11px;align-items:center;
+  background:var(--panel-2);padding:9px 13px}
+.dirrow .pip{width:12px;height:12px;border-radius:50%;border:2px solid var(--m,var(--gold));
+  background:transparent}
+.dirrow.full .pip{background:var(--m,var(--gold))}
+.dirrow .k{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--dim)}
+.dirrow .v{font-family:var(--mono);font-size:11.5px;color:var(--sand)}
+.dirrow.full .v{color:var(--m,var(--gold))}
+.btn{margin-top:16px;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  background:transparent;color:var(--sand);border:1px solid var(--line);padding:9px 15px;cursor:pointer}
+.btn:hover{border-color:var(--a);color:var(--a)}
+/* the tower: one plate per level the route names, top floor first */
+.tower{display:grid;gap:2px;min-width:0}
+.lvl{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;
+  background:var(--panel-2);border-left:3px solid var(--line);padding:6px 10px}
+.lvl .n{font-family:var(--mono);font-size:11px;color:var(--sand);letter-spacing:.04em}
+.lvl .c{font-family:var(--mono);font-size:9.5px;color:var(--faint)}
+.lvl.some{border-left-color:var(--gold-2)}
+.lvl.full{border-left-color:var(--gold);background:rgba(217,180,106,.10)}
+.lvl.full .c{color:var(--gold)}
+.towercap{margin:8px 0 0;font-family:var(--mono);font-size:9px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--faint);text-align:right}
 
-.tracker{border:1px solid var(--line);border-radius:4px;background:var(--glass-2);padding:18px;margin:20px 0 8px}
-.tracker-top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
-.bigcount{font-family:"Barlow Condensed",sans-serif;font-size:52px;line-height:.85;color:var(--sand)}
-.bigcount small{font-size:20px;color:var(--paper-dim)}
-.bar{height:8px;background:var(--glass-3);border-radius:99px;overflow:hidden;margin:14px 0 16px}
-.bar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--sand-dim),var(--sand));transition:width .45s cubic-bezier(.2,.7,.3,1)}
-.cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}
-.cat{border:1px solid var(--line);border-radius:3px;padding:9px 11px;background:rgba(0,0,0,.2)}
-.cat .n{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.14em;color:var(--paper-dim);text-transform:uppercase}
-.cat .v{font-family:"Barlow Condensed",sans-serif;font-size:26px;color:var(--paper)}
-.cat .v em{font-style:normal;color:var(--paper-dim);font-size:16px}
-.cat.done .v{color:var(--jade)}
-.reset{background:none;border:1px solid var(--line);color:var(--paper-dim);font-size:11px;padding:6px 12px;border-radius:3px;cursor:pointer;font-family:"JetBrains Mono",monospace;letter-spacing:.1em}
-.reset:hover{border-color:var(--ica);color:#ff8b7d}
+/* ── the standing notes, lifted whole ───────────────────────────────────── */
+.notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:14px;margin-top:16px}
+.note{background:var(--panel);border:1px solid var(--line-2);border-top:3px solid var(--d);
+  padding:16px 19px;font-size:14.4px;color:var(--text)}
+.note.warn{border-top-color:var(--a)}
+.note h3{margin:0 0 9px;font-family:var(--disp);font-weight:700;font-size:16px;letter-spacing:-.01em;
+  color:var(--sand)}
+.note ul{margin:0;padding-left:19px}
+.note li{margin-bottom:7px;font-weight:300}
+.note li:last-child{margin-bottom:0}
 
-nav.tabs{display:flex;gap:2px;border-bottom:1px solid var(--line);margin:24px 0 20px;flex-wrap:wrap}
-nav.tabs>button{background:none;border:0;border-bottom:2px solid transparent;color:var(--paper-dim);
-  font-family:"Barlow Condensed",sans-serif;text-transform:uppercase;letter-spacing:.08em;font-size:17px;padding:10px 15px;cursor:pointer}
-nav.tabs>button[aria-selected=true]{color:var(--sand);border-bottom-color:var(--sand)}
-nav.tabs>button:focus-visible{outline:2px solid var(--sand);outline-offset:2px}
-.panel[hidden]{display:none}
+/* ── tabs ───────────────────────────────────────────────────────────────── */
+.tabs{display:flex;flex-wrap:wrap;gap:2px;margin:22px 0 0}
+.tab{font-family:var(--disp);font-weight:600;font-size:13.5px;letter-spacing:.06em;
+  background:var(--panel);color:var(--dim);border:1px solid var(--line-2);border-bottom:0;
+  padding:11px 18px;cursor:pointer}
+.tab[aria-selected="true"]{background:var(--panel-2);color:var(--sand);box-shadow:inset 0 3px 0 var(--gold)}
+.tab:hover{color:var(--sand)}
+.pane{background:var(--panel-2);border:1px solid var(--line-2);padding:24px}
 
-/* run navigator */
-.runnav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
-.runnav button{display:flex;flex-direction:column;gap:2px;text-align:left;min-width:150px;flex:1;
-  border:1px solid var(--line);background:var(--glass-2);color:var(--paper);border-radius:4px;padding:9px 12px;cursor:pointer}
-.runnav button:hover{border-color:var(--sand)}
-.runnav .rn{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.16em;color:var(--sand)}
-.runnav .rt{font-family:"Barlow Condensed",sans-serif;font-size:15px;text-transform:uppercase;letter-spacing:.02em;line-height:1.05}
-.runnav .rp{font-family:"JetBrains Mono",monospace;font-size:9px;color:var(--paper-dim)}
+/* ── an ascent ──────────────────────────────────────────────────────────── */
+.ascnav{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:18px}
+.ajump{display:flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--line-2);
+  color:var(--text);padding:7px 12px;cursor:pointer;font-family:var(--body);font-size:13.5px}
+.ajump b{font-family:var(--mono);font-size:10.5px;color:var(--gold)}
+.ajump .pg{font-family:var(--mono);font-size:9.5px;color:var(--faint)}
+.ajump:hover{border-color:var(--gold);color:var(--sand)}
+.ajump.full{background:rgba(217,180,106,.10);border-color:rgba(217,180,106,.45)}
 
-/* run cards */
-.run{border:1px solid var(--line);border-radius:4px;margin-bottom:20px;background:var(--glass-2);overflow:hidden;scroll-margin-top:12px}
-.run-head{width:100%;text-align:left;background:linear-gradient(90deg,rgba(201,162,39,.08),transparent);
-  border:0;border-bottom:1px solid var(--line);padding:16px 18px;cursor:pointer;color:var(--paper);display:flex;gap:14px;align-items:flex-start}
-.run.closed .run-head{border-bottom:0}
-.chev{font-family:"JetBrains Mono",monospace;color:var(--sand);font-size:15px;margin-top:2px;transition:transform .2s}
-.run.closed .chev{transform:rotate(-90deg)}
-.run-head .rnum{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--sand);letter-spacing:.2em}
-.run-head h2{font-size:25px;margin:2px 0 5px;line-height:.98}
-.run-head .goal{color:var(--paper-dim);font-size:13px;max-width:74ch;font-family:Inter,sans-serif;text-transform:none;letter-spacing:0;font-weight:400}
-.run-body[hidden]{display:none}
+article.ascent{background:var(--panel);border:1px solid var(--line-2);margin-bottom:16px;
+  scroll-margin-top:12px}
+article.ascent.full{border-color:rgba(217,180,106,.45)}
+.ahead{display:grid;grid-template-columns:84px minmax(0,1fr);gap:16px;width:100%;text-align:left;
+  background:var(--panel-2);border:0;border-bottom:1px solid var(--line-2);cursor:pointer;padding:16px 18px;
+  font-family:var(--body);color:var(--text)}
+.ahead:hover .atitle{color:var(--gold)}
+/* the ascent's number, set in the plate the way a lift bank is labelled */
+.anum{display:grid;place-content:center;min-height:70px;background:var(--night);
+  border:1px solid var(--line);color:var(--gold);text-align:center;padding:8px}
+.anum .n{display:block;font-family:var(--disp);font-weight:800;font-size:26px;line-height:1}
+.anum .k{display:block;font-family:var(--mono);font-size:8.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--faint);margin-top:3px}
+article.ascent.full .anum{border-color:rgba(217,180,106,.5)}
+.amain{min-width:0}
+.atitle{display:block;font-family:var(--disp);font-weight:700;font-size:clamp(19px,2.7vw,26px);
+  line-height:1.14;letter-spacing:-.01em;color:var(--sand)}
+.agoal{display:block;margin-top:8px;font-size:14.6px;color:var(--text);font-weight:300;max-width:82ch}
+.atally{display:block;margin-top:9px;font-family:var(--mono);font-size:10px;color:var(--faint)}
+.abody{padding:18px}
+.standing{display:grid;gap:8px;margin-bottom:16px}
+.stand{border-left:3px solid var(--m,var(--d));background:var(--panel-2);padding:10px 13px;
+  font-size:14.2px;color:var(--text)}
+.stand .m{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--m,var(--d));margin-bottom:3px}
+.stand.excl{--m:var(--t)}
+.carry{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1px;
+  background:var(--line-2);border:1px solid var(--line-2);margin-bottom:18px}
+.slot{background:var(--panel-2);padding:9px 12px;min-width:0}
+.slot .k{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--faint)}
+.slot .v{display:block;margin-top:2px;font-size:14.4px;color:var(--sand);overflow-wrap:anywhere}
+.slot .v span{display:block}
+.stage{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin:22px 0 2px;padding-bottom:6px;
+  border-bottom:1px solid var(--line-2);font-family:var(--disp);font-weight:700;font-size:15px;
+  letter-spacing:-.01em;color:var(--gold)}
+.stage:first-child{margin-top:0}
+.stage .cnt{margin-left:auto;font-family:var(--mono);font-size:9.5px;color:var(--faint);font-weight:400}
 
-.loadout{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));border-bottom:1px solid var(--line)}
-.lo{padding:11px 15px;border-right:1px solid var(--line)}
-.lo:last-child{border-right:0}
-.lo .k{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.16em;color:var(--sand);text-transform:uppercase}
-.lo .v{font-size:13px;margin-top:3px}
-.sec{padding:4px 18px 0}
-.sec>h3{font-size:14px;color:var(--sand);letter-spacing:.12em;margin:18px 0 6px;padding-bottom:6px;border-bottom:1px dashed var(--line)}
-.prereq{font-size:13px;color:var(--paper-dim);padding:6px 0 2px}
+/* ── a stop ─────────────────────────────────────────────────────────────── */
+.step{display:grid;grid-template-columns:66px minmax(0,1fr);gap:14px;align-items:start;
+  padding:14px 2px;border-bottom:1px solid var(--line-2)}
+.step:last-of-type{border-bottom:0}
+.step.done{background:rgba(217,180,106,.05)}
+/* the tick is the floor button: press the level and it lights */
+.floorbtn{position:relative;width:66px;min-height:44px;padding:6px 4px;cursor:pointer;
+  background:var(--night);border:1px solid var(--line);color:var(--dim);
+  font-family:var(--mono);font-size:10px;line-height:1.25;letter-spacing:.02em;word-break:break-word}
+.floorbtn:hover{border-color:var(--gold);color:var(--sand)}
+.step.done .floorbtn{background:var(--gold);border-color:var(--gold);color:var(--night);font-weight:500;
+  box-shadow:0 0 14px rgba(217,180,106,.35)}
+.swrap{min-width:0}
+.stitle{margin:0;font-family:var(--body);font-weight:600;font-size:17px;line-height:1.3;color:var(--sand)}
+.ssum{margin:5px 0 0;font-size:14.6px;color:var(--text);font-weight:300}
+.fields{margin-top:10px;display:grid;gap:4px}
+.frow{display:grid;grid-template-columns:74px minmax(0,1fr);gap:12px;align-items:start}
+.fk{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);
+  padding-top:4px}
+.fv{font-size:14.6px;color:var(--text);overflow-wrap:anywhere;font-weight:300}
+.warn{margin:11px 0 0;padding:9px 13px;border-left:3px solid var(--a);background:rgba(217,88,79,.09);
+  font-size:14.2px;color:var(--text);font-weight:300}
+.warn .m{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--a);margin-bottom:3px}
+.marks{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
+/* the guide's own tags, kept as it wrote them */
+.mk{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;padding:4px 9px;
+  border:1px solid var(--m,var(--line));color:var(--m,var(--dim));background:transparent}
+.mk.ok{--m:var(--c)}
+.mk.save{--m:var(--d)}
+.mk.unv{--m:var(--t)}
+.chip{font-family:var(--body);font-size:13px;line-height:1.25;cursor:pointer;padding:4px 10px;
+  border:1px solid var(--line-2);border-left:3px solid var(--m,var(--gold));background:var(--panel-2);
+  color:var(--text);text-align:left}
+.chip:hover{border-color:var(--m,var(--gold));color:var(--sand)}
+.chip[aria-checked="true"]{background:var(--m,var(--gold));border-color:transparent;color:var(--night);
+  font-weight:600}
+.chip.plain{cursor:default;border-left-color:var(--line);color:var(--faint);font-style:italic}
 
-/* steps */
-.step{display:grid;grid-template-columns:60px 24px 1fr;position:relative}
-.step .floor{font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--sand-dim);padding:13px 6px 0 0;text-align:right;letter-spacing:.05em;white-space:nowrap}
-.spine{position:relative}
-.spine::before{content:"";position:absolute;left:11px;top:0;bottom:0;width:1px;background:var(--line)}
-.spine i{position:absolute;left:6px;top:15px;width:11px;height:11px;border:1px solid var(--sand-dim);border-radius:2px;background:var(--glass-2);transform:rotate(45deg)}
-.step.done .spine i{background:var(--jade);border-color:var(--jade)}
-.step .body{padding:9px 0 13px 12px;min-width:0}
-.step-head{cursor:pointer;display:flex;gap:8px;align-items:baseline}
-.step-head .sc{font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--sand);margin-top:1px}
-.step h4{font-size:16px;letter-spacing:.01em}
-.step .sum{color:var(--paper-dim);font-size:13px;margin-top:3px}
-.step.done h4{color:var(--paper-dim);text-decoration:line-through;text-decoration-thickness:1px}
+/* ── the checklist ──────────────────────────────────────────────────────── */
+.filters{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:20px}
+.filters button{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  background:var(--panel);border:1px solid var(--line-2);color:var(--dim);padding:8px 12px;cursor:pointer}
+.filters button:hover{border-color:var(--gold);color:var(--sand)}
+.filters button[aria-pressed="true"]{background:var(--sand);border-color:var(--sand);color:var(--night)}
+.grp{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin:26px 0 4px;padding-bottom:6px;
+  border-bottom:2px solid var(--m,var(--gold));font-family:var(--disp);font-weight:700;font-size:19px;
+  letter-spacing:-.01em;color:var(--sand)}
+.grp:first-child{margin-top:0}
+.grp .n{margin-left:auto;font-family:var(--mono);font-size:9.5px;color:var(--faint);font-weight:400}
+.crow{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:14px;align-items:start;
+  padding:12px 2px;border-bottom:1px solid var(--line-2)}
+.crow:last-child{border-bottom:0}
+.crow.done{background:rgba(217,180,106,.05)}
+.tick{width:44px;height:38px;padding:0;cursor:pointer;background:var(--night);border:1px solid var(--line);
+  font-family:var(--mono);font-size:10px;color:var(--dim)}
+.tick:hover{border-color:var(--gold);color:var(--sand)}
+.crow.done .tick{background:var(--gold);border-color:var(--gold);color:var(--night);font-weight:500}
+.cnm{margin:0;font-family:var(--body);font-weight:600;font-size:16.5px;line-height:1.28;color:var(--sand)}
+.crow.done .cnm{color:var(--m,var(--gold))}
+.cds{margin:4px 0 0;font-size:14.4px;color:var(--text);font-weight:300}
+.cnote{margin:5px 0 0;font-family:var(--mono);font-size:10.5px;color:var(--faint)}
+.cmeta{display:grid;justify-items:end;gap:3px;font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--faint);text-align:right;white-space:nowrap}
+.cmeta .xp{color:var(--gold)}
+.empty{margin:18px 0;color:var(--dim)}
 
-.rowbtns{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
-.chk{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
-  border:1px solid var(--line);background:none;color:var(--paper-dim);padding:5px 10px;border-radius:3px;cursor:pointer}
-.chk:hover{border-color:var(--sand);color:var(--sand)}
-.chk[aria-pressed=true]{background:var(--jade);border-color:var(--jade);color:#04140e}
+/* ── the lifted conflict and reference panels ───────────────────────────── */
+.prose h2,.prose h3,.prose h4{font-family:var(--disp);color:var(--sand);letter-spacing:-.01em}
+.prose h2{margin:24px 0 10px;font-size:21px}
+.prose h3{margin:20px 0 8px;font-size:17px;color:var(--gold)}
+.prose h4{margin:18px 0 7px;font-size:15px}
+.prose p{margin:0 0 10px;font-size:14.6px;color:var(--text);max-width:84ch;font-weight:300}
+.prose ul,.prose ol{margin:0 0 12px;padding-left:20px}
+.prose li{margin-bottom:6px;font-size:14.4px;color:var(--text);font-weight:300}
+.prose .run{background:var(--panel);border:1px solid var(--line-2);margin-bottom:14px}
+.tablewrap{overflow-x:auto;margin:0 0 16px}
+.prose table{border-collapse:collapse;width:100%;min-width:460px;font-size:14px}
+.prose th,.prose td{text-align:left;padding:8px 12px;border-bottom:1px solid var(--line-2)}
+.prose th{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--faint);border-bottom:1px solid var(--line)}
 
-.detail{margin-top:11px;border-left:2px solid var(--sand-dim);padding-left:0;font-size:13.5px}
-.detail[hidden]{display:none}
-.frow{display:grid;grid-template-columns:82px 1fr;gap:10px;padding:5px 0 5px 12px;border-bottom:1px solid rgba(201,162,39,.08)}
-.frow:last-of-type{border-bottom:0}
-.frow .fk{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.12em;color:var(--sand);text-transform:uppercase;padding-top:2px}
-.frow.warn .fk{color:#ff8b7d}
-.frow .fv{color:#cfdadb}
-.frow.warn .fv{color:#ffcabf}
+footer{margin-top:24px;padding-top:16px;border-top:1px solid var(--line-2);color:var(--faint);
+  font-size:12.6px;line-height:1.8}
 
-.badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
-.b{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:2px;border:1px solid;white-space:nowrap}
-.b.ch{color:var(--sand);border-color:var(--sand-dim);background:rgba(201,162,39,.09)}
-.b.save{color:var(--amber);border-color:var(--amber);background:rgba(224,165,58,.12)}
-.b.unv{color:#9fb0b5;border-color:#4a5c62;background:rgba(120,140,150,.12)}
-.b.ok{color:#6fd4ab;border-color:#2f6f57;background:rgba(63,158,124,.12)}
-
-.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
-.filters button{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
-  border:1px solid var(--line);background:none;color:var(--paper-dim);padding:7px 12px;border-radius:3px;cursor:pointer}
-.filters button[aria-pressed=true]{background:var(--sand);border-color:var(--sand);color:#151006}
-.clitem{display:grid;grid-template-columns:26px 1fr;gap:12px;padding:11px 12px;border:1px solid var(--line);border-radius:3px;margin-bottom:7px;background:var(--glass-2);align-items:start}
-.clitem[hidden]{display:none}
-.clitem.done{opacity:.5}
-.clitem.done .cname{text-decoration:line-through}
-.clitem input{width:17px;height:17px;accent-color:var(--jade);margin-top:3px;cursor:pointer}
-.cname{font-family:"Barlow Condensed",sans-serif;font-size:18px}
-.ctag{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.12em;color:var(--sand);text-transform:uppercase}
-.ccond{font-size:13px;color:var(--paper-dim);margin-top:3px}
-.cmeta{font-family:"JetBrains Mono",monospace;font-size:10px;color:#6f8288;margin-top:5px}
-.cnote{font-size:12.5px;color:#ffcabf;margin-top:4px;border-left:2px solid var(--sand-dim);padding-left:8px}
-
-table.cx{width:100%;border-collapse:collapse;font-size:13px;margin-top:10px}
-table.cx th,table.cx td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
-table.cx th{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.12em;color:var(--sand);text-transform:uppercase}
-footer{border-top:1px solid var(--line);margin-top:36px;padding-top:18px;color:#6f8288;font-size:12px}
-a{color:var(--sand)}
-@media (max-width:620px){.step{grid-template-columns:0 22px 1fr}.step .floor{display:none}.lo{border-right:0;border-bottom:1px solid var(--line)}.frow{grid-template-columns:70px 1fr}}
-@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;
+  scroll-behavior:auto!important}}
+@media (max-width:980px){
+  .hallgrid{grid-template-columns:minmax(0,280px) minmax(0,1fr);gap:20px}
+  .tower{grid-column:1/-1;grid-template-columns:repeat(auto-fit,minmax(120px,1fr))}
+  .towercap{text-align:left}
+}
+@media (max-width:640px){
+  .pane{padding:15px}
+  .plate-in,.rail,.hallgrid{padding-left:16px;padding-right:16px}
+  .hallgrid{grid-template-columns:minmax(0,1fr)}
+  .ahead{grid-template-columns:64px minmax(0,1fr);gap:12px;padding:14px}
+  .abody{padding:14px}
+  .step{grid-template-columns:56px minmax(0,1fr);gap:11px}
+  .floorbtn{width:56px}
+  .frow{grid-template-columns:minmax(0,1fr);gap:1px}
+  .fk{padding-top:0}
+  .crow{grid-template-columns:38px minmax(0,1fr)}
+  .tick{width:38px}
+  .cmeta{grid-column:2;justify-items:start;text-align:left;margin-top:5px}
+}
+@media print{
+  body{background:#fff;background-image:none;color:#000;font-size:10.5pt}
+  .hall{max-width:none;padding:0}
+  .tabs,.ascnav,.skip,.floorbtn,.tick,.btn,.filters,.rail,.dial,.tower{display:none!important}
+  .pane[hidden]{display:block!important}
+  .abody{display:block!important}
+  header.plate,.pane,article.ascent,.slot,.note,.stand,.prose .run{background:#fff!important;
+    border-color:#999!important;box-shadow:none!important}
+  h1,.atitle,.cnm,.stitle,.stage,.grp,.note h3{color:#000!important}
+  .sub,.fv,.cds,.agoal,.note li,.prose li,.prose p{color:#222!important}
+  .step,article.ascent,.crow{break-inside:avoid}
+}
 </style>
+</head>
+<body>
+<div class="hall">
 
-<div class="wrap">
-<header class="hero">
-  <div class="eyebrow">HITMAN: World of Assassination — Mission 01 — Guide v3</div>
-  <h1>On Top of<br>the <span>World</span></h1>
-  <p class="sub">Burj Al-Ghazali, Dubai. Targets: Carl Ingram and Marcus Stuyvesant. Six runs covering all 58 mission challenges, now reconciled against the game's own challenge data.</p>
+<header class="plate">
+  <div class="plate-in">
+    <p class="eyebrow"><!--@eyebrow-->HITMAN: World of Assassination — Mission 01 — Guide v3<!--/@eyebrow--></p>
+    <h1><!--@h1-->On Top of<br>the <span>World</span><!--/@h1--></h1>
+    <p class="sub"><!--@sub-->Burj Al-Ghazali, Dubai. Targets: Carl Ingram and Marcus Stuyvesant. Six runs covering all 58 mission challenges, now reconciled against the game's own challenge data.<!--/@sub--></p>
+  </div>
+
+  <!-- the skip link follows the plate, which holds nothing focusable, so this
+       is still the first stop for a keyboard -->
+  <a class="skip" href="#pane-runs">Skip to the six ascents</a>
+
+  <div class="rail">
+    <a href="../index.html">&#8592; All guides</a>
+    <span>Burj Al-Ghazali, Dubai &middot; Main campaign 19</span>
+    <span>Saved in this browser only</span>
+  </div>
+
+  <div class="hallgrid">
+    <div class="dial">
+      <svg viewBox="0 0 300 156" role="img"
+           aria-labelledby="dialTitle" aria-describedby="dialDesc">
+        <title id="dialTitle">The floor indicator</title>
+        <desc id="dialDesc">A half-dial whose needle sweeps from nothing to the full challenge list as the guide is worked through.</desc>
+        <path d="M22,130 A128,128 0 0 1 278,130" fill="none" stroke="rgba(230,220,194,.13)" stroke-width="10"/>
+        <path id="arcfill" class="arcfill" d="M22,130 A128,128 0 0 1 278,130" fill="none"
+              stroke="#d9b46a" stroke-width="10" stroke-linecap="butt"
+              pathLength="100" stroke-dasharray="100" stroke-dashoffset="100"/>
+        <g stroke="rgba(230,220,194,.35)" stroke-width="2">
+          <path d="M22,130 h14 M278,130 h-14 M150,2 v14
+                   M60.5,40.5 l10,10 M239.5,40.5 l-10,10"/>
+        </g>
+        <g class="needle" id="needle" transform="rotate(-90 150 130)">
+          <path d="M150,130 L150,24" stroke="#e6dcc2" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="150" cy="130" r="9" fill="#e6dcc2"/>
+          <circle cx="150" cy="130" r="4" fill="#0a0f1e"/>
+        </g>
+      </svg>
+      <p class="count"><b id="numDone">0</b><span id="numOf">/ 0 challenges</span></p>
+    </div>
+
+    <div class="readout">
+      <span class="lbl">The hall directory</span>
+      <p class="stopline" id="stopline">0 stops pressed</p>
+      <div class="directory" id="directory"></div>
+      <button class="btn" id="reset" type="button">Send every car back down</button>
+    </div>
+
+    <div>
+      <div class="tower" id="tower"></div>
+      <p class="towercap">Levels the route names</p>
+    </div>
+  </div>
 </header>
 
+<div class="notes">
+<!--@notes-->
 <section class="note">
   <h3>Verified against the in-game challenge export you provided</h3>
   <ul>
@@ -172,40 +377,39 @@ a{color:var(--sand)}
     <li>Remaining method-level disagreements are logged in the <b>Conflicts</b> tab with both accounts.</li>
   </ul>
 </section>
+<!--/@notes-->
+</div>
 
-<section class="tracker" id="tracker">
-  <div class="tracker-top">
-    <div><div class="eyebrow">Progress</div>
-    <div class="bigcount"><span id="tDone">0</span><small> / <span id="tTotal">60</span> challenges</small></div></div>
-    <button class="reset" id="reset">Reset all</button>
-  </div>
-  <div class="bar"><i id="tBar"></i></div>
-  <div class="cats" id="cats"></div>
+<div class="tabs" role="tablist" aria-label="Guide sections">
+  <button class="tab" role="tab" id="t-runs" aria-controls="pane-runs" aria-selected="true">The six ascents</button>
+  <button class="tab" role="tab" id="t-list" aria-controls="pane-list" aria-selected="false">Every challenge</button>
+  <button class="tab" role="tab" id="t-conf" aria-controls="p-conf" aria-selected="false">Conflicts</button>
+  <button class="tab" role="tab" id="t-ref" aria-controls="p-ref" aria-selected="false">Reference</button>
+</div>
+
+<section class="pane" id="pane-runs" role="tabpanel" aria-labelledby="t-runs">
+  <nav class="ascnav" id="ascnav" aria-label="Jump to an ascent"></nav>
+  <div id="ascents"></div>
 </section>
 
-<nav class="tabs" role="tablist">
-  <button role="tab" id="tab-runs" aria-controls="p-runs" aria-selected="true">Optimized runs</button>
-  <button role="tab" id="tab-list" aria-controls="p-list" aria-selected="false">Checklist</button>
-  <button role="tab" id="tab-conf" aria-controls="p-conf" aria-selected="false">Conflicts</button>
-  <button role="tab" id="tab-ref" aria-controls="p-ref" aria-selected="false">Reference</button>
-</nav>
+<section class="pane" id="pane-list" role="tabpanel" aria-labelledby="t-list" hidden>
+  <div class="filters" id="filters"></div>
+  <div id="checklist"></div>
+</section>
 
-<div class="panel" id="p-runs" role="tabpanel" aria-labelledby="tab-runs">
-  <div class="runnav" id="runnav"></div>
-  <div id="runs"></div>
-</div>
-<div class="panel" id="p-list" role="tabpanel" aria-labelledby="tab-list" hidden>
-  <div class="filters" id="filters"></div><div id="clist"></div>
-</div>
-<div class="panel" id="p-conf" role="tabpanel" aria-labelledby="tab-conf" hidden></div>
-<div class="panel" id="p-ref" role="tabpanel" aria-labelledby="tab-ref" hidden></div>
+<!-- the two prose panels keep the ids the previous edition wrote into -->
+<section class="pane prose" id="p-conf" role="tabpanel" aria-labelledby="t-conf" hidden></section>
+<section class="pane prose" id="p-ref" role="tabpanel" aria-labelledby="t-ref" hidden></section>
 
 <footer>
-  Ground truth: the in-game challenge export supplied by the user (60 challenges, official descriptions). Method detail cross-referenced from PowerPyx, SegmentNext, Gamepressure, Neoseeker, GameActuality, GoSuNoob, Gamepur, GamesRadar, Shacknews, TheGamer, ScreenRant, GamerJournalist, Gamers Heroes, PCGamesN, Gameranx; mastery table from TheSixthAxis + Attack of the Fanboy + DBLTAP (three-way agreement); save/reload mechanic and consumable counts from Steam community threads (labelled where used). Guard names and full XP tables are not published and are not invented here.
+<!--@footer-->
+Ground truth: the in-game challenge export supplied by the user (60 challenges, official descriptions). Method detail cross-referenced from PowerPyx, SegmentNext, Gamepressure, Neoseeker, GameActuality, GoSuNoob, Gamepur, GamesRadar, Shacknews, TheGamer, ScreenRant, GamerJournalist, Gamers Heroes, PCGamesN, Gameranx; mastery table from TheSixthAxis + Attack of the Fanboy + DBLTAP (three-way agreement); save/reload mechanic and consumable counts from Steam community threads (labelled where used). Guard names and full XP tables are not published and are not invented here.
+<!--/@footer-->
 </footer>
 </div>
 
 <script>
+/*@ch*/
 /* ============ 58 CHALLENGES (official export wording) ============ */
 /* [id, name, category, official condition, xp, note] */
 const CHALLENGES = [
@@ -274,9 +478,9 @@ const CHALLENGES = [
  ["c_so","Suit Only","Classics","Assassinate the targets and complete the mission in your suit.","",""],
  ["c_all","The Classics","Classics","Complete all Classic challenges: Silent Assassin, Silent Assassin Suit Only, Sniper Assassin, Suit Only.","",""]
 ];
-const CATS=["Assassination","Discovery","Feats","Targets","Classics"];
-const nameOf=id=>(CHALLENGES.find(c=>c[0]===id)||[,"?"])[1];
+/*/@ch*/
 
+/*@conflicts*/
 /* ============ CONFLICTS ============ */
 const CONFLICTS=[
  ["Explosive golf ball — where it comes from",
@@ -295,7 +499,9 @@ const CONFLICTS=[
   "No source names individual Dubai guards; they are generic NPCs.",
   "Guards are referred to by post and clothing throughout, which is all any source supports."]
 ];
+/*/@conflicts*/
 
+/*@runs*/
 /* ============ RUNS (structured steps) ============ */
 /* step fields: floor,t,sum, where,disguise,item,npc,action,warn (any nullable), badges[] */
 const RUNS=[
@@ -672,126 +878,272 @@ const RUNS=[
  excl:"Icarus, Cashing Out and Steep Task each need the opening minutes — separate attempts. All Ingram kill methods here are mutually exclusive; reload between each."
 }
 ];
+/*/@runs*/
 
-/* ============ STATE ============ */
-let done={},stepsDone={},mem=false;
-function reportProgress(){try{const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r['m19']={done:CHALLENGES.filter(c=>done[c[0]]).length,total:CHALLENGES.length,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
-async function load(){
-  try{const a=localStorage.getItem("dubai3:ch");if(a)done=JSON.parse(a);}catch(e){}
-  try{const b=localStorage.getItem("dubai3:st");if(b)stepsDone=JSON.parse(b);}catch(e){}
+/* ---------------- STATE ----------------
+   Both keys keep their names and their shapes: "dubai3:ch" is a map of
+   challenge id to true, "dubai3:st" a map of stop key to true, and a stop key
+   is still `${runIndex}-${sectionIndex}-${stepIndex}`, so an existing card
+   survives the rebuild untouched. */
+let done={}, stepsDone={}, filter='all';
+try{const a=localStorage.getItem("dubai3:ch");if(a)done=JSON.parse(a)||{};}catch(e){}
+try{const b=localStorage.getItem("dubai3:st");if(b)stepsDone=JSON.parse(b)||{};}catch(e){}
+
+function reportProgress(){
+  try{
+    const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');
+    r['m19']={done:CHALLENGES.filter(c=>done[c[0]]).length,total:CHALLENGES.length,updated:Date.now()};
+    localStorage.setItem('hitman-progress-registry',JSON.stringify(r));
+  }catch(e){}
 }
-async function save(){try{
-  localStorage.setItem("dubai3:ch",JSON.stringify(done));
-  localStorage.setItem("dubai3:st",JSON.stringify(stepsDone));
-}catch(e){}reportProgress();}
-function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;")}
-
-function renderTracker(){
-  const total=CHALLENGES.length,n=CHALLENGES.filter(c=>done[c[0]]).length;
-  tDone.textContent=n;tTotal.textContent=total;tBar.style.width=(n/total*100)+"%";
-  cats.innerHTML=CATS.map(cat=>{
-    const all=CHALLENGES.filter(c=>c[2]===cat),d=all.filter(c=>done[c[0]]).length;
-    return `<div class="cat${d===all.length?" done":""}"><div class="n">${cat}</div><div class="v">${d}<em> / ${all.length}</em></div></div>`;
-  }).join("");
-}
-
-const FIELD_ORDER=[["where","Where"],["disguise","Disguise"],["item","Item"],["npc","NPC"],["action","Action"],["warn","Warning"]];
-function renderRuns(){
-  runnav.innerHTML=RUNS.map((r,i)=>`<button data-run="${i}"><span class="rn">RUN ${String(i+1).padStart(2,"0")}</span><span class="rt">${esc(r.title.split(" \u2014 ")[0])}</span><span class="rp">${r.pops.length} challenges</span></button>`).join("");
-  runs.innerHTML=RUNS.map((r,ri)=>{
-    const items=r.loadout.items.map((it,i)=>`<div class="lo"><div class="k">Slot ${i+1}</div><div class="v">${esc(it)}</div></div>`).join("");
-    const secs=r.sections.map((sec,si)=>`<div class="sec"><h3>${esc(sec.name)}</h3>${sec.steps.map((st,i)=>{
-      const key=`${ri}-${si}-${i}`,isDone=!!stepsDone[key];
-      const rows=FIELD_ORDER.filter(([k])=>st[k]).map(([k,label])=>
-        `<div class="frow${k==="warn"?" warn":""}"><div class="fk">${label}</div><div class="fv">${esc(st[k])}</div></div>`).join("");
-      const bd=(st.badges||[]).map(b=>`<span class="b ${b.c}">${esc(b.x)}</span>`).join("");
-      return `<div class="step${isDone?" done":""}" data-key="${key}">
-        <div class="floor">${esc(st.floor)}</div><div class="spine"><i></i></div>
-        <div class="body">
-          <div class="step-head"><span class="sc">▸</span><div><h4>${esc(st.t)}</h4><div class="sum">${esc(st.sum)}</div></div></div>
-          ${bd?`<div class="badges">${bd}</div>`:""}
-          <div class="detail" hidden>${rows}</div>
-          <div class="rowbtns"><button class="chk" aria-pressed="${isDone}">${isDone?"Done":"Mark done"}</button></div>
-        </div></div>`;
-    }).join("")}</div>`).join("");
-    return `<article class="run${ri>0?" closed":""}" id="run-${ri}">
-      <button class="run-head" aria-expanded="${ri===0}"><span class="chev">▾</span>
-        <span><span class="rnum">RUN ${String(ri+1).padStart(2,"0")}</span>
-        <h2>${esc(r.title)}</h2><span class="goal">${esc(r.goal)}</span></span></button>
-      <div class="run-body"${ri>0?" hidden":""}>
-        <div class="loadout"><div class="lo"><div class="k">Starting location</div><div class="v">${esc(r.loadout.start)}</div></div>
-        <div class="lo"><div class="k">Suit</div><div class="v">${esc(r.loadout.suit)}</div></div>${items}</div>
-        <div class="sec"><h3>Before you start</h3><div class="prereq">${esc(r.prereq)}</div></div>
-        ${secs}
-        <div class="sec" style="padding-bottom:16px"><h3>Exclusivity</h3><div class="prereq">${esc(r.excl)}</div>
-        <div class="badges" style="margin-top:8px">${r.pops.map(id=>`<span class="b ch">${esc(nameOf(id))}</span>`).join("")}</div></div>
-      </div></article>`;
-  }).join("");
-
-  // run collapse
-  document.querySelectorAll(".run-head").forEach(h=>h.onclick=()=>{
-    const run=h.closest(".run"),body=run.querySelector(".run-body"),open=run.classList.contains("closed");
-    run.classList.toggle("closed",!open);
-    body.hidden=!open;
-    h.setAttribute("aria-expanded",String(open));
-  });
-  // step collapse
-  document.querySelectorAll(".step-head").forEach(h=>h.onclick=()=>{
-    const d=h.closest(".body").querySelector(".detail"),sc=h.querySelector(".sc");
-    d.hidden=!d.hidden; sc.textContent=d.hidden?"▸":"▾";
-  });
-  // step done
-  document.querySelectorAll(".chk").forEach(b=>b.onclick=async e=>{
-    e.stopPropagation();
-    const step=b.closest(".step"),k=step.dataset.key;
-    stepsDone[k]=!stepsDone[k];
-    step.classList.toggle("done",stepsDone[k]);
-    b.setAttribute("aria-pressed",String(!!stepsDone[k]));
-    b.textContent=stepsDone[k]?"Done":"Mark done";
-    await save();
-  });
-  // nav
-  runnav.querySelectorAll("button").forEach(b=>b.onclick=()=>{
-    const i=+b.dataset.run,run=document.getElementById("run-"+i);
-    if(run.classList.contains("closed"))run.querySelector(".run-head").click();
-    run.scrollIntoView({behavior:"smooth",block:"start"});
-  });
+function sv(){
+  try{
+    localStorage.setItem("dubai3:ch",JSON.stringify(done));
+    localStorage.setItem("dubai3:st",JSON.stringify(stepsDone));
+  }catch(e){}
+  reportProgress();
 }
 
-let filter="All";
+const $=s=>document.getElementById(s);
+const esc=s=>String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
+/* CHALLENGES rows are [id, name, category, objective, xp, note] */
+const ID=0,NAME=1,CAT=2,OBJ=3,XP=4,NOTE=5;
+const CATS=['Assassination','Discovery','Feats','Targets','Classics'];
+const CATVAR={Assassination:'var(--a)',Discovery:'var(--d)',Feats:'var(--f)',
+  Targets:'var(--t)',Classics:'var(--c)'};
+const byCat=k=>CHALLENGES.filter(c=>c[CAT]===k);
+const catDone=k=>byCat(k).filter(c=>done[c[ID]]).length;
+const cleared=()=>CHALLENGES.filter(c=>done[c[ID]]).length;
+
+/* ---------------- STOPS AND WHAT THEY PRESS ----------------
+   A step's badges carry the guide's own tag classes: 'ch' names a challenge,
+   'save' is a save marker, 'ok' a corroboration mark and 'unv' an unverified
+   flag. A 'ch' badge that carries a running counter — "Easy Breezy 1/6" —
+   only completes its challenge once the counter has run out, so the bare name
+   is matched first and the stripped name only when the two numbers agree. */
+const flat=s=>String(s).toLowerCase().replace(/[^a-z0-9]/g,'');
+const NAME2ID={};
+CHALLENGES.forEach(c=>{NAME2ID[flat(c[NAME])]=c[ID]});
+function badgeId(x){
+  const direct=NAME2ID[flat(x)];
+  if(direct)return direct;
+  const m=String(x).match(/^(.*?)[\s(]*(\d+)\s*\/\s*(\d+)\)?$/);
+  if(m&&m[2]===m[3]){const id=NAME2ID[flat(m[1])];if(id)return id;}
+  return null;
+}
+
+const STOP_CH={}, ALL_STOPS=[], ASCENT_OF={};
+RUNS.forEach((r,ri)=>r.sections.forEach((sec,si)=>sec.steps.forEach((st,i)=>{
+  const key=ri+'-'+si+'-'+i;
+  st._key=key;
+  ALL_STOPS.push(key);
+  STOP_CH[key]=(st.badges||[]).filter(b=>b.c==='ch').map(b=>badgeId(b.x)).filter(Boolean);
+})));
+/* which ascent claims a challenge — the run's own pops list says so */
+RUNS.forEach((r,ri)=>(r.pops||[]).forEach(id=>{if(ASCENT_OF[id]===undefined)ASCENT_OF[id]=ri;}));
+const runStops=r=>{const o=[];r.sections.forEach(s=>s.steps.forEach(t=>o.push(t._key)));return o;};
+const runDone=r=>runStops(r).filter(k=>stepsDone[k]).length;
+const runFull=r=>{const s=runStops(r);return s.length>0&&s.every(k=>stepsDone[k]);};
+const ascentLabel=i=>'Ascent '+String(i+1).padStart(2,'0');
+
+/* ---------------- THE TOWER ----------------
+   Every step names the floor it happens on, so the levels are read off the
+   route rather than typed out: a step that spans floors ("L1 → L3") is filed
+   under the one it starts on. */
+function levelOf(floor){
+  const first=String(floor||'').split(/→|–|—|\/|&/)[0].trim();
+  return first||'—';
+}
+function levelRank(l){
+  const m=l.match(/^L(-?\d+)/i);
+  if(m)return Number(m[1]);
+  if(/^roof/i.test(l))return 99;
+  return -99;
+}
+const LEVELS=(()=>{
+  const map=new Map();
+  RUNS.forEach(r=>r.sections.forEach(sec=>sec.steps.forEach(st=>{
+    const l=levelOf(st.floor);
+    if(!map.has(l))map.set(l,[]);
+    map.get(l).push(st._key);
+  })));
+  return [...map.entries()].sort((a,b)=>levelRank(b[0])-levelRank(a[0]));
+})();
+
+/* ---------------- THE INDICATOR ---------------- */
+function renderDial(){
+  const n=cleared(), frac=CHALLENGES.length?n/CHALLENGES.length:0;
+  const needle=$('needle');
+  if(needle)needle.setAttribute('transform','rotate('+(-90+180*frac).toFixed(2)+' 150 130)');
+  const arc=$('arcfill');
+  if(arc)arc.setAttribute('stroke-dashoffset',(100-100*frac).toFixed(2));
+  $('numDone').textContent=n;
+  $('numOf').textContent='/ '+CHALLENGES.length+' challenges';
+  $('stopline').textContent=ALL_STOPS.filter(k=>stepsDone[k]).length+' of '+ALL_STOPS.length+
+    ' stops pressed across '+RUNS.length+' ascents';
+  $('directory').innerHTML=CATS.map(k=>{
+    const t=byCat(k).length, d=catDone(k);
+    return `<div class="dirrow${t&&d===t?' full':''}" style="--m:${CATVAR[k]}">
+      <span class="pip"></span><span class="k">${k}</span><span class="v">${d} / ${t}</span></div>`;
+  }).join('');
+  $('tower').innerHTML=LEVELS.map(([l,keys])=>{
+    const d=keys.filter(k=>stepsDone[k]).length;
+    const cls=d===keys.length?'full':d?'some':'';
+    return `<div class="lvl ${cls}"><span class="n">${esc(l)}</span>
+      <span class="c">${d}/${keys.length}</span></div>`;
+  }).join('');
+}
+
+/* ---------------- THE ASCENTS ---------------- */
+function badgeHTML(b){
+  if(b.c!=='ch')return `<span class="mk ${esc(b.c)}">${esc(b.x)}</span>`;
+  const id=badgeId(b.x);
+  if(!id)return `<span class="chip plain">${esc(b.x)}</span>`;
+  const c=CHALLENGES.find(x=>x[ID]===id), on=!!done[id];
+  return `<button type="button" class="chip" role="switch" aria-checked="${on}"
+    data-ch="${esc(id)}" style="--m:${CATVAR[c[CAT]]}">${esc(b.x)}</button>`;
+}
+
+function fieldHTML(k,v){
+  return v&&v!=='—'?`<div class="frow"><div class="fk">${k}</div><div class="fv">${esc(v)}</div></div>`:'';
+}
+
+function stopHTML(st){
+  const on=!!stepsDone[st._key];
+  return `<div class="step${on?' done':''}" id="stop-${st._key}">
+    <button type="button" class="floorbtn" data-step="${st._key}" aria-pressed="${on}"
+      aria-label="${esc('Press '+(st.floor||'this stop')+': '+st.t)}">${esc(st.floor||'—')}</button>
+    <div class="swrap">
+      <p class="stitle">${esc(st.t)}</p>
+      ${st.sum?`<p class="ssum">${esc(st.sum)}</p>`:''}
+      <div class="fields">
+        ${fieldHTML('Where',st.where)}
+        ${fieldHTML('Disguise',st.disguise)}
+        ${fieldHTML('Item',st.item)}
+        ${fieldHTML('NPC',st.npc)}
+        ${fieldHTML('Action',st.action)}
+      </div>
+      ${st.warn?`<p class="warn"><span class="m">Watch this</span>${esc(st.warn)}</p>`:''}
+      ${(st.badges||[]).length?`<div class="marks">${st.badges.map(badgeHTML).join('')}</div>`:''}
+    </div>
+  </div>`;
+}
+
+function renderAscents(){
+  $('ascnav').innerHTML=RUNS.map((r,i)=>{
+    const s=runStops(r), d=runDone(r);
+    return `<button type="button" class="ajump${runFull(r)?' full':''}" data-jump="${i}">
+      <b>${String(i+1).padStart(2,'0')}</b><span class="pg">${d}/${s.length}</span></button>`;
+  }).join('')+
+  `<button type="button" class="ajump" data-toggleall="1">Open / close every ascent</button>`;
+
+  $('ascents').innerHTML=RUNS.map((r,i)=>{
+    const stops=runStops(r), d=runDone(r), open=!!openRun[i];
+    const body=r.sections.map(sec=>{
+      const keys=sec.steps.map(s=>s._key), sn=keys.filter(k=>stepsDone[k]).length;
+      return `<h3 class="stage">${esc(sec.name)}<span class="cnt">${sn} / ${keys.length} stops</span></h3>`+
+        sec.steps.map(stopHTML).join('');
+    }).join('');
+    const lo=r.loadout||{};
+    const pops=(r.pops||[]).length;
+    return `<article class="ascent${runFull(r)?' full':''}" id="ascent-${i}">
+      <button type="button" class="ahead" data-run="${i}" aria-expanded="${open}"
+        aria-controls="abody-${i}">
+        <span class="anum"><span class="n">${String(i+1).padStart(2,'0')}</span>
+          <span class="k">Ascent</span></span>
+        <span class="amain">
+          <span class="atitle">${esc(r.title)}</span>
+          <span class="agoal">${esc(r.goal)}</span>
+          <span class="atally">${d} of ${stops.length} stops pressed &middot; ${pops} challenges routed here${
+            open?'':' &middot; open the ascent to work through it'}</span>
+        </span>
+      </button>
+      <div class="abody" id="abody-${i}"${open?'':' hidden'}>
+        <div class="standing">
+          ${r.prereq?`<p class="stand"><span class="m">Before you start</span>${esc(r.prereq)}</p>`:''}
+          ${r.excl?`<p class="stand excl"><span class="m">Exclusions</span>${esc(r.excl)}</p>`:''}
+        </div>
+        <div class="carry">
+          ${lo.start?`<div class="slot"><span class="k">Start</span><span class="v">${esc(lo.start)}</span></div>`:''}
+          ${lo.suit?`<div class="slot"><span class="k">Suit</span><span class="v">${esc(lo.suit)}</span></div>`:''}
+          ${lo.items&&lo.items.length?`<div class="slot"><span class="k">Carried</span><span class="v">${
+            lo.items.map(x=>`<span>${esc(x)}</span>`).join('')}</span></div>`:''}
+        </div>
+        ${body}
+      </div>
+    </article>`;
+  }).join('');
+}
+
+/* ---------------- EVERY CHALLENGE ---------------- */
 function renderList(){
-  const fs=["All","Assassination","Discovery","Feats","Targets","Classics","Incomplete","Has note"];
-  filters.innerHTML=fs.map(f=>`<button data-f="${f}" aria-pressed="${f===filter}">${f}</button>`).join("");
-  filters.querySelectorAll("button").forEach(b=>b.onclick=()=>{filter=b.dataset.f;renderList();});
-  clist.innerHTML=CHALLENGES.map(([id,name,cat,cond,xp,note])=>{
-    const show=filter==="All"||filter===cat||(filter==="Incomplete"&&!done[id])||(filter==="Has note"&&note);
-    const xpTxt=xp?`XP: ${xp} (source-confirmed)`:"XP: not published";
-    return `<label class="clitem${done[id]?" done":""}"${show?"":" hidden"}>
-      <input type="checkbox" data-id="${id}"${done[id]?" checked":""}>
-      <span><span class="ctag">${esc(cat)}</span><div class="cname">${esc(name)}</div>
-      <div class="ccond">${esc(cond)}</div>
-      <div class="cmeta">Official game data · ${esc(xpTxt)}</div>
-      ${note?`<div class="cnote">${esc(note)}</div>`:""}</span></label>`;
-  }).join("");
-  clist.querySelectorAll("input").forEach(i=>i.onchange=async()=>{
-    done[i.dataset.id]=i.checked;
-    i.closest(".clitem").classList.toggle("done",i.checked);
-    renderTracker();await save();
-    if(filter==="Incomplete")renderList();
+  const F=[['all','All '+CHALLENGES.length]]
+    .concat(CATS.map(k=>[k,k+' '+byCat(k).length]))
+    .concat([['todo','Outstanding '+(CHALLENGES.length-cleared())]]);
+  $('filters').innerHTML=F.map(([k,l])=>
+    `<button type="button" data-f="${esc(k)}" aria-pressed="${filter===k}">${esc(l)}</button>`).join('');
+
+  let out='';
+  CATS.forEach(cat=>{
+    if(filter!=='all'&&filter!=='todo'&&filter!==cat)return;
+    let rows=byCat(cat);
+    if(filter==='todo')rows=rows.filter(c=>!done[c[ID]]);
+    if(!rows.length)return;
+    out+=`<h3 class="grp" style="--m:${CATVAR[cat]}">${cat}
+      <span class="n">${catDone(cat)} of ${byCat(cat).length} cleared</span></h3>`;
+    out+=rows.map(c=>{
+      const on=!!done[c[ID]], asc=ASCENT_OF[c[ID]];
+      return `<div class="crow${on?' done':''}" style="--m:${CATVAR[cat]}">
+        <button type="button" class="tick" data-ch="${esc(c[ID])}" aria-pressed="${on}"
+          aria-label="${esc('Clear '+c[NAME])}">${on?'ON':'—'}</button>
+        <div>
+          <p class="cnm">${esc(c[NAME])}</p>
+          <p class="cds">${esc(c[OBJ])}</p>
+          ${c[NOTE]?`<p class="cnote">${esc(c[NOTE])}</p>`:''}
+        </div>
+        <span class="cmeta">
+          <span>${asc===undefined?'Across ascents':esc(ascentLabel(asc))}</span>
+          ${c[XP]?`<span class="xp">${esc(c[XP])} XP</span>`:''}
+        </span>
+      </div>`;
+    }).join('');
+  });
+  $('checklist').innerHTML=out||'<p class="empty">Nothing outstanding under this heading.</p>';
+}
+
+/* Wide tables in the lifted panels scroll inside their own box. */
+function wrapTables(){
+  ['p-conf','p-ref'].forEach(id=>{
+    const box=$(id);
+    if(!box)return;
+    box.querySelectorAll('table').forEach(t=>{
+      if(t.parentElement&&t.parentElement.classList.contains('tablewrap'))return;
+      const w=document.createElement('div');
+      w.className='tablewrap';
+      t.parentNode.insertBefore(w,t);
+      w.appendChild(t);
+    });
   });
 }
 
-function renderConf(){
-  document.getElementById("p-conf").innerHTML=`<div class="run"><div style="padding:16px 18px">
+const openRun={};
+function render(){renderAscents();renderList();renderDial();}
+
+/* The conflicts and reference sheets, lifted whole as the statements that
+   write them — never retyped, and fenced with HTML comments so the
+   assembler finds them again on the next run. */
+<!--@conf-->
+document.getElementById("p-conf").innerHTML=`<div class="run"><div style="padding:16px 18px">
     <h2 style="font-size:24px">Source conflicts</h2>
     <p class="goal" style="color:var(--paper-dim);font-size:13px;margin-top:4px">Every remaining place two sources disagree. The challenge names and conditions themselves are no longer in doubt — those come from your in-game export. These are method-level disagreements only.</p>
     <table class="cx"><tr><th>Subject</th><th>The disagreement</th><th>How this guide handles it</th></tr>
     ${CONFLICTS.map(c=>`<tr><td><b style="color:#fff">${esc(c[0])}</b></td><td>${esc(c[1])}</td><td>${esc(c[2])}</td></tr>`).join("")}
     </table></div></div>`;
-}
+<!--/@conf-->
 
-function renderRef(){
-  document.getElementById("p-ref").innerHTML=`<div class="run"><div style="padding:16px 18px">
+<!--@ref-->
+document.getElementById("p-ref").innerHTML=`<div class="run"><div style="padding:16px 18px">
   <h2 style="font-size:24px">Reference</h2>
   <div class="sec" style="padding:12px 0 0"><h3>Escalations (not part of the 58)</h3>
   <div class="prereq">The Phoenix Ascension, The Asmodeus Waltz (1) and The Asmodeus Waltz (2) are separate Dubai escalation contracts. They are not in the mission challenge export and are excluded from the tracker. Start the escalation to get Waltz (2); complete all its levels for Waltz (1) and Phoenix Ascension.</div></div>
@@ -804,18 +1156,87 @@ function renderRef(){
   <div class="sec" style="padding-bottom:16px"><h3>Chameleon — the 11 disguises</h3>
   <div class="prereq">Event Security, Event Staff, Kitchen Staff (L0) · Assassin/Kazem (L1 Garden) · Maintenance, Art Crew, Pilot (L3) · Penthouse Guard, Penthouse Staff, Famous Chef, Ingram's Bodyguard (L3\u2013L5).</div></div>
   </div></div>`;
-}
+<!--/@ref-->
 
-document.querySelectorAll('nav.tabs>[role=tab]').forEach(t=>t.onclick=()=>{
-  document.querySelectorAll('nav.tabs>[role=tab]').forEach(x=>{
-    const on=x===t;x.setAttribute("aria-selected",String(on));
-    document.getElementById(x.getAttribute("aria-controls")).hidden=!on;
+/* ---------------- EVENTS ---------------- */
+const tabs=[...document.querySelectorAll('.tab')];
+function selectTab(tb){
+  tabs.forEach(x=>{
+    const on=x===tb;
+    x.setAttribute('aria-selected',String(on));
+    x.tabIndex=on?0:-1;
+    $(x.getAttribute('aria-controls')).hidden=!on;
+  });
+}
+tabs.forEach((tb,i)=>{
+  tb.tabIndex=tb.getAttribute('aria-selected')==='true'?0:-1;
+  tb.addEventListener('keydown',e=>{
+    const d=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;
+    if(!d)return;
+    e.preventDefault();
+    const next=tabs[(i+d+tabs.length)%tabs.length];
+    selectTab(next);next.focus();
   });
 });
-document.getElementById("reset").onclick=async()=>{done={};stepsDone={};await save();renderTracker();renderList();renderRuns();};
-(async function(){await load();renderTracker();renderRuns();renderList();renderConf();renderRef();reportProgress();})();
-</script>
 
+document.addEventListener('click',e=>{
+  const t=e.target;
+
+  /* a challenge is a control wherever it is named — on its row, or on the stop
+     that presses it */
+  const cb=t.closest('[data-ch]');
+  if(cb){
+    const id=cb.dataset.ch;
+    done[id]?delete done[id]:done[id]=true;
+    sv();render();return;
+  }
+
+  const sb=t.closest('[data-step]');
+  if(sb){
+    const k=sb.dataset.step, now=!stepsDone[k];
+    now?stepsDone[k]=true:delete stepsDone[k];
+    /* pressing a stop clears the challenges it completes; letting it back up
+       leaves them cleared, because another stop may cover the same one */
+    if(now)(STOP_CH[k]||[]).forEach(id=>{done[id]=true});
+    sv();render();return;
+  }
+
+  const rh=t.closest('[data-run]');
+  if(rh){const i=+rh.dataset.run;openRun[i]=!openRun[i];renderAscents();return;}
+
+  const jp=t.closest('[data-jump]');
+  if(jp){
+    const i=+jp.dataset.jump;
+    selectTab($('t-runs'));
+    openRun[i]=true;renderAscents();
+    $('ascent-'+i).scrollIntoView({behavior:'smooth',block:'start'});return;
+  }
+
+  const ta=t.closest('[data-toggleall]');
+  if(ta){
+    const anyClosed=RUNS.some((r,i)=>!openRun[i]);
+    RUNS.forEach((r,i)=>{openRun[i]=anyClosed});
+    renderAscents();return;
+  }
+
+  const fb=t.closest('[data-f]');
+  if(fb){filter=fb.dataset.f;renderList();return;}
+
+  const tb=t.closest('.tab');
+  if(tb){selectTab(tb);return;}
+});
+
+$('reset').addEventListener('click',()=>{
+  if(!confirm('Send every car back down? All '+CHALLENGES.length+' challenges and every stop on this guide are cleared. Other guides are not affected.'))return;
+  done={};stepsDone={};
+  sv();render();
+});
+
+openRun[0]=true;
+render();
+wrapTables();
+reportProgress();
+</script>
 <!-- step-progress-bridge -->
 <script>
 /* Reports route-step ticks into 'hitman-progress-registry' so the index can
@@ -864,3 +1285,5 @@ document.getElementById("reset").onclick=async()=>{done={};stepsDone={};await sa
 })();
 </script>
 <!-- /step-progress-bridge -->
+</body>
+</html>

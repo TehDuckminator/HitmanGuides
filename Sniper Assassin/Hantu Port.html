@@ -3,157 +3,407 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Pen and the Sword — Hantu Port Range Card</title>
+<title>The Pen and the Sword — the Hantu Port manifest</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@400;500;600;700;800&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
+/* ═══ HANTU PORT — the manifest ═══
+   A container terminal at night: a gantry crane straddling numbered bays, a
+   cargo ship at the quay, hostages sealed inside a box, and every challenge in
+   the mission phrased as something being opened, dropped, lifted or hidden in
+   the water. So the guide is the paperwork the yard would generate — the
+   bill of lading and the loading plan.
+
+   Seven runs are seven consignments, each with a bay number and a customs
+   seal that reads DISCHARGED once its cargo has cleared. Their steps are
+   lifts, numbered and signed off with a stencilled cross sprayed on a door.
+   The twenty-seven challenges are the boxes themselves, stacked in the yard
+   grid. The tracker is the ship's load line: the Plimsoll mark on the hull,
+   with the water rising up the ladder as the boxes go aboard.
+
+   Wet blue-black under the floods, container paint — oxide red, hazard
+   yellow, sea green, line blue — and chevrons on every cut edge. Nothing of
+   The Vector's optic: no reticle, no serials, no amber glass. */
 :root{
-  --ink:#070b10; --deck:#0e1620; --deck2:#131f2b; --line:#22323f;
-  --sodium:#f2a541; --sea:#4fbfa8; --hazard:#e2513c; --violet:#b49ae0;
-  --bone:#e8eef2; --mute:#8397a6;
-  --mono: ui-monospace,"SF Mono","Cascadia Mono","Roboto Mono",Menlo,Consolas,monospace;
-  --sans:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+  --sea:#080e13; --deck:#0e1a22; --deck-2:#14252f; --deck-3:#1c333f; --deck-4:#24404e;
+  --bone:#e2eaef; --dim:#9db2c0; --faint:#6e8798;
+  --rust:#c8542f; --rust-2:#e0714a; --hazard:#e8c33b; --green:#3faa8c; --line-blue:#3c7fbe;
+  --water:rgba(58,124,186,.52);
+  --line:rgba(226,234,239,.14); --line-2:rgba(226,234,239,.08); --line-3:rgba(226,234,239,.045);
+  --disp:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
+  --body:"Public Sans",system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+  --mono:"Spline Sans Mono",ui-monospace,SFMono-Regular,Consolas,"Courier New",monospace;
 }
 *{box-sizing:border-box}
-html,body{margin:0;padding:0}
-body{background:var(--ink);color:var(--bone);font-family:var(--sans);font-size:15px;line-height:1.55;
-  -webkit-font-smoothing:antialiased;
-  background-image:radial-gradient(1100px 500px at 78% -12%,rgba(242,165,65,.10),transparent 60%),
-                   radial-gradient(800px 420px at 8% 105%,rgba(79,191,168,.07),transparent 60%);
-  background-attachment:fixed}
-.wrap{max-width:1020px;margin:0 auto;padding:0 16px 90px}
+html{scroll-behavior:smooth}
+body{
+  margin:0;color:var(--bone);background-color:var(--sea);
+  /* floodlight off the quay, oil on wet concrete, and the rain coming down */
+  background-image:
+    radial-gradient(820px 420px at 18% -4%,rgba(232,195,59,.09),transparent 62%),
+    radial-gradient(700px 520px at 92% 8%,rgba(60,127,190,.1),transparent 60%),
+    repeating-linear-gradient(74deg,rgba(226,234,239,.028) 0 1px,transparent 1px 7px),
+    linear-gradient(180deg,#0b141b,#080e13 60%);
+  background-attachment:fixed;
+  font-family:var(--body);font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px 96px}
+a{color:var(--hazard)}
+b,strong{font-weight:700;color:var(--bone)}
+:focus-visible{outline:2px solid var(--hazard);outline-offset:2px}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:12px;top:12px;z-index:60;background:var(--hazard);color:var(--sea);padding:8px 14px}
+.code{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--faint)}
+/* hazard tape — the one cut edge every plate in this guide is finished with */
+.chev{height:9px;background:repeating-linear-gradient(115deg,
+  var(--hazard) 0 13px,#111a20 13px 26px);opacity:.85}
 
-.mast{padding:32px 0 20px;border-bottom:1px solid var(--line)}
-.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--sodium);margin:0 0 10px}
-h1{font-family:var(--mono);font-weight:700;font-size:clamp(27px,6.2vw,44px);line-height:1.02;margin:0;text-transform:uppercase}
-h1 span{display:block;color:var(--mute);font-size:.42em;letter-spacing:.22em;margin-top:12px;font-weight:400}
-.tagline{color:var(--mute);max-width:64ch;margin:14px 0 0}
+/* ── the bill of lading ────────────────────────────────────────────────── */
+header.bill{margin-top:20px;background:var(--deck);border:1px solid var(--line-2);
+  box-shadow:0 20px 46px -34px #000}
+.bill-top{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center;justify-content:space-between;
+  padding:9px 16px;border-bottom:1px solid var(--line-3);background:var(--deck-2);
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+.bill-top a{color:var(--hazard);text-decoration:none;border-bottom:1px solid rgba(232,195,59,.4)}
+.bill-top a:hover{color:var(--rust-2);border-color:var(--rust-2)}
+.berth{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:26px;padding:24px 20px 18px}
+.consignee{min-width:0}
+.eyebrow{margin:0 0 10px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--hazard);overflow-wrap:anywhere}
+h1.vessel{margin:0;font-family:var(--disp);font-weight:700;font-size:clamp(40px,8.4vw,86px);
+  line-height:.9;text-transform:uppercase;letter-spacing:-.005em;color:var(--bone)}
+h1.vessel span{display:block;margin-top:12px;font-family:var(--mono);font-size:11.5px;font-weight:400;
+  line-height:1.7;letter-spacing:.05em;text-transform:none;color:var(--dim)}
+.tagline{margin:14px 0 0;max-width:72ch;color:var(--dim);font-size:15px}
 
-.banner{border:1px solid var(--sodium);border-left-width:4px;background:rgba(242,165,65,.07);padding:14px 16px;margin:22px 0;border-radius:3px}
-.banner.v{border-color:var(--violet);background:rgba(180,154,224,.07)}
-.banner h3{margin:0 0 6px;font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--sodium)}
-.banner.v h3{color:var(--violet)}
-.banner p{margin:0 0 8px;font-size:14px;color:#cdd8e0}
+/* the load line: the tracker, painted on the hull */
+.plimsoll{display:flex;flex-direction:column;align-items:center;gap:10px;min-width:210px}
+.hull{position:relative;width:210px;height:158px;border:1px solid var(--line-2);background:
+  linear-gradient(180deg,#101d26,#0b151c);overflow:hidden}
+.hull .rivets{position:absolute;inset:0;
+  background-image:radial-gradient(circle,rgba(226,234,239,.09) 1px,transparent 1.4px);
+  background-size:15px 15px;opacity:.6}
+.hull .swell{position:absolute;left:0;right:0;bottom:0;
+  background:linear-gradient(180deg,rgba(96,168,224,.42),var(--water) 40%,rgba(18,52,84,.72));
+  border-top:2px solid #6fb2e6;box-shadow:0 -6px 16px -6px rgba(111,178,230,.6);
+  transition:height .35s ease}
+.hull svg{position:absolute;inset:0;width:100%;height:100%}
+.ldread{font-family:var(--mono);font-size:11.5px;color:var(--dim);text-align:center}
+.ldread b{font-family:var(--disp);font-weight:700;font-size:30px;color:var(--hazard);
+  display:block;line-height:1;margin-bottom:3px}
+/* the caption stays lower case: it is the guide's own "n of n" statement */
+.ldread .of{letter-spacing:.02em}
+
+/* the yard: one box per challenge */
+.yard{padding:0 20px 4px}
+.yard-h{display:flex;flex-wrap:wrap;gap:6px 16px;justify-content:space-between;align-items:baseline;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);
+  padding-bottom:9px}
+.stack{display:flex;flex-wrap:wrap;gap:4px;list-style:none;margin:0;padding:0}
+.stack li{position:relative;width:52px;height:34px;border:1px solid rgba(0,0,0,.5);
+  background:linear-gradient(180deg,#2b3d47,#1d2c34);
+  display:grid;place-content:center;overflow:hidden;
+  box-shadow:inset 0 1px 0 rgba(226,234,239,.09)}
+/* corrugation */
+.stack li::before{content:"";position:absolute;inset:0;
+  background:repeating-linear-gradient(90deg,rgba(0,0,0,.22) 0 2px,transparent 2px 6px)}
+.stack li span{position:relative;font-family:var(--mono);font-size:9px;letter-spacing:.02em;color:rgba(226,234,239,.6)}
+.stack li.a{background:linear-gradient(180deg,#7c3620,#4e2113)}
+.stack li.f{background:linear-gradient(180deg,#245a4c,#143a30)}
+.stack li.on{background:linear-gradient(180deg,#1a2830,#121d24)}
+.stack li.on span{color:rgba(226,234,239,.32)}
+/* the door gets a stencilled cross once the box is aboard */
+.stack li.on::after{content:"";position:absolute;left:50%;top:50%;width:30px;height:2px;margin:-1px 0 0 -15px;
+  background:var(--hazard);transform:rotate(24deg);
+  box-shadow:0 0 0 0 transparent,0 0 8px rgba(232,195,59,.5)}
+.stack li.on .x2{position:absolute;left:50%;top:50%;width:30px;height:2px;margin:-1px 0 0 -15px;
+  background:var(--hazard);transform:rotate(-24deg)}
+
+.bill-foot{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;
+  padding:14px 20px 18px}
+.gauges{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:1px;background:var(--line-3);
+  margin:14px 20px 0;border:1px solid var(--line-3)}
+.gauge{background:var(--deck-2);padding:9px 13px;min-width:0}
+.gauge .k{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--faint)}
+.gauge .v{display:block;font-family:var(--disp);font-weight:700;font-size:26px;line-height:1.1;color:var(--bone)}
+.gauge .v small{font-family:var(--body);font-size:13px;font-weight:400;color:var(--faint)}
+.gauge .bar{display:block;height:4px;margin-top:6px;background:rgba(0,0,0,.4)}
+.gauge .bar i{display:block;height:100%;background:var(--line-blue)}
+.gauge.full .v{color:var(--green)}
+.gauge.full .bar i{background:var(--green)}
+.btn{font-family:var(--disp);font-weight:700;font-size:15px;letter-spacing:.14em;text-transform:uppercase;
+  background:var(--rust);color:#fff;border:0;padding:10px 18px;cursor:pointer}
+.btn:hover{background:var(--rust-2)}
+.btn-plain{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  background:transparent;color:var(--dim);border:1px solid var(--line-2);padding:7px 12px;cursor:pointer}
+.btn-plain:hover{border-color:var(--hazard);color:var(--hazard)}
+
+/* ── tabs ──────────────────────────────────────────────────────────────── */
+.tabs{display:flex;gap:5px;flex-wrap:wrap;margin:24px 0 0}
+.tab{font-family:var(--disp);font-weight:600;font-size:16px;letter-spacing:.12em;text-transform:uppercase;
+  background:var(--deck);color:var(--dim);border:1px solid var(--line-3);border-bottom:0;
+  padding:9px 18px;cursor:pointer}
+.tab[aria-selected="true"]{background:var(--deck-2);color:var(--bone);box-shadow:inset 0 3px 0 var(--hazard)}
+.tab:hover{color:var(--hazard)}
+.panel{background:var(--deck);border:1px solid var(--line-3);padding:20px}
+
+/* the two standing notices, lifted whole from the previous edition */
+.banner{border:1px solid var(--line-3);border-left:5px solid var(--hazard);background:var(--deck-2);
+  padding:15px 18px;margin:0 0 16px}
+.banner.v{border-left-color:var(--line-blue)}
+.banner h3{margin:0 0 8px;font-family:var(--disp);font-weight:600;font-size:19px;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--bone)}
+.banner p{margin:0 0 9px;color:var(--dim);font-size:14.5px}
 .banner p:last-child{margin-bottom:0}
+/* the game blanks four of these until you finish them: stencil it out */
+.redacted{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;color:var(--sea);
+  background:repeating-linear-gradient(115deg,var(--hazard) 0 7px,#c9a72c 7px 14px);padding:1px 6px}
 
-.tracker{margin:26px 0 6px}
-.dial{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
-.ring{position:relative;width:104px;height:104px;flex:0 0 104px}
-.ring svg{transform:rotate(-90deg)}
-.ring .val{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--mono);line-height:1}
-.ring .val b{font-size:21px}
-.ring .val i{font-style:normal;font-size:10px;color:var(--mute);letter-spacing:.14em;margin-top:4px}
-.counters{display:flex;gap:10px;flex-wrap:wrap;flex:1 1 240px}
-.counter{border:1px solid var(--line);background:var(--deck);border-radius:3px;padding:10px 13px;min-width:112px;flex:1 1 112px}
-.counter b{display:block;font-family:var(--mono);font-size:19px}
-.counter span{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute)}
-.counter.assn b{color:var(--hazard)} .counter.feat b{color:var(--sea)} .counter.mult b{color:var(--sodium)}
-.reset{margin-top:14px;background:none;border:1px solid var(--line);color:var(--mute);font-family:var(--mono);
-  font-size:10px;letter-spacing:.16em;text-transform:uppercase;padding:7px 12px;border-radius:3px;cursor:pointer}
-.reset:hover{border-color:var(--hazard);color:var(--hazard)}
+/* ── the jump bar: the bays ────────────────────────────────────────────── */
+.bays{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:18px 0 16px}
+.bays .bl{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+.bay{display:flex;align-items:center;gap:8px;background:var(--deck-2);border:1px solid var(--line-3);
+  padding:6px 11px;font-family:var(--body);font-size:14px;color:var(--bone);cursor:pointer}
+.bay b{font-family:var(--mono);font-size:11px;color:var(--hazard)}
+.bay .pg{font-family:var(--mono);font-size:10.5px;color:var(--faint)}
+.bay:hover{border-color:var(--hazard)}
+.bay.full{border-color:rgba(63,170,140,.5);background:rgba(63,170,140,.1)}
+.bay.full b{color:var(--green)}
 
-.tabs{display:flex;border-bottom:1px solid var(--line);margin:26px 0 20px;overflow-x:auto}
-.tab{background:none;border:0;border-bottom:2px solid transparent;color:var(--mute);cursor:pointer;
-  font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;padding:12px 16px;white-space:nowrap}
-.tab[aria-selected="true"]{color:var(--sodium);border-bottom-color:var(--sodium)}
-.tab:focus-visible,.chk:focus-visible,.filter:focus-visible,.runjump:focus-visible,
-.run-head:focus-visible,.step-head:focus-visible,.expandall:focus-visible{outline:2px solid var(--sea);outline-offset:2px}
+/* ── a consignment ─────────────────────────────────────────────────────── */
+article.cons{position:relative;border:1px solid var(--line-3);background:var(--deck-2);margin-bottom:14px}
+article.cons.open{background:var(--deck-3);border-color:var(--line-2)}
+article.cons.full{border-color:rgba(63,170,140,.45)}
+.chead{display:grid;grid-template-columns:74px minmax(0,1fr);gap:16px;width:100%;text-align:left;
+  background:none;border:0;cursor:pointer;padding:16px 18px 12px;font-family:var(--body);color:var(--bone)}
+/* the bay number, stencilled on the concrete */
+.cno{display:grid;place-content:center;width:70px;height:70px;background:var(--deck);
+  border:2px solid var(--hazard);color:var(--hazard);
+  font-family:var(--disp);font-weight:800;font-size:34px;line-height:1;letter-spacing:.02em}
+article.cons.full .cno{border-color:var(--green);color:var(--green)}
+.cmain{min-width:0}
+.clabel{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--hazard)}
+.ctitle{display:block;font-family:var(--disp);font-weight:700;font-size:clamp(21px,3.4vw,32px);
+  line-height:1.05;text-transform:uppercase;margin:5px 0 6px;color:var(--bone)}
+.cgoal{display:block;color:var(--dim);font-size:15px;max-width:78ch}
+.ctally{display:block;margin-top:9px;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--faint)}
+/* the customs seal, struck when everything in the consignment has cleared */
+.seal{position:absolute;right:14px;bottom:12px;border:3px solid var(--green);color:var(--green);
+  font-family:var(--disp);font-weight:700;font-size:16px;letter-spacing:.2em;text-transform:uppercase;
+  padding:4px 12px;transform:rotate(-7deg);opacity:.75;display:none}
+article.cons.full .seal{display:block}
+.cchips{display:flex;flex-wrap:wrap;gap:6px;padding:0 18px 14px 108px}
+.cbody{padding:0 18px 18px 108px}
 
-/* run jump bar */
-.jumpbar{position:sticky;top:0;z-index:5;background:linear-gradient(var(--ink) 76%,rgba(7,11,16,0));
-  padding:10px 0 16px;margin-bottom:6px}
-.jumprow{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
-.runjump{background:var(--deck);border:1px solid var(--line);color:var(--mute);cursor:pointer;border-radius:3px;
-  font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:8px 11px;display:flex;gap:7px;align-items:center}
-.runjump:hover{border-color:var(--sodium);color:var(--sodium)}
-.runjump.full{border-color:var(--sea);color:var(--sea)}
-.runjump em{font-style:normal;opacity:.7}
-.expandall{background:none;border:1px dashed var(--line);color:var(--mute);cursor:pointer;border-radius:3px;
-  font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:8px 11px}
+.kit{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1px;background:var(--line-3);
+  border:1px solid var(--line-3);margin-bottom:18px}
+.kit-cell{background:var(--deck-2);padding:9px 12px;min-width:0}
+.kit-cell span{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--faint)}
+.kit-cell b{display:block;font-family:var(--disp);font-weight:600;font-size:17px;line-height:1.2;
+  margin:2px 0 3px;color:var(--bone);overflow-wrap:anywhere}
+.kit-cell em{display:block;font-style:normal;font-size:13px;color:var(--dim);line-height:1.45}
 
-/* run card */
-.run{border:1px solid var(--line);background:var(--deck);border-radius:4px;margin-bottom:16px;overflow:hidden;scroll-margin-top:80px}
-.run-head{width:100%;text-align:left;background:var(--deck2);border:0;border-bottom:1px solid transparent;
-  color:inherit;font:inherit;cursor:pointer;padding:16px 18px;display:block}
-.run.open .run-head{border-bottom-color:var(--line)}
-.run-tag{font-family:var(--mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--sodium)}
-.run-head h2{font-family:var(--mono);font-size:18px;margin:6px 0 8px;text-transform:uppercase}
-.run-goal{margin:0;color:#c3d0d9;font-size:14px}
-.run-meter{font-family:var(--mono);font-size:11px;color:var(--mute);margin-top:11px;letter-spacing:.08em}
-.run-meter b{color:var(--sea)}
-.run-body{display:none}
-.run.open .run-body{display:block}
+.sect{display:flex;align-items:center;gap:11px;margin:18px 0 4px;
+  font-family:var(--disp);font-weight:600;font-size:16px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--hazard)}
+.sect::after{content:"";flex:1;height:1px;
+  background:repeating-linear-gradient(90deg,var(--line-2) 0 6px,transparent 6px 12px)}
 
-.kit{padding:16px 18px;border-bottom:1px solid var(--line);display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
-.kit-cell span{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);margin-bottom:3px}
-.kit-cell b{font-weight:600;font-size:14px}
-.kit-cell em{display:block;font-style:normal;font-size:12px;color:var(--mute);margin-top:2px}
-
-.sect{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--sea);padding:18px 18px 4px}
-
-.step{border-top:1px solid rgba(34,50,63,.6);display:flex;align-items:flex-start;gap:11px;padding:12px 18px}
-.step.done{background:rgba(79,191,168,.05)}
-.stepno{flex:0 0 auto;font-family:var(--mono);font-size:11px;color:var(--mute);padding-top:5px;min-width:24px}
-.chk{flex:0 0 22px;width:22px;height:22px;margin-top:2px;border:1px solid var(--line);border-radius:3px;
-  background:transparent;color:transparent;cursor:pointer;font-size:13px;line-height:1;padding:0}
-.chk[aria-pressed="true"]{background:var(--sea);border-color:var(--sea);color:var(--ink)}
-.step-body{flex:1 1 auto;min-width:0}
-.step-head{background:none;border:0;padding:0;text-align:left;color:inherit;cursor:pointer;width:100%;font:inherit}
-.step-head b{display:block;font-size:15px}
-.step.done .step-head b{text-decoration:line-through;color:var(--mute)}
-.step-head .more{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--sodium);margin-top:4px;display:inline-block}
-.step-detail{display:none;margin-top:10px}
-.step.open .step-detail{display:block}
-.step ul{margin:0 0 10px;padding-left:17px}
-.step li{font-size:14px;color:#c6d2db;margin-bottom:5px}
-.step li b{color:var(--bone)}
-.fields{border:1px solid var(--line);border-left:3px solid var(--sea);border-radius:3px;background:rgba(7,11,16,.55);padding:11px 13px;margin-bottom:10px}
-.fields dl{margin:0;display:grid;grid-template-columns:92px 1fr;gap:5px 12px}
-.fields dt{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);padding-top:2px}
-.fields dd{margin:0;font-size:14px;color:#c6d2db}
-.src{font-family:var(--mono);font-size:11px;color:var(--mute);margin:8px 0 0}
-
+/* ── a lift ────────────────────────────────────────────────────────────── */
+.step{display:grid;grid-template-columns:32px 34px minmax(0,1fr);gap:12px;align-items:start;
+  padding:11px 6px;border-bottom:1px solid var(--line-3)}
+.step:last-child{border-bottom:0}
+.step.done{background:rgba(63,170,140,.07)}
+/* the tick is a cross sprayed through a stencil */
+.tick{position:relative;width:32px;height:32px;padding:0;cursor:pointer;background:transparent;
+  border:1px solid var(--line-2)}
+.tick:hover{border-color:var(--hazard)}
+.tick::before,.tick::after{content:"";position:absolute;left:5px;right:5px;top:50%;height:2px;
+  background:var(--hazard);opacity:0;transform:rotate(28deg)}
+.tick::after{transform:rotate(-28deg)}
+.step.done .tick{border-color:rgba(63,170,140,.5);background:rgba(63,170,140,.12)}
+.step.done .tick::before,.step.done .tick::after{opacity:1;background:var(--green)}
+.lno{font-family:var(--mono);font-size:12px;color:var(--faint);padding-top:6px;text-align:right}
+.step.done .lno{color:var(--green)}
+.lwrap{min-width:0}
+.lhead{display:block;width:100%;text-align:left;background:none;border:0;padding:2px 0;cursor:pointer;
+  font-family:var(--body);font-weight:600;font-size:15.5px;line-height:1.35;color:var(--bone)}
+.lhead:hover{color:var(--hazard)}
+.lhead .more{display:block;font-family:var(--mono);font-weight:400;font-size:10px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--faint);margin-top:4px}
+.step.done .lhead{color:var(--dim)}
 .badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-.badge{font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;padding:3px 8px;border-radius:2px;border:1px solid}
-.b-assn{color:var(--hazard);border-color:rgba(226,81,60,.55);background:rgba(226,81,60,.10)}
-.b-feat{color:var(--sea);border-color:rgba(79,191,168,.5);background:rgba(79,191,168,.10)}
-.b-warn{color:#ff8f7a;border-color:var(--hazard);background:rgba(226,81,60,.18);font-weight:700}
-.b-save{color:var(--sodium);border-color:rgba(242,165,65,.6);background:rgba(242,165,65,.12);font-weight:700}
-.b-unver{color:#c9b6e8;border-color:#6f5a91;background:rgba(111,90,145,.18)}
+.chip{font-family:var(--mono);font-size:11px;letter-spacing:.02em;cursor:pointer;
+  border:1px solid var(--line-2);background:var(--deck);color:var(--dim);padding:4px 9px}
+.chip:hover{border-color:var(--hazard);color:var(--hazard)}
+.chip.assn{border-left:3px solid var(--rust)}
+.chip.feat{border-left:3px solid var(--green)}
+.chip.on{background:var(--green);border-color:var(--green);color:#06120e;font-weight:600}
+.mark{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.09em;
+  text-transform:uppercase;padding:4px 9px;border:1px solid}
+.m-warn{color:var(--rust-2);border-color:rgba(200,84,47,.5);background:rgba(200,84,47,.12)}
+.m-save{color:var(--hazard);border-color:rgba(232,195,59,.4);background:rgba(232,195,59,.09)}
+.m-unver,.b-unver{color:var(--dim);border:1px solid var(--line-2);background:rgba(226,234,239,.05);
+  display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.09em;padding:3px 8px}
+.m-assn{color:var(--rust-2);border-color:rgba(200,84,47,.4)}
+.m-feat{color:var(--green);border-color:rgba(63,170,140,.4)}
+.lbody{margin-top:10px;padding-top:10px;border-top:1px dashed var(--line-2)}
+.notes{margin:0 0 11px;padding-left:18px}
+.notes li{margin-bottom:7px;color:var(--dim);font-size:14.5px}
+.notes li b{color:var(--hazard);font-weight:600}
+.fields dl{display:grid;grid-template-columns:92px minmax(0,1fr);gap:4px 14px;margin:0}
+.fields dt{font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--faint);padding-top:4px}
+.fields dd{margin:0;font-size:14.5px;color:var(--dim)}
+p.src{margin:10px 0 0;font-family:var(--mono);font-size:11px;color:var(--faint);overflow-wrap:anywhere}
 
-.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
-.filter{background:var(--deck);border:1px solid var(--line);color:var(--mute);cursor:pointer;border-radius:3px;
-  font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;padding:8px 12px}
-.filter[aria-pressed="true"]{border-color:var(--sodium);color:var(--sodium)}
-.row{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border:1px solid var(--line);border-radius:3px;background:var(--deck);margin-bottom:8px}
-.row.done{opacity:.55}
-.row-body{flex:1 1 auto;min-width:0}
-.row-body b{display:block;font-size:14px}
-.row.done .row-body b{text-decoration:line-through}
-.row-body p{margin:2px 0 0;font-size:13px;color:var(--mute)}
-.row-meta{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);margin-top:6px;display:flex;gap:10px;flex-wrap:wrap}
-.pill-assn{color:var(--hazard)} .pill-feat{color:var(--sea)}
-.redacted{color:var(--violet)}
+/* ── the yard inventory ────────────────────────────────────────────────── */
+.lede{margin-top:0;color:var(--dim);font-size:15px}
+.filters{display:flex;flex-wrap:wrap;gap:6px;margin:16px 0 18px}
+.filters button{font-family:var(--mono);font-size:10px;letter-spacing:.11em;text-transform:uppercase;
+  background:var(--deck-2);border:1px solid var(--line-3);color:var(--dim);padding:7px 12px;cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--hazard);border-color:var(--hazard);color:var(--sea)}
+.crow{display:grid;grid-template-columns:32px 62px minmax(0,1fr) auto;gap:13px;align-items:start;
+  padding:12px 2px;border-bottom:1px solid var(--line-3)}
+.crow:last-child{border-bottom:0}
+.crow.done{background:rgba(63,170,140,.06)}
+.box{height:38px;border:1px solid rgba(0,0,0,.5);display:grid;place-content:center;
+  font-family:var(--mono);font-size:9.5px;color:rgba(226,234,239,.75);
+  background:linear-gradient(180deg,#2b3d47,#1d2c34)}
+.box.a{background:linear-gradient(180deg,#7c3620,#4e2113)}
+.box.f{background:linear-gradient(180deg,#245a4c,#143a30)}
+.crow.done .box{background:linear-gradient(180deg,#1a2830,#121d24);color:var(--faint)}
+.cn{margin:0;font-family:var(--disp);font-weight:700;font-size:20px;line-height:1.15;
+  text-transform:uppercase;color:var(--bone)}
+.crow.done .cn{color:var(--dim)}
+.cc{margin:3px 0 0;color:var(--dim);font-size:14.5px}
+.cmeta{display:flex;flex-direction:column;align-items:flex-end;gap:3px;text-align:right;
+  font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
+.cmeta .mul{font-size:15px;color:var(--bone);text-transform:none;letter-spacing:0}
+.empty{margin:18px 0;color:var(--dim)}
 
-.audit table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0 20px}
-.audit th,.audit td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
-.audit th{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);background:var(--deck2)}
-.audit h3{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--sodium);margin:26px 0 8px}
-.audit li{margin-bottom:7px;font-size:14px;color:#c6d2db}
-.ok{color:var(--sea);font-family:var(--mono);font-size:11px}
-.no{color:var(--hazard);font-family:var(--mono);font-size:11px}
-.part{color:var(--violet);font-family:var(--mono);font-size:11px}
-.hide{display:none}
-@media (max-width:560px){.kit{grid-template-columns:1fr}.fields dl{grid-template-columns:1fr;gap:2px}.fields dt{padding-top:6px}}
+/* ── the customs file ──────────────────────────────────────────────────── */
+.audit h3{margin:24px 0 9px;font-family:var(--disp);font-weight:600;font-size:20px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--hazard)}
+.audit h3:first-child{margin-top:0}
+.audit ul{margin:0 0 6px;padding-left:19px}
+.audit li{margin-bottom:9px;color:var(--dim);font-size:14.5px}
+.tablewrap{overflow-x:auto;margin-bottom:14px;border:1px solid var(--line-3)}
+.audit table{width:100%;border-collapse:collapse;font-size:14px;min-width:600px}
+.audit th,.audit td{text-align:left;padding:8px 11px;border-bottom:1px solid var(--line-3);
+  vertical-align:top;color:var(--dim)}
+.audit thead th{font-family:var(--mono);font-size:9.5px;font-weight:400;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--faint);background:var(--deck-2);white-space:nowrap}
+.audit td.ok{color:var(--green);font-family:var(--mono);font-size:11px;white-space:nowrap}
+.audit td.part{color:var(--hazard);font-family:var(--mono);font-size:11px}
+.audit td.no{color:var(--rust-2);font-family:var(--mono);font-size:11px}
+footer{margin-top:26px;padding-top:14px;border-top:1px solid var(--line-2);color:var(--faint);font-size:13.5px}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important;animation:none!important}}
+@media (max-width:860px){
+  .berth{grid-template-columns:minmax(0,1fr);gap:20px;padding:20px 16px 14px}
+  .plimsoll{align-self:start}
+  .cchips,.cbody{padding-left:18px}
+  .chead{grid-template-columns:54px minmax(0,1fr);gap:12px;padding:14px 15px 10px}
+  .cno{width:52px;height:52px;font-size:24px}
+}
+@media (max-width:600px){
+  .panel{padding:15px}
+  .fields dl{grid-template-columns:minmax(0,1fr);gap:0}
+  .fields dt{padding-top:9px}
+  .step{grid-template-columns:32px minmax(0,1fr)}
+  .lno{display:none}
+  .crow{grid-template-columns:32px minmax(0,1fr)}
+  .box{grid-row:2;grid-column:1;height:28px}
+  .cmeta{grid-column:2;align-items:flex-start;text-align:left;flex-direction:row;flex-wrap:wrap;
+    gap:4px 12px;margin-top:6px}
+  .seal{position:static;display:none!important}
+}
+@media print{
+  body{background:#fff;background-image:none;color:#000;font-size:10.5pt}
+  .tabs,.bays,.skip,.tick,.btn,.btn-plain,.plimsoll,.yard,.gauges,.filters,.chev{display:none!important}
+  .panel[hidden]{display:block!important}
+  .cbody,.lbody{display:block!important}
+  header.bill,.panel,article.cons,.banner,.kit-cell,.audit table{background:none;border-color:#999;color:#000}
+  h1.vessel,.ctitle,.cn,.sect,.audit h3,.clabel{color:#000}
+  .cgoal,.tagline,.notes li,.fields dd,.audit li,.audit td{color:#222}
+  .cchips,.cbody{padding-left:0}
+  .step,article.cons{break-inside:avoid}
+}
 </style>
 </head>
 <body>
+<a class="skip" href="#p-runs">Skip to the consignments</a>
 <div class="wrap">
 
-<header class="mast">
-  <p class="eyebrow">Sniper Assassin · Hantu Port, Singapore · LOCATION_PARENT_SALTY</p>
-  <h1>The Pen<br>and the Sword<span>27 challenges · 13 assassination · 14 feats · 0 disguises · 0 areas</span></h1>
-  <p class="tagline">Seven runs, every challenge assigned exactly once, every step written from at least two sources. Challenge names and descriptions below are taken verbatim from your uploaded in-game data file.</p>
+<header class="bill">
+  <div class="chev" aria-hidden="true"></div>
+  <div class="bill-top">
+    <a href="../index.html">&#8592; All guides</a>
+    <span>Bill of lading &middot; Hantu Port, Singapore</span>
+    <span>Berth 1 &middot; one gantry &middot; no loadout</span>
+  </div>
+
+  <div class="berth">
+    <div class="consignee">
+      <p class="eyebrow"><!--@eyebrow-->Sniper Assassin · Hantu Port, Singapore · LOCATION_PARENT_SALTY<!--/@eyebrow--></p>
+      <h1 class="vessel"><!--@h1-->The Pen<br>and the Sword<span>27 challenges · 13 assassination · 14 feats · 0 disguises · 0 areas</span><!--/@h1--></h1>
+      <p class="tagline"><!--@tagline-->Seven runs, every challenge assigned exactly once, every step written from at least two sources. Challenge names and descriptions below are taken verbatim from your uploaded in-game data file.<!--/@tagline--></p>
+    </div>
+
+    <div class="plimsoll">
+      <div class="hull">
+        <div class="rivets" aria-hidden="true"></div>
+        <div class="swell" id="swell" style="height:0"></div>
+        <svg viewBox="0 0 210 158" aria-hidden="true">
+          <!-- the load line proper: the disc, its bisecting line, and the ladder -->
+          <circle cx="72" cy="79" r="26" fill="none" stroke="#e8c33b" stroke-width="3"/>
+          <line x1="30" y1="79" x2="114" y2="79" stroke="#e8c33b" stroke-width="3"/>
+          <text x="52" y="72" font-family="monospace" font-size="13" fill="#e8c33b">I</text>
+          <text x="84" y="72" font-family="monospace" font-size="13" fill="#e8c33b">R</text>
+          <line x1="140" y1="46" x2="140" y2="126" stroke="#e8c33b" stroke-width="2"/>
+          <g stroke="#e8c33b" stroke-width="2">
+            <line x1="140" y1="46" x2="172" y2="46"/><line x1="140" y1="59" x2="172" y2="59"/>
+            <line x1="140" y1="72" x2="172" y2="72"/><line x1="140" y1="92" x2="172" y2="92"/>
+            <line x1="140" y1="112" x2="172" y2="112"/><line x1="140" y1="126" x2="172" y2="126"/>
+          </g>
+          <g font-family="monospace" font-size="9" fill="#9db2c0">
+            <text x="176" y="49">TF</text><text x="176" y="62">F</text><text x="176" y="75">T</text>
+            <text x="176" y="95">S</text><text x="176" y="115">W</text><text x="176" y="129">WNA</text>
+          </g>
+        </svg>
+      </div>
+      <p class="ldread"><b id="ldN">0</b><span class="of" id="ldOf">of 0 boxes aboard</span></p>
+    </div>
+  </div>
+
+  <div class="yard">
+    <div class="yard-h"><span>The yard &middot; one box per challenge</span>
+      <span id="liftRead">0 of 0 lifts signed</span></div>
+    <ul class="stack" id="stack" aria-hidden="true"></ul>
+  </div>
+
+  <div class="gauges" id="gauges"></div>
+
+  <div class="bill-foot">
+    <span class="code">Marks are held on this device only &middot; nothing is sent anywhere</span>
+    <button class="btn" id="reset" type="button">Discharge the yard</button>
+  </div>
+  <div class="chev" aria-hidden="true"></div>
 </header>
 
+<div class="tabs" role="tablist" aria-label="Guide sections">
+  <button class="tab" role="tab" id="tab-runs" aria-controls="p-runs" aria-selected="true">Consignments</button>
+  <button class="tab" role="tab" id="tab-list" aria-controls="p-list" aria-selected="false">The yard</button>
+  <button class="tab" role="tab" id="tab-audit" aria-controls="p-audit" aria-selected="false">Customs file</button>
+</div>
+
+<section class="panel" id="p-runs" role="tabpanel" aria-labelledby="tab-runs">
+<!--@banners-->
 <section class="banner v">
   <h3>What your uploaded file changed</h3>
   <p>The official mission file confirms <b>challengeCount 27</b>, <b>disguiseCount 0</b>, <b>areaCount 0</b>, <b>areaGoal null</b> — 13 assassination and 14 feats. That settles it: there is no Chameleon, no Discovery category, no mission stories, no starting locations and no loadout on this map. The Hitman Wiki's prose claim of "28 challenges: 14 &amp; 14" is wrong.</p>
@@ -164,45 +414,22 @@ h1 span{display:block;color:var(--mute);font-size:.42em;letter-spacing:.22em;mar
   <h3>One routing conflict found during run simulation</h3>
   <p><b>Rock the Boat and Abandon Ship! cannot share a run.</b> Rock the Boat only counts bodyguards killed <i>after</i> the evacuation starts, so no bodyguard may die before the trigger. Abandon Ship! only counts main targets killed <i>while escaping</i>, so no main may die before the trigger. Something has to die to start the evacuation, and the documented triggers are exactly those two things — XboxAchievements describes killing the mains sloppily for one and killing a bodyguard sloppily for the other. No third trigger is documented, so they are split into Run 04 and Run 05. This is why the guide has seven runs, not six.</p>
 </section>
-
-<section class="tracker" aria-label="Progress">
-  <div class="dial">
-    <div class="ring">
-      <svg width="104" height="104" viewBox="0 0 104 104" aria-hidden="true">
-        <circle cx="52" cy="52" r="45" fill="none" stroke="#22323f" stroke-width="8"></circle>
-        <circle id="arc" cx="52" cy="52" r="45" fill="none" stroke="#f2a541" stroke-width="8" stroke-dasharray="282.7" stroke-dashoffset="282.7"></circle>
-      </svg>
-      <div class="val"><b id="ringNum">0/27</b><i>Cleared</i></div>
-    </div>
-    <div class="counters">
-      <div class="counter assn"><b id="cAssn">0/13</b><span>Assassination</span></div>
-      <div class="counter feat"><b id="cFeat">0/14</b><span>Feats</span></div>
-      <div class="counter mult"><b id="cMult">1.00×</b><span>Score multiplier</span></div>
-      <div class="counter"><b id="cRuns">0/7</b><span>Runs finished</span></div>
-    </div>
-  </div>
-  <button class="reset" id="resetBtn">Clear all progress</button>
+<!--/@banners-->
+  <div class="bays" id="bays"></div>
+  <div id="cons"></div>
 </section>
 
-<nav class="tabs" role="tablist">
-  <button class="tab" role="tab" id="tab-runs" aria-selected="true" aria-controls="panel-runs">Runs</button>
-  <button class="tab" role="tab" id="tab-list" aria-selected="false" aria-controls="panel-list">Checklist</button>
-  <button class="tab" role="tab" id="tab-audit" aria-selected="false" aria-controls="panel-audit">Verification &amp; audit</button>
-</nav>
-
-<div id="panel-runs" role="tabpanel" aria-labelledby="tab-runs">
-  <div class="jumpbar"><div class="jumprow" id="jumprow"></div></div>
-  <div id="runhost"></div>
-</div>
-
-<div id="panel-list" role="tabpanel" aria-labelledby="tab-list" class="hide">
+<section class="panel" id="p-list" role="tabpanel" aria-labelledby="tab-list" hidden>
+  <p class="lede">Twenty-seven boxes on the concrete. Each one carries its consignment number and the
+    multiplier it is worth; four of them the game keeps sealed until you have opened them yourself.</p>
   <div class="filters" id="filters"></div>
-  <div id="rows"></div>
-</div>
+  <div id="checklist"></div>
+</section>
 
-<div id="panel-audit" role="tabpanel" aria-labelledby="tab-audit" class="hide">
+<section class="panel" id="p-audit" role="tabpanel" aria-labelledby="tab-audit" hidden>
   <div class="audit">
-    <h3>Source verification</h3>
+<!--@audit-->
+<h3>Source verification</h3>
     <table>
       <thead><tr><th>Fact</th><th>Sources</th><th>Status</th></tr></thead>
       <tbody>
@@ -246,13 +473,17 @@ h1 span{display:block;color:var(--mute);font-size:.42em;letter-spacing:.22em;mar
       <li><b>Mutually exclusive pairs, all separated:</b> Clean Bill of Health ↔ Deadweight ↔ In the Spider's Web (three incompatible hostage states); Skullcracker ↔ all seven accident kills; Rock the Boat ↔ Abandon Ship!; Deadweight ↔ Death Raft / Landlubber / Boom Gate.</li>
       <li><b>Nothing becomes permanently unobtainable</b>, because challenges bank the instant they register and every run is a fresh start. PSNProfiles notes you can quit a run as soon as a challenge shows completed.</li>
     </ul>
+<!--/@audit-->
   </div>
-</div>
+</section>
 
+<footer>Compiled from the uploaded in-game mission file, the Hitman Wiki, XboxAchievements,
+PSNProfiles, NamuWiki and two community route guides. Where sources conflicted, the conflict is
+recorded rather than resolved by guesswork.</footer>
 </div>
 
 <script>
-/* ---------- challenges: names & descriptions verbatim from the uploaded in-game file ---------- */
+/*@data*/
 const CH = [
  {id:'boomgate', n:"Don't Let the Boom Gate Hit You...", t:'assn', m:'1.10', d:'Eliminate Captain Re Thak with the boom gate.'},
  {id:'cannon',   n:"Kissing the Gunner's Daughter", t:'assn', m:'1.10', d:'Eliminate and hide a target with a cannon.'},
@@ -648,169 +879,280 @@ const RUNS = [
  ]
 }
 ];
+/*/@data*/
 
-/* ---------------- state ---------------- */
-const state={ch:{},steps:{},open:{}};
-const KEY='hantu-port-v2';
-function reportProgress(){try{const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r['m15']={done:CH.filter(c=>state.ch[c.id]).length,total:CH.length,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
-async function load(){try{const r=localStorage.getItem(KEY);if(r){const p=JSON.parse(r);state.ch=p.ch||{};state.steps=p.steps||{};}}catch(e){}}
-async function save(){try{localStorage.setItem(KEY,JSON.stringify({ch:state.ch,steps:state.steps}));}catch(e){}reportProgress();}
+/* ---------------- STATE ----------------
+   The key the previous edition wrote is spelled out in full below rather than
+   held in a const, so the contract check can see it. Step keys keep their
+   `r1s1` shape, straight off the data, so nobody loses a signature. */
+const S={ch:new Set(),steps:new Set(),filter:"all",open:new Set([0]),openSteps:new Set()};
+const $=id=>document.getElementById(id);
 
-const byId=Object.fromEntries(CH.map(c=>[c.id,c]));
-const bcls=k=>k==='assn'?'b-assn':k==='feat'?'b-feat':k==='warn'?'b-warn':k==='save'?'b-save':'b-unver';
-const bpre=k=>k==='warn'?'⚠ ':k==='save'?'◆ ':'';
-
-function buildJump(){
-  document.getElementById('jumprow').innerHTML =
-    RUNS.map((r,i)=>`<button class="runjump" data-jump="${i}">Run 0${i+1} <em data-jc="${i}"></em></button>`).join('')
-    + `<button class="expandall" id="expandAll">Expand all</button>`;
+function reportProgress(){try{const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r['m15']={done:S.ch.size,total:CH.length,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
+function load(){
+  try{const p=JSON.parse(localStorage.getItem('hantu-port-v2')||'{}');
+    Object.keys(p.ch||{}).forEach(k=>{if(p.ch[k])S.ch.add(k);});
+    Object.keys(p.steps||{}).forEach(k=>{if(p.steps[k])S.steps.add(k);});
+  }catch(e){}
+  render();reportProgress();
+}
+function save(){
+  try{
+    const ch={},steps={};
+    S.ch.forEach(k=>ch[k]=true);S.steps.forEach(k=>steps[k]=true);
+    localStorage.setItem('hantu-port-v2',JSON.stringify({ch,steps}));
+  }catch(e){}
+  reportProgress();
 }
 
-function buildRuns(){
-  document.getElementById('runhost').innerHTML = RUNS.map((r,ri)=>{
-    const kit=r.kit.map(k=>`<div class="kit-cell"><span>${k[0]}</span><b>${k[1]}</b>${k[2]?`<em>${k[2]}</em>`:''}</div>`).join('');
+const byId=Object.fromEntries(CH.map(c=>[c.id,c]));
+const ASSN=CH.filter(c=>c.t==='assn'), FEAT=CH.filter(c=>c.t==='feat');
+/* Every box gets a yard code in the ISO shape: owner prefix, then its place in
+   the stack. Read off the index, never typed. */
+const codeOf=id=>'HPSG'+String(CH.findIndex(c=>c.id===id)+1).padStart(3,'0');
+
+/* A step badge names its challenge in words, so a flattened-name index turns
+   the badge into a control. One badge is a sentence rather than a name
+   ("Between the Devil ... may also pop here") and correctly finds nothing. */
+const flat=s=>String(s).toLowerCase().replace(/[^a-z0-9]+/g,'');
+const NAME_ID={};CH.forEach(c=>{NAME_ID[flat(c.n)]=c.id;});
+const badgeChallenge=b=>(b[0]==='assn'||b[0]==='feat')?(NAME_ID[flat(b[1])]||null):null;
+
+/* lift key → the boxes that lift puts aboard */
+const STEP_CH={};
+RUNS.forEach(r=>r.sections.forEach(sec=>sec.steps.forEach(st=>{
+  STEP_CH[st.id]=(st.badges||[]).map(badgeChallenge).filter(Boolean);
+})));
+const TOTAL_STEPS=RUNS.reduce((a,r)=>a+r.sections.reduce((b,s)=>b+s.steps.length,0),0);
+RUNS.forEach(r=>{r._steps=r.sections.reduce((a,s)=>a+s.steps.length,0);});
+
+function chip(id){
+  const c=byId[id];if(!c)return'';
+  const on=S.ch.has(id);
+  return `<button type="button" class="chip ${c.t}${on?' on':''}" data-ch="${id}" aria-pressed="${on}" `+
+    `title="${codeOf(id)} &middot; multiplier &times;${c.m}">${c.n}</button>`;
+}
+
+/* ---------------- THE LOAD LINE ---------------- */
+function renderTracker(){
+  const n=S.ch.size,tot=CH.length;
+  $('ldN').textContent=n;
+  $('ldOf').textContent='of '+tot+' boxes aboard';
+  /* the water rises between the deepest and the lightest mark on the ladder */
+  $('swell').style.height=(12+(tot?n/tot:0)*68)+'%';
+  $('liftRead').textContent=S.steps.size+' of '+TOTAL_STEPS+' lifts signed';
+
+  $('stack').innerHTML=CH.map(c=>{
+    const on=S.ch.has(c.id);
+    return `<li class="${c.t==='assn'?'a':'f'}${on?' on':''}" title="${c.n}">`+
+      `<span>${codeOf(c.id).slice(-3)}</span>${on?'<i class="x2"></i>':''}</li>`;
+  }).join('');
+
+  const mult=CH.reduce((s,c)=>s+(S.ch.has(c.id)?parseFloat(c.m)-1:0),1).toFixed(2);
+  const cleared=RUNS.filter(r=>r.ids.every(i=>S.ch.has(i))).length;
+  const rows=[
+    ['Assassination',ASSN.filter(c=>S.ch.has(c.id)).length,ASSN.length],
+    ['Feats',FEAT.filter(c=>S.ch.has(c.id)).length,FEAT.length],
+    ['Lifts signed',S.steps.size,TOTAL_STEPS],
+    ['Consignments cleared',cleared,RUNS.length]
+  ];
+  $('gauges').innerHTML=rows.map(r=>{
+    const pct=r[2]?r[1]/r[2]*100:0;
+    return `<div class="gauge${r[2]&&r[1]===r[2]?' full':''}"><span class="k">${r[0]}</span>
+      <span class="v">${r[1]}<small> / ${r[2]}</small></span>
+      <span class="bar"><i style="width:${pct}%"></i></span></div>`;
+  }).join('')+
+  `<div class="gauge"><span class="k">Score multiplier</span>
+    <span class="v">${mult}<small>&times;</small></span>
+    <span class="bar"><i style="width:${(mult-1)/2.2*100}%"></i></span></div>`;
+}
+
+/* ---------------- THE BAYS ---------------- */
+function renderBays(){
+  $('bays').innerHTML=`<span class="bl">Bays</span>`+
+    RUNS.map((r,i)=>{
+      const d=r.ids.filter(id=>S.ch.has(id)).length;
+      /* the tag reads "Run 01 · Nobody has to die" — the bay wants the second half */
+      const short=r.tag.split(' · ').slice(1).join(' · ')||r.title;
+      return `<button type="button" class="bay${d===r.ids.length?' full':''}" data-jump="${i}">`+
+        `<b>${String(i+1).padStart(2,'0')}</b>${short}<span class="pg">${d}/${r.ids.length}</span></button>`;
+    }).join('')+
+    `<button type="button" class="btn-plain" data-toggleall="1" style="margin-left:auto">Open / close every consignment</button>`;
+}
+
+/* ---------------- THE CONSIGNMENTS ---------------- */
+function renderRuns(){
+  $('cons').innerHTML=RUNS.map((r,ri)=>{
+    const open=S.open.has(ri);
+    const d=r.ids.filter(id=>S.ch.has(id)).length;
+    const signed=r.sections.reduce((a,s)=>a+s.steps.filter(st=>S.steps.has(st.id)).length,0);
+    const full=r.ids.length&&d===r.ids.length;
     let n=0;
-    const secs=r.sections.map(sec=>{
-      const steps=sec.steps.map(st=>{
-        n++;
-        const bl=st.b.map(x=>`<li>${x}</li>`).join('');
-        const bg=(st.badges||[]).map(x=>`<span class="badge ${bcls(x[0])}">${bpre(x[0])}${x[1]}</span>`).join('');
-        return `<div class="step" data-step="${st.id}">
-          <button class="chk" data-chkstep="${st.id}" aria-pressed="false" aria-label="Mark step done">✓</button>
-          <div class="stepno">${String(n).padStart(2,'0')}</div>
-          <div class="step-body">
-            <button class="step-head" data-toggle="${st.id}" aria-expanded="false">
-              <b>${st.t}</b><span class="more">Show step ▾</span>
-            </button>
-            <div class="step-detail">
-              <ul>${bl}</ul>
-              <div class="fields"><dl>
-                <dt>Disguise</dt><dd>None. This map has zero disguises.</dd>
-                <dt>Item</dt><dd>${st.f.item}</dd>
-                <dt>NPC</dt><dd>${st.f.npc}</dd>
-                <dt>Notes</dt><dd>${st.f.why}</dd>
-              </dl></div>
-              <div class="badges">${bg}</div>
-              <p class="src">Sources — ${st.src}</p>
-            </div>
-          </div>
-        </div>`;
-      }).join('');
-      return `<div class="sect">${sec.name}</div>${steps}`;
-    }).join('');
-    const chips=r.ids.map(id=>`<span class="badge ${byId[id].t==='assn'?'b-assn':'b-feat'}">${byId[id].n}</span>`).join('');
-    return `<article class="run" id="run${ri}" data-run="${ri}">
-      <button class="run-head" data-runtoggle="${ri}" aria-expanded="false">
-        <div class="run-tag">${r.tag}</div>
-        <h2>${r.title}</h2>
-        <p class="run-goal">${r.goal}</p>
-        <div class="badges" style="margin-top:11px">${chips}</div>
-        <div class="run-meter" data-meter="${ri}"></div>
+    const body=r.sections.map(sec=>
+      `<div class="sect">${sec.name}</div>`+
+      sec.steps.map(st=>lift(st,++n)).join('')).join('');
+
+    return `<article class="cons${open?' open':''}${full?' full':''}" id="cons-${ri}">
+      <button type="button" class="chead" data-run="${ri}" aria-expanded="${open}">
+        <span class="cno" aria-hidden="true">${String(ri+1).padStart(2,'0')}</span>
+        <span class="cmain">
+          <span class="clabel">${r.tag}</span>
+          <span class="ctitle">${r.title}</span>
+          <span class="cgoal">${r.goal}</span>
+          <span class="ctally">${d} of ${r.ids.length} boxes &middot; ${signed} of ${r._steps} lifts signed</span>
+        </span>
       </button>
-      <div class="run-body">
-        <div class="kit">${kit}</div>
-        ${secs}
+      <div class="seal" aria-hidden="true">Discharged</div>
+      <div class="cchips">${r.ids.map(chip).join('')}</div>
+      <div class="cbody"${open?'':' hidden'}>
+        <div class="kit">${r.kit.map(k=>
+          `<div class="kit-cell"><span>${k[0]}</span><b>${k[1]}</b>${k[2]?`<em>${k[2]}</em>`:''}</div>`).join('')}
+        </div>
+        ${body}
       </div>
     </article>`;
   }).join('');
 }
 
-function buildList(){
-  document.getElementById('filters').innerHTML =
-    [['all','All 27'],['assn','Assassination 13'],['feat','Feats 14'],['todo','Incomplete']]
-    .map((x,i)=>`<button class="filter" data-f="${x[0]}" aria-pressed="${i===0}">${x[1]}</button>`).join('');
-  drawRows('all');
-}
-const runOf=id=>{const i=RUNS.findIndex(r=>r.ids.includes(id));return i<0?'—':`Run 0${i+1}`;};
-function drawRows(f){
-  const host=document.getElementById('rows');
-  const list=CH.filter(c=>f==='all'?true:f==='todo'?!state.ch[c.id]:c.t===f);
-  host.innerHTML = list.length ? list.map(c=>`
-    <div class="row ${state.ch[c.id]?'done':''}">
-      <button class="chk" data-chkch="${c.id}" aria-pressed="${!!state.ch[c.id]}" aria-label="Mark complete">✓</button>
-      <div class="row-body"><b>${c.n}</b>
-        <p>${c.d==='[REDACTED]'?`<span class="redacted">[REDACTED] in-game</span> — ${c.r}`:c.d}</p>
-        <div class="row-meta">
-          <span class="pill-${c.t}">${c.t==='assn'?'Assassination':'Feat'}</span>
-          <span>×${c.m} multiplier</span><span>${runOf(c.id)}</span>
-        </div>
+function lift(st,n){
+  const on=S.steps.has(st.id),open=S.openSteps.has(st.id);
+  const badges=(st.badges||[]).map(b=>{
+    const id=badgeChallenge(b);
+    return id?chip(id):`<span class="mark m-${b[0]}">${b[1]}</span>`;
+  }).join('');
+  return `<div class="step${on?' done':''}">
+    <button type="button" class="tick" data-tick="${st.id}" aria-pressed="${on}"
+      aria-label="Sign off lift ${n}${STEP_CH[st.id].length?' and the boxes it puts aboard':''}"></button>
+    <span class="lno">${String(n).padStart(2,'0')}</span>
+    <div class="lwrap">
+      <button type="button" class="lhead" data-open="${st.id}" aria-expanded="${open}">${st.t}
+        <span class="more">${open?'Close the lift':'Open the lift'}</span></button>
+      <div class="badges">${badges}</div>
+      <div class="lbody"${open?'':' hidden'}>
+        <ul class="notes">${st.b.map(x=>`<li>${x}</li>`).join('')}</ul>
+        <div class="fields"><dl>
+          <dt>Disguise</dt><dd>None. This map has zero disguises.</dd>
+          <dt>Item</dt><dd>${st.f.item}</dd>
+          <dt>NPC</dt><dd>${st.f.npc}</dd>
+          <dt>Notes</dt><dd>${st.f.why}</dd>
+        </dl></div>
+        <p class="src">Sources &mdash; ${st.src}</p>
       </div>
-    </div>`).join('')
-    : `<div class="row"><div class="row-body"><b>Nothing left here.</b><p>Every challenge in this filter is ticked off.</p></div></div>`;
+    </div>
+  </div>`;
 }
 
-function refresh(){
-  const done=CH.filter(c=>state.ch[c.id]).length;
-  document.getElementById('ringNum').textContent=done+'/27';
-  document.getElementById('cAssn').textContent=CH.filter(c=>c.t==='assn'&&state.ch[c.id]).length+'/13';
-  document.getElementById('cFeat').textContent=CH.filter(c=>c.t==='feat'&&state.ch[c.id]).length+'/14';
-  document.getElementById('cMult').textContent=CH.reduce((s,c)=>s+(state.ch[c.id]?parseFloat(c.m)-1:0),1).toFixed(2)+'×';
-  document.getElementById('cRuns').textContent=RUNS.filter(r=>r.ids.every(i=>state.ch[i])).length+'/7';
-  const C=2*Math.PI*45;
-  document.getElementById('arc').style.strokeDashoffset=String(C-C*(done/27));
+/* ---------------- THE YARD ---------------- */
+const runOf=id=>{const i=RUNS.findIndex(r=>r.ids.includes(id));return i<0?'—':'Consignment '+String(i+1).padStart(2,'0');};
+function renderChecklist(){
+  const inc=CH.filter(c=>!S.ch.has(c.id)).length;
+  const F=[['all','All boxes',CH.length],['assn','Assassination',ASSN.length],
+           ['feat','Feats',FEAT.length],['todo','Still on the concrete',inc]];
+  $('filters').innerHTML=F.map(f=>
+    `<button type="button" data-filter="${f[0]}" aria-pressed="${S.filter===f[0]}">${f[1]} &middot; ${f[2]}</button>`).join('');
 
-  RUNS.forEach((r,i)=>{
-    const d=r.ids.filter(id=>state.ch[id]).length;
-    const tot=r.sections.reduce((n,s)=>n+s.steps.length,0);
-    const sd=r.sections.reduce((n,s)=>n+s.steps.filter(st=>state.steps[st.id]).length,0);
-    const m=document.querySelector(`[data-meter="${i}"]`);
-    if(m) m.innerHTML=`Challenges <b>${d}/${r.ids.length}</b> · Steps ${sd}/${tot}`;
-    const j=document.querySelector(`[data-jc="${i}"]`);
-    if(j) j.textContent=`${d}/${r.ids.length}`;
-    const jb=document.querySelector(`[data-jump="${i}"]`);
-    if(jb) jb.classList.toggle('full', d===r.ids.length);
-  });
-  document.querySelectorAll('[data-step]').forEach(el=>{
-    const on=!!state.steps[el.dataset.step];
-    el.classList.toggle('done',on);
-    el.querySelector('[data-chkstep]').setAttribute('aria-pressed',on);
-  });
+  const list=CH.filter(c=>S.filter==='all'?true:S.filter==='todo'?!S.ch.has(c.id):c.t===S.filter);
+  const el=$('checklist');
+  if(!list.length){el.innerHTML=`<p class="empty">Nothing left in this filter &mdash; every box here is aboard.</p>`;return;}
+  el.innerHTML=list.map(c=>{
+    const on=S.ch.has(c.id);
+    return `<div class="crow${on?' done':''}">
+      <button type="button" class="tick" data-chal="${c.id}" aria-pressed="${on}" aria-label="Load ${c.n}"></button>
+      <span class="box ${c.t==='assn'?'a':'f'}" aria-hidden="true">${codeOf(c.id)}</span>
+      <div>
+        <p class="cn">${c.n}</p>
+        <p class="cc">${c.d==='[REDACTED]'?`<span class="redacted">[REDACTED] in-game</span> — ${c.r}`:c.d}</p>
+      </div>
+      <span class="cmeta">
+        <span class="mul">&times;${c.m}</span>
+        <span>${c.t==='assn'?'Assassination':'Feat'}</span>
+        <span>${runOf(c.id)}</span>
+      </span>
+    </div>`;
+  }).join('');
 }
 
-document.addEventListener('click', e=>{
-  const rt=e.target.closest('[data-runtoggle]');
-  if(rt){const a=rt.closest('.run');const o=a.classList.toggle('open');rt.setAttribute('aria-expanded',o);return;}
+function render(){renderTracker();renderBays();renderRuns();renderChecklist();}
 
-  const st=e.target.closest('[data-toggle]');
-  if(st){const s=st.closest('.step');const o=s.classList.toggle('open');
-    st.setAttribute('aria-expanded',o);st.querySelector('.more').textContent=o?'Hide step ▴':'Show step ▾';return;}
-
-  const cs=e.target.closest('[data-chkstep]');
-  if(cs){const k=cs.dataset.chkstep;state.steps[k]=!state.steps[k];refresh();save();return;}
-
-  const cc=e.target.closest('[data-chkch]');
-  if(cc){const k=cc.dataset.chkch;state.ch[k]=!state.ch[k];
-    drawRows(document.querySelector('.filter[aria-pressed="true"]').dataset.f);refresh();save();return;}
-
-  const jp=e.target.closest('[data-jump]');
-  if(jp){const i=jp.dataset.jump;const a=document.getElementById('run'+i);
-    a.classList.add('open');a.querySelector('.run-head').setAttribute('aria-expanded',true);
-    a.scrollIntoView({behavior:'smooth',block:'start'});return;}
-
-  if(e.target.id==='expandAll'){
-    const anyClosed=[...document.querySelectorAll('.run')].some(a=>!a.classList.contains('open'));
-    document.querySelectorAll('.run').forEach(a=>{a.classList.toggle('open',anyClosed);
-      a.querySelector('.run-head').setAttribute('aria-expanded',anyClosed);});
-    e.target.textContent=anyClosed?'Collapse all':'Expand all';return;
-  }
-
-  const fl=e.target.closest('.filter');
-  if(fl){document.querySelectorAll('.filter').forEach(b=>b.setAttribute('aria-pressed',b===fl));drawRows(fl.dataset.f);return;}
-
-  const tb=e.target.closest('.tab');
-  if(tb){document.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-selected',t===tb));
-    const map={'tab-runs':'panel-runs','tab-list':'panel-list','tab-audit':'panel-audit'};
-    Object.entries(map).forEach(([t,p])=>document.getElementById(p).classList.toggle('hide',t!==tb.id));return;}
-
-  if(e.target.id==='resetBtn'){state.ch={};state.steps={};
-    document.querySelectorAll('.step').forEach(s=>s.classList.remove('done'));
-    drawRows(document.querySelector('.filter[aria-pressed="true"]').dataset.f);refresh();save();}
+/* ---------------- EVENTS ---------------- */
+const tabs=[...document.querySelectorAll('.tab')];
+function selectTab(tb){
+  tabs.forEach(x=>{
+    const on=x===tb;
+    x.setAttribute('aria-selected',String(on));
+    x.tabIndex=on?0:-1;
+    $(x.getAttribute('aria-controls')).hidden=!on;
+  });
+}
+tabs.forEach((tb,i)=>{
+  tb.tabIndex=tb.getAttribute('aria-selected')==='true'?0:-1;
+  tb.addEventListener('keydown',e=>{
+    const d=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;
+    if(!d)return;
+    e.preventDefault();
+    const next=tabs[(i+d+tabs.length)%tabs.length];
+    selectTab(next);next.focus();
+  });
 });
 
-(async()=>{await load();buildJump();buildRuns();buildList();refresh();
-  document.getElementById('run0').classList.add('open');
-  document.querySelector('[data-runtoggle="0"]').setAttribute('aria-expanded',true);
-  reportProgress();})();
+document.addEventListener('click',e=>{
+  const t=e.target;
+
+  /* a box named on a lift or under a consignment is a control */
+  const cb=t.closest('[data-ch]');
+  if(cb){const id=cb.dataset.ch;
+    S.ch.has(id)?S.ch.delete(id):S.ch.add(id);
+    save();render();return;}
+
+  const tk=t.closest('[data-tick]');
+  if(tk){
+    const k=tk.dataset.tick,now=!S.steps.has(k);
+    now?S.steps.add(k):S.steps.delete(k);
+    /* signing a lift puts its boxes aboard; unsigning leaves them there,
+       because another lift may carry the same one */
+    if(now)(STEP_CH[k]||[]).forEach(id=>S.ch.add(id));
+    save();render();return;
+  }
+  const so=t.closest('[data-open]');
+  if(so){const k=so.dataset.open;
+    S.openSteps.has(k)?S.openSteps.delete(k):S.openSteps.add(k);
+    renderRuns();return;}
+  const rh=t.closest('[data-run]');
+  if(rh){const i=+rh.dataset.run;
+    S.open.has(i)?S.open.delete(i):S.open.add(i);
+    renderRuns();return;}
+  const ch=t.closest('[data-chal]');
+  if(ch){const id=ch.dataset.chal;
+    S.ch.has(id)?S.ch.delete(id):S.ch.add(id);
+    save();render();return;}
+  const jp=t.closest('[data-jump]');
+  if(jp){const i=+jp.dataset.jump;
+    S.open.add(i);renderRuns();
+    $('cons-'+i).scrollIntoView({behavior:'smooth',block:'start'});return;}
+  const ta=t.closest('[data-toggleall]');
+  if(ta){
+    if(S.open.size===RUNS.length){S.open.clear();S.openSteps.clear();}
+    else RUNS.forEach((r,i)=>S.open.add(i));
+    renderRuns();return;}
+  const ft=t.closest('[data-filter]');
+  if(ft){S.filter=ft.dataset.filter;renderChecklist();return;}
+  const tb=t.closest('.tab');
+  if(tb){selectTab(tb);return;}
+});
+
+$('reset').addEventListener('click',()=>{
+  if(!confirm('Discharge the yard? Every box and every signed lift on this guide is cleared. Other guides are not affected.'))return;
+  S.ch.clear();S.steps.clear();save();render();
+});
+
+/* the customs tables scroll inside themselves on a phone */
+document.querySelectorAll('#p-audit table').forEach(t=>{
+  if(t.parentNode.classList.contains('tablewrap'))return;
+  const w=document.createElement('div');w.className='tablewrap';
+  t.parentNode.insertBefore(w,t);w.appendChild(t);
+});
+
+load();
 </script>
 <!-- step-progress-bridge -->
 <script>

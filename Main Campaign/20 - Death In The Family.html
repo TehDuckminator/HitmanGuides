@@ -3,215 +3,362 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Thornbridge Manor Case File — Death in the Family (Dartmoor)</title>
+<!--@title--><title>Thornbridge Manor Case File — Death in the Family (Dartmoor)</title><!--/@title-->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,600;6..96,900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Cutive+Mono&display=swap" rel="stylesheet">
 <style>
+/* ═══ DARTMOOR — the casebook ═══
+   This is the one mission in the game that is a whodunnit. 47 walks in wearing
+   a private investigator's coat, interviews a household, collects clues and
+   then formally accuses somebody by name. So the guide is the file that
+   investigation would produce: a manila folder open on a desk, with typed
+   sheets in it and a red pencil in the margin.
+
+   The tracker is the FINGERPRINT CARD. The print is inked ridge by ridge —
+   one ridge for each slice of the 59 challenges — and only when the last one
+   is down does the card read MATCH. The five categories are the folder's
+   index tabs, and each one is a filter into the schedule of exhibits.
+
+   A run is a LINE OF ENQUIRY, carrying the run number exactly as the guide
+   typed it; a section is a heading in the notebook; a step is a NOTE, and
+   taking one types a red X in its box, struck slightly off-register the way a
+   typewriter does. The guide's own cautions become red marginal notes, its
+   save markers become MARK THE FILE, and each run's standing note is a slip
+   clipped to the front.
+
+   Bottle-green desk leather, manila, typed carbon and red pencil. The
+   typescript here is a form being filled in, not prose being written — that
+   column with the ruled margin belongs to The Author, and this is not it. */
 :root{
-  --slate:#161d1b;--slate-2:#1e2725;--slate-3:#28332f;
-  --parch:#e8e1cf;--parch-dim:#b9b2a0;
-  --oxblood:#8f2b2b;--oxblood-lt:#c25151;
-  --brass:#c9a349;--moss:#6f8f68;--ink:#0d1211;
-  --amber:#d99a2b;--warn:#c0392b;--r:3px;
+  --desk:#16201b; --desk-2:#1e2b24; --file:#d9cbab; --file-2:#cdbd99;
+  --sheet:#f3edde; --sheet-2:#e9e1cd; --ink:#241f19; --ink-2:#4c4437; --faint:#7e7364;
+  --red:#a8302a; --blue:#2c4a70; --rule:rgba(36,31,25,.22); --rule-2:rgba(36,31,25,.12);
+  --rule-3:rgba(36,31,25,.06);
+  --ass:#a8302a; --dis:#2c4a70; --fea:#8a6118; --tar:#6b2f6b; --cla:#2f6b4a;
+  --typed:"Special Elite","Courier New",monospace;
+  --body:Lora,Georgia,"Times New Roman",serif;
+  --mono:"Cutive Mono",ui-monospace,Consolas,"Courier New",monospace;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;
-  background:radial-gradient(1200px 700px at 15% -10%,#223029 0%,transparent 60%),var(--slate);
-  color:var(--parch);font-family:'Source Sans 3',system-ui,sans-serif;font-size:16px;line-height:1.6;}
-a{color:var(--brass)}
-.wrap{max-width:1140px;margin:0 auto;padding:0 20px 80px}
+body{
+  margin:0;color:var(--ink);background-color:var(--desk);
+  /* the desk it is all lying on: green leather, worn where the lamp falls */
+  background-image:
+    radial-gradient(900px 560px at 50% -10%,rgba(255,246,220,.10),transparent 62%),
+    repeating-linear-gradient(41deg,rgba(255,255,255,.014) 0 2px,transparent 2px 6px),
+    repeating-linear-gradient(-41deg,rgba(0,0,0,.05) 0 2px,transparent 2px 6px);
+  background-attachment:fixed;
+  font-family:var(--body);font-size:16px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.desk{max-width:1120px;margin:0 auto;padding:0 15px 100px}
+a{color:var(--blue)}
+b,strong{font-weight:600;color:var(--ink)}
+i,em{font-style:italic}
+:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:12px;top:12px;z-index:60;background:var(--red);color:#fff;padding:8px 14px;
+  font-family:var(--mono);font-size:12px}
+.lbl{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
 
-header.mast{border-bottom:1px solid #3a4742;
-  background:linear-gradient(180deg,#101514 0%,rgba(16,21,20,0) 100%);padding:38px 0 26px;margin-bottom:24px;}
-.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.22em;
-  text-transform:uppercase;color:var(--brass);margin:0 0 10px;}
-h1{font-family:'Bodoni Moda',serif;font-weight:900;font-size:clamp(2.1rem,6vw,4rem);
-  line-height:.95;margin:0 0 6px;letter-spacing:-.01em;}
-h1 em{font-style:italic;font-weight:400;color:var(--parch-dim);display:block;
-  font-size:.42em;letter-spacing:.02em;margin-top:12px}
-.mast-note{color:var(--parch-dim);max-width:64ch;font-size:.95rem;margin:14px 0 0}
+/* ── the folder ─────────────────────────────────────────────────────────── */
+.file{margin-top:40px;background:var(--file);border:1px solid rgba(0,0,0,.35);
+  box-shadow:0 26px 54px -40px #000;position:relative}
+/* the index tabs along the top of the folder */
+.tabsrow{display:flex;flex-wrap:wrap;gap:3px;padding:0 14px;margin-top:-19px}
+.idx{position:relative;background:var(--file-2);border:1px solid rgba(0,0,0,.3);border-bottom:0;
+  padding:5px 12px 6px;cursor:pointer;min-width:104px;text-align:left;
+  border-radius:3px 3px 0 0;box-shadow:inset 0 3px 0 var(--m,var(--ink))}
+.idx:hover{background:var(--file)}
+.idx .k{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-2)}
+.idx .v{display:block;font-family:var(--typed);font-size:13px;color:var(--ink)}
+.idx .fill{display:block;height:3px;margin-top:3px;background:rgba(0,0,0,.14)}
+.idx .fill i{display:block;height:100%;width:0;background:var(--m,var(--ink));transition:width .4s ease}
+.idx.full .v{color:var(--m,var(--ink))}
 
-.tracker{border:1px solid #3a4742;border-radius:var(--r);
-  background:linear-gradient(180deg,#1c2523,#161d1b);padding:20px;margin-bottom:22px;
-  position:sticky;top:0;z-index:60;box-shadow:0 12px 30px rgba(0,0,0,.45);}
-.tracker-top{display:flex;flex-wrap:wrap;align-items:baseline;gap:14px;justify-content:space-between;margin-bottom:14px}
-.tracker-total{font-family:'Bodoni Moda',serif;font-size:2.4rem;line-height:1;font-weight:600}
-.tracker-total small{font-size:.9rem;color:var(--parch-dim);font-family:'JetBrains Mono',monospace;letter-spacing:.1em}
-.bar{height:10px;background:#0e1312;border:1px solid #3a4742;border-radius:99px;overflow:hidden}
-.bar>span{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--oxblood),var(--brass));transition:width .4s ease}
-.cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:10px;margin-top:16px}
-.cat{border:1px solid #3a4742;border-radius:var(--r);padding:9px 11px;background:#131a19}
-.cat b{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--parch-dim);margin-bottom:4px}
-.cat span{font-family:'Bodoni Moda',serif;font-size:1.35rem;font-weight:600}
-.cat span i{font-style:normal;color:var(--parch-dim);font-size:.75em}
-.reset{background:none;border:1px solid #4a5854;color:var(--parch-dim);
-  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
-  padding:7px 12px;border-radius:var(--r);cursor:pointer}
-.reset:hover{border-color:var(--oxblood-lt);color:var(--oxblood-lt)}
+.cover{padding:26px 26px 20px}
+.eyebrow{margin:0 0 14px;font-family:var(--mono);font-size:11px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--ink-2)}
+h1{margin:0;font-family:var(--typed);font-weight:400;font-size:clamp(30px,5.6vw,54px);line-height:1.06;
+  color:var(--ink)}
+h1 em{display:block;margin-top:12px;font-family:var(--mono);font-style:normal;
+  font-size:clamp(11px,1.8vw,13px);letter-spacing:.14em;text-transform:uppercase;color:var(--red)}
+.mast-note{margin:18px 0 0;max-width:76ch;font-size:15.4px;color:var(--ink-2)}
+.rail{display:flex;flex-wrap:wrap;gap:6px 20px;align-items:center;justify-content:space-between;
+  padding:9px 26px;background:var(--file-2);border-top:1px solid rgba(0,0,0,.16);
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+.rail a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(44,74,112,.45)}
+.rail a:hover{color:var(--red);border-color:var(--red)}
 
-nav.tabs{display:flex;gap:2px;border-bottom:1px solid #3a4742;margin-bottom:22px;flex-wrap:wrap}
-nav.tabs button{background:none;border:0;border-bottom:2px solid transparent;color:var(--parch-dim);
-  font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;
-  padding:13px 16px;cursor:pointer}
-nav.tabs button[aria-selected="true"]{color:var(--parch);border-bottom-color:var(--oxblood)}
-nav.tabs button:hover{color:var(--parch)}
-.panel{display:none}.panel.on{display:block}
+/* ── the fingerprint card ───────────────────────────────────────────────── */
+.case{display:grid;grid-template-columns:minmax(0,210px) minmax(0,1fr);gap:22px;align-items:start;
+  padding:22px 26px 26px;border-top:1px solid rgba(0,0,0,.16)}
+.printcard{background:var(--sheet);border:1px solid var(--rule);padding:12px 12px 10px;text-align:center}
+.printcard svg{display:block;width:100%;height:auto}
+.ridge{fill:none;stroke:var(--ink);stroke-width:2.4;stroke-linecap:round;opacity:.09;
+  transition:opacity .3s ease,stroke .3s ease}
+.ridge.on{opacity:.92}
+.printcard.match .ridge.on{stroke:var(--red)}
+.printcap{margin:8px 0 0;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--faint)}
+.printcard.match .printcap{color:var(--red)}
+.casefacts{min-width:0}
+/* the count is typed, and stays in lower case so the number reads as written */
+.count{margin:2px 0 0;font-family:var(--body);font-size:16px;color:var(--ink-2)}
+.count b{font-family:var(--typed);font-weight:400;font-size:52px;line-height:.94;color:var(--ink);
+  margin-right:10px}
+.subcount{margin:8px 0 16px;font-family:var(--mono);font-size:11px;color:var(--faint)}
+.stampline{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  background:transparent;color:var(--ink-2);border:1px solid var(--rule);padding:9px 14px;cursor:pointer}
+.btn:hover{border-color:var(--red);color:var(--red)}
 
-/* run selector */
-.run-nav{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
-.run-nav button{background:#131a19;border:1px solid #3a4742;color:var(--parch);
-  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
-  padding:9px 13px;border-radius:var(--r);cursor:pointer;text-align:left;line-height:1.35}
-.run-nav button b{color:var(--brass);display:block;font-size:10px;letter-spacing:.16em;margin-bottom:2px}
-.run-nav button:hover{border-color:var(--brass)}
-.run-nav button.active{border-color:var(--oxblood);background:#231416}
+/* ── tabs ───────────────────────────────────────────────────────────────── */
+.tabs{display:flex;flex-wrap:wrap;gap:3px;margin:24px 0 0}
+.tab{font-family:var(--typed);font-size:14px;letter-spacing:.04em;background:var(--file-2);
+  color:var(--ink-2);border:1px solid rgba(0,0,0,.28);border-bottom:0;padding:10px 16px;cursor:pointer}
+.tab[aria-selected="true"]{background:var(--sheet);color:var(--ink);box-shadow:inset 0 3px 0 var(--red)}
+.tab:hover{color:var(--ink)}
+.pane{background:var(--sheet);border:1px solid rgba(0,0,0,.28);padding:24px}
 
-/* run card */
-.run{border:1px solid #3a4742;border-radius:var(--r);background:#1a2220;margin-bottom:20px;overflow:hidden;scroll-margin-top:180px}
-.run-head{padding:20px 22px;background:linear-gradient(180deg,#212b28,#1a2220);cursor:pointer;
-  display:flex;gap:14px;align-items:flex-start}
-.run-head:hover{background:#242f2b}
-.run-chev{flex:0 0 auto;font-family:'JetBrains Mono',monospace;color:var(--brass);font-size:18px;
-  transition:transform .2s;margin-top:2px;user-select:none}
-.run[data-open="1"] .run-chev{transform:rotate(90deg)}
-.run-head-main{flex:1;min-width:0}
-.run-no{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;color:var(--brass);
-  text-transform:uppercase;display:block;margin-bottom:6px}
-.run-head h2{font-family:'Bodoni Moda',serif;font-size:1.55rem;font-weight:600;margin:0 0 7px}
-.run-head p{margin:0;color:var(--parch-dim);max-width:72ch;font-size:.95rem}
-.run-prog{flex:0 0 auto;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--parch-dim);
-  border:1px solid #3a4742;border-radius:99px;padding:3px 10px;margin-top:2px;white-space:nowrap}
-.run-body{display:none;border-top:1px solid #3a4742}
-.run[data-open="1"] .run-body{display:block}
+/* ── a line of enquiry ──────────────────────────────────────────────────── */
+.enqnav{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:18px}
+.ejump{display:flex;align-items:center;gap:8px;background:var(--sheet-2);border:1px solid var(--rule-2);
+  color:var(--ink-2);padding:7px 11px;cursor:pointer;font-family:var(--body);font-size:13.5px}
+.ejump b{font-family:var(--mono);font-size:10.5px;color:var(--red)}
+.ejump .pg{font-family:var(--mono);font-size:10px;color:var(--faint)}
+.ejump:hover{border-color:var(--red);color:var(--ink)}
+.ejump.full{background:rgba(168,48,42,.08);border-color:rgba(168,48,42,.4)}
 
-.loadout{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:1px;background:#3a4742;border-bottom:1px solid #3a4742}
-.lo{background:#151d1b;padding:12px 15px}
-.lo b{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--brass);margin-bottom:5px}
-.lo span{font-size:.9rem;display:block}
-.run-note{color:var(--parch-dim);padding:16px 22px 0;margin:0;font-size:.94rem}
+article.enq{background:var(--sheet-2);border:1px solid var(--rule-2);margin-bottom:16px;
+  scroll-margin-top:12px}
+article.enq.full{border-color:rgba(168,48,42,.45)}
+.ehead{display:grid;grid-template-columns:110px minmax(0,1fr);gap:16px;width:100%;text-align:left;
+  background:var(--sheet);border:0;border-bottom:1px solid var(--rule-2);cursor:pointer;padding:16px 18px;
+  font-family:var(--body);color:var(--ink-2)}
+.ehead:hover .etitle{color:var(--red)}
+/* the file number, typed and boxed the way a case reference is */
+.fileno{display:grid;place-content:center;min-height:66px;background:var(--sheet-2);
+  border:1px solid var(--rule);font-family:var(--typed);font-size:15px;color:var(--ink);text-align:center;
+  padding:8px 6px;line-height:1.3}
+article.enq.full .fileno{color:var(--red);border-color:rgba(168,48,42,.5)}
+.emain{min-width:0}
+.elbl{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--faint);margin-bottom:5px}
+.etitle{display:block;font-family:var(--typed);font-size:clamp(19px,2.7vw,26px);line-height:1.16;
+  color:var(--ink)}
+.egoal{display:block;margin-top:8px;font-size:14.8px;color:var(--ink-2);max-width:82ch}
+.etally{display:block;margin-top:9px;font-family:var(--mono);font-size:10px;color:var(--faint)}
+.ebody{padding:18px}
+/* the run's standing note, clipped to the front of the file */
+.slip{position:relative;background:var(--sheet);border:1px solid var(--rule-2);padding:12px 15px;
+  margin-bottom:18px;font-size:14.4px;color:var(--ink-2);box-shadow:2px 3px 0 rgba(0,0,0,.05)}
+/* the clip holding the slip to the front of the file */
+.slip::before{content:"";position:absolute;left:16px;top:-11px;width:15px;height:30px;
+  border:1.6px solid var(--faint);border-radius:8px;background:transparent}
+.slip::after{content:"";position:absolute;left:20px;top:-6px;width:7px;height:22px;
+  border:1.6px solid var(--faint);border-top-color:transparent;border-radius:0 0 4px 4px;
+  background:var(--sheet)}
+.carried{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;
+  background:var(--rule-3);border:1px solid var(--rule-3);margin-bottom:18px}
+.slot{background:var(--sheet);padding:9px 12px;min-width:0}
+.slot .k{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--faint)}
+.slot .v{display:block;margin-top:2px;font-size:14.4px;color:var(--ink);overflow-wrap:anywhere}
+.slot .v span{display:block}
+.head{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin:24px 0 2px;padding-bottom:6px;
+  border-bottom:1px solid var(--rule);font-family:var(--typed);font-size:16px;color:var(--ink)}
+.head:first-child{margin-top:0}
+.head .cnt{margin-left:auto;font-family:var(--mono);font-size:9.5px;color:var(--faint)}
 
-.sect{border-top:1px solid #232e2b;margin-top:16px}
-.sect-h{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;
-  color:var(--moss);padding:16px 22px 4px;margin:0}
+/* ── a note ─────────────────────────────────────────────────────────────── */
+.step{display:grid;grid-template-columns:40px minmax(0,1fr);gap:14px;align-items:start;
+  padding:14px 2px;border-bottom:1px solid var(--rule-3)}
+.step:last-of-type{border-bottom:0}
+.step.done{background:rgba(168,48,42,.045)}
+/* the tick is a red X typed into the box, struck a little off-register */
+.mark{position:relative;width:40px;height:40px;padding:0;cursor:pointer;background:var(--sheet);
+  border:1px solid var(--rule)}
+.mark:hover{border-color:var(--red)}
+.mark::before,.mark::after{content:"";position:absolute;left:50%;top:50%;width:24px;height:2.6px;
+  background:var(--red);opacity:0;transition:opacity .16s ease}
+.mark::before{transform:translate(-50%,-50%) rotate(43deg)}
+.mark::after{transform:translate(-52%,-46%) rotate(-45deg)}
+.step.done .mark::before,.step.done .mark::after,
+.crow.done .mark::before,.crow.done .mark::after{opacity:1}
+.swrap{min-width:0}
+.stitle{margin:0;font-family:var(--body);font-weight:600;font-size:17px;line-height:1.3;color:var(--ink)}
+.ssum{margin:5px 0 0;font-size:14.6px;color:var(--ink-2)}
+.fields{margin-top:10px;display:grid;gap:4px}
+.frow{display:grid;grid-template-columns:74px minmax(0,1fr);gap:12px;align-items:start}
+.fk{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);
+  padding-top:4px}
+.fv{font-size:14.6px;color:var(--ink-2);overflow-wrap:anywhere}
+/* the red pencil in the margin */
+.caution{margin:11px 0 0;padding:9px 13px;border-left:3px solid var(--red);background:rgba(168,48,42,.06);
+  font-size:14.2px;color:var(--ink-2)}
+.caution .m{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--red);margin-bottom:3px}
+.savetag{display:inline-block;margin-top:10px;font-family:var(--mono);font-size:9px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--blue);border:1px solid var(--blue);padding:3px 9px}
+.badges{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
+.badge{font-family:var(--body);font-size:13px;line-height:1.25;cursor:pointer;padding:4px 10px;
+  border:1px solid var(--rule-2);border-left:3px solid var(--m,var(--ink));background:var(--sheet);
+  color:var(--ink-2);text-align:left}
+.badge:hover{border-color:var(--m,var(--ink));color:var(--ink)}
+.badge[aria-checked="true"]{background:var(--m,var(--ink));border-color:transparent;color:var(--sheet);
+  font-weight:500}
+.badge.plain{cursor:default;border-left-color:var(--rule);color:var(--faint);font-style:italic}
 
-.step{border-top:1px solid #232e2b;margin:0 22px;padding:13px 0;display:flex;gap:13px;align-items:flex-start}
-.step:first-of-type{border-top:0}
-.tick{flex:0 0 auto;width:25px;height:25px;border:1px solid #4a5854;border-radius:50%;background:#0e1312;
-  cursor:pointer;color:transparent;font-size:13px;line-height:1;display:flex;align-items:center;justify-content:center;margin-top:2px;transition:.15s}
-.tick:hover{border-color:var(--brass)}
-.tick[data-done="1"]{background:var(--moss);border-color:var(--moss);color:var(--ink)}
-.step-body{flex:1;min-width:0}
-.step-head{cursor:pointer;display:flex;gap:8px;align-items:baseline}
-.step-head .schev{font-family:'JetBrains Mono',monospace;color:var(--parch-dim);font-size:12px;transition:transform .2s;flex:0 0 auto}
-.step[data-sopen="1"] .schev{transform:rotate(90deg)}
-.step-title{font-weight:700;font-size:1.01rem;margin:0}
-.step[data-done="1"] .step-title{text-decoration:line-through;color:var(--parch-dim)}
-.step-sum{margin:2px 0 0;color:var(--parch-dim);font-size:.93rem}
-.detail{display:none;margin-top:11px;border-left:2px solid var(--oxblood);padding-left:15px}
-.step[data-sopen="1"] .detail{display:block}
-.drow{display:flex;gap:10px;margin-bottom:6px;font-size:.92rem}
-.drow .k{flex:0 0 74px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;
-  text-transform:uppercase;color:var(--brass);padding-top:2px}
-.drow .v{flex:1;color:#d5cfbe}
-
-.badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-.b{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.09em;text-transform:uppercase;
-  padding:4px 8px;border-radius:2px;border:1px solid;white-space:nowrap}
-.b.ass{color:#e79aa0;border-color:#7a3b40;background:#2b1a1c}
-.b.dis{color:#9fc6e8;border-color:#37546b;background:#151f27}
-.b.fea{color:#d8c07e;border-color:#6b5a2c;background:#231f13}
-.b.cla{color:#c3a8e8;border-color:#5a4574;background:#1e1828}
-.b.tar{color:#f0b09a;border-color:#7d4a35;background:#291a14}
-.b.warn{color:#fff;border-color:var(--warn);background:var(--warn);font-weight:600}
-.b.save{color:#1a1206;border-color:var(--amber);background:var(--amber);font-weight:600}
-.b.unv{color:#cfcfcf;border-color:#666;background:#2a2a2a}
-
-.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
-.filters button{background:#131a19;border:1px solid #3a4742;color:var(--parch-dim);
-  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;
-  padding:8px 13px;border-radius:var(--r);cursor:pointer}
-.filters button[aria-pressed="true"]{background:var(--oxblood);border-color:var(--oxblood);color:#fff}
-.clist{border:1px solid #3a4742;border-radius:var(--r);overflow:hidden}
-.crow{display:flex;gap:13px;align-items:flex-start;padding:13px 16px;border-bottom:1px solid #232e2b;background:#1a2220}
+/* ── the schedule of exhibits ───────────────────────────────────────────── */
+.filters{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:20px}
+.filters button{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+  background:var(--sheet-2);border:1px solid var(--rule-2);color:var(--ink-2);padding:8px 12px;cursor:pointer}
+.filters button:hover{border-color:var(--red);color:var(--ink)}
+.filters button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--sheet)}
+.grp{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin:26px 0 4px;padding-bottom:6px;
+  border-bottom:2px solid var(--m,var(--ink));font-family:var(--typed);font-size:18px;color:var(--ink)}
+.grp:first-child{margin-top:0}
+.grp .n{margin-left:auto;font-family:var(--mono);font-size:9.5px;color:var(--faint)}
+.crow{display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:14px;align-items:start;
+  padding:12px 2px;border-bottom:1px solid var(--rule-3)}
 .crow:last-child{border-bottom:0}
-.crow:nth-child(even){background:#171f1d}
-.crow-main{flex:1;min-width:0}
-.crow-name{font-weight:700;font-size:1rem;margin:0 0 2px;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
-.crow[data-done="1"] .crow-name{text-decoration:line-through;color:var(--parch-dim)}
-.crow-cond{margin:0;font-size:.9rem;color:var(--parch-dim)}
-.xp{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--brass);letter-spacing:.08em}
-.empty{padding:40px;text-align:center;color:var(--parch-dim)}
+.crow.done{background:rgba(168,48,42,.045)}
+.exno{font-family:var(--mono);font-size:9.5px;color:var(--faint);letter-spacing:.06em}
+.cnm{margin:0;font-family:var(--body);font-weight:600;font-size:16.5px;line-height:1.28;color:var(--ink)}
+.crow.done .cnm{color:var(--m,var(--red))}
+.ccond{margin:4px 0 0;font-size:14.4px;color:var(--ink-2)}
+.cmeta{display:grid;justify-items:end;gap:3px;font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--faint);text-align:right;white-space:nowrap}
+.cmeta .xp{color:var(--fea)}
+.empty{margin:18px 0;color:var(--ink-2)}
 
-.prose{max-width:80ch}
-.prose h2{font-family:'Bodoni Moda',serif;font-size:1.6rem;font-weight:600;margin:34px 0 10px}
-.prose h3{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--brass);margin:26px 0 8px}
-.prose li{margin-bottom:6px}
-.callout{border:1px solid var(--warn);background:#2a1512;border-radius:var(--r);padding:16px 18px;margin:18px 0}
-.callout.amberc{border-color:var(--amber);background:#241a09}
-.callout.neutral{border-color:#3a4742;background:#151d1b}
-.callout b{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:6px}
-table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.92rem}
-th,td{text-align:left;padding:9px 10px;border-bottom:1px solid #2f3b37;vertical-align:top}
-th{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--brass)}
-code{font-family:'JetBrains Mono',monospace;font-size:.85em;background:#0e1312;padding:2px 5px;border-radius:2px;color:var(--brass)}
-footer{border-top:1px solid #3a4742;margin-top:50px;padding-top:20px;color:var(--parch-dim);font-size:.86rem}
-@media (max-width:640px){
-  .tracker{position:static}
-  .step{margin:0 14px}.sect-h{padding-left:14px;padding-right:14px}
-  .run-head{padding:16px}.run-note{padding-left:16px;padding-right:16px}
-  .drow{flex-direction:column;gap:1px}.drow .k{flex-basis:auto}
+/* ── the lifted reference and audit sheets ──────────────────────────────── */
+.prose h2{margin:26px 0 10px;font-family:var(--typed);font-size:21px;color:var(--ink)}
+.prose h2:first-child{margin-top:0}
+.prose h3{margin:20px 0 8px;font-family:var(--typed);font-size:16px;color:var(--red)}
+.prose p{margin:0 0 10px;font-size:14.8px;color:var(--ink-2);max-width:84ch}
+.prose ul,.prose ol{margin:0 0 12px;padding-left:20px}
+.prose li{margin-bottom:6px;font-size:14.6px;color:var(--ink-2)}
+.prose .callout{border:1px solid var(--rule-2);border-left:4px solid var(--fea);background:var(--sheet-2);
+  padding:12px 15px;margin:0 0 14px;font-size:14.2px;color:var(--ink-2)}
+.prose .callout b,.prose .callout strong{display:inline;color:var(--ink)}
+.prose .callout b:first-child{display:block;margin-bottom:5px;font-family:var(--mono);font-size:10px;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--fea)}
+.tablewrap{overflow-x:auto;margin:0 0 16px}
+.prose table{border-collapse:collapse;width:100%;min-width:460px;font-size:14px}
+.prose th,.prose td{text-align:left;padding:8px 12px;border-bottom:1px solid var(--rule-3)}
+.prose th{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--faint);border-bottom:1px solid var(--rule)}
+
+footer{margin-top:24px;padding:18px 22px;background:var(--file);border:1px solid rgba(0,0,0,.3);
+  font-size:13px;line-height:1.75;color:var(--ink-2)}
+footer em{font-style:italic}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;
+  scroll-behavior:auto!important}}
+@media (max-width:860px){
+  .case{grid-template-columns:minmax(0,1fr)}
+  .printcard{max-width:210px}
 }
-@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+@media (max-width:620px){
+  .pane{padding:15px}
+  .cover,.rail,.case{padding-left:16px;padding-right:16px}
+  .ehead{grid-template-columns:72px minmax(0,1fr);gap:11px;padding:14px}
+  .fileno{font-size:12px;min-height:52px}
+  .ebody{padding:14px}
+  .step{grid-template-columns:34px minmax(0,1fr);gap:11px}
+  .mark{width:34px;height:34px}
+  .frow{grid-template-columns:minmax(0,1fr);gap:1px}
+  .fk{padding-top:0}
+  .crow{grid-template-columns:34px minmax(0,1fr)}
+  .cmeta{grid-column:2;justify-items:start;text-align:left;margin-top:5px}
+}
+@media print{
+  body{background:#fff;background-image:none;font-size:10.5pt}
+  .desk{max-width:none;padding:0}
+  .tabs,.enqnav,.skip,.mark,.btn,.filters,.rail,.printcard,.tabsrow{display:none!important}
+  .pane[hidden]{display:block!important}
+  .ebody{display:block!important}
+  .file,.pane,article.enq,.slot,.slip,footer,.prose .callout{background:#fff!important;
+    border-color:#999!important;box-shadow:none!important}
+  .step,article.enq,.crow{break-inside:avoid}
+}
 </style>
 </head>
 <body>
-<div class="wrap">
+<div class="desk">
 
-<header class="mast">
-  <p class="eyebrow">Thornbridge Manor · Devon · Case File 02</p>
-  <h1>Death in the Family<em>All 59 challenges, routed into seven runs</em></h1>
-  <p class="mast-note">A multi-run completion guide for Dartmoor in HITMAN World of Assassination, rebuilt against the mission's own challenge export. Every step lists where to go, what to wear, what to carry, who's involved and what to do. Uncertain claims are tagged, not guessed.</p>
-</header>
-
-<section class="tracker">
-  <div class="tracker-top">
-    <div class="tracker-total"><span id="tDone">0</span>/58 <small>CHALLENGES CLEARED</small></div>
-    <button class="reset" id="reset">Clear all progress</button>
+<div class="file">
+  <div class="tabsrow" id="idxtabs"></div>
+  <div class="cover">
+    <p class="eyebrow"><!--@eyebrow-->Thornbridge Manor · Devon · Case File 02<!--/@eyebrow--></p>
+    <h1><!--@h1-->Death in the Family<em>All 59 challenges, routed into seven runs</em><!--/@h1--></h1>
+    <p class="mast-note"><!--@note-->A multi-run completion guide for Dartmoor in HITMAN World of Assassination, rebuilt against the mission's own challenge export. Every step lists where to go, what to wear, what to carry, who's involved and what to do. Uncertain claims are tagged, not guessed.<!--/@note--></p>
   </div>
-  <div class="bar"><span id="tBar"></span></div>
-  <div class="cats" id="cats"></div>
+
+  <!-- the skip link follows the cover sheet, which holds nothing focusable,
+       so this is still the first stop for a keyboard -->
+  <a class="skip" href="#pane-runs">Skip to the seven lines of enquiry</a>
+
+  <div class="rail">
+    <a href="../index.html">&#8592; All guides</a>
+    <span>Thornbridge Manor, Dartmoor &middot; Main campaign 20</span>
+    <span>Saved in this browser only</span>
+  </div>
+
+  <div class="case">
+    <div class="printcard" id="printcard">
+      <svg viewBox="0 0 140 190" role="img"
+           aria-labelledby="printTitle" aria-describedby="printDesc">
+        <title id="printTitle">The fingerprint card</title>
+        <desc id="printDesc">A print inked one ridge at a time as challenges are cleared. It reads MATCH only when every one is down.</desc>
+        <g id="ridges"></g>
+      </svg>
+      <p class="printcap" id="printcap">No ridges inked</p>
+    </div>
+    <div class="casefacts">
+      <span class="lbl">Cleared</span>
+      <p class="count"><b id="numDone">0</b><span id="numOf">/ 0 challenges</span></p>
+      <p class="subcount" id="subcount">0 notes taken</p>
+      <div class="stampline">
+        <button class="btn" id="reset" type="button">Close the file &amp; clear it</button>
+        <span class="lbl">Every total on this page is counted off the export</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="tabs" role="tablist" aria-label="Guide sections">
+  <button class="tab" role="tab" id="tab-runs" aria-controls="pane-runs" aria-selected="true">Lines of enquiry</button>
+  <button class="tab" role="tab" id="tab-list" aria-controls="pane-list" aria-selected="false">Schedule of exhibits</button>
+  <button class="tab" role="tab" id="tab-ref" aria-controls="p-ref" aria-selected="false">Reference</button>
+  <button class="tab" role="tab" id="tab-audit" aria-controls="p-audit" aria-selected="false">Verification &amp; audit</button>
+</div>
+
+<section class="pane" id="pane-runs" role="tabpanel" aria-labelledby="tab-runs">
+  <nav class="enqnav" id="enqnav" aria-label="Jump to a line of enquiry"></nav>
+  <div id="enquiries"></div>
 </section>
 
-<nav class="tabs" role="tablist">
-  <button role="tab" aria-selected="true" data-panel="runs">Optimized runs</button>
-  <button role="tab" aria-selected="false" data-panel="check">Checklist</button>
-  <button role="tab" aria-selected="false" data-panel="ref">Reference</button>
-  <button role="tab" aria-selected="false" data-panel="audit">Verification &amp; audit</button>
-</nav>
-
-<div class="panel on" id="p-runs">
-  <div class="run-nav" id="runNav"></div>
-  <div id="runList"></div>
-</div>
-
-<div class="panel" id="p-check">
+<section class="pane" id="pane-list" role="tabpanel" aria-labelledby="tab-list" hidden>
   <div class="filters" id="filters"></div>
-  <div class="clist" id="clist"></div>
-</div>
+  <div id="checklist"></div>
+</section>
 
-<div class="panel prose" id="p-ref"></div>
-<div class="panel prose" id="p-audit"></div>
+<section class="pane prose" id="p-ref" role="tabpanel" aria-labelledby="tab-ref" hidden></section>
+<section class="pane prose" id="p-audit" role="tabpanel" aria-labelledby="tab-audit" hidden></section>
 
 <footer>
-  Primary source: the mission's in-game challenge export (59 challenges). Corroborating sources: Hitman Wiki (<em>Death in the Family/Challenges</em>, <em>It's a Fhammerly Affair</em>, <em>Voyeurism</em>); PowerPyx Dartmoor challenge / area / shortcut / mission-story / SASO pages; DBLTAP mastery list; Gamepur; TheGamer; ScreenRant; a community Steam walkthrough. Progress lives only in this page and resets on reload.
+<!--@footer-->
+Primary source: the mission's in-game challenge export (59 challenges). Corroborating sources: Hitman Wiki (<em>Death in the Family/Challenges</em>, <em>It's a Fhammerly Affair</em>, <em>Voyeurism</em>); PowerPyx Dartmoor challenge / area / shortcut / mission-story / SASO pages; DBLTAP mastery list; Gamepur; TheGamer; ScreenRant; a community Steam walkthrough. Progress lives only in this page and resets on reload.
+<!--/@footer-->
 </footer>
-
 </div>
+
 <script>
+/*@ch*/
 /* ============================================================
    CHALLENGE MASTER LIST — 58 total (from in-game export)
    cat: ass(12) | dis(19) | fea(21) | tar(1) | cla(5)
@@ -288,10 +435,9 @@ const CH = [
 {id:'sa',cat:'cla',name:'Silent Assassin',cond:'Only kill the target, no bodies found, never compromised, erase any camera evidence.',xp:''},
 {id:'sniper',cat:'cla',name:'Sniper Assassin',cond:'Assassinate the target with a sniper rifle without being spotted.',xp:''}
 ];
+/*/@ch*/
 
-const CATNAME={ass:'Assassination',dis:'Discovery',fea:'Feats',tar:'Targets',cla:'The Classics'};
-const CATSHORT={ass:'ASS',dis:'DIS',fea:'FEAT',tar:'TGT',cla:'CLASSIC'};
-
+/*@runs*/
 /* ============================================================
    RUNS — step schema:
    {t, s, where, disg, item, npc, act, warn, save, badges:[{c,t}]}
@@ -836,176 +982,264 @@ const RUNS = [
  ]
 }
 ];
+/*/@runs*/
 
-/* ============================================================
-   RENDER
-   ============================================================ */
-const state={}; CH.forEach(c=>state[c.id]=false);
-try{const saved=JSON.parse(localStorage.getItem('dartmoor_state_v1')||'null');if(saved)Object.keys(saved).forEach(k=>{if(k in state)state[k]=!!saved[k];});}catch(e){}
-function reportProgress(){try{const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r['m20']={done:CH.filter(c=>state[c.id]).length,total:CH.length,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
-/* `state` only accepts known challenge ids on load, so route steps get their
-   own store rather than being silently dropped */
-const stepDone=new Set();
-try{const _s=JSON.parse(localStorage.getItem('dartmoor_state_v1:steps')||'[]');_s.forEach(k=>stepDone.add(k));}catch(e){}
-function saveState(){try{localStorage.setItem('dartmoor_state_v1',JSON.stringify(state));localStorage.setItem('dartmoor_state_v1:steps',JSON.stringify([...stepDone]));}catch(e){}reportProgress();}
-function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+/* ---------------- STATE ----------------
+   Both keys keep their names and their shapes. 'dartmoor_state_v1' is written
+   the way the previous edition wrote it — a map of every challenge id to a
+   boolean, not a list of the cleared ones — and 'dartmoor_state_v1:steps' is
+   the array of note ids, which are still 's0' … 's48' numbered down the page.
+   An existing file therefore survives the rebuild untouched. */
+let done=new Set(), notes=new Set(), filter='all';
+try{
+  const o=JSON.parse(localStorage.getItem('dartmoor_state_v1')||'null');
+  if(Array.isArray(o))o.forEach(k=>done.add(k));
+  else if(o)Object.keys(o).forEach(k=>{if(o[k])done.add(k);});
+}catch(e){}
+try{const s=localStorage.getItem('dartmoor_state_v1:steps');if(s)notes=new Set(JSON.parse(s));}catch(e){}
 
-function refresh(){
-  const done=CH.filter(c=>state[c.id]).length;
-  document.getElementById('tDone').textContent=done;
-  document.getElementById('tBar').style.width=(done/CH.length*100)+'%';
-  ['ass','dis','fea','tar','cla'].forEach(()=>{});
-  document.getElementById('cats').innerHTML=['ass','dis','fea','tar','cla'].map(k=>{
-    const all=CH.filter(c=>c.cat===k),d=all.filter(c=>state[c.id]).length;
-    return `<div class="cat"><b>${CATNAME[k]}</b><span>${d}<i>/${all.length}</i></span></div>`;
+function reportProgress(){
+  try{
+    const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');
+    r['m20']={done:CH.filter(c=>done.has(c.id)).length,total:CH.length,updated:Date.now()};
+    localStorage.setItem('hitman-progress-registry',JSON.stringify(r));
+  }catch(e){}
+}
+function sv(){
+  try{
+    const map={};
+    CH.forEach(c=>{map[c.id]=done.has(c.id)});
+    localStorage.setItem('dartmoor_state_v1',JSON.stringify(map));
+    localStorage.setItem('dartmoor_state_v1:steps',JSON.stringify([...notes]));
+  }catch(e){}
+  reportProgress();
+}
+
+const $=s=>document.getElementById(s);
+const esc=s=>String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
+
+const CATS=['ass','dis','fea','tar','cla'];
+const CATLABEL={ass:'Assassination',dis:'Discovery',fea:'Feats',tar:'Target',cla:'Classics'};
+const CATVAR={ass:'var(--ass)',dis:'var(--dis)',fea:'var(--fea)',tar:'var(--tar)',cla:'var(--cla)'};
+const byCat=k=>CH.filter(c=>c.cat===k);
+const catDone=k=>byCat(k).filter(c=>done.has(c.id)).length;
+const cleared=()=>CH.filter(c=>done.has(c.id)).length;
+
+/* ---------------- NOTES AND WHAT THEY CLEAR ----------------
+   A note names its challenges in words. Some of those names carry the guide's
+   own running counter — "Chameleon 1/8", "Discover Dartmoor (22/22)" — and a
+   counter only completes the challenge when it has run out, so a badge is
+   matched on its bare name, and again with a trailing n/n stripped but only
+   when the two numbers agree. Everything else ("Bug status unverified") names
+   no challenge and stays a plain label. */
+const flat=s=>String(s).replace(/<[^>]+>/g,'').toLowerCase().replace(/[^a-z0-9]/g,'');
+const NAME2ID={};
+CH.forEach(c=>{NAME2ID[flat(c.name)]=c.id});
+function badgeId(t){
+  const direct=NAME2ID[flat(t)];
+  if(direct)return direct;
+  const m=String(t).match(/^(.*?)[\s(]*(\d+)\s*\/\s*(\d+)\)?$/);
+  if(m&&m[2]===m[3]){const id=NAME2ID[flat(m[1])];if(id)return id;}
+  return null;
+}
+
+let noteNo=0;
+const NOTE_CH={}, ALL_NOTES=[], ENQ_OF={};
+RUNS.forEach((r,ri)=>r.sections.forEach(sec=>sec.steps.forEach(st=>{
+  st._id='s'+(noteNo++);
+  ALL_NOTES.push(st._id);
+  NOTE_CH[st._id]=(st.badges||[]).map(b=>badgeId(b.t)).filter(Boolean);
+  NOTE_CH[st._id].forEach(id=>{if(!ENQ_OF[id])ENQ_OF[id]=r.no;});
+})));
+const runNotes=r=>{const out=[];r.sections.forEach(s=>s.steps.forEach(t=>out.push(t._id)));return out;};
+const runTaken=r=>runNotes(r).filter(id=>notes.has(id)).length;
+const runFull=r=>{const n=runNotes(r);return n.length>0&&n.every(id=>notes.has(id));};
+
+/* ---------------- THE FINGERPRINT ----------------
+   Fourteen ridges for the whole export: one inks in for each 1/14th of it, and
+   the card only reads MATCH when the last challenge is down. */
+const RIDGES=14;
+(function drawPrint(){
+  let out='';
+  for(let i=0;i<RIDGES;i++){
+    /* nested loops with a gap in each, the way a whorl actually reads;
+       pathLength normalises every ridge to 100 so one dash pattern fits all */
+    const rx=7+i*4.3, ry=9+i*5.8;
+    const gap=9+(i%3)*3, off=-(26+i*4);
+    out+=`<ellipse class="ridge" id="ridge${i}" cx="70" cy="95" rx="${rx.toFixed(1)}" ry="${ry.toFixed(1)}"
+      pathLength="100" stroke-dasharray="${100-gap} ${gap}" stroke-dashoffset="${off}"
+      transform="rotate(${-8+i*0.9} 70 95)"/>`;
+  }
+  /* the core, and two ridge endings off to the side */
+  out+='<path class="ridge" id="ridgecore" d="M63,92 a7,9 0 1 1 13,4" pathLength="100"/>';
+  const g=$('ridges');
+  if(g)g.innerHTML=out;
+})();
+
+function renderCard(){
+  const n=cleared(), frac=CH.length?n/CH.length:0;
+  const lit=n===0?0:Math.max(1,Math.round(frac*RIDGES));
+  for(let i=0;i<RIDGES;i++){
+    const el=$('ridge'+i);
+    if(el)el.classList.toggle('on',i<lit);
+  }
+  const core=$('ridgecore');
+  if(core)core.classList.toggle('on',lit>0);
+  const full=CH.length>0&&n===CH.length;
+  $('printcard').classList.toggle('match',full);
+  $('printcap').textContent=full?'Match — case closed'
+    :n===0?'No ridges inked':lit+' of '+RIDGES+' ridges inked';
+  $('numDone').textContent=n;
+  $('numOf').textContent='/ '+CH.length+' challenges';
+  $('subcount').textContent=[...notes].filter(k=>NOTE_CH[k]!==undefined).length+' of '+
+    ALL_NOTES.length+' notes taken across '+RUNS.length+' lines of enquiry';
+  $('idxtabs').innerHTML=CATS.map(k=>{
+    const t=byCat(k).length, d=catDone(k);
+    return `<button type="button" class="idx${t&&d===t?' full':''}" data-f="${k}"
+      style="--m:${CATVAR[k]}"><span class="k">${CATLABEL[k]}</span>
+      <span class="v">${d} / ${t}</span>
+      <span class="fill"><i style="width:${t?d/t*100:0}%"></i></span></button>`;
   }).join('');
-  document.querySelectorAll('.crow').forEach(r=>{
-    const on=state[r.dataset.id]; r.dataset.done=on?'1':'0';
-    const t=r.querySelector('.tick'); t.dataset.done=on?'1':'0'; t.textContent=on?'✓':'';
-  });
 }
 
-/* runs */
-function badgeHTML(b){return `<span class="b ${b.c}">${esc(b.t)}</span>`}
-function drow(k,v){return v?`<div class="drow"><div class="k">${k}</div><div class="v">${esc(v)}</div></div>`:''}
-function stepDetail(st){
-  let h='';
-  h+=drow('Where',st.where);
-  h+=drow('Disguise',st.disg);
-  h+=drow('Item',st.item);
-  h+=drow('NPC',st.npc);
-  h+=drow('Action',st.act);
-  h+=drow('Warning',st.warn);
-  let bs=[];
-  if(st.warn)bs.push('<span class="b warn">Warning</span>');
-  if(st.save)bs.push('<span class="b save">Save here</span>');
-  (st.badges||[]).forEach(b=>bs.push(badgeHTML(b)));
-  if(bs.length)h+=`<div class="badges">${bs.join('')}</div>`;
-  return h;
+/* ---------------- THE LINES OF ENQUIRY ---------------- */
+function badgeHTML(b){
+  const id=badgeId(b.t);
+  if(!id)return `<span class="badge plain">${esc(b.t)}</span>`;
+  const c=CH.find(x=>x.id===id), on=done.has(id);
+  return `<button type="button" class="badge" role="switch" aria-checked="${on}"
+    data-ch="${esc(id)}" style="--m:${CATVAR[c.cat]}">${esc(b.t)}</button>`;
 }
 
-let sN=0;
-document.getElementById('runList').innerHTML=RUNS.map((r,ri)=>`
-<article class="run" id="run${ri}" data-open="${ri===0?'1':'0'}">
-  <div class="run-head" data-runtog="${ri}">
-    <span class="run-chev">▸</span>
-    <div class="run-head-main">
-      <span class="run-no">${esc(r.no)}</span>
-      <h2>${esc(r.title)}</h2>
-      <p>${esc(r.goal)}</p>
-    </div>
-  </div>
-  <div class="run-body">
-    <div class="loadout">
-      <div class="lo"><b>Start</b><span>${esc(r.loadout.start)}</span></div>
-      <div class="lo"><b>Suit</b><span>${esc(r.loadout.suit)}</span></div>
-      ${r.loadout.items.map((it,i)=>`<div class="lo"><b>Slot ${i+1}</b><span>${esc(it)}</span></div>`).join('')}
-    </div>
-    <p class="run-note">${esc(r.note)}</p>
-    ${r.sections.map(s=>`
-      <div class="sect">
-        <p class="sect-h">${esc(s.h)}</p>
-        ${s.steps.map(st=>{
-          const id='s'+(sN++);
-          return `<div class="step" id="${id}" data-sopen="0">
-            <button class="tick" data-step="${id}" aria-label="Mark step complete"></button>
-            <div class="step-body">
-              <div class="step-head" data-steptog="${id}">
-                <span class="schev">▸</span>
-                <div>
-                  <p class="step-title">${esc(st.t)}</p>
-                  <p class="step-sum">${esc(st.s)}</p>
-                </div>
-              </div>
-              <div class="detail">${stepDetail(st)}</div>
-            </div>
-          </div>`;
-        }).join('')}
-      </div>`).join('')}
-    <div style="height:16px"></div>
-  </div>
-</article>`).join('');
+function fieldHTML(k,v){
+  return v&&v!=='—'?`<div class="frow"><div class="fk">${k}</div><div class="fv">${esc(v)}</div></div>`:'';
+}
 
-/* run nav */
-document.getElementById('runNav').innerHTML=RUNS.map((r,ri)=>
-  `<button data-jump="${ri}"><b>${esc(r.no)}</b>${esc(r.short)}</button>`).join('');
-document.getElementById('runNav').addEventListener('click',e=>{
-  const b=e.target.closest('button'); if(!b)return;
-  const ri=b.dataset.jump;
-  const run=document.getElementById('run'+ri);
-  run.dataset.open='1';
-  document.querySelectorAll('.run-nav button').forEach(x=>x.classList.toggle('active',x===b));
-  run.scrollIntoView({behavior:'smooth',block:'start'});
-});
-
-document.getElementById('runList').addEventListener('click',e=>{
-  const rt=e.target.closest('[data-runtog]');
-  if(rt){const run=document.getElementById('run'+rt.dataset.runtog);
-    run.dataset.open=run.dataset.open==='1'?'0':'1'; return}
-  const stt=e.target.closest('[data-steptog]');
-  if(stt){const step=document.getElementById(stt.dataset.steptog);
-    step.dataset.sopen=step.dataset.sopen==='1'?'0':'1'; return}
-  const t=e.target.closest('.tick');
-  if(t){const step=document.getElementById(t.dataset.step);
-    const on=step.dataset.done!=='1';
-    step.dataset.done=on?'1':'0'; t.dataset.done=on?'1':'0'; t.textContent=on?'✓':'';
-    on?stepDone.add(t.dataset.step):stepDone.delete(t.dataset.step); saveState()}
-});
-
-/* checklist */
-let filter='all';
-function drawList(){
-  const rows=CH.filter(c=>filter==='all'?true:filter==='inc'?!state[c.id]:c.cat===filter);
-  const el=document.getElementById('clist');
-  el.innerHTML=rows.length?rows.map(c=>`
-    <div class="crow" data-id="${c.id}" data-done="${state[c.id]?'1':'0'}">
-      <button class="tick" data-check="${c.id}" data-done="${state[c.id]?'1':'0'}" aria-label="Mark complete">${state[c.id]?'✓':''}</button>
-      <div class="crow-main">
-        <p class="crow-name">${esc(c.name)} <span class="b ${c.cat}">${CATSHORT[c.cat]}</span>${c.xp?`<span class="xp">${esc(c.xp)} XP</span>`:''}</p>
-        <p class="crow-cond">${esc(c.cond)}</p>
+function noteHTML(st){
+  const on=notes.has(st._id);
+  return `<div class="step${on?' done':''}" id="note-${st._id}">
+    <button type="button" class="mark" data-step="${st._id}" aria-pressed="${on}"
+      aria-label="${esc('Mark the note: '+String(st.t).replace(/<[^>]+>/g,''))}"></button>
+    <div class="swrap">
+      <p class="stitle">${esc(st.t)}</p>
+      ${st.s?`<p class="ssum">${esc(st.s)}</p>`:''}
+      <div class="fields">
+        ${fieldHTML('Where',st.where)}
+        ${fieldHTML('Disguise',st.disg)}
+        ${fieldHTML('Item',st.item)}
+        ${fieldHTML('NPC',st.npc)}
+        ${fieldHTML('Action',st.act)}
       </div>
-    </div>`).join(''):`<div class="empty">Nothing left in this filter.</div>`;
+      ${st.warn?`<p class="caution"><span class="m">In the margin</span>${esc(st.warn)}</p>`:''}
+      ${st.save?'<span class="savetag">Mark the file here</span>':''}
+      ${(st.badges||[]).length?`<div class="badges">${st.badges.map(badgeHTML).join('')}</div>`:''}
+    </div>
+  </div>`;
 }
-document.getElementById('filters').innerHTML=
-  [['all','All (58)'],['ass','Assassination (12)'],['dis','Discovery (19)'],['fea','Feats (21)'],['tar','Targets (1)'],['cla','Classics (5)'],['inc','Incomplete']]
-  .map(([k,l])=>`<button data-f="${k}" aria-pressed="${k==='all'}">${l}</button>`).join('');
-document.getElementById('filters').addEventListener('click',e=>{
-  const b=e.target.closest('button'); if(!b)return;
-  filter=b.dataset.f;
-  document.querySelectorAll('#filters button').forEach(x=>x.setAttribute('aria-pressed',x===b));
-  drawList();
-});
-document.getElementById('clist').addEventListener('click',e=>{
-  const t=e.target.closest('.tick'); if(!t)return;
-  state[t.dataset.check]=!state[t.dataset.check]; saveState(); drawList(); refresh();
-});
-document.getElementById('reset').addEventListener('click',()=>{
-  CH.forEach(c=>state[c.id]=false); stepDone.clear();
-  document.querySelectorAll('.step').forEach(s=>{s.dataset.done='0';
-    const t=s.querySelector('.tick'); t.dataset.done='0'; t.textContent=''});
-  saveState(); drawList(); refresh();
-});
 
-/* tabs */
-document.querySelectorAll('nav.tabs button').forEach(b=>{
-  b.addEventListener('click',()=>{
-    document.querySelectorAll('nav.tabs button').forEach(x=>x.setAttribute('aria-selected',x===b));
-    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
-    document.getElementById('p-'+b.dataset.panel).classList.add('on');
-    window.scrollTo({top:0,behavior:'smooth'});
+function renderEnquiries(){
+  $('enqnav').innerHTML=RUNS.map((r,i)=>{
+    const n=runNotes(r), d=runTaken(r);
+    return `<button type="button" class="ejump${runFull(r)?' full':''}" data-jump="${i}">
+      <b>${esc(r.no)}</b>${esc(r.short)}<span class="pg">${d}/${n.length}</span></button>`;
+  }).join('')+
+  `<button type="button" class="ejump" data-toggleall="1">Open / close every file</button>`;
+
+  $('enquiries').innerHTML=RUNS.map((r,i)=>{
+    const ids=runNotes(r), d=runTaken(r), open=!!openRun[i];
+    const body=r.sections.map(sec=>{
+      const keys=sec.steps.map(s=>s._id), sn=keys.filter(k=>notes.has(k)).length;
+      return `<h3 class="head">${esc(sec.h)}<span class="cnt">${sn} / ${keys.length} notes</span></h3>`+
+        sec.steps.map(noteHTML).join('');
+    }).join('');
+    const lo=r.loadout||{};
+    return `<article class="enq${runFull(r)?' full':''}" id="enq-${i}">
+      <button type="button" class="ehead" data-run="${i}" aria-expanded="${open}"
+        aria-controls="ebody-${i}">
+        <span class="fileno">${esc(r.no)}</span>
+        <span class="emain">
+          <span class="elbl">Line of enquiry &middot; ${esc(r.short)}</span>
+          <span class="etitle">${esc(r.title)}</span>
+          <span class="egoal">${esc(r.goal)}</span>
+          <span class="etally">${d} of ${ids.length} notes taken${open?'':' &middot; open the file to work through it'}</span>
+        </span>
+      </button>
+      <div class="ebody" id="ebody-${i}"${open?'':' hidden'}>
+        ${r.note?`<p class="slip">${esc(r.note)}</p>`:''}
+        <div class="carried">
+          ${lo.start?`<div class="slot"><span class="k">Start</span><span class="v">${esc(lo.start)}</span></div>`:''}
+          ${lo.suit?`<div class="slot"><span class="k">Suit</span><span class="v">${esc(lo.suit)}</span></div>`:''}
+          ${lo.items&&lo.items.length?`<div class="slot"><span class="k">Carried</span><span class="v">${
+            lo.items.map(x=>`<span>${esc(x)}</span>`).join('')}</span></div>`:''}
+        </div>
+        ${body}
+      </div>
+    </article>`;
+  }).join('');
+}
+
+/* ---------------- THE SCHEDULE OF EXHIBITS ---------------- */
+function renderList(){
+  const F=[['all','Whole schedule '+CH.length]]
+    .concat(CATS.map(k=>[k,CATLABEL[k]+' '+byCat(k).length]))
+    .concat([['todo','Outstanding '+(CH.length-cleared())]]);
+  $('filters').innerHTML=F.map(([k,l])=>
+    `<button type="button" data-f="${k}" aria-pressed="${filter===k}">${esc(l)}</button>`).join('');
+
+  let out='', ex=0;
+  CATS.forEach(cat=>{
+    const all=byCat(cat);
+    if(filter!=='all'&&filter!=='todo'&&filter!==cat){ex+=all.length;return;}
+    let rows=all.map((c,i)=>({c,no:ex+i+1}));
+    ex+=all.length;
+    if(filter==='todo')rows=rows.filter(x=>!done.has(x.c.id));
+    if(!rows.length)return;
+    out+=`<h3 class="grp" style="--m:${CATVAR[cat]}">${CATLABEL[cat]}
+      <span class="n">${catDone(cat)} of ${all.length} cleared</span></h3>`;
+    out+=rows.map(({c,no})=>{
+      const on=done.has(c.id);
+      return `<div class="crow${on?' done':''}" style="--m:${CATVAR[c.cat]}">
+        <button type="button" class="mark" data-ch="${esc(c.id)}" aria-pressed="${on}"
+          aria-label="${esc('Clear '+c.name)}"></button>
+        <div>
+          <p class="cnm"><span class="exno">EX ${String(no).padStart(2,'0')}</span> ${esc(c.name)}</p>
+          <p class="ccond">${esc(c.cond)}</p>
+        </div>
+        <span class="cmeta">
+          <span>${esc(ENQ_OF[c.id]||'Across files')}</span>
+          ${c.xp?`<span class="xp">${esc(c.xp)} XP</span>`:''}
+        </span>
+      </div>`;
+    }).join('');
   });
-});
+  $('checklist').innerHTML=out||'<p class="empty">Nothing outstanding under this heading.</p>';
+}
 
-/* re-apply saved step ticks now the runs are in the DOM */
-stepDone.forEach(id=>{
-  const step=document.getElementById(id); if(!step)return;
-  step.dataset.done='1';
-  const t=step.querySelector('.tick'); if(t){t.dataset.done='1'; t.textContent='✓';}
-});
+/* Wide tables in the lifted reference and audit sheets scroll inside their own
+   box rather than pushing the page sideways — done here rather than by editing
+   the lifted markup. */
+function wrapTables(){
+  ['p-ref','p-audit'].forEach(id=>{
+    const box=$(id);
+    if(!box)return;
+    box.querySelectorAll('table').forEach(t=>{
+      if(t.parentElement&&t.parentElement.classList.contains('tablewrap'))return;
+      const w=document.createElement('div');
+      w.className='tablewrap';
+      t.parentNode.insertBefore(w,t);
+      w.appendChild(t);
+    });
+  });
+}
 
-drawList(); refresh(); reportProgress();
+const openRun={};
+function render(){renderEnquiries();renderList();renderCard();}
 
-/* ============================================================ REFERENCE ============================================================ */
+/* The reference and audit sheets, lifted whole out of the previous edition
+   as the statements that write them — never retyped, and fenced with HTML
+   comments so the assembler finds them again on the next run. */
+<!--@ref-->
 document.getElementById('p-ref').innerHTML = `
 <h2>Starting locations &amp; mastery</h2>
 <div class="callout amberc"><b>Single source, internally inconsistent</b>
@@ -1086,8 +1320,9 @@ This table comes from one guide (DBLTAP). It lists "Behind Mansion" as a start a
 <h2>XP &amp; patch notes</h2>
 <div class="callout amberc"><b>Mostly unpublished</b>Per-challenge XP is not in the sources reached. Confirmed: <strong>Another Death in the Family</strong> = 4,000 XP; the full <strong>Classics</strong> set in one run &asymp; 20,000 XP; <strong>It's a Fhammerly Affair</strong> = 2,000 XP per the wiki (single source) and unlocks the Claw Hammer. <strong>It's a Fhammerly Affair was added in the Season of Envy update (October 2021)</strong>, alongside Berlin's "Who's Sniping the Sniper" &mdash; the only patch-added challenge among the 58. Everything else is left blank rather than estimated.</div>
 `;
+<!--/@ref-->
 
-/* ============================================================ AUDIT ============================================================ */
+<!--@audit-->
 document.getElementById('p-audit').innerHTML = `
 <h2>Verification report</h2>
 <p>This version is rebuilt around the mission's own challenge export you supplied, which is the strongest source available and replaces the earlier web-guide counts.</p>
@@ -1166,7 +1401,91 @@ The re-extraction from Peacock v8.7.0 carries a thirteenth Assassination challen
 <div class="callout neutral"><b>Confidence summary</b>
 The 58-count, the corrected descriptions and the run structure follow directly from the export and multi-source rules, and are high-confidence. The mastery ranks, XP figures and specific bug claims are the soft spots &mdash; confirm those on your own screen before planning a session around them.</div>
 `;
+<!--/@audit-->
 
+/* ---------------- EVENTS ---------------- */
+const tabs=[...document.querySelectorAll('.tab')];
+function selectTab(tb){
+  tabs.forEach(x=>{
+    const on=x===tb;
+    x.setAttribute('aria-selected',String(on));
+    x.tabIndex=on?0:-1;
+    $(x.getAttribute('aria-controls')).hidden=!on;
+  });
+}
+tabs.forEach((tb,i)=>{
+  tb.tabIndex=tb.getAttribute('aria-selected')==='true'?0:-1;
+  tb.addEventListener('keydown',e=>{
+    const d=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;
+    if(!d)return;
+    e.preventDefault();
+    const next=tabs[(i+d+tabs.length)%tabs.length];
+    selectTab(next);next.focus();
+  });
+});
+
+document.addEventListener('click',e=>{
+  const t=e.target;
+
+  /* a challenge is a control wherever it is named — on its line in the
+     schedule, or on the note that clears it */
+  const cb=t.closest('[data-ch]');
+  if(cb){
+    const id=cb.dataset.ch;
+    done.has(id)?done.delete(id):done.add(id);
+    sv();render();return;
+  }
+
+  const sb=t.closest('[data-step]');
+  if(sb){
+    const id=sb.dataset.step, now=!notes.has(id);
+    now?notes.add(id):notes.delete(id);
+    /* taking a note clears what it clears; striking it out again leaves those
+       cleared, because another note may cover the same one */
+    if(now)(NOTE_CH[id]||[]).forEach(c=>done.add(c));
+    sv();render();return;
+  }
+
+  const rh=t.closest('[data-run]');
+  if(rh){const i=+rh.dataset.run;openRun[i]=!openRun[i];renderEnquiries();return;}
+
+  const jp=t.closest('[data-jump]');
+  if(jp){
+    const i=+jp.dataset.jump;
+    selectTab($('tab-runs'));
+    openRun[i]=true;renderEnquiries();
+    $('enq-'+i).scrollIntoView({behavior:'smooth',block:'start'});return;
+  }
+
+  const ta=t.closest('[data-toggleall]');
+  if(ta){
+    const anyClosed=RUNS.some((r,i)=>!openRun[i]);
+    RUNS.forEach((r,i)=>{openRun[i]=anyClosed});
+    renderEnquiries();return;
+  }
+
+  /* the folder's index tabs are filters into the schedule, so they open it */
+  const fb=t.closest('[data-f]');
+  if(fb){
+    filter=fb.dataset.f;
+    if(fb.classList.contains('idx'))selectTab($('tab-list'));
+    renderList();return;
+  }
+
+  const tb=t.closest('.tab');
+  if(tb){selectTab(tb);return;}
+});
+
+$('reset').addEventListener('click',()=>{
+  if(!confirm('Close the file and clear it? All '+CH.length+' challenges and every note on this guide are cleared. Other guides are not affected.'))return;
+  done=new Set();notes=new Set();
+  sv();render();
+});
+
+openRun[0]=true;
+render();
+wrapTables();
+reportProgress();
 </script>
 <!-- step-progress-bridge -->
 <script>

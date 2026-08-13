@@ -3,250 +3,453 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>A Silver Tongue — Step Run Sheet</title>
+<title>A Silver Tongue — the Atlantide launch kit</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Expanded:wght@600;700&family=Barlow+Condensed:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Figtree:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
+/* ═══ MIAMI — the Atlantide launch kit ═══
+   Ajit Krish does not run a race team; he sells flavoured water to the people
+   watching one, and every challenge on this mission is a way of turning his
+   own product against him — a poisoned cup, an electrified puddle, a bottle
+   fired off a rooftop, an unquenchable thirst. So the guide is the product:
+   a die-cut label sheet off the Atlantide press. The tracker is the bottle,
+   filling as challenges land. The categories are a nutrition panel. Runs are
+   production batches with lot codes and a foil seal, steps are fill entries
+   ticked with a crown cap, and the checklist is the ingredients declaration.
+   Glossy consumer plastic — never the racetrack telemetry the other Miami
+   guide will want. */
 :root{
-  --deep:#06202B; --panel:#0B2B39; --line:#1A4E62;
-  --aqua:#38E1D4; --flamingo:#FF5C8A; --sun:#FFB627; --danger:#FF4D4D;
-  --violet:#C9A9FF; --sand:#EFEAE0; --muted:#8FB3BE; --radius:3px;
-  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
-  --cond:"Barlow Condensed","Arial Narrow",sans-serif;
-  --disp:"Archivo Expanded","Archivo",Helvetica,sans-serif;
+  --stock:#e9eef0; --card:#ffffff; --card-2:#f5f9fa;
+  --ink:#07202a; --ink-2:#3d5f6a; --faint:#7d99a2;
+  --aqua:#009fb2; --aqua-2:#00c8d8; --deep:#00323c;
+  --lime:#b7e600; --coral:#e8384f; --amber:#e08700; --blue:#2559d8;
+  --line:rgba(7,32,42,.14); --line-2:rgba(7,32,42,.08); --line-3:rgba(7,32,42,.045);
+  --disp:"Archivo Black","Arial Black",Impact,Helvetica,sans-serif;
+  --body:"Figtree",system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+  --mono:"DM Mono",ui-monospace,SFMono-Regular,Consolas,"Courier New",monospace;
+  --r:14px;
 }
 *{box-sizing:border-box}
-html,body{margin:0;padding:0}
+html{scroll-behavior:smooth}
 body{
-  background:radial-gradient(1200px 600px at 15% -10%,#10465A 0%,transparent 60%),
-             radial-gradient(900px 500px at 100% 0%,#2A1230 0%,transparent 55%),var(--deep);
-  color:var(--sand);font-family:var(--cond);font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased;
-}
-.wrap{max-width:1120px;margin:0 auto;padding:0 20px 90px}
+  margin:0;color:var(--ink);background-color:var(--stock);
+  /* a gloss across the sheet, and the faint cyan the press lays down first */
+  background-image:
+    linear-gradient(122deg,rgba(255,255,255,.85) 0 22%,rgba(255,255,255,0) 46%),
+    radial-gradient(900px 480px at 88% -6%,rgba(0,200,216,.16),transparent 62%),
+    radial-gradient(700px 420px at 2% 96%,rgba(183,230,0,.14),transparent 60%);
+  background-attachment:fixed;
+  font-family:var(--body);font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1080px;margin:0 auto;padding:0 18px 96px}
+a{color:var(--aqua)}
+b,strong{font-weight:700}
+:focus-visible{outline:3px solid var(--aqua);outline-offset:2px}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:12px;top:12px;z-index:60;background:var(--ink);color:#fff;padding:9px 14px;font-weight:700;border-radius:6px}
+.code{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
 
-header.masthead{padding:44px 0 18px;border-bottom:1px solid var(--line)}
-.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--aqua);margin:0 0 12px}
-h1{font-family:var(--disp);font-weight:700;font-size:clamp(30px,5.4vw,58px);line-height:.98;margin:0 0 10px}
-h1 .sub{display:block;color:var(--flamingo)}
-.dek{max-width:64ch;color:var(--muted);font-size:19px;margin:0 0 20px}
-.factstrip{display:flex;flex-wrap:wrap;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin-bottom:8px}
-.fact{flex:1 1 150px;padding:10px 14px;border-right:1px solid var(--line);background:rgba(255,255,255,.02)}
-.fact:last-child{border-right:none}
-.fact b{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
-.fact span{font-size:18px;font-weight:600}
+/* ── the label ─────────────────────────────────────────────────────────────
+   Everything above the tabs is one die-cut label: rounded corners, a printed
+   keyline set in from the die, and a perforated shelf strip along the top. */
+header.label{position:relative;margin-top:22px;background:var(--card);border-radius:var(--r);
+  box-shadow:0 1px 0 rgba(255,255,255,.9) inset,0 10px 30px -18px rgba(7,32,42,.5);
+  overflow:hidden}
+header.label::after{content:"";position:absolute;inset:9px;border:1.5px dashed rgba(0,159,178,.34);
+  border-radius:8px;pointer-events:none}
+.shelf{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;justify-content:space-between;
+  padding:9px 16px;background:var(--deep);color:#bfe6ec;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase}
+.shelf a{color:#bfe6ec;text-decoration:none;border-bottom:1px solid rgba(191,230,236,.4)}
+.shelf a:hover{color:#fff;border-color:#fff}
+.shelf .lot{color:var(--lime)}
 
-.verif{margin:22px 0 0;border-left:3px solid var(--sun);background:rgba(255,182,39,.07);padding:14px 18px;border-radius:0 var(--radius) var(--radius) 0}
-.verif h3{margin:0 0 6px;font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--sun)}
-.verif p{margin:0 0 8px;font-size:16px;color:#E4DFD3}
-.verif p:last-child{margin-bottom:0}
+.label-body{display:grid;grid-template-columns:minmax(0,1fr) 210px;gap:20px;padding:26px 26px 8px}
+.brand{margin:0 0 10px;font-family:var(--mono);font-size:11px;letter-spacing:.34em;
+  text-transform:uppercase;color:var(--aqua)}
+.brand i{font-style:normal;color:var(--faint)}
+h1.title{font-family:var(--disp);font-size:clamp(38px,8.4vw,80px);line-height:.88;margin:0 0 14px;
+  letter-spacing:-.028em;text-transform:uppercase;color:var(--ink)}
+h1.title em{font-style:normal;-webkit-text-stroke:2px var(--aqua);color:transparent;
+  paint-order:stroke fill}
+.dek{margin:0 0 16px;color:var(--ink-2);font-size:15px;max-width:62ch}
+.facts{display:flex;flex-wrap:wrap;gap:1px;
+  background:var(--line-2);border:1px solid var(--line-2);border-radius:8px;overflow:hidden}
+.facts .fact{flex:1 1 118px;background:var(--card-2);padding:8px 11px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.facts .fact b{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--faint);font-weight:400}
+.facts .fact span{font-weight:600;font-size:14px;overflow-wrap:anywhere}
 
-.board{margin:28px 0 0;border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(180deg,rgba(56,225,212,.06),rgba(0,0,0,.15));overflow:hidden}
-.board-top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 18px 12px;flex-wrap:wrap}
-.board-title{font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
-.board-count{font-family:var(--disp);font-size:34px;line-height:1}
-.board-count small{font-family:var(--mono);font-size:13px;color:var(--muted)}
-.xp{font-family:var(--mono);font-size:13px;color:var(--aqua)}
-.track{height:10px;background:rgba(0,0,0,.35);position:relative;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.track .fill{height:100%;width:0;background:linear-gradient(90deg,var(--aqua),var(--flamingo));transition:width .45s cubic-bezier(.2,.7,.3,1)}
-.track .ticks{position:absolute;inset:0;display:flex;pointer-events:none}
-.track .ticks i{flex:1;border-right:1px solid rgba(255,255,255,.07)}
-.sectors{display:grid;grid-template-columns:repeat(5,1fr)}
-.sector{padding:12px 14px;border-right:1px solid var(--line)}
-.sector:last-child{border-right:none}
-.sector b{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
-.sector .num{font-family:var(--disp);font-size:22px;line-height:1}
-.sector .num em{font-style:normal;color:var(--muted);font-size:14px;font-family:var(--mono)}
-.sector.done .num{color:var(--aqua)}
-.btn{background:none;border:1px solid var(--line);color:var(--muted);font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:7px 12px;border-radius:var(--radius);cursor:pointer}
-.btn:hover{border-color:var(--flamingo);color:var(--flamingo)}
+/* the bottle: the whole tracker is how full it is */
+.bottle{align-self:end}
+.bottle svg{display:block;width:100%;height:auto;max-height:290px}
+.glass{fill:none;stroke:var(--ink);stroke-width:3;stroke-linejoin:round}
+.cap{fill:var(--ink)}
+.grad{stroke:rgba(7,32,42,.3);stroke-width:1.4}
+.gradl{font-family:"DM Mono",monospace;font-size:9px;fill:var(--faint)}
+.juice{fill:url(#juice)}
+.foam{fill:rgba(255,255,255,.55)}
+.bub{fill:rgba(255,255,255,.7)}
+@keyframes rise{0%{transform:translateY(0);opacity:0}12%{opacity:.9}100%{transform:translateY(-96px);opacity:0}}
+.bub{animation:rise 5.4s linear infinite}
+.bub:nth-of-type(2){animation-delay:1.7s}
+.bub:nth-of-type(3){animation-delay:3.2s}
+.fill-read{text-align:center;margin-top:8px}
+.fill-read b{display:block;font-family:var(--disp);font-size:30px;line-height:1;letter-spacing:-.02em}
+.fill-read b small{font-family:var(--body);font-weight:600;font-size:14px;color:var(--faint)}
+.fill-read span{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
 
-nav.tabs{display:flex;margin:30px 0 22px;border-bottom:1px solid var(--line);flex-wrap:wrap}
-nav.tabs button{background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;padding:12px 18px;cursor:pointer}
-nav.tabs button[aria-selected="true"]{color:var(--sand);border-bottom-color:var(--flamingo)}
-nav.tabs button:hover{color:var(--sand)}
-.panel[hidden]{display:none}
+/* ── the nutrition panel: categories, declared like a legal panel ───────── */
+.nutri{margin:18px 26px 0;border:3px solid var(--ink);border-radius:6px;background:#fff}
+.nutri-h{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:baseline;justify-content:space-between;
+  padding:8px 13px 7px;border-bottom:7px solid var(--ink)}
+.nutri-h b{font-family:var(--disp);font-size:20px;letter-spacing:-.02em;text-transform:uppercase}
+.nutri-h span{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+.nrow{display:grid;grid-template-columns:minmax(0,1fr) 74px 92px;gap:10px;align-items:center;
+  padding:7px 13px;border-bottom:1px solid var(--line)}
+.nrow:last-child{border-bottom:0}
+.nrow .n{font-weight:700;font-size:14.5px;min-width:0}
+.nrow .n s{display:block;text-decoration:none;font-weight:400;font-size:11px;color:var(--faint);
+  font-family:var(--mono);letter-spacing:.08em;text-transform:uppercase}
+.nrow .v{font-family:var(--mono);font-size:14px;text-align:right;white-space:nowrap}
+.nrow .v em{font-style:normal;color:var(--faint)}
+.nrow .bar{height:9px;border:1.5px solid var(--ink);border-radius:5px;overflow:hidden;background:#fff}
+.nrow .bar i{display:block;height:100%;background:var(--aqua)}
+.nrow.full .bar i{background:var(--lime)}
+.nrow.full .n{color:var(--aqua)}
+.nutri-foot{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;justify-content:space-between;
+  padding:9px 13px;border-top:5px solid var(--ink);background:var(--card-2)}
 
-/* run jump bar */
-.jumpbar{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px;align-items:center}
-.jumpbar .lab{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-right:4px}
-.jump{background:none;border:1px solid var(--line);color:var(--sand);font-family:var(--cond);font-size:15px;font-weight:600;padding:8px 13px;border-radius:var(--radius);cursor:pointer;display:flex;align-items:center;gap:8px}
+/* the barcode along the foot of the label — its digits are the mission's */
+.barcode{display:flex;align-items:flex-end;gap:1.5px;height:38px;margin:16px 26px 0;overflow:hidden}
+.barcode i{display:block;background:var(--ink);height:100%}
+.barnum{margin:3px 26px 0;font-family:var(--mono);font-size:10px;letter-spacing:.5em;color:var(--ink-2)}
+.shake{margin:0 26px 20px;font-family:var(--mono);font-size:9.5px;letter-spacing:.28em;
+  text-transform:uppercase;color:var(--faint)}
+
+.btn{font-family:var(--body);font-weight:700;font-size:12.5px;letter-spacing:.02em;
+  background:var(--ink);color:#fff;border:0;border-radius:999px;padding:8px 15px;cursor:pointer}
+.btn:hover{background:var(--aqua)}
+.btn-ghost{background:transparent;color:var(--ink);border:2px solid var(--line);
+  font-family:var(--body);font-weight:700;font-size:12px;border-radius:999px;padding:6px 13px;cursor:pointer}
+.btn-ghost:hover{border-color:var(--aqua);color:var(--aqua)}
+
+/* ── the maker's notice ────────────────────────────────────────────────── */
+.notice{margin-top:18px;background:var(--card);border-radius:var(--r);border-left:10px solid var(--lime);
+  padding:16px 20px}
+.notice h3,.notice h4{margin:0 0 8px;font-family:var(--disp);font-size:16px;text-transform:uppercase;
+  letter-spacing:-.01em}
+.notice p{margin:0 0 9px;color:var(--ink-2);font-size:14.5px}
+.notice p:last-child{margin-bottom:0}
+.notice code{font-family:var(--mono);font-size:12.5px;background:var(--card-2);padding:1px 5px;border-radius:4px}
+.notice .anchors{font-family:var(--mono);font-size:12px;color:var(--faint);letter-spacing:.01em}
+
+/* ── tabs: the three faces of the label ────────────────────────────────── */
+.tabs{display:flex;gap:6px;margin:22px 0 0;flex-wrap:wrap}
+.tab{font-family:var(--disp);font-size:12.5px;letter-spacing:.04em;text-transform:uppercase;
+  background:var(--card);color:var(--ink-2);border:0;border-radius:10px 10px 0 0;
+  padding:11px 17px;cursor:pointer;box-shadow:inset 0 -3px 0 var(--line-2)}
+.tab[aria-selected="true"]{color:var(--ink);box-shadow:inset 0 -4px 0 var(--aqua)}
+.tab:hover{color:var(--ink)}
+.panel{background:var(--card);border-radius:0 var(--r) var(--r) var(--r);padding:20px}
+
+/* ── the batch index ───────────────────────────────────────────────────── */
+.jumpbar{display:flex;flex-wrap:wrap;gap:7px;align-items:center;margin-bottom:16px}
+.jumpbar .jl{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--faint);margin-right:4px}
+.jump{display:flex;align-items:center;gap:8px;background:var(--card-2);border:2px solid var(--line-2);
+  border-radius:999px;padding:5px 13px 5px 6px;font-family:var(--body);font-weight:600;font-size:13px;
+  color:var(--ink);cursor:pointer}
+.jump b{font-family:var(--mono);font-size:11px;background:var(--ink);color:#fff;border-radius:999px;
+  padding:3px 8px;letter-spacing:.06em}
+.jump .pg{font-family:var(--mono);font-size:11px;color:var(--faint)}
 .jump:hover{border-color:var(--aqua)}
-.jump .n{font-family:var(--mono);font-size:10px;color:var(--aqua);letter-spacing:.1em}
-.jump.full{border-color:rgba(56,225,212,.6);background:rgba(56,225,212,.08)}
-.jump.full .n{color:var(--aqua)}
-.expandbar{display:flex;gap:8px;margin:0 0 22px}
+.jump.full{border-color:var(--lime);background:rgba(183,230,0,.14)}
+.jump.full b{background:var(--aqua)}
 
-/* run cards */
-.run{border:1px solid var(--line);border-radius:var(--radius);margin-bottom:16px;background:rgba(255,255,255,.015);scroll-margin-top:14px}
-.run-head{width:100%;text-align:left;background:none;border:none;color:inherit;padding:18px 22px;cursor:pointer;display:flex;gap:16px;align-items:flex-start}
-.run-head .chev{font-family:var(--mono);color:var(--aqua);font-size:15px;padding-top:4px;transition:transform .2s}
-.run.open .run-head .chev{transform:rotate(90deg)}
-.run-head .meat{flex:1;min-width:0}
-.run-tag{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--flamingo);margin-bottom:7px}
-.run-head h2{font-family:var(--disp);font-size:clamp(19px,2.7vw,26px);margin:0 0 8px;line-height:1.06}
-.run-head p{margin:0;color:var(--muted);max-width:70ch;font-size:16px}
-.run-prog{font-family:var(--mono);font-size:12px;color:var(--aqua);margin-top:10px}
-.run-body[hidden]{display:none}
+/* ── a batch ───────────────────────────────────────────────────────────── */
+article.batch{position:relative;border:2px solid var(--line-2);border-radius:var(--r);
+  background:var(--card);margin-bottom:14px;overflow:hidden}
+article.batch.open{border-color:var(--aqua)}
+.bhead{display:block;width:100%;text-align:left;background:var(--card-2);border:0;
+  padding:14px 52px 14px 16px;cursor:pointer;font-family:var(--body);color:var(--ink)}
+.bhead:hover{background:#eef7f8}
+.chev{position:absolute;right:18px;top:20px;width:11px;height:11px;border-right:3px solid var(--faint);
+  border-bottom:3px solid var(--faint);transform:rotate(45deg);transition:transform .18s}
+article.batch.open .chev{transform:rotate(-135deg)}
+.lotline{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:8px}
+.lotcode{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  background:var(--ink);color:#fff;border-radius:999px;padding:3px 11px}
+article.batch.open .lotcode{background:var(--aqua)}
+.flav{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+.gauge{display:flex;align-items:center;gap:7px;margin-left:auto}
+.gauge .tube{width:78px;height:10px;border:1.5px solid var(--ink);border-radius:5px;overflow:hidden;background:#fff}
+.gauge .tube i{display:block;height:100%;background:var(--aqua)}
+.gauge .rd{font-family:var(--mono);font-size:11px;color:var(--ink-2)}
+.btitle{display:block;font-family:var(--disp);font-size:clamp(17px,2.6vw,23px);line-height:1.12;
+  letter-spacing:-.02em;text-transform:uppercase;margin-bottom:6px}
+.bgoal{display:block;color:var(--ink-2);font-size:14px;max-width:82ch}
+/* a foil seal, printed only when the whole batch is cleared */
+.seal{position:absolute;right:14px;bottom:14px;width:74px;height:74px;border-radius:50%;
+  border:3px solid var(--lime);color:var(--aqua);display:none;place-items:center;text-align:center;
+  font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;line-height:1.25;
+  background:rgba(183,230,0,.12);transform:rotate(-11deg)}
+article.batch.sealed .seal{display:grid}
 
-.loadout{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));border-top:1px solid var(--line)}
-.slot{padding:12px 16px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
-.slot b{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--aqua);margin-bottom:4px}
-.slot span{font-size:16px;display:block}
-.slot small{display:block;color:var(--muted);font-size:14px;margin-top:2px}
+.bchips{display:flex;flex-wrap:wrap;gap:6px;padding:0 16px 13px;background:var(--card-2);
+  border-bottom:1px solid var(--line-2)}
+.bbody{padding:16px}
 
-.section-head{padding:14px 22px 4px;font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
-.step{border-top:1px solid rgba(26,78,98,.55);display:flex}
-.tick{flex:0 0 50px;border:none;border-right:1px solid rgba(26,78,98,.55);background:none;color:var(--line);font-size:19px;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.tick:hover{color:var(--aqua);background:rgba(56,225,212,.06)}
-.tick[aria-pressed="true"]{color:var(--aqua);background:rgba(56,225,212,.1)}
-.step-body{flex:1;min-width:0}
-.step-toggle{width:100%;text-align:left;background:none;border:none;color:inherit;padding:13px 20px;cursor:pointer;display:flex;gap:12px;align-items:flex-start}
-.step-toggle .num{font-family:var(--mono);font-size:11px;color:var(--flamingo);padding-top:5px;min-width:26px}
-.step.done .step-title{text-decoration:line-through;opacity:.5}
-.step-title{font-weight:700;font-size:19px;margin:0 0 3px}
-.step-sum{margin:0;color:#CFDDE2;font-size:16px}
-.step-detail{padding:0 20px 16px 58px}
-.step-detail[hidden]{display:none}
-.fields{list-style:none;margin:0 0 10px;padding:0;border-left:2px solid var(--line)}
-.fields li{padding:5px 0 5px 14px;display:grid;grid-template-columns:88px 1fr;gap:12px}
-.fields b{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding-top:3px}
+/* the bottling kit */
+.kit{border:2px dashed var(--line);border-radius:10px;padding:13px 15px;margin-bottom:16px;background:var(--card-2)}
+.kit h5{margin:0 0 10px;font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--faint);font-weight:400}
+.kgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:9px}
+.kslot{background:#fff;border-radius:8px;padding:9px 11px;min-width:0}
+.kslot .k{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.kslot .v{display:block;font-weight:700;font-size:14.5px;margin:1px 0 3px;overflow-wrap:anywhere}
+.kslot .m{display:block;color:var(--ink-2);font-size:12.5px;line-height:1.45}
+
+.stage{display:flex;align-items:center;gap:10px;margin:18px 0 8px;font-family:var(--mono);font-size:10px;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--faint)}
+.stage::after{content:"";flex:1;height:1px;background:var(--line-2)}
+
+/* ── a fill entry ──────────────────────────────────────────────────────── */
+.step{position:relative;display:grid;grid-template-columns:34px 30px minmax(0,1fr);gap:10px;
+  align-items:start;padding:10px 12px;border:1px solid var(--line-3);border-radius:10px;
+  background:#fff;margin-bottom:6px}
+.step.done{background:rgba(0,159,178,.055);border-color:rgba(0,159,178,.28)}
+/* the tick is a crown cap: knurled rim, pressed down when the entry is filled */
+.tick{position:relative;width:30px;height:30px;border-radius:50%;cursor:pointer;padding:0;
+  border:2px solid var(--line);background:#fff;
+  background-image:repeating-conic-gradient(var(--line-2) 0 6deg,transparent 6deg 12deg)}
+.tick::after{content:"";position:absolute;inset:6px;border-radius:50%;background:var(--card-2);
+  box-shadow:inset 0 1px 0 #fff}
+.tick:hover{border-color:var(--aqua)}
+.step.done .tick{border-color:var(--aqua);background-image:repeating-conic-gradient(rgba(0,159,178,.5) 0 6deg,transparent 6deg 12deg)}
+.step.done .tick::after{background:var(--aqua);box-shadow:inset 0 2px 4px rgba(0,0,0,.28)}
+.snum{font-family:var(--mono);font-size:12px;color:var(--faint);padding-top:6px;text-align:right}
+.step.done .snum{color:var(--aqua)}
+.swrap{min-width:0}
+.shead{display:block;width:100%;text-align:left;background:none;border:0;padding:5px 0;cursor:pointer;
+  font-family:var(--body);color:var(--ink);font-weight:700;font-size:15px;line-height:1.35}
+.shead .sum{display:block;font-weight:400;font-size:13.5px;color:var(--ink-2);margin-top:3px}
+.step.done .shead{color:var(--ink-2)}
+.sbody{padding:8px 0 4px;border-top:1px dashed var(--line-2);margin-top:6px}
+.sbody dl{display:grid;grid-template-columns:104px minmax(0,1fr);gap:4px 12px;margin:0 0 10px}
+.sbody dt{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--faint);padding-top:4px}
+.sbody dd{margin:0;font-size:14px;color:var(--ink-2)}
+.sbody dt.d-save{color:var(--amber)}
+.sbody dt.d-reload{color:var(--blue)}
+.sbody dt.d-unv{color:#5d7c86}
+.warnline{border-left:5px solid var(--coral);background:rgba(232,56,79,.07);border-radius:0 8px 8px 0;
+  padding:8px 12px;margin:0 0 10px;font-size:13.5px;color:var(--ink)}
+.warnline b{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--coral);margin-bottom:3px}
+.warnline ul{margin:0;padding-left:17px}
 .badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-.badge{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:4px 8px;border-radius:var(--radius);border:1px solid}
-.b-pop{color:var(--aqua);border-color:rgba(56,225,212,.5);background:rgba(56,225,212,.08)}
-.b-warn{color:var(--danger);border-color:rgba(255,77,77,.55);background:rgba(255,77,77,.1)}
-.b-save{color:var(--sun);border-color:rgba(255,182,39,.55);background:rgba(255,182,39,.1)}
-.b-unv{color:var(--violet);border-color:rgba(201,169,255,.5);background:rgba(201,169,255,.09)}
-.b-excl{color:var(--flamingo);border-color:rgba(255,92,138,.5);background:rgba(255,92,138,.1)}
-.b-reload{color:#7FD4FF;border-color:rgba(127,212,255,.55);background:rgba(127,212,255,.1)}
-.step-detail .badge{display:inline-block;margin:0 0 6px}
 
-/* chips visible while the step is collapsed */
-.chips{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 4px}
-.chip{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;padding:2px 7px;border-radius:var(--radius);border:1px solid}
-.chip-save{color:var(--sun);border-color:rgba(255,182,39,.55);background:rgba(255,182,39,.1)}
-.chip-reload{color:#7FD4FF;border-color:rgba(127,212,255,.55);background:rgba(127,212,255,.1)}
+/* chips: an ingredient is a control — press it and it goes in the bottle */
+.chip{font-family:var(--body);font-weight:700;font-size:11.5px;letter-spacing:.01em;cursor:pointer;
+  border:2px solid var(--line-2);background:#fff;color:var(--ink-2);border-radius:999px;padding:4px 11px}
+.chip:hover{border-color:var(--aqua);color:var(--ink)}
+.chip.on{background:var(--aqua);border-color:var(--aqua);color:#fff}
+.tag{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;
+  text-transform:uppercase;border-radius:999px;padding:4px 10px;border:2px solid transparent}
+.t-save{background:rgba(224,135,0,.14);color:#8a5300;border-color:rgba(224,135,0,.4)}
+.t-reload{background:rgba(37,89,216,.12);color:#1c46ad;border-color:rgba(37,89,216,.35)}
+.t-unv,.badge.b-unv{background:rgba(125,153,162,.16);color:#4e6771;border-color:rgba(125,153,162,.42)}
+.badge.b-unv{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;
+  text-transform:uppercase;border-radius:999px;padding:3px 9px;border:2px solid rgba(125,153,162,.42)}
 
-/* save-scum explainer */
-.scumnote{border-left:3px solid #7FD4FF;background:rgba(127,212,255,.07);padding:13px 17px;margin:0 0 18px;border-radius:0 var(--radius) var(--radius) 0}
-.scumnote h4{margin:0 0 5px;font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#7FD4FF}
-.scumnote p{margin:0 0 7px;font-size:16px;color:#E4DFD3}
-.scumnote p:last-child{margin:0}
-.scumnote .anchors{font-family:var(--mono);font-size:13px;color:var(--muted);letter-spacing:.02em}
+/* ── the ingredients declaration ───────────────────────────────────────── */
+.filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.filters button{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  background:var(--card-2);border:2px solid var(--line-2);color:var(--ink-2);border-radius:999px;
+  padding:6px 12px;cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.decl{border:3px solid var(--ink);border-radius:8px;overflow:hidden;background:#fff}
+.decl-h{display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:space-between;align-items:baseline;
+  padding:9px 13px;border-bottom:6px solid var(--ink)}
+.decl-h b{font-family:var(--disp);font-size:16px;text-transform:uppercase;letter-spacing:-.01em}
+.decl-h span{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+.crow{display:grid;grid-template-columns:32px minmax(0,1fr) auto;gap:11px;align-items:start;
+  padding:10px 13px;border-bottom:1px solid var(--line)}
+.crow:last-child{border-bottom:0}
+.crow.done{background:rgba(0,159,178,.05)}
+.crow .tick{width:26px;height:26px;margin-top:2px}
+.crow .tick::after{inset:5px}
+.cn{margin:0;font-weight:700;font-size:15px}
+.crow.done .cn{color:var(--ink-2);text-decoration:line-through}
+.cc{margin:2px 0 0;color:var(--ink-2);font-size:13.5px}
+.cmeta{display:flex;flex-direction:column;align-items:flex-end;gap:3px;text-align:right}
+.cmeta .xp{font-family:var(--mono);font-size:13px;font-weight:500;white-space:nowrap}
+.cmeta .cat{font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--faint)}
+.empty{color:var(--ink-2);font-style:italic;padding:16px 13px;margin:0}
 
-.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
-.filters button{background:none;border:1px solid var(--line);color:var(--muted);font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:7px 12px;border-radius:var(--radius);cursor:pointer}
-.filters button[aria-pressed="true"]{border-color:var(--aqua);color:var(--aqua);background:rgba(56,225,212,.08)}
-.clist{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
-.crow{display:flex;border-bottom:1px solid rgba(26,78,98,.55)}
-.crow:last-child{border-bottom:none}
-.crow .tick{align-self:stretch}
-.crow-body{padding:12px 18px;flex:1;min-width:0}
-.crow-top{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px}
-.crow h4{margin:0;font-size:18px;font-weight:700}
-.crow.done h4{text-decoration:line-through;opacity:.5}
-.type-tag{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;border:1px solid var(--line);padding:2px 6px;border-radius:var(--radius)}
-.type-A{color:var(--flamingo);border-color:rgba(255,92,138,.45)}
-.type-D{color:var(--aqua);border-color:rgba(56,225,212,.45)}
-.type-F{color:var(--sun);border-color:rgba(255,182,39,.45)}
-.type-T{color:#fff;border-color:rgba(255,255,255,.4)}
-.type-TC{color:var(--violet);border-color:rgba(201,169,255,.45)}
-.crow p{margin:5px 0 0;color:#CFDDE2;font-size:16px}
-.crow .meta{margin-top:6px;font-family:var(--mono);font-size:11px;color:var(--muted)}
-.empty{padding:30px;text-align:center;color:var(--muted);font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+/* ── the small print ───────────────────────────────────────────────────── */
+.small-print h2{font-family:var(--disp);font-size:19px;text-transform:uppercase;letter-spacing:-.01em;
+  margin:22px 0 8px}
+.small-print h2:first-child{margin-top:0}
+.small-print p,.small-print li{color:var(--ink-2);font-size:14px}
+.small-print ul{padding-left:19px}
+.small-print li{margin-bottom:6px}
+.tablewrap{overflow-x:auto;margin-bottom:6px}
+table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:480px}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line-2);vertical-align:top;color:var(--ink-2)}
+th{font-family:var(--mono);font-size:9.5px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--faint);white-space:nowrap}
+td.ok{color:var(--aqua);font-weight:700}
+td.no{color:var(--amber);font-weight:700}
+footer{margin-top:30px;padding:16px 20px;background:var(--card);border-radius:var(--r);
+  color:var(--ink-2);font-size:13px}
+footer::before{content:"♺ ";color:var(--aqua);font-size:16px}
 
-.audit h2{font-family:var(--disp);font-size:23px;margin:32px 0 10px}
-.audit h2:first-child{margin-top:0}
-.audit p,.audit ul{max-width:76ch}
-.audit p{margin:0 0 12px}
-.audit ul{padding-left:20px;margin:0 0 14px}
-.audit li{margin-bottom:7px}
-table{width:100%;border-collapse:collapse;margin:0 0 20px;font-size:16px}
-th,td{text-align:left;padding:9px 12px;border-bottom:1px solid rgba(26,78,98,.6);vertical-align:top}
-th{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--line)}
-td.ok{color:var(--aqua);font-family:var(--mono);font-size:13px}
-td.no{color:var(--sun);font-family:var(--mono);font-size:13px}
-.src{font-family:var(--mono);font-size:13px;color:var(--muted)}
-footer{margin-top:50px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:15px}
-
-@media (max-width:720px){
-  .sectors{grid-template-columns:repeat(2,1fr)}
-  .sector{border-bottom:1px solid var(--line)}
-  .fields li{grid-template-columns:1fr;gap:2px}
-  .step-detail{padding-left:20px}
-  .tick{flex:0 0 42px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important;animation:none!important}
+  .bub{display:none}}
+@media (max-width:760px){
+  .label-body{grid-template-columns:minmax(0,1fr);padding:20px 18px 6px}
+  .bottle{max-width:180px;margin:0 auto}
+  .nutri,.barcode,.barnum,.shake{margin-left:18px;margin-right:18px}
+  .nrow{grid-template-columns:minmax(0,1fr) 64px;row-gap:6px}
+  .nrow .bar{grid-column:1/-1}
+  .sbody dl{grid-template-columns:minmax(0,1fr);gap:0}
+  .sbody dt{padding-top:8px}
+  .step{grid-template-columns:30px minmax(0,1fr);}
+  .snum{display:none}
+  .crow{grid-template-columns:26px minmax(0,1fr)}
+  .cmeta{grid-column:2;align-items:flex-start;text-align:left;flex-direction:row;gap:10px;margin-top:4px}
 }
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
-:focus-visible{outline:2px solid var(--aqua);outline-offset:2px}
+@media print{
+  body{background:#fff;background-image:none;font-size:10.5pt;color:#000}
+  .tabs,.jumpbar,.skip,.tick,.btn,.btn-ghost,.bottle,.barcode{display:none!important}
+  .panel[hidden]{display:block!important}
+  .bbody,.sbody{display:block!important}
+  header.label,.panel,article.batch,.notice,footer{box-shadow:none;border:1px solid #999}
+  header.label::after{display:none}
+  .step,article.batch{break-inside:avoid}
+}
 </style>
 </head>
 <body>
+<a class="skip" href="#p-runs">Skip to the batch sheets</a>
 <div class="wrap">
 
-<header class="masthead">
-  <p class="eyebrow">Special Assignment · Miami · World of Assassination</p>
-  <h1>A Silver Tongue<span class="sub">26 challenges · 6 runs · step format</span></h1>
-  <p class="dek">Every challenge name and unlock condition below is taken from your in-game export and cross-checked against the Hitman Wiki. Each step names the place, the disguise, the item, the NPC and the action — and flags anything the sources don’t actually confirm.</p>
-  <div class="factstrip">
-    <div class="fact"><b>Target</b><span>Ajit “AJ” Krish</span></div>
+<header class="label">
+  <div class="shelf">
+    <a href="../index.html">&#8592; All guides</a>
+    <span>Special Assignment &middot; Miami &middot; World of Assassination</span>
+    <span class="lot">LOT SA&#8209;01</span>
+  </div>
+
+  <div class="label-body">
+    <div>
+      <p class="brand">Atlantide<i>&trade;</i> &middot; hydration for winners</p>
+      <h1 class="title">A Silver<br><em>Tongue</em></h1>
+      <p class="dek"><!--@dek-->Every challenge name and unlock condition below is taken from your in-game export and cross-checked against the Hitman Wiki. Each step names the place, the disguise, the item, the NPC and the action — and flags anything the sources don’t actually confirm.<!--/@dek--></p>
+      <div class="facts">
+<!--@facts-->
+<div class="fact"><b>Target</b><span>Ajit “AJ” Krish</span></div>
     <div class="fact"><b>Location</b><span>Miami, USA</span></div>
     <div class="fact"><b>Released</b><span>24 Sep 2019</span></div>
     <div class="fact"><b>Total XP</b><span>64,000</span></div>
     <div class="fact"><b>Disguise goal</b><span>0 (none)</span></div>
     <div class="fact"><b>Area goal</b><span>0 (none)</span></div>
+<!--/@facts-->
+      </div>
+    </div>
+
+    <!-- the tracker is the bottle: it fills as the challenges land -->
+    <div class="bottle">
+      <svg viewBox="0 0 120 300" role="img" aria-labelledby="bottleTitle">
+        <title id="bottleTitle">Challenge progress, drawn as the level in an Atlantide bottle</title>
+        <defs>
+          <linearGradient id="juice" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#00c8d8"/><stop offset="100%" stop-color="#009fb2"/>
+          </linearGradient>
+          <clipPath id="bclip">
+            <path d="M42 30 h36 v14 c0 7 3 10 7 16 c9 13 13 25 13 40 v168 c0 13 -9 22 -22 22 h-32 c-13 0 -22 -9 -22 -22 v-168 c0 -15 4 -27 13 -40 c4 -6 7 -9 7 -16 z"/>
+          </clipPath>
+        </defs>
+        <rect class="cap" x="40" y="8" width="40" height="22" rx="4"/>
+        <g clip-path="url(#bclip)">
+          <rect id="juiceRect" class="juice" x="24" y="290" width="72" height="0"/>
+          <rect id="foamRect" class="foam" x="24" y="290" width="72" height="3"/>
+          <circle class="bub" cx="46" cy="250" r="3"/>
+          <circle class="bub" cx="68" cy="264" r="2.2"/>
+          <circle class="bub" cx="58" cy="240" r="1.8"/>
+        </g>
+        <path class="glass" d="M42 30 h36 v14 c0 7 3 10 7 16 c9 13 13 25 13 40 v168 c0 13 -9 22 -22 22 h-32 c-13 0 -22 -9 -22 -22 v-168 c0 -15 4 -27 13 -40 c4 -6 7 -9 7 -16 z"/>
+        <g class="grad">
+          <path d="M96 118 h-13"/><path d="M96 162 h-13"/><path d="M96 206 h-13"/><path d="M96 250 h-13"/>
+        </g>
+        <g class="gradl" text-anchor="end">
+          <text x="80" y="121">100</text><text x="80" y="165">75</text>
+          <text x="80" y="209">50</text><text x="80" y="253">25</text>
+        </g>
+      </svg>
+      <div class="fill-read">
+        <b><span id="doneN">0</span> <small>/ <span id="totN">0</span></small></b>
+        <span>challenges bottled</span>
+      </div>
+    </div>
   </div>
 
-  <div class="verif">
-    <h3>Three things your JSON settled</h3>
+  <!-- categories, declared the way a drink declares what is in it -->
+  <div class="nutri">
+    <div class="nutri-h"><b>Challenge facts</b><span id="serving">Per mission</span></div>
+    <div id="cats"></div>
+    <div class="nutri-foot">
+      <span class="code" id="stepRead">Fill entries logged 0 / 0</span>
+      <button class="btn" id="reset" type="button">Empty the bottle</button>
+    </div>
+  </div>
+
+  <div class="barcode" id="barcode" aria-hidden="true"></div>
+  <p class="barnum">5 901234 123457</p>
+  <p class="shake">Shake well &middot; keep out of direct sunlight &middot; not a substitute for a plan</p>
+</header>
+
+<section class="notice" aria-label="From the maker">
+<!--@verif-->
+<h3>Three things your JSON settled</h3>
     <p><b>1 · No Chameleon, no area discovery — now confirmed twice.</b> Your export reports <code>disguiseCount: 0</code>, <code>areas: []</code>, <code>areaCount: 0</code> and <code>areaGoal: null</code>. Combined with the wiki, that closes the question: this mission has no disguise-collection challenge and no zone-discovery challenges. <code>areasSharedWith: "The Finish Line"</code> confirms the map is the shared Miami sandbox.</p>
     <p><b>2 · Versatile challenges are Miami-wide, not mission-specific.</b> The in-game text for Versatile Assassin reads “Complete the following Versatile challenges <b>in Miami</b>”. Piano Man, Someone Could Hurt Themselves, Hold My Hair, Straight Shot and Tasteless, Traceless therefore carry over from The Finish Line. If you already cleared them there, they are already ticked here. I had this flagged as unverified last time; it is now confirmed.</p>
     <p><b>3 · A real conflict between your export and the wiki — read this before Runs 4 and 5.</b> Your in-game text for <b>Silent Assassin</b> lists only “Only eliminate the target / No bodies found”, and omits both “Do not get spotted” and the camera clause. Sniper Assassin and SASO omit the camera clause too. The wiki lists all of them. I have <b>not</b> picked a winner: the guide plays to the stricter wiki wording, because a run that satisfies the strict version also satisfies the loose one. Do not plan around being allowed to get spotted.</p>
-  </div>
-</header>
-
-<section class="board" aria-label="Progress tracker">
-  <div class="board-top">
-    <div>
-      <div class="board-title">Challenges cleared</div>
-      <div class="board-count"><span id="doneCount">0</span><small> / 26</small></div>
-    </div>
-    <div style="text-align:right">
-      <div class="xp" id="xpLine">0 / 64,000 XP</div>
-      <div style="margin-top:8px"><button class="btn" id="resetBtn">Clear all ticks</button></div>
-    </div>
-  </div>
-  <div class="track"><div class="fill" id="fill"></div><div class="ticks" id="ticks"></div></div>
-  <div class="sectors" id="sectors"></div>
+<!--/@verif-->
 </section>
 
-<nav class="tabs" role="tablist">
-  <button role="tab" id="tab-runs" aria-controls="p-runs" aria-selected="true">Optimized runs</button>
-  <button role="tab" id="tab-list" aria-controls="p-list" aria-selected="false">Checklist</button>
-  <button role="tab" id="tab-audit" aria-controls="p-audit" aria-selected="false">Verification &amp; audit</button>
-</nav>
+<div class="tabs" role="tablist" aria-label="Guide sections">
+  <button class="tab" role="tab" id="t-runs" aria-controls="p-runs" aria-selected="true">Batch sheets</button>
+  <button class="tab" role="tab" id="t-list" aria-controls="p-list" aria-selected="false">Ingredients</button>
+  <button class="tab" role="tab" id="t-audit" aria-controls="p-audit" aria-selected="false">Small print</button>
+</div>
 
-<div class="panel" id="p-runs" role="tabpanel" aria-labelledby="tab-runs">
-  <div class="scumnote">
-    <h4>How the save anchors work</h4>
+<section class="panel" id="p-runs" role="tabpanel" aria-labelledby="t-runs">
+  <div class="notice" style="margin-top:0;margin-bottom:16px;border-left-color:var(--amber)">
+<!--@scum-->
+<h4>How the save anchors work</h4>
     <p>Krish dies once per attempt, so most kill challenges can’t share a run. The way round it is save-scumming: <b>a challenge is written to your profile the instant it fires, and reloading never takes it back.</b> Kill him five different ways off the same save and you keep all five.</p>
     <p>Amber <b>SAVE HERE</b> steps create an anchor. Blue <b>RELOAD</b> steps send you back to one — both are chipped on the step header so you can see them without expanding.</p>
     <p class="anchors">Anchors used: Run 2 → Save A (area untouched) and Save B (forklift staged) · Run 3 → driver-outfit save and pre-drop save · Runs 1, 4, 5, 6 → insurance saves only, no reload required.</p>
+<!--/@scum-->
   </div>
   <div class="jumpbar" id="jumpbar"></div>
-  <div class="expandbar">
-    <button class="btn" id="openAll">Open all runs</button>
-    <button class="btn" id="closeAll">Collapse all</button>
-  </div>
-  <div id="runList"></div>
-</div>
+  <div id="batches"></div>
+</section>
 
-<div class="panel" id="p-list" role="tabpanel" aria-labelledby="tab-list" hidden>
+<section class="panel" id="p-list" role="tabpanel" aria-labelledby="t-list" hidden>
   <div class="filters" id="filters"></div>
-  <div class="clist" id="clist"></div>
-</div>
+  <div class="decl">
+    <div class="decl-h"><b>Ingredients</b><span id="declMeta">26 declared</span></div>
+    <div id="clist"></div>
+  </div>
+</section>
 
-<div class="panel audit" id="p-audit" role="tabpanel" aria-labelledby="tab-audit" hidden>
-  <h2>Count audit — in-game export vs. wiki</h2>
+<section class="panel small-print" id="p-audit" role="tabpanel" aria-labelledby="t-audit" hidden>
+<!--@audit-->
+<h2>Count audit — in-game export vs. wiki</h2>
   <p>Both sources agree on every number. Challenge names in this guide use your in-game spelling where the two differ (the wiki title-cases “Against The Rules”, “Oil And Water”, “Here To Serve”, “In Case Of Shortage…”; the game does not).</p>
   <table>
     <thead><tr><th>Category</th><th>Your JSON</th><th>Wiki</th><th>XP (wiki)</th><th>Status</th></tr></thead>
@@ -330,14 +533,18 @@ footer{margin-top:50px;padding-top:18px;border-top:1px solid var(--line);color:v
     <li><b>No Evidence</b> (The Classics, +1000 XP) existed in HITMAN 2 and is listed by the wiki as cut in HITMAN III. It does not appear in your export, which independently confirms the removal. Legacy HITMAN 2 players will see 27.</li>
     <li>No other challenge here is documented as patch-added. <span class="badge b-unv">UNVERIFIED</span> — IOI’s per-patch challenge deltas for 2019 DLC are not itemised in any source I could reach.</li>
   </ul>
-</div>
+<!--/@audit-->
+</section>
 
 <footer>
-  Built from your in-game challenge export, the Hitman Wiki mission, challenge and walkthrough pages, and Steam community redacted-challenge guides. Tick state is stored on this device only. Where two sources disagreed, both readings are printed rather than one being picked silently.
+<!--@footer-->
+Built from your in-game challenge export, the Hitman Wiki mission, challenge and walkthrough pages, and Steam community redacted-challenge guides. Tick state is stored on this device only. Where two sources disagreed, both readings are printed rather than one being picked silently.
+<!--/@footer-->
 </footer>
 </div>
 
 <script>
+/*@data*/
 const TYPES={A:"Assassination",D:"Discovery",F:"Feats",T:"Targets",TC:"The Classics"};
 
 /* Names and descriptions below follow the in-game export. XP is wiki-sourced. */
@@ -838,181 +1045,307 @@ const RUNS=[
  ]
 }
 ];
+/*/@data*/
 
-/* ---------- state ---------- */
+/* ---------------- STATE ---------------- */
 const KEY="ast_done_v2";
-let done=new Set(), stepDone=new Set(), openRuns=new Set(), openSteps=new Set(), memoryOnly=false;
+const state={done:new Set(),steps:new Set(),filter:"all",openRuns:new Set(["r1"]),openSteps:new Set()};
+let memoryOnly=false;
 
-function reportProgress(){try{const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r['sa01']={done:CHALLENGES.filter(c=>done.has(c.id)).length,total:CHALLENGES.length,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
-async function loadState(){
+function reportProgress(){try{const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r['sa01']={done:CHALLENGES.filter(c=>state.done.has(c.id)).length,total:CHALLENGES.length,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
+function load(){
+  /* the shape the previous edition wrote — {c:[challenges], s:[steps]} — is
+     kept exactly, so nobody loses a tick to the rebuild */
   try{const r=localStorage.getItem(KEY);
-    if(r){const o=JSON.parse(r);done=new Set(o.c||[]);stepDone=new Set(o.s||[]);}
+    if(r){const o=JSON.parse(r);(o.c||[]).forEach(x=>state.done.add(x));(o.s||[]).forEach(x=>state.steps.add(x));}
   }catch(e){memoryOnly=true;}
+  render();reportProgress();
 }
-async function saveState(){
-  if(memoryOnly)return;
-  try{localStorage.setItem(KEY,JSON.stringify({c:[...done],s:[...stepDone]}));}catch(e){memoryOnly=true;}
+function save(){
+  if(!memoryOnly){try{localStorage.setItem(KEY,JSON.stringify({c:[...state.done],s:[...state.steps]}));}catch(e){memoryOnly=true;}}
   reportProgress();
 }
 
-/* ---------- tracker ---------- */
-const CATS=[["A","Assassination",13],["D","Discovery",5],["F","Feats",2],["T","Targets",1],["TC","Classics",5]];
+const $=id=>document.getElementById(id);
+
+/* Every step carries a stable id so its tick survives a reload: run id, the
+   section it sits in, and its position. Nothing is typed in. */
+const STEP_CH={};
+RUNS.forEach(r=>r.sections.forEach((sec,si)=>sec.steps.forEach((st,ti)=>{
+  st._id=r.id+":"+si+":"+ti;
+  STEP_CH[st._id]=st.pops||[];
+})));
+const TOTAL_STEPS=RUNS.reduce((a,r)=>a+r.sections.reduce((b,s)=>b+s.steps.length,0),0);
+
+/* the ingredients a batch declares, in the order the steps pour them */
+function batchIds(run){
+  const out=[];
+  run.sections.forEach(sec=>sec.steps.forEach(st=>(st.pops||[]).forEach(p=>{if(!out.includes(p))out.push(p);})));
+  return out;
+}
+RUNS.forEach(r=>{r._ids=batchIds(r);});
+
+/* a chip is a control — press it and that ingredient goes in the bottle */
+function chip(id){
+  const c=byId[id];if(!c)return"";
+  const on=state.done.has(id);
+  return `<button type="button" class="chip${on?" on":""}" data-ch="${id}" aria-pressed="${on}" title="${TYPES[c.type]} &middot; ${c.xp.toLocaleString()} XP">${c.name}</button>`;
+}
+
+/* ---------------- THE BOTTLE ---------------- */
+const CATS=[["A","Assassination"],["D","Discovery"],["F","Feats"],["T","Targets"],["TC","The Classics"]];
+const TOTAL_XP=CHALLENGES.reduce((a,c)=>a+c.xp,0);
+
 function renderTracker(){
-  const n=done.size;
-  document.getElementById("doneCount").textContent=n;
-  const xp=CHALLENGES.filter(c=>done.has(c.id)).reduce((a,c)=>a+c.xp,0);
-  document.getElementById("xpLine").textContent=xp.toLocaleString()+" / 64,000 XP";
-  document.getElementById("fill").style.width=(n/CHALLENGES.length*100)+"%";
-  document.getElementById("sectors").innerHTML=CATS.map(([t,l,tot])=>{
-    const d=CHALLENGES.filter(c=>c.type===t&&done.has(c.id)).length;
-    return `<div class="sector${d===tot?" done":""}"><b>${l}</b><div class="num">${d}<em> / ${tot}</em></div></div>`;
-  }).join("");
+  const done=CHALLENGES.filter(c=>state.done.has(c.id));
+  const n=done.length, tot=CHALLENGES.length;
+  $('doneN').textContent=n;
+  $('totN').textContent=tot;
+
+  /* the level: the bottle's inside runs from y=290 (empty) to y=64 (full) */
+  const EMPTY=290, FULL=64, h=(EMPTY-FULL)*(tot?n/tot:0);
+  $('juiceRect').setAttribute('y',EMPTY-h);
+  $('juiceRect').setAttribute('height',h);
+  const foam=$('foamRect');
+  foam.setAttribute('y',EMPTY-h-(h?3:0));
+  foam.setAttribute('height',h?3:0);
+
+  const xp=done.reduce((a,c)=>a+c.xp,0);
+  $('serving').textContent=xp.toLocaleString()+' / '+TOTAL_XP.toLocaleString()+' XP';
+  $('stepRead').textContent='Fill entries logged '+state.steps.size+' / '+TOTAL_STEPS;
+  $('declMeta').textContent=tot+' declared';
+
+  $('cats').innerHTML=CATS.map(([t,label])=>{
+    const all=CHALLENGES.filter(c=>c.type===t), d=all.filter(c=>state.done.has(c.id)).length;
+    const pct=all.length?d/all.length*100:0;
+    const xpc=all.reduce((a,c)=>a+c.xp,0);
+    return `<div class="nrow${d===all.length?' full':''}">
+      <span class="n">${label}<s>${xpc.toLocaleString()} XP</s></span>
+      <span class="v">${d}<em> / ${all.length}</em></span>
+      <span class="bar"><i style="width:${pct}%"></i></span>
+    </div>`;
+  }).join('');
 }
-document.getElementById("ticks").innerHTML=Array.from({length:26},()=>"<i></i>").join("");
 
-/* ---------- runs ---------- */
-function runIdsOf(run){return run.sections.flatMap(s=>s.steps.flatMap(st=>st.pops));}
-
-function renderJumpbar(){
-  document.getElementById("jumpbar").innerHTML =
-    `<span class="lab">Jump to</span>` + RUNS.map(r=>{
-      const ids=runIdsOf(r), c=ids.filter(i=>done.has(i)).length;
-      return `<button class="jump${c===ids.length?" full":""}" data-jump="${r.id}">
-        <span class="n">${r.tag.toUpperCase()}</span> ${r.short} <span class="n">${c}/${ids.length}</span></button>`;
-    }).join("");
+/* the barcode is drawn from the mission's own numbers, not decoration */
+function renderBarcode(){
+  const seed=[CHALLENGES.length,RUNS.length,TOTAL_STEPS].join('');
+  let bars='';
+  for(let i=0;i<58;i++){
+    const w=1+(Number(seed[i%seed.length])+i*3)%4;
+    const tall=i%7===0;
+    bars+=`<i style="width:${w}px;height:${tall?100:78}%"></i>`;
+  }
+  $('barcode').innerHTML=bars;
 }
 
+function renderJump(){
+  $('jumpbar').innerHTML=`<span class="jl">Batches</span>`+
+    RUNS.map((r,i)=>{
+      const d=r._ids.filter(x=>state.done.has(x)).length;
+      return `<button type="button" class="jump${d===r._ids.length?' full':''}" data-jump="${i}">`+
+        `<b>${String(i+1).padStart(2,'0')}</b>${r.short}<span class="pg">${d}/${r._ids.length}</span></button>`;
+    }).join('')+
+    `<button type="button" class="btn-ghost" data-toggleall="1" style="margin-left:auto">Open / close all</button>`;
+}
+
+/* ---------------- BATCH SHEETS ---------------- */
 function renderRuns(){
-  let stepNo=0;
-  document.getElementById("runList").innerHTML=RUNS.map(run=>{
-    const ids=runIdsOf(run), cleared=ids.filter(i=>done.has(i)).length;
-    const isOpen=openRuns.has(run.id);
-    const loadout=run.loadout.map(l=>`<div class="slot"><b>${l.k}</b><span>${l.v}</span><small>${l.n}</small></div>`).join("");
-    let n=0;
-    const secs=run.sections.map(sec=>{
-      const steps=sec.steps.map(st=>{
-        n++;
-        const key=run.id+"|"+st.t;
-        const dOn=stepDone.has(key), sOpen=openSteps.has(key);
-        const fields=[
-          ["Where",st.where],["Disguise",st.disguise],["Item",st.item],["NPC",st.npc],["Do",st.action]
-        ].filter(f=>f[1]).map(f=>`<li><b>${f[0]}</b><span>${f[1]}</span></li>`).join("");
-        const warns=(st.warn||[]).map(w=>`<div class="badge b-warn">WARNING</div> <span style="display:block;margin:0 0 8px">${w}</span>`).join("");
-        const unvBlock=st.unv?`<div class="badge b-unv">UNVERIFIED</div> <span style="display:block;margin:0 0 8px" class="src">${st.unv}</span>`:"";
-        const saveBlock=st.save?`<div class="badge b-save">SAVE HERE</div> <span style="display:block;margin:0 0 8px">${st.save}</span>`:"";
-        const reloadBlock=st.reload?`<div class="badge b-reload">RELOAD FIRST</div> <span style="display:block;margin:0 0 10px">${st.reload}</span>`:"";
-        const popBadges=st.pops.length?`<div class="badges">${st.pops.map(i=>`<span class="badge b-pop">POPS: ${byId[i].name}</span>`).join("")}</div>`:"";
-        const chips=[
-          st.reload?`<span class="chip chip-reload">↺ Reload first</span>`:"",
-          st.save?`<span class="chip chip-save">◆ Save here</span>`:""
-        ].filter(Boolean).join("");
-        return `<div class="step${dOn?" done":""}">
-          <button class="tick" data-step="${encodeURIComponent(key)}" aria-pressed="${dOn}" aria-label="Mark step done">${dOn?"✔":"○"}</button>
-          <div class="step-body">
-            <button class="step-toggle" data-stoggle="${encodeURIComponent(key)}" aria-expanded="${sOpen}">
-              <span class="num">${String(n).padStart(2,"0")}</span>
-              <span style="flex:1;min-width:0">
-                ${chips?`<span class="chips">${chips}</span>`:""}
-                <span class="step-title" style="display:block">${st.t}</span>
-                <span class="step-sum" style="display:block">${st.sum}</span>
-              </span>
-              <span class="num">${sOpen?"−":"+"}</span>
-            </button>
-            <div class="step-detail" ${sOpen?"":"hidden"}>
-              ${reloadBlock}
-              <ul class="fields">${fields}</ul>
-              ${saveBlock}${warns}${unvBlock}${popBadges}
-            </div>
-          </div></div>`;
-      }).join("");
-      return `<div class="section-head">${sec.name}</div>${steps}`;
-    }).join("");
-    return `<article class="run${isOpen?" open":""}" id="${run.id}">
-      <button class="run-head" data-run="${run.id}" aria-expanded="${isOpen}">
-        <span class="chev">▶</span>
-        <span class="meat">
-          <span class="run-tag" style="display:block">${run.tag} of 6</span>
-          <h2>${run.title}</h2>
-          <p>${run.goal}</p>
-          <span class="run-prog" style="display:block">${cleared} / ${ids.length} challenges in this run cleared</span>
+  $('batches').innerHTML=RUNS.map((r,ri)=>{
+    const open=state.openRuns.has(r.id);
+    const d=r._ids.filter(x=>state.done.has(x)).length;
+    const pct=r._ids.length?d/r._ids.length*100:0;
+    const entries=r.sections.reduce((a,s)=>a+s.steps.length,0);
+    const logged=r.sections.reduce((a,s)=>a+s.steps.filter(st=>state.steps.has(st._id)).length,0);
+    const sealed=r._ids.length&&d===r._ids.length;
+
+    /* the chips are buttons, so they cannot live inside the header button —
+       nested buttons tear the header apart. They get their own strip. */
+    return `<article class="batch${open?' open':''}${sealed?' sealed':''}" id="run-${ri}">
+      <button type="button" class="bhead" data-run="${r.id}" aria-expanded="${open}">
+        <span class="chev"></span>
+        <span class="lotline">
+          <span class="lotcode">ATL&#8209;B${String(ri+1).padStart(2,'0')}</span>
+          <span class="flav">${r.short} &middot; ${entries} fill entries &middot; ${logged} logged</span>
+          <span class="gauge"><span class="tube"><i style="width:${pct}%"></i></span>
+            <span class="rd">${d}/${r._ids.length}</span></span>
         </span>
+        <span class="btitle">${r.title}</span>
+        <span class="bgoal">${r.goal}</span>
       </button>
-      <div class="run-body" ${isOpen?"":"hidden"}>
-        <div class="loadout">${loadout}</div>
-        ${secs}
+      <div class="seal" aria-hidden="true">Batch<br>sealed</div>
+      <div class="bchips">${r._ids.map(chip).join('')}</div>
+      <div class="bbody"${open?'':' hidden'}>
+        <div class="kit">
+          <h5>Bottling kit &mdash; ${r.tag}</h5>
+          <div class="kgrid">${r.loadout.map(l=>
+            `<div class="kslot"><span class="k">${l.k}</span><span class="v">${l.v}</span><span class="m">${l.n}</span></div>`).join('')}
+          </div>
+        </div>
+        ${r.sections.map((sec,si)=>`<div class="stage">${sec.name}</div>`+
+          sec.steps.map((st,ti)=>stepHTML(r,st,stepNumber(r,st._id))).join('')).join('')}
       </div>
     </article>`;
-  }).join("");
+  }).join('');
 }
 
-/* ---------- checklist ---------- */
-let filter="all";
-const FILTERS=[["all","All"],["A","Assassination"],["D","Discovery"],["F","Feats"],["T","Targets"],["TC","Classics"],["todo","Incomplete"]];
+function stepNumber(run,id){
+  let n=0;
+  for(const sec of run.sections) for(const st of sec.steps){n++; if(st._id===id) return String(n).padStart(2,'0');}
+  return '';
+}
+
+function stepHTML(run,st,num){
+  const done=state.steps.has(st._id), open=state.openSteps.has(st._id);
+  const warns=st.warn||[];
+  return `<div class="step${done?' done':''}">
+    <button type="button" class="tick" data-tick="${st._id}" aria-pressed="${done}"
+      aria-label="Log fill entry ${num}${(st.pops&&st.pops.length)?' and bottle the challenges it pours':''}"></button>
+    <span class="snum">${num}</span>
+    <div class="swrap">
+      <button type="button" class="shead" data-open="${st._id}" aria-expanded="${open}">
+        ${st.t}<span class="sum">${st.sum}</span>
+      </button>
+      <div class="badges">
+        ${(st.pops||[]).map(chip).join('')}
+        ${st.save?`<span class="tag t-save">Retain sample</span>`:''}
+        ${st.reload?`<span class="tag t-reload">Re-pour</span>`:''}
+        ${st.unv?`<span class="tag t-unv">Not on the label</span>`:''}
+      </div>
+      <div class="sbody"${open?'':' hidden'}>
+        <dl>
+          <dt>Where</dt><dd>${st.where}</dd>
+          <dt>Disguise</dt><dd>${st.disguise}</dd>
+          <dt>Item</dt><dd>${st.item}</dd>
+          <dt>NPC</dt><dd>${st.npc}</dd>
+          <dt>Action</dt><dd>${st.action}</dd>
+          ${st.save?`<dt class="d-save">Retain sample</dt><dd>${st.save}</dd>`:''}
+          ${st.reload?`<dt class="d-reload">Re-pour from</dt><dd>${st.reload}</dd>`:''}
+          ${st.unv?`<dt class="d-unv">Not on the label</dt><dd>${st.unv}</dd>`:''}
+        </dl>
+        ${warns.length?`<div class="warnline"><b>Watch out</b><ul>${warns.map(w=>`<li>${w}</li>`).join('')}</ul></div>`:''}
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ---------------- INGREDIENTS ---------------- */
+const FILTERS=[["all","All"],["A","Assassination"],["D","Discovery"],["F","Feats"],["T","Targets"],["TC","The Classics"],["todo","Not yet bottled"]];
 function renderFilters(){
-  document.getElementById("filters").innerHTML=FILTERS.map(([k,l])=>
-    `<button data-f="${k}" aria-pressed="${filter===k}">${l}</button>`).join("");
+  $('filters').innerHTML=FILTERS.map(([k,l])=>
+    `<button type="button" data-filter="${k}" aria-pressed="${state.filter===k}">${l}</button>`).join('');
 }
-function runOf(id){const r=RUNS.find(run=>runIdsOf(run).includes(id));return r?r.tag+" · "+r.short:"—";}
+
+/* which batch pours this ingredient — read off the runs, never typed */
+const RUN_OF={};
+RUNS.forEach((r,i)=>r._ids.forEach(id=>{if(!RUN_OF[id])RUN_OF[id]=r.tag;}));
+
 function renderList(){
-  const items=CHALLENGES.filter(c=>filter==="all"?true:filter==="todo"?!done.has(c.id):c.type===filter);
-  const el=document.getElementById("clist");
-  if(!items.length){el.innerHTML=`<div class="empty">Nothing here — every challenge in this filter is ticked.</div>`;return;}
-  el.innerHTML=items.map(c=>{
-    const d=done.has(c.id);
-    return `<div class="crow${d?" done":""}">
-      <button class="tick" data-ch="${c.id}" aria-pressed="${d}" aria-label="Mark ${c.name} complete">${d?"✔":"○"}</button>
-      <div class="crow-body">
-        <div class="crow-top"><h4>${c.name}</h4><span class="type-tag type-${c.type}">${TYPES[c.type]}</span></div>
-        <p>${c.desc}</p>
-        <div class="meta">+${c.xp.toLocaleString()} XP · ${runOf(c.id)}</div>
-      </div></div>`;
-  }).join("");
+  let rows=CHALLENGES.slice();
+  const f=state.filter;
+  if(f==="todo") rows=rows.filter(c=>!state.done.has(c.id));
+  else if(f!=="all") rows=rows.filter(c=>c.type===f);
+  const el=$('clist');
+  if(!rows.length){el.innerHTML=`<p class="empty">Nothing left in this filter &mdash; that shelf is cleared.</p>`;return;}
+  el.innerHTML=rows.map(c=>{
+    const on=state.done.has(c.id);
+    return `<div class="crow${on?' done':''}">
+      <button type="button" class="tick" data-chal="${c.id}" aria-pressed="${on}" aria-label="Bottle ${c.name}"></button>
+      <div>
+        <p class="cn">${c.name}</p>
+        <p class="cc">${c.desc}</p>
+      </div>
+      <span class="cmeta">
+        <span class="xp">${c.xp.toLocaleString()} XP</span>
+        <span class="cat">${TYPES[c.type]}</span>
+        <span class="cat">${RUN_OF[c.id]||'Any batch'}</span>
+      </span>
+    </div>`;
+  }).join('');
 }
 
-/* ---------- events ---------- */
-document.addEventListener("click",async e=>{
-  const j=e.target.closest("[data-jump]");
-  if(j){const id=j.dataset.jump;openRuns.add(id);renderRuns();
-    document.getElementById(id).scrollIntoView({behavior:"smooth",block:"start"});return;}
+function render(){renderTracker();renderJump();renderRuns();renderFilters();renderList();}
 
-  const r=e.target.closest("[data-run]");
-  if(r){const id=r.dataset.run;openRuns.has(id)?openRuns.delete(id):openRuns.add(id);renderRuns();return;}
-
-  const s=e.target.closest("[data-stoggle]");
-  if(s){const k=decodeURIComponent(s.dataset.stoggle);openSteps.has(k)?openSteps.delete(k):openSteps.add(k);renderRuns();return;}
-
-  const ch=e.target.closest("[data-ch]");
-  if(ch){const id=ch.dataset.ch;done.has(id)?done.delete(id):done.add(id);
-    await saveState();renderTracker();renderList();renderRuns();renderJumpbar();return;}
-
-  const st=e.target.closest("[data-step]");
-  if(st){const k=decodeURIComponent(st.dataset.step);stepDone.has(k)?stepDone.delete(k):stepDone.add(k);
-    await saveState();renderRuns();return;}
-
-  const f=e.target.closest("[data-f]");
-  if(f){filter=f.dataset.f;renderFilters();renderList();return;}
-});
-
-document.getElementById("openAll").addEventListener("click",()=>{RUNS.forEach(r=>openRuns.add(r.id));renderRuns();});
-document.getElementById("closeAll").addEventListener("click",()=>{openRuns.clear();openSteps.clear();renderRuns();});
-document.getElementById("resetBtn").addEventListener("click",async()=>{
-  done.clear();stepDone.clear();await saveState();renderTracker();renderList();renderRuns();renderJumpbar();});
-
-document.querySelectorAll('nav.tabs button').forEach(btn=>{
-  btn.addEventListener("click",()=>{
-    document.querySelectorAll('nav.tabs button').forEach(b=>{
-      const on=b===btn;b.setAttribute("aria-selected",on);
-      document.getElementById(b.getAttribute("aria-controls")).hidden=!on;
-    });
+/* ---------------- EVENTS ---------------- */
+const tabs=[...document.querySelectorAll('.tab')];
+function selectTab(tb){
+  tabs.forEach(x=>{
+    const on=x===tb;
+    x.setAttribute('aria-selected',String(on));
+    x.tabIndex=on?0:-1;
+    $(x.getAttribute('aria-controls')).hidden=!on;
+  });
+}
+tabs.forEach((tb,i)=>{
+  tb.tabIndex=tb.getAttribute('aria-selected')==='true'?0:-1;
+  tb.addEventListener('keydown',e=>{
+    const d=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;
+    if(!d)return;
+    e.preventDefault();
+    const next=tabs[(i+d+tabs.length)%tabs.length];
+    selectTab(next);next.focus();
   });
 });
 
-(async()=>{
-  await loadState();
-  openRuns.add("r1");
-  renderTracker();renderJumpbar();renderRuns();renderFilters();renderList();
-  reportProgress();
-})();
+document.addEventListener('click',e=>{
+  const t=e.target;
+
+  /* an ingredient chip is a control: press it and that challenge is bottled */
+  const cb=t.closest('[data-ch]');
+  if(cb){const id=cb.dataset.ch;
+    state.done.has(id)?state.done.delete(id):state.done.add(id);
+    save();render();return;}
+
+  const tk=t.closest('[data-tick]');
+  if(tk){
+    const id=tk.dataset.tick, now=!state.steps.has(id);
+    now?state.steps.add(id):state.steps.delete(id);
+    /* logging a fill entry pours what that entry pours; un-logging leaves the
+       challenges alone, because another entry may pour the same one */
+    if(now)(STEP_CH[id]||[]).forEach(c=>state.done.add(c));
+    save();render();return;
+  }
+  const so=t.closest('[data-open]');
+  if(so){const id=so.dataset.open;
+    state.openSteps.has(id)?state.openSteps.delete(id):state.openSteps.add(id);
+    renderRuns();return;}
+  const rh=t.closest('[data-run]');
+  if(rh){const id=rh.dataset.run;
+    state.openRuns.has(id)?state.openRuns.delete(id):state.openRuns.add(id);
+    renderRuns();return;}
+  const ch=t.closest('[data-chal]');
+  if(ch){const id=ch.dataset.chal;
+    state.done.has(id)?state.done.delete(id):state.done.add(id);
+    save();render();return;}
+  const jp=t.closest('[data-jump]');
+  if(jp){const i=+jp.dataset.jump;
+    state.openRuns.add(RUNS[i].id);renderRuns();
+    $('run-'+i).scrollIntoView({behavior:'smooth',block:'start'});return;}
+  const ta=t.closest('[data-toggleall]');
+  if(ta){
+    if(state.openRuns.size===RUNS.length){state.openRuns.clear();state.openSteps.clear();}
+    else RUNS.forEach(r=>state.openRuns.add(r.id));
+    renderRuns();return;}
+  const ft=t.closest('[data-filter]');
+  if(ft){state.filter=ft.dataset.filter;renderFilters();renderList();return;}
+  const tb=t.closest('.tab');
+  if(tb){selectTab(tb);return;}
+});
+
+$('reset').addEventListener('click',()=>{
+  if(!confirm('Empty the bottle? Every tick on this guide is cleared. Other guides are not affected.'))return;
+  state.done.clear();state.steps.clear();save();render();
+});
+
+/* wide tables in the small print scroll inside themselves on a phone */
+document.querySelectorAll('#p-audit table').forEach(t=>{
+  if(t.parentNode.classList.contains('tablewrap'))return;
+  const w=document.createElement('div');w.className='tablewrap';
+  t.parentNode.insertBefore(w,t);w.appendChild(t);
+});
+
+renderBarcode();
+load();
 </script>
 <!-- step-progress-bridge -->
 <script>

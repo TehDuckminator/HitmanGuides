@@ -4,155 +4,296 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>LANDSLIDE — Sapienza Bonus Mission · Step-by-Step Challenge Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,700;0,6..96,900;1,6..96,400;1,6..96,700&family=Archivo+Narrow:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+/* ═══ LANDSLIDE — campaign broadsheet ═══
+   Abiatti is running for mayor, so the guide is printed like his campaign:
+   newsprint stock, Bodoni slogans, hairline rules and rubber stamps. Runs are
+   ballot papers — perforated top edge, a numbered stub, boxes you mark with a
+   cross — and progress is counted like a precinct return. The one light-ground
+   guide in the library; it is meant to look like paper, not a screen. */
 :root{
-  --ink:#0d1b2a; --ink-2:#132a41; --stone:#efe7d8; --stone-dim:#c9bda6;
-  --oxblood:#7d1128; --oxblood-hi:#a8203c; --lemon:#e8b430; --sea:#2f7d8c;
-  --amber:#c8811a; --ok:#3f7d4f; --warn:#9e1b1b;
-  --line:rgba(239,231,216,.16);
-  --disp:"Bodoni MT",Didot,"Didot LT STD","Playfair Display",Georgia,"Times New Roman",serif;
-  --body:ui-sans-serif,-apple-system,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+  /* stock and ink */
+  --paper:#efe6d2; --paper-2:#e8ddc5; --paper-3:#ded1b4; --paper-4:#d3c4a3;
+  --ink:#181410; --ink-2:#3d3329; --muted:#6d6152; --faint:#8d806e;
+  /* campaign colours: poster red, the returning officer's blue stamp */
+  --red:#8c1225; --red-2:#a8203c; --blue:#26456f; --sea:#2c6360; --gold:#8a6a15;
+  --rule:rgba(24,20,16,.22); --rule-2:rgba(24,20,16,.12); --rule-3:rgba(24,20,16,.06);
+  /* preserved prose from the previous edition still asks for this one */
+  --stone-dim:#6d6152;
+  --disp:"Bodoni Moda","Bodoni MT",Didot,"Didot LT STD",Georgia,"Times New Roman",serif;
+  --body:"Archivo Narrow","Arial Narrow",Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
   --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
 }
 *{box-sizing:border-box}
-body{margin:0;background:
-    radial-gradient(1200px 600px at 12% -10%, #1b3a58 0%, transparent 60%),
-    radial-gradient(900px 500px at 105% 5%, #3a1220 0%, transparent 55%), var(--ink);
-  color:var(--stone);font-family:var(--body);line-height:1.55;-webkit-font-smoothing:antialiased}
-.wrap{max-width:1120px;margin:0 auto;padding:0 20px 80px}
-a{color:var(--lemon)}
+html{scroll-behavior:smooth}
+body{
+  margin:0;color:var(--ink);background-color:var(--paper);
+  /* newsprint: a warm wash, a faint halftone, and grain that never touches text */
+  background-image:
+    radial-gradient(900px 520px at 12% -8%, rgba(140,18,37,.07), transparent 62%),
+    radial-gradient(760px 460px at 104% 4%, rgba(38,69,111,.07), transparent 58%),
+    radial-gradient(rgba(24,20,16,.05) 1px, transparent 1.1px);
+  background-size:auto,auto,4px 4px;
+  font-family:var(--body);font-size:15.5px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1140px;margin:0 auto;padding:0 22px 90px}
+a{color:var(--red);text-underline-offset:2px}
+b,strong{font-weight:600}
+:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:12px;top:12px;z-index:60;background:var(--ink);color:var(--paper);padding:8px 12px}
 
-header.mast{padding:40px 0 16px;border-bottom:1px solid var(--line);margin-bottom:20px}
-.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--stone-dim)}
-h1.title{font-family:var(--disp);font-weight:700;font-size:clamp(44px,11vw,116px);line-height:.84;margin:10px 0 6px;letter-spacing:-.02em;
-  background:linear-gradient(180deg,var(--stone) 40%,var(--stone-dim) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
-.sub{font-family:var(--disp);font-style:italic;font-size:clamp(16px,2.4vw,21px);color:var(--stone-dim);margin:0 0 14px}
-.mastmeta{display:flex;flex-wrap:wrap;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
-.mastmeta span{border:1px solid var(--line);padding:5px 9px;color:var(--stone-dim)}
+/* small caps label used everywhere a form would print one */
+.lab{font-family:var(--body);font-size:10.5px;font-weight:600;letter-spacing:.22em;text-transform:uppercase}
 
-.tracker{border:1px solid var(--line);padding:18px;margin:20px 0 6px;background:linear-gradient(180deg,rgba(239,231,216,.05),rgba(239,231,216,.015))}
-.tracker h2{font-family:var(--mono);font-size:11px;letter-spacing:.28em;text-transform:uppercase;margin:0 0 14px;color:var(--stone-dim);font-weight:500}
-.ballotbar{position:relative;height:34px;border:1px solid var(--line);background:rgba(0,0,0,.28);overflow:hidden}
-.ballotfill{position:absolute;inset:0 auto 0 0;width:0%;background:repeating-linear-gradient(135deg,var(--oxblood) 0 12px,var(--oxblood-hi) 12px 24px);transition:width .45s cubic-bezier(.2,.7,.2,1)}
-.ballotlabel{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 12px;font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase}
-.cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:10px;margin-top:14px}
-.cat{border:1px solid var(--line);padding:10px 12px;background:rgba(0,0,0,.2)}
-.cat .cn{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--stone-dim)}
-.cat .cv{font-family:var(--disp);font-size:30px;line-height:1.1;margin-top:2px}
-.cat .cv em{font-style:normal;color:var(--stone-dim);font-size:16px}
-.cat .cmini{height:3px;background:rgba(255,255,255,.09);margin-top:8px;overflow:hidden}
-.cat .cmini i{display:block;height:100%;width:0%;background:var(--lemon);transition:width .4s ease}
+/* ── nameplate ─────────────────────────────────────────────────────────── */
+.plate{padding:26px 0 0}
+.plate-top{display:flex;justify-content:space-between;align-items:baseline;gap:16px;
+  border-bottom:1px solid var(--ink);padding-bottom:7px}
+.plate-top a{color:var(--muted);text-decoration:none}
+.plate-top a:hover{color:var(--red)}
+.plate-rules{border-top:3px solid var(--ink);border-bottom:1px solid var(--ink);height:5px;margin-top:2px}
+h1.plate-title{font-family:var(--disp);font-weight:900;font-size:clamp(52px,13.5vw,146px);line-height:.82;
+  letter-spacing:-.025em;margin:16px 0 6px;text-align:center}
+.plate-slogan{font-family:var(--disp);font-style:italic;font-size:clamp(16px,2.5vw,23px);text-align:center;
+  color:var(--ink-2);margin:0 auto 16px;max-width:52ch}
+.dateline{display:flex;flex-wrap:wrap;justify-content:center;gap:0;border-top:1px solid var(--ink);
+  border-bottom:3px double var(--ink);padding:9px 0}
+.dateline span{padding:0 14px;color:var(--ink-2);font-size:11px;font-weight:600;letter-spacing:.2em;
+  text-transform:uppercase;border-right:1px solid var(--rule-2)}
+.dateline span:last-child{border-right:0}
 
-nav.tabs{display:flex;gap:2px;margin:24px 0 18px;border-bottom:1px solid var(--line);flex-wrap:wrap}
-nav.tabs button{background:none;border:0;border-bottom:2px solid transparent;color:var(--stone-dim);font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;padding:12px 14px;cursor:pointer}
-nav.tabs button[aria-selected="true"]{color:var(--stone);border-bottom-color:var(--oxblood-hi)}
-nav.tabs button:focus-visible,.runjump button:focus-visible,.filters button:focus-visible{outline:2px solid var(--lemon);outline-offset:2px}
+/* ── the return (progress) ─────────────────────────────────────────────── */
+.return{border:1px solid var(--ink);background:var(--paper-2);margin:22px 0 6px;
+  box-shadow:3px 3px 0 rgba(24,20,16,.08)}
+.return-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
+  padding:12px 16px;border-bottom:1px solid var(--rule)}
+.return-head h2{margin:0;font-family:var(--disp);font-size:20px;font-weight:700}
+.return-head h2 em{font-style:italic;color:var(--muted);font-size:14px;font-family:var(--body);font-weight:400}
+.resetbtn{font-family:var(--body);font-size:10.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+  background:transparent;border:1px solid var(--rule);color:var(--muted);padding:6px 11px;cursor:pointer}
+.resetbtn:hover{border-color:var(--red);color:var(--red)}
+.tally{padding:16px}
+.tallybar{position:relative;height:40px;border:1px solid var(--ink);background:var(--paper);overflow:hidden}
+.tallyfill{position:absolute;inset:0 auto 0 0;width:0;
+  background:repeating-linear-gradient(45deg,var(--red) 0 10px,var(--red-2) 10px 20px);
+  transition:width .5s cubic-bezier(.2,.7,.2,1)}
+.tallylabel{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 13px;
+  font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;mix-blend-mode:normal}
+.tallylabel span{background:var(--paper);border:1px solid var(--ink);padding:2px 8px}
+.precincts{display:grid;grid-template-columns:repeat(auto-fit,minmax(178px,1fr));gap:12px;margin-top:14px}
+.precinct{border:1px solid var(--rule);background:var(--paper);padding:10px 12px}
+.precinct .pn{color:var(--muted)}
+.precinct .pv{font-family:var(--disp);font-size:29px;font-weight:700;line-height:1.1;margin-top:1px}
+.precinct .pv em{font-style:normal;color:var(--faint);font-size:15px}
+.boxes{display:flex;flex-wrap:wrap;gap:3px;margin-top:8px}
+.boxes i{width:9px;height:9px;border:1px solid var(--faint);display:block}
+.boxes i.on{background:var(--red);border-color:var(--red)}
+
+/* ── tabs ──────────────────────────────────────────────────────────────── */
+nav.tabs{display:flex;flex-wrap:wrap;gap:0;margin:26px 0 20px;border-bottom:2px solid var(--ink)}
+nav.tabs button{background:transparent;border:1px solid transparent;border-bottom:0;color:var(--muted);
+  font-family:var(--body);font-size:11.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+  padding:11px 15px;cursor:pointer;margin-bottom:-2px}
+nav.tabs button:hover{color:var(--ink)}
+nav.tabs button[aria-selected="true"]{color:var(--ink);background:var(--paper-2);
+  border-color:var(--ink);border-bottom:2px solid var(--paper-2)}
 .panel[hidden]{display:none}
 
-/* run jump bar */
-.runjump{position:sticky;top:0;z-index:20;display:flex;flex-wrap:wrap;gap:6px;padding:10px 0 12px;margin-bottom:14px;
-  background:linear-gradient(180deg,var(--ink) 70%,rgba(13,27,42,.86));border-bottom:1px solid var(--line)}
-.runjump button{background:rgba(0,0,0,.35);border:1px solid var(--line);color:var(--stone-dim);font-family:var(--mono);
-  font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;padding:8px 11px;cursor:pointer;white-space:nowrap}
-.runjump button:hover{color:var(--stone);border-color:var(--lemon)}
-.runjump button.util{border-style:dashed}
+/* ── ballot index (run jump) ───────────────────────────────────────────── */
+.index{position:sticky;top:0;z-index:20;display:flex;flex-wrap:wrap;gap:6px;align-items:center;
+  padding:10px 0 11px;margin-bottom:16px;background:linear-gradient(180deg,var(--paper) 74%,rgba(239,230,210,.9));
+  border-bottom:1px solid var(--rule)}
+.index .lab{color:var(--faint);margin-right:2px}
+.index button{background:var(--paper-2);border:1px solid var(--rule);color:var(--ink-2);
+  font-family:var(--body);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  padding:7px 11px;cursor:pointer;white-space:nowrap}
+.index button:hover{border-color:var(--red);color:var(--red)}
+.index button.util{border-style:dashed;background:transparent}
 
-details.run{border:1px solid var(--line);margin:0 0 18px;background:rgba(0,0,0,.22);scroll-margin-top:70px}
-details.run>summary{cursor:pointer;list-style:none;padding:18px 20px;background:linear-gradient(180deg,rgba(125,17,40,.22),transparent)}
-details.run>summary::-webkit-details-marker{display:none}
-.runtag{font-family:var(--mono);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--lemon)}
-.runtag .chev{color:var(--stone-dim)}
-details.run>summary h3{font-family:var(--disp);font-size:clamp(23px,4vw,32px);margin:4px 0 6px;line-height:1.05}
-.goal{color:var(--stone-dim);margin:0;max-width:72ch;font-size:14.5px}
-.runbody{border-top:1px solid var(--line)}
+/* ── scheda: one run, printed as a ballot paper ────────────────────────── */
+details.scheda{border:1px solid var(--ink);background:var(--paper-2);margin:0 0 22px;scroll-margin-top:74px;
+  box-shadow:3px 3px 0 rgba(24,20,16,.07)}
+details.scheda>summary{cursor:pointer;list-style:none;padding:0}
+details.scheda>summary::-webkit-details-marker{display:none}
+.perf{height:10px;border-bottom:1px dashed var(--rule);background-color:var(--paper-3);
+  background-image:radial-gradient(circle at 6px 50%,var(--paper) 2.6px,rgba(24,20,16,.18) 2.9px,transparent 3.1px);
+  background-size:12px 10px;background-repeat:repeat-x}
+.scheda-top{display:grid;grid-template-columns:auto 1fr;gap:16px;padding:15px 18px 16px;align-items:start}
+.stub{border:2px solid var(--ink);background:var(--paper);text-align:center;padding:6px 10px 7px;min-width:74px}
+.stub .sn{font-family:var(--disp);font-weight:900;font-size:34px;line-height:.92;display:block}
+.stub .sl{font-size:8.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.scheda-tag{margin:0;font-size:10.5px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--red)}
+.scheda-title{font-family:var(--disp);font-weight:700;font-size:clamp(23px,3.6vw,33px);line-height:1.06;margin:5px 0 7px}
+.scheda-goal{margin:0;max-width:76ch;color:var(--ink-2);font-size:14.5px}
+.scheda-facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.scheda-facts span{border:1px solid var(--rule);background:var(--paper);color:var(--muted);
+  font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:4px 8px}
+.scheda-facts span.open-hint{border-style:dashed;color:var(--faint)}
+details.scheda[open] .open-hint{display:none}
+.scheda-body{border-top:1px solid var(--ink);background:var(--paper)}
 
-.loadout{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;padding:16px 20px;border-bottom:1px solid var(--line);background:rgba(239,231,216,.03)}
-.lo{border-left:2px solid var(--sea);padding-left:10px}
-.lo .lk{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--stone-dim)}
-.lo .lv{font-size:13.5px}
-.section-h{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--lemon);padding:16px 20px 4px;border-top:1px dashed var(--line)}
+/* loadout: the candidate's declaration form. Flex rather than grid so the
+   last slot stretches to fill its row instead of leaving a blank column. */
+.loadout{display:flex;flex-wrap:wrap;border-bottom:1px solid var(--rule)}
+.lo{flex:1 1 190px;padding:11px 14px;border-right:1px solid var(--rule-2);border-bottom:1px solid var(--rule-2)}
+.lo .lk{color:var(--blue)}
+.lo .lv{font-size:13.5px;margin-top:2px}
 
-details.step{border-top:1px solid rgba(239,231,216,.07)}
-details.step>summary{cursor:pointer;list-style:none;padding:11px 20px 11px 16px;display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:start}
+.section{border-top:1px solid var(--rule-2)}
+.section-h{display:flex;align-items:center;gap:10px;padding:15px 18px 6px;margin:0;
+  font-family:var(--disp);font-size:19px;font-weight:700}
+.section-h::before{content:"§";color:var(--red);font-size:15px}
+.section-h::after{content:"";flex:1;border-bottom:1px solid var(--rule-2)}
+
+/* ── a step: a line on the ballot with a box to mark ───────────────────── */
+details.step{border-top:1px solid var(--rule-3)}
+details.step>summary{cursor:pointer;list-style:none;display:grid;grid-template-columns:34px 1fr;gap:12px;
+  align-items:start;padding:11px 18px 12px 16px}
 details.step>summary::-webkit-details-marker{display:none}
-.tick{width:24px;height:24px;margin-top:2px;border:1px solid var(--stone-dim);background:transparent;color:transparent;cursor:pointer;font-family:var(--disp);font-size:18px;line-height:1;padding:0}
-.tick[aria-pressed="true"]{color:var(--oxblood-hi);border-color:var(--oxblood-hi);background:rgba(168,32,60,.12)}
-.stepnum{font-family:var(--mono);font-size:10px;color:var(--lemon);letter-spacing:.14em}
-.steptitle{font-size:15.5px;font-weight:600;margin:1px 0 0}
-details.step.done .steptitle{opacity:.45;text-decoration:line-through}
-.badges{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
-.b{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;padding:3px 6px;border:1px solid}
-.b.ch{border-color:rgba(232,180,48,.5);color:var(--lemon);background:rgba(232,180,48,.08);cursor:pointer}
-.b.warn{border-color:rgba(158,27,27,.7);color:#ff9d9d;background:rgba(158,27,27,.25)}
-.b.save{border-color:rgba(200,129,26,.7);color:#ffcf87;background:rgba(200,129,26,.16)}
-.b.unv{border-color:rgba(201,189,166,.5);color:var(--stone-dim);background:rgba(201,189,166,.08)}
-.stepbody{padding:2px 20px 16px 56px}
-.sb{margin:0 0 5px;font-size:14px;display:grid;grid-template-columns:74px 1fr;gap:10px;align-items:start}
-.sb b{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--sea);padding-top:3px;font-weight:500}
-.sb.w b{color:#ff9d9d} .sb.s b{color:#ffcf87} .sb.u b{color:var(--stone-dim)}
-.validated{margin:14px 20px 18px;border-left:3px solid var(--ok);background:rgba(63,125,79,.09);padding:10px 14px;font-size:13px}
-.validated b{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;display:block;margin-bottom:4px;color:#9ede9e}
+details.step:hover{background:rgba(24,20,16,.025)}
+/* The cross is drawn rather than typed: no serif face reliably carries a
+   ballot ✗, and a hand-struck pen stroke suits the paper better anyway. */
+.mark{position:relative;width:28px;height:28px;padding:0;cursor:pointer;background:var(--paper);
+  border:1.5px solid var(--ink-2);font-size:0}
+.mark::before,.mark::after{content:"";position:absolute;left:50%;top:50%;width:72%;height:2.5px;
+  background:var(--red);border-radius:1px;opacity:0;transition:opacity .14s}
+.mark::before{transform:translate(-50%,-50%) rotate(43deg)}
+.mark::after{transform:translate(-50%,-50%) rotate(-45deg)}
+.mark[aria-pressed="true"]{border-color:var(--red)}
+.mark[aria-pressed="true"]::before,.mark[aria-pressed="true"]::after{opacity:1}
+.mark:hover{border-color:var(--red)}
+.stepnum{font-size:9.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
+.steptitle{font-size:16px;font-weight:600;margin:1px 0 0;line-height:1.35}
+details.step.done .steptitle{color:var(--muted)}
+details.step.done>summary{background:rgba(140,18,37,.05)}
+.voted{float:right;margin:-2px 0 0 10px;border:1.5px solid var(--red);color:var(--red);
+  font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;padding:2px 6px;
+  transform:rotate(-4deg);opacity:.85;display:none}
+details.step.done .voted{display:inline-block}
 
+.badges{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}
+.b{font-size:9.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 7px;border:1px solid}
+.b.ch{border-color:rgba(38,69,111,.5);color:var(--blue);background:rgba(38,69,111,.07);cursor:pointer}
+.b.ch:hover{border-color:var(--blue)}
+.b.ch.on{opacity:.5;text-decoration:line-through}
+.b.warn{border-color:var(--red);color:var(--red);background:rgba(140,18,37,.08)}
+.b.save{border-color:var(--gold);color:var(--gold);background:rgba(138,106,21,.09)}
+.b.unv{border-color:var(--faint);color:var(--muted);background:transparent;border-style:dashed}
+
+.stepbody{padding:0 18px 15px 62px}
+.sb{margin:0;font-size:14.5px;display:grid;grid-template-columns:88px 1fr;gap:12px;align-items:start;
+  padding:5px 0;border-top:1px dotted var(--rule-2)}
+.sb b{font-size:9.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);padding-top:4px}
+.sb.w b{color:var(--red)} .sb.s b{color:var(--gold)} .sb.u b{color:var(--muted)}
+.sb.w span{color:#6d1220}
+.checked{margin:14px 18px 18px;border:1px solid var(--rule);border-left:4px solid var(--sea);
+  background:rgba(44,99,96,.06);padding:11px 14px;font-size:13.5px}
+.checked b{display:block;margin-bottom:4px;font-size:9.5px;font-weight:700;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--sea)}
+
+/* ── the ballot itself (checklist) ─────────────────────────────────────── */
 .filters{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 16px}
-.filters button{background:rgba(0,0,0,.28);border:1px solid var(--line);color:var(--stone-dim);font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;padding:7px 11px;cursor:pointer}
-.filters button[aria-pressed="true"]{color:var(--ink);background:var(--lemon);border-color:var(--lemon);font-weight:700}
-.ch-row{display:grid;grid-template-columns:32px 1fr auto;gap:12px;align-items:start;padding:10px 12px;border:1px solid rgba(239,231,216,.08);margin-bottom:6px;background:rgba(0,0,0,.2)}
-.ch-row.done{background:rgba(63,125,79,.1);border-color:rgba(63,125,79,.35)}
-.ch-row.done .cname{opacity:.5;text-decoration:line-through}
-.cname{font-size:15px;margin:0}
-.cdesc{margin:2px 0 0;font-size:13px;color:var(--stone-dim)}
-.ctag{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--stone-dim);border:1px solid var(--line);padding:3px 6px;white-space:nowrap}
+.filters button{background:var(--paper-2);border:1px solid var(--rule);color:var(--ink-2);font-family:var(--body);
+  font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:7px 12px;cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.ch-row{display:grid;grid-template-columns:34px 1fr auto;gap:13px;align-items:start;padding:11px 13px;
+  border:1px solid var(--rule-2);border-left:3px solid var(--rule-2);background:var(--paper-2);margin-bottom:7px}
+.ch-row.done{border-left-color:var(--red);background:rgba(140,18,37,.05)}
+.ch-row.done .cname{color:var(--muted);text-decoration:line-through}
+.cname{font-family:var(--disp);font-size:17px;font-weight:700;margin:0;line-height:1.2}
+.cdesc{margin:3px 0 0;font-size:13.5px;color:var(--ink-2)}
+.ctags{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.ctag{font-size:9.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+  border:1px solid var(--rule-2);background:var(--paper);padding:3px 7px;white-space:nowrap}
+.empty{color:var(--muted);font-style:italic}
 
-.vblock{border:1px solid var(--line);padding:16px 18px;margin-bottom:16px;background:rgba(0,0,0,.22)}
-.vblock h3{font-family:var(--disp);font-size:22px;margin:0 0 8px}
-.vblock h4{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--lemon);margin:14px 0 4px}
-.vblock p,.vblock li{font-size:14px}
-table{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:8px}
-th,td{text-align:left;padding:7px 9px;border-bottom:1px solid rgba(239,231,216,.1);vertical-align:top}
-th{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--stone-dim);font-weight:500}
-footer.foot{margin-top:36px;padding-top:16px;border-top:1px solid var(--line);color:var(--stone-dim);font-size:13px}
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
-@media (max-width:640px){
-  .stepbody{padding-left:20px}
+/* ── reference and verification (prose kept from the previous edition) ─── */
+.vblock{border:1px solid var(--rule);background:var(--paper-2);padding:17px 19px;margin-bottom:18px;
+  box-shadow:3px 3px 0 rgba(24,20,16,.06)}
+.vblock h3{font-family:var(--disp);font-size:25px;font-weight:700;margin:0 0 9px;
+  border-bottom:1px solid var(--rule);padding-bottom:7px}
+.vblock h4{font-size:10.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--red);margin:16px 0 5px}
+.vblock p,.vblock li{font-size:14.5px}
+.vblock ul,.vblock ol{padding-left:20px}
+.vblock li{margin-bottom:4px}
+table{width:100%;border-collapse:collapse;font-size:14px;margin-top:9px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--rule-2);vertical-align:top}
+tr:nth-child(even) td{background:rgba(24,20,16,.025)}
+th{font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+  border-bottom:1px solid var(--ink)}
+.tablewrap{overflow-x:auto}
+
+footer.foot{margin-top:40px;padding-top:16px;border-top:3px double var(--ink);color:var(--muted);font-size:13.5px}
+footer.foot .colophon{font-family:var(--disp);font-style:italic;font-size:15px;color:var(--ink-2);margin:0 0 6px}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+@media (max-width:680px){
+  body{font-size:15px}
+  .stepbody{padding-left:18px}
   .sb{grid-template-columns:1fr;gap:0}
-  .sb b{padding-top:6px}
-  .loadout,.section-h,details.run>summary{padding-left:14px;padding-right:14px}
-  details.step>summary{padding-left:12px;padding-right:14px}
+  .sb b{padding-top:3px}
+  .scheda-top{grid-template-columns:1fr;gap:11px}
+  .stub{min-width:0;justify-self:start;padding:5px 14px 6px}
+  .stub .sn{font-size:28px}
+  .dateline span{border-right:0;padding:2px 10px}
+}
+@media print{
+  body{background:#fff;font-size:11pt}
+  .index,nav.tabs,.resetbtn,.skip,.voted{display:none!important}
+  .panel[hidden]{display:block!important}
+  details.scheda,details.step{break-inside:avoid}
+  details.scheda>summary,details.step>summary{cursor:default}
+  .scheda-body,.stepbody{display:block!important}
+  .return,.vblock,details.scheda{box-shadow:none}
 }
 </style>
 </head>
 <body>
+<a class="skip" href="#p-runs">Skip to the runs</a>
 <div class="wrap">
 
-<header class="mast">
-  <div class="kicker">HITMAN · World of Assassination · Bonus Mission</div>
-  <h1 class="title">LANDSLIDE</h1>
-  <p class="sub">Sapienza, Italy — Festival del Paese. One target: Marco Abiatti.</p>
-  <div class="mastmeta">
-    <span>35 challenges — verified against mission data</span>
+<header class="plate">
+  <div class="plate-top">
+    <a href="../index.html">&#8592; All guides</a>
+    <span class="lab" style="color:var(--muted)">Bonus Mission 03 &middot; Sapienza</span>
+  </div>
+  <div class="plate-rules"></div>
+  <h1 class="plate-title">LANDSLIDE</h1>
+  <p class="plate-slogan">Sapienza, Italy — Festival del Paese. One candidate for mayor, one contract: Marco Abiatti.</p>
+  <div class="dateline">
+    <span>35 challenges</span>
     <span>6 runs</span>
     <span>13 disguises</span>
     <span>Client: Silvio Caruso</span>
+    <span>Verified against mission data</span>
   </div>
 </header>
 
-<section class="tracker" aria-label="Progress tracker">
-  <h2>Vote count — challenges completed</h2>
-  <div class="ballotbar"><div class="ballotfill" id="fill"></div>
-    <div class="ballotlabel"><span id="pctText">0%</span><span id="totText">0 / 35</span></div>
+<section class="return" aria-label="Progress">
+  <div class="return-head">
+    <h2>Spoglio <em>— the count</em></h2>
+    <button class="resetbtn" id="reset">Clear this guide</button>
   </div>
-  <div class="cats" id="cats"></div>
+  <div class="tally">
+    <div class="tallybar"><div class="tallyfill" id="fill"></div>
+      <div class="tallylabel"><span id="pctText">0%</span><span id="totText">0 / 35</span></div>
+    </div>
+    <div class="precincts" id="cats"></div>
+  </div>
 </section>
 
-<nav class="tabs" role="tablist">
+<nav class="tabs" role="tablist" aria-label="Guide sections">
   <button role="tab" id="tab-runs" aria-controls="p-runs" aria-selected="true">Runs</button>
-  <button role="tab" id="tab-list" aria-controls="p-list" aria-selected="false">Checklist</button>
+  <button role="tab" id="tab-list" aria-controls="p-list" aria-selected="false">The ballot</button>
   <button role="tab" id="tab-ref" aria-controls="p-ref" aria-selected="false">Disguises &amp; items</button>
   <button role="tab" id="tab-ver" aria-controls="p-ver" aria-selected="false">Verification</button>
 </nav>
 
 <div class="panel" id="p-runs" role="tabpanel" aria-labelledby="tab-runs">
-  <div class="runjump" id="runjump"></div>
+  <div class="index" id="runjump"></div>
   <div id="runlist"></div>
 </div>
 
@@ -165,9 +306,10 @@ footer.foot{margin-top:36px;padding-top:16px;border-top:1px solid var(--line);co
 <div class="panel" id="p-ver" role="tabpanel" aria-labelledby="tab-ver" hidden></div>
 
 <footer class="foot">
+  <p class="colophon">Printed for the Festival del Paese — no candidate was consulted.</p>
   Challenge names, descriptions, categories and the 13-disguise list are taken from the mission data file you supplied, which matches the in-game list (35 challenges).
   Route detail comes from the sources listed under Verification. Anything a source did not state is marked <span class="b unv">unverified</span> rather than filled in.
-  Progress is held in memory for this session only.
+  Progress is stored in this browser only.
 </footer>
 </div>
 
@@ -506,94 +648,141 @@ const RUNS=[
  valid:'Disguises are collected before the Cheat Sheet chain, so every restricted room on the chain is already accessible. The screwdriver is taken in the same room as the reschedule, so the graveyard rig needs no second trip. The save sits after the story registers, so all five kill branches keep the mission story. The Photographer dependency on Run 04 is called out rather than assumed. Hold My Hair and Discover Sapienza are the two items that cannot be completed inside Landslide, and both are flagged in place.'
 }];
 
-/* ═══════════ STATE + RENDER ═══════════ */
+/* ═══════════ STATE ═══════════ */
 const state={done:new Set(),steps:new Set(),filter:'All'};
 try{const saved=JSON.parse(localStorage.getItem('landslide_done_v1')||'[]');saved.forEach(id=>state.done.add(id));}catch(e){}
 try{const _s=JSON.parse(localStorage.getItem('landslide_done_v1:steps'));if(Array.isArray(_s))_s.forEach(k=>state.steps.add(k));}catch(e){}
 function reportProgress(){try{const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r['b03']={done:state.done.size,total:CH.length,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
 function saveDone(){try{localStorage.setItem('landslide_done_v1',JSON.stringify([...state.done]));localStorage.setItem('landslide_done_v1:steps',JSON.stringify([...state.steps]));}catch(e){}reportProgress();}
+
 const byId=Object.fromEntries(CH.map(c=>[c.id,c]));
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const $=id=>document.getElementById(id);
+const runNo=r=>{const m=String(r.tag||'').match(/\d+/);return m?Number(m[0]):0;};
 
+/* ═══════════ THE COUNT ═══════════ */
 function updateTracker(){
   const total=CH.length,done=CH.filter(c=>state.done.has(c.id)).length,pct=Math.round(done/total*100);
-  fill.style.width=pct+'%';pctText.textContent=pct+'% of the vote';totText.textContent=done+' / '+total;
-  cats.innerHTML=Object.entries(CATMETA).map(([k,[name,n]])=>{
+  $('fill').style.width=pct+'%';
+  $('pctText').textContent=pct+'% counted';
+  $('totText').textContent=done+' / '+total;
+  /* One ballot box per challenge in the category — filled as they land. */
+  $('cats').innerHTML=Object.entries(CATMETA).map(([k,[name,n]])=>{
     const d=CH.filter(c=>c.cat===k&&state.done.has(c.id)).length;
-    return '<div class="cat"><div class="cn">'+name+'</div><div class="cv">'+d+' <em>/ '+n+'</em></div><div class="cmini"><i style="width:'+(d/n*100)+'%"></i></div></div>';
+    let boxes='';for(let i=0;i<n;i++)boxes+='<i'+(i<d?' class="on"':'')+'></i>';
+    return '<div class="precinct"><div class="pn lab">'+esc(name)+'</div>'+
+      '<div class="pv">'+d+' <em>/ '+n+'</em></div><div class="boxes" aria-hidden="true">'+boxes+'</div></div>';
   }).join('');
 }
-function toggleCh(id){state.done.has(id)?state.done.delete(id):state.done.add(id);saveDone();renderChecklist();updateTracker();syncBadges();}
-function syncBadges(){document.querySelectorAll('[data-ch]').forEach(el=>{
-  const on=state.done.has(el.dataset.ch);el.style.opacity=on?'.45':'';el.style.textDecoration=on?'line-through':'';});}
+
+function toggleCh(id){
+  state.done.has(id)?state.done.delete(id):state.done.add(id);
+  saveDone();renderChecklist();updateTracker();syncBadges();
+}
+function syncBadges(){
+  document.querySelectorAll('.b.ch[data-ch]').forEach(el=>el.classList.toggle('on',state.done.has(el.dataset.ch)));
+}
+
+/* ═══════════ RUNS ═══════════ */
 function badgeHTML(s){
   let h='';
-  (s.ch||[]).forEach(id=>{const c=byId[id];if(c)h+='<span class="b ch" data-ch="'+id+'">'+esc(c.n)+'</span>';});
+  (s.ch||[]).forEach(id=>{const c=byId[id];if(c)h+='<button type="button" class="b ch'+(state.done.has(id)?' on':'')+'" data-ch="'+id+'" title="Mark this challenge done">'+esc(c.n)+'</button>';});
   if(s.warn)h+='<span class="b warn">&#9888; Warning</span>';
   if(s.save)h+='<span class="b save">&#9670; Save here</span>';
   if(s.unv)h+='<span class="b unv">Unverified detail</span>';
   return h?'<div class="badges">'+h+'</div>':'';
 }
 function row(cls,label,txt){return txt?'<p class="sb '+cls+'"><b>'+label+'</b><span>'+esc(txt)+'</span></p>':'';}
+
+/* step key -> the challenges that step completes, so ticking one ticks them */
+const STEP_CH={};
 function stepHTML(s,key,num){
   const on=state.steps.has(key);
-  return '<details class="step'+(on?' done':'')+'" data-step="'+key+'"><summary>'+
-    '<button class="tick" aria-pressed="'+on+'" aria-label="Mark step done">&#10005;</button>'+
-    '<span><span class="stepnum">STEP '+num+'</span><p class="steptitle">'+esc(s.t)+'</p>'+badgeHTML(s)+'</span>'+
-    '</summary><div class="stepbody">'+
-    row('','Where',s.go)+row('','Disguise',s.disg)+row('','Item',s.item)+row('','NPC',s.npc)+row('','Do',s.act)+
-    row('w','Warning',s.warn)+row('s','Save',s.savetxt)+row('u','Unverified',s.unv)+
+  STEP_CH[key]=s.ch||[];
+  return '<details class="step'+(on?' done':'')+'" data-step="'+key+'">'+
+    '<summary><button type="button" class="mark" aria-pressed="'+on+'" aria-label="Mark step '+num+' done'+((s.ch&&s.ch.length)?' and bank the challenges it covers':'')+'"></button>'+
+    '<span><span class="stepnum">Step '+num+'</span><span class="voted">Marked</span>'+
+    '<p class="steptitle">'+esc(s.t)+'</p>'+badgeHTML(s)+'</span></summary>'+
+    '<div class="stepbody">'+
+      row('','Where',s.go)+row('','Disguise',s.disg)+row('','Item',s.item)+row('','NPC',s.npc)+row('','Do',s.act)+
+      row('w','Warning',s.warn)+row('s','Save',s.savetxt)+row('u','Unverified',s.unv)+
     '</div></details>';
 }
+
 function renderRuns(){
-  runjump.innerHTML=RUNS.map(r=>'<button data-go="'+r.id+'">'+esc(r.short)+'</button>').join('')+
-    '<button class="util" data-all="open">Expand all</button><button class="util" data-all="close">Collapse all</button>';
-  let n=0;
-  runlist.innerHTML=RUNS.map((r,ri)=>{
+  $('runjump').innerHTML='<span class="lab">Schede</span>'+
+    RUNS.map(r=>'<button type="button" data-go="'+r.id+'">'+esc(r.short)+'</button>').join('')+
+    '<button type="button" class="util" data-all="open">Open all</button>'+
+    '<button type="button" class="util" data-all="close">Close all</button>';
+
+  $('runlist').innerHTML=RUNS.map((r,ri)=>{
+    const no=runNo(r);
+    const chalCount=CH.filter(c=>c.run===no).length;
+    let stepTotal=0;r.sections.forEach(sec=>stepTotal+=sec.steps.length);
+
     const lo='<div class="loadout">'+
-      '<div class="lo"><div class="lk">Start</div><div class="lv">'+esc(r.loadout.start)+'</div></div>'+
-      '<div class="lo"><div class="lk">Suit</div><div class="lv">'+esc(r.loadout.suit)+'</div></div>'+
-      r.loadout.items.map((it,i)=>'<div class="lo"><div class="lk">Slot '+(i+1)+'</div><div class="lv">'+esc(it)+'</div></div>').join('')+'</div>';
+      '<div class="lo"><div class="lk lab">Start</div><div class="lv">'+esc(r.loadout.start)+'</div></div>'+
+      '<div class="lo"><div class="lk lab">Suit</div><div class="lv">'+esc(r.loadout.suit)+'</div></div>'+
+      r.loadout.items.map((it,i)=>'<div class="lo"><div class="lk lab">Slot '+(i+1)+'</div><div class="lv">'+esc(it)+'</div></div>').join('')+
+      '</div>';
+
     let sn=0;
-    const secs=r.sections.map((sec,si)=>'<div class="section-h">'+esc(sec.h)+'</div>'+
-      sec.steps.map((st,sti)=>stepHTML(st,ri+'-'+si+'-'+sti,++sn)).join('')).join('');
-    return '<details class="run" id="'+r.id+'"'+(ri===0?' open':'')+'><summary>'+
-      '<div class="runtag">'+esc(r.tag)+' <span class="chev">— click to open/close</span></div>'+
-      '<h3>'+esc(r.title)+'</h3><p class="goal">'+esc(r.goal)+'</p></summary>'+
-      '<div class="runbody">'+lo+secs+
-      '<div class="validated"><b>Run logic check</b>'+esc(r.valid)+'</div></div></details>';
+    const secs=r.sections.map((sec,si)=>'<div class="section"><h4 class="section-h">'+esc(sec.h)+'</h4>'+
+      sec.steps.map((st,sti)=>stepHTML(st,ri+'-'+si+'-'+sti,++sn)).join('')+'</div>').join('');
+
+    return '<details class="scheda" id="'+r.id+'"'+(ri===0?' open':'')+'>'+
+      '<summary><div class="perf"></div><div class="scheda-top">'+
+        '<div class="stub"><span class="sn">'+String(no).padStart(2,'0')+'</span><span class="sl">Scheda</span></div>'+
+        '<div><p class="scheda-tag">'+esc(r.tag)+'</p>'+
+        '<h3 class="scheda-title">'+esc(r.title)+'</h3>'+
+        '<p class="scheda-goal">'+esc(r.goal)+'</p>'+
+        '<div class="scheda-facts"><span>'+chalCount+' challenges</span><span>'+stepTotal+' steps</span>'+
+        '<span class="open-hint">Click to open</span></div></div>'+
+      '</div></summary>'+
+      '<div class="scheda-body">'+lo+secs+
+        '<div class="checked"><b>Run logic check</b>'+esc(r.valid)+'</div>'+
+      '</div></details>';
   }).join('');
 
-  runlist.querySelectorAll('.tick').forEach(btn=>btn.addEventListener('click',e=>{
+  $('runlist').querySelectorAll('.mark').forEach(btn=>btn.addEventListener('click',e=>{
     e.preventDefault();e.stopPropagation();
     const d=btn.closest('.step'),key=d.dataset.step;
-    state.steps.has(key)?state.steps.delete(key):state.steps.add(key);saveDone();
-    const on=state.steps.has(key);btn.setAttribute('aria-pressed',on);d.classList.toggle('done',on);
+    const on=!state.steps.has(key);
+    on?state.steps.add(key):state.steps.delete(key);
+    /* marking the step banks the challenges it covers; unmarking leaves them,
+       since another step may cover the same one */
+    if(on)(STEP_CH[key]||[]).forEach(id=>state.done.add(id));
+    saveDone();
+    btn.setAttribute('aria-pressed',on);d.classList.toggle('done',on);
+    renderChecklist();updateTracker();syncBadges();
   }));
-  runlist.querySelectorAll('.b.ch').forEach(b=>b.addEventListener('click',e=>{
-    e.preventDefault();e.stopPropagation();toggleCh(b.dataset.ch);}));
-  runjump.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
-    if(b.dataset.all){document.querySelectorAll('details.run').forEach(d=>d.open=b.dataset.all==='open');return;}
-    const d=document.getElementById(b.dataset.go);d.open=true;d.scrollIntoView({behavior:'smooth',block:'start'});
+  $('runlist').querySelectorAll('.b.ch').forEach(b=>b.addEventListener('click',e=>{
+    e.preventDefault();e.stopPropagation();toggleCh(b.dataset.ch);
+  }));
+  $('runjump').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
+    if(b.dataset.all){document.querySelectorAll('details.scheda').forEach(d=>d.open=b.dataset.all==='open');return;}
+    const d=$(b.dataset.go);d.open=true;d.scrollIntoView({behavior:'smooth',block:'start'});
   }));
 }
+
+/* ═══════════ THE BALLOT ═══════════ */
 function renderChecklist(){
   const map={'Assassination':'A','Discovery':'D','Feats':'F','Targets':'T','The Classics':'C'},F=state.filter;
   const rows=CH.filter(c=>F==='All'?true:F==='Incomplete'?!state.done.has(c.id):c.cat===map[F]);
-  checklist.innerHTML=rows.map(c=>{
+  $('checklist').innerHTML=rows.map(c=>{
     const on=state.done.has(c.id);
     return '<div class="ch-row'+(on?' done':'')+'" data-id="'+c.id+'">'+
-      '<button class="tick" aria-pressed="'+on+'" aria-label="Mark challenge done">&#10005;</button>'+
+      '<button type="button" class="mark" aria-pressed="'+on+'" aria-label="Mark challenge done"></button>'+
       '<div><p class="cname">'+esc(c.n)+'</p><p class="cdesc">'+esc(c.d)+'</p></div>'+
-      '<div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end">'+
-      '<span class="ctag">Run 0'+c.run+'</span><span class="ctag">'+CATMETA[c.cat][0]+'</span></div></div>';
-  }).join('')||'<p style="color:var(--stone-dim)">Nothing left in this filter.</p>';
-  checklist.querySelectorAll('.tick').forEach(b=>b.addEventListener('click',()=>toggleCh(b.closest('.ch-row').dataset.id)));
+      '<div class="ctags"><span class="ctag">Scheda 0'+c.run+'</span><span class="ctag">'+CATMETA[c.cat][0]+'</span></div>'+
+    '</div>';
+  }).join('')||'<p class="empty">Nothing left in this filter.</p>';
+  $('checklist').querySelectorAll('.mark').forEach(b=>b.addEventListener('click',()=>toggleCh(b.closest('.ch-row').dataset.id)));
 }
 function renderFilters(){
   const opts=['All','Assassination','Discovery','Feats','Targets','The Classics','Incomplete'];
-  filters.innerHTML=opts.map(o=>'<button aria-pressed="'+(state.filter===o)+'" data-f="'+o+'">'+o+'</button>').join('');
-  filters.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{state.filter=b.dataset.f;renderFilters();renderChecklist();}));
+  $('filters').innerHTML=opts.map(o=>'<button type="button" aria-pressed="'+(state.filter===o)+'" data-f="'+o+'">'+o+'</button>').join('');
+  $('filters').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{state.filter=b.dataset.f;renderFilters();renderChecklist();}));
 }
 
 /* ═══════════ REFERENCE ═══════════ */
@@ -685,13 +874,38 @@ document.getElementById('p-ver').innerHTML=
  '<li>Steam Community discussions — Chameleon disguise reports, bonus-mission difficulty behaviour</li></ul>'+
  '<p style="color:var(--stone-dim)">Direct fetches of hitman.fandom.com are blocked by bot protection, so wiki content was read through search extracts. That is why several route details are marked single-source rather than double-confirmed.</p></div>';
 
-const fill=document.getElementById('fill'),pctText=document.getElementById('pctText'),totText=document.getElementById('totText'),
-      cats=document.getElementById('cats'),runjump=document.getElementById('runjump'),runlist=document.getElementById('runlist'),
-      checklist=document.getElementById('checklist'),filters=document.getElementById('filters');
-document.querySelectorAll('nav.tabs button').forEach(btn=>btn.addEventListener('click',()=>{
-  document.querySelectorAll('nav.tabs button').forEach(b=>b.setAttribute('aria-selected',b===btn));
-  document.querySelectorAll('.panel').forEach(p=>p.hidden=p.id!==btn.getAttribute('aria-controls'));
-}));
+/* ═══════════ CHROME ═══════════ */
+const tabs=[...document.querySelectorAll('nav.tabs button')];
+function selectTab(btn){
+  tabs.forEach(b=>{const on=b===btn;b.setAttribute('aria-selected',on);b.tabIndex=on?0:-1;});
+  document.querySelectorAll('.panel').forEach(p=>{p.hidden=p.id!==btn.getAttribute('aria-controls');});
+}
+tabs.forEach((btn,i)=>{
+  btn.tabIndex=btn.getAttribute('aria-selected')==='true'?0:-1;
+  btn.addEventListener('click',()=>selectTab(btn));
+  btn.addEventListener('keydown',e=>{
+    const d=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;
+    if(!d)return;
+    e.preventDefault();
+    const next=tabs[(i+d+tabs.length)%tabs.length];
+    selectTab(next);next.focus();
+  });
+});
+
+/* Long tables from the reference and verification sections scroll inside
+   themselves rather than pushing the page sideways on a phone. */
+document.querySelectorAll('#p-ref table,#p-ver table').forEach(t=>{
+  const w=document.createElement('div');w.className='tablewrap';
+  t.parentNode.insertBefore(w,t);w.appendChild(t);
+});
+
+document.getElementById('reset').addEventListener('click',()=>{
+  if(!confirm('Clear every tick on this guide? Other guides are not affected.'))return;
+  state.done.clear();state.steps.clear();
+  saveDone();
+  renderRuns();renderChecklist();updateTracker();
+});
+
 renderRuns();renderFilters();renderChecklist();updateTracker();
 reportProgress();
 </script>

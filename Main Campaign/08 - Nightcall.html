@@ -3,213 +3,427 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Nightcall — Hawke's Bay · 33-Challenge Run Planner</title>
+<!--@title--><title>Nightcall — Hawke's Bay · 33-Challenge Run Planner</title><!--/@title-->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&family=Roboto+Mono:wght@400;500&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
 <style>
+/* ═══ HAWKE'S BAY — the empty house, and the lights coming on ═══
+   Nightcall is one fact repeated six ways: a glass house on a black shore in
+   the rain, with nobody in it. No targets, no guards, no witnesses — until you
+   put the dongle in the office computer, and the whole place wakes up.
+
+   So the guide is that house, seen from the beach, and progress is the house
+   coming on. The tracker is the elevation itself: thirty-three window panes,
+   one per challenge, dark until it is earned and then lit in the colour of its
+   category — sodium for the kills, sea-green for discovery, violet for the
+   feats, red for the target, cold white for the Classics. The water below
+   carries the reflection, so the sea fills with light at the same rate.
+
+   A run is a night, and a night's steps are the lights you turn on as you move
+   through the house: a switch per step, thrown one at a time. Every night is
+   ruled straight across at the moment the computer runs — the house wakes
+   there, and everything after it happens in an occupied building.
+
+   Wet black glass, rain, sodium and sea-green. Nothing of the drawing set,
+   nothing of the instrument panel: this is a building at night in weather. */
 :root{
-  --ink:#07131A; --tide:#0D2029; --tide-2:#123340;
-  --bone:#E9E4D6; --muted:#8DA6B0;
-  --sodium:#E9A23B; --sodium-dim:#7A5A22;
-  --surf:#5FC9B0; --alarm:#DE5548; --violet:#9C8AD6;
-  --line:rgba(233,228,214,.14); --line-soft:rgba(233,228,214,.07);
+  --night:#050a12; --night-2:#08111d;
+  --sea:#071522; --sea-2:#0a1e2e;
+  --glass:#0e1b2a; --glass-2:#132436; --glass-3:#182c41;
+  --mullion:#2a4256; --mullion-2:#1c3145;
+  --ink:#dde8f3; --ink-2:#b9c9da; --muted:#93a8bd; --faint:#6f8399;
+  --sodium:#f5a623; --surf:#3fd2bd; --violet:#9d8cff; --alarm:#de5548; --bone:#e9eef4;
+  --lamp:rgba(245,166,35,.9);
+  --rule:rgba(143,178,209,.18); --rule-2:rgba(143,178,209,.1); --rule-3:rgba(143,178,209,.055);
+  --disp:"Space Grotesk","Segoe UI",Tahoma,sans-serif;
+  --body:Manrope,"Segoe UI",system-ui,-apple-system,sans-serif;
+  --mono:"Roboto Mono",ui-monospace,Consolas,"Courier New",monospace;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--ink);color:var(--bone);
-  font-family:'Instrument Sans',system-ui,sans-serif;font-size:15.5px;line-height:1.6;
-  -webkit-font-smoothing:antialiased;
-  background-image:radial-gradient(1100px 500px at 78% -12%,rgba(233,162,59,.11),transparent 62%),
-                   radial-gradient(900px 620px at 6% 104%,rgba(95,201,176,.07),transparent 60%);
-  background-attachment:fixed}
-.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
-h1,h2,h3,h4{font-family:'Bricolage Grotesque',sans-serif;margin:0;letter-spacing:-.022em;line-height:1.1}
-.mono{font-family:'IBM Plex Mono',monospace}
+body{
+  margin:0;color:var(--ink);background-color:var(--night);
+  /* the sky over the bay: cloud, a break of moon, and the sea glow low down */
+  background-image:
+    radial-gradient(900px 460px at 74% -10%,rgba(96,140,182,.16),transparent 66%),
+    radial-gradient(700px 520px at 8% 4%,rgba(30,70,104,.22),transparent 62%),
+    linear-gradient(180deg,#060d18 0%,#050a12 46%,#04080f 100%);
+  background-attachment:fixed;
+  font-family:var(--body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px 96px}
 a{color:var(--surf)}
-
-header.mast{padding:48px 0 24px;border-bottom:1px solid var(--line)}
-.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--sodium)}
-h1{font-size:clamp(38px,7vw,70px);font-weight:800;margin:12px 0 0}
-h1 .sub{display:block;font-size:clamp(15px,2.3vw,21px);font-weight:600;color:var(--muted);margin-top:10px;letter-spacing:0}
-.mast-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
-.chip{font-family:'IBM Plex Mono',monospace;font-size:11.5px;padding:4px 9px;border:1px solid var(--line);border-radius:4px;color:var(--muted);background:rgba(255,255,255,.02)}
-.chip b{color:var(--bone);font-weight:600}
-
-.tracker{position:sticky;top:0;z-index:40;background:rgba(7,19,26,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
-.tracker-inner{padding:13px 0 10px}
-.tk-top{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
-.tk-count{font-family:'Bricolage Grotesque',sans-serif;font-size:29px;font-weight:800;line-height:1}
-.tk-count small{font-size:15px;color:var(--muted);font-weight:600}
-.tk-xp{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--sodium)}
-.bar{height:5px;background:var(--tide-2);border-radius:99px;overflow:hidden;margin:10px 0 12px}
-.bar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--sodium),var(--surf));transition:width .45s cubic-bezier(.2,.7,.3,1)}
-.board{display:grid;grid-template-columns:repeat(33,1fr);gap:3px;margin-bottom:11px}
-.board i{display:block;height:15px;border-radius:2px;background:var(--tide-2);border-bottom:2px solid transparent;transition:.25s;cursor:pointer}
-.board i[data-cat=A]{border-bottom-color:rgba(233,162,59,.45)}
-.board i[data-cat=D]{border-bottom-color:rgba(95,201,176,.45)}
-.board i[data-cat=F]{border-bottom-color:rgba(156,138,214,.45)}
-.board i[data-cat=T]{border-bottom-color:rgba(222,85,72,.45)}
-.board i[data-cat=C]{border-bottom-color:rgba(233,228,214,.4)}
-.board i.on[data-cat=A]{background:var(--sodium)}
-.board i.on[data-cat=D]{background:var(--surf)}
-.board i.on[data-cat=F]{background:var(--violet)}
-.board i.on[data-cat=T]{background:var(--alarm)}
-.board i.on[data-cat=C]{background:var(--bone)}
-.cats{display:flex;flex-wrap:wrap;gap:14px}
-.cat{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--muted);display:flex;align-items:center;gap:6px}
-.cat s{width:8px;height:8px;border-radius:2px;display:inline-block;text-decoration:none}
-.cat b{color:var(--bone);font-weight:500}
-
-nav.tabs{display:flex;gap:2px;border-bottom:1px solid var(--line);margin-top:12px;overflow-x:auto}
-nav.tabs button{background:none;border:0;border-bottom:2px solid transparent;color:var(--muted);
-  font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;
-  padding:11px 15px;cursor:pointer;white-space:nowrap;transition:.2s}
-nav.tabs button:hover{color:var(--bone)}
-nav.tabs button[aria-selected=true]{color:var(--sodium);border-bottom-color:var(--sodium)}
-.panel{display:none;padding:30px 0 90px}
-.panel.on{display:block}
-
-/* run jump bar */
-.jump{display:flex;flex-wrap:wrap;gap:7px;align-items:center;margin-bottom:24px;padding:14px 16px;border:1px solid var(--line);border-radius:6px;background:rgba(18,51,64,.28)}
-.jump>span{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-right:4px}
-.jbtn{background:none;border:1px solid var(--line);color:var(--bone);font-family:'IBM Plex Mono',monospace;font-size:11.5px;padding:7px 12px;border-radius:4px;cursor:pointer;transition:.18s;display:flex;gap:7px;align-items:center}
-.jbtn:hover{border-color:var(--sodium);color:var(--sodium)}
-.jbtn i{font-style:normal;color:var(--surf);font-size:10.5px}
-.jbtn.full{border-color:rgba(95,201,176,.5)}
-.jbtn.full i{color:var(--surf)}
-.tiny{background:none;border:1px solid var(--line);color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:10.5px;padding:6px 10px;border-radius:99px;cursor:pointer}
-.tiny:hover{color:var(--bone);border-color:var(--muted)}
-
-.run{border:1px solid var(--line);border-radius:6px;background:linear-gradient(180deg,rgba(18,51,64,.42),rgba(13,32,41,.22));margin-bottom:22px;overflow:hidden;scroll-margin-top:210px}
-.run-head{padding:20px 22px;cursor:pointer;display:flex;gap:16px;align-items:flex-start;user-select:none}
-.run-head:hover{background:rgba(255,255,255,.02)}
-.run-no{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--sodium);border:1px solid var(--sodium-dim);border-radius:4px;padding:3px 7px;flex:none;margin-top:4px}
-.run-head h2{font-size:23px;font-weight:700}
-.run-goal{color:var(--muted);font-size:14.3px;margin-top:6px;max-width:64ch}
-.run-prog{margin-left:auto;flex:none;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);text-align:right}
-.run-prog em{display:block;font-style:normal;color:var(--surf);font-size:16px}
-.run-prog s{display:block;text-decoration:none;margin-top:5px;font-size:14px;color:var(--muted);transition:.25s}
-.run.open .run-prog s{transform:rotate(180deg)}
-.run-body{display:none;padding:0 22px 22px;border-top:1px solid var(--line-soft)}
-.run.open .run-body{display:block}
-
-.loadout{display:grid;grid-template-columns:repeat(auto-fit,minmax(178px,1fr));gap:1px;background:var(--line-soft);border:1px solid var(--line-soft);border-radius:5px;margin:18px 0 22px;overflow:hidden}
-.lo{background:rgba(7,19,26,.62);padding:12px 14px}
-.lo span{display:block;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
-.lo b{font-weight:600;font-size:14px;display:block}
-.lo p{margin:4px 0 0;font-size:12.2px;color:var(--muted);line-height:1.42}
-
-.sec-title{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.19em;text-transform:uppercase;color:var(--sodium);margin:24px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--line-soft)}
-
-.step{border:1px solid var(--line-soft);border-radius:5px;margin-bottom:8px;background:rgba(7,19,26,.42);transition:.2s}
-.step.done{border-color:rgba(95,201,176,.35);background:rgba(95,201,176,.045)}
-.step-top{display:flex;gap:12px;padding:13px 15px;align-items:flex-start}
-.tick{flex:none;width:21px;height:21px;border:1.5px solid var(--muted);border-radius:3px;background:none;cursor:pointer;color:transparent;font-size:13px;line-height:1;margin-top:2px;transition:.2s;padding:0}
-.tick:hover{border-color:var(--surf)}
-.step.done .tick,.ch-row.done .tick{background:var(--surf);border-color:var(--surf);color:var(--ink)}
-.step-txt{flex:1;min-width:0;cursor:pointer}
-.snum{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--sodium);letter-spacing:.08em}
-.step-txt h4{font-size:15.5px;font-weight:700;margin-top:2px}
-.step-txt p{margin:4px 0 0;color:var(--muted);font-size:13.8px}
-.caret{flex:none;color:var(--muted);font-size:11px;margin-top:6px;transition:.25s;font-family:'IBM Plex Mono',monospace;cursor:pointer}
-.step.open .caret{transform:rotate(90deg)}
-.detail{display:none;padding:0 15px 15px 48px}
-.step.open .detail{display:block}
-.spec{list-style:none;margin:6px 0 0;padding:12px 0 0;border-top:1px solid var(--line-soft)}
-.spec li{display:flex;gap:11px;margin-bottom:7px;font-size:13.8px;color:#CFD9DD;align-items:flex-start}
-.spec li>b{flex:none;width:74px;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--sodium);padding-top:4px;font-weight:500}
-.badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:11px}
-.b{font-family:'IBM Plex Mono',monospace;font-size:10.5px;padding:3px 8px;border-radius:3px;border:1px solid;cursor:pointer}
-.b.A{color:var(--sodium);border-color:var(--sodium-dim);background:rgba(233,162,59,.09)}
-.b.D{color:var(--surf);border-color:rgba(95,201,176,.4);background:rgba(95,201,176,.09)}
-.b.F{color:var(--violet);border-color:rgba(156,138,214,.4);background:rgba(156,138,214,.09)}
-.b.T{color:var(--alarm);border-color:rgba(222,85,72,.4);background:rgba(222,85,72,.09)}
-.b.C{color:var(--bone);border-color:var(--line);background:rgba(233,228,214,.07)}
-.warn,.save{display:flex;gap:9px;margin-top:10px;padding:9px 11px;border-radius:4px;font-size:13.3px}
-.warn{background:rgba(222,85,72,.1);border:1px solid rgba(222,85,72,.34);color:#F0C4BF}
-.warn b{color:var(--alarm);font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;flex:none;padding-top:2px}
-.save{background:rgba(233,162,59,.1);border:1px solid rgba(233,162,59,.34);color:#F2D9AE}
-.save b{color:var(--sodium);font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;flex:none;padding-top:2px}
-.unv{color:var(--alarm);font-family:'IBM Plex Mono',monospace;font-size:11px}
-
-.filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
-.filters button{background:none;border:1px solid var(--line);color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:11.5px;padding:6px 12px;border-radius:99px;cursor:pointer;transition:.2s}
-.filters button:hover{color:var(--bone);border-color:var(--muted)}
-.filters button.on{background:var(--bone);color:var(--ink);border-color:var(--bone)}
-.ch-row{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border:1px solid var(--line-soft);border-radius:5px;margin-bottom:7px;background:rgba(7,19,26,.42)}
-.ch-row.done{border-color:rgba(95,201,176,.32);background:rgba(95,201,176,.045)}
-.ch-row.done .ch-name{color:var(--muted);text-decoration:line-through;text-decoration-color:rgba(95,201,176,.6)}
-.ch-main{flex:1;min-width:0}
-.ch-name{font-weight:600;font-size:15px}
-.ch-cond{color:var(--muted);font-size:13.5px;margin-top:3px}
-.ch-note{font-size:12.2px;color:var(--sodium);margin-top:4px;font-family:'IBM Plex Mono',monospace}
-.ch-side{flex:none;text-align:right;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--muted)}
-.ch-side em{display:block;font-style:normal;color:var(--sodium)}
-.ch-side s{display:block;text-decoration:none;margin-top:4px;opacity:.75}
-
-.panel h2.big{font-size:29px;margin-bottom:8px}
-.lede{color:var(--muted);max-width:70ch;margin:0 0 24px}
-.card{border:1px solid var(--line);border-radius:6px;padding:19px 21px;margin-bottom:15px;background:rgba(18,51,64,.24)}
-.card h3{font-size:17.5px;margin-bottom:9px}
-.card p{margin:0 0 9px;font-size:14.4px}
-.card p:last-child{margin-bottom:0}
-.card ul{margin:7px 0 0;padding-left:19px;font-size:14.4px}
-.card li{margin-bottom:6px}
-table{width:100%;border-collapse:collapse;font-size:13.8px;margin-top:9px}
-th,td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--line-soft);vertical-align:top}
-th{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--sodium);font-weight:500}
-td.mono{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted)}
-footer{border-top:1px solid var(--line);padding:24px 0 60px;color:var(--muted);font-size:13px}
-@media (max-width:720px){
-  .board{grid-template-columns:repeat(17,1fr)}
-  .detail{padding-left:15px}
-  .spec li{flex-direction:column;gap:2px}
-  .spec li>b{width:auto;padding-top:0}
-  .run-prog{margin-left:0;width:100%;text-align:left;display:flex;gap:12px;align-items:center}
-  .run-prog s{margin-top:0}
-}
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+b,strong{font-weight:700}
+em{font-style:italic}
+code{font-family:var(--mono);font-size:13px;background:var(--glass-2);padding:1px 5px;border-radius:3px}
 :focus-visible{outline:2px solid var(--sodium);outline-offset:2px}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:12px;top:12px;z-index:60;background:var(--sodium);color:#10141b;padding:8px 14px;
+  font-family:var(--mono);font-size:12px}
+.label{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
+
+/* ── the shore: the whole night in one plate ────────────────────────────── */
+header.shore{position:relative;margin-top:18px;border:1px solid var(--rule-2);border-radius:4px;
+  background:linear-gradient(180deg,var(--night-2),var(--sea) 62%,var(--sea-2));overflow:hidden;
+  box-shadow:0 30px 70px -50px #000}
+.shore-top{display:flex;flex-wrap:wrap;gap:5px 18px;align-items:center;justify-content:space-between;
+  padding:9px 16px;border-bottom:1px solid var(--rule-3);background:rgba(4,9,16,.5);
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--muted)}
+.shore-top a{color:var(--surf);text-decoration:none;border-bottom:1px solid rgba(63,210,189,.35)}
+.shore-top a:hover{color:var(--sodium);border-color:var(--sodium)}
+
+/* the sky, with the weather in it */
+.sky{position:relative;padding:34px 22px 26px;overflow:hidden}
+.sky::before{content:"";position:absolute;inset:-40% -10% -10%;pointer-events:none;opacity:.5;
+  background-image:
+    repeating-linear-gradient(76deg,rgba(180,214,240,.16) 0 1px,transparent 1px 9px),
+    repeating-linear-gradient(74deg,rgba(180,214,240,.09) 0 1px,transparent 1px 15px);
+  background-size:auto 220px,auto 340px;
+  animation:rain 1.1s linear infinite}
+@keyframes rain{to{background-position:0 220px,0 340px}}
+.sky>*{position:relative}
+.eyebrow{margin:0 0 14px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--surf)}
+h1{margin:0;font-family:var(--disp);font-weight:700;font-size:clamp(46px,10vw,104px);line-height:.88;
+  letter-spacing:-.028em;color:var(--ink);
+  text-shadow:0 0 46px rgba(120,170,214,.22)}
+.sub{margin:16px 0 0;max-width:62ch;color:var(--ink-2);font-size:16px}
+.mast-meta{display:flex;flex-wrap:wrap;gap:7px;margin-top:20px}
+.chip{font-family:var(--mono);font-size:11px;letter-spacing:.03em;color:var(--muted);
+  border:1px solid var(--rule);border-radius:2px;padding:5px 9px;background:rgba(8,17,29,.55)}
+.chip b{color:var(--ink);font-weight:500}
+
+/* ── the house: thirty-three panes, one per challenge ───────────────────── */
+.house{padding:0 22px}
+.hcap{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:baseline;justify-content:space-between;
+  margin-bottom:7px}
+/* the roof slab, with the two ventilation units the mission keeps talking about */
+.roof{position:relative;height:14px;margin:0 -7px;border:1px solid var(--mullion);border-bottom:0;
+  background:linear-gradient(180deg,#1d3247,#101f2f);border-radius:3px 3px 0 0;
+  box-shadow:inset 0 1px 0 rgba(160,200,232,.22)}
+.roof i{position:absolute;top:-9px;width:28px;height:9px;background:#20374f;
+  border:1px solid var(--mullion);border-bottom:0;border-radius:2px 2px 0 0}
+.roof i:nth-child(1){left:16%}
+.roof i:nth-child(2){left:63%}
+.facade{border:1px solid var(--mullion);border-top:0;border-bottom:0;padding:7px;
+  background:linear-gradient(180deg,rgba(12,24,37,.9),rgba(7,16,26,.9))}
+/* three storeys of eleven, with a slab line between the floors */
+.glass{display:grid;grid-template-columns:repeat(11,minmax(0,1fr));column-gap:3px;row-gap:7px}
+/* one pane. dark glass with a sheen, until its challenge lands */
+.pane{position:relative;height:clamp(34px,4.4vw,58px);width:min(100%,46px);justify-self:center;
+  padding:0;cursor:pointer;border-radius:1px;border:1px solid var(--mullion);
+  background:linear-gradient(158deg,rgba(96,142,184,.34),rgba(16,32,50,.95) 62%);
+  box-shadow:inset 0 0 0 1px rgba(6,13,22,.5);
+  transition:background .18s ease,box-shadow .18s ease,border-color .18s ease}
+.pane:hover{border-color:var(--surf);background:linear-gradient(158deg,rgba(126,180,224,.42),rgba(20,40,60,.95) 62%)}
+.pane.on{border-color:transparent;background-color:var(--c,var(--sodium));
+  background-image:linear-gradient(165deg,rgba(255,255,255,.34),rgba(0,0,0,.34));
+  box-shadow:0 0 12px -1px var(--c,var(--sodium)),0 0 26px -6px var(--c,var(--sodium))}
+/* the sill line, so a lit pane still reads as a window and not a swatch */
+.pane.on::after{content:"";position:absolute;left:0;right:0;bottom:26%;height:1px;
+  background:rgba(6,12,20,.5)}
+.deck{height:11px;border:1px solid var(--mullion);border-top:0;border-radius:0 0 3px 3px;
+  background:linear-gradient(180deg,#132435,#0a1725)}
+/* the water, carrying the house upside down */
+.sea{position:relative;height:64px;margin-top:2px;overflow:hidden;border-radius:0 0 3px 3px;
+  background:linear-gradient(180deg,rgba(12,32,49,.85),rgba(5,12,20,0))}
+.reflect{display:grid;grid-template-columns:repeat(11,minmax(0,1fr));gap:3px;padding:0 8px;
+  transform:scaleY(-1);filter:blur(1.6px);opacity:.42;
+  -webkit-mask-image:linear-gradient(0deg,transparent,#000);mask-image:linear-gradient(0deg,transparent,#000)}
+.reflect i{height:13px;width:min(100%,46px);justify-self:center;border-radius:1px;
+  background:rgba(30,54,78,.35)}
+.reflect i.on{background:var(--c,var(--sodium));box-shadow:0 0 9px var(--c,var(--sodium))}
+.sea::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(0deg,rgba(4,10,18,.42) 0 2px,transparent 2px 5px)}
+
+/* ── the readout on the shoreline ───────────────────────────────────────── */
+.readout{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:22px;align-items:end;
+  padding:20px 22px 6px;border-top:1px solid var(--rule-3);margin-top:14px}
+.lit{margin:6px 0 0;font-size:19px;color:var(--ink-2)}
+/* the guide's own "n / n": deliberately lower case, so it reads as written and
+   stays legible to anything checking the page for its own total */
+.lit b{font-family:var(--disp);font-weight:700;font-size:52px;line-height:.9;color:var(--sodium);
+  margin-right:8px;text-shadow:0 0 30px rgba(245,166,35,.35)}
+.xp{margin:8px 0 0;font-family:var(--mono);font-size:12px;color:var(--muted)}
+.lamps{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:1px;
+  background:var(--rule-3);border:1px solid var(--rule-3)}
+.lamp{background:rgba(8,17,29,.7);padding:8px 11px;min-width:0}
+.lamp .k{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10px;
+  letter-spacing:.05em;color:var(--faint);text-transform:uppercase}
+.lamp .k s{width:7px;height:7px;border-radius:50%;background:var(--c,var(--sodium));opacity:.45;
+  text-decoration:none;flex:none}
+.lamp.full .k s{opacity:1;box-shadow:0 0 8px var(--c,var(--sodium))}
+.lamp .v{display:block;font-family:var(--disp);font-weight:700;font-size:21px;line-height:1.2;margin-top:2px}
+.lamp .v small{font-family:var(--body);font-weight:400;font-size:12.5px;color:var(--faint)}
+.lamp .b{display:block;height:3px;margin-top:6px;background:rgba(143,178,209,.12)}
+.lamp .b i{display:block;height:100%;background:var(--c,var(--sodium))}
+.shore-foot{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;
+  padding:14px 22px 18px}
+.btn{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;
+  background:var(--alarm);color:#120608;border:0;border-radius:2px;padding:9px 16px;cursor:pointer;font-weight:500}
+.btn:hover{background:var(--sodium)}
+.btn-plain{font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;background:transparent;
+  color:var(--muted);border:1px solid var(--rule);border-radius:2px;padding:6px 11px;cursor:pointer}
+.btn-plain:hover{border-color:var(--sodium);color:var(--sodium)}
+
+/* ── tabs ──────────────────────────────────────────────────────────────── */
+.tabs{display:flex;gap:4px;flex-wrap:wrap;margin:26px 0 0}
+.tab{font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
+  background:rgba(10,22,35,.75);color:var(--muted);border:1px solid var(--rule-3);border-bottom:0;
+  border-radius:3px 3px 0 0;padding:11px 17px;cursor:pointer}
+.tab[aria-selected="true"]{background:var(--glass);color:var(--ink);box-shadow:inset 0 2px 0 var(--sodium)}
+.tab:hover{color:var(--sodium)}
+.panel{background:var(--glass);border:1px solid var(--rule-3);border-radius:0 3px 3px 3px;padding:22px}
+
+/* ── the nights ────────────────────────────────────────────────────────── */
+.nightnav{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:0 0 20px}
+.njump{display:flex;align-items:center;gap:9px;background:rgba(8,17,29,.7);border:1px solid var(--rule-3);
+  border-radius:2px;padding:7px 12px;font-family:var(--body);font-size:14px;color:var(--ink-2);cursor:pointer}
+.njump b{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--sodium);font-weight:500}
+.njump .pg{font-family:var(--mono);font-size:10.5px;color:var(--faint)}
+.njump:hover{border-color:var(--sodium);color:var(--ink)}
+.njump.full{border-color:rgba(63,210,189,.45);background:rgba(63,210,189,.08)}
+.njump.full b{color:var(--surf)}
+
+article.night{border:1px solid var(--rule-3);border-radius:3px;background:rgba(8,17,29,.5);
+  margin-bottom:14px;scroll-margin-top:16px}
+article.night.open{background:var(--glass-2);border-color:var(--rule-2)}
+article.night.full{border-color:rgba(63,210,189,.4)}
+.nhead{display:grid;grid-template-columns:78px minmax(0,1fr);gap:16px;width:100%;text-align:left;
+  background:none;border:0;cursor:pointer;padding:17px 18px 13px;font-family:var(--body);color:var(--ink)}
+/* the night's own window: its challenges, in miniature */
+.nglass{display:grid;grid-template-columns:repeat(var(--cols,3),1fr);gap:2px;align-content:start;
+  border:1px solid var(--mullion-2);border-radius:2px;padding:3px;background:rgba(5,12,20,.7)}
+.nglass i{aspect-ratio:.74;border-radius:1px;background:rgba(40,68,96,.4)}
+.nglass i.on{background:var(--c,var(--sodium));box-shadow:0 0 7px -1px var(--c,var(--sodium))}
+.nmain{min-width:0}
+.nkicker{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;color:var(--surf)}
+.ntitle{display:block;font-family:var(--disp);font-weight:700;font-size:clamp(22px,3.6vw,34px);
+  line-height:1.06;letter-spacing:-.02em;margin:5px 0 7px}
+.ngoal{display:block;color:var(--ink-2);font-size:15px;max-width:78ch}
+.ntally{display:block;margin-top:10px;font-family:var(--mono);font-size:10.5px;color:var(--faint)}
+.npills{display:flex;flex-wrap:wrap;gap:6px;padding:0 18px 14px 112px}
+.nbody{padding:0 18px 20px 112px}
+
+/* six slots, so the column count stays a divisor of six and the block never
+   ends on a hole */
+.kit{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1px;
+  background:var(--rule-3);border:1px solid var(--rule-3);margin-bottom:20px}
+.slot{background:rgba(5,12,20,.55);padding:9px 12px;min-width:0}
+.slot .k{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--faint)}
+.slot .v{display:block;font-family:var(--disp);font-weight:500;font-size:15.5px;line-height:1.3;
+  margin-top:3px;overflow-wrap:anywhere}
+.slot .v em{display:block;font-family:var(--body);font-style:normal;font-weight:400;font-size:13px;
+  color:var(--muted);line-height:1.45;margin-top:2px}
+
+.sect{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin:22px 0 6px;
+  font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--surf)}
+.sect .rule{flex:1;height:1px;background:var(--rule-3);min-width:20px}
+.sect .cnt{font-size:10px;color:var(--faint);letter-spacing:.05em}
+
+/* the one line only this mission draws: the house is empty until the computer
+   runs, so every night is ruled straight across at that moment */
+.wake{display:flex;align-items:center;gap:12px;margin:18px 0 6px;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--sodium)}
+.wake .bolt{flex:none;width:14px;height:20px;background:var(--sodium);
+  clip-path:polygon(56% 0,10% 56%,44% 56%,30% 100%,90% 40%,52% 40%)}
+.wake .rule{flex:1;height:1px;min-width:16px;
+  background:repeating-linear-gradient(90deg,var(--sodium) 0 7px,transparent 7px 13px);opacity:.6}
+.wake em{font-style:normal;color:var(--faint);letter-spacing:.05em;text-transform:none;font-size:11px}
+
+.step{display:grid;grid-template-columns:34px 34px minmax(0,1fr);gap:12px;align-items:start;
+  padding:12px 4px;border-bottom:1px solid var(--rule-3)}
+.step:last-child{border-bottom:0}
+.step.occupied{box-shadow:inset 2px 0 0 rgba(245,166,35,.28)}
+.step.done{background:rgba(63,210,189,.055)}
+.step.done.occupied{box-shadow:inset 2px 0 0 var(--sodium)}
+/* the tick is a switch plate: throw it and the light comes on */
+.tick{position:relative;width:34px;height:34px;padding:0;cursor:pointer;border-radius:2px;
+  border:1px solid var(--mullion-2);background:linear-gradient(180deg,#132435,#0b1826)}
+.tick::before{content:"";position:absolute;left:9px;right:9px;top:5px;height:13px;border-radius:1px;
+  background:#25415b;box-shadow:inset 0 -1px 0 rgba(0,0,0,.5);transition:transform .16s ease,background .16s ease}
+.tick:hover{border-color:var(--sodium)}
+.step.done .tick,.crow.done .tick{border-color:rgba(245,166,35,.5);
+  background:linear-gradient(180deg,#2a2010,#171008)}
+.step.done .tick::before,.crow.done .tick::before{transform:translateY(11px);background:var(--sodium);
+  box-shadow:0 0 12px -1px var(--sodium)}
+.sno{font-family:var(--mono);font-size:11.5px;color:var(--faint);padding-top:8px;text-align:right}
+.step.done .sno{color:var(--sodium)}
+.swrap{min-width:0}
+.shead{display:block;width:100%;text-align:left;background:none;border:0;padding:3px 0;cursor:pointer;
+  font-family:var(--disp);font-weight:500;font-size:17px;line-height:1.3;color:var(--ink);letter-spacing:-.01em}
+.shead:hover{color:var(--sodium)}
+.shead .more{display:block;font-family:var(--mono);font-weight:400;font-size:10px;letter-spacing:.06em;
+  color:var(--faint);margin-top:5px;text-transform:uppercase}
+.step.done .shead{color:var(--ink-2)}
+.ssum{margin:5px 0 0;color:var(--ink-2);font-size:14.5px}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+.pill{font-family:var(--body);font-size:13px;cursor:pointer;border-radius:2px;
+  border:1px solid var(--rule);border-left:3px solid var(--c,var(--sodium));
+  background:rgba(5,12,20,.6);color:var(--ink-2);padding:4px 10px}
+.pill:hover{border-color:var(--sodium);border-left-color:var(--c,var(--sodium));color:var(--ink)}
+.pill.on{background:var(--c,var(--sodium));border-color:transparent;color:#0a1018;font-weight:700}
+.sbody{margin-top:12px;padding-top:12px;border-top:1px dashed var(--rule-2)}
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(196px,1fr));gap:10px;margin-bottom:12px}
+.meta>div{border-left:2px solid var(--rule);padding-left:11px;min-width:0}
+.meta span{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--faint)}
+.meta p{margin:2px 0 0;font-size:14.5px;color:var(--ink-2)}
+.warn,.save{margin:10px 0 0;padding:10px 13px;font-size:14px;color:var(--ink-2);border-left:3px solid;
+  border-radius:0 2px 2px 0}
+.warn{border-left-color:var(--alarm);background:rgba(222,85,72,.09)}
+.save{border-left-color:var(--surf);background:rgba(63,210,189,.08)}
+.warn b,.save b{font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;
+  display:block;margin-bottom:3px}
+.warn b{color:var(--alarm)}.save b{color:var(--surf)}
+
+/* ── every window (the checklist) ──────────────────────────────────────── */
+.filters{display:flex;flex-wrap:wrap;gap:6px;margin:18px 0 20px}
+.filters button{font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;background:rgba(8,17,29,.7);
+  border:1px solid var(--rule-3);border-radius:2px;color:var(--muted);padding:7px 12px;cursor:pointer}
+.filters button:hover{border-color:var(--sodium);color:var(--ink)}
+.filters button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#0a1018}
+.crow{display:grid;grid-template-columns:34px minmax(0,1fr) auto;gap:14px;align-items:start;
+  padding:13px 2px;border-bottom:1px solid var(--rule-3)}
+.crow:last-child{border-bottom:0}
+.crow.done{background:rgba(63,210,189,.045)}
+.cn{margin:0;font-family:var(--disp);font-weight:700;font-size:18px;line-height:1.25;letter-spacing:-.015em}
+.crow.done .cn{color:var(--c,var(--sodium))}
+.cd{margin:4px 0 0;color:var(--ink-2);font-size:14.3px}
+.cnote{margin:5px 0 0;font-family:var(--mono);font-size:11.5px;color:var(--faint)}
+.cmeta{display:flex;flex-direction:column;align-items:flex-end;gap:3px;text-align:right;
+  font-family:var(--mono);font-size:10.5px;color:var(--faint)}
+.cmeta .kind{color:var(--c,var(--sodium))}
+.cmeta .cxp{color:var(--ink-2)}
+.empty{margin:18px 0;color:var(--muted)}
+
+/* ── lifted panels: the house, and the verification ────────────────────── */
+.panel h2.big{font-family:var(--disp);font-weight:700;font-size:clamp(24px,4vw,31px);letter-spacing:-.02em;
+  margin:0 0 8px}
+.lede{color:var(--muted);max-width:74ch;margin:0 0 22px;font-size:15px}
+.card{border:1px solid var(--rule-3);border-radius:3px;padding:19px 21px;margin-bottom:14px;
+  background:rgba(5,12,20,.5)}
+.card h3{font-family:var(--disp);font-weight:700;font-size:18px;margin:0 0 10px;letter-spacing:-.015em}
+.card p{margin:0 0 9px;font-size:14.4px;color:var(--ink-2)}
+.card p:last-child{margin-bottom:0}
+.card ul{margin:8px 0 0;padding-left:19px;font-size:14.4px;color:var(--ink-2)}
+.card li{margin-bottom:7px}
+.card li:last-child{margin-bottom:0}
+.tscroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:10px}
+table{width:100%;min-width:430px;border-collapse:collapse;font-size:13.7px}
+th{text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--faint);font-weight:400;padding:7px 10px 7px 0;border-bottom:1px solid var(--rule)}
+td{padding:8px 10px 8px 0;border-bottom:1px solid var(--rule-3);color:var(--ink-2);vertical-align:top}
+td.mono,.mono{font-family:var(--mono)}
+td.mono{font-size:12px;color:var(--muted)}
+.unv{font-family:var(--mono);font-size:11px;color:var(--alarm)}
+footer{margin-top:26px;padding-top:14px;border-top:1px solid var(--rule-3);color:var(--faint);font-size:13px}
+
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;scroll-behavior:auto!important;animation:none!important}
+  .sky::before{opacity:.28}
+}
+@media (max-width:860px){
+  .readout{grid-template-columns:minmax(0,1fr);gap:16px;align-items:start}
+  .npills,.nbody{padding-left:18px}
+  .nhead{grid-template-columns:56px minmax(0,1fr);gap:13px;padding:15px 16px 11px}
+  .sky{padding:28px 16px 22px}
+  .house{padding:0 16px}
+  .readout,.shore-foot{padding-left:16px;padding-right:16px}
+}
+@media (max-width:620px){
+  .panel{padding:15px}
+  .step{grid-template-columns:34px minmax(0,1fr)}
+  .sno{display:none}
+  .crow{grid-template-columns:34px minmax(0,1fr)}
+  .cmeta{grid-column:2;align-items:flex-start;text-align:left;flex-direction:row;flex-wrap:wrap;
+    gap:4px 12px;margin-top:7px}
+  .sea{height:44px}
+  .lit b{font-size:42px}
+}
+@media print{
+  body{background:#fff;background-image:none;color:#000;font-size:10.5pt}
+  .tabs,.nightnav,.skip,.tick,.btn,.btn-plain,.filters,.sea,.roof i,.shore-top{display:none!important}
+  .panel[hidden]{display:block!important}
+  .nbody,.sbody{display:block!important}
+  header.shore,.panel,article.night,.card,.slot,.lamp{background:none!important;border-color:#999;
+    box-shadow:none!important}
+  .sky::before{display:none}
+  h1,.ntitle,.cn,.card h3,.shead{color:#000}
+  .ssum,.ngoal,.cd,.meta p,.card p,.card li,td,.lede,.sub{color:#222}
+  .npills,.nbody{padding-left:0}
+  .pane{border-color:#999}
+  .pane.on{background:#333!important;box-shadow:none!important}
+  .step,article.night,.card{break-inside:avoid}
+}
 </style>
 </head>
 <body>
+<a class="skip" href="#pane-runs">Skip to the six nights</a>
+<div class="wrap">
 
-<header class="mast"><div class="wrap">
-  <div class="eyebrow">HITMAN World of Assassination · Hawke's Bay, New Zealand</div>
-  <h1>Nightcall<span class="sub">All 33 challenges, in step format, across six validated runs</span></h1>
-  <div class="mast-meta">
-    <span class="chip"><b>33</b> challenges</span>
+<header class="shore">
+  <div class="shore-top">
+    <a href="../index.html">&#8592; All guides</a>
+    <span>Hawke&#8217;s Bay, New Zealand &middot; Main campaign 08</span>
+    <span>Saved in this browser &middot; nothing leaves this device</span>
+  </div>
+
+  <div class="sky">
+    <p class="eyebrow"><!--@eyebrow-->HITMAN World of Assassination · Hawke's Bay, New Zealand<!--/@eyebrow--></p>
+    <h1><!--@h1-->Nightcall<!--/@h1--></h1>
+    <p class="sub"><!--@sub-->All 33 challenges, in step format, across six validated runs<!--/@sub--></p>
+    <div class="mast-meta">
+<!--@meta-->
+<span class="chip"><b>33</b> challenges</span>
     <span class="chip"><b>63,000</b> XP</span>
     <span class="chip"><b>0</b> mission stories</span>
     <span class="chip"><b>1</b> disguise</span>
     <span class="chip"><b>6</b> discovery areas</span>
     <span class="chip"><b>3</b> starting locations</span>
+<!--/@meta-->
+    </div>
   </div>
-</div></header>
 
-<div class="tracker"><div class="wrap"><div class="tracker-inner">
-  <div class="tk-top">
-    <div class="tk-count" id="tkCount">0 <small>/ 33 complete</small></div>
-    <div class="tk-xp" id="tkXp">0 / 63,000 XP</div>
+  <div class="house">
+    <div class="hcap">
+      <span class="label">The house from the beach &middot; one pane a challenge</span>
+      <span class="label" id="houseState">dark</span>
+    </div>
+    <div class="roof" aria-hidden="true"><i></i><i></i></div>
+    <div class="facade">
+      <div class="glass" id="glass"></div>
+    </div>
+    <div class="deck" aria-hidden="true"></div>
+    <div class="sea" aria-hidden="true"><div class="reflect" id="reflect"></div></div>
   </div>
-  <div class="bar"><i id="tkBar"></i></div>
-  <div class="board" id="board" title="One tile per challenge — click to toggle"></div>
-  <div class="cats" id="cats"></div>
-  <nav class="tabs" role="tablist">
-    <button role="tab" aria-selected="true" data-tab="runs">Runs</button>
-    <button role="tab" aria-selected="false" data-tab="list">Checklist</button>
-    <button role="tab" aria-selected="false" data-tab="map">Map &amp; items</button>
-    <button role="tab" aria-selected="false" data-tab="verify">Verification</button>
-  </nav>
-</div></div></div>
 
-<main class="wrap">
+  <div class="readout">
+    <div>
+      <span class="label">Lights on</span>
+      <p class="lit"><b id="numLit">0</b><span id="ofLit">/ 0 windows lit</span></p>
+      <p class="xp" id="xp">0 XP</p>
+    </div>
+    <div class="lamps" id="lamps"></div>
+  </div>
 
-<section class="panel on" id="tab-runs">
-  <div class="jump" id="jump"><span>Jump to run</span></div>
+  <div class="shore-foot">
+    <span class="label">Six nights &middot; the house is empty until the office computer runs</span>
+    <button class="btn" id="reset" type="button">Put the house back in the dark</button>
+  </div>
+</header>
 
-  <div class="card" style="border-color:rgba(222,85,72,.35);background:rgba(222,85,72,.07)">
+<div class="tabs" role="tablist" aria-label="Guide sections">
+  <button class="tab" role="tab" id="tab-runs" aria-controls="pane-runs" aria-selected="true">The six nights</button>
+  <button class="tab" role="tab" id="tab-list" aria-controls="pane-list" aria-selected="false">Every window</button>
+  <button class="tab" role="tab" id="tab-house" aria-controls="pane-house" aria-selected="false">The house</button>
+  <button class="tab" role="tab" id="tab-verify" aria-controls="pane-verify" aria-selected="false">Verification</button>
+</div>
+
+<section class="panel" id="pane-runs" role="tabpanel" aria-labelledby="tab-runs">
+  <nav class="nightnav" id="nightnav" aria-label="Jump to a night"></nav>
+<!--@rules-->
+<div class="card" style="border-color:rgba(222,85,72,.35);background:rgba(222,85,72,.07)">
     <h3 style="color:var(--alarm)">Four rules that govern every run</h3>
     <ul>
       <li><b>There are no Mission Stories.</b> The wiki states this outright and your challenge data contains none. Nothing here can be broken by story-script ordering, and no "Hero of Hawke's Bay" challenge exists.</li>
@@ -224,20 +438,22 @@ footer{border-top:1px solid var(--line);padding:24px 0 60px;color:var(--muted);f
     <p>Runs 1&ndash;3 are the mastery engine. The <b>Office</b> starting location only unlocks at Mastery&nbsp;5, which is this destination's cap, so a fresh profile will be starting from the <b>Boat</b> for the first few attempts. Runs 4, 5 and 6 assume you have Office by then; if not, every one of them opens with the same Boat approach used in Run&nbsp;2, which costs about ninety seconds.</p>
     <p>One dependency is hard: <b>Versatile Assassin</b> needs Straight Shot, which is earned in Run&nbsp;2. Do Run&nbsp;2 before Run&nbsp;4 or it will not fire. <b>The Classics</b> needs Sniper Assassin from Run&nbsp;3 plus the three from Run&nbsp;2.</p>
   </div>
-
-  <div id="runs"></div>
+<!--/@rules-->
+  <div id="nights"></div>
 </section>
 
-<section class="panel" id="tab-list">
-  <h2 class="big">All 33 challenges</h2>
+<section class="panel" id="pane-list" role="tabpanel" aria-labelledby="tab-list" hidden>
+<!--@listhead-->
+<h2 class="big">All 33 challenges</h2>
   <p class="lede">Names and unlock conditions are taken verbatim from your in-game challenge data. XP values come from the Hitman Wiki challenge table and sum to exactly 63,000, matching the wiki's stated mission total.</p>
+<!--/@listhead-->
   <div class="filters" id="filters"></div>
-  <div id="list"></div>
-  <div style="margin-top:20px"><button class="tiny" id="resetBtn">Clear all progress</button></div>
+  <div id="checklist"></div>
 </section>
 
-<section class="panel" id="tab-map">
-  <h2 class="big">The house, room by room</h2>
+<section class="panel" id="pane-house" role="tabpanel" aria-labelledby="tab-house" hidden>
+<!--@map-->
+<h2 class="big">The house, room by room</h2>
   <p class="lede">One beach house, a garage, a pool room and a shoreline. Where sources disagree, both readings are given rather than one being picked.</p>
 
   <div class="card">
@@ -308,10 +524,12 @@ footer{border-top:1px solid var(--line);padding:24px 0 60px;color:var(--muted);f
       <li><b>The tea choice is random.</b> Alma picks either sugar or honey. The wiki walkthrough's answer is to poison both. A Steam guide instead describes hiding behind the kitchen counter and poisoning the chosen ingredient in the moment while the tea is being made.</li>
     </ul>
   </div>
+<!--/@map-->
 </section>
 
-<section class="panel" id="tab-verify">
-  <h2 class="big">Verification and run validation</h2>
+<section class="panel" id="pane-verify" role="tabpanel" aria-labelledby="tab-verify" hidden>
+<!--@verify-->
+<h2 class="big">Verification and run validation</h2>
   <p class="lede">What was checked, what your file corrected, and what still cannot be confirmed.</p>
 
   <div class="card">
@@ -403,13 +621,18 @@ footer{border-top:1px solid var(--line);padding:24px 0 60px;color:var(--muted);f
       <li>Steam discussion threads — used only to corroborate bugs.</li>
     </ul>
   </div>
+<!--/@verify-->
 </section>
-</main>
 
-<footer><div class="wrap"><p>Progress is saved automatically to this browser and survives reloads. Opened straight off disk, Firefox keeps each guide's storage separate from the index page — serve the folder with <code>Start Guides.cmd</code> (or use Edge/Chrome) for totals to add up on the index.</p></div></footer>
+<footer>
+<!--@footer-->
+Progress is saved automatically to this browser and survives reloads. Opened straight off disk, Firefox keeps each guide's storage separate from the index page — serve the folder with <code>Start Guides.cmd</code> (or use Edge/Chrome) for totals to add up on the index.
+<!--/@footer-->
+</footer>
+</div>
 
 <script>
-/* ── challenge data: names + descriptions verbatim from the uploaded in-game file ── */
+/*@data*/
 const CH=[
  {id:'fish',n:'Like Fish in a Barrel',c:'A',xp:4000,d:'Assassinate Alma Reynard from the roof, while she is in the panic room.',run:5},
  {id:'nail',n:'Smells like Nail Polish',c:'A',xp:1000,d:'Assassinate Alma Reynard by poisoning the ventilation system.',run:5},
@@ -822,159 +1045,328 @@ const RUNS=[
    ch:['ninja']}
  ]}]}
 ];
+/*/@data*/
 
-/* ── state ── */
-const GUIDE_ID='m08', STORAGE_KEY='nightcall_v1';
+/* ---------------- STATE ----------------
+   The key and the shape the previous edition wrote are kept exactly:
+   'nightcall_v1' holding {done:[ids], steps:['<run>-<n>']}, with the step
+   number running across a night's sections in render order. An existing
+   record survives the rebuild untouched. */
 const done=new Set(), stepsDone=new Set();
 try{
-  const d=JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}');
+  const d=JSON.parse(localStorage.getItem('nightcall_v1')||'{}');
   (d.done||[]).forEach(id=>done.add(id));
   (d.steps||[]).forEach(k=>stepsDone.add(k));
 }catch(e){}
 function reportProgress(){
   try{
     const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');
-    r[GUIDE_ID]={done:done.size,total:CH.length,updated:Date.now()};
+    r['m08']={done:done.size,total:CH.length,updated:Date.now()};
     localStorage.setItem('hitman-progress-registry',JSON.stringify(r));
   }catch(e){}
 }
 function save(){
-  try{localStorage.setItem(STORAGE_KEY,JSON.stringify({done:[...done],steps:[...stepsDone]}));}catch(e){}
+  try{localStorage.setItem('nightcall_v1',JSON.stringify({done:[...done],steps:[...stepsDone]}));}catch(e){}
   reportProgress();
 }
-let filter='all';
+
+const $=s=>document.getElementById(s);
 const byId=Object.fromEntries(CH.map(c=>[c.id,c]));
 const TOTAL_XP=CH.reduce((a,c)=>a+c.xp,0);
+const nightChallenges=no=>CH.filter(c=>c.run===no);
+const colour=k=>(CAT[k]&&CAT[k].color)||'var(--sodium)';
+let filter='all';
+const stepOpen={}, nightOpen={};
 
-/* ── tracker board ── */
-const board=document.getElementById('board');
-CH.forEach(c=>{
-  const i=document.createElement('i');
-  i.dataset.cat=c.c;i.dataset.id=c.id;i.title=c.n;i.setAttribute('role','button');i.tabIndex=0;
-  i.addEventListener('click',()=>toggle(c.id));
-  i.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle(c.id);}});
-  board.appendChild(i);
+/* Every step gets its running number up front — numbered across the night's
+   sections, which is where the stored step ids come from — plus the challenges
+   it banks and whether it falls after the house wakes. */
+const STEP_CH={};
+let TOTAL_STEPS=0;
+RUNS.forEach(r=>{
+  let n=0;
+  r._steps=[];
+  /* The one line only this mission draws: the map is empty until the office
+     computer runs. The step that runs it is the last quiet moment of the
+     night, so the guide rules straight across there. */
+  r._wake=null;
+  r.secs.forEach(sec=>sec.steps.forEach(st=>{
+    st._n=++n;
+    st._key=r.no+'-'+n;
+    r._steps.push(st._key);
+    STEP_CH[st._key]=(st.ch||[]).filter(id=>byId[id]);
+    if(r._wake===null&&/computer|trigger/i.test(st.t)) r._wake=n;
+  }));
+  TOTAL_STEPS+=n;
 });
-function renderTracker(){
-  document.querySelectorAll('#board i').forEach(i=>i.classList.toggle('on',done.has(i.dataset.id)));
-  document.getElementById('tkCount').innerHTML=done.size+' <small>/ 33 complete</small>';
-  const xp=[...done].reduce((a,id)=>a+byId[id].xp,0);
-  document.getElementById('tkXp').textContent=xp.toLocaleString()+' / '+TOTAL_XP.toLocaleString()+' XP';
-  document.getElementById('tkBar').style.width=(done.size/CH.length*100)+'%';
-  document.getElementById('cats').innerHTML=Object.entries(CAT).map(([k,v])=>{
-    const t=CH.filter(c=>c.c===k).length,d=CH.filter(c=>c.c===k&&done.has(c.id)).length;
-    return `<span class="cat"><s style="background:${v.color}"></s>${v.label} <b>${d}/${t}</b></span>`;
+
+const nightFull=r=>{const k=nightChallenges(r.no);return k.length>0&&k.every(c=>done.has(c.id));};
+
+/* ---------------- THE HOUSE ----------------
+   One pane a challenge, dark until it is earned, and the water underneath
+   carries the same lights back. */
+function renderHouse(){
+  $('glass').innerHTML=CH.map(c=>{
+    const on=done.has(c.id);
+    return `<button type="button" class="pane${on?' on':''}" data-ch="${c.id}"
+      style="--c:${colour(c.c)}" aria-pressed="${on}"
+      title="${esc(c.n)}" aria-label="${esc(c.n)} — ${esc(CAT[c.c].label)}"></button>`;
   }).join('');
-  RUNS.forEach(r=>{
-    const list=CH.filter(c=>c.run===r.no), d=list.filter(c=>done.has(c.id)).length;
-    const el=document.querySelector(`.run[data-run="${r.no}"] .run-prog em`); if(el) el.textContent=d+'/'+list.length;
-    const jb=document.querySelector(`.jbtn[data-jump="${r.no}"]`);
-    if(jb){jb.querySelector('i').textContent=d+'/'+list.length;jb.classList.toggle('full',d===list.length);}
-  });
+  $('reflect').innerHTML=CH.map(c=>
+    `<i class="${done.has(c.id)?'on':''}" style="--c:${colour(c.c)}"></i>`).join('');
 }
-function toggle(id){done.has(id)?done.delete(id):done.add(id);save();renderTracker();renderList();syncBadges();}
 
-/* ── build runs ── */
-function badge(id){const c=byId[id];return `<span class="b ${c.c}" data-badge="${id}">${done.has(id)?'\u2713 ':''}${c.n} +${c.xp.toLocaleString()}</span>`;}
-function stepHTML(runNo,num,st){
-  const key=runNo+'-'+num, isDone=stepsDone.has(key);
-  const spec=[['Where',st.where],['Disguise',st.dis],['Item',st.item],['NPC',st.npc],['Do',st.act]]
-    .filter(([,v])=>v).map(([k,v])=>`<li><b>${k}</b><span>${v}</span></li>`).join('');
-  return `<div class="step${isDone?' done':''}" data-step="${key}">
-    <div class="step-top">
-      <button class="tick" aria-label="Mark step done">\u2713</button>
-      <div class="step-txt"><div class="snum">STEP ${runNo}.${num}</div><h4>${st.t}</h4><p>${st.s}</p></div>
-      <span class="caret">\u25B8</span>
-    </div>
-    <div class="detail">
-      <ul class="spec">${spec}</ul>
-      ${st.warn?`<div class="warn"><b>WARNING</b><span>${st.warn}</span></div>`:''}
-      ${st.save?`<div class="save"><b>SAVE HERE</b><span>${st.save}</span></div>`:''}
-      ${st.ch&&st.ch.length?`<div class="badges">${st.ch.map(badge).join('')}</div>`:''}
-    </div></div>`;
+function renderStats(){
+  const lit=done.size;
+  $('numLit').textContent=lit;
+  $('ofLit').textContent='/ '+CH.length+' windows lit';
+  const xp=[...done].reduce((a,id)=>a+byId[id].xp,0);
+  $('xp').textContent=xp.toLocaleString()+' / '+TOTAL_XP.toLocaleString()+' XP banked';
+  $('houseState').textContent=lit===0?'dark'
+    :lit===CH.length?'every window lit'
+    :lit+' lit, '+(CH.length-lit)+' still dark';
+
+  const cells=Object.entries(CAT).map(([k,v])=>{
+    const t=CH.filter(c=>c.c===k).length, d=CH.filter(c=>c.c===k&&done.has(c.id)).length;
+    return [v.label,d,t,v.color];
+  });
+  const thrown=RUNS.reduce((a,r)=>a+r._steps.filter(k=>stepsDone.has(k)).length,0);
+  cells.push(['Lights thrown',thrown,TOTAL_STEPS,'var(--surf)']);
+  cells.push(['Nights complete',RUNS.filter(nightFull).length,RUNS.length,'var(--bone)']);
+  $('lamps').innerHTML=cells.map(([lab,d,t,col])=>{
+    const pct=t?d/t*100:0;
+    return `<div class="lamp${t&&d===t?' full':''}" style="--c:${col}">
+      <span class="k"><s></s>${lab}</span>
+      <span class="v">${d}<small> / ${t}</small></span>
+      <span class="b"><i style="width:${pct}%"></i></span></div>`;
+  }).join('');
+  renderHouse();
 }
-document.getElementById('runs').innerHTML=RUNS.map(r=>{
-  let num=0; const list=CH.filter(c=>c.run===r.no);
-  const slots=[['Weapon',r.lo.w],['Item 1',r.lo.i1],['Item 2',r.lo.i2],['Agency pickup',r.lo.pick]];
-  return `<article class="run${r.no===1?' open':''}" id="run${r.no}" data-run="${r.no}">
-    <div class="run-head">
-      <span class="run-no">RUN ${r.no}</span>
-      <div><h2>${r.title}</h2><div class="run-goal">${r.goal}</div></div>
-      <div class="run-prog"><em>0/${list.length}</em><s>\u25BE</s></div>
-    </div>
-    <div class="run-body">
-      <div class="loadout">
-        <div class="lo"><span>Start</span><b>${r.lo.start}</b><p>${r.lo.startNote}</p></div>
-        <div class="lo"><span>Suit</span><b>${r.lo.suit.split('.')[0]}</b><p>${r.lo.suit.split('.').slice(1).join('.').trim()}</p></div>
-        ${slots.map(([lab,v])=>`<div class="lo"><span>${lab}</span><b>${v.split('\u2014')[0].trim()}</b><p>${(v.split('\u2014')[1]||'').trim()}</p></div>`).join('')}
+
+/* ---------------- THE NIGHTS ---------------- */
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
+const pill=id=>{
+  const c=byId[id];
+  if(!c) return '';
+  const on=done.has(id);
+  return `<button type="button" class="pill${on?' on':''}" data-ch="${id}" style="--c:${colour(c.c)}"
+    aria-pressed="${on}">${c.n} <span class="mono">+${c.xp.toLocaleString()}</span></button>`;
+};
+
+/* Loadout lines carry their own aside after an em dash, or after the first
+   sentence when there is no dash. Nothing is dropped either way. */
+function pair(s){
+  s=String(s==null?'':s);
+  const d=s.indexOf('—');
+  if(d>-1) return [s.slice(0,d).trim(),s.slice(d+1).trim()];
+  const p=s.indexOf('. ');
+  if(p>-1) return [s.slice(0,p+1).trim(),s.slice(p+2).trim()];
+  return [s,''];
+}
+const slot=(k,v,note)=>`<div class="slot"><span class="k">${k}</span>
+  <span class="v">${v}${note?`<em>${note}</em>`:''}</span></div>`;
+
+function renderNav(){
+  $('nightnav').innerHTML=RUNS.map(r=>{
+    const k=nightChallenges(r.no), got=k.filter(c=>done.has(c.id)).length;
+    return `<button type="button" class="njump${got===k.length?' full':''}" data-jump="${r.no}">
+      <b>Night ${String(r.no).padStart(2,'0')}</b>${r.title}<span class="pg">${got}/${k.length}</span></button>`;
+  }).join('')+
+  `<button type="button" class="btn-plain" data-toggleall="1" style="margin-left:auto">Open / close every night</button>`;
+}
+
+function renderNights(){
+  renderNav();
+  $('nights').innerHTML=RUNS.map(r=>{
+    const list=nightChallenges(r.no), got=list.filter(c=>done.has(c.id)).length;
+    const open=!!nightOpen[r.no], full=nightFull(r);
+    const thrown=r._steps.filter(k=>stepsDone.has(k)).length;
+
+    const body=r.secs.map(sec=>{
+      const keys=sec.steps.map(st=>st._key);
+      const secDone=keys.filter(k=>stepsDone.has(k)).length;
+      return `<div class="sect">${sec.n}<span class="rule"></span>
+        <span class="cnt">${secDone} / ${keys.length}</span></div>`+
+        sec.steps.map(st=>stepHTML(r,st)).join('');
+    }).join('');
+
+    return `<article class="night${open?' open':''}${full?' full':''}" id="night${r.no}">
+      <button type="button" class="nhead" data-night="${r.no}" aria-expanded="${open}">
+        <span class="nglass" aria-hidden="true" style="--cols:${list.length<=4?2:list.length<=9?3:4}">${
+          list.map(c=>`<i class="${done.has(c.id)?'on':''}" style="--c:${colour(c.c)}"></i>`).join('')}</span>
+        <span class="nmain">
+          <span class="nkicker">Night ${String(r.no).padStart(2,'0')} of ${String(RUNS.length).padStart(2,'0')} &middot; Run ${r.no}</span>
+          <span class="ntitle">${r.title}</span>
+          <span class="ngoal">${r.goal}</span>
+          <span class="ntally">${got} of ${list.length} windows lit &middot; ${thrown} of ${r._steps.length} lights thrown</span>
+        </span>
+      </button>
+      <div class="npills">${list.map(c=>pill(c.id)).join('')}</div>
+      <div class="nbody"${open?'':' hidden'}>
+        <div class="kit">
+          ${slot('Start',r.lo.start,r.lo.startNote)}
+          ${slot('Suit',...pair(r.lo.suit))}
+          ${slot('Weapon',...pair(r.lo.w))}
+          ${slot('Item 1',...pair(r.lo.i1))}
+          ${slot('Item 2',...pair(r.lo.i2))}
+          ${slot('Agency pickup',...pair(r.lo.pick))}
+        </div>
+        ${body}
       </div>
-      ${r.secs.map(s=>`<div class="sec-title">${s.n}</div>${s.steps.map(st=>stepHTML(r.no,++num,st)).join('')}`).join('')}
-    </div></article>`;
-}).join('');
+    </article>`;
+  }).join('');
+}
 
-/* jump bar */
-document.getElementById('jump').insertAdjacentHTML('beforeend',
-  RUNS.map(r=>`<button class="jbtn" data-jump="${r.no}">Run ${r.no} \u00b7 ${r.title}<i>0/0</i></button>`).join('')
-  + `<button class="tiny" id="expandAll">Expand all</button><button class="tiny" id="collapseAll">Collapse all</button>`);
+function stepHTML(r,st){
+  const key=st._key, on=stepsDone.has(key), o=!!stepOpen[key];
+  const after=r._wake!==null&&st._n>r._wake;
+  const spec=[['Where',st.where],['Disguise',st.dis],['Item',st.item],['NPC',st.npc],['Do',st.act]]
+    .filter(([,v])=>v)
+    .map(([k,v])=>`<div><span>${k}</span><p>${v}</p></div>`).join('');
+  const wake=(r._wake===st._n)?`<div class="wake"><span class="bolt" aria-hidden="true"></span>
+    The house wakes<span class="rule"></span><em>everything below happens in an occupied house</em></div>`:'';
 
-document.querySelectorAll('.jbtn').forEach(b=>b.addEventListener('click',()=>{
-  const r=document.getElementById('run'+b.dataset.jump);
-  r.classList.add('open'); r.scrollIntoView({block:'start'});
-}));
-document.getElementById('expandAll').addEventListener('click',()=>{
-  document.querySelectorAll('.run').forEach(r=>r.classList.add('open'));
-  document.querySelectorAll('.step').forEach(s=>s.classList.add('open'));
-});
-document.getElementById('collapseAll').addEventListener('click',()=>{
-  document.querySelectorAll('.run').forEach(r=>r.classList.remove('open'));
-  document.querySelectorAll('.step').forEach(s=>s.classList.remove('open'));
-});
-document.querySelectorAll('.run-head').forEach(h=>h.addEventListener('click',()=>h.parentElement.classList.toggle('open')));
-document.querySelectorAll('.step').forEach(s=>{
-  const t=()=>s.classList.toggle('open');
-  s.querySelector('.step-txt').addEventListener('click',t);
-  s.querySelector('.caret').addEventListener('click',t);
-  s.querySelector('.tick').addEventListener('click',e=>{
-    e.stopPropagation();const k=s.dataset.step;
-    stepsDone.has(k)?stepsDone.delete(k):stepsDone.add(k);
-    s.classList.toggle('done',stepsDone.has(k));
-    save();
+  return `<div class="step${on?' done':''}${after?' occupied':''}" id="step${key}">
+    <button type="button" class="tick" data-step="${key}" aria-pressed="${on}"
+      aria-label="Throw the light on step ${st._n} of night ${r.no}${
+        STEP_CH[key].length?', and light the windows it completes':''}"></button>
+    <span class="sno">${r.no}.${st._n}</span>
+    <div class="swrap">
+      <button type="button" class="shead" data-open="${key}" aria-expanded="${o}" aria-controls="body${key}">${st.t}
+        <span class="more">${o?'Hide the detail':'Where, disguise, item, NPC, what to do'}</span></button>
+      <p class="ssum">${st.s}</p>
+      ${st.ch&&st.ch.length?`<div class="badges">${st.ch.map(pill).join('')}</div>`:''}
+      <div class="sbody" id="body${key}"${o?'':' hidden'}>
+        <div class="meta">${spec}</div>
+        ${st.warn?`<p class="warn"><b>Warning</b>${st.warn}</p>`:''}
+        ${st.save?`<p class="save"><b>Save here</b>${st.save}</p>`:''}
+      </div>
+    </div>
+  </div>${wake}`;
+}
+
+/* ---------------- EVERY WINDOW ---------------- */
+function renderList(){
+  const F=[['all','All '+CH.length]].concat(Object.entries(CAT).map(([k,v])=>
+    [k,v.label+' '+CH.filter(c=>c.c===k).length]));
+  F.push(['todo','Still dark '+CH.filter(c=>!done.has(c.id)).length]);
+  $('filters').innerHTML=F.map(([k,l])=>
+    `<button type="button" data-f="${k}" aria-pressed="${filter===k}">${l}</button>`).join('');
+
+  const rows=CH.filter(c=>filter==='all'?true:filter==='todo'?!done.has(c.id):c.c===filter);
+  const el=$('checklist');
+  if(!rows.length){el.innerHTML=`<p class="empty">Every window under this heading is lit.</p>`;return;}
+  el.innerHTML=rows.map(c=>{
+    const on=done.has(c.id);
+    return `<div class="crow${on?' done':''}" style="--c:${colour(c.c)}">
+      <button type="button" class="tick" data-ch="${c.id}" aria-pressed="${on}"
+        aria-label="Light the window for ${esc(c.n)}"></button>
+      <div>
+        <p class="cn">${c.n}</p>
+        <p class="cd">${c.d}</p>
+        ${c.note?`<p class="cnote">${c.note}</p>`:''}
+      </div>
+      <span class="cmeta">
+        <span class="kind">${CAT[c.c].label}</span>
+        <span>Night ${String(c.run).padStart(2,'0')} &middot; Run ${c.run}</span>
+        <span class="cxp">+${c.xp.toLocaleString()} XP</span>
+      </span>
+    </div>`;
+  }).join('');
+}
+
+function render(){renderNights();renderList();renderStats();}
+
+/* ---------------- EVENTS ---------------- */
+const tabs=[...document.querySelectorAll('.tab')];
+function selectTab(tb){
+  tabs.forEach(x=>{
+    const on=x===tb;
+    x.setAttribute('aria-selected',String(on));
+    x.tabIndex=on?0:-1;
+    $(x.getAttribute('aria-controls')).hidden=!on;
+  });
+}
+tabs.forEach((tb,i)=>{
+  tb.tabIndex=tb.getAttribute('aria-selected')==='true'?0:-1;
+  tb.addEventListener('keydown',e=>{
+    const d=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;
+    if(!d)return;
+    e.preventDefault();
+    const next=tabs[(i+d+tabs.length)%tabs.length];
+    selectTab(next);next.focus();
   });
 });
-function syncBadges(){document.querySelectorAll('[data-badge]').forEach(b=>{
-  const c=byId[b.dataset.badge];b.textContent=(done.has(c.id)?'\u2713 ':'')+c.n+' +'+c.xp.toLocaleString();});}
-document.querySelectorAll('[data-badge]').forEach(b=>b.addEventListener('click',()=>toggle(b.dataset.badge)));
 
-/* ── checklist ── */
-const FILTERS=[['all','All 33'],['A','Assassination'],['D','Discovery'],['F','Feats'],['T','Targets'],['C','The Classics'],['todo','Incomplete']];
-document.getElementById('filters').innerHTML=FILTERS.map(([k,l])=>`<button data-f="${k}" class="${k==='all'?'on':''}">${l}</button>`).join('');
-document.querySelectorAll('#filters button').forEach(b=>b.addEventListener('click',()=>{
-  filter=b.dataset.f;document.querySelectorAll('#filters button').forEach(x=>x.classList.toggle('on',x===b));renderList();}));
-function renderList(){
-  const rows=CH.filter(c=>filter==='all'?true:filter==='todo'?!done.has(c.id):c.c===filter);
-  document.getElementById('list').innerHTML=rows.length?rows.map(c=>`
-    <div class="ch-row${done.has(c.id)?' done':''}">
-      <button class="tick" data-ch="${c.id}" aria-label="Mark complete">\u2713</button>
-      <div class="ch-main"><div class="ch-name">${c.n}</div><div class="ch-cond">${c.d}</div>
-      ${c.note?`<div class="ch-note">${c.note}</div>`:''}</div>
-      <div class="ch-side"><em>+${c.xp.toLocaleString()}</em><s>${CAT[c.c].label}</s><s>Run ${c.run}</s></div>
-    </div>`).join('') : `<div class="card"><p>Nothing left in this filter.</p></div>`;
-  document.querySelectorAll('[data-ch]').forEach(b=>b.addEventListener('click',()=>toggle(b.dataset.ch)));
-}
-document.getElementById('resetBtn').addEventListener('click',()=>{
+document.addEventListener('click',e=>{
+  const t=e.target;
+
+  /* a window is a control wherever it appears: on the house, on a night, on a
+     step that completes it, or in the checklist */
+  const cb=t.closest('[data-ch]');
+  if(cb){
+    const id=cb.dataset.ch;
+    done.has(id)?done.delete(id):done.add(id);
+    save();render();return;
+  }
+
+  const sb=t.closest('[data-step]');
+  if(sb){
+    const key=sb.dataset.step, now=!stepsDone.has(key);
+    now?stepsDone.add(key):stepsDone.delete(key);
+    /* throwing a light banks the windows that step completes; putting it back
+       leaves them lit, because another step may cover the same one */
+    if(now)(STEP_CH[key]||[]).forEach(id=>done.add(id));
+    save();render();return;
+  }
+
+  const so=t.closest('[data-open]');
+  if(so){const k=so.dataset.open;stepOpen[k]=!stepOpen[k];renderNights();return;}
+
+  const nb=t.closest('[data-night]');
+  if(nb){const n=+nb.dataset.night;nightOpen[n]=!nightOpen[n];renderNights();return;}
+
+  const jp=t.closest('[data-jump]');
+  if(jp){
+    const n=+jp.dataset.jump;
+    nightOpen[n]=true;renderNights();
+    $('night'+n).scrollIntoView({behavior:'smooth',block:'start'});return;
+  }
+
+  const ta=t.closest('[data-toggleall]');
+  if(ta){
+    const anyClosed=RUNS.some(r=>!nightOpen[r.no]);
+    RUNS.forEach(r=>nightOpen[r.no]=anyClosed);
+    renderNights();return;
+  }
+
+  const fb=t.closest('[data-f]');
+  if(fb){filter=fb.dataset.f;renderList();return;}
+
+  const tb=t.closest('.tab');
+  if(tb){selectTab(tb);return;}
+});
+
+$('reset').addEventListener('click',()=>{
+  if(!confirm('Put the house back in the dark? Every lit window and every thrown light on this guide is cleared. Other guides are not affected.'))return;
   done.clear();stepsDone.clear();
-  document.querySelectorAll('.step').forEach(s=>s.classList.remove('done'));
-  save();
-  renderTracker();renderList();syncBadges();});
+  Object.keys(stepOpen).forEach(k=>delete stepOpen[k]);
+  save();render();
+});
 
-/* ── tabs ── */
-document.querySelectorAll('nav.tabs button').forEach(b=>b.addEventListener('click',()=>{
-  document.querySelectorAll('nav.tabs button').forEach(x=>x.setAttribute('aria-selected',x===b));
-  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('on',p.id==='tab-'+b.dataset.tab));
-  window.scrollTo({top:0,behavior:'smooth'});}));
+/* The lifted reference tables are wider than a phone; each gets its own
+   scroller so the page itself never scrolls sideways. */
+document.querySelectorAll('.panel table').forEach(t=>{
+  if(t.parentElement&&t.parentElement.classList.contains('tscroll'))return;
+  const box=document.createElement('div');
+  box.className='tscroll';
+  t.parentNode.insertBefore(box,t);
+  box.appendChild(t);
+});
 
-renderTracker();renderList();
-/* every other guide reports on load, not only after a tick */
+RUNS.forEach(r=>nightOpen[r.no]=(r.no===1));
+render();
 reportProgress();
 </script>
 <!-- step-progress-bridge -->

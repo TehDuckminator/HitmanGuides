@@ -4,148 +4,302 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Source — 20 Challenge Run Sheet (Himmapan Hotel, Bangkok)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Karla:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <style>
+/* ═══ THE SOURCE — the Himmapan, after hours ═══
+   A teak-and-gold river hotel with a cult holding a ceremony on the top floor.
+   The guide is the hotel's own paperwork: an engraved brass plaque for a
+   masthead, the concierge's key board for navigation, each run a room card
+   hanging off its fob, and every step a line in the guest register, signed in
+   ink. The cult arrives as candlelight and a jade thread running through the
+   gold. Warm lacquer — the opposite of Club 27's cold neon. */
 :root{
-  --lacquer:#0d1411; --card:#16201b; --teak:#2a201a;
-  --brass:#c8a24a; --brass-dim:#8d723a; --wine:#8e2b36;
-  --bone:#ece4d4; --bone-dim:#a99f8c; --jade:#4e8d74; --amber:#d8a13a; --alarm:#c04a3f;
-  --rule:rgba(200,162,74,.28);
-  --display:"Iowan Old Style","Palatino Linotype","Book Antiqua",Palatino,Georgia,serif;
-  --body:ui-sans-serif,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+  --lacquer:#0a0c0a; --teak:#120f0b; --teak-2:#17130d; --teak-3:#1e1810;
+  --bone:#efe7d5; --bone-dim:#b6a98f; --faint:#7d7261;
+  --gold:#d4af5f; --gold-dim:#8e7333; --gold-lo:rgba(212,175,95,.22);
+  --jade:#63a189; --candle:#e8a94a; --blood:#a8443a; --indigo:#7b86b8;
+  --rule:rgba(212,175,95,.26); --rule-2:rgba(239,231,213,.1); --rule-3:rgba(239,231,213,.055);
+  --disp:"Cormorant Garamond",Garamond,"Times New Roman",serif;
+  --body:"Karla",system-ui,-apple-system,"Segoe UI",sans-serif;
 }
 *{box-sizing:border-box}
-html,body{margin:0;padding:0}
+html{scroll-behavior:smooth}
 body{
-  background:radial-gradient(1200px 600px at 80% -10%,rgba(142,43,54,.18),transparent 60%),
-             radial-gradient(900px 500px at -10% 10%,rgba(78,141,116,.12),transparent 55%),var(--lacquer);
-  color:var(--bone);font-family:var(--body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;
-}
-.wrap{max-width:1080px;margin:0 auto;padding:26px 18px 90px}
-.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--brass-dim)}
-h1{font-family:var(--display);font-weight:400;font-size:clamp(32px,5.6vw,54px);line-height:1.03;margin:10px 0 6px}
-h1 em{font-style:italic;color:var(--brass)}
-.deck{max-width:64ch;color:var(--bone-dim);margin:0 0 22px}
+  margin:0;color:var(--bone);background-color:var(--lacquer);
+  /* lamplight in the lobby, the river outside, and something red upstairs */
+  background-image:
+    radial-gradient(900px 520px at 78% -10%,rgba(232,169,74,.13),transparent 60%),
+    radial-gradient(700px 460px at 4% 30%,rgba(99,161,137,.06),transparent 58%),
+    radial-gradient(900px 600px at 50% 108%,rgba(168,68,58,.07),transparent 60%);
+  font-family:var(--body);font-size:15.5px;font-weight:300;line-height:1.62;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 90px}
+a{color:var(--gold)}
+b,strong{font-weight:600}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:12px;top:12px;z-index:60;background:var(--gold);color:var(--lacquer);padding:8px 12px;font-weight:700}
+/* engraved brass: the letters the house pays for */
+.engrave{background:linear-gradient(178deg,#f6e6ba 6%,var(--gold) 44%,#8f7133 96%);
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.smallcaps{font-family:var(--body);font-size:10.5px;font-weight:600;letter-spacing:.26em;text-transform:uppercase}
 
-.notice{border:1px solid var(--rule);border-left:3px solid var(--jade);
-  background:linear-gradient(180deg,rgba(78,141,116,.10),rgba(78,141,116,.02));
-  padding:15px 17px;margin:0 0 24px;border-radius:2px}
-.notice h3{font-family:var(--display);font-weight:400;font-size:19px;margin:0 0 8px}
-.notice ul{margin:8px 0 0;padding-left:18px}
-.notice li{margin-bottom:6px}
-.notice p{margin:0 0 8px}
+/* ── ornament: a Himmapan-forest divider, drawn once and reused ─────────── */
+.orn{display:flex;align-items:center;gap:14px;color:var(--gold-dim)}
+.orn::before,.orn::after{content:"";flex:1;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold-lo) 22%,var(--gold-lo) 78%,transparent)}
+.orn i{display:block;width:9px;height:9px;transform:rotate(45deg);border:1px solid var(--gold-dim)}
+.orn i::after{content:"";display:block;width:3px;height:3px;background:var(--gold);margin:2px}
 
-.tracker{border:1px solid var(--rule);background:var(--card);border-radius:2px;padding:16px 18px;margin-bottom:22px}
-.tracker-top{display:flex;flex-wrap:wrap;gap:14px;align-items:baseline;justify-content:space-between}
-.tracker-count{font-family:var(--display);font-size:38px;line-height:1}
-.tracker-count small{font-size:14px;color:var(--bone-dim);font-family:var(--mono);letter-spacing:.08em}
-.bar{height:8px;background:rgba(236,228,212,.09);border-radius:99px;overflow:hidden;margin:13px 0 15px}
-.bar span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--brass-dim),var(--brass));transition:width .35s ease}
-.pills{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:9px}
-.pill{border:1px solid var(--rule);border-radius:2px;padding:9px 11px;background:rgba(0,0,0,.18)}
-.pill b{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--bone-dim);margin-bottom:3px}
-.pill span{font-family:var(--display);font-size:21px}
-.btn{background:none;border:1px solid var(--rule);color:var(--bone-dim);font-family:var(--mono);
-  font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:8px 12px;border-radius:2px;cursor:pointer}
-.btn:hover{color:var(--bone);border-color:var(--brass)}
+/* ── the plaque ────────────────────────────────────────────────────────── */
+header.plaque{margin-top:24px;border:1px solid var(--rule);padding:0 0 22px;text-align:center;position:relative;
+  background:linear-gradient(180deg,rgba(212,175,95,.07),transparent 40%),var(--teak)}
+header.plaque::before,header.plaque::after{content:"";position:absolute;width:16px;height:16px;
+  border:1px solid var(--gold-lo)}
+header.plaque::before{top:9px;left:9px;border-right:0;border-bottom:0}
+header.plaque::after{bottom:9px;right:9px;border-left:0;border-top:0}
+.plaque-top{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:11px 16px;
+  border-bottom:1px solid var(--rule-3);text-align:left}
+.plaque-top a{color:var(--faint);text-decoration:none;font-size:12px;letter-spacing:.1em}
+.plaque-top a:hover{color:var(--gold)}
+.plaque-top span{color:var(--faint)}
+.house{margin:22px 0 0;font-size:10.5px;font-weight:600;letter-spacing:.42em;text-transform:uppercase;color:var(--gold-dim)}
+h1.title{font-family:var(--disp);font-weight:500;font-size:clamp(50px,11.5vw,120px);line-height:.9;
+  margin:10px 0 4px;letter-spacing:.02em;text-transform:uppercase}
+.tagline{font-family:var(--disp);font-style:italic;font-size:clamp(17px,2.6vw,24px);color:var(--bone-dim);
+  margin:0 0 16px;font-weight:300}
+.plaque .orn{margin:0 22px 18px}
+.sub{margin:0 auto;max-width:70ch;padding:0 22px;color:var(--bone-dim);font-size:15px;text-align:left}
 
-.tabs{display:flex;border-bottom:1px solid var(--rule);margin-bottom:20px;flex-wrap:wrap}
-.tab{background:none;border:0;border-bottom:2px solid transparent;color:var(--bone-dim);font-family:var(--mono);
-  font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;padding:12px 15px;cursor:pointer}
-.tab[aria-selected="true"]{color:var(--bone);border-bottom-color:var(--brass)}
+/* the register of facts, ruled like a ledger head */
+.register-head{display:flex;flex-wrap:wrap;margin:20px 16px 0;border-top:1px solid var(--rule);
+  border-bottom:1px solid var(--rule);text-align:left}
+.register-head div{flex:1 1 150px;padding:10px 14px;border-right:1px solid var(--rule-3)}
+.register-head div:last-child{border-right:0}
+.register-head .k{font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--faint)}
+.register-head .v{font-family:var(--disp);font-size:21px;font-weight:500;color:var(--bone);margin-top:1px}
+
+/* ── house rules (the pre-run notice) ──────────────────────────────────── */
+.notice{border:1px solid var(--rule-3);background:var(--teak);padding:17px 20px;margin:22px 0;position:relative}
+.notice::before{content:"";position:absolute;left:0;top:16px;bottom:16px;width:2px;
+  background:linear-gradient(180deg,transparent,var(--candle),transparent)}
+.notice h3{margin:0 0 10px;font-family:var(--disp);font-size:24px;font-weight:600;letter-spacing:.01em;color:var(--candle)}
+.notice ul{margin:0;padding-left:19px;list-style:none}
+.notice li{margin-bottom:9px;color:var(--bone-dim);font-size:15px;position:relative}
+.notice li::before{content:"";position:absolute;left:-19px;top:9px;width:5px;height:5px;
+  transform:rotate(45deg);border:1px solid var(--gold-dim)}
+.notice li:last-child{margin-bottom:0}
+.notice li b{color:var(--bone);font-weight:600}
+
+/* ── the ceremony: progress, counted in candles ────────────────────────── */
+.ritual{border:1px solid var(--rule);padding:20px 20px 18px;margin-bottom:8px;text-align:center;
+  background:radial-gradient(420px 170px at 50% 0,rgba(232,169,74,.1),transparent 70%),var(--teak)}
+.ritual h2{margin:0;font-family:var(--disp);font-size:26px;font-weight:500;letter-spacing:.02em}
+.ritual .count{font-family:var(--disp);font-size:62px;font-weight:300;line-height:1;margin:6px 0 2px}
+.ritual .count small{font-size:20px;color:var(--faint)}
+.ritual .pct{color:var(--faint);font-size:11px;letter-spacing:.2em;text-transform:uppercase}
+/* one candle per category; the flame grows as its challenges land */
+.candles{display:flex;flex-wrap:wrap;justify-content:center;gap:26px;margin:22px 0 4px}
+.candle{width:96px}
+.candle .flame{position:relative;height:28px;display:flex;align-items:flex-end;justify-content:center}
+.candle .flame::after{content:"";position:absolute;bottom:0;left:50%;width:1px;height:5px;
+  background:var(--faint);transform:translateX(-50%)}
+.candle .flame i{display:block;width:8px;height:0;border-radius:50% 50% 46% 46%;
+  background:linear-gradient(180deg,#fff2c9,var(--candle) 55%,#c2601f);
+  box-shadow:0 0 14px rgba(232,169,74,.75);transition:height .45s ease}
+.candle .stick{position:relative;height:46px;width:13px;margin:0 auto;overflow:hidden;
+  background:linear-gradient(90deg,rgba(239,231,213,.09),rgba(239,231,213,.28),rgba(239,231,213,.09))}
+.candle .stick i{position:absolute;left:0;right:0;bottom:0;height:0;
+  background:linear-gradient(180deg,rgba(232,169,74,.55),rgba(232,169,74,.15));transition:height .45s ease}
+.candle .lbl{margin-top:9px;font-size:9.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+.candle .val{font-family:var(--disp);font-size:18px;color:var(--bone)}
+.ritual-foot{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;align-items:center;margin-top:18px;
+  padding-top:14px;border-top:1px solid var(--rule-3);color:var(--faint);font-size:12.5px}
+.ritual-foot b{color:var(--bone);font-weight:600}
+.btn{background:transparent;border:1px solid var(--rule-2);color:var(--bone-dim);font-size:10.5px;
+  font-weight:600;letter-spacing:.16em;text-transform:uppercase;padding:7px 12px;cursor:pointer}
+.btn:hover{border-color:var(--gold);color:var(--gold)}
+
+/* ── tabs, cut as brass tabs on a folder ───────────────────────────────── */
+.tabs{display:flex;flex-wrap:wrap;gap:4px;margin:26px 0 0}
+.tab{background:transparent;border:1px solid var(--rule-3);border-bottom:0;color:var(--faint);
+  font-size:10.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;padding:11px 16px;cursor:pointer}
+.tab:hover{color:var(--bone)}
+.tab[aria-selected="true"]{color:var(--gold);border-color:var(--rule);background:var(--teak)}
+.panel{border-top:1px solid var(--rule);padding-top:20px}
 .panel[hidden]{display:none}
-:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
 
-/* run jump bar */
-.jump{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
-.jbtn{background:rgba(0,0,0,.2);border:1px solid var(--rule);color:var(--bone);border-radius:2px;cursor:pointer;
-  padding:9px 12px;text-align:left;font-family:var(--body);font-size:13px;line-height:1.25}
-.jbtn b{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--brass);text-transform:uppercase}
-.jbtn:hover{border-color:var(--brass)}
-.jbtn.on{border-color:var(--brass);background:rgba(200,162,74,.12)}
-.jhint{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--bone-dim);text-transform:uppercase;margin:0 0 18px}
+/* ── the key board ─────────────────────────────────────────────────────── */
+.board{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start;padding:4px 0 18px;
+  border-bottom:1px solid var(--rule-3);margin-bottom:20px}
+.board-lbl{width:100%;color:var(--faint);font-size:10px;font-weight:600;letter-spacing:.24em;
+  text-transform:uppercase;margin-bottom:2px}
+/* a brass fob: rounded head, punched hole, engraved number */
+.fob{position:relative;width:106px;padding:27px 8px 12px;cursor:pointer;text-align:center;
+  background:linear-gradient(180deg,var(--teak-3),var(--teak-2));border:1px solid var(--rule);
+  border-radius:53px 53px 5px 5px;color:var(--bone-dim);font-family:var(--body);font-size:11px;
+  transition:transform .18s,border-color .18s,box-shadow .18s}
+.fob::before{content:"";position:absolute;top:10px;left:50%;transform:translateX(-50%);width:9px;height:9px;
+  border-radius:50%;background:var(--lacquer);box-shadow:inset 0 1px 2px rgba(0,0,0,.9),0 0 0 1px var(--gold-lo)}
+.fob:hover,.fob.on{border-color:var(--gold);transform:translateY(-3px);box-shadow:0 6px 18px rgba(0,0,0,.5)}
+.fob .no{display:block;font-family:var(--disp);font-size:28px;font-weight:600;line-height:1;color:var(--gold)}
+.fob .nm{display:block;margin-top:5px;font-size:11px;line-height:1.35;color:var(--faint)}
+.boardtools{display:flex;gap:8px;margin-left:auto;align-self:center}
 
-/* runs */
-.run{border:1px solid var(--rule);border-radius:2px;background:var(--card);margin-bottom:20px;overflow:hidden;scroll-margin-top:12px}
-.run>summary{list-style:none;cursor:pointer;padding:16px 20px;display:block}
-.run>summary::-webkit-details-marker{display:none}
-.run>summary:hover{background:rgba(200,162,74,.05)}
-.plate{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--brass);text-transform:uppercase}
-.run h2{font-family:var(--display);font-weight:400;font-size:clamp(20px,3.2vw,27px);margin:7px 0 5px}
-.run summary p{margin:0;color:var(--bone-dim);max-width:74ch;font-size:14.5px}
-.chev{float:right;font-family:var(--mono);font-size:11px;color:var(--brass-dim);letter-spacing:.1em}
-.run[open]>summary .chev::after{content:"CLOSE"}
-.run:not([open])>summary .chev::after{content:"OPEN"}
-.runbody{border-top:1px solid var(--rule)}
-.loadout{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));border-bottom:1px solid var(--rule)}
-.slot{padding:12px 16px;border-right:1px solid var(--rule)}
-.slot:last-child{border-right:0}
-.slot b{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--brass-dim);margin-bottom:4px}
-.slot span{font-size:14px}
-.sec{padding:15px 20px 3px;font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--brass-dim)}
+/* ── a run: the room card hanging on that fob ──────────────────────────── */
+details.room{border:1px solid var(--rule-3);background:var(--teak);margin:0 0 18px;scroll-margin-top:24px}
+details.room[open]{border-color:var(--rule)}
+details.room>summary{cursor:pointer;list-style:none;padding:0}
+details.room>summary::-webkit-details-marker{display:none}
+.door{display:grid;grid-template-columns:auto 1fr;gap:18px;padding:18px 20px;align-items:start}
+.doorplate{width:78px;text-align:center;border:1px solid var(--rule);padding:9px 6px 8px;
+  background:linear-gradient(180deg,rgba(212,175,95,.1),transparent)}
+.doorplate .rn{display:block;font-family:var(--disp);font-size:31px;font-weight:600;line-height:1;color:var(--gold)}
+.doorplate .rl{display:block;margin-top:3px;font-size:8.5px;font-weight:600;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--faint)}
+.door .plate{margin:0;font-size:10.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--jade)}
+.door h2{font-family:var(--disp);font-weight:600;font-size:clamp(24px,3.6vw,34px);line-height:1.1;
+  margin:6px 0 8px;letter-spacing:.01em}
+.door p{margin:0;color:var(--bone-dim);font-size:15px;max-width:78ch}
+.roombody{border-top:1px solid var(--rule-3)}
 
-.step{border-top:1px solid rgba(200,162,74,.14);display:flex;gap:12px;padding:11px 18px 11px 16px;align-items:flex-start}
-.step.done{background:rgba(78,141,116,.07)}
-.check{flex:0 0 auto;width:25px;height:25px;margin-top:4px;border:1px solid var(--rule);background:transparent;color:var(--jade);border-radius:2px;cursor:pointer;font-size:14px;line-height:1}
-.check[aria-pressed="true"]{border-color:var(--jade);background:rgba(78,141,116,.16)}
-.sbody{flex:1 1 auto;min-width:0}
-.sbody>details>summary{list-style:none;cursor:pointer}
-.sbody>details>summary::-webkit-details-marker{display:none}
-.stitle{font-family:var(--display);font-size:18px;margin:0}
-.stitle .num{font-family:var(--mono);font-size:11px;color:var(--brass);letter-spacing:.12em;margin-right:8px}
-.stitle .tog{font-family:var(--mono);font-size:10px;color:var(--brass-dim);letter-spacing:.1em;margin-left:8px}
-details[open]>summary .tog::after{content:"▾"}
-details:not([open])>summary .tog::after{content:"▸"}
-ul.bul{margin:9px 0 0;padding:0;list-style:none}
-ul.bul li{margin:0 0 5px;padding-left:0;font-size:14.5px}
-ul.bul k{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--brass);margin-right:7px}
-.badges{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px}
-.badge{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;padding:3px 7px;border-radius:2px;border:1px solid}
-.b-assassination{color:#e6b98f;border-color:rgba(230,185,143,.5);background:rgba(230,185,143,.08)}
-.b-discovery{color:#8fc7e6;border-color:rgba(143,199,230,.5);background:rgba(143,199,230,.08)}
-.b-feats{color:#b6e08f;border-color:rgba(182,224,143,.5);background:rgba(182,224,143,.08)}
-.b-classic{color:#dcc7f0;border-color:rgba(220,199,240,.5);background:rgba(220,199,240,.08)}
-.flag{display:block;font-size:13.5px;margin-top:9px;padding:7px 10px;border-radius:2px}
-.f-warn{background:rgba(192,74,63,.13);border:1px solid rgba(192,74,63,.55)}
-.f-save{background:rgba(216,161,58,.11);border:1px solid rgba(216,161,58,.5)}
-.f-unver{background:rgba(236,228,212,.05);border:1px dashed var(--bone-dim);color:var(--bone-dim)}
-.flag b{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;margin-right:7px}
-.f-warn b{color:#e79187}.f-save b{color:var(--amber)}
-.src{margin:9px 0 0;font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:var(--bone-dim)}
+/* what you take upstairs — luggage tags */
+.luggage{display:flex;flex-wrap:wrap;gap:10px;padding:16px 20px;border-bottom:1px solid var(--rule-3)}
+.tag{flex:1 1 210px;position:relative;border:1px solid var(--rule-3);padding:9px 12px 9px 24px;
+  background:rgba(239,231,213,.02)}
+.tag::before{content:"";position:absolute;left:9px;top:14px;width:7px;height:7px;border-radius:50%;
+  border:1px solid var(--gold-dim)}
+.tag b{display:block;font-size:9.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+.tag span{font-size:14px;color:var(--bone)}
 
-/* checklist */
-.filters{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:16px}
-.filter{background:none;border:1px solid var(--rule);color:var(--bone-dim);border-radius:99px;font-family:var(--mono);
-  font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;padding:7px 13px;cursor:pointer}
-.filter[aria-pressed="true"]{color:var(--lacquer);background:var(--brass);border-color:var(--brass)}
-.clist{border:1px solid var(--rule);border-radius:2px;background:var(--card)}
-.crow{display:flex;gap:12px;padding:13px 17px;border-top:1px solid rgba(200,162,74,.14);align-items:flex-start}
-.crow:first-child{border-top:0}
-.crow.done .cname{color:var(--bone-dim);text-decoration:line-through}
-.cname{font-family:var(--display);font-size:17px;margin:0 0 3px}
-.ccond{margin:0;color:var(--bone-dim);font-size:14px}
-.cmeta{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px;align-items:center}
-.tagrun{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;color:var(--brass);border:1px solid var(--rule);padding:3px 7px;border-radius:2px}
+/* ── the guest register: steps, ruled and signed in ink ────────────────── */
+.regsec{display:flex;align-items:center;gap:12px;margin:0;padding:18px 20px 6px;
+  font-family:var(--disp);font-size:21px;font-weight:600;color:var(--candle);letter-spacing:.01em}
+.regsec::after{content:"";flex:1;height:1px;background:var(--rule-3)}
+.register{margin:0;padding:0 20px 10px;list-style:none}
+.line{display:grid;grid-template-columns:34px 26px 1fr;gap:12px;align-items:start;
+  border-bottom:1px dotted var(--rule-3);padding:10px 0}
+.line:last-child{border-bottom:0}
+.lineno{font-family:var(--disp);font-size:17px;color:var(--faint);text-align:right;padding-top:3px}
+.line.done .lineno{color:var(--gold)}
+/* the pen: an ink stroke that draws itself when the line is signed */
+.pen{width:24px;height:24px;padding:0;background:transparent;border:1px solid var(--rule-2);cursor:pointer;
+  position:relative;margin-top:2px;transition:border-color .18s}
+.pen:hover{border-color:var(--gold)}
+.pen svg{position:absolute;inset:4px;width:14px;height:14px;overflow:visible}
+.pen path{fill:none;stroke:var(--jade);stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;
+  stroke-dasharray:26;stroke-dashoffset:26;transition:stroke-dashoffset .35s ease}
+.pen[aria-pressed="true"]{border-color:var(--jade)}
+.pen[aria-pressed="true"] path{stroke-dashoffset:0}
+.entry{min-width:0}
+.entry>summary{cursor:pointer;list-style:none;display:flex;gap:10px;align-items:baseline}
+.entry>summary::-webkit-details-marker{display:none}
+.etitle{margin:0;font-family:var(--disp);font-size:20px;font-weight:600;line-height:1.3;letter-spacing:.005em}
+.line.done .etitle{color:var(--bone-dim)}
+.more{flex:none;font-size:9.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.entry>summary .more::after{content:"open"}
+.entry[open]>summary .more::after{content:"close"}
+.note{margin:10px 0 4px;padding:2px 0 4px 14px;border-left:1px solid var(--rule-3)}
+.note dl{display:grid;grid-template-columns:88px 1fr;gap:5px 14px;margin:0;font-size:14.5px}
+.note dt{font-size:9.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--jade);padding-top:4px}
+.note dd{margin:0;color:var(--bone)}
+.stamps{display:flex;flex-wrap:wrap;gap:6px;margin-top:11px}
+.stamp{font-size:10px;font-weight:600;letter-spacing:.08em;padding:3px 8px;border:1px solid;background:transparent}
+button.stamp{cursor:pointer}
+.b-assassination{border-color:rgba(168,68,58,.55);color:#d8867c}
+.b-discovery{border-color:rgba(123,134,184,.55);color:var(--indigo)}
+.b-feats{border-color:rgba(232,169,74,.5);color:var(--candle)}
+.b-classic{border-color:rgba(99,161,137,.55);color:var(--jade)}
+.stamp.on{opacity:.42;text-decoration:line-through}
+.slip{display:block;margin-top:10px;border:1px solid;padding:9px 12px;font-size:14px}
+.slip b{display:block;font-size:9.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;margin-bottom:3px}
+.s-warn{border-color:rgba(168,68,58,.45);background:rgba(168,68,58,.09);color:#eec0b9}
+.s-warn b{color:#e4867a}
+.s-save{border-color:rgba(232,169,74,.4);background:rgba(232,169,74,.07);color:#f0d6ab}
+.s-save b{color:var(--candle)}
+.s-unver{border-color:var(--rule-2);border-style:dashed;color:var(--bone-dim)}
+.s-unver b{color:var(--faint)}
+.src{margin:9px 0 0;font-size:12px;color:var(--faint);font-style:italic}
 
-/* verification */
-.vblock{border:1px solid var(--rule);background:var(--card);border-radius:2px;padding:18px 20px;margin-bottom:20px}
-.vblock h3{font-family:var(--display);font-weight:400;font-size:21px;margin:0 0 9px}
-.vblock h4{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--brass-dim);margin:17px 0 6px}
-.vblock ul{margin:6px 0 0;padding-left:18px}.vblock li{margin-bottom:7px}
-table{width:100%;border-collapse:collapse;margin-top:9px;font-size:13.5px}
-th,td{text-align:left;padding:7px 9px;border-bottom:1px solid rgba(200,162,74,.16);vertical-align:top}
-th{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--brass-dim);font-weight:400}
-footer{color:var(--bone-dim);font-size:13px;margin-top:32px;border-top:1px solid var(--rule);padding-top:15px}
-@media (max-width:640px){.slot{border-right:0;border-bottom:1px solid var(--rule)}.step{padding:11px 13px}}
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+/* ── checklist, as the concierge's list ────────────────────────────────── */
+.filters{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 16px}
+.filter{background:transparent;border:1px solid var(--rule-3);color:var(--bone-dim);font-size:10.5px;
+  font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:7px 12px;cursor:pointer}
+.filter[aria-pressed="true"]{background:var(--gold);border-color:var(--gold);color:var(--lacquer)}
+.clist{border-top:1px solid var(--rule-3)}
+.crow{display:grid;grid-template-columns:26px 1fr;gap:14px;padding:13px 4px;
+  border-bottom:1px solid var(--rule-3);align-items:start}
+.crow.done .cname{color:var(--faint);text-decoration:line-through;text-decoration-color:var(--jade)}
+.cname{margin:0;font-family:var(--disp);font-size:21px;font-weight:600;line-height:1.2}
+.ccond{margin:3px 0 0;color:var(--bone-dim);font-size:14.5px}
+.cmeta{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px;align-items:center}
+.tagrun{font-size:9.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);
+  border:1px dashed var(--rule-2);padding:3px 8px}
+
+/* ── verification log (prose kept from the previous edition) ───────────── */
+.vblock{border:1px solid var(--rule-3);background:var(--teak);padding:18px 20px;margin-bottom:17px}
+.vblock h3{font-family:var(--disp);font-size:27px;font-weight:600;margin:0 0 10px;letter-spacing:.01em}
+.vblock h4{font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin:16px 0 6px}
+.vblock p,.vblock li{font-size:15px;color:var(--bone-dim)}
+.vblock li b,.vblock p b,.vblock td b{color:var(--bone)}
+.vblock ul{padding-left:19px;margin:0}
+.vblock li{margin-bottom:6px}
+table{width:100%;border-collapse:collapse;font-size:14.5px;margin-top:9px}
+th,td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--rule-3);vertical-align:top;color:var(--bone-dim)}
+th{font-size:9.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);
+  border-bottom:1px solid var(--rule-2)}
+.tablewrap{overflow-x:auto}
+footer{margin-top:34px;padding-top:16px;border-top:1px solid var(--rule-3);color:var(--faint);font-size:13px}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+@media (max-width:680px){
+  .door{grid-template-columns:1fr;gap:12px}
+  .doorplate{width:70px}
+  .note dl{grid-template-columns:1fr;gap:0}
+  .note dt{padding-top:9px}
+  .line{grid-template-columns:24px 24px 1fr;gap:9px}
+  .register,.regsec,.luggage,.door{padding-left:14px;padding-right:14px}
+  .fob{width:calc(50% - 6px)}
+  .boardtools{margin-left:0;width:100%}
+  .candles{gap:16px}
+  .candle{width:74px}
+  .sub,.register-head{padding-left:14px;padding-right:14px}
+}
+@media print{
+  body{background:#fff;color:#111;background-image:none;font-size:11pt}
+  .board,.tabs,.btn,.boardtools,.skip,.pen,.candles{display:none!important}
+  .panel[hidden]{display:block!important}
+  details.room,details.room>summary,.entry{display:block!important}
+  .line,details.room{break-inside:avoid}
+  .engrave{-webkit-text-fill-color:#111;color:#111}
+  .ritual,.notice,.vblock,details.room,header.plaque{background:none;border-color:#bbb}
+}
 </style>
 </head>
 <body>
+<a class="skip" href="#panel-runs">Skip to the runs</a>
 <div class="wrap">
 
-  <p class="eyebrow">Patient Zero · Mission 01 · Himmapan Hotel, Bangkok</p>
-  <h1>The Source — <em>20 challenges</em> in five runs</h1>
-  <p class="deck">Built from your exported mission data (20 challenges, 11 disguises, exact tile wording) and cross-checked against community sources for the parts the export doesn't cover: where each disguise sits, where the vodka and the pills are, and which kills cancel each other out.</p>
+<header class="plaque">
+  <div class="plaque-top">
+    <a href="../index.html">&#8592; All guides</a>
+    <span class="smallcaps">Patient Zero &middot; Mission 01</span>
+  </div>
+  <p class="house">Himmapan Hotel &middot; Bangkok</p>
+  <h1 class="title engrave">The Source</h1>
+  <p class="tagline">Twenty challenges, five stays, one ceremony on the top floor.</p>
+  <div class="orn"><i></i></div>
+  <p class="sub">Built from your exported mission data (20 challenges, 11 disguises, exact tile wording) and cross-checked against community sources for the parts the export doesn't cover: where each disguise sits, where the vodka and the pills are, and which kills cancel each other out.</p>
+  <div class="register-head">
+    <div><div class="k">Guest &mdash; the cult's man</div><div class="v">Oybek Nabazov</div></div>
+    <div><div class="k">Guest &mdash; the sister</div><div class="v">Sister Yulduz</div></div>
+    <div><div class="k">Challenges</div><div class="v">20</div></div>
+    <div><div class="k">Stays</div><div class="v">5</div></div>
+    <div><div class="k">Uniforms on site</div><div class="v">11</div></div>
+    <div><div class="k">House difficulty</div><div class="v">Professional</div></div>
+  </div>
+</header>
 
   <div class="notice">
     <h3>Four things that shape every run below</h3>
@@ -157,42 +311,34 @@ footer{color:var(--bone-dim);font-size:13px;margin-top:32px;border-top:1px solid
     </ul>
   </div>
 
-  <div class="tracker">
-    <div class="tracker-top">
-      <div>
-        <p class="eyebrow" style="margin:0 0 5px">Progress</p>
-        <div class="tracker-count"><span id="t-done">0</span> <small>/ 20 challenges</small></div>
-      </div>
-      <button class="btn" id="reset">Reset all ticks</button>
-    </div>
-    <div class="bar"><span id="t-bar"></span></div>
-    <div class="pills">
-      <div class="pill"><b>Assassination</b><span id="p-assassination">0/12</span></div>
-      <div class="pill"><b>Discovery</b><span id="p-discovery">0/3</span></div>
-      <div class="pill"><b>Feats</b><span id="p-feats">0/1</span></div>
-      <div class="pill"><b>Classics</b><span id="p-classic">0/4</span></div>
-      <div class="pill"><b>Run steps</b><span id="p-steps">0/0</span></div>
-    </div>
+<section class="ritual" aria-label="Progress">
+  <h2>The ceremony</h2>
+  <div class="count"><span id="t-done">0</span><small> / 20 challenges</small></div>
+  <div class="pct"><span id="t-pct">0%</span> complete</div>
+  <div class="candles" id="cats"></div>
+  <div class="ritual-foot">
+    <span>Register lines signed: <b id="p-steps">0/0</b></span>
+    <button class="btn" id="reset">Clear the register</button>
   </div>
+</section>
 
-  <div class="tabs" role="tablist">
-    <button class="tab" role="tab" aria-selected="true" data-panel="runs">Runs</button>
-    <button class="tab" role="tab" aria-selected="false" data-panel="checklist">Checklist</button>
-    <button class="tab" role="tab" aria-selected="false" data-panel="verify">Verification log</button>
-  </div>
+<div class="tabs" role="tablist" aria-label="Guide sections">
+  <button class="tab" role="tab" aria-selected="true" data-panel="runs">The stays</button>
+  <button class="tab" role="tab" aria-selected="false" data-panel="checklist">Checklist</button>
+  <button class="tab" role="tab" aria-selected="false" data-panel="verify">Verification log</button>
+</div>
 
-  <div class="panel" id="panel-runs">
-    <div class="jump" id="jump"></div>
-    <p class="jhint">Tap a run to open it and jump to it · <button class="btn" id="expand-all" style="padding:4px 9px">Open all</button> <button class="btn" id="collapse-all" style="padding:4px 9px">Close all</button></p>
-    <div id="runs"></div>
-  </div>
+<div class="panel" id="panel-runs">
+  <div class="board" id="jump"></div>
+  <div id="runs"></div>
+</div>
 
-  <div class="panel" id="panel-checklist" hidden>
-    <div class="filters" id="filters"></div>
-    <div class="clist" id="clist"></div>
-  </div>
+<div class="panel" id="panel-checklist" hidden>
+  <div class="filters" id="filters"></div>
+  <div class="clist" id="clist"></div>
+</div>
 
-  <div class="panel" id="panel-verify" hidden></div>
+<div class="panel" id="panel-verify" hidden></div>
 
   <footer>
     Ticks persist where browser storage is available, otherwise they last for the session. Sources: your exported mission file (challenge names, tile wording, 11-disguise roster); Hitman Wiki (challenge and outfit pages, mission page); Steam guide "HITMAN 2 | Chameleon | All Disguises" by Artoriaz (per-disguise locations for The Source); Steam guide "HITMAN I — All Bangkok Challenges" by fish (Bangkok layout, challenges bank immediately); Shacknews (Divine Intervention setup); whatchaa.com (suit-only route, knife kill, vodka); Steam Community discussions (sniper wall penetration, Discover-area bug).
@@ -558,51 +704,86 @@ const RUNS = [
 const state={done:{},steps:{},filter:"all"};
 let storageOK=true;
 function reportProgress(){try{const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r['pz01']={done:CH.filter(c=>state.done[c.id]).length,total:CH.length,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
-async function save(){ if(!storageOK) return; try{ localStorage.setItem("source20:v1",JSON.stringify(state)); }catch(e){ storageOK=false; } reportProgress(); }
-async function load(){ try{ const r=localStorage.getItem("source20:v1"); if(r){const d=JSON.parse(r); state.done=d.done||{}; state.steps=d.steps||{};} }catch(e){} }
+function save(){ if(!storageOK) return; try{ localStorage.setItem("source20:v1",JSON.stringify(state)); }catch(e){ storageOK=false; } reportProgress(); }
+function load(){ try{ const r=localStorage.getItem("source20:v1"); if(r){const d=JSON.parse(r); state.done=d.done||{}; state.steps=d.steps||{};} }catch(e){} }
 
 /* ================= RENDER ================= */
 const TYPE={assassination:"Assassination",discovery:"Discovery",feats:"Feats",classic:"Classics"};
+/* run keys are letters; this is the order the house recommends staying in */
+const RUN_LABEL={E:"Run 1",D:"Run 2",A:"Run 3",C:"Run 4",B:"Run 5"};
 const byId=Object.fromEntries(CH.map(c=>[c.id,c]));
 const esc=s=>String(s).replace(/[&<>]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[m]));
-const badges=ids=>!ids||!ids.length?"":`<div class="badges">${ids.map(i=>byId[i]?`<span class="badge b-${byId[i].t}">${esc(byId[i].n)}</span>`:"").join("")}</div>`;
+const $=id=>document.getElementById(id);
+const runNo=key=>(RUN_LABEL[key]||"").replace("Run ","");
+/* the ink stroke drawn inside every pen tick */
+const NIB='<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 8.5 L5.5 13 L14.5 2.5"/></svg>';
 
+/* register-line key -> the challenges that line completes */
+const STEP_CH={};
+RUNS.forEach(run=>run.secs.forEach(sec=>sec.steps.forEach((st,si)=>{
+  STEP_CH[run.key+'-'+sec.n+'-'+si]=st.badges||[];
+})));
+
+const stamps=ids=>!ids||!ids.length?"":`<div class="stamps">${ids.map(i=>byId[i]
+  ?`<button type="button" class="stamp b-${byId[i].t}${state.done[i]?" on":""}" data-ch="${i}" title="Mark this challenge done">${esc(byId[i].n)}</button>`
+  :"").join("")}</div>`;
+
+/* The concierge's board: one brass fob per stay. */
 function renderJump(){
-  document.getElementById("jump").innerHTML=RUNS.map((r,i)=>
-    `<button class="jbtn" data-jump="run-${r.key}"><b>${esc(r.plate.split("·")[0].trim())}</b>${esc(r.title.split("—")[0].trim())}</button>`).join("");
+  $("jump").innerHTML=`<div class="board-lbl">Key board</div>`+
+    RUNS.map((r,i)=>
+    `<button type="button" class="fob${i===0?" on":""}" data-jump="run-${r.key}">
+       <span class="no">${runNo(r.key)}</span>
+       <span class="nm">${esc(r.title.split("—")[0].trim())}</span>
+     </button>`).join("")+
+    `<div class="boardtools">
+       <button type="button" class="btn" id="expand-all">Take every key</button>
+       <button type="button" class="btn" id="collapse-all">Hang them up</button>
+     </div>`;
 }
 
 function renderRuns(){
-  document.getElementById("runs").innerHTML=RUNS.map((run,ri)=>{
+  $("runs").innerHTML=RUNS.map((run,ri)=>{
+    let n=0;
     const secs=run.secs.map(sec=>{
-      const steps=sec.steps.map((st,si)=>{
+      const lines=sec.steps.map((st,si)=>{
         const key=`${run.key}-${sec.n}-${si}`, on=!!state.steps[key];
-        return `<div class="step ${on?"done":""}">
-          <button class="check" aria-pressed="${on}" aria-label="Mark step done" data-step="${esc(key)}">${on?"✓":""}</button>
-          <div class="sbody"><details>
-            <summary><p class="stitle"><span class="num">STEP</span>${esc(st.t)}<span class="tog"></span></p></summary>
-            <ul class="bul">${st.b.map(([k,v])=>`<li><k>${esc(k)}</k>${esc(v)}</li>`).join("")}</ul>
-            ${badges(st.badges)}
-            ${st.warn?`<div class="flag f-warn"><b>Warning</b>${esc(st.warn)}</div>`:""}
-            ${st.save?`<div class="flag f-save"><b>Save here</b>Manual save before this step — it is the cheapest place to retry from.</div>`:""}
-            ${st.unver?`<div class="flag f-unver"><b>Unverified</b>${esc(st.unver)}</div>`:""}
-            ${st.src?`<p class="src">Source — ${esc(st.src)}</p>`:""}
-          </details></div></div>`;
+        const no=String(++n).padStart(2,"0");
+        return `<li class="line step ${on?"done":""}">
+          <span class="lineno">${no}</span>
+          <button type="button" class="pen" aria-pressed="${on}" aria-label="Sign off step ${no}" data-step="${esc(key)}">${NIB}</button>
+          <details class="entry">
+            <summary><p class="etitle">${esc(st.t)}</p><span class="more"></span></summary>
+            <div class="note">
+              <dl>${st.b.map(([k,v])=>`<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("")}</dl>
+              ${stamps(st.badges)}
+              ${st.warn?`<span class="slip s-warn"><b>Warning</b>${esc(st.warn)}</span>`:""}
+              ${st.save?`<span class="slip s-save"><b>Save here</b>Manual save before this step — it is the cheapest place to retry from.</span>`:""}
+              ${st.unver?`<span class="slip s-unver"><b>Unverified</b>${esc(st.unver)}</span>`:""}
+              ${st.src?`<p class="src">Source — ${esc(st.src)}</p>`:""}
+            </div>
+          </details>
+        </li>`;
       }).join("");
-      return `<p class="sec">${esc(sec.n)}</p>${steps}`;
+      return `<h3 class="regsec">${esc(sec.n)}</h3><ol class="register">${lines}</ol>`;
     }).join("");
-    return `<details class="run" id="run-${run.key}" ${ri===0?"open":""}>
+
+    return `<details class="room" id="run-${run.key}" ${ri===0?"open":""}>
       <summary>
-        <span class="chev"></span>
-        <p class="plate">${esc(run.plate)}</p>
-        <h2>${esc(run.title)}</h2>
-        <p>${esc(run.goal)}</p>
+        <div class="door">
+          <span class="doorplate"><span class="rn">${runNo(run.key)}</span><span class="rl">Stay</span></span>
+          <span>
+            <p class="plate">${esc(run.plate)}</p>
+            <h2>${esc(run.title)}</h2>
+            <p>${esc(run.goal)}</p>
+          </span>
+        </div>
       </summary>
-      <div class="runbody">
-        <div class="loadout">
-          <div class="slot"><b>Starting location</b><span>${esc(run.load.start)}</span></div>
-          <div class="slot"><b>Suit</b><span>${esc(run.load.suit)}</span></div>
-          ${run.load.items.map((it,i)=>`<div class="slot"><b>Slot ${i+1}</b><span>${esc(it)}</span></div>`).join("")}
+      <div class="roombody">
+        <div class="luggage">
+          <div class="tag"><b>Starting location</b><span>${esc(run.load.start)}</span></div>
+          <div class="tag"><b>Suit</b><span>${esc(run.load.suit)}</span></div>
+          ${run.load.items.map((it,i)=>`<div class="tag"><b>Slot ${i+1}</b><span>${esc(it)}</span></div>`).join("")}
         </div>
         ${secs}
       </div>
@@ -612,24 +793,24 @@ function renderRuns(){
 
 function renderChecklist(){
   const f=[["all","All"],["assassination","Assassination"],["discovery","Discovery"],["feats","Feats"],["classic","Classics"],["incomplete","Incomplete"]];
-  document.getElementById("filters").innerHTML=f.map(([k,l])=>`<button class="filter" data-filter="${k}" aria-pressed="${state.filter===k}">${l}</button>`).join("");
+  $("filters").innerHTML=f.map(([k,l])=>`<button type="button" class="filter" data-filter="${k}" aria-pressed="${state.filter===k}">${l}</button>`).join("");
   const rows=CH.filter(c=>state.filter==="all"?true:state.filter==="incomplete"?!state.done[c.id]:c.t===state.filter).map(c=>{
     const on=!!state.done[c.id];
-    const label={E:"Run 1",D:"Run 2",A:"Run 3",C:"Run 4",B:"Run 5"}[c.run];
     return `<div class="crow ${on?"done":""}">
-      <button class="check" aria-pressed="${on}" aria-label="Mark challenge done" data-ch="${c.id}">${on?"✓":""}</button>
+      <button type="button" class="pen" aria-pressed="${on}" aria-label="Mark challenge done" data-ch="${c.id}">${NIB}</button>
       <div class="cmain">
         <p class="cname">${esc(c.n)}</p>
         <p class="ccond">${esc(c.d)}</p>
         <div class="cmeta">
-          <span class="badge b-${c.t}">${TYPE[c.t]}</span>
-          <span class="tagrun">${label}</span>
+          <span class="stamp b-${c.t}">${TYPE[c.t]}</span>
+          <span class="tagrun">${RUN_LABEL[c.run]||""}</span>
         </div>
       </div></div>`;
   }).join("");
-  document.getElementById("clist").innerHTML=rows||`<div class="crow"><div class="cmain"><p class="ccond">Nothing matches this filter.</p></div></div>`;
+  $("clist").innerHTML=rows||`<div class="crow"><div class="cmain"><p class="ccond">Nothing matches this filter.</p></div></div>`;
 }
 
+/* ================= VERIFICATION LOG ================= */
 function renderVerify(){
   document.getElementById("panel-verify").innerHTML=`
   <div class="vblock">
@@ -716,54 +897,91 @@ function renderVerify(){
   </div>`;
 }
 
-/* ================= TRACKER ================= */
+/* ================= THE CEREMONY (tracker) ================= */
 function updateTracker(){
   const done=CH.filter(c=>state.done[c.id]).length;
-  document.getElementById("t-done").textContent=done;
-  document.getElementById("t-bar").style.width=(done/CH.length*100)+"%";
-  for(const t of ["assassination","discovery","feats","classic"]){
-    const l=CH.filter(c=>c.t===t);
-    document.getElementById("p-"+t).textContent=`${l.filter(c=>state.done[c.id]).length}/${l.length}`;
-  }
+  const pct=Math.round(done/CH.length*100);
+  $("t-done").textContent=done;
+  $("t-pct").textContent=pct+"%";
+
+  /* one candle per category — the flame grows with the count */
+  $("cats").innerHTML=["assassination","discovery","feats","classic"].map(t=>{
+    const all=CH.filter(c=>c.t===t), d=all.filter(c=>state.done[c.id]).length;
+    const frac=all.length?d/all.length:0;
+    return `<div class="candle">
+      <div class="flame"><i style="height:${(4+frac*20).toFixed(1)}px;opacity:${frac?1:.18}"></i></div>
+      <div class="stick"><i style="height:${(frac*100).toFixed(0)}%"></i></div>
+      <div class="lbl">${TYPE[t]}</div>
+      <div class="val">${d} / ${all.length}</div>
+    </div>`;
+  }).join("");
+
   let tot=0; RUNS.forEach(r=>r.secs.forEach(s=>tot+=s.steps.length));
-  document.getElementById("p-steps").textContent=`${Object.values(state.steps).filter(Boolean).length}/${tot}`;
+  $("p-steps").textContent=`${Object.values(state.steps).filter(Boolean).length}/${tot}`;
+  document.querySelectorAll(".stamp[data-ch]").forEach(b=>b.classList.toggle("on",!!state.done[b.dataset.ch]));
 }
 
 /* ================= EVENTS ================= */
-document.querySelectorAll(".tab").forEach(tab=>tab.addEventListener("click",()=>{
-  document.querySelectorAll(".tab").forEach(t=>t.setAttribute("aria-selected",String(t===tab)));
-  ["runs","checklist","verify"].forEach(p=>document.getElementById("panel-"+p).hidden=(p!==tab.dataset.panel));
-}));
+const tabs=[...document.querySelectorAll(".tab")];
+function selectTab(tab){
+  tabs.forEach(t=>{const on=t===tab;t.setAttribute("aria-selected",String(on));t.tabIndex=on?0:-1;});
+  ["runs","checklist","verify"].forEach(p=>{$("panel-"+p).hidden=(p!==tab.dataset.panel);});
+}
+tabs.forEach((tab,i)=>{
+  tab.tabIndex=tab.getAttribute("aria-selected")==="true"?0:-1;
+  tab.addEventListener("click",()=>selectTab(tab));
+  tab.addEventListener("keydown",e=>{
+    const d=e.key==="ArrowRight"?1:e.key==="ArrowLeft"?-1:0;
+    if(!d)return;
+    e.preventDefault();
+    const next=tabs[(i+d+tabs.length)%tabs.length];
+    selectTab(next);next.focus();
+  });
+});
 
 document.addEventListener("click",e=>{
   const j=e.target.closest("[data-jump]");
   if(j){
-    const el=document.getElementById(j.dataset.jump);
+    const el=$(j.dataset.jump);
     el.open=true; el.scrollIntoView({behavior:"smooth",block:"start"});
-    document.querySelectorAll(".jbtn").forEach(b=>b.classList.toggle("on",b===j));
+    document.querySelectorAll(".fob").forEach(b=>b.classList.toggle("on",b===j));
     return;
   }
   const c=e.target.closest("[data-ch]");
   if(c){ state.done[c.dataset.ch]=!state.done[c.dataset.ch]; renderChecklist(); updateTracker(); save(); return; }
   const s=e.target.closest("[data-step]");
   if(s){
-    const k=s.dataset.step; state.steps[k]=!state.steps[k];
-    s.setAttribute("aria-pressed",String(!!state.steps[k]));
-    s.textContent=state.steps[k]?"✓":"";
-    s.closest(".step").classList.toggle("done",!!state.steps[k]);
+    const k=s.dataset.step;
+    const on=!state.steps[k];
+    state.steps[k]=on;
+    s.setAttribute("aria-pressed",String(on));
+    s.closest(".line").classList.toggle("done",on);
+    /* signing the line banks the challenges it covers */
+    if(on){ (STEP_CH[k]||[]).forEach(id=>{state.done[id]=true;}); renderChecklist(); }
     updateTracker(); save(); return;
   }
   const f=e.target.closest("[data-filter]");
-  if(f){ state.filter=f.dataset.filter; renderChecklist(); }
+  if(f){ state.filter=f.dataset.filter; renderChecklist(); return; }
+
+  /* the board's own buttons are rendered with it, so they are delegated too */
+  if(e.target.id==="expand-all"){ document.querySelectorAll(".room").forEach(r=>r.open=true); return; }
+  if(e.target.id==="collapse-all"){ document.querySelectorAll(".room").forEach(r=>r.open=false); return; }
+  if(e.target.id==="reset"){
+    if(!confirm("Clear every tick on this guide? Other guides are not affected."))return;
+    state.done={}; state.steps={}; renderRuns(); renderChecklist(); updateTracker(); save();
+  }
 });
 
-document.getElementById("reset").addEventListener("click",()=>{
-  state.done={}; state.steps={}; renderRuns(); renderChecklist(); updateTracker(); save();
-});
-document.getElementById("expand-all").addEventListener("click",()=>document.querySelectorAll(".run").forEach(r=>r.open=true));
-document.getElementById("collapse-all").addEventListener("click",()=>document.querySelectorAll(".run").forEach(r=>r.open=false));
+/* Wide tables in the verification log scroll inside themselves on a phone. */
+function wrapTables(){
+  document.querySelectorAll("#panel-verify table").forEach(t=>{
+    if(t.parentNode.classList.contains("tablewrap"))return;
+    const w=document.createElement("div");w.className="tablewrap";
+    t.parentNode.insertBefore(w,t);w.appendChild(t);
+  });
+}
 
-(async function(){ await load(); renderJump(); renderRuns(); renderChecklist(); renderVerify(); updateTracker(); reportProgress(); })();
+load(); renderJump(); renderRuns(); renderChecklist(); renderVerify(); wrapTables(); updateTracker(); reportProgress();
 </script>
 <!-- step-progress-bridge -->
 <script>

@@ -1,219 +1,475 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Ark Society — Final Challenge Dossier</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--@title--><title>The Ark Society — Final Challenge Dossier</title><!--/@title-->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;900&family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --storm-900:#0b131c;--storm-800:#101b27;--storm-700:#16232f;--storm-600:#1e2f3d;
-    --stone-line:#2c4152;--parch:#e9e2d1;--parch-2:#f3eede;--ink:#1c1710;
-    --ember:#c8923a;--ember-bright:#e6ad4c;--aurora:#5fcdc0;--aurora-dim:#2f7d75;
-    --blood:#a6472f;--blood-bright:#d1613f;--parch-mut:#8a8069;
-    --a-badge:#8c5a2b;--d-badge:#2f6f73;--f-badge:#5a4a86;--t-badge:#9c4a6b;--c-badge:#4a6a86;
-  }
-  *{box-sizing:border-box}
-  body{margin:0;background:
-      radial-gradient(1200px 600px at 78% -10%,rgba(95,205,192,.10),transparent 60%),
-      radial-gradient(900px 500px at 10% 110%,rgba(200,146,58,.08),transparent 55%),var(--storm-900);
-    color:#d4dde4;font-family:"Spectral",Georgia,serif;line-height:1.55;-webkit-font-smoothing:antialiased}
-  a{color:var(--ember-bright)}
-  .wrap{max-width:1080px;margin:0 auto;padding:0 18px 90px}
-  header.mast{padding:36px 0 20px;border-bottom:1px solid var(--stone-line);margin-bottom:20px}
-  .crest{font-family:"JetBrains Mono",monospace;letter-spacing:.42em;text-transform:uppercase;font-size:11px;color:var(--aurora);margin:0 0 14px}
-  h1.title{font-family:"Cinzel",serif;font-weight:900;letter-spacing:.04em;font-size:clamp(30px,6vw,56px);line-height:.98;margin:0;color:var(--parch-2);text-shadow:0 2px 0 rgba(0,0,0,.4)}
-  h1.title .sub{display:block;font-size:clamp(12px,2.3vw,17px);font-weight:600;letter-spacing:.32em;color:var(--ember);margin-top:12px;text-transform:uppercase}
-  .dek{max-width:720px;color:#9fb0bc;margin:15px 0 0;font-size:15px}
-  .dek b{color:#cdd8df;font-weight:600}
-  .srcnote{margin-top:16px;background:rgba(95,205,192,.07);border-left:3px solid var(--aurora-dim);border-radius:0 4px 4px 0;padding:12px 15px;font-size:13px;color:#9fc9c4}
-  .srcnote b{color:#c9efe9}
+/* ═══ ISLE OF SGÀIL — the initiation ═══
+   The Ark Society does not let you in; it admits you. Ten commemorative
+   tokens handed to the guard at the door, a lie-detector test under Zoe, and
+   the gate is raised. That is the mission's own machinery — Magpie counts
+   thirty tokens, Promotion counts ten — so this guide is the initiation
+   itself rather than a dossier about it.
 
-  .tracker{margin-top:20px;background:linear-gradient(180deg,var(--storm-700),var(--storm-800));border:1px solid var(--stone-line);border-radius:4px;padding:18px;box-shadow:inset 0 1px 0 rgba(255,255,255,.03),0 18px 40px -30px #000}
-  .ttop{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
-  .tracker h2{font-family:"Cinzel",serif;font-size:15px;letter-spacing:.2em;text-transform:uppercase;margin:0;color:var(--parch)}
-  .totread{font-family:"JetBrains Mono",monospace;font-size:13px;color:var(--parch-mut)}
-  .totread b{color:var(--aurora);font-size:17px}
-  .bar{height:12px;background:#0c1620;border:1px solid var(--stone-line);border-radius:20px;margin:12px 0 16px;overflow:hidden}
-  .bar>i{display:block;height:100%;width:0;border-radius:20px;background:linear-gradient(90deg,var(--aurora-dim),var(--aurora));box-shadow:0 0 14px rgba(95,205,192,.5);transition:width .5s cubic-bezier(.2,.8,.2,1)}
-  .cats{display:grid;grid-template-columns:repeat(5,1fr);gap:9px}
-  .cat{background:#0e1a24;border:1px solid var(--stone-line);border-radius:4px;padding:10px 11px}
-  .cat .lab{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--parch-mut);display:flex;align-items:center;gap:6px}
-  .cat .dot{width:8px;height:8px;border-radius:2px;display:inline-block}
-  .cat .num{font-family:"Cinzel",serif;font-weight:700;font-size:22px;margin-top:4px;color:var(--parch-2)}
-  .cat .num span{font-size:13px;color:var(--parch-mut);font-weight:500}
-  .cbar{height:5px;background:#0a141d;border-radius:8px;margin-top:7px;overflow:hidden}
-  .cbar>i{display:block;height:100%;width:0;transition:width .45s ease}
-  .dot.assassination{background:var(--a-badge)}.cbar.assassination>i{background:linear-gradient(90deg,#5a3a1c,var(--a-badge))}
-  .dot.discovery{background:var(--d-badge)}.cbar.discovery>i{background:linear-gradient(90deg,#1c4547,var(--d-badge))}
-  .dot.feats{background:var(--f-badge)}.cbar.feats>i{background:linear-gradient(90deg,#382d55,var(--f-badge))}
-  .dot.targets{background:var(--t-badge)}.cbar.targets>i{background:linear-gradient(90deg,#5c2c40,var(--t-badge))}
-  .dot.classic{background:var(--c-badge)}.cbar.classic>i{background:linear-gradient(90deg,#2c4256,var(--c-badge))}
-  .resetbtn{margin-top:14px;background:none;border:1px solid var(--stone-line);color:var(--parch-mut);font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.1em;padding:6px 12px;border-radius:3px;cursor:pointer;text-transform:uppercase}
-  .resetbtn:hover{border-color:var(--blood);color:var(--blood-bright)}
+   The page is the gatehouse of the keep, cut in wet basalt. The tracker is
+   the PORTCULLIS: a black iron grille that is hauled up out of the arch one
+   sixty-second at a time, and stands clear only when every challenge is
+   taken. The five categories are five metals in the assay: gold for the
+   Classics, ember for the twins, steel for assassinations, verdigris for
+   discovery, bronze for the feats. The seven runs are seven DEGREES you are
+   raised through, and each carries its own bone mask on the nav — outlined
+   until the degree is complete, then cut in bone.
 
-  /* run nav buttons */
-  .runnav{margin-top:22px}
-  .runnav .lbl{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--parch-mut);margin-bottom:9px}
-  .runbtns{display:flex;flex-wrap:wrap;gap:7px}
-  .rb{font-family:"Cinzel",serif;font-weight:600;font-size:12.5px;letter-spacing:.04em;background:#0e1a24;border:1px solid var(--stone-line);color:#c6d2da;padding:8px 12px;border-radius:4px;cursor:pointer;display:flex;align-items:center;gap:8px}
-  .rb:hover{border-color:var(--ember);color:var(--ember-bright)}
-  .rb b{font-family:"JetBrains Mono",monospace;color:var(--ember);font-size:12px}
-  .rb .cnt{font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--parch-mut)}
-  .rb.allbtn{background:transparent;color:var(--parch-mut)}
-  .rb.allbtn:hover{color:var(--aurora);border-color:var(--aurora-dim)}
+   A run's steps are CHARGES, and taking one strikes its token: the tick is a
+   die that stamps a bronze disc. The checklist is the ROLL of admission, the
+   audit panel is the PROVING, and its findings are attested or qualified in
+   the society's own language.
 
-  .tabs{display:flex;gap:4px;margin:24px 0 20px;border-bottom:1px solid var(--stone-line);flex-wrap:wrap}
-  .tab{background:none;border:0;border-bottom:2px solid transparent;color:var(--parch-mut);font-family:"Cinzel",serif;font-weight:600;font-size:13.5px;letter-spacing:.14em;text-transform:uppercase;padding:11px 15px;cursor:pointer;margin-bottom:-1px}
-  .tab[aria-selected="true"]{color:var(--ember-bright);border-color:var(--ember)}
-  .tab:hover{color:#cdd8df}
-  .panel{display:none}.panel.on{display:block;animation:fade .35s ease}
-  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+   Nothing here is the leather-and-vellum ritual book that Santa Fortuna took,
+   and nothing is engraved stationery — the material is stone, salt water and
+   struck metal, and the type is cut into it rather than printed on it. */
+:root{
+  --basalt:#080b0e; --stone:#11171c; --stone-2:#171f26; --stone-3:#1e2831;
+  --cut:#2a3742; --cut-2:#1d262e; --hair:rgba(228,220,203,.10);
+  --bone:#e6dfce; --text:#b6c2c9; --dim:#8b99a3; --faint:#6d7c87;
+  --gold:#d3ad55; --ember:#c96038; --steel:#8fa8ba; --verd:#4fa08d; --bronze:#b07c42;
+  --sea:#12313d;
+  --disp:Cinzel,"Trajan Pro","Times New Roman",serif;
+  --body:Spectral,Georgia,"Times New Roman",serif;
+  --mono:"JetBrains Mono",ui-monospace,Consolas,"Courier New",monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;color:var(--text);background-color:var(--basalt);
+  /* wet basalt: a cold sea glow off the north face, salt haze at the sill */
+  background-image:
+    radial-gradient(1100px 620px at 50% -14%,rgba(79,160,141,.10),transparent 66%),
+    radial-gradient(760px 520px at 96% 22%,rgba(18,49,61,.55),transparent 62%),
+    repeating-linear-gradient(178deg,rgba(255,255,255,.014) 0 1px,transparent 1px 7px);
+  background-attachment:fixed;
+  font-family:var(--body);font-size:16px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.isle{max-width:1120px;margin:0 auto;padding:0 16px 100px}
+a{color:var(--verd)}
+b,strong{font-weight:600;color:var(--bone)}
+em,i{font-style:italic}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:12px;top:12px;z-index:60;background:var(--gold);color:var(--basalt);
+  padding:8px 14px;font-family:var(--mono);font-size:12px}
+.lbl{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
 
-  .run{margin-bottom:16px;border:1px solid var(--stone-line);border-radius:5px;overflow:hidden;background:var(--storm-800);scroll-margin-top:14px}
-  .run>summary{list-style:none;cursor:pointer;padding:0}
-  .run>summary::-webkit-details-marker{display:none}
-  .runhead{display:flex;gap:16px;align-items:flex-start;padding:17px 20px;background:linear-gradient(180deg,var(--storm-700),var(--storm-800))}
-  .runhead:hover{background:var(--storm-600)}
-  .rnum{font-family:"Cinzel",serif;font-weight:900;font-size:28px;color:var(--ember);line-height:1;min-width:52px;text-align:center;border-right:1px solid var(--stone-line);padding-right:14px}
-  .rnum small{display:block;font-size:9px;letter-spacing:.2em;color:var(--parch-mut);margin-top:5px;font-family:"JetBrains Mono",monospace}
-  .rtitle{flex:1}.rtitle h3{font-family:"Cinzel",serif;font-size:18px;margin:0 0 4px;color:var(--parch-2)}
-  .rtitle p{margin:0;font-size:13.5px;color:#9fb0bc}
-  .rcount{font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--parch-mut);margin-top:6px}
-  .chev{color:var(--parch-mut);font-size:13px;align-self:center}
-  details[open]>summary .chev{color:var(--ember)}
-  .runbody{padding:6px 20px 22px}
+/* ── the lintel: the title cut into the stone over the door ─────────────── */
+header.gatehouse{margin-top:20px;border:1px solid var(--cut);background:var(--stone);
+  box-shadow:0 30px 60px -50px #000}
+.lintel{position:relative;padding:34px 26px 24px;border-bottom:1px solid var(--cut-2);
+  background:linear-gradient(180deg,var(--stone-2),var(--stone))}
+/* the masonry course that runs under the inscription */
+.lintel::after{content:"";position:absolute;left:0;right:0;bottom:0;height:5px;
+  background:repeating-linear-gradient(90deg,var(--cut) 0 46px,transparent 46px 48px)}
+.crest{margin:0 0 14px;font-family:var(--mono);font-size:10.5px;letter-spacing:.26em;
+  text-transform:uppercase;color:var(--verd)}
+h1{margin:0;font-family:var(--disp);font-weight:700;font-size:clamp(32px,6.4vw,62px);
+  line-height:1.02;letter-spacing:.03em;text-transform:uppercase;color:var(--bone);
+  /* incised, not printed: a dark cut above, a lit edge below */
+  text-shadow:0 -1px 0 rgba(0,0,0,.85),0 1px 0 rgba(230,223,206,.16)}
+h1 .sub{display:block;margin-top:13px;font-family:var(--mono);font-weight:400;
+  font-size:clamp(10px,1.7vw,12.5px);letter-spacing:.22em;line-height:1.7;color:var(--gold);
+  text-shadow:none}
+.dek{margin:18px 0 0;max-width:78ch;color:var(--text);font-size:15.4px}
+.dek b{color:var(--bone)}
+/* the standing notice, chiselled into its own plate */
+.notice{margin:18px 0 0;padding:14px 17px;border:1px solid var(--cut);border-left:4px solid var(--verd);
+  background:rgba(79,160,141,.055);font-size:14.2px;color:var(--text)}
+.notice b{color:var(--bone)}
+.topbar{display:flex;flex-wrap:wrap;gap:6px 20px;align-items:center;justify-content:space-between;
+  padding:9px 26px;border-bottom:1px solid var(--cut-2);background:var(--basalt);
+  font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.topbar a{color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(211,173,85,.4)}
+.topbar a:hover{color:var(--bone);border-color:var(--bone)}
 
-  .loadout{background:linear-gradient(180deg,var(--parch-2),var(--parch));color:var(--ink);border-radius:4px;padding:15px 17px;margin:14px 0 20px;box-shadow:0 10px 30px -20px #000;border:1px solid #cabf9f}
-  .loadout h4{font-family:"Cinzel",serif;margin:0 0 11px;font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--a-badge);border-bottom:1px solid #cabf9f;padding-bottom:7px}
-  .lgrid{display:grid;grid-template-columns:1fr 1fr;gap:9px 20px}
-  .lrow{display:flex;flex-direction:column;gap:2px}
-  .lrow .k{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--parch-mut)}
-  .lrow .v{font-size:14.5px;color:var(--ink);font-weight:500}
-  .lrow .v em{color:var(--a-badge);font-style:normal;font-weight:600}
-  .slots{grid-column:1/-1;margin-top:3px}
-  .slotlist{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin-top:5px}
-  .slot{font-family:"JetBrains Mono",monospace;font-size:11.5px;background:#ded3b2;border:1px solid #c3b78f;border-radius:3px;padding:6px 9px;color:var(--ink)}
+/* ── the gate ───────────────────────────────────────────────────────────── */
+.gate{display:grid;grid-template-columns:minmax(0,360px) minmax(0,1fr);gap:26px;
+  padding:24px 26px 8px;align-items:center}
+.arch{min-width:0}
+.arch svg{display:block;width:100%;height:auto}
+.grille{transition:transform .55s cubic-bezier(.25,.85,.3,1)}
+.sill{fill:none;stroke:var(--cut);stroke-width:2}
+.lamp{fill:#2a3038;transition:fill .4s ease}
+.lamphalo{fill:var(--gold);opacity:0;transition:opacity .5s ease}
+.gate.full .lamp{fill:var(--gold)}
+.gate.full .lamphalo{opacity:.22}
+.readout{min-width:0}
+/* the guide's own total, kept in lower case so the number reads as written */
+.count{margin:6px 0 0;font-family:var(--body);font-size:17px;color:var(--dim)}
+.count b{display:inline-block;font-family:var(--disp);font-weight:700;font-size:56px;line-height:.92;
+  color:var(--bone);margin-right:11px}
+.charged{margin:9px 0 16px;font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--faint)}
+/* the assay: five metals, five bars */
+.assay{display:grid;gap:1px;background:var(--cut-2);border:1px solid var(--cut-2)}
+.ingot{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:baseline;
+  background:var(--stone-2);padding:8px 12px}
+.ingot .k{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--dim)}
+.ingot .v{font-family:var(--disp);font-weight:600;font-size:17px;color:var(--bone);white-space:nowrap}
+.ingot .v small{font-family:var(--mono);font-size:10.5px;color:var(--faint)}
+.ingot .lvl{grid-column:1/-1;height:4px;background:var(--basalt);overflow:hidden}
+.ingot .lvl i{display:block;height:100%;width:0;background:var(--m,var(--gold));
+  transition:width .45s ease}
+.ingot.full .v{color:var(--m,var(--gold))}
+.gatefoot{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;
+  padding:14px 26px 20px}
+.btn{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  background:transparent;color:var(--bone);border:1px solid var(--cut);padding:9px 16px;cursor:pointer}
+.btn:hover{border-color:var(--ember);color:var(--ember)}
+.btn-quiet{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  background:transparent;color:var(--faint);border:1px solid var(--cut-2);padding:6px 11px;cursor:pointer}
+.btn-quiet:hover{border-color:var(--gold);color:var(--gold)}
 
-  .sect{font-family:"Cinzel",serif;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--aurora);margin:22px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--stone-line);display:flex;align-items:center;gap:10px}
-  .sect::before{content:"";width:6px;height:13px;background:var(--aurora);border-radius:1px}
+/* ── the seven masks (run nav) ──────────────────────────────────────────── */
+.masks{display:grid;grid-template-columns:repeat(auto-fit,minmax(124px,1fr));gap:1px;
+  background:var(--cut-2);border-top:1px solid var(--cut-2)}
+.mask{display:grid;justify-items:center;gap:7px;background:var(--stone);border:0;
+  padding:15px 8px 13px;cursor:pointer;color:var(--dim);text-align:center}
+.mask:hover{background:var(--stone-3);color:var(--bone)}
+.mask svg{width:44px;height:58px;display:block}
+.maskface{fill:rgba(230,223,206,.06);stroke:rgba(230,223,206,.34);stroke-width:2.2;
+  transition:fill .35s ease,stroke .35s ease}
+.maskcut{fill:var(--basalt)}
+.mask:hover .maskface{stroke:var(--gold)}
+.mask.full .maskface{fill:var(--bone);stroke:var(--bone)}
+.mask .deg{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase}
+.mask.full .deg{color:var(--gold)}
+.mask .tal{font-family:var(--mono);font-size:9.5px;color:var(--faint)}
 
-  .step{border:1px solid var(--stone-line);border-radius:4px;margin-bottom:9px;background:var(--storm-700)}
-  .step.done{border-color:var(--aurora-dim);background:linear-gradient(90deg,rgba(95,205,192,.06),transparent)}
-  .stephead{display:flex;gap:12px;padding:12px 14px;align-items:flex-start}
-  .chk{flex:0 0 auto;width:25px;height:25px;border-radius:50%;border:2px solid var(--stone-line);background:#0c1620;cursor:pointer;color:transparent;font-size:13px;font-weight:700;line-height:21px;text-align:center;transition:all .18s;margin-top:1px}
-  .chk:hover{border-color:var(--aurora)}
-  .step.done .chk,.clitem.done .chk{background:var(--aurora);border-color:var(--aurora);color:#062018}
-  .stepmain{flex:1;min-width:0}
-  .stepmain .st{font-weight:600;color:var(--parch-2);font-size:15px}
-  .step.done .stepmain .st{color:var(--aurora)}
-  .stepmain .ss{font-size:13px;color:#9fb0bc;margin-top:3px}
-  .badges{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
-  .b{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.05em;padding:3px 7px;border-radius:20px;text-transform:uppercase;font-weight:500;white-space:nowrap}
-  .b.assassination{background:rgba(140,90,43,.2);color:#d69a5e;border:1px solid #7a4f27}
-  .b.discovery{background:rgba(47,111,115,.2);color:#63c0c4;border:1px solid #2c5f63}
-  .b.feats{background:rgba(90,74,134,.24);color:#a894d6;border:1px solid #4c3f72}
-  .b.targets{background:rgba(156,74,107,.22);color:#d488a8;border:1px solid #7c3f57}
-  .b.classic{background:rgba(74,106,134,.22);color:#84b0d6;border:1px solid #3f5f7c}
-  .b.warn{background:rgba(166,71,47,.2);color:var(--blood-bright);border:1px solid #7c3423}
-  .b.save{background:rgba(200,146,58,.18);color:var(--ember-bright);border:1px solid #8a6425}
-  .exp{background:none;border:0;color:var(--parch-mut);font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.08em;cursor:pointer;padding:2px 0;margin-top:8px;text-transform:uppercase}
-  .exp:hover{color:var(--ember)}
-  .exp .ar{display:inline-block;transition:transform .2s}
-  .step.open .exp .ar{transform:rotate(90deg)}
-  .detail{display:none;padding:2px 14px 14px 51px}
-  .step.open .detail{display:block;animation:fade .25s ease}
-  .frow{display:grid;grid-template-columns:88px 1fr;gap:4px 12px;padding:4px 0;border-bottom:1px dashed rgba(44,65,82,.6)}
-  .frow:last-of-type{border-bottom:0}
-  .frow .fk{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--aurora);padding-top:2px}
-  .frow .fv{font-size:13px;color:#c8d2d9}
-  .frow .fv b{color:var(--parch-2);font-weight:600}
-  .warnbox{background:rgba(166,71,47,.1);border-left:2px solid var(--blood);padding:7px 11px;margin-top:10px;border-radius:0 3px 3px 0;font-size:12.5px;color:#e5b4a4}
-  .savebox{background:rgba(200,146,58,.1);border-left:2px solid var(--ember);padding:7px 11px;margin-top:8px;border-radius:0 3px 3px 0;font-size:12.5px;color:#e6cfa0}
-  .srcline{font-family:"JetBrains Mono",monospace;font-size:10px;color:#7f9a96;margin-top:9px;letter-spacing:.02em}
+/* ── tabs ───────────────────────────────────────────────────────────────── */
+.tabs{display:flex;flex-wrap:wrap;gap:2px;margin:26px 0 0}
+.tab{font-family:var(--disp);font-weight:600;font-size:13px;letter-spacing:.18em;text-transform:uppercase;
+  background:var(--stone);color:var(--dim);border:1px solid var(--cut);border-bottom:0;
+  padding:11px 18px;cursor:pointer}
+.tab[aria-selected="true"]{background:var(--stone-2);color:var(--bone);box-shadow:inset 0 3px 0 var(--gold)}
+.tab:hover{color:var(--bone)}
+.pane{background:var(--stone-2);border:1px solid var(--cut);padding:24px}
 
-  .filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
-  .filt{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;background:#0e1a24;border:1px solid var(--stone-line);color:var(--parch-mut);padding:7px 12px;border-radius:20px;cursor:pointer}
-  .filt[aria-pressed="true"]{background:var(--ember);color:#1a1206;border-color:var(--ember);font-weight:700}
-  .filt:hover:not([aria-pressed="true"]){border-color:var(--ember);color:var(--ember-bright)}
-  .clgroup{margin-bottom:20px}
-  .clgroup h3{font-family:"Cinzel",serif;font-size:13px;letter-spacing:.14em;text-transform:uppercase;display:flex;align-items:center;gap:9px;color:var(--parch);margin:0 0 10px}
-  .clgroup h3 .dot{width:10px;height:10px;border-radius:2px}
-  .clgroup h3 .gc{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--parch-mut);font-weight:400}
-  .clitem{display:flex;gap:11px;align-items:flex-start;padding:10px 12px;border:1px solid var(--stone-line);border-radius:4px;margin-bottom:6px;background:var(--storm-700);cursor:pointer}
-  .clitem:hover{border-color:var(--parch-mut)}
-  .clitem.done{border-color:var(--aurora-dim);background:linear-gradient(90deg,rgba(95,205,192,.06),transparent)}
-  .clbody{flex:1;min-width:0}
-  .clitem .nm{font-size:14.5px;color:var(--parch-2);font-weight:500}
-  .clitem.done .nm{color:var(--aurora);text-decoration:line-through;text-decoration-color:var(--aurora-dim)}
-  .clitem .cond{font-size:12.5px;color:#8fa0ad;margin-top:2px}
-  .clitem .how{font-size:12px;color:#a9bec6;margin-top:5px}
-  .clitem .how b{color:#cdd8df}
-  .clmeta{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px;align-items:center}
-  .xp{font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--parch-mut)}
-  .rtag{font-family:"JetBrains Mono",monospace;font-size:9px;color:var(--ember);border:1px solid #6b4e22;padding:2px 6px;border-radius:3px;text-transform:uppercase}
-  .srctag{font-family:"JetBrains Mono",monospace;font-size:9px;color:#7f9a96}
-  .empty{color:var(--parch-mut);font-style:italic;padding:20px;text-align:center}
+/* ── a degree ───────────────────────────────────────────────────────────── */
+.degree{border:1px solid var(--cut);background:var(--stone);margin-bottom:16px;scroll-margin-top:12px}
+.degree.full{border-color:rgba(211,173,85,.45)}
+.dhead{display:grid;grid-template-columns:74px minmax(0,1fr);gap:16px;width:100%;text-align:left;
+  background:linear-gradient(180deg,var(--stone-3),var(--stone-2));border:0;
+  border-bottom:1px solid var(--cut-2);padding:16px 18px;cursor:pointer;
+  font-family:var(--body);color:var(--text)}
+.dhead:hover .dtitle{color:var(--gold)}
+/* the degree's number, cut into the stone shoulder of the card */
+.numeral{display:grid;place-content:center;width:74px;height:74px;background:var(--basalt);
+  border:1px solid var(--cut);font-family:var(--disp);font-weight:700;font-size:30px;
+  line-height:1;color:var(--bone);text-shadow:0 -1px 0 #000,0 1px 0 rgba(230,223,206,.14)}
+.degree.full .numeral{color:var(--gold);border-color:rgba(211,173,85,.45)}
+.dmain{min-width:0}
+.dlbl{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:5px}
+.dtitle{display:block;font-family:var(--disp);font-weight:600;font-size:clamp(19px,2.9vw,26px);
+  line-height:1.16;letter-spacing:.01em;color:var(--bone)}
+.dgoal{display:block;margin-top:8px;color:var(--text);font-size:14.6px;max-width:82ch}
+.dtally{display:block;margin-top:10px;font-family:var(--mono);font-size:10px;letter-spacing:.06em;
+  color:var(--faint)}
+.dbody{padding:18px}
+/* what you carry through the gate */
+.carry{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;
+  background:var(--cut-2);border:1px solid var(--cut-2);margin-bottom:20px}
+.slot{background:var(--stone-2);padding:10px 13px;min-width:0}
+.slot .k{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--faint)}
+.slot .v{display:block;margin-top:3px;font-size:14.6px;color:var(--bone);line-height:1.42;
+  overflow-wrap:anywhere}
+.slot .v .kit{display:block}
+.passage{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin:24px 0 2px;
+  padding-bottom:7px;border-bottom:1px solid var(--cut);
+  font-family:var(--disp);font-weight:600;font-size:15px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--bone)}
+.passage:first-child{margin-top:0}
+.passage .cnt{margin-left:auto;font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;
+  color:var(--faint);text-transform:none}
 
-  .auditrow{border:1px solid var(--stone-line);border-radius:4px;padding:12px 15px;margin-bottom:9px;background:var(--storm-700)}
-  .auditrow h4{font-family:"Cinzel",serif;font-size:14px;margin:0 0 5px;color:var(--parch-2)}
-  .auditrow p{margin:0;font-size:13px;color:#9fb0bc}
-  .auditrow.ok{border-left:3px solid var(--aurora-dim)}
-  .auditrow.warn{border-left:3px solid var(--ember)}
-  .auditrow.bad{border-left:3px solid var(--blood)}
-  footer{margin-top:36px;padding-top:18px;border-top:1px solid var(--stone-line);color:var(--parch-mut);font-size:11.5px;font-family:"JetBrains Mono",monospace;line-height:1.7}
-  @media(max-width:720px){.cats{grid-template-columns:repeat(2,1fr)}.lgrid{grid-template-columns:1fr}.slotlist{grid-template-columns:1fr}.detail{padding-left:14px}.frow{grid-template-columns:1fr}.rnum{min-width:40px;font-size:23px}}
-  :focus-visible{outline:2px solid var(--ember-bright);outline-offset:2px}
-  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+/* ── a charge ───────────────────────────────────────────────────────────── */
+.step{display:grid;grid-template-columns:46px minmax(0,1fr);gap:14px;align-items:start;
+  padding:14px 2px;border-bottom:1px solid var(--cut-2)}
+.step:last-child{border-bottom:0}
+.step.done{background:rgba(211,173,85,.045)}
+/* the tick is a die: pressing it strikes a bronze token */
+.strike{position:relative;width:46px;height:46px;padding:0;cursor:pointer;border-radius:50%;
+  border:1px solid var(--cut);background:radial-gradient(circle at 38% 32%,#1d262e,#0c1116);
+  transition:border-color .2s ease}
+.strike:hover{border-color:var(--gold)}
+.strike::before{content:"";position:absolute;inset:6px;border-radius:50%;
+  border:1px dashed rgba(230,223,206,.16)}
+.strike::after{content:"";position:absolute;inset:11px;border-radius:50%;background:transparent;
+  transform:scale(.3);opacity:0;transition:transform .2s ease,opacity .2s ease}
+.step.done .strike{border-color:rgba(211,173,85,.6);
+  background:radial-gradient(circle at 36% 30%,#e0c079,#9d7a2c 62%,#5e461a)}
+.step.done .strike::before{border-style:solid;border-color:rgba(8,11,14,.4)}
+.step.done .strike::after{opacity:1;transform:scale(1);
+  /* the relief on the token: a struck cross-bar, drawn rather than typed */
+  background:
+    linear-gradient(90deg,transparent 44%,rgba(8,11,14,.62) 44% 56%,transparent 56%),
+    linear-gradient(0deg,transparent 44%,rgba(8,11,14,.62) 44% 56%,transparent 56%)}
+.cwrap{min-width:0}
+.ctitle{display:block;width:100%;text-align:left;background:none;border:0;padding:0;cursor:pointer;
+  font-family:var(--body);font-weight:600;font-size:17px;line-height:1.34;color:var(--bone)}
+.ctitle:hover{color:var(--gold)}
+.ctitle .csum{display:block;margin-top:5px;font-weight:400;font-size:14.4px;color:var(--text)}
+.ctitle .open{display:block;margin-top:7px;font-family:var(--mono);font-size:9.5px;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.marks{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+/* chiselled tags: the guide's own standing markers */
+.mark{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;
+  padding:4px 9px;border:1px solid var(--m,var(--cut));color:var(--m,var(--dim));background:transparent}
+.mark.save{--m:var(--steel)}
+.mark.once{--m:var(--ember)}
+.warnstrip{margin-top:10px;padding:9px 13px;border-left:3px solid var(--ember);
+  background:rgba(201,96,56,.09);font-size:14px;color:var(--text)}
+.warnstrip .w{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ember);display:block;margin-bottom:3px}
+/* a challenge named on a charge is a token you can strike from here */
+.tokchip{font-family:var(--body);font-size:13.4px;line-height:1.25;cursor:pointer;padding:4px 10px 4px 8px;
+  border:1px solid var(--cut);border-left:3px solid var(--m,var(--gold));
+  background:var(--stone-3);color:var(--text);text-align:left}
+.tokchip:hover{border-color:var(--m,var(--gold));color:var(--bone)}
+.tokchip[aria-checked="true"]{background:var(--m,var(--gold));border-color:transparent;
+  color:var(--basalt);font-weight:500}
+.cbody{margin-top:12px;padding-top:12px;border-top:1px solid var(--cut-2)}
+.frow{display:grid;grid-template-columns:88px minmax(0,1fr);gap:12px;padding:5px 0;
+  border-bottom:1px solid rgba(228,220,203,.05)}
+.frow:last-of-type{border-bottom:0}
+.fk{font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--faint);padding-top:3px}
+.fv{font-size:14.6px;color:var(--text);overflow-wrap:anywhere}
+.src{margin:11px 0 0;font-family:var(--mono);font-size:10.5px;line-height:1.65;color:var(--faint);
+  overflow-wrap:anywhere}
+
+/* ── the roll ───────────────────────────────────────────────────────────── */
+.filters{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:22px}
+.filters button{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  background:var(--stone);border:1px solid var(--cut-2);color:var(--dim);padding:8px 12px;cursor:pointer}
+.filters button:hover{border-color:var(--gold);color:var(--bone)}
+.filters button[aria-pressed="true"]{background:var(--bone);border-color:var(--bone);color:var(--basalt)}
+.grp{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin:28px 0 4px;padding-bottom:7px;
+  border-bottom:2px solid var(--m,var(--gold));font-family:var(--disp);font-weight:600;font-size:16px;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--bone)}
+.grp:first-child{margin-top:0}
+.grp .n{margin-left:auto;font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;
+  color:var(--faint);text-transform:none}
+.crow{display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:14px;align-items:start;
+  padding:13px 2px;border-bottom:1px solid var(--cut-2)}
+.crow:last-child{border-bottom:0}
+.crow.done{background:rgba(211,173,85,.045)}
+/* the token in the roll: an empty well until it is struck */
+.tok{position:relative;width:40px;height:40px;padding:0;cursor:pointer;border-radius:50%;
+  border:1px solid var(--cut);background:radial-gradient(circle at 38% 32%,#1a232a,#0a0e12)}
+.tok:hover{border-color:var(--m,var(--gold))}
+.tok::after{content:"";position:absolute;inset:7px;border-radius:50%;opacity:0;transform:scale(.4);
+  transition:opacity .2s ease,transform .2s ease}
+.crow.done .tok{border-color:transparent}
+.crow.done .tok::after{opacity:1;transform:scale(1);
+  background:radial-gradient(circle at 36% 30%,color-mix(in srgb,var(--m,var(--gold)) 72%,#fff),
+    var(--m,var(--gold)) 60%,color-mix(in srgb,var(--m,var(--gold)) 55%,#000))}
+.cnm{margin:0;font-family:var(--disp);font-weight:600;font-size:17px;line-height:1.24;color:var(--bone)}
+.crow.done .cnm{color:var(--m,var(--gold))}
+.ccond{margin:5px 0 0;font-size:14.6px;color:var(--text)}
+.cmore{margin-top:7px}
+.cmore summary{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--faint);cursor:pointer}
+.cmore summary:hover{color:var(--gold)}
+.cmore p{margin:9px 0 0;font-size:14.2px;color:var(--text)}
+.cmore .csrc{font-family:var(--mono);font-size:10.5px;color:var(--faint);overflow-wrap:anywhere}
+.cmeta{display:grid;justify-items:end;gap:4px;font-family:var(--mono);font-size:9.5px;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--faint);text-align:right}
+.cmeta .deg{color:var(--dim)}
+.cmeta .xp{color:var(--gold)}
+.empty{margin:20px 0;color:var(--dim)}
+
+/* ── the proving ────────────────────────────────────────────────────────── */
+.provlead{margin:0 0 20px;max-width:80ch;color:var(--text);font-size:15px}
+.attest{border:1px solid var(--cut);border-left:4px solid var(--m,var(--verd));background:var(--stone);
+  padding:15px 18px;margin-bottom:12px}
+.attest .seal{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--m,var(--verd));border:1px solid var(--m,var(--verd));
+  padding:2px 8px;margin-bottom:9px}
+.attest h3{margin:0 0 7px;font-family:var(--disp);font-weight:600;font-size:17px;letter-spacing:.02em;
+  color:var(--bone)}
+.attest p{margin:0;font-size:14.4px;color:var(--text)}
+.attest.warn{--m:var(--ember)}
+
+footer{margin-top:28px;padding-top:16px;border-top:1px solid var(--cut);color:var(--faint);
+  font-size:12.6px;line-height:1.8}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;
+  scroll-behavior:auto!important}}
+@media (max-width:900px){
+  .gate{grid-template-columns:minmax(0,1fr);gap:20px}
+  .arch{max-width:340px}
+  .lintel,.topbar,.gate,.gatefoot{padding-left:18px;padding-right:18px}
+}
+@media (max-width:620px){
+  .pane{padding:16px}
+  .dhead{grid-template-columns:54px minmax(0,1fr);gap:12px;padding:14px}
+  .numeral{width:54px;height:54px;font-size:23px}
+  .dbody{padding:14px}
+  .step{grid-template-columns:40px minmax(0,1fr);gap:11px}
+  .strike{width:40px;height:40px}
+  .frow{grid-template-columns:minmax(0,1fr);gap:2px}
+  .crow{grid-template-columns:34px minmax(0,1fr)}
+  .tok{width:34px;height:34px}
+  .cmeta{grid-column:2;justify-items:start;text-align:left;margin-top:6px}
+}
+@media print{
+  body{background:#fff;background-image:none;color:#000;font-size:10.5pt}
+  .isle{max-width:none;padding:0}
+  .tabs,.masks,.skip,.strike,.tok,.btn,.btn-quiet,.filters,.arch,.topbar{display:none!important}
+  .pane[hidden]{display:block!important}
+  .dbody,.cbody{display:block!important}
+  .cmore{display:block}
+  header.gatehouse,.pane,.degree,.slot,.ingot,.attest,.lintel,.assay,.carry{background:#fff!important;
+    border-color:#999!important;box-shadow:none!important}
+  h1,.dtitle,.cnm,.numeral,.ctitle,.passage,.grp,.attest h3{color:#000!important;text-shadow:none!important}
+  .dek,.notice,.fv,.ccond,.dgoal,.slot .v,.attest p{color:#222!important}
+  .step,.degree,.crow,.attest{break-inside:avoid}
+}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header class="mast">
-    <p class="crest">Isle of Sgàil · North Atlantic · Final Dossier</p>
-    <h1 class="title">The Ark Society<span class="sub">All 62 Challenges · Validated Multi-Run Route</span></h1>
-    <p class="dek">Built from your <b>in-game challenge export</b> (the authoritative 62-challenge list) cross-referenced with Neoseeker, gamepressure, screenrant, the Hitman Wiki, and community bug threads. Targets: <b>Sophia Washington</b> (The Schemer) and <b>Zoe Washington</b> (The Socialite). Every step lists where to go, the disguise, the item, the NPC, the action, and any warning.</p>
-    <div class="srcnote"><b>How the runs work:</b> HITMAN challenges are permanent across attempts, so you accumulate them over replays. Within a run, <b>save before each target kill and reload</b> to collect every method — each target only dies once per attempt. Mutually-exclusive challenges are split and flagged. Every method carries a source line; where only the in-game condition is confirmed, the step says so rather than inventing a route.</p>
+<div class="isle">
 
-    <section class="tracker" aria-label="Progress">
-      <div class="ttop"><h2>Dossier Progress</h2><div class="totread"><b id="totDone">0</b> / 62 challenges</div></div>
-      <div class="bar"><i id="totBar"></i></div>
-      <div class="cats">
-        <div class="cat"><div class="lab"><span class="dot assassination"></span>Assassination</div><div class="num"><span id="assassinationDone">0</span><span>/19</span></div><div class="cbar assassination"><i id="assassinationBar"></i></div></div>
-        <div class="cat"><div class="lab"><span class="dot discovery"></span>Discovery</div><div class="num"><span id="discoveryDone">0</span><span>/10</span></div><div class="cbar discovery"><i id="discoveryBar"></i></div></div>
-        <div class="cat"><div class="lab"><span class="dot feats"></span>Feats</div><div class="num"><span id="featsDone">0</span><span>/26</span></div><div class="cbar feats"><i id="featsBar"></i></div></div>
-        <div class="cat"><div class="lab"><span class="dot targets"></span>Targets</div><div class="num"><span id="targetsDone">0</span><span>/2</span></div><div class="cbar targets"><i id="targetsBar"></i></div></div>
-        <div class="cat"><div class="lab"><span class="dot classic"></span>Classic</div><div class="num"><span id="classicDone">0</span><span>/5</span></div><div class="cbar classic"><i id="classicBar"></i></div></div>
-      </div>
-      <button class="resetbtn" id="resetBtn">↺ Reset progress</button>
-    </section>
+<header class="gatehouse">
+  <div class="lintel">
+    <p class="crest"><!--@crest-->Isle of Sgàil · North Atlantic · Final Dossier<!--/@crest--></p>
+    <h1><!--@h1-->The Ark Society<span class="sub">All 62 Challenges · Validated Multi-Run Route</span><!--/@h1--></h1>
+    <p class="dek"><!--@dek-->Built from your <b>in-game challenge export</b> (the authoritative 62-challenge list) cross-referenced with Neoseeker, gamepressure, screenrant, the Hitman Wiki, and community bug threads. Targets: <b>Sophia Washington</b> (The Schemer) and <b>Zoe Washington</b> (The Socialite). Every step lists where to go, the disguise, the item, the NPC, the action, and any warning.<!--/@dek--></p>
+    <div class="notice"><!--@notice--><b>How the runs work:</b> HITMAN challenges are permanent across attempts, so you accumulate them over replays. Within a run, <b>save before each target kill and reload</b> to collect every method — each target only dies once per attempt. Mutually-exclusive challenges are split and flagged. Every method carries a source line; where only the in-game condition is confirmed, the step says so rather than inventing a route.<!--/@notice--></div>
+  </div>
 
-    <div class="runnav">
-      <div class="lbl">Jump to run</div>
-      <div class="runbtns" id="runNav"></div>
+  <!-- the skip link sits after the inscription, which holds no focusable
+       element, so this is still the first thing a keyboard reaches -->
+  <a class="skip" href="#pane-runs">Skip to the seven degrees</a>
+
+  <div class="topbar">
+    <a href="../index.html">&#8592; All guides</a>
+    <span>Isle of Sg&agrave;il &middot; Main campaign 13</span>
+    <span>Saved in this browser only</span>
+  </div>
+
+  <div class="gate" id="gate">
+    <div class="arch">
+      <svg viewBox="0 0 420 344" role="img"
+           aria-labelledby="gateTitle" aria-describedby="gateDesc">
+        <title id="gateTitle">The portcullis of the keep</title>
+        <desc id="gateDesc">An iron grille in a stone arch. It is hauled up as challenges are taken, and stands clear of the arch only when all of them are.</desc>
+        <defs>
+          <clipPath id="archClip">
+            <path d="M108,318 L108,172 A102,102 0 0 1 312,172 L312,318 Z"/>
+          </clipPath>
+          <pattern id="ironGrid" width="26" height="34" patternUnits="userSpaceOnUse">
+            <rect x="0" y="0" width="26" height="34" fill="#080b0e"/>
+            <rect x="1" y="0" width="8" height="34" fill="#333e48"/>
+            <rect x="1" y="0" width="8" height="34" fill="none" stroke="#0a0e12" stroke-width="1.4"/>
+            <rect x="0" y="1" width="26" height="7" fill="#3b4650"/>
+            <rect x="0" y="1" width="26" height="7" fill="none" stroke="#0a0e12" stroke-width="1.4"/>
+          </pattern>
+          <linearGradient id="deep" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#14384a"/>
+            <stop offset="1" stop-color="#05080a"/>
+          </linearGradient>
+          <linearGradient id="face" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#1a232b"/>
+            <stop offset="1" stop-color="#0e141a"/>
+          </linearGradient>
+        </defs>
+
+        <!-- the masonry face of the gatehouse, laid in courses -->
+        <rect x="4" y="24" width="412" height="296" fill="url(#face)"/>
+        <g stroke="#070a0d" stroke-width="2.5" fill="none">
+          <path d="M4,72 H416 M4,120 H416 M4,168 H416 M4,216 H416 M4,264 H416"/>
+          <path d="M56,24 V72 M152,24 V72 M268,24 V72 M360,24 V72
+                   M30,72 V120 M104,72 V120 M330,72 V120 M392,72 V120
+                   M52,120 V168 M366,120 V168 M70,168 V216 M356,168 V216
+                   M42,216 V264 M380,216 V264 M74,264 V320 M348,264 V320"/>
+        </g>
+        <!-- the opening -->
+        <path d="M108,318 L108,172 A102,102 0 0 1 312,172 L312,318 Z" fill="url(#deep)"/>
+        <g clip-path="url(#archClip)">
+          <!-- the keep beyond the gate, seen between the bars -->
+          <path d="M124,318 V244 h24 v-18 h20 v18 h26 V218 h30 v26 h26 v-18 h20 v18 h26 v74 Z"
+                fill="#080c10"/>
+          <rect x="176" y="262" width="12" height="20" fill="#c96038" opacity=".6"/>
+          <rect x="238" y="252" width="12" height="26" fill="#d3ad55" opacity=".5"/>
+          <!-- the grille: hauled up one sixty-second at a time -->
+          <g class="grille" id="grille" transform="translate(0,0)">
+            <rect x="104" y="-262" width="212" height="580" fill="url(#ironGrid)"/>
+            <path d="M104,318 l13,20 l13,-20 l13,20 l13,-20 l13,20 l13,-20 l13,20 l13,-20
+                     l13,20 l13,-20 l13,20 l13,-20 l13,20 l13,-20 l13,20 l13,-20"
+                  fill="none" stroke="#3b4650" stroke-width="7"/>
+          </g>
+        </g>
+        <!-- the arch ring, the jambs and the sill -->
+        <path class="sill" d="M108,318 L108,172 A102,102 0 0 1 312,172 L312,318"/>
+        <path d="M98,320 h224" stroke="#3b4650" stroke-width="5" fill="none"/>
+        <!-- the keystone, and the lamp over it: lit only when the gate stands clear -->
+        <path d="M196,74 h28 l7,-32 h-42 Z" fill="#222b34" stroke="#3b4650" stroke-width="2"/>
+        <circle class="lamphalo" cx="210" cy="30" r="26"/>
+        <circle class="lamp" cx="210" cy="30" r="8"/>
+      </svg>
     </div>
-  </header>
 
-  <nav class="tabs" role="tablist">
-    <button class="tab" id="tabRuns" role="tab" aria-selected="true">Optimized Runs</button>
-    <button class="tab" id="tabList" role="tab" aria-selected="false">Checklist</button>
-    <button class="tab" id="tabAudit" role="tab" aria-selected="false">Validation &amp; Audit</button>
-  </nav>
+    <div class="readout">
+      <span class="lbl">Tokens struck</span>
+      <p class="count"><b id="numDone">0</b><span id="numOf">/ 0 challenges</span></p>
+      <p class="charged" id="chargeLine">0 charges taken</p>
+      <div class="assay" id="assay"></div>
+    </div>
+  </div>
 
-  <section class="panel on" id="panelRuns" role="tabpanel"></section>
-  <section class="panel" id="panelList" role="tabpanel"></section>
-  <section class="panel" id="panelAudit" role="tabpanel"></section>
+  <div class="gatefoot">
+    <span class="lbl">Ten tokens admit an initiate &middot; sixty-two raise the gate</span>
+    <button class="btn" id="reset" type="button">Melt the tokens down</button>
+  </div>
 
-  <footer>
-    Authoritative list: uploaded in-game export "13 - The Ark Society.json" (challengeCount 62).<br>
+  <nav class="masks" id="masks" aria-label="Jump to a degree"></nav>
+</header>
+
+<div class="tabs" role="tablist" aria-label="Guide sections">
+  <button class="tab" role="tab" id="tab-runs" aria-controls="pane-runs" aria-selected="true">The seven degrees</button>
+  <button class="tab" role="tab" id="tab-list" aria-controls="pane-list" aria-selected="false">The roll</button>
+  <button class="tab" role="tab" id="tab-audit" aria-controls="pane-audit" aria-selected="false">The proving</button>
+</div>
+
+<section class="pane" id="pane-runs" role="tabpanel" aria-labelledby="tab-runs">
+  <div id="runs"></div>
+</section>
+
+<section class="pane" id="pane-list" role="tabpanel" aria-labelledby="tab-list" hidden>
+  <div class="filters" id="filters"></div>
+  <div id="checklist"></div>
+</section>
+
+<section class="pane" id="pane-audit" role="tabpanel" aria-labelledby="tab-audit" hidden>
+  <p class="provlead">Every finding the routing was checked against before this guide was written &mdash; attested where the sources agree, qualified where they needed a decision.</p>
+  <div id="proving"></div>
+</section>
+
+<footer>
+<!--@footer-->
+Authoritative list: uploaded in-game export "13 - The Ark Society.json" (challengeCount 62).<br>
     Methods cross-referenced: Neoseeker · gamepressure.com · screenrant.com · Hitman Wiki (hitman.fandom.com) · whatchaa.com · walkthroughs.games · Steam Community "HITMAN 2 Redacted Challenges Guide" (Shameless) &amp; discussion threads · xboxachievements.<br>
     Progress saves to this browser only. HITMAN World of Assassination — The Ark Society (Isle of Sgàil).
-  </footer>
+<!--/@footer-->
+</footer>
 </div>
 
 <script>
+/*@ch*/
 /* ===================== AUTHORITATIVE CHALLENGES (from uploaded JSON) =====================
    cat matches the export exactly. cond = verbatim in-game condition. how/src = sourced method. */
 const CH=[
@@ -285,11 +541,9 @@ const CH=[
 {id:"f_egg",name:"Egg on Your Face",cat:"feats",run:"R6",cond:"Knock out 6 NPCs with filigree eggs.",how:"Collect filigree eggs (throwables) and KO 6 NPCs with them.",src:"JSON + Steam (knight-cluster grouping)."},
 {id:"f_access",name:"Access Denied",cat:"feats",run:"R6",cond:"Eliminate 3 people using the portcullis.",how:"Use the portcullis gate mechanism to eliminate 3 people (the '3 people with the portcullis' kill from the knight run).",src:"JSON + Steam (Volkerson)."},
 ];
-const byId={};CH.forEach(c=>byId[c.id]=c);
-const CATLABEL={assassination:"Assassination",discovery:"Discovery",feats:"Feats",targets:"Targets",classic:"Classic"};
-const CATMAX={assassination:19,discovery:10,feats:26,targets:2,classic:5};
+/*/@ch*/
 
-/* ===================== RUNS ===================== */
+/*@runs*/
 const RUNS=[
 {n:1,id:"R1",title:"Silent Assassin, Suit Only",
  goal:"A clean, unspotted suit-only clear using a documented pipe route to the funeral side. Nets the three rank challenges plus two accident kills.",
@@ -512,8 +766,9 @@ const RUNS=[
     where:"Chapel tower nest (Mastery 2 start).",disguise:"Suit.",item:"Sieger 300 Tactical (silenced sniper).",npc:"Both twins.",
     action:"Set up in the chapel tower; wait for each twin on her outdoor route and take silenced shots without being spotted. Completes The Classics alongside SA/SASO/Suit Only from Run 1.",warn:"Time shots so bodies aren't discovered by patrols.",save:true,pops:["c_sniper","c_classics"],src:"gamepressure + JSON."}]}]},
 ];
+/*/@runs*/
 
-/* ===================== VALIDATION / AUDIT ===================== */
+/*@audit*/
 const AUDIT=[
  {k:"ok",h:"Count reconciled — 62 exact",p:"The uploaded export lists 62 = 19 Assassination + 10 Discovery + 26 Feats + 2 Targets + 5 Classic. Your original brief's '19/10/26 = 55' simply omitted the Targets (2) and Classic (5) buckets. All 62 are mapped to a run."},
  {k:"ok",h:"Every challenge assigned & unique",p:"All 62 appear in exactly one primary run and in the checklist; no duplicates. Run tallies: R1 = 7, R2 = 11, R3 = 5, R4 = 6, R5 = 10, R6 = 12, R7 = 11 (sum 62)."},
@@ -525,151 +780,326 @@ const AUDIT=[
  {k:"warn",h:"Known bug flagged",p:"Come Fly with Me: multiple users report the helipad exit icon failing to appear. If it doesn't trigger, the exit reportedly still counts when used during an Escalation/Contract (community workaround; patch status unknown)."},
  {k:"ok",h:"Runs are individually completable",p:"Each run was simulated start-to-finish: no step requires an item/disguise/mission-state made unavailable earlier, no instruction contradicts another, and no challenge becomes unobtainable within its run given the stated save/reload points."},
 ];
+/*/@audit*/
 
-/* ===================== STATE ===================== */
-const store=(()=>{let m={};try{localStorage.setItem("__t","1");localStorage.removeItem("__t");return{get:k=>localStorage.getItem(k),set:(k,v)=>localStorage.setItem(k,v)};}catch(e){return{get:k=>m[k]??null,set:(k,v)=>{m[k]=v}};}})();
-let done=new Set();try{const r=store.get("ark3_done");if(r)done=new Set(JSON.parse(r));}catch(e){}
-function reportProgress(){try{const r=JSON.parse(store.get("hitman-progress-registry")||"{}");r["m13"]={done:CH.filter(c=>isDone(c.id)).length,total:CH.length,updated:Date.now()};store.set("hitman-progress-registry",JSON.stringify(r));}catch(e){}}
-const persist=()=>{try{store.set("ark3_done",JSON.stringify([...done]))}catch(e){}reportProgress();};
-const isDone=id=>done.has(id);
-function toggleCh(id){done.has(id)?done.delete(id):done.add(id);persist();renderAll();}
-function stepDone(s){return s.pops&&s.pops.length?s.pops.every(isDone):false;}
-function toggleStep(s){if(!s.pops||!s.pops.length)return;const cur=stepDone(s);s.pops.forEach(i=>cur?done.delete(i):done.add(i));persist();renderAll();}
-function findStep(id){for(const r of RUNS)for(const s of r.sections)for(const st of s.steps)if(st.id===id)return st;return null;}
+/* ---------------- STATE ----------------
+   'ark3_done' keeps its name and its shape — a JSON array of challenge ids —
+   so a player's existing progress survives the rebuild untouched. Charges are
+   new (the previous edition derived a step's state from the challenges it
+   completed, which left the ten charges that complete none of them unclickable)
+   and live beside it under 'ark3_steps'. Both names are written as literal
+   strings so the contract check in validate.js can see them. */
+const store=(()=>{
+  let mem={};
+  try{
+    localStorage.setItem("__t","1");localStorage.removeItem("__t");
+    return{get:k=>localStorage.getItem(k),set:(k,v)=>localStorage.setItem(k,v)};
+  }catch(e){return{get:k=>(k in mem?mem[k]:null),set:(k,v)=>{mem[k]=v}};}
+})();
+let struck=new Set(), taken=new Set(), filter='all';
+try{const a=JSON.parse(localStorage.getItem("ark3_done")||"[]");if(Array.isArray(a))struck=new Set(a);}catch(e){}
+try{const a=JSON.parse(localStorage.getItem("ark3_steps")||"[]");if(Array.isArray(a))taken=new Set(a);}catch(e){}
 
-/* ===================== TRACKER ===================== */
-function renderTracker(){
-  const t={assassination:0,discovery:0,feats:0,targets:0,classic:0};
-  CH.forEach(c=>{if(isDone(c.id))t[c.cat]++;});
-  const tot=CH.filter(c=>isDone(c.id)).length;
-  const set=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
-  set("totDone",tot);
-  Object.keys(t).forEach(k=>{set(k+"Done",t[k]);const b=document.getElementById(k+"Bar");if(b)b.style.width=(t[k]/CATMAX[k]*100)+"%";});
-  const tb=document.getElementById("totBar");if(tb)tb.style.width=(tot/62*100)+"%";
+function reportProgress(){
+  try{
+    const r=JSON.parse(store.get('hitman-progress-registry')||'{}');
+    r['m13']={done:CH.filter(c=>struck.has(c.id)).length,total:CH.length,updated:Date.now()};
+    store.set('hitman-progress-registry',JSON.stringify(r));
+  }catch(e){}
+}
+function save(){
+  try{
+    localStorage.setItem("ark3_done",JSON.stringify([...struck]));
+    localStorage.setItem("ark3_steps",JSON.stringify([...taken]));
+  }catch(e){}
+  reportProgress();
 }
 
-/* ===================== RUN NAV ===================== */
-function renderRunNav(){
-  const nav=document.getElementById("runNav");
-  nav.innerHTML=RUNS.map(r=>{
-    const ids=[];r.sections.forEach(s=>s.steps.forEach(st=>st.pops.forEach(p=>{if(!ids.includes(p))ids.push(p)})));
-    const dn=ids.filter(isDone).length;
-    return `<button class="rb" data-run="${r.id}"><b>${r.id}</b>${r.title}<span class="cnt">${dn}/${ids.length}</span></button>`;
-  }).join("")+`<button class="rb allbtn" data-all="open">Expand all</button><button class="rb allbtn" data-all="close">Collapse all</button>`;
-  nav.querySelectorAll("[data-run]").forEach(b=>b.addEventListener("click",()=>{
-    setTab("runs");
-    const d=document.getElementById("det_"+b.dataset.run);
-    if(d){d.open=true;d.scrollIntoView({behavior:"smooth",block:"start"});}
-  }));
-  nav.querySelectorAll("[data-all]").forEach(b=>b.addEventListener("click",()=>{
-    setTab("runs");
-    document.querySelectorAll("details.run").forEach(d=>d.open=(b.dataset.all==="open"));
-  }));
+/* ---------------- THE ASSAY ----------------
+   Five categories, five metals. Every total is counted off CH; nothing here
+   states a number the data does not already hold. */
+const $=s=>document.getElementById(s);
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const CATS=['classic','targets','assassination','discovery','feats'];
+const CATLABEL={classic:'Classic',targets:'Targets',assassination:'Assassination',
+  discovery:'Discovery',feats:'Feats'};
+const METAL={classic:'gold',targets:'ember',assassination:'steel',discovery:'verdigris',feats:'bronze'};
+const CATVAR={classic:'var(--gold)',targets:'var(--ember)',assassination:'var(--steel)',
+  discovery:'var(--verd)',feats:'var(--bronze)'};
+const byId={};CH.forEach(c=>{byId[c.id]=c});
+const catTotal=k=>CH.filter(c=>c.cat===k).length;
+const catDone=k=>CH.filter(c=>c.cat===k&&struck.has(c.id)).length;
+
+/* charges, in the order the degrees present them */
+const CHARGE={}, DEGREE_OF={};
+RUNS.forEach((r,i)=>r.sections.forEach(sec=>sec.steps.forEach(st=>{
+  CHARGE[st.id]=(st.pops||[]).filter(id=>byId[id]);
+  DEGREE_OF[st.id]=i;
+})));
+const ALL_CHARGES=Object.keys(CHARGE);
+const runCharges=r=>{const out=[];r.sections.forEach(s=>s.steps.forEach(st=>out.push(st.id)));return out;};
+const runTaken=r=>runCharges(r).filter(id=>taken.has(id)).length;
+const runFull=r=>{const c=runCharges(r);return c.length>0&&c.every(id=>taken.has(id));};
+/* the degree a challenge is claimed by, read off the run it is filed under */
+const degreeIndex=id=>{const c=byId[id];if(!c||!c.run)return -1;const i=RUNS.findIndex(r=>r.id===c.run);return i;};
+const degLabel=i=>'Degree '+String(i+1).padStart(2,'0');
+
+/* ---------------- THE GATE ---------------- */
+/* The grille rests on the sill at y=318 and clears the crown of the arch,
+   at y=70, once every challenge is taken. */
+const LIFT=282;
+function raiseGate(){
+  const frac=CH.length?struck.size/CH.length:0;
+  const g=$('grille');
+  if(g)g.setAttribute('transform','translate(0,'+(-LIFT*frac).toFixed(2)+')');
+  $('gate').classList.toggle('full',CH.length>0&&struck.size===CH.length);
 }
 
-/* ===================== RUNS ===================== */
-const badge=(c,t)=>`<span class="b ${c}">${t}</span>`;
-function fieldRow(k,v){return v&&v!=="—"?`<div class="frow"><div class="fk">${k}</div><div class="fv">${v}</div></div>`:"";}
-function renderRuns(){
-  document.getElementById("panelRuns").innerHTML=RUNS.map((r,ri)=>{
-    let runIds=[];r.sections.forEach(s=>s.steps.forEach(st=>st.pops.forEach(p=>{if(!runIds.includes(p))runIds.push(p)})));
-    const dn=runIds.filter(isDone).length;
-    const secs=r.sections.map(sec=>{
-      const steps=sec.steps.map(st=>{
-        const d=stepDone(st);
-        const pops=(st.pops||[]).map(i=>badge(byId[i]?byId[i].cat:"feats",byId[i]?byId[i].name:i)).join("");
-        const fields=fieldRow("Where",st.where)+fieldRow("Disguise",st.disguise)+fieldRow("Item",st.item)+fieldRow("NPC",st.npc)+fieldRow("Action",st.action);
-        return `<div class="step ${d?'done':''}">
-          <div class="stephead">
-            <button class="chk" data-toggle="${st.id}" aria-label="Mark step complete">${d?'✓':''}</button>
-            <div class="stepmain">
-              <div class="st">${st.t}</div>
-              <div class="ss">${st.sum}</div>
-              <div class="badges">${pops}${st.warn?badge("warn","⚠ warning"):""}${st.save?badge("save","◆ save here"):""}</div>
-              <button class="exp" data-exp="1"><span class="ar">▸</span> Step details</button>
-              <div class="detail">${fields}${st.warn?`<div class="warnbox">⚠ ${st.warn}</div>`:""}${st.save?`<div class="savebox">◆ Save here before proceeding.</div>`:""}<div class="srcline">SRC: ${st.src}</div></div>
-            </div></div></div>`;
-      }).join("");
-      return `<div class="sect">${sec.name}</div>${steps}`;
-    }).join("");
-    const slots=r.load.items.map(i=>`<div class="slot">▪ ${i}</div>`).join("");
-    return `<details class="run" id="det_${r.id}" ${ri===0?'open':''}>
-      <summary><div class="runhead">
-        <div class="rnum">${r.n}<small>${r.id}</small></div>
-        <div class="rtitle"><h3>${r.title}</h3><p>${r.goal}</p><div class="rcount">${dn}/${runIds.length} challenges in this run</div></div>
-        <div class="chev">▾</div></div></summary>
-      <div class="runbody">
-        <div class="loadout"><h4>Loadout — ${r.id}</h4><div class="lgrid">
-          <div class="lrow"><span class="k">Start location</span><span class="v"><em>${r.load.start}</em></span></div>
-          <div class="lrow"><span class="k">Mastery notes</span><span class="v">${r.load.mastery}</span></div>
-          <div class="lrow"><span class="k">Suit / disguises</span><span class="v">${r.load.suit}</span></div>
-          <div class="lrow"><span class="k">Slots</span><span class="v">4 carried items</span></div>
-          <div class="slots"><span class="k">Item slots</span><div class="slotlist">${slots}</div></div>
-        </div></div>${secs}</div></details>`;
-  }).join("");
-  document.querySelectorAll("#panelRuns [data-toggle]").forEach(b=>b.addEventListener("click",e=>{
-    e.preventDefault();e.stopPropagation();const s=findStep(b.dataset.toggle);if(s)toggleStep(s);}));
-  document.querySelectorAll("#panelRuns [data-exp]").forEach(b=>b.addEventListener("click",e=>{
-    e.preventDefault();b.closest(".step").classList.toggle("open");}));
+function renderGate(){
+  $('numDone').textContent=struck.size;
+  $('numOf').textContent='/ '+CH.length+' challenges';
+  $('chargeLine').textContent=taken.size+' of '+ALL_CHARGES.length+
+    ' charges taken across '+RUNS.length+' degrees';
+  $('assay').innerHTML=CATS.map(k=>{
+    const t=catTotal(k), n=catDone(k), pct=t?n/t*100:0;
+    return `<div class="ingot${t&&n===t?' full':''}" style="--m:${CATVAR[k]}">
+      <span class="k">${CATLABEL[k]} &middot; ${METAL[k]}</span>
+      <span class="v">${n}<small> / ${t}</small></span>
+      <span class="lvl"><i style="width:${pct}%"></i></span></div>`;
+  }).join('');
+  raiseGate();
 }
 
-/* ===================== CHECKLIST ===================== */
-let filter="all";
-function renderList(){
-  const wrap=document.getElementById("panelList");
-  const btns=[["all","All"],["assassination","Assassination"],["discovery","Discovery"],["feats","Feats"],["targets","Targets"],["classic","Classic"],["incomplete","Incomplete"]]
-    .map(([k,l])=>`<button class="filt" data-filt="${k}" aria-pressed="${filter===k}">${l}</button>`).join("");
-  const order=["classic","targets","assassination","discovery","feats"];
-  let body="";
-  order.forEach(cat=>{
-    if(!["all","incomplete"].includes(filter)&&filter!==cat)return;
+/* ---------------- THE MASKS ---------------- */
+const MASK='<svg viewBox="0 0 60 80" aria-hidden="true">'+
+  '<path class="maskface" d="M30,3 C47,3 57,17 57,35 C57,58 45,77 30,77 C15,77 3,58 3,35 C3,17 13,3 30,3 Z"/>'+
+  '<path class="maskcut" d="M12,32 C17,27 24,27 27,32 C24,36 17,36 12,32 Z"/>'+
+  '<path class="maskcut" d="M33,32 C36,27 43,27 48,32 C43,36 36,36 33,32 Z"/>'+
+  '<path class="maskcut" d="M23,58 h14 l-3,5 h-8 Z"/></svg>';
+
+function renderMasks(){
+  $('masks').innerHTML=RUNS.map((r,i)=>{
+    const ids=runCharges(r), n=ids.filter(id=>taken.has(id)).length;
+    return `<button type="button" class="mask${runFull(r)?' full':''}" data-jump="${i}"
+      aria-label="${esc(degLabel(i)+' — '+r.title)}">
+      ${MASK}<span class="deg">${degLabel(i)}</span>
+      <span class="tal">${n}/${ids.length}</span></button>`;
+  }).join('');
+}
+
+/* ---------------- THE DEGREES ---------------- */
+const RELOAD=/save\s*\/\s*reload|save before|one per attempt/i;
+
+function chipHTML(id){
+  const c=byId[id];
+  if(!c)return '';
+  const on=struck.has(id);
+  return `<button type="button" class="tokchip" role="switch" aria-checked="${on}"
+    data-ch="${esc(id)}" style="--m:${CATVAR[c.cat]}"
+    title="${esc(CATLABEL[c.cat])}">${esc(c.name)}</button>`;
+}
+
+function fieldHTML(k,v){
+  return v&&v!=='—'?`<div class="frow"><div class="fk">${k}</div><div class="fv">${esc(v)}</div></div>`:'';
+}
+
+function chargeHTML(st,n){
+  const on=taken.has(st.id), open=!!openCharge[st.id];
+  const marks=[
+    st.save?'<span class="mark save">Save here</span>':'',
+    (CHARGE[st.id]||[]).map(chipHTML).join('')
+  ].join('');
+  return `<div class="step${on?' done':''}" id="charge-${esc(st.id)}">
+    <button type="button" class="strike" data-step="${esc(st.id)}" aria-pressed="${on}"
+      aria-label="${esc('Strike the token for charge '+n+': '+st.t)}"></button>
+    <div class="cwrap">
+      <button type="button" class="ctitle" data-open="${esc(st.id)}" aria-expanded="${open}"
+        aria-controls="body-${esc(st.id)}">${esc(st.t)}
+        <span class="csum">${esc(st.sum)}</span>
+        <span class="open">${open?'Close the charge':'Open the charge'}</span>
+      </button>
+      <div class="marks">${marks}</div>
+      ${st.warn?`<p class="warnstrip"><span class="w">Missable</span>${esc(st.warn)}</p>`:''}
+      <div class="cbody" id="body-${esc(st.id)}"${open?'':' hidden'}>
+        ${fieldHTML('Where',st.where)}
+        ${fieldHTML('Disguise',st.disguise)}
+        ${fieldHTML('Item',st.item)}
+        ${fieldHTML('NPC',st.npc)}
+        ${fieldHTML('Action',st.action)}
+        <p class="src">Source &mdash; ${esc(st.src)}</p>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderDegrees(){
+  renderMasks();
+  $('runs').innerHTML=RUNS.map((r,i)=>{
+    const ids=runCharges(r), n=runTaken(r), open=!!openDegree[i];
+    const claimed=CH.filter(c=>c.run===r.id);
+    const claimedDone=claimed.filter(c=>struck.has(c.id)).length;
+    let num=0;
+    const body=r.sections.map(sec=>{
+      const keys=sec.steps.map(s=>s.id), sn=keys.filter(k=>taken.has(k)).length;
+      return `<h3 class="passage">${esc(sec.name)}
+        ${RELOAD.test(sec.name)?'<span class="mark once">Reload branch</span>':''}
+        <span class="cnt">${sn} / ${keys.length} charges</span></h3>`+
+        sec.steps.map(st=>chargeHTML(st,++num)).join('');
+    }).join('');
+
+    return `<article class="degree${runFull(r)?' full':''}" id="degree-${i}">
+      <button type="button" class="dhead" data-degree="${i}" aria-expanded="${open}"
+        aria-controls="dbody-${i}">
+        <span class="numeral" aria-hidden="true">${r.n}</span>
+        <span class="dmain">
+          <span class="dlbl">${degLabel(i)} &middot; ${esc(r.id)}</span>
+          <span class="dtitle">${esc(r.title)}</span>
+          <span class="dgoal">${esc(r.goal)}</span>
+          <span class="dtally">${n} of ${ids.length} charges taken &middot;
+            ${claimedDone} of ${claimed.length} tokens claimed by this degree${open?'':' &middot; open it to work through'}</span>
+        </span>
+      </button>
+      <div class="dbody" id="dbody-${i}"${open?'':' hidden'}>
+        <div class="carry">
+          <div class="slot"><span class="k">Start</span><span class="v">${esc(r.load.start)}</span></div>
+          <div class="slot"><span class="k">Mastery</span><span class="v">${esc(r.load.mastery)}</span></div>
+          <div class="slot"><span class="k">Suit</span><span class="v">${esc(r.load.suit)}</span></div>
+          <div class="slot"><span class="k">Carried through the gate</span><span class="v">${
+            r.load.items.map(x=>`<span class="kit">${esc(x)}</span>`).join('')}</span></div>
+        </div>
+        ${body}
+      </div>
+    </article>`;
+  }).join('');
+}
+
+/* ---------------- THE ROLL ---------------- */
+function renderRoll(){
+  const F=[['all','The whole roll '+CH.length]]
+    .concat(CATS.map(k=>[k,CATLABEL[k]+' '+catTotal(k)]))
+    .concat([['unstruck','Not yet struck '+(CH.length-struck.size)]]);
+  $('filters').innerHTML=F.map(([k,l])=>
+    `<button type="button" data-f="${esc(k)}" aria-pressed="${filter===k}">${esc(l)}</button>`).join('');
+
+  let out='';
+  CATS.forEach(cat=>{
+    if(filter!=='all'&&filter!=='unstruck'&&filter!==cat)return;
     let items=CH.filter(c=>c.cat===cat);
-    if(filter==="incomplete")items=items.filter(c=>!isDone(c.id));
+    if(filter==='unstruck')items=items.filter(c=>!struck.has(c.id));
     if(!items.length)return;
-    const dnAll=CH.filter(c=>c.cat===cat&&isDone(c.id)).length;
-    const rows=items.map(c=>{
-      const d=isDone(c.id);
-      return `<div class="clitem ${d?'done':''}" data-clk="${c.id}">
-        <button class="chk" aria-label="Toggle">${d?'✓':''}</button>
-        <div class="clbody">
-          <div class="nm">${c.name}</div>
-          <div class="cond">${c.cond}</div>
-          ${c.how?`<div class="how"><b>How:</b> ${c.how}</div>`:""}
-          <div class="clmeta">
-            ${c.run?`<span class="rtag">${c.run}</span>`:""}
-            ${c.xp?`<span class="xp">+${c.xp.toLocaleString()} XP</span>`:`<span class="xp">XP not published</span>`}
-            <span class="srctag">SRC: ${c.src}</span>
-          </div></div></div>`;
-    }).join("");
-    body+=`<div class="clgroup"><h3><span class="dot ${cat}"></span>${CATLABEL[cat]} <span class="gc">${dnAll}/${CATMAX[cat]}</span></h3>${rows}</div>`;
+    out+=`<h3 class="grp" style="--m:${CATVAR[cat]}">${CATLABEL[cat]}
+      <span class="n">${catDone(cat)} of ${catTotal(cat)} struck in ${METAL[cat]}</span></h3>`;
+    out+=items.map(c=>{
+      const on=struck.has(c.id), di=degreeIndex(c.id);
+      return `<div class="crow${on?' done':''}" style="--m:${CATVAR[c.cat]}">
+        <button type="button" class="tok" data-ch="${esc(c.id)}" aria-pressed="${on}"
+          aria-label="${esc('Strike the token for '+c.name)}"></button>
+        <div class="cmain">
+          <p class="cnm">${esc(c.name)}</p>
+          <p class="ccond">${esc(c.cond)}</p>
+          <details class="cmore">
+            <summary>Method and source</summary>
+            <p class="chow">${esc(c.how)}</p>
+            <p class="csrc">${esc(c.src)}</p>
+          </details>
+        </div>
+        <span class="cmeta">
+          <span class="deg">${di>=0?degLabel(di):'Across degrees'}</span>
+          ${c.xp?`<span class="xp">+${c.xp.toLocaleString()} XP</span>`:''}
+        </span>
+      </div>`;
+    }).join('');
   });
-  wrap.innerHTML=`<div class="filters">${btns}</div>${body||`<div class="empty">Nothing matches this filter.</div>`}`;
-  wrap.querySelectorAll("[data-filt]").forEach(b=>b.addEventListener("click",()=>{filter=b.dataset.filt;renderList();}));
-  wrap.querySelectorAll("[data-clk]").forEach(r=>r.addEventListener("click",()=>toggleCh(r.dataset.clk)));
+  $('checklist').innerHTML=out||'<p class="empty">Nothing left under this heading.</p>';
 }
 
-/* ===================== AUDIT ===================== */
-function renderAudit(){
-  document.getElementById("panelAudit").innerHTML=
-   `<p style="font-size:14px;color:#9fb0bc;margin:0 0 18px">Run-logic, routing and missing-step checks performed before output. Findings:</p>`
-   +AUDIT.map(a=>`<div class="auditrow ${a.k}"><h4>${a.h}</h4><p>${a.p}</p></div>`).join("");
+/* ---------------- THE PROVING ---------------- */
+function renderProving(){
+  $('proving').innerHTML=AUDIT.map(a=>
+    `<div class="attest ${a.k==='ok'?'ok':'warn'}">
+      <span class="seal">${a.k==='ok'?'Attested':'Qualified'}</span>
+      <h3>${esc(a.h)}</h3>
+      <p>${esc(a.p)}</p>
+    </div>`).join('');
 }
 
-/* ===================== TABS ===================== */
-function setTab(w){
-  const map={runs:["tabRuns","panelRuns"],list:["tabList","panelList"],audit:["tabAudit","panelAudit"]};
-  Object.entries(map).forEach(([k,[tab,panel]])=>{
-    document.getElementById(tab).setAttribute("aria-selected",k===w);
-    document.getElementById(panel).classList.toggle("on",k===w);
+const openDegree={}, openCharge={};
+function render(){renderDegrees();renderRoll();renderGate();}
+
+/* ---------------- EVENTS ---------------- */
+const tabs=[...document.querySelectorAll('.tab')];
+function selectTab(tb){
+  tabs.forEach(x=>{
+    const on=x===tb;
+    x.setAttribute('aria-selected',String(on));
+    x.tabIndex=on?0:-1;
+    $(x.getAttribute('aria-controls')).hidden=!on;
   });
 }
-document.getElementById("tabRuns").addEventListener("click",()=>setTab("runs"));
-document.getElementById("tabList").addEventListener("click",()=>setTab("list"));
-document.getElementById("tabAudit").addEventListener("click",()=>setTab("audit"));
-document.getElementById("resetBtn").addEventListener("click",()=>{if(confirm("Reset all progress?")){done.clear();persist();renderAll();}});
+tabs.forEach((tb,i)=>{
+  tb.tabIndex=tb.getAttribute('aria-selected')==='true'?0:-1;
+  tb.addEventListener('keydown',e=>{
+    const d=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;
+    if(!d)return;
+    e.preventDefault();
+    const next=tabs[(i+d+tabs.length)%tabs.length];
+    selectTab(next);next.focus();
+  });
+});
 
-function renderAll(){renderTracker();renderRunNav();renderRuns();renderList();renderAudit();}
-renderAll();
+document.addEventListener('click',e=>{
+  const t=e.target;
+
+  /* a challenge is a control wherever it is named — on its row in the roll, or
+     on a charge that completes it */
+  const cb=t.closest('[data-ch]');
+  if(cb){
+    const id=cb.dataset.ch;
+    struck.has(id)?struck.delete(id):struck.add(id);
+    save();render();return;
+  }
+
+  const sb=t.closest('[data-step]');
+  if(sb){
+    const id=sb.dataset.step, now=!taken.has(id);
+    now?taken.add(id):taken.delete(id);
+    /* taking a charge strikes the tokens it completes; giving it back leaves
+       them struck, because another charge may cover the same one */
+    if(now)(CHARGE[id]||[]).forEach(c=>struck.add(c));
+    save();render();return;
+  }
+
+  const oc=t.closest('[data-open]');
+  if(oc){openCharge[oc.dataset.open]=!openCharge[oc.dataset.open];renderDegrees();return;}
+
+  const dg=t.closest('[data-degree]');
+  if(dg){const i=+dg.dataset.degree;openDegree[i]=!openDegree[i];renderDegrees();return;}
+
+  const jp=t.closest('[data-jump]');
+  if(jp){
+    const i=+jp.dataset.jump;
+    selectTab($('tab-runs'));
+    openDegree[i]=true;renderDegrees();
+    $('degree-'+i).scrollIntoView({behavior:'smooth',block:'start'});return;
+  }
+
+  const fb=t.closest('[data-f]');
+  if(fb){filter=fb.dataset.f;renderRoll();return;}
+
+  const tb=t.closest('.tab');
+  if(tb){selectTab(tb);return;}
+});
+
+$('reset').addEventListener('click',()=>{
+  if(!confirm('Melt every token down? All '+CH.length+' challenges and every charge on this guide are cleared. Other guides are not affected.'))return;
+  struck=new Set();taken=new Set();
+  Object.keys(openCharge).forEach(k=>delete openCharge[k]);
+  save();render();
+});
+
+openDegree[0]=true;
+render();
+renderProving();
 reportProgress();
 </script>
 <!-- step-progress-bridge -->

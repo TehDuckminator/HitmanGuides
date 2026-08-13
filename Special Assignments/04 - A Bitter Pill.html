@@ -3,219 +3,387 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>A Bitter Pill — Step Guide</title>
+<title>A Bitter Pill — the Whittleton Creek post</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,600;0,700;1,400&family=Oswald:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
+/* ═══ WHITTLETON CREEK — the post ═══
+   A suburb of identical houses where the only things that tell one address
+   from another are the mailboxes, and the mission agrees: Letterboxed puts a
+   bomb in one, the sheriff's doorbell starts the whole sequence, and 47 gets
+   into the street dressed as the mailman. So the guide is the day's post.
+   The tracker is a sheet of twenty-one stamps, cancelled one per challenge.
+   Runs are letters, franked and postmarked and stamped DELIVERED when they
+   clear. Steps are lines on a delivery manifest, and each one ticks with a
+   circular cancellation. Kraft, airmail chevrons and rubber stamps — nothing
+   of the clinic, which two guides in this library already own. */
 :root{
-  --ink:#0C1416; --panel:#131F21; --panel-2:#182A2C;
-  --line:#263B3D; --line-soft:#1E3032;
-  --text:#DAE6E3; --dim:#7C918D;
-  --amber:#E8A33D; --teal:#4DBBA2; --rx:#D9584F; --violet:#9A8BD0; --slate:#6F9AA8;
-  --r:3px;
+  --kraft:#d9c8a4; --kraft-2:#cdb992; --paper:#f7f2e6; --paper-2:#efe7d5;
+  --ink:#1d1a15; --ink-2:#4c4436; --faint:#7d7360;
+  --red:#bf3428; --blue:#1f3e8c; --green:#3f6b3a; --amber:#a97614;
+  --cancel:#1a1a18;
+  --rule:rgba(29,26,21,.28); --rule-2:rgba(29,26,21,.14); --rule-3:rgba(29,26,21,.07);
+  --disp:"Oswald","Arial Narrow",Impact,sans-serif;
+  --body:"Bitter",Georgia,"Times New Roman",serif;
+  --mono:"Space Mono",ui-monospace,Consolas,"Courier New",monospace;
 }
 *{box-sizing:border-box}
-html,body{margin:0;padding:0}
-body{background:var(--ink);color:var(--text);font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
-h1,h2,h3,h4{font-family:"Barlow Condensed","Arial Narrow",sans-serif;font-weight:600;margin:0;letter-spacing:.04em}
-.wrap{max-width:1120px;margin:0 auto;padding:0 20px 90px}
-[hidden]{display:none !important}
-:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
-@media (prefers-reduced-motion:reduce){*{transition:none !important}}
+html{scroll-behavior:smooth}
+body{
+  margin:0;color:var(--ink);background-color:var(--kraft);
+  /* kraft fibre, and the shadow of the pile on the doormat */
+  background-image:
+    radial-gradient(760px 400px at 50% -4%,rgba(247,242,230,.55),transparent 62%),
+    radial-gradient(600px 480px at 96% 88%,rgba(31,62,140,.08),transparent 60%),
+    repeating-linear-gradient(31deg,rgba(29,26,21,.028) 0 2px,transparent 2px 5px),
+    repeating-linear-gradient(-31deg,rgba(255,255,255,.05) 0 2px,transparent 2px 6px);
+  background-attachment:fixed;
+  font-family:var(--body);font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1040px;margin:0 auto;padding:0 16px 90px}
+a{color:var(--blue)}
+b,strong{font-weight:700}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:12px;top:12px;z-index:60;background:var(--ink);color:var(--paper);padding:8px 13px}
+.stampline{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
 
-header{border-bottom:1px solid var(--line);background:linear-gradient(180deg,#0F1B1D,#0C1416)}
-.hdr{max-width:1120px;margin:0 auto;padding:24px 20px 20px}
-.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--amber)}
-h1{font-size:clamp(32px,6vw,56px);line-height:.95;text-transform:uppercase;margin:6px 0 4px}
-h1 .thin{font-weight:400;color:var(--dim)}
-.sub{color:var(--dim);font-size:14px;max-width:74ch;margin:0}
-.facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
-.fact{font-family:"IBM Plex Mono",monospace;font-size:11px;padding:5px 9px;border:1px solid var(--line);border-radius:var(--r);color:var(--dim);background:var(--panel)}
-.fact b{color:var(--text);font-weight:500}
+/* ── the envelope ──────────────────────────────────────────────────────────
+   Airmail chevrons round the edge, a window, a franking block and the
+   postmark that dates the whole thing. */
+header.post{position:relative;margin-top:20px;background:var(--paper);
+  border:9px solid transparent;
+  border-image:repeating-linear-gradient(45deg,
+    var(--red) 0 11px,var(--paper) 11px 22px,var(--blue) 22px 33px,var(--paper) 33px 44px) 9;
+  box-shadow:0 14px 34px -24px rgba(29,26,21,.9)}
+.post-top{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;justify-content:space-between;
+  padding:9px 16px;border-bottom:1px solid var(--rule-2);background:var(--paper-2);
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+.post-top a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(31,62,140,.4)}
+.post-top a:hover{color:var(--red);border-color:var(--red)}
+.post-body{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:22px;padding:22px 22px 6px}
+.addr{min-width:0}
+.addr .to{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--faint);margin:0 0 8px}
+h1.title{font-family:var(--disp);font-weight:600;font-size:clamp(34px,7.4vw,70px);line-height:.95;
+  margin:0 0 6px;text-transform:uppercase;letter-spacing:-.005em}
+h1.title em{font-style:normal;color:var(--red)}
+h1.title .thin{font-weight:300;color:var(--faint)}
+.sub{margin:8px 0 14px;color:var(--ink-2);font-size:15px;max-width:64ch}
+.facts{display:flex;flex-wrap:wrap;gap:6px}
+.facts .fact{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+  border:1px solid var(--rule-2);background:var(--paper-2);padding:5px 10px;color:var(--ink-2)}
+.facts .fact b{font-family:var(--disp);font-size:14px;font-weight:600;color:var(--ink);letter-spacing:0}
 
-.tracker{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);margin-top:20px;padding:16px}
-.trk-top{display:flex;flex-wrap:wrap;gap:18px;align-items:flex-end;justify-content:space-between}
-.big{font-family:"Barlow Condensed",sans-serif;font-size:50px;line-height:.85;font-weight:700}
-.big small{font-size:20px;color:var(--dim);font-weight:400}
-.lbl{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
-.xp{font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--amber)}
-.cap{margin-top:14px;height:14px;border:1px solid var(--line);border-radius:999px;background:#0B1213;overflow:hidden}
-.cap i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--amber));transition:width .3s ease}
-.cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:9px;margin-top:14px}
-.cat{border:1px solid var(--line-soft);border-radius:var(--r);padding:9px 11px;background:var(--panel-2)}
-.cat .nm{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
-.cat .vl{font-family:"Barlow Condensed",sans-serif;font-size:25px;font-weight:600;line-height:1.1}
-.cat .bar{height:3px;background:#0B1213;margin-top:5px;border-radius:2px;overflow:hidden}
-.cat .bar i{display:block;height:100%;width:0;transition:width .3s ease}
-.reset{margin-top:12px;background:none;border:1px solid var(--line);color:var(--dim);font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding:6px 12px;border-radius:var(--r);cursor:pointer}
-.reset:hover{color:var(--text);border-color:var(--dim)}
+/* the franking block: a red meter impression, and the postmark beside it */
+.frank{display:flex;flex-direction:column;align-items:center;gap:10px}
+.meter{border:2px solid var(--red);color:var(--red);padding:9px 14px;text-align:center;min-width:150px}
+.meter .m1{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase}
+.meter .m2{font-family:var(--disp);font-weight:600;font-size:34px;line-height:1.05;color:var(--red)}
+.meter .m2 small{font-family:var(--body);font-size:15px;font-weight:400}
+.meter .m3{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;color:var(--ink-2)}
+.pmark{width:104px;height:104px;border-radius:50%;border:2px solid var(--cancel);
+  display:grid;place-items:center;text-align:center;color:var(--cancel);opacity:.62;
+  transform:rotate(-9deg);font-family:var(--mono);font-size:10px;letter-spacing:.08em;line-height:1.4;
+  background:repeating-linear-gradient(-9deg,transparent 0 12px,rgba(26,26,24,.14) 12px 14px)}
+.pmark b{display:block;font-family:var(--disp);font-weight:600;font-size:19px;letter-spacing:.04em}
 
-nav.tabs{display:flex;gap:2px;margin:24px 0 18px;border-bottom:1px solid var(--line);flex-wrap:wrap}
-nav.tabs button{background:none;border:none;border-bottom:2px solid transparent;color:var(--dim);font-family:"Barlow Condensed",sans-serif;font-size:18px;letter-spacing:.08em;text-transform:uppercase;padding:10px 16px;cursor:pointer}
-nav.tabs button:hover{color:var(--text)}
-nav.tabs button[aria-selected="true"]{color:var(--amber);border-bottom-color:var(--amber)}
+/* the sheet: twenty-one stamps, one a challenge, cancelled as they land */
+.sheet{margin:16px 22px 0;padding:13px;background:var(--paper-2);border:1px solid var(--rule-2)}
+.sheet-h{display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:space-between;align-items:baseline;
+  margin-bottom:10px;font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--faint)}
+.stamps{display:flex;flex-wrap:wrap;gap:5px;list-style:none;margin:0;padding:0}
+.stamps li{position:relative;width:46px;height:54px;border:3px dotted var(--paper-2);
+  background:linear-gradient(160deg,#c9d6e8,#aebfd8);display:grid;place-content:center;text-align:center;
+  box-shadow:0 0 0 1px var(--rule-2)}
+.stamps li .sn{font-family:var(--disp);font-weight:600;font-size:17px;color:var(--blue);line-height:1}
+.stamps li .sv{font-family:var(--mono);font-size:8px;letter-spacing:.04em;color:var(--ink-2)}
+.stamps li.on{background:linear-gradient(160deg,#d6e3cf,#b7cdae)}
+/* the cancellation: a ring and its killer bars, struck across the stamp */
+.stamps li.on::after{content:"";position:absolute;left:50%;top:50%;width:34px;height:34px;margin:-17px 0 0 -17px;
+  border-radius:50%;border:2px solid var(--cancel);opacity:.85;
+  background:repeating-linear-gradient(-24deg,transparent 0 4px,rgba(26,26,24,.55) 4px 5.6px)}
 
-.runbar{position:sticky;top:0;z-index:20;background:rgba(12,20,22,.94);backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:var(--r);padding:10px;margin-bottom:18px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
-.runbar .jump{background:var(--panel-2);border:1px solid var(--line);color:var(--text);font-family:"Barlow Condensed",sans-serif;font-size:16px;letter-spacing:.05em;text-transform:uppercase;padding:7px 13px;border-radius:var(--r);cursor:pointer;display:flex;gap:7px;align-items:center}
-.runbar .jump:hover{border-color:var(--amber);color:var(--amber)}
-.runbar .jump .pill{font-family:"IBM Plex Mono",monospace;font-size:9.5px;color:var(--dim)}
-.runbar .jump.complete{border-color:var(--teal);color:var(--teal)}
-.runbar .spacer{flex:1;min-width:8px}
-.runbar .util{background:none;border:1px solid var(--line);color:var(--dim);font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;padding:7px 10px;border-radius:var(--r);cursor:pointer}
-.runbar .util:hover{color:var(--text)}
+.post-foot{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;
+  margin:0 22px;padding:12px 0 16px}
+.btn{font-family:var(--disp);font-weight:500;font-size:13px;letter-spacing:.13em;text-transform:uppercase;
+  background:var(--red);color:var(--paper);border:0;padding:9px 16px;cursor:pointer}
+.btn:hover{background:var(--cancel)}
+.btn-plain{font-family:var(--disp);font-weight:400;font-size:12px;letter-spacing:.12em;text-transform:uppercase;
+  background:transparent;color:var(--ink-2);border:1px solid var(--rule-2);padding:6px 12px;cursor:pointer}
+.btn-plain:hover{border-color:var(--red);color:var(--red)}
 
-.notice{border:1px solid var(--line);border-left:3px solid var(--slate);background:var(--panel);padding:13px 15px;border-radius:var(--r);margin-bottom:16px}
-.notice.warn{border-left-color:var(--rx)}
-.notice h4{font-size:17px;text-transform:uppercase;margin-bottom:4px}
-.notice p{margin:6px 0 0;font-size:14px;color:var(--dim)}
-.notice p b{color:var(--text);font-weight:500}
+/* the sorting frame: category counts, read like a rack of pigeonholes */
+.rack{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--rule-2);
+  margin:0 22px;border:1px solid var(--rule-2)}
+.slot{background:var(--paper);padding:9px 12px;min-width:0}
+.slot .k{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--faint)}
+.slot .v{display:block;font-family:var(--disp);font-weight:600;font-size:22px;line-height:1.15}
+.slot .v small{font-family:var(--body);font-size:13px;font-weight:400;color:var(--faint)}
+.slot .bar{display:block;height:5px;margin-top:5px;background:var(--rule-3)}
+.slot .bar i{display:block;height:100%;background:var(--blue)}
+.slot.full .v{color:var(--green)}
+.slot.full .bar i{background:var(--green)}
 
-.run{border:1px solid var(--line);border-radius:var(--r);background:var(--panel);margin-bottom:14px;overflow:hidden;scroll-margin-top:72px}
-.run-head{width:100%;text-align:left;background:var(--panel-2);border:none;border-bottom:1px solid transparent;padding:15px 17px;cursor:pointer;display:flex;gap:14px;align-items:flex-start;color:inherit;font:inherit}
-.run.open .run-head{border-bottom-color:var(--line-soft)}
-.run-head:hover{background:#1C3032}
-.chev{flex:none;font-family:"IBM Plex Mono",monospace;color:var(--amber);font-size:13px;margin-top:5px;transition:transform .2s ease}
-.run.open .chev{transform:rotate(90deg)}
-.run-head .meta{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.16em;color:var(--amber);text-transform:uppercase}
-.run-head h2{font-size:27px;text-transform:uppercase;margin:2px 0 5px}
-.run-head p{margin:0;color:var(--dim);font-size:14px;max-width:80ch}
-.run-prog{flex:none;text-align:right;font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--dim);margin-top:4px}
-.run-body{padding:17px}
+/* ── tabs: the three trays ─────────────────────────────────────────────── */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:22px 0 0}
+.tab{font-family:var(--disp);font-weight:500;font-size:13px;letter-spacing:.14em;text-transform:uppercase;
+  background:var(--paper-2);color:var(--ink-2);border:1px solid var(--rule-2);border-bottom:0;
+  padding:10px 18px;cursor:pointer}
+.tab[aria-selected="true"]{background:var(--paper);color:var(--ink);box-shadow:inset 0 3px 0 var(--red)}
+.tab:hover{color:var(--red)}
+.panel{background:var(--paper);border:1px solid var(--rule-2);padding:20px}
 
-.rx{border:1px solid var(--line);border-radius:var(--r);background:#0F1A1B;margin-bottom:18px}
-.rx-top{display:flex;justify-content:space-between;align-items:center;padding:9px 14px;border-bottom:1px dashed var(--line)}
-.rx-top .tag{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--amber)}
-.rx-top .lot{font-family:"IBM Plex Mono",monospace;font-size:10px;color:var(--dim)}
-.rx-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
-.rx-cell{padding:11px 14px;border-right:1px solid var(--line-soft);border-top:1px solid var(--line-soft)}
-.rx-cell:last-child{border-right:none}
-.rx-cell .k{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim)}
-.rx-cell .v{font-family:"Barlow Condensed",sans-serif;font-size:19px;font-weight:500;line-height:1.25;margin-top:2px}
-.rx-cell .n{font-size:12px;color:var(--dim);margin-top:2px;line-height:1.45}
+/* ── the letters ───────────────────────────────────────────────────────── */
+.notice{border:1px solid var(--rule-2);border-left:7px solid var(--amber);background:var(--paper-2);
+  padding:14px 17px;margin:0 0 18px}
+.notice h4{margin:0 0 8px;font-family:var(--disp);font-weight:600;font-size:16px;letter-spacing:.02em;
+  text-transform:uppercase}
+.notice p{margin:0 0 8px;color:var(--ink-2);font-size:14.5px}
+.notice p:last-child{margin-bottom:0}
+.notice .xpv{font-family:var(--mono);font-size:12.5px;background:var(--paper);padding:1px 5px}
 
-.sec{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--teal);margin:20px 0 9px;padding-bottom:6px;border-bottom:1px solid var(--line-soft)}
+.runbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:16px}
+.runbar .jl{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.jump{display:flex;align-items:center;gap:9px;background:var(--paper-2);border:1px solid var(--rule-2);
+  padding:6px 13px;font-family:var(--body);font-size:14.5px;color:var(--ink);cursor:pointer}
+.jump b{font-family:var(--mono);font-size:11px;letter-spacing:.06em;background:var(--ink);color:var(--paper);padding:2px 7px}
+.jump .pg{font-family:var(--mono);font-size:11px;color:var(--faint)}
+.jump:hover{border-color:var(--red)}
+.jump.full{background:rgba(63,107,58,.12);border-color:rgba(63,107,58,.45)}
+.jump.full b{background:var(--green)}
 
-.step{border:1px solid var(--line-soft);border-radius:var(--r);margin-bottom:7px;background:var(--panel-2)}
-.step.done{border-color:#2E4F45;background:#14231F}
-.step-head{display:flex;gap:11px;align-items:flex-start;padding:11px 13px}
-.tick{flex:none;width:24px;height:24px;border:1px solid var(--line);border-radius:var(--r);background:none;color:transparent;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;margin-top:2px}
-.tick:hover{border-color:var(--teal)}
-.step.done .tick,.chal.done .tick{background:var(--teal);border-color:var(--teal);color:#0C1416}
-.step-open{flex:1;min-width:0;text-align:left;background:none;border:none;color:inherit;font:inherit;cursor:pointer;padding:0;display:flex;gap:10px;align-items:flex-start}
-.stepno{flex:none;font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--amber);margin-top:5px}
-.step-txt h4{font-size:17.5px;margin-bottom:1px}
-.step.done .step-txt h4{text-decoration:line-through;color:var(--dim)}
-.step-txt p{margin:0;font-size:14px;color:var(--dim)}
-.chev2{flex:none;font-family:"IBM Plex Mono",monospace;color:var(--dim);font-size:12px;margin-top:5px;transition:transform .2s ease}
-.step.expanded .chev2{transform:rotate(90deg);color:var(--amber)}
-.detail{padding:12px 13px 13px 48px;border-top:1px solid var(--line-soft)}
-ul.f{list-style:none;margin:0;padding:0}
-ul.f li{display:flex;gap:9px;margin-bottom:7px;font-size:14px;align-items:flex-start}
-ul.f li:last-child{margin-bottom:0}
-.ftag{flex:none;font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);border:1px solid var(--line);border-radius:2px;padding:2px 6px;margin-top:2px;min-width:74px;text-align:center}
-.ftag.warnt{color:var(--rx);border-color:rgba(217,88,79,.55)}
-.badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:11px}
-.badge{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;padding:4px 8px;border-radius:999px;border:1px solid;white-space:nowrap}
-.b-A{color:var(--rx);border-color:rgba(217,88,79,.5);background:rgba(217,88,79,.09)}
-.b-D{color:var(--slate);border-color:rgba(111,154,168,.5);background:rgba(111,154,168,.09)}
-.b-F{color:var(--amber);border-color:rgba(232,163,61,.5);background:rgba(232,163,61,.09)}
-.b-T{color:var(--violet);border-color:rgba(154,139,208,.5);background:rgba(154,139,208,.09)}
-.b-C{color:var(--teal);border-color:rgba(77,187,162,.5);background:rgba(77,187,162,.09)}
-.b-warn{color:#fff;border-color:var(--rx);background:var(--rx);font-weight:600}
-.b-save{color:#0C1416;border-color:var(--amber);background:var(--amber);font-weight:600}
-.b-unv{color:var(--dim);border-color:var(--line);background:transparent}
+article.letter{position:relative;border:1px solid var(--rule-2);background:var(--paper-2);margin-bottom:16px;
+  overflow:hidden}
+article.letter.open{background:var(--paper);border-color:var(--rule)}
+.lhead{display:block;width:100%;text-align:left;background:none;border:0;cursor:pointer;
+  padding:16px 18px;font-family:var(--body);color:var(--ink)}
+.lline{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;margin-bottom:9px}
+/* every letter carries a stamp with the number of challenges it is worth */
+.lstamp{width:52px;height:56px;border:3px dotted var(--paper-2);background:linear-gradient(160deg,#e4d3c4,#cdb7a4);
+  box-shadow:0 0 0 1px var(--rule-2);display:grid;place-content:center;text-align:center;flex:0 0 auto}
+.lstamp b{display:block;font-family:var(--disp);font-weight:600;font-size:20px;line-height:1;color:var(--red)}
+.lstamp span{display:block;font-family:var(--mono);font-size:7.5px;letter-spacing:.02em;color:var(--ink-2);
+  text-transform:uppercase;line-height:1.3;margin-top:2px}
+article.letter.full .lstamp{background:linear-gradient(160deg,#d6e3cf,#b7cdae)}
+article.letter.full .lstamp b{color:var(--green)}
+.lrun{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--red)}
+.lmeta{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;color:var(--faint)}
+.ltally{margin-left:auto;font-family:var(--disp);font-weight:600;font-size:17px;color:var(--ink-2)}
+.ltitle{display:block;font-family:var(--disp);font-weight:600;font-size:clamp(20px,3.4vw,31px);line-height:1.1;
+  text-transform:uppercase;margin-bottom:6px}
+.lgoal{display:block;color:var(--ink-2);font-size:15px;max-width:78ch}
+/* struck on a letter whose whole contents have been signed for */
+.delivered{position:absolute;right:12px;bottom:10px;border:3px solid var(--green);color:var(--green);
+  font-family:var(--disp);font-weight:600;font-size:15px;letter-spacing:.2em;text-transform:uppercase;
+  padding:5px 11px;transform:rotate(-8deg);opacity:.7;display:none}
+article.letter.full .delivered{display:block}
+.lchips{display:flex;flex-wrap:wrap;gap:6px;padding:0 18px 14px}
+.lbody{padding:0 18px 18px}
 
-.filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
-.filters button{background:var(--panel);border:1px solid var(--line);color:var(--dim);font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding:7px 12px;border-radius:var(--r);cursor:pointer}
-.filters button:hover{color:var(--text)}
-.filters button.on{background:var(--amber);border-color:var(--amber);color:#0C1416;font-weight:600}
-.chal{display:flex;gap:11px;align-items:flex-start;border:1px solid var(--line-soft);border-radius:var(--r);background:var(--panel);padding:11px 13px;margin-bottom:6px}
-.chal.done{background:#14231F;border-color:#2E4F45}
-.chal h4{font-size:19px}
-.chal.done h4{text-decoration:line-through;color:var(--dim)}
-.chal .cond{font-size:13.5px;color:var(--dim);margin:2px 0 0}
-.chal .m{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;align-items:center}
-.xpv{font-family:"IBM Plex Mono",monospace;font-size:10px;color:var(--amber)}
-.runtag{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);border:1px solid var(--line);padding:3px 7px;border-radius:999px}
+.kit{border:1px solid var(--rule-2);background:var(--paper-2);padding:13px 15px;margin-bottom:16px}
+.kit h5{margin:0 0 10px;font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--faint);font-weight:400}
+.kit dl{display:grid;grid-template-columns:104px minmax(0,1fr);gap:5px 14px;margin:0 0 11px}
+.kit dt{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);padding-top:3px}
+.kit dd{margin:0;font-size:14.5px;color:var(--ink-2)}
+.kit dd b{color:var(--ink)}
+.kgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:9px}
+.kslot{border:1px solid var(--rule-3);background:var(--paper);padding:9px 11px;min-width:0}
+.kslot .k{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.kslot .v{display:block;font-family:var(--disp);font-weight:600;font-size:15px;margin:1px 0 3px;overflow-wrap:anywhere}
+.kslot .n{display:block;color:var(--ink-2);font-size:13px;line-height:1.45}
 
-table{width:100%;border-collapse:collapse;font-size:13.5px;margin:10px 0 22px}
-th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line-soft);vertical-align:top}
-th{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);border-bottom-color:var(--line)}
-td.num,th.num{font-family:"IBM Plex Mono",monospace}
-.ok{color:var(--teal)}
-h3.blk{font-size:23px;text-transform:uppercase;margin:26px 0 6px}
-h3.blk:first-child{margin-top:0}
-.lede{color:var(--dim);font-size:14px;margin:0 0 12px;max-width:84ch}
-ul.plain{padding-left:18px;margin:8px 0 18px}
-ul.plain li{margin-bottom:8px;font-size:14px}
-.src{border:1px solid var(--line-soft);border-radius:var(--r);padding:11px 13px;margin-bottom:7px;background:var(--panel)}
-.src .p{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber)}
-.src .t{font-size:14px;margin-top:2px}
-.src .u{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--dim);word-break:break-all}
+.tray{display:flex;align-items:center;gap:10px;margin:20px 0 8px;font-family:var(--mono);font-size:10.5px;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--red)}
+.tray::after{content:"";flex:1;height:1px;background:var(--rule-2)}
 
-@media (max-width:640px){
-  .detail{padding-left:13px}
-  .rx-cell{border-right:none}
-  .ftag{min-width:64px}
+/* ── a manifest line ───────────────────────────────────────────────────── */
+.step{display:grid;grid-template-columns:34px 40px minmax(0,1fr);gap:11px;align-items:start;
+  padding:11px 10px;border-bottom:1px solid var(--rule-3)}
+.step:last-child{border-bottom:0}
+.step.done{background:rgba(63,107,58,.08)}
+/* the tick is a cancellation: a ring and the killer bars through it */
+.tick{position:relative;width:34px;height:34px;border-radius:50%;padding:0;cursor:pointer;
+  border:2px solid var(--rule);background:transparent}
+.tick::before{content:"";position:absolute;inset:4px;border-radius:50%;border:1px solid var(--rule)}
+.tick:hover{border-color:var(--red)}
+.step.done .tick{border-color:var(--cancel);
+  background:repeating-linear-gradient(-24deg,transparent 0 4px,rgba(26,26,24,.6) 4px 5.6px)}
+.step.done .tick::before{border-color:var(--cancel);background:rgba(247,242,230,.62)}
+.route{font-family:var(--mono);font-size:10.5px;color:var(--faint);padding-top:7px;text-align:right;
+  letter-spacing:.02em}
+.step.done .route{color:var(--green)}
+.swrap{min-width:0}
+.shead{display:block;width:100%;text-align:left;background:none;border:0;padding:2px 0;cursor:pointer;
+  font-family:var(--body);font-weight:700;font-size:15.5px;line-height:1.35;color:var(--ink)}
+.shead .sum{display:block;font-weight:400;font-size:14px;color:var(--ink-2);margin-top:3px}
+.shead:hover{color:var(--red)}
+.step.done .shead{color:var(--ink-2)}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chip{font-family:var(--disp);font-weight:500;font-size:12px;letter-spacing:.05em;cursor:pointer;
+  border:1px solid var(--rule-2);background:var(--paper);color:var(--ink-2);padding:4px 10px}
+.chip:hover{border-color:var(--red);color:var(--red)}
+.chip.on{background:var(--cancel);border-color:var(--cancel);color:var(--paper)}
+.mark,.badge{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.11em;
+  text-transform:uppercase;padding:4px 9px;border:1px solid}
+.m-save{color:#7a560c;border-color:rgba(169,118,20,.55);background:rgba(169,118,20,.12)}
+.m-warn{color:var(--red);border-color:rgba(191,52,40,.45);background:rgba(191,52,40,.08)}
+.m-unv{color:var(--faint);border-color:var(--rule-2);background:var(--paper-2)}
+.sbody{margin-top:9px;padding-top:9px;border-top:1px dashed var(--rule-2)}
+.sbody dl{display:grid;grid-template-columns:96px minmax(0,1fr);gap:4px 14px;margin:0}
+.sbody dt{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--faint);padding-top:4px}
+.sbody dd{margin:0;font-size:14.5px;color:var(--ink-2)}
+.sbody dt.wr{color:var(--red)}
+.sbody dd.wr{color:var(--ink);border-left:3px solid var(--red);padding-left:9px;background:rgba(191,52,40,.05)}
+
+/* ── the album ─────────────────────────────────────────────────────────── */
+.lede{color:var(--ink-2);font-size:14.5px;margin-top:0}
+.filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.filters button{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  background:var(--paper-2);border:1px solid var(--rule-2);color:var(--ink-2);padding:6px 11px;cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--cancel);border-color:var(--cancel);color:var(--paper)}
+.crow{display:grid;grid-template-columns:34px minmax(0,1fr) auto;gap:12px;align-items:start;
+  padding:11px 2px;border-bottom:1px solid var(--rule-3)}
+.crow:last-child{border-bottom:0}
+.crow.done .cn{color:var(--ink-2);text-decoration:line-through}
+.cn{margin:0;font-family:var(--disp);font-weight:600;font-size:17px;line-height:1.25;text-transform:uppercase}
+.cc{margin:3px 0 0;color:var(--ink-2);font-size:14px}
+.cpost{display:flex;flex-direction:column;align-items:flex-end;gap:3px;text-align:right;
+  font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+.cpost .den{font-family:var(--disp);font-weight:600;font-size:15px;letter-spacing:0;color:var(--ink);text-transform:none}
+.empty{margin:16px 0;color:var(--ink-2);font-style:italic}
+
+/* ── verification ──────────────────────────────────────────────────────── */
+.blk{font-family:var(--disp);font-weight:600;font-size:17px;letter-spacing:.03em;text-transform:uppercase;
+  margin:22px 0 8px}
+.blk:first-child{margin-top:0}
+.plain{padding-left:20px}
+.plain li{margin-bottom:8px;color:var(--ink-2);font-size:14.5px}
+.tablewrap{overflow-x:auto;margin-bottom:10px}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:520px}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--rule-2);vertical-align:top;color:var(--ink-2)}
+th{font-family:var(--mono);font-size:10px;font-weight:400;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--faint);white-space:nowrap}
+td.num,th.num{text-align:right;font-family:var(--mono)}
+td.ok,th.ok{color:var(--green);font-weight:600}
+.src{display:grid;grid-template-columns:190px minmax(0,1fr);gap:2px 14px;padding:9px 0;
+  border-bottom:1px solid var(--rule-3)}
+.src .p{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--red)}
+.src .t{font-size:14px;color:var(--ink-2)}
+.src .u{grid-column:2;font-family:var(--mono);font-size:11px;color:var(--faint);overflow-wrap:anywhere}
+.xpv{font-family:var(--mono);font-size:12.5px}
+footer{margin-top:26px;padding-top:14px;border-top:1px solid var(--rule-2);color:var(--faint);font-size:13.5px}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important;animation:none!important}}
+@media (max-width:760px){
+  .post-body{grid-template-columns:minmax(0,1fr);padding:18px 16px 6px}
+  .frank{flex-direction:row;flex-wrap:wrap;justify-content:flex-start;align-items:center}
+  .sheet,.rack,.post-foot{margin-left:16px;margin-right:16px}
+  .kit dl,.sbody dl{grid-template-columns:minmax(0,1fr);gap:0}
+  .kit dt,.sbody dt{padding-top:9px}
+  .step{grid-template-columns:34px minmax(0,1fr)}
+  .route{display:none}
+  .crow{grid-template-columns:34px minmax(0,1fr)}
+  .cpost{grid-column:2;align-items:flex-start;text-align:left;flex-direction:row;gap:10px;margin-top:5px}
+  .src{grid-template-columns:minmax(0,1fr)}
+  .src .u{grid-column:1}
+}
+@media print{
+  body{background:#fff;background-image:none;color:#000;font-size:10.5pt}
+  .tabs,.runbar,.skip,.tick,.btn,.btn-plain,.sheet,.frank{display:none!important}
+  .panel[hidden]{display:block!important}
+  .lbody,.sbody{display:block!important}
+  header.post{border-image:none;border:1px solid #999;box-shadow:none;background:none}
+  .panel,article.letter,.notice{background:none;border-color:#999}
+  .step,article.letter{break-inside:avoid}
 }
 </style>
 </head>
 <body>
+<a class="skip" href="#p-runs">Skip to the letters</a>
+<div class="wrap">
 
-<header>
-  <div class="hdr">
-    <div class="eyebrow">Special Assignment · Whittleton Creek, Vermont</div>
-    <h1>A Bitter&nbsp;Pill <span class="thin">/ 21</span></h1>
-    <p class="sub">Step by step, five runs, every challenge covered. Verified against your in-game export, the Hitman Wiki mission and walkthrough pages, the nine individual challenge pages, and two community route guides. Anything a source could not confirm is labelled, not guessed.</p>
-    <div class="facts">
-      <span class="fact"><b>21</b> challenges</span>
+<header class="post">
+  <div class="post-top">
+    <a href="../index.html">&#8592; All guides</a>
+    <span><!--@eyebrow-->Special Assignment · Whittleton Creek, Vermont<!--/@eyebrow--></span>
+    <span>First class &middot; do not bend</span>
+  </div>
+
+  <div class="post-body">
+    <div class="addr">
+      <p class="to">To the occupant &middot; Whittleton Creek, Vermont</p>
+      <h1 class="title"><!--@h1-->A Bitter&nbsp;Pill <span class="thin">/ 21</span><!--/@h1--></h1>
+      <p class="sub"><!--@sub-->Step by step, five runs, every challenge covered. Verified against your in-game export, the Hitman Wiki mission and walkthrough pages, the nine individual challenge pages, and two community route guides. Anything a source could not confirm is labelled, not guessed.<!--/@sub--></p>
+      <div class="facts">
+<!--@facts-->
+<span class="fact"><b>21</b> challenges</span>
       <span class="fact"><b>53,000</b> XP</span>
       <span class="fact"><b>1</b> target · Galen Vholes</span>
       <span class="fact"><b>0</b> mission stories</span>
       <span class="fact"><b>0</b> Chameleon disguises</span>
       <span class="fact"><b>0</b> discovery areas</span>
-    </div>
-    <div class="tracker">
-      <div class="trk-top">
-        <div><div class="lbl">Challenges complete</div><div class="big"><span id="tDone">0</span><small>/21</small></div></div>
-        <div style="text-align:right"><div class="lbl">XP earned</div><div class="xp"><span id="tXp">0</span> / 53,000</div></div>
+<!--/@facts-->
       </div>
-      <div class="cap"><i id="tFill"></i></div>
-      <div class="cats" id="tCats"></div>
-      <button class="reset" id="btnReset">Clear all progress</button>
     </div>
+
+    <div class="frank">
+      <div class="meter">
+        <div class="m1">Postage paid</div>
+        <div class="m2"><span id="tDone">0</span><small> / <span id="tTot">0</span></small></div>
+        <div class="m3" id="tXpLine">0 XP franked</div>
+      </div>
+      <div class="pmark" aria-hidden="true">
+        <span>Whittleton Creek VT<b id="pmPct">0%</b>delivered</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- the tracker proper: one stamp a challenge, cancelled when it lands -->
+  <div class="sheet">
+    <div class="sheet-h"><span>Sheet of <span id="sheetN">0</span> &middot; one stamp per challenge</span>
+      <span id="stepRead">Manifest lines cancelled 0 of 0</span></div>
+    <ul class="stamps" id="stamps" aria-hidden="true"></ul>
+  </div>
+
+  <div class="rack" id="tCats"></div>
+
+  <div class="post-foot">
+    <span class="stampline">Marks are kept on this device only</span>
+    <button class="btn" id="reset" type="button">Clear the whole sack</button>
   </div>
 </header>
 
-<div class="wrap">
-  <nav class="tabs" role="tablist">
-    <button role="tab" id="tab-runs" aria-selected="true" aria-controls="p-runs">Runs</button>
-    <button role="tab" id="tab-check" aria-selected="false" aria-controls="p-check">Checklist</button>
-    <button role="tab" id="tab-verify" aria-selected="false" aria-controls="p-verify">Verification</button>
-  </nav>
+<div class="tabs" role="tablist" aria-label="Guide sections">
+  <button class="tab" role="tab" id="tab-runs" aria-controls="p-runs" aria-selected="true">The letters</button>
+  <button class="tab" role="tab" id="tab-check" aria-controls="p-check" aria-selected="false">Stamp album</button>
+  <button class="tab" role="tab" id="tab-verify" aria-controls="p-verify" aria-selected="false">Postmarks &amp; sources</button>
+</div>
 
-  <section id="p-runs" role="tabpanel" aria-labelledby="tab-runs">
-    <div class="runbar" id="runbar"></div>
-
-    <div class="notice warn">
-      <h4>Three things this mission does not have</h4>
+<section class="panel" id="p-runs" role="tabpanel" aria-labelledby="tab-runs">
+  <div class="notice">
+<!--@notice-->
+<h4>Three things this mission does not have</h4>
       <p><b>No Mission Stories.</b> Confirmed by the wiki and by your export. There is no story order to protect and no "complete all stories" challenge. Guides that list mission stories here are describing <i>Another Life</i>, the main Whittleton Creek mission.</p>
       <p><b>No Chameleon and no discovery areas.</b> Your export reports <span class="xpv">disguiseCount: 0</span> and <span class="xpv">areaCount: 0</span>, with areas shared from Another Life. There is no disguise set to collect and no map to sweep.</p>
       <p><b>Eight kill methods, one target.</b> Every kill challenge is mutually exclusive within a single life, so Runs 4 and 5 branch off one save each. Run the runs in order — Versatile Assassin in Run 5 needs challenges banked in Runs 1 and 4.</p>
-    </div>
+<!--/@notice-->
+  </div>
+  <div class="runbar" id="runbar"></div>
+  <div id="runs"></div>
+</section>
 
-    <div id="runs"></div>
-  </section>
+<section class="panel" id="p-check" role="tabpanel" aria-labelledby="tab-check" hidden>
+  <p class="lede"><!--@lede-->All 21 challenges. Unlock text is quoted from your in-game export; XP values come from the wiki, which your export does not carry.<!--/@lede--></p>
+  <div class="filters" id="filters"></div>
+  <div id="checklist"></div>
+</section>
 
-  <section id="p-check" role="tabpanel" aria-labelledby="tab-check" hidden>
-    <p class="lede">All 21 challenges. Unlock text is quoted from your in-game export; XP values come from the wiki, which your export does not carry.</p>
-    <div class="filters" id="filters"></div>
-    <div id="checklist"></div>
-  </section>
-
-  <section id="p-verify" role="tabpanel" aria-labelledby="tab-verify" hidden>
-    <h3 class="blk">Count audit</h3>
+<section class="panel" id="p-verify" role="tabpanel" aria-labelledby="tab-verify" hidden>
+<!--@verify-->
+<h3 class="blk">Count audit</h3>
     <p class="lede">Your export, the wiki challenge table, and this guide counted independently.</p>
     <table><thead><tr><th>Category</th><th class="num">Your export</th><th class="num">Wiki table</th><th class="num">This guide</th><th class="num">XP</th><th>Match</th></tr></thead>
     <tbody id="auditRows"></tbody><tfoot id="auditFoot"></tfoot></table>
@@ -271,10 +439,14 @@ ul.plain li{margin-bottom:8px;font-size:14px}
       <li><b>NPC names.</b> Only Galen Vholes, Sheriff Masterson, Dale Anderson and Helen West are named anywhere. The two gardeners, the four police deputies and Vholes' two plainclothes aides are unnamed in every source consulted, so they are identified by post and patrol instead.</li>
       <li><b>Patch history.</b> No challenge in the current 21 is recorded as added by a patch. Ectoplasmic and No Evidence were cut in HITMAN III, with no patch number given.</li>
     </ul>
-  </section>
+<!--/@verify-->
+</section>
+
+<footer>Compiled from the in-game challenge export, the Hitman Wiki mission, walkthrough and challenge pages, and two community route guides. Where two sources disagreed, both readings are printed rather than one being picked silently.</footer>
 </div>
 
 <script>
+/*@data*/
 const CATS={A:{n:"Assassination",c:"var(--rx)"},D:{n:"Discovery",c:"var(--slate)"},F:{n:"Feats",c:"var(--amber)"},T:{n:"Targets",c:"var(--violet)"},C:{n:"The Classics",c:"var(--teal)"}};
 const ORDER=["A","D","F","T","C"];
 
@@ -569,131 +741,297 @@ const RUNS=[
  ]}]
 }
 ];
+/*/@data*/
 
-const S={done:new Set(),steps:new Set(),ex:new Set(),open:new Set([1]),filter:"all"};
-try{const saved=JSON.parse(localStorage.getItem('bitter_pill_done_v1')||'[]');saved.forEach(id=>S.done.add(id));}catch(e){}
-try{const _s=JSON.parse(localStorage.getItem('bitter_pill_done_v1:steps'));if(Array.isArray(_s))_s.forEach(k=>S.steps.add(k));}catch(e){}
-function reportProgress(){try{const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r['sa04']={done:S.done.size,total:CH.length,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
-function saveDone(){try{localStorage.setItem('bitter_pill_done_v1',JSON.stringify([...S.done]));localStorage.setItem('bitter_pill_done_v1:steps',JSON.stringify([...S.steps]));}catch(e){}reportProgress();}
+/* ---------------- STATE ---------------- */
+/* The two keys the previous edition wrote are spelled out in full below, and
+   the step keys keep their `run-section-step` shape, so nobody loses a mark. */
+const S={done:new Set(),steps:new Set(),filter:"all",open:new Set([1]),openSteps:new Set()};
 const TOTXP=CH.reduce((a,c)=>a+c.xp,0);
 const $=id=>document.getElementById(id);
 
-function runStats(id){const l=CH.filter(c=>c.run===id);return{n:l.length,d:l.filter(c=>S.done.has(c.id)).length,xp:l.reduce((a,c)=>a+c.xp,0)};}
-
-function renderRunbar(){
-  $("runbar").innerHTML=RUNS.map(r=>{const st=runStats(r.id);
-    return `<button class="jump ${st.d===st.n?"complete":""}" data-jump="${r.id}">Run ${r.id}<span class="pill">${st.d}/${st.n}</span></button>`;
-  }).join("")+`<span class="spacer"></span><button class="util" data-all="open">Expand all</button><button class="util" data-all="close">Collapse all</button>`;
+function reportProgress(){try{const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r['sa04']={done:S.done.size,total:CH.length,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
+function load(){
+  try{const saved=JSON.parse(localStorage.getItem('bitter_pill_done_v1')||'[]');saved.forEach(id=>S.done.add(id));}catch(e){}
+  try{const st=JSON.parse(localStorage.getItem('bitter_pill_done_v1:steps'));if(Array.isArray(st))st.forEach(k=>S.steps.add(k));}catch(e){}
+  render();reportProgress();
 }
-function renderTracker(){
-  const dn=S.done.size,xp=CH.filter(c=>S.done.has(c.id)).reduce((a,c)=>a+c.xp,0);
-  $("tDone").textContent=dn; $("tXp").textContent=xp.toLocaleString();
-  $("tFill").style.width=(dn/CH.length*100)+"%";
-  $("tCats").innerHTML=ORDER.map(k=>{
-    const all=CH.filter(c=>c.c===k),d=all.filter(c=>S.done.has(c.id)).length;
-    return `<div class="cat"><div class="nm">${CATS[k].n}</div><div class="vl">${d}<span style="color:var(--dim);font-size:16px">/${all.length}</span></div><div class="bar"><i style="width:${d/all.length*100}%;background:${CATS[k].c}"></i></div></div>`;
-  }).join("");
-  renderRunbar();
-}
-function badge(b){const pre=b.c==="warn"?"⚠ ":b.c==="save"?"◆ ":b.c==="unv"?"unverified — ":"";return `<span class="badge b-${b.c}">${pre}${b.t}</span>`;}
-
-function renderRuns(){
-  $("runs").innerHTML=RUNS.map((r,ri)=>{
-    const st=runStats(r.id),open=S.open.has(r.id);let no=0;
-    const body=r.secs.map((sec,si)=>`<div class="sec">${sec.n}</div>`+sec.steps.map((sp,ti)=>{
-      no++;
-      const key=`${ri}-${si}-${ti}`,dn=S.steps.has(key),ex=S.ex.has(key);
-      const bul=sp.f.map(f=>`<li><span class="ftag ${f[2]?"warnt":""}">${f[0]}</span><span>${f[1]}</span></li>`).join("");
-      const bd=sp.b.length?`<div class="badges">${sp.b.map(badge).join("")}</div>`:"";
-      return `<div class="step ${dn?"done":""} ${ex?"expanded":""}">
-        <div class="step-head">
-          <button class="tick" data-tick="${key}" aria-label="Mark step complete">✓</button>
-          <button class="step-open" data-ex="${key}" aria-expanded="${ex}">
-            <span class="stepno">${String(no).padStart(2,"0")}</span>
-            <span class="step-txt" style="flex:1;min-width:0"><h4>${sp.t}</h4><p>${sp.s}</p></span>
-            <span class="chev2">▶</span>
-          </button>
-        </div>
-        <div class="detail" ${ex?"":"hidden"}><ul class="f">${bul}</ul>${bd}</div>
-      </div>`;
-    }).join("")).join("");
-    return `<article class="run ${open?"open":""}" id="run-${r.id}">
-      <button class="run-head" data-run="${r.id}" aria-expanded="${open}">
-        <span class="chev">▶</span>
-        <span style="flex:1;min-width:0">
-          <span class="meta">Run ${String(r.id).padStart(2,"0")} · ${st.n} challenges · ${st.xp.toLocaleString()} XP</span>
-          <h2>${r.title}</h2><p>${r.goal}</p>
-        </span>
-        <span class="run-prog">${st.d}/${st.n}</span>
-      </button>
-      <div class="run-body" ${open?"":"hidden"}>
-        <div class="rx">
-          <div class="rx-top"><span class="tag">Loadout</span><span class="lot">RUN-${String(r.id).padStart(2,"0")} · WHITTLETON CREEK</span></div>
-          <div class="rx-grid">
-            <div class="rx-cell"><div class="k">Starting location</div><div class="v">${r.load.start}</div><div class="n">${r.load.startNote}</div></div>
-            <div class="rx-cell"><div class="k">Suit</div><div class="v">${r.load.suit}</div><div class="n">${r.load.suitNote}</div></div>
-            ${r.load.slots.map(s=>`<div class="rx-cell"><div class="k">${s.k}</div><div class="v">${s.v}</div><div class="n">${s.n}</div></div>`).join("")}
-          </div>
-        </div>${body}
-      </div></article>`;
-  }).join("");
+function saveDone(){
+  try{
+    localStorage.setItem('bitter_pill_done_v1',JSON.stringify([...S.done]));
+    localStorage.setItem('bitter_pill_done_v1:steps',JSON.stringify([...S.steps]));
+  }catch(e){}
+  reportProgress();
 }
 
-const FILTERS=[{k:"all",l:"All"},{k:"A",l:"Assassination"},{k:"D",l:"Discovery"},{k:"F",l:"Feats"},{k:"T",l:"Targets"},{k:"C",l:"The Classics"},{k:"inc",l:"Incomplete"}];
-function renderChecklist(){
-  $("filters").innerHTML=FILTERS.map(f=>{
-    const n=f.k==="all"?CH.length:f.k==="inc"?CH.filter(c=>!S.done.has(c.id)).length:CH.filter(c=>c.c===f.k).length;
-    return `<button data-filter="${f.k}" class="${S.filter===f.k?"on":""}">${f.l} · ${n}</button>`;
-  }).join("");
-  const list=CH.filter(c=>S.filter==="all"?true:S.filter==="inc"?!S.done.has(c.id):c.c===S.filter);
-  $("checklist").innerHTML=list.length?list.map(c=>`<div class="chal ${S.done.has(c.id)?"done":""}">
-    <button class="tick" data-chal="${c.id}" aria-label="Mark challenge complete">✓</button>
-    <div style="flex:1;min-width:0"><h4>${c.n}</h4><p class="cond">${c.cond}</p>
-    <div class="m"><span class="badge b-${c.c}">${CATS[c.c].n}</span><span class="xpv">+${c.xp.toLocaleString()} XP</span><span class="runtag">Run ${String(c.run).padStart(2,"0")}</span></div></div></div>`).join("")
-    :`<div class="notice"><h4>Nothing left here</h4><p>Every challenge in this filter is ticked off.</p></div>`;
+const byId=Object.fromEntries(CH.map(c=>[c.id,c]));
+/* A step badge names its challenge in words and adds the XP — "Straight Shot
+   +1000". Matching is by name, with one alias: the data abbreviates Silent
+   Assassin, Suit Only on the badge but not in the challenge list. */
+const ALIAS={"sa,suitonly":"saso"};
+const flat=s=>String(s).toLowerCase().replace(/\+[\d,]+/g,'').replace(/[^a-z0-9]+/g,'');
+const NAME_ID={};
+CH.forEach(c=>{NAME_ID[flat(c.n)]=c.id;});
+function badgeChallenge(b){
+  if(!CATS[b.c]) return null;
+  const k=flat(b.t);
+  return NAME_ID[k]||ALIAS[k]||null;
 }
 
-function renderAudit(){
-  const off={A:10,D:2,F:3,T:1,C:5};
-  $("auditRows").innerHTML=ORDER.map(k=>{
-    const l=CH.filter(c=>c.c===k),xp=l.reduce((a,c)=>a+c.xp,0),m=l.length===off[k];
-    return `<tr><td>${CATS[k].n}</td><td class="num">${off[k]}</td><td class="num">${off[k]}</td><td class="num">${l.length}</td><td class="num">${xp.toLocaleString()}</td><td class="${m?"ok":""}">${m?"Match":"MISMATCH"}</td></tr>`;
-  }).join("");
-  const ok=CH.length===21&&TOTXP===53000;
-  $("auditFoot").innerHTML=`<tr><th>Total</th><th class="num">21</th><th class="num">21</th><th class="num">${CH.length}</th><th class="num">${TOTXP.toLocaleString()}</th><th class="${ok?"ok":""}">${ok?"Match — 21 challenges, 53,000 XP":"MISMATCH"}</th></tr>`;
-  $("unverified").innerHTML=UNVERIFIED.map(u=>`<li>${u}</li>`).join("");
-}
+/* manifest key → the challenges that line signs for */
+const STEP_CH={};
+RUNS.forEach((r,ri)=>r.secs.forEach((sec,si)=>sec.steps.forEach((st,ti)=>{
+  st._key=ri+"-"+si+"-"+ti;
+  STEP_CH[st._key]=(st.b||[]).map(badgeChallenge).filter(Boolean);
+})));
+const TOTAL_STEPS=RUNS.reduce((a,r)=>a+r.secs.reduce((b,s)=>b+s.steps.length,0),0);
 
-document.addEventListener("click",e=>{
-  const j=e.target.closest("[data-jump]");
-  if(j){const id=+j.dataset.jump;S.open.add(id);renderRuns();
-    document.getElementById("run-"+id).scrollIntoView({behavior:"smooth",block:"start"});return;}
-  const al=e.target.closest("[data-all]");
-  if(al){if(al.dataset.all==="open")RUNS.forEach(r=>S.open.add(r.id));else S.open.clear();renderRuns();return;}
-  const rh=e.target.closest("[data-run]");
-  if(rh){const id=+rh.dataset.run;S.open.has(id)?S.open.delete(id):S.open.add(id);renderRuns();return;}
-  const tk=e.target.closest("[data-tick]");
-  if(tk){const k=tk.dataset.tick;S.steps.has(k)?S.steps.delete(k):S.steps.add(k);saveDone();
-    tk.closest(".step").classList.toggle("done",S.steps.has(k));return;}
-  const ex=e.target.closest("[data-ex]");
-  if(ex){const k=ex.dataset.ex,step=ex.closest(".step"),d=step.querySelector(".detail"),now=!S.ex.has(k);
-    now?S.ex.add(k):S.ex.delete(k);
-    d.toggleAttribute("hidden",!now);step.classList.toggle("expanded",now);ex.setAttribute("aria-expanded",String(now));return;}
-  const ch=e.target.closest("[data-chal]");
-  if(ch){const id=ch.dataset.chal;S.done.has(id)?S.done.delete(id):S.done.add(id);saveDone();renderTracker();renderChecklist();return;}
-  const f=e.target.closest("[data-filter]");
-  if(f){S.filter=f.dataset.filter;renderChecklist();return;}
+/* what each letter is worth — read off the data, never typed */
+RUNS.forEach(r=>{
+  const out=[];
+  r.secs.forEach(sec=>sec.steps.forEach(st=>STEP_CH[st._key].forEach(id=>{if(!out.includes(id))out.push(id);})));
+  CH.forEach(c=>{if(c.run===r.id&&!out.includes(c.id))out.push(c.id);});
+  r._ids=out;
 });
 
-$("btnReset").addEventListener("click",()=>{S.done.clear();S.steps.clear();S.ex.clear();saveDone();renderTracker();renderChecklist();renderRuns();});
+function chip(id){
+  const c=byId[id];if(!c)return"";
+  const on=S.done.has(id);
+  return `<button type="button" class="chip${on?" on":""}" data-ch="${id}" aria-pressed="${on}" `+
+    `title="${CATS[c.c].n} &middot; ${c.xp.toLocaleString()} XP">${c.n}</button>`;
+}
 
-document.querySelectorAll("nav.tabs button").forEach(b=>b.addEventListener("click",()=>{
-  document.querySelectorAll("nav.tabs button").forEach(x=>x.setAttribute("aria-selected",String(x===b)));
-  ["p-runs","p-check","p-verify"].forEach(id=>document.getElementById(id).hidden=(id!==b.getAttribute("aria-controls")));
-}));
+/* ---------------- THE SHEET ---------------- */
+function renderTracker(){
+  const n=S.done.size, tot=CH.length;
+  $('tDone').textContent=n;
+  $('tTot').textContent=tot;
+  $('sheetN').textContent=tot;
+  const xp=CH.filter(c=>S.done.has(c.id)).reduce((a,c)=>a+c.xp,0);
+  $('tXpLine').textContent=xp.toLocaleString()+' of '+TOTXP.toLocaleString()+' XP franked';
+  $('pmPct').textContent=Math.round(tot?n/tot*100:0)+'%';
+  $('stepRead').textContent='Manifest lines cancelled '+S.steps.size+' of '+TOTAL_STEPS;
 
-renderTracker();renderRuns();renderChecklist();renderAudit();
-reportProgress();
+  $('stamps').innerHTML=CH.map((c,i)=>
+    `<li class="${S.done.has(c.id)?'on':''}" title="${c.n}">
+      <span class="sn">${String(i+1).padStart(2,'0')}</span>
+      <span class="sv">${(c.xp/1000)}k</span></li>`).join('');
+
+  $('tCats').innerHTML=ORDER.map(k=>{
+    const all=CH.filter(c=>c.c===k), d=all.filter(c=>S.done.has(c.id)).length;
+    const pct=all.length?d/all.length*100:0;
+    return `<div class="slot${d===all.length?' full':''}">
+      <span class="k">${CATS[k].n}</span>
+      <span class="v">${d}<small> / ${all.length}</small></span>
+      <span class="bar"><i style="width:${pct}%"></i></span>
+    </div>`;
+  }).join('');
+}
+
+function renderBar(){
+  $('runbar').innerHTML=`<span class="jl">The sack</span>`+
+    RUNS.map(r=>{
+      const d=r._ids.filter(id=>S.done.has(id)).length;
+      return `<button type="button" class="jump${d===r._ids.length?' full':''}" data-jump="${r.id}">`+
+        `<b>No. ${String(r.id).padStart(2,'0')}</b>${r.title}<span class="pg">${d}/${r._ids.length}</span></button>`;
+    }).join('')+
+    `<button type="button" class="btn-plain" data-toggleall="1" style="margin-left:auto">Open / close every letter</button>`;
+}
+
+/* ---------------- THE LETTERS ---------------- */
+function renderRuns(){
+  $('runs').innerHTML=RUNS.map((r,ri)=>{
+    const open=S.open.has(r.id);
+    const d=r._ids.filter(id=>S.done.has(id)).length;
+    const lines=r.secs.reduce((a,s)=>a+s.steps.length,0);
+    const signed=r.secs.reduce((a,s)=>a+s.steps.filter(st=>S.steps.has(st._key)).length,0);
+    const full=r._ids.length&&d===r._ids.length;
+
+    /* the chips are buttons, so they sit under the header rather than inside
+       it — a button inside a button tears the header apart */
+    return `<article class="letter${open?' open':''}${full?' full':''}" id="run-${r.id}">
+      <button type="button" class="lhead" data-run="${r.id}" aria-expanded="${open}">
+        <span class="lline">
+          <span class="lstamp"><b>${r._ids.length}</b><span>challenges</span></span>
+          <span>
+            <span class="lrun">Run ${String(r.id).padStart(2,'0')}</span><br>
+            <span class="lmeta">${lines} manifest lines &middot; ${signed} cancelled</span>
+          </span>
+          <span class="ltally">${d} / ${r._ids.length}</span>
+        </span>
+        <span class="ltitle">${r.title}</span>
+        <span class="lgoal">${r.goal}</span>
+      </button>
+      <div class="delivered" aria-hidden="true">Delivered</div>
+      <div class="lchips">${r._ids.map(chip).join('')}</div>
+      <div class="lbody"${open?'':' hidden'}>
+        <div class="kit">
+          <h5>Franking &amp; kit &mdash; Run ${String(r.id).padStart(2,'0')}</h5>
+          <dl>
+            <dt>Posted from</dt><dd><b>${r.load.start}</b> &mdash; ${r.load.startNote}</dd>
+            <dt>Wearing</dt><dd><b>${r.load.suit}</b> &mdash; ${r.load.suitNote}</dd>
+          </dl>
+          <div class="kgrid">${r.load.slots.map(s=>
+            `<div class="kslot"><span class="k">${s.k}</span><span class="v">${s.v}</span><span class="n">${s.n}</span></div>`).join('')}
+          </div>
+        </div>
+        ${r.secs.map(sec=>`<div class="tray">${sec.n}</div>`+
+          sec.steps.map(st=>lineHTML(r,st)).join('')).join('')}
+      </div>
+    </article>`;
+  }).join('');
+}
+
+function lineNumber(run,key){
+  let n=0;
+  for(const sec of run.secs) for(const st of sec.steps){n++; if(st._key===key) return n;}
+  return '';
+}
+
+function lineHTML(run,st){
+  const on=S.steps.has(st._key), open=S.openSteps.has(st._key);
+  const num=lineNumber(run,st._key);
+  const badges=st.b||[];
+  return `<div class="step${on?' done':''}">
+    <button type="button" class="tick" data-tick="${st._key}" aria-pressed="${on}"
+      aria-label="Cancel manifest line ${num}${STEP_CH[st._key].length?' and sign for the challenges it carries':''}"></button>
+    <span class="route">WC&#8209;${String(run.id).padStart(2,'0')}<br>${String(num).padStart(2,'0')}</span>
+    <div class="swrap">
+      <button type="button" class="shead" data-open="${st._key}" aria-expanded="${open}">
+        ${st.t}${st.s?`<span class="sum">${st.s}</span>`:''}
+      </button>
+      <div class="badges">
+        ${badges.map(b=>{const id=badgeChallenge(b);
+          return id?chip(id):`<span class="mark m-${b.c}">${b.t}</span>`;}).join('')}
+      </div>
+      <div class="sbody"${open?'':' hidden'}>
+        <dl>${(st.f||[]).map(f=>
+          `<dt${f[2]?' class="wr"':''}>${f[0]}</dt><dd${f[2]?' class="wr"':''}>${f[1]}</dd>`).join('')}</dl>
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ---------------- THE ALBUM ---------------- */
+const FILTERS=[{k:"all",l:"All"}].concat(ORDER.map(k=>({k:k,l:CATS[k].n}))).concat([{k:"inc",l:"Uncancelled"}]);
+function renderChecklist(){
+  $('filters').innerHTML=FILTERS.map(f=>{
+    const n=f.k==="all"?CH.length:f.k==="inc"?CH.filter(c=>!S.done.has(c.id)).length:CH.filter(c=>c.c===f.k).length;
+    return `<button type="button" data-filter="${f.k}" aria-pressed="${S.filter===f.k}">${f.l} &middot; ${n}</button>`;
+  }).join('');
+  const list=CH.filter(c=>S.filter==="all"?true:S.filter==="inc"?!S.done.has(c.id):c.c===S.filter);
+  const el=$('checklist');
+  if(!list.length){el.innerHTML=`<p class="empty">Nothing left in this tray &mdash; every stamp here is cancelled.</p>`;return;}
+  el.innerHTML=list.map(c=>{
+    const on=S.done.has(c.id);
+    return `<div class="crow${on?' done':''}">
+      <button type="button" class="tick" data-chal="${c.id}" aria-pressed="${on}" aria-label="Cancel ${c.n}"></button>
+      <div>
+        <p class="cn">${c.n}</p>
+        <p class="cc">${c.cond}</p>
+      </div>
+      <span class="cpost">
+        <span class="den">${c.xp.toLocaleString()} XP</span>
+        <span>${CATS[c.c].n}</span>
+        <span>Run ${String(c.run).padStart(2,'0')}</span>
+      </span>
+    </div>`;
+  }).join('');
+}
+
+/* ---------------- POSTMARKS & SOURCES ---------------- */
+function renderAudit(){
+  const off={A:10,D:2,F:3,T:1,C:5};
+  $('auditRows').innerHTML=ORDER.map(k=>{
+    const l=CH.filter(c=>c.c===k),xp=l.reduce((a,c)=>a+c.xp,0),m=l.length===off[k];
+    return `<tr><td>${CATS[k].n}</td><td class="num">${off[k]}</td><td class="num">${off[k]}</td><td class="num">${l.length}</td><td class="num">${xp.toLocaleString()}</td><td class="${m?"ok":""}">${m?"Match":"MISMATCH"}</td></tr>`;
+  }).join('');
+  const ok=CH.length===21&&TOTXP===53000;
+  $('auditFoot').innerHTML=`<tr><th>Total</th><th class="num">21</th><th class="num">21</th><th class="num">${CH.length}</th><th class="num">${TOTXP.toLocaleString()}</th><th class="${ok?"ok":""}">${ok?"Match — 21 challenges, 53,000 XP":"MISMATCH"}</th></tr>`;
+  $('unverified').innerHTML=UNVERIFIED.map(u=>`<li>${u}</li>`).join('');
+}
+
+function render(){renderTracker();renderBar();renderRuns();renderChecklist();renderAudit();}
+
+/* ---------------- EVENTS ---------------- */
+const tabs=[...document.querySelectorAll('.tab')];
+function selectTab(tb){
+  tabs.forEach(x=>{
+    const on=x===tb;
+    x.setAttribute('aria-selected',String(on));
+    x.tabIndex=on?0:-1;
+    $(x.getAttribute('aria-controls')).hidden=!on;
+  });
+}
+tabs.forEach((tb,i)=>{
+  tb.tabIndex=tb.getAttribute('aria-selected')==='true'?0:-1;
+  tb.addEventListener('keydown',e=>{
+    const d=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;
+    if(!d)return;
+    e.preventDefault();
+    const next=tabs[(i+d+tabs.length)%tabs.length];
+    selectTab(next);next.focus();
+  });
+});
+
+document.addEventListener('click',e=>{
+  const t=e.target;
+
+  /* a challenge named on a manifest line or a letter is a control */
+  const cb=t.closest('[data-ch]');
+  if(cb){const id=cb.dataset.ch;
+    S.done.has(id)?S.done.delete(id):S.done.add(id);
+    saveDone();render();return;}
+
+  const tk=t.closest('[data-tick]');
+  if(tk){
+    const k=tk.dataset.tick, now=!S.steps.has(k);
+    now?S.steps.add(k):S.steps.delete(k);
+    /* cancelling a line signs for what that line carries; un-cancelling leaves
+       the challenges signed, because another line may carry the same one */
+    if(now)(STEP_CH[k]||[]).forEach(id=>S.done.add(id));
+    saveDone();render();return;
+  }
+  const so=t.closest('[data-open]');
+  if(so){const k=so.dataset.open;
+    S.openSteps.has(k)?S.openSteps.delete(k):S.openSteps.add(k);
+    renderRuns();return;}
+  const rh=t.closest('[data-run]');
+  if(rh){const id=+rh.dataset.run;
+    S.open.has(id)?S.open.delete(id):S.open.add(id);
+    renderRuns();return;}
+  const ch=t.closest('[data-chal]');
+  if(ch){const id=ch.dataset.chal;
+    S.done.has(id)?S.done.delete(id):S.done.add(id);
+    saveDone();render();return;}
+  const jp=t.closest('[data-jump]');
+  if(jp){const id=+jp.dataset.jump;
+    S.open.add(id);renderRuns();
+    $('run-'+id).scrollIntoView({behavior:'smooth',block:'start'});return;}
+  const ta=t.closest('[data-toggleall]');
+  if(ta){
+    if(S.open.size===RUNS.length){S.open.clear();S.openSteps.clear();}
+    else RUNS.forEach(r=>S.open.add(r.id));
+    renderRuns();return;}
+  const ft=t.closest('[data-filter]');
+  if(ft){S.filter=ft.dataset.filter;renderChecklist();return;}
+  const tb=t.closest('.tab');
+  if(tb){selectTab(tb);return;}
+});
+
+$('reset').addEventListener('click',()=>{
+  if(!confirm('Return the whole sack? Every mark on this guide is cleared. Other guides are not affected.'))return;
+  S.done.clear();S.steps.clear();saveDone();render();
+});
+
+/* the audit tables scroll inside themselves on a phone */
+document.querySelectorAll('#p-verify table').forEach(t=>{
+  if(t.parentNode.classList.contains('tablewrap'))return;
+  const w=document.createElement('div');w.className='tablewrap';
+  t.parentNode.insertBefore(w,t);w.appendChild(t);
+});
+
+load();
 </script>
 <!-- step-progress-bridge -->
 <script>

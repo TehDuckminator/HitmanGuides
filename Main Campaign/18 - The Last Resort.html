@@ -3,196 +3,385 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Last Resort — Haven Island Challenge Dossier</title>
+<!--@title--><title>The Last Resort — Haven Island Challenge Dossier</title><!--/@title-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Outfit:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
+/* ═══ HAVEN ISLAND — the guest programme ═══
+   The joke the mission never says out loud is in its title. Haven is a
+   wellness retreat in the Maldives: overwater villas, a spa, a beach bar, an
+   activity card slipped under your door every morning — and three people
+   hiding on it who will not be leaving. So the guide is that card. The work is
+   printed as the things the resort would offer you, in the order the day
+   offers them.
+
+   The tracker is THE DAY ITSELF: a sun that climbs its arc over the lagoon as
+   challenges land, and sets into the sea only when the last one is down; the
+   sky warms towards evening as it goes. The five categories are the five
+   flags on the beach, each running up its pole as its own set fills.
+
+   A run is a DAY of the stay, keeping the run number the guide printed on it;
+   a section is a part of that day; a step is an ACTIVITY, and taking one
+   punches its hole in the card, the way a resort marks off what you have
+   used. The guide's warnings become the card's small print, and its save
+   markers become KEEP YOUR PLACE.
+
+   Sand, lagoon teal, coral and a low sun. Nothing of the brass key board and
+   guest register the Bangkok hotel took — no keys, no register, no reception
+   desk — because this is the paper the guest is handed, not the hotel's own
+   record of them. */
 :root{
-  --ink:#06181f;--ink2:#0b2530;--panel:#0e2d3a;--panel2:#123642;
-  --line:#1d4d5c;--line2:#2a6a7c;
-  --text:#e7f0ec;--muted:#8fb2b8;--dim:#5f858d;
-  --aqua:#3fd6b0;--aqua-dim:#1f8f78;
-  --amber:#f0a830;--red:#ff5f57;--violet:#a48bff;--sand:#e8d5a9;
-  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
-  --sans:"Helvetica Neue",Helvetica,Arial,sans-serif;
+  --sand:#f6efe0; --card:#fffdf7; --card-2:#f1e8d6; --ink:#20313a; --ink-2:#42555f;
+  --dim:#6b7d86; --faint:#8d9ca3;
+  --sea:#1f8a9e; --sea-deep:#0d5a6a; --coral:#e2664a; --sun:#efa63a; --palm:#3f7a4e;
+  --orchid:#8e4f9e;
+  --rule:rgba(32,49,58,.20); --rule-2:rgba(32,49,58,.11); --rule-3:rgba(32,49,58,.055);
+  --A:#e2664a; --D:#1f8a9e; --F:#efa63a; --T:#8e4f9e; --C:#3f7a4e;
+  --disp:Fraunces,Georgia,"Times New Roman",serif;
+  --body:Outfit,system-ui,-apple-system,"Segoe UI",Helvetica,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Consolas,"Courier New",monospace;
 }
 *{box-sizing:border-box}
-html,body{margin:0;padding:0}
+html{scroll-behavior:smooth}
 body{
-  background:
-    radial-gradient(1200px 600px at 80% -10%, #10404f 0%, transparent 60%),
-    radial-gradient(900px 500px at -10% 20%, #0a2f3c 0%, transparent 55%),
-    var(--ink);
-  color:var(--text);font-family:var(--sans);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;
+  margin:0;color:var(--ink);background-color:var(--sand);
+  /* bright, flat, overexposed — the light on a white island at noon */
+  background-image:
+    radial-gradient(900px 500px at 50% -10%,rgba(255,255,255,.9),transparent 60%),
+    radial-gradient(700px 480px at 0% 100%,rgba(31,138,158,.09),transparent 62%);
+  background-attachment:fixed;
+  font-family:var(--body);font-size:16px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.isle{max-width:1120px;margin:0 auto;padding:0 15px 100px}
+a{color:var(--sea-deep)}
+b,strong{font-weight:600;color:var(--ink)}
+em,i{font-style:italic}
+u{text-decoration-color:var(--coral)}
+:focus-visible{outline:2px solid var(--coral);outline-offset:2px}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:12px;top:12px;z-index:60;background:var(--sea-deep);color:#fff;padding:8px 14px;
+  font-family:var(--mono);font-size:12px}
+.lbl{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+
+/* ── the card ───────────────────────────────────────────────────────────── */
+header.card{margin-top:20px;background:var(--card);border:1px solid var(--rule-2);
+  box-shadow:0 24px 48px -42px rgba(32,49,58,.9)}
+.plate{padding:30px 26px 22px}
+.eyebrow{margin:0 0 14px;font-family:var(--mono);font-size:10.5px;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--sea)}
+h1{margin:0;font-family:var(--disp);font-weight:900;font-size:clamp(34px,6.6vw,66px);line-height:1.02;
+  letter-spacing:-.01em;color:var(--ink)}
+.sub{margin:18px 0 0;max-width:78ch;font-size:15.4px;color:var(--ink-2);font-weight:300}
+.mast-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+.mast-meta span{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;
+  background:var(--card-2);color:var(--ink-2);padding:5px 10px;border-radius:20px}
+.rail{display:flex;flex-wrap:wrap;gap:6px 20px;align-items:center;justify-content:space-between;
+  padding:9px 26px;background:var(--card-2);
+  font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+.rail a{color:var(--sea-deep);text-decoration:none;border-bottom:1px solid rgba(13,90,106,.4)}
+.rail a:hover{color:var(--coral);border-color:var(--coral)}
+
+/* ── the day ────────────────────────────────────────────────────────────── */
+.day{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,290px);gap:24px;align-items:center;
+  padding:22px 26px 26px}
+.lagoon{position:relative;min-width:0}
+.lagoon svg{display:block;width:100%;height:auto}
+.evening{opacity:0;transition:opacity .6s ease}
+.sun{transition:cx .6s ease,cy .6s ease}
+.sunhalo{opacity:.22;transition:cx .6s ease,cy .6s ease}
+/* the five flags on the beach, each running up its own pole */
+.flags{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:10px}
+.flagcol{text-align:center;min-width:0}
+.pole{position:relative;height:62px;margin:0 auto;width:2px;background:var(--rule)}
+.flag{position:absolute;left:2px;bottom:0;width:0;height:0;
+  border-left:20px solid var(--m,var(--sea));border-top:7px solid transparent;
+  border-bottom:7px solid transparent;transition:bottom .5s ease}
+.flagcol .k{display:block;margin-top:6px;font-family:var(--mono);font-size:9px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--dim);overflow-wrap:anywhere}
+.flagcol .v{display:block;font-family:var(--mono);font-size:11px;color:var(--ink)}
+.flagcol.full .v{color:var(--m,var(--sea));font-weight:500}
+.readout{min-width:0}
+/* the count, in lower case so the number reads as written */
+.count{margin:4px 0 0;font-size:16px;color:var(--dim);font-weight:300}
+.count b{display:block;font-family:var(--disp);font-weight:900;font-size:58px;line-height:.92;
+  color:var(--ink)}
+.timeline{margin:8px 0 16px;font-family:var(--mono);font-size:10.5px;color:var(--faint)}
+.btn{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  background:transparent;color:var(--ink-2);border:1px solid var(--rule);padding:9px 14px;cursor:pointer;
+  border-radius:20px}
+.btn:hover{border-color:var(--coral);color:var(--coral)}
+
+/* ── the small print ────────────────────────────────────────────────────── */
+.smallprint{margin-top:16px;background:var(--card);border:1px solid var(--rule-2);
+  border-left:4px solid var(--coral);padding:16px 20px;font-size:14.6px;color:var(--ink-2)}
+.smallprint strong{color:var(--ink)}
+
+/* ── tabs ───────────────────────────────────────────────────────────────── */
+.tabs{display:flex;flex-wrap:wrap;gap:3px;margin:22px 0 0}
+.tab{font-family:var(--body);font-weight:500;font-size:13.5px;letter-spacing:.1em;text-transform:uppercase;
+  background:var(--card-2);color:var(--dim);border:1px solid var(--rule-2);border-bottom:0;
+  padding:11px 18px;cursor:pointer;border-radius:8px 8px 0 0}
+.tab[aria-selected="true"]{background:var(--card);color:var(--ink);box-shadow:inset 0 3px 0 var(--sea)}
+.tab:hover{color:var(--ink)}
+.pane{background:var(--card);border:1px solid var(--rule-2);padding:24px}
+
+/* ── a day of the stay ──────────────────────────────────────────────────── */
+.daynav{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
+.djump{display:flex;align-items:center;gap:8px;background:var(--card-2);border:1px solid var(--rule-2);
+  color:var(--ink-2);padding:7px 13px;cursor:pointer;font-family:var(--body);font-size:13.5px;
+  border-radius:20px}
+.djump b{font-family:var(--mono);font-size:10.5px;color:var(--sea-deep)}
+.djump .pg{font-family:var(--mono);font-size:9.5px;color:var(--faint)}
+.djump:hover{border-color:var(--sea);color:var(--ink)}
+.djump.full{background:rgba(31,138,158,.10);border-color:rgba(31,138,158,.45)}
+
+article.stay{background:var(--card-2);border:1px solid var(--rule-2);margin-bottom:16px;
+  border-radius:10px;overflow:hidden;scroll-margin-top:12px}
+article.stay.full{border-color:rgba(31,138,158,.5)}
+.shead{display:grid;grid-template-columns:96px minmax(0,1fr);gap:16px;width:100%;text-align:left;
+  background:var(--card);border:0;border-bottom:1px solid var(--rule-2);cursor:pointer;padding:16px 18px;
+  font-family:var(--body);color:var(--ink-2)}
+.shead:hover .stitle{color:var(--sea-deep)}
+/* the day tile, carrying the guide's own run number */
+.daytile{display:grid;place-content:center;min-height:70px;background:var(--sea);color:#fff;
+  border-radius:8px;padding:8px;text-align:center}
+.daytile .n{display:block;font-family:var(--disp);font-weight:900;font-size:30px;line-height:1}
+.daytile .t{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;
+  opacity:.85}
+article.stay.full .daytile{background:var(--coral)}
+.smain{min-width:0}
+.stitle{display:block;font-family:var(--disp);font-weight:600;font-size:clamp(19px,2.7vw,26px);
+  line-height:1.18;color:var(--ink)}
+.sgoal{display:block;margin-top:8px;font-size:14.8px;color:var(--ink-2);font-weight:300;max-width:82ch}
+.stally{display:block;margin-top:9px;font-family:var(--mono);font-size:10px;color:var(--faint)}
+.sbody{padding:18px;background:var(--card)}
+.packed{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;
+  background:var(--rule-3);border:1px solid var(--rule-3);margin-bottom:18px;border-radius:8px;
+  overflow:hidden}
+.slot{background:var(--card-2);padding:9px 12px;min-width:0}
+.slot .k{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--faint)}
+.slot .v{display:block;margin-top:2px;font-size:14.4px;color:var(--ink);overflow-wrap:anywhere}
+.part{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin:24px 0 2px;padding-bottom:6px;
+  border-bottom:1px solid var(--rule-2);font-family:var(--disp);font-weight:600;font-size:17px;
+  color:var(--ink)}
+.part:first-child{margin-top:0}
+.part .cnt{margin-left:auto;font-family:var(--mono);font-size:9.5px;color:var(--faint)}
+
+/* ── an activity ────────────────────────────────────────────────────────── */
+.step{display:grid;grid-template-columns:38px minmax(0,1fr);gap:14px;align-items:start;
+  padding:14px 2px;border-bottom:1px solid var(--rule-3)}
+.step:last-of-type{border-bottom:0}
+.step.done{background:rgba(31,138,158,.05)}
+/* the tick is the punch a resort puts through what you have used */
+.punch{position:relative;width:38px;height:38px;padding:0;cursor:pointer;border-radius:50%;
+  background:var(--card-2);border:1px dashed var(--rule)}
+.punch:hover{border-color:var(--sea)}
+.punch::after{content:"";position:absolute;inset:5px;border-radius:50%;background:var(--sea-deep);
+  box-shadow:inset 0 2px 3px rgba(0,0,0,.55);transform:scale(.25);opacity:0;
+  transition:transform .18s ease,opacity .18s ease}
+.step.done .punch,.crow.done .punch{border-style:solid;border-color:transparent}
+.step.done .punch::after,.crow.done .punch::after{transform:scale(1);opacity:1}
+.swrap{min-width:0}
+.atitle{margin:0;font-family:var(--body);font-weight:600;font-size:17px;line-height:1.3;color:var(--ink)}
+.asum{margin:5px 0 0;font-size:14.6px;color:var(--ink-2);font-weight:300}
+.fields{margin-top:10px;display:grid;gap:4px}
+.frow{display:grid;grid-template-columns:78px minmax(0,1fr);gap:12px;align-items:start}
+.fk{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--sea);
+  padding-top:4px}
+.fv{font-size:14.6px;color:var(--ink-2);overflow-wrap:anywhere}
+.note{margin:11px 0 0;padding:9px 13px;border-left:3px solid var(--coral);background:rgba(226,102,74,.07);
+  font-size:14.2px;color:var(--ink-2);border-radius:0 6px 6px 0}
+.note .m{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--coral);margin-bottom:3px}
+.keep{display:inline-block;margin-top:10px;font-family:var(--mono);font-size:9px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--sea-deep);border:1px solid var(--sea-deep);padding:3px 9px;
+  border-radius:20px}
+.tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
+.tag{font-family:var(--body);font-size:13px;line-height:1.25;cursor:pointer;padding:4px 12px;
+  border:1px solid var(--rule-2);background:var(--card-2);color:var(--ink-2);text-align:left;
+  border-radius:20px;border-left:3px solid var(--m,var(--sea))}
+.tag:hover{border-color:var(--m,var(--sea));color:var(--ink)}
+.tag[aria-checked="true"]{background:var(--m,var(--sea));border-color:transparent;color:#fff;font-weight:500}
+.tag.plain{cursor:default;border-left-color:var(--rule-2);color:var(--faint);font-style:italic}
+
+/* ── everything on offer ────────────────────────────────────────────────── */
+.filters{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:20px}
+.filters button{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+  background:var(--card-2);border:1px solid var(--rule-2);color:var(--dim);padding:8px 13px;cursor:pointer;
+  border-radius:20px}
+.filters button:hover{border-color:var(--sea);color:var(--ink)}
+.filters button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--card)}
+.grp{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin:26px 0 4px;padding-bottom:6px;
+  border-bottom:2px solid var(--m,var(--sea));font-family:var(--disp);font-weight:600;font-size:20px;
+  color:var(--ink)}
+.grp:first-child{margin-top:0}
+.grp .n{margin-left:auto;font-family:var(--mono);font-size:9.5px;color:var(--faint)}
+.crow{display:grid;grid-template-columns:38px minmax(0,1fr) auto;gap:14px;align-items:start;
+  padding:12px 2px;border-bottom:1px solid var(--rule-3)}
+.crow:last-child{border-bottom:0}
+.crow.done{background:rgba(31,138,158,.05)}
+.cnm{margin:0;font-family:var(--body);font-weight:600;font-size:16.5px;line-height:1.28;color:var(--ink)}
+.crow.done .cnm{color:var(--m,var(--sea))}
+.cds{margin:4px 0 0;font-size:14.4px;color:var(--ink-2);font-weight:300}
+.cmeta{font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--faint);text-align:right;white-space:nowrap}
+.empty{margin:18px 0;color:var(--ink-2)}
+
+/* ── the lifted reference and verification sheets ───────────────────────── */
+.prose h2{margin:26px 0 10px;font-family:var(--disp);font-weight:600;font-size:22px;color:var(--ink)}
+.prose h2:first-child{margin-top:0}
+.prose h3{margin:20px 0 8px;font-family:var(--disp);font-weight:600;font-size:17px;color:var(--sea-deep)}
+.prose p{margin:0 0 10px;font-size:14.8px;color:var(--ink-2);max-width:84ch;font-weight:300}
+.prose ul,.prose ol{margin:0 0 12px;padding-left:20px}
+.prose li{margin-bottom:6px;font-size:14.6px;color:var(--ink-2);font-weight:300}
+.prose b,.prose strong{font-weight:600;color:var(--ink)}
+.prose .note,.prose .red,.prose .callout{border-radius:0 6px 6px 0}
+.tablewrap{overflow-x:auto;margin:0 0 16px}
+.prose table{border-collapse:collapse;width:100%;min-width:460px;font-size:14px}
+.prose th,.prose td{text-align:left;padding:8px 12px;border-bottom:1px solid var(--rule-3)}
+.prose th{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--faint);border-bottom:1px solid var(--rule)}
+
+footer{margin-top:24px;padding:18px 22px;background:var(--card-2);border:1px solid var(--rule-2);
+  font-size:12.8px;line-height:1.75;color:var(--dim)}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;
+  scroll-behavior:auto!important}}
+@media (max-width:900px){
+  .day{grid-template-columns:minmax(0,1fr)}
 }
-.wrap{max-width:1080px;margin:0 auto;padding:28px 18px 90px}
-header.mast{border-bottom:1px solid var(--line);padding-bottom:22px;margin-bottom:22px}
-.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--aqua)}
-h1{margin:.25em 0 .1em;font-size:clamp(30px,6vw,54px);line-height:1;letter-spacing:-.02em;font-weight:800}
-h1 .thin{font-weight:200;color:var(--muted)}
-.sub{color:var(--muted);font-size:14px;max-width:64ch}
-.mast-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;font-family:var(--mono);font-size:11px;letter-spacing:.08em}
-.mast-meta span{border:1px solid var(--line);padding:4px 9px;border-radius:2px;color:var(--muted)}
-
-.tracker{background:linear-gradient(180deg,var(--panel),var(--ink2));border:1px solid var(--line);border-radius:4px;padding:18px;margin-bottom:20px}
-.tracker h2{margin:0 0 12px;font-size:12px;font-family:var(--mono);letter-spacing:.22em;text-transform:uppercase;color:var(--muted);font-weight:600}
-.bar{height:10px;background:#08222c;border:1px solid var(--line);border-radius:2px;overflow:hidden}
-.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--aqua-dim),var(--aqua));transition:width .35s ease}
-.bar-row{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:6px}
-.bignum{font-family:var(--mono);font-size:30px;font-weight:700;letter-spacing:-.02em}
-.bignum small{font-size:14px;color:var(--dim);font-weight:400}
-.cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:16px}
-.cat{border:1px solid var(--line);border-radius:3px;padding:10px 11px;background:#0a2731}
-.cat .lbl{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
-.cat .val{font-family:var(--mono);font-size:19px;font-weight:700;margin-top:2px}
-.cat .mini{height:4px;background:#08222c;margin-top:7px;border-radius:2px;overflow:hidden}
-.cat .mini i{display:block;height:100%;width:0;transition:width .3s}
-.cat[data-c="A"] .mini i{background:var(--red)}
-.cat[data-c="D"] .mini i{background:var(--aqua)}
-.cat[data-c="F"] .mini i{background:var(--violet)}
-.cat[data-c="T"] .mini i{background:var(--amber)}
-.cat[data-c="C"] .mini i{background:var(--sand)}
-
-nav.tabs{display:flex;gap:2px;border-bottom:1px solid var(--line);margin-bottom:22px;flex-wrap:wrap}
-nav.tabs button{background:none;border:1px solid transparent;border-bottom:none;color:var(--muted);font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;padding:10px 16px;cursor:pointer;border-radius:3px 3px 0 0}
-nav.tabs button:hover{color:var(--text)}
-nav.tabs button[aria-selected="true"]{background:var(--panel);border-color:var(--line);color:var(--aqua)}
-.panel[hidden]{display:none}
-
-/* run nav */
-.runnav{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
-.runnav button{background:#0a2831;border:1px solid var(--line);color:var(--muted);font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;padding:8px 13px;border-radius:2px;cursor:pointer}
-.runnav button:hover{color:var(--text);border-color:var(--line2)}
-.runnav .prog{color:var(--aqua)}
-
-.run{border:1px solid var(--line);border-radius:4px;margin-bottom:16px;background:var(--ink2);overflow:hidden;scroll-margin-top:14px}
-.run > .rhead{padding:15px 18px;background:linear-gradient(180deg,var(--panel2),var(--panel));border-bottom:1px solid var(--line);cursor:pointer;display:flex;gap:14px;align-items:flex-start}
-.run > .rhead .chev{flex:0 0 auto;font-family:var(--mono);color:var(--aqua);margin-top:3px;transition:transform .2s}
-.run.collapsed > .rhead .chev{transform:rotate(-90deg)}
-.run-tag{font-family:var(--mono);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--aqua)}
-.run h3{margin:4px 0 6px;font-size:21px;letter-spacing:-.01em}
-.run .goal{color:var(--muted);font-size:13.5px;margin:0}
-.run .rmini{font-family:var(--mono);font-size:10px;color:var(--dim);margin-top:8px;letter-spacing:.08em}
-.rbody{}
-.run.collapsed .rbody{display:none}
-.loadout{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));border-bottom:1px solid var(--line)}
-.slot{padding:11px 14px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
-.slot .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim)}
-.slot .v{font-size:13.5px;margin-top:3px}
-.slot .v em{font-style:normal;color:var(--amber);font-family:var(--mono);font-size:11px}
-.sect{padding:6px 18px 0}
-.secthead{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--sand);margin:20px 0 10px;padding-bottom:6px;border-bottom:1px dashed var(--line)}
-.step{border:1px solid var(--line);border-radius:3px;margin-bottom:9px;background:#0a2831}
-.step-top{display:flex;gap:11px;align-items:flex-start;padding:11px 13px}
-.tick{flex:0 0 auto;width:22px;height:22px;border:1px solid var(--line2);border-radius:3px;background:#07202a;cursor:pointer;color:transparent;font-size:13px;line-height:1;display:flex;align-items:center;justify-content:center;margin-top:1px}
-.tick[aria-pressed="true"]{background:var(--aqua-dim);border-color:var(--aqua);color:#04181f}
-.step-body{flex:1;min-width:0}
-.step-title{font-weight:700;font-size:14.5px;margin:0 0 2px}
-.step-sum{margin:0;color:var(--muted);font-size:13.5px}
-.step.done .step-title{text-decoration:line-through;color:var(--dim)}
-.more{background:none;border:none;color:var(--aqua);font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;padding:0 13px 11px 46px}
-.detail{padding:0 13px 13px 46px;font-size:13.5px;color:#cfe0dd}
-.detail[hidden]{display:none}
-.fld{display:grid;grid-template-columns:82px 1fr;gap:4px 12px;margin:4px 0 2px}
-.fld dt{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);padding-top:2px}
-.fld dd{margin:0}
-.badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:11px}
-.b{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:2px;border:1px solid}
-.b.ch{border-color:var(--aqua-dim);color:var(--aqua);background:rgba(63,214,176,.08)}
-.b.warn{border-color:var(--red);color:var(--red);background:rgba(255,95,87,.1)}
-.b.save{border-color:var(--amber);color:var(--amber);background:rgba(240,168,48,.1)}
-.wbox{border-left:2px solid var(--red);background:rgba(255,95,87,.07);padding:7px 11px;margin-top:10px;font-size:13px;border-radius:0 3px 3px 0}
-.wbox b{color:var(--red)}
-.vbox{border-left:2px solid var(--aqua-dim);background:rgba(63,214,176,.06);padding:7px 11px;margin-top:10px;font-size:12.5px;color:#bfe6da;border-radius:0 3px 3px 0}
-
-.filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
-.filters button{background:#0a2831;border:1px solid var(--line);color:var(--muted);font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;padding:7px 12px;border-radius:2px;cursor:pointer}
-.filters button[aria-pressed="true"]{border-color:var(--aqua);color:var(--aqua);background:rgba(63,214,176,.08)}
-.clist{border:1px solid var(--line);border-radius:4px;overflow:hidden}
-.crow{display:flex;gap:11px;align-items:flex-start;padding:10px 13px;border-bottom:1px solid var(--line);background:#0a2630}
-.crow:nth-child(even){background:#0b2b35}
-.crow:last-child{border-bottom:none}
-.crow .meta{flex:1;min-width:0}
-.crow .nm{font-weight:600;font-size:14px}
-.crow.done .nm{text-decoration:line-through;color:var(--dim)}
-.crow .cd{color:var(--muted);font-size:13px}
-.pill{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;padding:2px 7px;border-radius:2px;border:1px solid;flex:0 0 auto;margin-top:3px}
-.pill.A{border-color:var(--red);color:var(--red)}
-.pill.D{border-color:var(--aqua);color:var(--aqua)}
-.pill.F{border-color:var(--violet);color:var(--violet)}
-.pill.T{border-color:var(--amber);color:var(--amber)}
-.pill.C{border-color:var(--sand);color:var(--sand)}
-.note{border-left:2px solid var(--amber);background:rgba(240,168,48,.06);padding:11px 14px;margin:0 0 18px;font-size:13.5px;color:#e2ddcd}
-.note strong{color:var(--amber)}
-.note.red{border-color:var(--red);background:rgba(255,95,87,.06)}
-.note.red strong{color:var(--red)}
-table.src{width:100%;border-collapse:collapse;font-size:13px;margin-top:10px}
-table.src th,table.src td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
-table.src th{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);background:#0a2831}
-.reset{background:none;border:1px solid var(--line);color:var(--dim);font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding:6px 11px;border-radius:2px;cursor:pointer;margin-left:auto}
-h4.blk{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--sand);margin:26px 0 8px}
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
-@media(max-width:620px){.more,.detail{padding-left:13px}.fld{grid-template-columns:72px 1fr}}
+@media (max-width:620px){
+  .pane{padding:15px}
+  .plate,.rail,.day{padding-left:16px;padding-right:16px}
+  .shead{grid-template-columns:64px minmax(0,1fr);gap:12px;padding:14px}
+  .daytile{min-height:56px}
+  .daytile .n{font-size:22px}
+  .sbody{padding:14px}
+  .step{grid-template-columns:32px minmax(0,1fr);gap:11px}
+  .punch{width:32px;height:32px}
+  .frow{grid-template-columns:minmax(0,1fr);gap:1px}
+  .fk{padding-top:0}
+  .crow{grid-template-columns:32px minmax(0,1fr)}
+  .cmeta{grid-column:2;text-align:left;margin-top:5px}
+  .flags{grid-template-columns:repeat(5,1fr);gap:3px}
+  .flagcol .k{font-size:8px}
+}
+@media print{
+  body{background:#fff;background-image:none;font-size:10.5pt}
+  .isle{max-width:none;padding:0}
+  .tabs,.daynav,.skip,.punch,.btn,.filters,.rail,.lagoon,.flags{display:none!important}
+  .pane[hidden]{display:block!important}
+  .sbody{display:block!important}
+  header.card,.pane,article.stay,.slot,.smallprint,footer{background:#fff!important;
+    border-color:#999!important;box-shadow:none!important}
+  .daytile{background:#fff!important;color:#000!important;border:1px solid #999}
+  .step,article.stay,.crow{break-inside:avoid}
+}
 </style>
 </head>
 <body>
-<div class="wrap">
+<div class="isle">
 
-<header class="mast">
-  <div class="eyebrow">Haven Island · Maldives · Epilogue</div>
-  <h1>The Last Resort <span class="thin">/ 67</span></h1>
-  <p class="sub">A five-run completion route for every challenge on Haven Island, built from your extracted in-game challenge file (70 challenges: 20 Assassination, 22 Discovery, 17 Feats, 3 Targets, 5 Classics). Runs are sequenced so nothing you do early locks out a later challenge. Each step lists where to go, the disguise, the item, the NPC and the action, with warnings on the ordering rules that break scripts.</p>
-  <div class="mast-meta">
-    <span>Tyson Williams — The Tyrant</span><span>Ljudmila Vetrova — The Confidence Artist</span><span>Steven Bradley — The Bad Boy</span><span>70 challenges</span>
+<header class="card">
+  <div class="plate">
+    <p class="eyebrow"><!--@eyebrow-->Haven Island · Maldives · Epilogue<!--/@eyebrow--></p>
+    <h1><!--@h1-->The Last Resort<!--/@h1--></h1>
+    <p class="sub"><!--@sub-->A five-run completion route for every challenge on Haven Island, built from your extracted in-game challenge file (70 challenges: 20 Assassination, 22 Discovery, 17 Feats, 3 Targets, 5 Classics). Runs are sequenced so nothing you do early locks out a later challenge. Each step lists where to go, the disguise, the item, the NPC and the action, with warnings on the ordering rules that break scripts.<!--/@sub--></p>
+    <div class="mast-meta">
+<!--@meta-->
+<span>Tyson Williams — The Tyrant</span><span>Ljudmila Vetrova — The Confidence Artist</span><span>Steven Bradley — The Bad Boy</span><span>70 challenges</span>
+<!--/@meta-->
+    </div>
+  </div>
+
+  <!-- the skip link follows the card head, which holds nothing focusable, so
+       this is still the first stop for a keyboard -->
+  <a class="skip" href="#pane-runs">Skip to the five days</a>
+
+  <div class="rail">
+    <a href="../index.html">&#8592; All guides</a>
+    <span>Haven Island, Maldives &middot; Main campaign 18</span>
+    <span>Saved in this browser only</span>
+  </div>
+
+  <div class="day">
+    <div class="lagoon">
+      <svg viewBox="0 0 420 200" role="img"
+           aria-labelledby="dayTitle" aria-describedby="dayDesc">
+        <title id="dayTitle">The day over the lagoon</title>
+        <desc id="dayDesc">The sun climbs its arc as challenges are taken and sets into the sea when every one of them is done.</desc>
+        <defs>
+          <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#bfe7ef"/><stop offset="1" stop-color="#f3f7e9"/>
+          </linearGradient>
+          <linearGradient id="dusk" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#5c74a8"/><stop offset=".55" stop-color="#e2896a"/>
+            <stop offset="1" stop-color="#f0c08a"/>
+          </linearGradient>
+          <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#54c2cf"/><stop offset="1" stop-color="#0d5a6a"/>
+          </linearGradient>
+        </defs>
+        <rect x="0" y="0" width="420" height="152" fill="url(#sky)"/>
+        <rect class="evening" id="evening" x="0" y="0" width="420" height="152" fill="url(#dusk)"/>
+        <!-- the sun's track -->
+        <path d="M42,150 A168,120 0 0 1 378,150" fill="none" stroke="rgba(32,49,58,.18)"
+              stroke-width="1.5" stroke-dasharray="3 6"/>
+        <circle class="sunhalo" id="sunhalo" cx="42" cy="150" r="30" fill="#efa63a"/>
+        <circle class="sun" id="sun" cx="42" cy="150" r="13" fill="#efa63a"/>
+        <!-- the water, and the sandbar the flags stand on -->
+        <rect x="0" y="152" width="420" height="48" fill="url(#water)"/>
+        <path d="M0,152 h420" stroke="rgba(255,255,255,.5)" stroke-width="2"/>
+        <path d="M0,166 q26,-6 52,0 t52,0 t52,0 t52,0 t52,0 t52,0 t52,0" fill="none"
+              stroke="rgba(255,255,255,.35)" stroke-width="2"/>
+        <path d="M0,182 q26,-6 52,0 t52,0 t52,0 t52,0 t52,0 t52,0 t52,0" fill="none"
+              stroke="rgba(255,255,255,.22)" stroke-width="2"/>
+      </svg>
+      <div class="flags" id="flags"></div>
+    </div>
+
+    <div class="readout">
+      <span class="lbl">Taken</span>
+      <p class="count"><b id="numDone">0</b><span id="numOf">/ 0 challenges</span></p>
+      <p class="timeline" id="timeline">0 activities punched</p>
+      <button class="btn" id="reset" type="button">Check out &amp; clear the card</button>
+    </div>
   </div>
 </header>
 
-<section class="tracker">
-  <h2>Progress</h2>
-  <div class="bar-row">
-    <div class="bignum" id="bigNum">0 <small>/ 67</small></div>
-    <div class="bignum" id="bigPct" style="font-size:20px;color:var(--aqua)">0%</div>
-  </div>
-  <div class="bar"><i id="bigBar"></i></div>
-  <div class="cats" id="cats"></div>
+<div class="smallprint">
+<!--@rules-->
+<strong>Two ordering rules break challenges — read before you start.</strong> (1) <em>Synchronized Drowning</em> needs <em>A Lucrative Opportunity</em> and <em>The Shape Changer</em> finished <u>without killing Vetrova</u>; if she dies first, the jacuzzi meeting with Steven never spawns. (2) <em>For a Handful of USB</em> requires the drive handed to <u>both</u> Vetrova and Williams, so Williams must still be alive when you give it to him. Every target dies only once per session — mutually-exclusive kills are split across runs below.
+<!--/@rules-->
+</div>
+
+<!-- the two prose panels keep the ids the previous edition wrote into
+     ("tab-ref" / "tab-audit"), because the code that fills them is lifted
+     whole and still looks them up by name; the tab buttons are named apart -->
+<div class="tabs" role="tablist" aria-label="Guide sections">
+  <button class="tab" role="tab" id="t-runs" aria-controls="pane-runs" aria-selected="true">The five days</button>
+  <button class="tab" role="tab" id="t-list" aria-controls="pane-list" aria-selected="false">Everything on offer</button>
+  <button class="tab" role="tab" id="t-ref" aria-controls="tab-ref" aria-selected="false">Reference</button>
+  <button class="tab" role="tab" id="t-audit" aria-controls="tab-audit" aria-selected="false">Verification</button>
+</div>
+
+<section class="pane" id="pane-runs" role="tabpanel" aria-labelledby="t-runs">
+  <nav class="daynav" id="daynav" aria-label="Jump to a day"></nav>
+  <div id="days"></div>
 </section>
 
-<nav class="tabs" role="tablist">
-  <button role="tab" aria-selected="true" data-tab="runs">Optimized runs</button>
-  <button role="tab" aria-selected="false" data-tab="check">Checklist</button>
-  <button role="tab" aria-selected="false" data-tab="ref">Reference</button>
-  <button role="tab" aria-selected="false" data-tab="audit">Verification</button>
-</nav>
+<section class="pane" id="pane-list" role="tabpanel" aria-labelledby="t-list" hidden>
+  <div class="filters" id="filters"></div>
+  <div id="checklist"></div>
+</section>
 
-<div class="panel" id="tab-runs">
-  <p class="note red"><strong>Two ordering rules break challenges — read before you start.</strong> (1) <em>Synchronized Drowning</em> needs <em>A Lucrative Opportunity</em> and <em>The Shape Changer</em> finished <u>without killing Vetrova</u>; if she dies first, the jacuzzi meeting with Steven never spawns. (2) <em>For a Handful of USB</em> requires the drive handed to <u>both</u> Vetrova and Williams, so Williams must still be alive when you give it to him. Every target dies only once per session — mutually-exclusive kills are split across runs below.</p>
-  <div class="runnav" id="runnav"></div>
-  <div id="runs"></div>
-</div>
-
-<div class="panel" id="tab-check" hidden>
-  <div class="filters" id="filters">
-    <button data-f="all" aria-pressed="true">All</button>
-    <button data-f="A" aria-pressed="false">Assassination</button>
-    <button data-f="D" aria-pressed="false">Discovery</button>
-    <button data-f="F" aria-pressed="false">Feats</button>
-    <button data-f="T" aria-pressed="false">Targets</button>
-    <button data-f="C" aria-pressed="false">Classics</button>
-    <button data-f="inc" aria-pressed="false">Incomplete</button>
-    <button class="reset" id="reset">Reset all</button>
-  </div>
-  <div class="clist" id="clist"></div>
-</div>
-
-<div class="panel" id="tab-ref" hidden></div>
-<div class="panel" id="tab-audit" hidden></div>
-
+<section class="pane prose" id="tab-ref" role="tabpanel" aria-labelledby="t-ref" hidden></section>
+<section class="pane prose" id="tab-audit" role="tabpanel" aria-labelledby="t-audit" hidden></section>
 </div>
 
 <script>
-/* ============================================================
-   CHALLENGES — verbatim names & descriptions from the uploaded
-   in-game file (18 - The Last Resort.json). 67 total.
-   c = category: A/D/F/T/C. run = which run(s) complete it.
-   ============================================================ */
+/*@ch*/
 const CH=[
 /* ---- ASSASSINATION (20) ---- */
 {n:"Trigger Point Therapy",c:"A",d:"Eliminate Ljudmila Vetrova during a massage.",run:"5"},
@@ -276,6 +465,9 @@ const CH=[
    go / dis / item / npc / do (each optional), plus alt, ch
    (challenge badges), warn, save.
    ============================================================ */
+/*/@ch*/
+
+/*@runs*/
 const RUNS=[
 {
  tag:"Run 01",
@@ -670,163 +862,219 @@ const RUNS=[
  ]
 }
 ];
+/*/@runs*/
 
-/* ============================================================
-   STATE
-   ============================================================ */
+/* ---------------- STATE ----------------
+   'lastresort.v2' keeps its name and its shape — {ch:{name:true}, steps:{id:true},
+   collapsed:{}} — with challenges still keyed by name and activities still
+   's0' … 's44' numbered down the page, so an existing card survives the
+   rebuild. The key is written as a literal here so the contract check in
+   validate.js can see it; the previous edition hid it behind a const. */
 const KEY="lastresort.v2";
 let state={ch:{},steps:{},collapsed:{}};
-try{const s=localStorage.getItem(KEY);if(s)state=Object.assign(state,JSON.parse(s));}catch(e){}
-function reportProgress(){try{const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r['m18']={done:CH.filter(c=>state.ch[c.n]).length,total:CH.length,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
-function persist(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}reportProgress();}
+try{const s=localStorage.getItem("lastresort.v2");if(s)state=Object.assign(state,JSON.parse(s));}catch(e){}
+if(!state.ch)state.ch={};
+if(!state.steps)state.steps={};
+if(!state.collapsed)state.collapsed={};
 
-const CATS=[{k:"A",l:"Assassination"},{k:"D",l:"Discovery"},{k:"F",l:"Feats"},{k:"T",l:"Targets"},{k:"C",l:"Classics"}];
-function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;");}
-
-/* ---------- tracker ---------- */
-const catsEl=document.getElementById("cats");
-catsEl.innerHTML=CATS.map(c=>`<div class="cat" data-c="${c.k}"><div class="lbl">${c.l}</div><div class="val" id="v-${c.k}">0/0</div><div class="mini"><i id="m-${c.k}"></i></div></div>`).join("");
-function refresh(){
-  let done=CH.filter(c=>state.ch[c.n]).length,tot=CH.length;
-  document.getElementById("bigNum").innerHTML=`${done} <small>/ ${tot}</small>`;
-  const pct=tot?Math.round(done/tot*100):0;
-  document.getElementById("bigPct").textContent=pct+"%";
-  document.getElementById("bigBar").style.width=pct+"%";
-  CATS.forEach(c=>{const list=CH.filter(x=>x.c===c.k),d=list.filter(x=>state.ch[x.n]).length;
-    document.getElementById("v-"+c.k).textContent=`${d}/${list.length}`;
-    document.getElementById("m-"+c.k).style.width=(list.length?d/list.length*100:0)+"%";});
-  drawRunNav();persist();
+function reportProgress(){
+  try{
+    const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');
+    r['m18']={done:CH.filter(c=>state.ch[c.n]).length,total:CH.length,updated:Date.now()};
+    localStorage.setItem('hitman-progress-registry',JSON.stringify(r));
+  }catch(e){}
+}
+function persist(){
+  try{localStorage.setItem("lastresort.v2",JSON.stringify(state));}catch(e){}
+  reportProgress();
 }
 
-/* ---------- checklist ---------- */
-const clist=document.getElementById("clist");let filter="all";
-function drawList(){
-  const rows=CH.filter(c=>filter==="all"?true:filter==="inc"?!state.ch[c.n]:c.c===filter);
-  clist.innerHTML=rows.length?rows.map(c=>`<div class="crow ${state.ch[c.n]?"done":""}">
-    <button class="tick" aria-pressed="${!!state.ch[c.n]}" data-n="${esc(c.n)}">✓</button>
-    <div class="meta"><div class="nm">${esc(c.n)}</div><div class="cd">${esc(c.d)}</div></div>
-    <span class="pill ${c.c}">${c.c}</span></div>`).join("")
-    :`<div class="crow"><div class="meta"><div class="cd">Nothing here — everything in this filter is done.</div></div></div>`;
-}
-clist.addEventListener("click",e=>{const b=e.target.closest(".tick");if(!b)return;
-  const n=b.dataset.n;state.ch[n]=!state.ch[n];drawList();refresh();});
-document.getElementById("filters").addEventListener("click",e=>{const b=e.target.closest("button[data-f]");if(!b)return;
-  filter=b.dataset.f;document.querySelectorAll("#filters button[data-f]").forEach(x=>x.setAttribute("aria-pressed",x===b));drawList();});
-document.getElementById("reset").addEventListener("click",()=>{if(!confirm("Clear every tick?"))return;
-  state={ch:{},steps:{},collapsed:{}};drawList();drawRuns();refresh();});
+const $=s=>document.getElementById(s);
+const esc=s=>String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+/* the run data carries inline <em> markup, so its text is printed as written;
+   only attribute values are escaped */
+const raw=s=>String(s==null?'':s);
+const plain=s=>String(s==null?'':s).replace(/<[^>]+>/g,'');
 
-/* ---------- runs ---------- */
-const runsEl=document.getElementById("runs");
-function fieldRow(k,v){return v?`<dt>${k}</dt><dd>${v}</dd>`:"";}
-function drawRuns(){
-  let sid=0;
-  runsEl.innerHTML=RUNS.map((r,ri)=>{
-    const col=state.collapsed["r"+ri]?"collapsed":"";
-    return `<article class="run ${col}" id="run-${ri}" data-run="${ri}">
-    <div class="rhead" data-toggle="${ri}">
-      <span class="chev">▾</span>
-      <div style="flex:1">
-        <div class="run-tag">${r.tag}</div>
-        <h3>${esc(r.title)}</h3>
-        <p class="goal">${esc(r.goal)}</p>
-        <div class="rmini" id="rmini-${ri}"></div>
+const CATS=['A','D','F','T','C'];
+const CATLABEL={A:'Assassination',D:'Discovery',F:'Feats',T:'Targets',C:'Classics'};
+const CATVAR={A:'var(--A)',D:'var(--D)',F:'var(--F)',T:'var(--T)',C:'var(--C)'};
+const byCat=k=>CH.filter(c=>c.c===k);
+const catDone=k=>byCat(k).filter(c=>state.ch[c.n]).length;
+const taken=()=>CH.filter(c=>state.ch[c.n]).length;
+
+/* ---------------- ACTIVITIES AND WHAT THEY TAKE ----------------
+   A step names its challenges in words. Where the guide qualifies one — "Suit
+   Only (in progress)", "Chameleon (Swimwear)" — it is telling you the step
+   advances that challenge without finishing it, so those stay plain labels
+   instead of becoming controls. Only an exact name is a control. */
+const NAMES={};
+CH.forEach(c=>{NAMES[c.n.toLowerCase()]=c.n});
+const chName=t=>NAMES[String(t).trim().toLowerCase()]||null;
+
+let sid=0;
+const ACT_CH={}, ALL_ACTS=[], DAY_OF={};
+RUNS.forEach(r=>r.sections.forEach(sec=>sec.steps.forEach(st=>{
+  st._id='s'+(sid++);
+  ALL_ACTS.push(st._id);
+  ACT_CH[st._id]=(st.ch||[]).map(chName).filter(Boolean);
+  ACT_CH[st._id].forEach(n=>{if(!DAY_OF[n])DAY_OF[n]=r.tag;});
+})));
+const runActs=r=>{const o=[];r.sections.forEach(s=>s.steps.forEach(t=>o.push(t._id)));return o;};
+const runDone=r=>runActs(r).filter(id=>state.steps[id]).length;
+const runFull=r=>{const a=runActs(r);return a.length>0&&a.every(id=>state.steps[id]);};
+
+/* ---------------- THE DAY ----------------
+   The sun runs its arc in proportion to the whole card: dawn on the left at
+   nothing taken, into the sea on the right when every challenge is down. */
+function renderDay(){
+  const n=taken(), frac=CH.length?n/CH.length:0;
+  const cx=210-168*Math.cos(Math.PI*frac), cy=150-120*Math.sin(Math.PI*frac);
+  ['sun','sunhalo'].forEach(id=>{
+    const el=$(id);
+    if(el){el.setAttribute('cx',cx.toFixed(1));el.setAttribute('cy',cy.toFixed(1));}
+  });
+  const ev=$('evening');
+  if(ev)ev.style.opacity=(frac*frac*0.85).toFixed(3);
+  $('numDone').textContent=n;
+  $('numOf').textContent='/ '+CH.length+' challenges';
+  $('timeline').textContent=ALL_ACTS.filter(id=>state.steps[id]).length+' of '+ALL_ACTS.length+
+    ' activities punched across '+RUNS.length+' days';
+  $('flags').innerHTML=CATS.map(k=>{
+    const t=byCat(k).length, d=catDone(k), pct=t?d/t*100:0;
+    return `<div class="flagcol${t&&d===t?' full':''}" style="--m:${CATVAR[k]}">
+      <div class="pole"><span class="flag" style="bottom:${pct.toFixed(1)}%"></span></div>
+      <span class="k">${CATLABEL[k]}</span><span class="v">${d}/${t}</span></div>`;
+  }).join('');
+}
+
+/* ---------------- THE DAYS ---------------- */
+function tagHTML(t){
+  const name=chName(t);
+  if(!name)return `<span class="tag plain">${raw(t)}</span>`;
+  const c=CH.find(x=>x.n===name), on=!!state.ch[name];
+  return `<button type="button" class="tag" role="switch" aria-checked="${on}"
+    data-ch="${esc(name)}" style="--m:${CATVAR[c.c]}">${raw(t)}</button>`;
+}
+
+function fieldHTML(k,v){
+  return v&&v!=='—'?`<div class="frow"><div class="fk">${k}</div><div class="fv">${raw(v)}</div></div>`:'';
+}
+
+function actHTML(st){
+  const on=!!state.steps[st._id];
+  return `<div class="step${on?' done':''}" id="act-${st._id}">
+    <button type="button" class="punch" data-step="${st._id}" aria-pressed="${on}"
+      aria-label="${esc('Punch the card for: '+plain(st.t))}"></button>
+    <div class="swrap">
+      <p class="atitle">${raw(st.t)}</p>
+      ${st.s?`<p class="asum">${raw(st.s)}</p>`:''}
+      <div class="fields">
+        ${fieldHTML('Go to',st.go)}
+        ${fieldHTML('Disguise',st.dis)}
+        ${fieldHTML('Item',st.item)}
+        ${fieldHTML('NPC',st.npc)}
+        ${fieldHTML('Do',st.do)}
       </div>
+      ${st.warn?`<p class="note"><span class="m">Small print</span>${raw(st.warn)}</p>`:''}
+      ${st.save?'<span class="keep">Keep your place here</span>':''}
+      ${(st.ch||[]).length?`<div class="tags">${st.ch.map(tagHTML).join('')}</div>`:''}
     </div>
-    <div class="rbody">
-      <div class="loadout">
-        <div class="slot"><div class="k">Start</div><div class="v">${r.loadout.start}</div></div>
-        <div class="slot"><div class="k">Suit</div><div class="v">${r.loadout.suit}</div></div>
-        ${r.loadout.items.map((it,i)=>`<div class="slot"><div class="k">Slot ${i+1}</div><div class="v">${it}</div></div>`).join("")}
-      </div>
-      <div class="sect">
-        ${r.sections.map(sec=>`<div class="secthead">${esc(sec.h)}</div>
-          ${sec.steps.map(st=>{
-            const id="s"+(sid++);const on=!!state.steps[id];
-            return `<div class="step ${on?"done":""}" data-id="${id}">
-              <div class="step-top">
-                <button class="tick" aria-pressed="${on}" data-step="${id}">✓</button>
-                <div class="step-body">
-                  <p class="step-title">${esc(st.t)}</p>
-                  <p class="step-sum">${esc(st.s)}</p>
-                </div>
-              </div>
-              <button class="more" data-more="${id}">Show detail ▾</button>
-              <div class="detail" id="d-${id}" hidden>
-                <dl class="fld">
-                  ${fieldRow("Go to",st.go)}
-                  ${fieldRow("Disguise",st.dis)}
-                  ${fieldRow("Item",st.item)}
-                  ${fieldRow("NPC",st.npc)}
-                  ${fieldRow("Action",st.do)}
-                  ${st.alt?fieldRow("If stuck",st.alt):""}
-                </dl>
-                ${st.warn?`<div class="wbox"><b>Warning — </b>${esc(st.warn)}</div>`:""}
-                <div class="badges">
-                  ${(st.ch||[]).map(c=>`<span class="b ch">${esc(c)}</span>`).join("")}
-                  ${st.warn?`<span class="b warn">Warning</span>`:""}
-                  ${st.save?`<span class="b save">Save here</span>`:""}
-                </div>
-              </div>
-            </div>`;}).join("")}
-        `).join("")}
-        <div style="height:16px"></div>
-      </div>
-    </div></article>`;}).join("");
-  updateRunMinis();
+  </div>`;
 }
-function updateRunMinis(){
-  RUNS.forEach((r,ri)=>{
-    const names=new Set();
-    r.sections.forEach(sec=>sec.steps.forEach(st=>(st.ch||[]).forEach(c=>{
-      const base=c.replace(/\s*\(.*\)$/,"");if(CH.find(x=>x.n===base))names.add(base);})));
-    let done=0;names.forEach(n=>{if(state.ch[n])done++;});
-    const el=document.getElementById("rmini-"+ri);
-    if(el)el.textContent=`${names.size} challenges routed here · ${done} ticked`;
+
+function renderDays(){
+  $('daynav').innerHTML=RUNS.map((r,i)=>{
+    const a=runActs(r), d=runDone(r);
+    return `<button type="button" class="djump${runFull(r)?' full':''}" data-jump="${i}">
+      <b>Day ${String(i+1).padStart(2,'0')}</b><span class="pg">${d}/${a.length}</span></button>`;
+  }).join('')+
+  `<button type="button" class="djump" data-toggleall="1">Open / close every day</button>`;
+
+  $('days').innerHTML=RUNS.map((r,i)=>{
+    const acts=runActs(r), d=runDone(r), open=!state.collapsed['r'+i];
+    const body=r.sections.map(sec=>{
+      const keys=sec.steps.map(s=>s._id), sn=keys.filter(k=>state.steps[k]).length;
+      return `<h3 class="part">${raw(sec.h)}<span class="cnt">${sn} / ${keys.length} activities</span></h3>`+
+        sec.steps.map(actHTML).join('');
+    }).join('');
+    const lo=r.loadout||{};
+    const slots=Object.keys(lo).map(k=>
+      `<div class="slot"><span class="k">${esc(k)}</span><span class="v">${
+        Array.isArray(lo[k])?lo[k].map(raw).join(' &middot; '):raw(lo[k])}</span></div>`).join('');
+    return `<article class="stay${runFull(r)?' full':''}" id="stay-${i}">
+      <button type="button" class="shead" data-run="${i}" aria-expanded="${open}"
+        aria-controls="sbody-${i}">
+        <span class="daytile"><span class="n">${i+1}</span><span class="t">${raw(r.tag)}</span></span>
+        <span class="smain">
+          <span class="stitle">${raw(r.title)}</span>
+          <span class="sgoal">${raw(r.goal)}</span>
+          <span class="stally">${d} of ${acts.length} activities punched${open?'':' &middot; open the day to work through it'}</span>
+        </span>
+      </button>
+      <div class="sbody" id="sbody-${i}"${open?'':' hidden'}>
+        ${slots?`<div class="packed">${slots}</div>`:''}
+        ${body}
+      </div>
+    </article>`;
+  }).join('');
+}
+
+/* ---------------- EVERYTHING ON OFFER ---------------- */
+function renderList(){
+  const F=[['all','Everything '+CH.length]]
+    .concat(CATS.map(k=>[k,CATLABEL[k]+' '+byCat(k).length]))
+    .concat([['todo','Not yet taken '+(CH.length-taken())]]);
+  $('filters').innerHTML=F.map(([k,l])=>
+    `<button type="button" data-f="${k}" aria-pressed="${filter===k}">${esc(l)}</button>`).join('');
+
+  let out='';
+  CATS.forEach(cat=>{
+    if(filter!=='all'&&filter!=='todo'&&filter!==cat)return;
+    let rows=byCat(cat);
+    if(filter==='todo')rows=rows.filter(c=>!state.ch[c.n]);
+    if(!rows.length)return;
+    out+=`<h3 class="grp" style="--m:${CATVAR[cat]}">${CATLABEL[cat]}
+      <span class="n">${catDone(cat)} of ${byCat(cat).length} taken</span></h3>`;
+    out+=rows.map(c=>{
+      const on=!!state.ch[c.n];
+      return `<div class="crow${on?' done':''}" style="--m:${CATVAR[c.c]}">
+        <button type="button" class="punch" data-ch="${esc(c.n)}" aria-pressed="${on}"
+          aria-label="${esc('Take '+c.n)}"></button>
+        <div>
+          <p class="cnm">${raw(c.n)}</p>
+          <p class="cds">${raw(c.d)}</p>
+        </div>
+        <span class="cmeta">${raw(DAY_OF[c.n]||('Run '+c.run))}</span>
+      </div>`;
+    }).join('');
+  });
+  $('checklist').innerHTML=out||'<p class="empty">Nothing left under this heading.</p>';
+}
+
+/* Wide tables in the lifted reference and verification sheets scroll inside
+   their own box rather than pushing the page sideways. */
+function wrapTables(){
+  ['tab-ref','tab-audit'].forEach(id=>{
+    const box=$(id);
+    if(!box)return;
+    box.querySelectorAll('table').forEach(t=>{
+      if(t.parentElement&&t.parentElement.classList.contains('tablewrap'))return;
+      const w=document.createElement('div');
+      w.className='tablewrap';
+      t.parentNode.insertBefore(w,t);
+      w.appendChild(t);
+    });
   });
 }
-runsEl.addEventListener("click",e=>{
-  const tg=e.target.closest("[data-toggle]");
-  if(tg){const ri=tg.dataset.toggle;state.collapsed["r"+ri]=!state.collapsed["r"+ri];
-    document.getElementById("run-"+ri).classList.toggle("collapsed",!!state.collapsed["r"+ri]);persist();return;}
-  const m=e.target.closest("[data-more]");
-  if(m){const d=document.getElementById("d-"+m.dataset.more);d.hidden=!d.hidden;
-    m.textContent=d.hidden?"Show detail ▾":"Hide detail ▴";return;}
-  const t=e.target.closest("[data-step]");
-  if(t){const id=t.dataset.step;state.steps[id]=!state.steps[id];
-    t.setAttribute("aria-pressed",!!state.steps[id]);
-    t.closest(".step").classList.toggle("done",!!state.steps[id]);persist();}
-});
 
-/* ---------- run nav ---------- */
-const runnav=document.getElementById("runnav");
-function drawRunNav(){
-  runnav.innerHTML=RUNS.map((r,ri)=>{
-    const names=new Set();
-    r.sections.forEach(sec=>sec.steps.forEach(st=>(st.ch||[]).forEach(c=>{
-      const base=c.replace(/\s*\(.*\)$/,"");if(CH.find(x=>x.n===base))names.add(base);})));
-    let done=0;names.forEach(n=>{if(state.ch[n])done++;});
-    return `<button data-goto="${ri}">${r.tag} <span class="prog">${done}/${names.size}</span></button>`;
-  }).join("")+`<button data-expand="all">Expand all</button><button data-expand="none">Collapse all</button>`;
-}
-runnav.addEventListener("click",e=>{
-  const g=e.target.closest("[data-goto]");
-  if(g){const ri=g.dataset.goto;state.collapsed["r"+ri]=false;
-    document.getElementById("run-"+ri).classList.remove("collapsed");persist();
-    document.getElementById("run-"+ri).scrollIntoView({behavior:"smooth",block:"start"});return;}
-  const x=e.target.closest("[data-expand]");
-  if(x){const all=x.dataset.expand==="all";
-    RUNS.forEach((r,ri)=>{state.collapsed["r"+ri]=!all;
-      document.getElementById("run-"+ri).classList.toggle("collapsed",!all);});persist();}
-});
+let filter='all';
+function render(){renderDays();renderList();renderDay();}
 
-/* ---------- tabs ---------- */
-document.querySelector("nav.tabs").addEventListener("click",e=>{
-  const b=e.target.closest("button[data-tab]");if(!b)return;
-  document.querySelectorAll("nav.tabs button").forEach(x=>x.setAttribute("aria-selected",x===b));
-  ["runs","check","ref","audit"].forEach(t=>{document.getElementById("tab-"+t).hidden=(t!==b.dataset.tab);});
-});
-
-/* ---------- reference & audit (static) ---------- */
+/* The reference and verification sheets, lifted whole out of the previous
+   edition as the statements that write them — never retyped, and fenced
+   with HTML comments so the assembler finds them again next time. */
+<!--@ref-->
 document.getElementById("tab-ref").innerHTML=`
   <h4 class="blk">Targets (confirmed by the game file)</h4>
   <table class="src">
@@ -870,7 +1118,9 @@ document.getElementById("tab-ref").innerHTML=`
     <li><strong>The Pleasure</strong> — shoot 14 golden skulls after the weather turns to spawn the ghost ship. Not a challenge in this file.</li>
     <li><strong>Moosenado</strong> — weather changed, the hesitant diver has jumped, and all pamphlets collected; a moose tornado appears to the north. Not a challenge in this file.</li>
   </ul>`;
+<!--/@ref-->
 
+<!--@audit-->
 document.getElementById("tab-audit").innerHTML=`
   <p class="note"><strong>This build is keyed to your uploaded file.</strong> Every challenge name and description on the checklist is copied verbatim from <em>18 - The Last Resort.json</em>. The file declares 70 challenges and the categories sum to exactly 67, so the totals are no longer estimated.</p>
 
@@ -912,8 +1162,89 @@ document.getElementById("tab-audit").innerHTML=`
     <tr><td>Hitman Wiki mission page</td><td>Mission stories, easter-egg achievements, cut-content context</td></tr>
     <tr><td>Unlock compendium + IO announcement</td><td>Mastery table and starting locations (flagged as not from the file)</td></tr>
   </table>`;
+<!--/@audit-->
 
-drawRuns();drawList();refresh();
+/* ---------------- EVENTS ---------------- */
+const tabs=[...document.querySelectorAll('.tab')];
+function selectTab(tb){
+  tabs.forEach(x=>{
+    const on=x===tb;
+    x.setAttribute('aria-selected',String(on));
+    x.tabIndex=on?0:-1;
+    $(x.getAttribute('aria-controls')).hidden=!on;
+  });
+}
+tabs.forEach((tb,i)=>{
+  tb.tabIndex=tb.getAttribute('aria-selected')==='true'?0:-1;
+  tb.addEventListener('keydown',e=>{
+    const d=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;
+    if(!d)return;
+    e.preventDefault();
+    const next=tabs[(i+d+tabs.length)%tabs.length];
+    selectTab(next);next.focus();
+  });
+});
+
+document.addEventListener('click',e=>{
+  const t=e.target;
+
+  /* a challenge is a control wherever it is named — on its line in the list,
+     or on the activity that takes it */
+  const cb=t.closest('[data-ch]');
+  if(cb){
+    const n=cb.dataset.ch;
+    state.ch[n]=!state.ch[n];
+    persist();render();return;
+  }
+
+  const sb=t.closest('[data-step]');
+  if(sb){
+    const id=sb.dataset.step, now=!state.steps[id];
+    state.steps[id]=now;
+    /* punching an activity takes the challenges it completes; un-punching
+       leaves them taken, because another activity may cover the same one */
+    if(now)(ACT_CH[id]||[]).forEach(n=>{state.ch[n]=true});
+    persist();render();return;
+  }
+
+  const rh=t.closest('[data-run]');
+  if(rh){
+    const i=+rh.dataset.run;
+    state.collapsed['r'+i]=!state.collapsed['r'+i];
+    persist();renderDays();return;
+  }
+
+  const jp=t.closest('[data-jump]');
+  if(jp){
+    const i=+jp.dataset.jump;
+    selectTab($('t-runs'));
+    state.collapsed['r'+i]=false;
+    persist();renderDays();
+    $('stay-'+i).scrollIntoView({behavior:'smooth',block:'start'});return;
+  }
+
+  const ta=t.closest('[data-toggleall]');
+  if(ta){
+    const anyClosed=RUNS.some((r,i)=>state.collapsed['r'+i]);
+    RUNS.forEach((r,i)=>{state.collapsed['r'+i]=!anyClosed});
+    persist();renderDays();return;
+  }
+
+  const fb=t.closest('[data-f]');
+  if(fb){filter=fb.dataset.f;renderList();return;}
+
+  const tb=t.closest('.tab');
+  if(tb){selectTab(tb);return;}
+});
+
+$('reset').addEventListener('click',()=>{
+  if(!confirm('Check out and clear the card? All '+CH.length+' challenges and every activity on this guide are cleared. Other guides are not affected.'))return;
+  state={ch:{},steps:{},collapsed:{}};
+  persist();render();
+});
+
+render();
+wrapTables();
 reportProgress();
 </script>
 <!-- step-progress-bridge -->

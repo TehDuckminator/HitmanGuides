@@ -1,195 +1,413 @@
-<!-- The Farewell (Mendoza) — 61-challenge step-format guide, v2 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Farewell — Mendoza Step Guide</title>
+<!--@title--><title>The Farewell — Mendoza Step Guide</title><!--/@title-->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,600;0,800;1,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Prata&family=Alegreya:ital,wght@0,400;0,500;0,700;1,400&family=PT+Mono&display=swap" rel="stylesheet">
 <style>
+/* ═══ MENDOZA — the tasting card ═══
+   47's last mission with Diana is a wine estate, and the two of them spend it
+   tasting. So the guide is the card the estate would hand you: one ivory sheet,
+   printed both sides, filled in by hand as the flight goes on.
+
+   The tracker is the TASTING WHEEL. Five families of note run round it, one per
+   challenge category, and each wedge inks outward from the centre as its
+   challenges are cleared. The number in the middle is the whole card. At the
+   end the wheel is solid and the centre goes wine-dark.
+
+   A run is a FLIGHT, a section is a COURSE, and a step is a POUR. The tick is
+   the ring a glass leaves on paper — an empty circle while the pour is
+   waiting, a wine stain once it is done. Nothing here is a bottle that fills:
+   that belongs to A Silver Tongue, and the previous edition of this guide had
+   the same idea, which is exactly why this one does not.
+
+   The one thing only this mission has: a third setting on the card. Diana
+   Burnwood has to walk away from Mendoza alive, so her glass is drawn on the
+   card and is the one ring on it that can never be ticked.
+
+   Ivory card and vineyard dusk: bordeaux, gold, olive, plum and slate, with a
+   Prata title and everything else set in Alegreya. Light and papery on
+   purpose — the two guides either side of this one are dark machinery. */
 :root{
-  --ink:#15111a; --ink-2:#1e1824; --panel:#241d2c; --panel-2:#2c2436;
-  --line:#3a3044; --wine:#7c1f3d; --wine-lit:#c33a58; --gold:#d7b25c;
-  --straw:#efe4c6; --vine:#7ea25c; --text:#e7dfd4; --dim:#a496a8;
-  --alert:#e04a4a; --amber:#e0952f;
+  --ground:#241A1E; --ground-2:#1B1316;
+  --card:#F7F1E4; --card-2:#EFE6D3; --card-3:#E6DAC2;
+  --ink:#2A211C; --ink-2:#54443A; --ink-dim:#79654F; --faint:#96826C;
+  --wine:#7B1F35; --wine-2:#A63A50; --gold:#9C7524; --olive:#5A6A31;
+  --plum:#5B3A63; --slate:#3B5567;
+  --rule:rgba(42,33,28,.24); --rule-2:rgba(42,33,28,.13); --rule-3:rgba(42,33,28,.07);
+  --stain:rgba(123,31,53,.3);
+  --disp:Prata,"Times New Roman",Georgia,serif;
+  --body:Alegreya,Georgia,"Times New Roman",serif;
+  --mono:"PT Mono",ui-monospace,Consolas,"Courier New",monospace;
 }
 *{box-sizing:border-box}
-html,body{margin:0;padding:0}
+html{scroll-behavior:smooth}
 body{
-  background:radial-gradient(1200px 500px at 15% -10%,#2a1c30 0,transparent 60%),
-             radial-gradient(900px 400px at 95% 0%,#3a1a28 0,transparent 55%),var(--ink);
-  color:var(--text);font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:15px;line-height:1.55;
-  -webkit-font-smoothing:antialiased;
+  margin:0;color:var(--ink);background-color:var(--ground);
+  /* the table the card is lying on, at dusk */
+  background-image:
+    radial-gradient(900px 520px at 50% -6%,rgba(214,166,96,.13),transparent 66%),
+    radial-gradient(700px 500px at 92% 110%,rgba(91,58,99,.16),transparent 70%);
+  background-attachment:fixed;
+  font-family:var(--body);font-size:16.5px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.table{max-width:1080px;margin:0 auto;padding:0 15px 96px}
+a{color:var(--wine)}
+b,strong{font-weight:700;color:var(--ink)}
+i,em{font-style:italic}
+code{font-family:var(--mono);font-size:.9em;background:var(--card-3);padding:1px 5px;border-radius:2px}
+:focus-visible{outline:2px solid var(--wine);outline-offset:2px}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:12px;top:12px;z-index:60;background:var(--wine);color:var(--card);padding:8px 14px;
+  font-family:var(--mono);font-size:12px}
+.lbl{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--faint)}
+
+/* ── the card ───────────────────────────────────────────────────────────── */
+.card{margin-top:38px;background:var(--card);
+  /* the printed double rule a card like this carries, drawn rather than
+     bordered so the inner rule sits in from the trim */
+  box-shadow:0 30px 64px -44px #000, inset 0 0 0 1px var(--rule),
+    inset 0 0 0 7px var(--card), inset 0 0 0 8px var(--rule-2)}
+.cardhead{padding:34px 34px 26px;text-align:center;border-bottom:1px solid var(--rule-2)}
+.eyebrow{margin:0 0 16px;font-family:var(--mono);font-size:10.5px;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--ink-dim)}
+h1{margin:0;font-family:var(--disp);font-weight:400;font-size:clamp(34px,6.2vw,60px);
+  line-height:1.08;color:var(--ink)}
+h1 em{display:block;margin-top:12px;font-family:var(--mono);font-style:normal;
+  font-size:clamp(10.5px,1.7vw,12px);letter-spacing:.2em;text-transform:uppercase;color:var(--wine)}
+.sub{margin:20px auto 0;max-width:72ch;font-size:16px;color:var(--ink-2)}
+.rail{display:flex;flex-wrap:wrap;gap:6px 20px;align-items:center;justify-content:space-between;
+  padding:9px 34px;background:var(--card-2);border-bottom:1px solid var(--rule-2);
+  font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-dim)}
+.rail a{color:var(--wine);text-decoration:none;border-bottom:1px solid rgba(123,31,53,.4)}
+.rail a:hover{color:var(--ink);border-color:var(--ink)}
+
+/* ── the tasting wheel ──────────────────────────────────────────────────── */
+.tasting{padding:26px 34px 30px}
+.wheelbox{max-width:390px;margin:0 auto}
+.wheelbox svg{display:block;width:100%;height:auto}
+.wedge{stroke:var(--card);stroke-width:1;transition:d .4s ease}
+.spoke{fill:none;stroke:var(--rule-2);stroke-width:1}
+.rim{fill:none;stroke:var(--rule);stroke-width:1.2}
+.rim.inner{stroke:var(--rule-2)}
+.rim.closed{stroke:var(--wine);stroke-width:1.6}
+.hub{fill:var(--card-2);stroke:var(--rule);stroke-width:1.2}
+.hub.full{fill:var(--wine);stroke:var(--wine)}
+.hubnum{font-family:Prata,Georgia,serif;font-size:30px;fill:var(--ink);text-anchor:middle}
+.hub.full ~ .hubnum,.hubnum.full{fill:var(--card)}
+.hubof{font-family:"PT Mono",ui-monospace,Consolas,monospace;font-size:8.5px;letter-spacing:.1em;
+  fill:var(--faint);text-anchor:middle}
+.hubof.full{fill:rgba(247,241,228,.8)}
+/* no text-anchor here: each label carries its own, swung to the side of the
+   wheel it sits on, and a CSS declaration would override the attribute */
+.wcode{font-family:Prata,Georgia,serif;font-size:13px;fill:var(--ink-2)}
+.wcode.full{fill:var(--m,var(--wine))}
+.wcount{font-family:"PT Mono",ui-monospace,Consolas,monospace;font-size:9.5px;letter-spacing:.04em;
+  fill:var(--faint)}
+.wcount.full{fill:var(--m,var(--wine))}
+/* the count line. Left in lower case on purpose: behaviour-check.js reads
+   rendered text and matches "n / n" — uppercasing it has hidden that number
+   from the harness before. Do not 'fix' this. */
+.count{margin:20px 0 0;text-align:center;font-size:16px;color:var(--ink-2)}
+.count b{display:block;font-family:var(--disp);font-weight:400;font-size:clamp(40px,7vw,58px);
+  line-height:1;color:var(--wine);margin-bottom:4px}
+.wheelcap{margin:8px 0 0;text-align:center;font-family:var(--mono);font-size:10px;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+
+/* the five families, ruled across the card the way a scoring block is */
+.families{margin:28px 0 0;border-top:1px solid var(--rule)}
+.fam{display:grid;grid-template-columns:minmax(0,1fr) minmax(90px,180px) auto;gap:8px 16px;
+  align-items:center;padding:9px 2px;border-bottom:1px solid var(--rule-3)}
+.fam .fn{font-family:var(--disp);font-size:17px;color:var(--ink)}
+.fam.full .fn{color:var(--m,var(--wine))}
+.fam .gauge{height:5px;background:var(--card-3);border-radius:3px;overflow:hidden}
+.fam .gauge i{display:block;height:100%;width:0;background:var(--m,var(--wine));
+  transition:width .45s ease}
+.fam .fv{font-family:var(--mono);font-size:11px;color:var(--ink-dim);white-space:nowrap}
+.fam.full .fv{color:var(--m,var(--wine))}
+
+.actions{display:flex;flex-wrap:wrap;gap:12px 18px;align-items:center;margin-top:24px}
+.btn{font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;
+  background:transparent;color:var(--ink-2);border:1px solid var(--rule);padding:10px 15px;
+  cursor:pointer}
+.btn:hover{border-color:var(--wine);color:var(--wine)}
+/* Diana's glass: the third setting on the card, and the one ring on it that
+   nothing ever ticks */
+.diana{display:flex;align-items:center;gap:11px;margin:0;font-size:14.6px;color:var(--ink-dim);
+  font-style:italic}
+.diana::before{content:"";flex:0 0 auto;width:26px;height:26px;border-radius:50%;
+  border:1.4px solid var(--rule);box-shadow:inset 0 0 0 3px var(--card),
+    inset 0 0 0 4px var(--rule-3)}
+
+/* ── tabs, printed along the card ───────────────────────────────────────── */
+.tabs{display:flex;flex-wrap:wrap;gap:4px 26px;margin:28px 0 0;padding:0 4px}
+.tab{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  background:transparent;color:rgba(247,241,228,.62);border:0;border-bottom:2px solid transparent;
+  padding:10px 2px;cursor:pointer}
+.tab[aria-selected="true"]{color:var(--card);border-bottom-color:var(--gold)}
+.tab:hover{color:var(--card)}
+.pane{margin-top:14px;background:var(--card);padding:26px 30px;
+  box-shadow:0 24px 54px -44px #000, inset 0 0 0 1px var(--rule)}
+
+/* ── the flight index ───────────────────────────────────────────────────── */
+.fnav{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:22px}
+.fjump{display:flex;align-items:baseline;gap:9px;background:var(--card-2);border:1px solid var(--rule-2);
+  color:var(--ink-2);padding:8px 13px;cursor:pointer;font-family:var(--body);font-size:15px;
+  text-align:left}
+.fjump b{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--wine)}
+.fjump i{font-style:normal;font-family:var(--mono);font-size:9.5px;color:var(--faint)}
+.fjump:hover{border-color:var(--wine);color:var(--ink)}
+.fjump.full{background:rgba(123,31,53,.08);border-color:rgba(123,31,53,.4)}
+
+/* ── a flight ───────────────────────────────────────────────────────────── */
+article.flight{border:1px solid var(--rule-2);margin-bottom:18px;background:var(--card-2);
+  scroll-margin-top:12px}
+article.flight.full{border-color:rgba(123,31,53,.42)}
+.fhead{display:grid;grid-template-columns:74px minmax(0,1fr);gap:18px;width:100%;text-align:left;
+  background:var(--card);border:0;border-bottom:1px solid var(--rule-2);cursor:pointer;
+  padding:17px 19px;font-family:var(--body);color:var(--ink-2)}
+.fhead:hover .ftitle{color:var(--wine)}
+/* the flight number, set the way a card numbers its pours */
+.fno{display:grid;place-content:center;gap:2px;min-height:70px;border:1px solid var(--rule-2);
+  background:var(--card-2);text-align:center;padding:8px 4px}
+.fno .k{font-family:var(--mono);font-size:8px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--faint)}
+.fno .v{font-family:var(--disp);font-size:27px;line-height:1;color:var(--ink)}
+article.flight.full .fno{border-color:var(--wine)}
+article.flight.full .fno .v{color:var(--wine)}
+.fmain{min-width:0}
+.fshort{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.ftitle{display:block;font-family:var(--disp);font-size:clamp(21px,3vw,30px);line-height:1.12;
+  color:var(--ink)}
+.fgoal{display:block;margin-top:10px;font-size:15.4px;color:var(--ink-2);max-width:84ch}
+.ftally{display:block;margin-top:10px;font-family:var(--mono);font-size:10px;color:var(--faint)}
+.fbody{padding:19px}
+.served{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1px;
+  background:var(--rule-3);border:1px solid var(--rule-3);margin-bottom:22px}
+.slot{background:var(--card);padding:10px 13px;min-width:0}
+.slot .k{display:block;font-family:var(--mono);font-size:8.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--faint)}
+.slot .v{display:block;margin-top:3px;font-size:14.8px;color:var(--ink);overflow-wrap:anywhere}
+.slot .v em{font-style:italic;color:var(--ink-dim)}
+.course{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin:26px 0 4px;
+  padding-bottom:8px;border-bottom:1px solid var(--rule);font-family:var(--disp);font-size:19px;
+  color:var(--ink)}
+.course:first-of-type{margin-top:0}
+.course .cnt{margin-left:auto;font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;
+  color:var(--faint)}
+
+/* ── a pour ─────────────────────────────────────────────────────────────── */
+.step{display:grid;grid-template-columns:44px minmax(0,1fr);gap:15px;align-items:start;
+  padding:15px 2px;border-bottom:1px solid var(--rule-3)}
+.step:last-of-type{border-bottom:0}
+.step.done{background:rgba(123,31,53,.045)}
+/* the tick is the ring a glass leaves on the card: empty while the pour is
+   waiting, a wine stain once it is taken. Drawn, because the faces here have
+   no usable tick glyph. */
+.ring{position:relative;width:44px;height:44px;padding:0;cursor:pointer;background:transparent;
+  border:1.5px solid var(--rule);border-radius:50%;
+  box-shadow:inset 0 0 0 4px var(--card),inset 0 0 0 5px var(--rule-3)}
+.ring:hover{border-color:var(--wine)}
+.ring::before{content:"";position:absolute;inset:5px;border-radius:50%;opacity:0;
+  background:radial-gradient(circle at 38% 32%,rgba(123,31,53,.5),var(--stain) 62%,
+    rgba(123,31,53,.42) 100%);
+  transition:opacity .2s ease}
+.step.done .ring{border-color:var(--wine)}
+.step.done .ring::before{opacity:1}
+.pwrap{min-width:0}
+.pno{font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--faint)}
+.step.done .pno{color:var(--wine)}
+.ptitle{margin:3px 0 0;font-family:var(--body);font-weight:700;font-size:17.4px;line-height:1.28;
+  color:var(--ink)}
+.pmeta{margin-top:10px;display:grid;gap:4px}
+.mrow{display:grid;grid-template-columns:74px minmax(0,1fr);gap:12px;align-items:start}
+.mk{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--faint);padding-top:4px}
+.mv{font-size:15px;color:var(--ink-2);overflow-wrap:anywhere}
+.does{margin:12px 0 0;padding-left:20px}
+.does li{margin-bottom:7px;font-size:15.4px;color:var(--ink-2)}
+.does li:last-child{margin-bottom:0}
+/* the marginal notes: an off note in red ink, a second pour in gold, and the
+   place to set the glass down before something irreversible */
+.nline{margin:11px 0 0;padding:9px 13px;font-size:14.8px;color:var(--ink-2);
+  border-left:3px solid var(--rule)}
+.nline b{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;
+  font-weight:400;display:block;margin-bottom:3px}
+.nline.off{border-left-color:var(--wine-2);background:rgba(166,58,80,.07)}
+.nline.off b{color:var(--wine-2)}
+.nline.alt{border-left-color:var(--gold);background:rgba(156,117,36,.07)}
+.nline.alt b{color:var(--gold)}
+.nline.set{border-left-color:var(--slate);background:rgba(59,85,103,.07)}
+.nline.set b{color:var(--slate)}
+/* the notes a pour carries: each one a challenge, and a control for it */
+.notes{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.note-chip{font-family:var(--body);font-size:14px;line-height:1.25;cursor:pointer;
+  padding:4px 11px;border:1px solid var(--rule-2);border-left:3px solid var(--m,var(--wine));
+  background:var(--card);color:var(--ink-2);text-align:left}
+.note-chip:hover{border-color:var(--m,var(--wine));color:var(--ink)}
+.note-chip[aria-checked="true"]{background:var(--m,var(--wine));border-color:var(--m,var(--wine));
+  color:var(--card);font-weight:500}
+
+/* ── the cellar list ────────────────────────────────────────────────────── */
+.filters{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:22px}
+.filters button{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+  background:var(--card-2);border:1px solid var(--rule-2);color:var(--ink-dim);padding:8px 12px;
+  cursor:pointer}
+.filters button:hover{border-color:var(--wine);color:var(--ink)}
+.filters button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--card)}
+.grp{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin:30px 0 4px;
+  padding-bottom:7px;border-bottom:2px solid var(--m,var(--wine));font-family:var(--disp);
+  font-size:21px;color:var(--ink)}
+.grp:first-child{margin-top:0}
+.grp .n{margin-left:auto;font-family:var(--mono);font-size:9.5px;color:var(--faint)}
+.crow{display:grid;grid-template-columns:38px minmax(0,1fr) auto;gap:15px;align-items:start;
+  padding:12px 2px;border-bottom:1px solid var(--rule-3)}
+.crow:last-child{border-bottom:0}
+.crow.done{background:rgba(123,31,53,.045)}
+.mark{position:relative;width:38px;height:38px;padding:0;cursor:pointer;background:transparent;
+  border:1.5px solid var(--rule);border-radius:50%;
+  box-shadow:inset 0 0 0 3px var(--card),inset 0 0 0 4px var(--rule-3)}
+.mark:hover{border-color:var(--m,var(--wine))}
+.mark::before{content:"";position:absolute;inset:4px;border-radius:50%;opacity:0;
+  background:radial-gradient(circle at 38% 32%,rgba(123,31,53,.5),var(--stain) 62%,
+    rgba(123,31,53,.42) 100%);transition:opacity .2s ease}
+.crow.done .mark{border-color:var(--m,var(--wine))}
+.crow.done .mark::before{opacity:1}
+.cn{margin:0;font-family:var(--body);font-weight:700;font-size:17px;line-height:1.28;color:var(--ink)}
+.crow.done .cn{color:var(--m,var(--wine))}
+.cd{margin:4px 0 0;font-size:15px;color:var(--ink-2)}
+.cmeta{display:grid;justify-items:end;gap:3px;font-family:var(--mono);font-size:9.5px;
+  letter-spacing:.05em;text-transform:uppercase;color:var(--faint);text-align:right;white-space:nowrap}
+.cmeta .xp{color:var(--gold)}
+.empty{margin:18px 0;color:var(--ink-2)}
+
+/* ── the lifted verification sheet ──────────────────────────────────────── */
+.verify h3{margin:0 0 8px;font-family:var(--disp);font-size:19px;color:var(--ink)}
+.verify p{margin:0 0 10px;font-size:15.4px;color:var(--ink-2);max-width:86ch}
+.verify p:last-child{margin-bottom:0}
+.verify ul,.verify ol{margin:0 0 11px;padding-left:20px}
+.verify li{margin-bottom:6px;font-size:15.2px;color:var(--ink-2);max-width:86ch}
+/* the guide's own standing notes, kept as the flags it wrote them as */
+.verify .note{margin:0 0 16px;padding:15px 17px;background:var(--card-2);
+  border:1px solid var(--rule-2);border-left:3px solid var(--slate)}
+.verify .note.flag-ok{border-left-color:var(--olive)}
+.verify .note.flag{border-left-color:var(--gold)}
+.verify .note.flag-u{border-left-color:var(--wine-2)}
+.tablewrap{overflow-x:auto;margin:0 0 16px;border:1px solid var(--rule-2)}
+.verify table{border-collapse:collapse;width:100%;min-width:460px;font-size:14.6px}
+.verify th,.verify td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--rule-3);
+  color:var(--ink-2);vertical-align:top}
+.verify th{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--faint);background:var(--card-2)}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;
+  scroll-behavior:auto!important}}
+@media (max-width:620px){
+  .card{box-shadow:0 20px 44px -40px #000, inset 0 0 0 1px var(--rule)}
+  .cardhead{padding:24px 16px 20px}
+  .rail,.tasting{padding-left:16px;padding-right:16px}
+  .pane{padding:16px}
+  .fam{grid-template-columns:minmax(0,1fr) auto}
+  .fam .gauge{grid-column:1 / -1}
+  .fhead{grid-template-columns:56px minmax(0,1fr);gap:12px;padding:14px}
+  .fno{min-height:52px}
+  .fno .v{font-size:20px}
+  .fbody{padding:14px}
+  .step{grid-template-columns:36px minmax(0,1fr);gap:12px}
+  .ring{width:36px;height:36px}
+  .mrow{grid-template-columns:minmax(0,1fr);gap:1px}
+  .mk{padding-top:0}
+  .crow{grid-template-columns:32px minmax(0,1fr)}
+  .mark{width:32px;height:32px}
+  .cmeta{grid-column:2;justify-items:start;text-align:left;margin-top:6px}
 }
-.wrap{max-width:1080px;margin:0 auto;padding:26px 18px 90px}
-
-/* masthead */
-.masthead{border-bottom:1px solid var(--line);padding-bottom:20px;margin-bottom:20px}
-.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin:0 0 10px}
-h1{font-family:'Spectral',serif;font-weight:800;font-size:clamp(30px,5.5vw,50px);line-height:1;margin:0;letter-spacing:-.01em}
-h1 em{font-style:italic;font-weight:300;color:var(--gold)}
-.sub{color:var(--dim);max-width:64ch;margin:10px 0 0}
-
-/* tracker */
-.tracker{background:linear-gradient(180deg,var(--panel),var(--ink-2));border:1px solid var(--line);border-radius:4px;padding:18px;margin-bottom:22px}
-.tracker-top{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;justify-content:space-between}
-.bigcount{font-family:'Spectral',serif;font-size:42px;font-weight:800;line-height:1}
-.bigcount span{font-size:19px;color:var(--dim);font-weight:300}
-.xpline{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--gold);letter-spacing:.06em}
-.glass{position:relative;height:15px;margin:16px 0 4px;border:1px solid var(--line);border-radius:2px;background:#191320;overflow:hidden}
-.pour{position:absolute;inset:0 auto 0 0;width:0;background:linear-gradient(180deg,var(--wine-lit),var(--wine) 45%,#4d1026);transition:width .5s cubic-bezier(.22,.61,.36,1)}
-.pour::after{content:"";position:absolute;top:0;right:0;width:3px;height:100%;background:rgba(255,220,180,.55)}
-.pct{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--dim);letter-spacing:.1em}
-.cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(115px,1fr));gap:9px;margin-top:16px}
-.cat{background:var(--panel-2);border:1px solid var(--line);border-radius:3px;padding:9px 11px}
-.cat b{display:block;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);margin-bottom:3px;font-weight:400}
-.cat i{font-style:normal;font-family:'Spectral',serif;font-size:21px;font-weight:600}
-.cat i small{font-size:13px;color:var(--dim);font-weight:300}
-
-/* tabs */
-.tabs{display:flex;gap:2px;margin:0 0 18px;border-bottom:1px solid var(--line);flex-wrap:wrap}
-.tab{appearance:none;background:none;border:0;border-bottom:2px solid transparent;color:var(--dim);
-  font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;padding:12px 15px;cursor:pointer}
-.tab:hover{color:var(--text)}
-.tab[aria-selected="true"]{color:var(--gold);border-bottom-color:var(--gold)}
-.tab:focus-visible,.runbtn:focus-visible,.filter:focus-visible,.tick:focus-visible,.exp:focus-visible,.runhead:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
-.view[hidden]{display:none}
-
-/* run nav buttons */
-.runnav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
-.runbtn{appearance:none;text-align:left;background:var(--panel-2);border:1px solid var(--line);border-radius:3px;
-  color:var(--text);padding:9px 12px;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;font-size:12.5px;line-height:1.3}
-.runbtn:hover{border-color:var(--wine-lit)}
-.runbtn b{display:block;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:400;margin-bottom:2px}
-.runbtn i{font-style:normal;color:var(--dim);font-size:11px}
-
-/* run */
-.run{border:1px solid var(--line);border-radius:4px;margin-bottom:18px;background:var(--ink-2);overflow:hidden;scroll-margin-top:12px}
-.runhead{width:100%;text-align:left;appearance:none;border:0;background:var(--panel);color:var(--text);padding:17px 20px;cursor:pointer;display:block}
-.runhead .rn{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.2em;color:var(--wine-lit);text-transform:uppercase}
-.runhead h2{font-family:'Spectral',serif;font-size:23px;font-weight:600;margin:4px 0 5px;line-height:1.15}
-.runhead p{margin:0;color:var(--dim);max-width:72ch;font-size:14px}
-.runhead .chev{float:right;color:var(--gold);font-size:13px;margin-left:12px}
-.runbody[hidden]{display:none}
-
-.loadout{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:1px;background:var(--line);border-top:1px solid var(--line)}
-.lo{background:var(--ink-2);padding:13px 16px}
-.lo b{display:block;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:4px;font-weight:400}
-.lo span{font-size:13px}
-.lo em{display:block;font-style:normal;color:var(--dim);font-size:11.5px;margin-top:2px}
-
-.secbar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 20px 6px;border-top:1px solid var(--line)}
-.sech{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
-.exp{appearance:none;background:none;border:1px solid var(--line);border-radius:2px;color:var(--dim);
-  font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;padding:5px 9px;cursor:pointer}
-
-/* step */
-.step{border-top:1px solid var(--line);padding:0}
-.sthead{display:flex;gap:11px;align-items:flex-start;padding:12px 20px}
-.tick{flex:0 0 auto;width:23px;height:23px;margin-top:2px;border:1px solid var(--line);border-radius:2px;background:var(--panel-2);
-  color:transparent;cursor:pointer;font-size:13px;line-height:1;display:flex;align-items:center;justify-content:center}
-.tick[aria-pressed="true"]{background:var(--vine);border-color:var(--vine);color:#12200c}
-.stnum{flex:0 0 auto;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--wine-lit);margin-top:5px;min-width:26px}
-.sttoggle{flex:1;appearance:none;background:none;border:0;color:var(--text);text-align:left;cursor:pointer;padding:0;font-family:inherit}
-.sttitle{font-weight:600;font-size:15px}
-.sttitle .chev{color:var(--gold);font-size:11px;margin-left:6px;font-weight:400}
-.step.done .sttitle{color:var(--dim);text-decoration:line-through}
-.badges{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}
-.badge{font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;padding:3px 7px;border-radius:2px;border:1px solid}
-.b-a{color:#f2a0b4;border-color:#7c1f3d;background:rgba(124,31,61,.28)}
-.b-d{color:#9fd0e8;border-color:#2c5b73;background:rgba(44,91,115,.25)}
-.b-f{color:#cbb6e8;border-color:#4d3a6b;background:rgba(77,58,107,.28)}
-.b-t{color:#f0c98a;border-color:#7a5a1d;background:rgba(122,90,29,.25)}
-.b-tc{color:#a8dfa0;border-color:#3d6b33;background:rgba(61,107,51,.25)}
-.b-warn{color:#fff;border-color:var(--alert);background:var(--alert);font-weight:600}
-.b-save{color:#1c1408;border-color:var(--amber);background:var(--amber);font-weight:600}
-.b-unv{color:#161016;border-color:#c8c0cc;background:#c8c0cc;font-weight:600}
-
-.stbody{padding:0 20px 15px 60px}
-.stbody[hidden]{display:none}
-.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:7px 16px;margin:2px 0 11px;
-  padding:10px 12px;background:var(--panel-2);border-left:2px solid var(--wine);border-radius:0 2px 2px 0}
-.meta div{font-size:12.5px;color:#d5cbc4}
-.meta k{font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--gold);display:block}
-.does{margin:0 0 10px;padding-left:17px}
-.does li{margin-bottom:5px;font-size:14px}
-.does strong{color:var(--straw)}
-.note-line{font-size:13px;padding:9px 11px;border-radius:2px;margin-bottom:9px}
-.nl-warn{background:rgba(224,74,74,.13);border-left:3px solid var(--alert)}
-.nl-save{background:rgba(224,149,47,.12);border-left:3px solid var(--amber)}
-.nl-alt{background:var(--panel-2);border-left:3px solid var(--dim)}
-.note-line b{color:var(--straw)}
-
-/* checklist */
-.filters{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:15px}
-.filter{appearance:none;background:var(--panel-2);border:1px solid var(--line);color:var(--dim);
-  font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;padding:7px 11px;border-radius:2px;cursor:pointer}
-.filter[aria-pressed="true"]{background:var(--wine);border-color:var(--wine-lit);color:#fff}
-.ch{display:flex;gap:11px;align-items:flex-start;padding:11px 3px;border-bottom:1px solid var(--line)}
-.ch.done .ch-name{color:var(--dim);text-decoration:line-through}
-.ch-name{font-weight:600}
-.ch-desc{color:var(--dim);font-size:13.5px;margin-top:1px}
-.ch-meta{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--gold);margin-top:4px;letter-spacing:.05em}
-
-/* notes */
-.note{border:1px solid var(--line);background:var(--panel);border-radius:4px;padding:17px 19px;margin-bottom:15px}
-.note h3{font-family:'Spectral',serif;font-size:19px;font-weight:600;margin:0 0 8px}
-.note p,.note li{color:#d5cbc4}
-.note ul{padding-left:18px;margin:8px 0}
-.note li{margin-bottom:5px}
-.flag{border-left:3px solid var(--alert)}
-.flag-u{border-left:3px solid #c8c0cc}
-.flag-ok{border-left:3px solid var(--vine)}
-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:10px}
-th,td{text-align:left;padding:7px 9px;border-bottom:1px solid var(--line);vertical-align:top}
-th{font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--gold);font-weight:400}
-.reset{appearance:none;background:none;border:1px solid var(--line);color:var(--dim);font-family:'IBM Plex Mono',monospace;
-  font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;padding:8px 13px;border-radius:2px;cursor:pointer;margin-top:14px}
-.reset:hover{border-color:var(--alert);color:var(--alert)}
-@media (max-width:600px){.stbody{padding-left:20px}}
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media print{
+  body{background:#fff;background-image:none;font-size:10.5pt}
+  .table{max-width:none;padding:0}
+  .tabs,.fnav,.skip,.ring,.mark,.btn,.filters,.rail,.wheelbox,.diana{display:none!important}
+  .pane[hidden]{display:block!important}
+  .fbody{display:block!important}
+  .card,.pane,article.flight,.slot,.verify .note{background:#fff!important;
+    box-shadow:none!important;border-color:#999!important}
+  .step,article.flight,.crow{break-inside:avoid}
+}
 </style>
+</head>
+<body>
+<div class="table">
 
-<div class="wrap">
-
-<header class="masthead">
-  <p class="eyebrow">HITMAN World of Assassination · Mission 05 · Viñedo Yates</p>
-  <h1>The Farewell <em>— step guide</em></h1>
-  <p class="sub">61 challenges across 6 runs. Targets: Don Archibald Yates and Tamara Vidal. Diana Burnwood must survive — killing her, or letting her die in your accident, fails the mission instantly.</p>
-</header>
-
-<section class="tracker" aria-label="Progress">
-  <div class="tracker-top">
-    <div>
-      <div class="bigcount"><span id="tDone">0</span><span> / 61 challenges</span></div>
-      <div class="xpline" id="tXp">0 / 130,000 XP</div>
-    </div>
-    <div class="pct" id="tPct">0% complete</div>
+<div class="card">
+  <div class="cardhead">
+    <p class="eyebrow"><!--@eyebrow-->HITMAN World of Assassination · Mission 05 · Viñedo Yates<!--/@eyebrow--></p>
+    <h1><!--@h1-->The Farewell <em>— step guide</em><!--/@h1--></h1>
+    <p class="sub"><!--@sub-->61 challenges across 6 runs. Targets: Don Archibald Yates and Tamara Vidal. Diana Burnwood must survive — killing her, or letting her die in your accident, fails the mission instantly.<!--/@sub--></p>
   </div>
-  <div class="glass"><div class="pour" id="tBar"></div></div>
-  <div class="cats" id="tCats"></div>
+
+  <!-- the head of the card holds nothing focusable, so this is still the first
+       stop for a keyboard -->
+  <a class="skip" href="#pane-runs">Skip to the six flights</a>
+
+  <div class="rail">
+    <a href="../index.html">&#8592; All guides</a>
+    <span>Vi&ntilde;edo Yates, Mendoza &middot; Main campaign 23</span>
+    <span>Saved in this browser only</span>
+  </div>
+
+  <div class="tasting">
+    <div class="wheelbox">
+      <!-- wider than it is tall, so the family labels either side of the wheel
+           have room to sit outside the rim without being clipped -->
+      <svg viewBox="0 0 360 316" role="img" aria-labelledby="wheelTitle" aria-describedby="wheelDesc">
+        <title id="wheelTitle">The tasting wheel</title>
+        <desc id="wheelDesc">Five families of note, each inking outward as its challenges are cleared.</desc>
+        <g id="wedges"></g>
+        <g id="spokes"></g>
+        <circle class="rim" cx="180" cy="152" r="108"/>
+        <circle class="rim inner" id="rimin" cx="180" cy="152" r="104"/>
+        <circle class="hub" id="hub" cx="180" cy="152" r="34"/>
+        <text class="hubnum" id="hubnum" x="180" y="156">0</text>
+        <text class="hubof" id="hubof" x="180" y="170">of 0</text>
+        <g id="wlabels"></g>
+      </svg>
+      <p class="count"><b id="numDone">0</b><span id="numOf">/ 0 notes tasted</span></p>
+      <p class="wheelcap" id="wheelcap">Nothing poured yet</p>
+    </div>
+
+    <div class="families" id="families"></div>
+
+    <div class="actions">
+      <button class="btn" id="reset" type="button">Wipe the card clean</button>
+      <p class="diana">Diana&rsquo;s glass &mdash; the one ring on this card that nothing ticks.</p>
+    </div>
+  </div>
+</div>
+
+<div class="tabs" role="tablist" aria-label="Guide sections">
+  <button class="tab" role="tab" id="tab-runs" aria-controls="pane-runs" aria-selected="true">The flights</button>
+  <button class="tab" role="tab" id="tab-list" aria-controls="pane-list" aria-selected="false">Cellar list</button>
+  <button class="tab" role="tab" id="tab-ver" aria-controls="p-ver" aria-selected="false">Verification</button>
+</div>
+
+<section class="pane" id="pane-runs" role="tabpanel" aria-labelledby="tab-runs">
+  <nav class="fnav" id="fnav" aria-label="Jump to a flight"></nav>
+  <div id="flights"></div>
 </section>
 
-<div class="tabs" role="tablist">
-  <button class="tab" role="tab" aria-selected="true" data-view="runs">Runs</button>
-  <button class="tab" role="tab" aria-selected="false" data-view="list">Checklist</button>
-  <button class="tab" role="tab" aria-selected="false" data-view="verify">Verification</button>
-</div>
-
-<div class="view" id="view-runs">
-  <div class="runnav" id="runnav"></div>
-  <div id="runs"></div>
-</div>
-
-<div class="view" id="view-list" hidden>
+<section class="pane" id="pane-list" role="tabpanel" aria-labelledby="tab-list" hidden>
   <div class="filters" id="filters"></div>
-  <div id="chList"></div>
-  <button class="reset" id="resetBtn">Clear all progress</button>
-</div>
+  <div id="checklist"></div>
+</section>
 
-<div class="view" id="view-verify" hidden>
-
-  <div class="note flag-ok">
+<section class="pane verify" id="p-ver" role="tabpanel" aria-labelledby="tab-ver" hidden>
+<!--@verify-->
+<div class="note flag-ok">
     <h3>Count reconciled — your JSON confirms 61</h3>
     <p>Your uploaded file (<code>23_-_The_Farewell.json</code>) reports <strong>challengeCount: 59</strong>, broken down as 17 Assassination / 20 Discovery / 15 Feats / 2 Targets / 5 Classics. I diffed it line by line against the Hitman Wiki's 61-challenge list. Exactly two entries are missing from your file:</p>
     <ul>
@@ -277,11 +495,12 @@ th{font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.13em;te
     <h3>Sources</h3>
     <p>Your <code>23_-_The_Farewell.json</code> in-game dump (authoritative for names, descriptions and category counts). Hitman Wiki: <em>The Farewell</em>, <em>Closing Statement</em>, <em>Banana Blazer</em>. Gamepressure: Mendoza map and mission information, QR codes, Eliminate Tamara Vidal, Eliminate Don Archibald Yates, shortcuts. PowerPyx: Mendoza challenges, undiscovered areas, and the four mission-story walkthroughs. Neoseeker Mendoza walkthrough. PCGamesN and Gfinity (independent corroboration of the propane SASO method). SegmentNext. HitmanForum (Banana Blazer date and bug reports only).</p>
   </div>
-</div>
-
+<!--/@verify-->
+</section>
 </div>
 
 <script>
+/*@ch*/
 /* ================= CHALLENGES (names/descriptions from the uploaded JSON where present) ================ */
 const CH=[
 {id:'hemlock',n:'Notes of Hemlock',t:'A',xp:2000,d:'Serve Tamara Vidal a poisoned glass of Pinot Noir.'},
@@ -346,10 +565,14 @@ const CH=[
 {id:'so',n:'Suit Only',t:'TC',xp:4000,d:'Assassinate the targets and complete the mission. / Do it all in your suit.'},
 {id:'sa',n:'Silent Assassin',t:'TC',xp:4000,d:'Complete "The Farewell." / Only kill the targets. / No bodies found. / Do not get compromised. / If you are detected by cameras, erase or destroy the evidence.'}
 ];
+/*/@ch*/
+
+/*@types*/
 const TYPES={A:'Assassination',D:'Discovery',F:'Feats',T:'Targets',TC:'The Classics'};
 const BC={A:'b-a',D:'b-d',F:'b-f',T:'b-t',TC:'b-tc'};
-const byId=Object.fromEntries(CH.map(c=>[c.id,c]));
+/*/@types*/
 
+/*@runs*/
 /* ================= RUNS ================= */
 const RUNS=[
 {
@@ -649,146 +872,364 @@ does:['Resolves once Silent Assassin, Silent Assassin Suit Only, Sniper Assassin
 does:['Resolves once Piano Man, Someone Could Hurt Themselves, Hold My Hair, Straight Shot and Tasteless, Traceless are all done — spread across Runs 1 to 5, so nothing extra is needed.'],ch:['versatile']}
 ]}]}
 ];
+/*/@runs*/
 
-/* ================= STATE ================= */
-let done={},steps={},openRuns={r1:true},openSteps={};
-function reportProgress(){try{const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r['m23']={done:CH.filter(c=>done[c.id]).length,total:CH.length,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
-async function load(){
-  try{const r=localStorage.getItem('farewell-v2');if(r){const p=JSON.parse(r);done=p.done||{};steps=p.steps||{};}}catch(e){}
-  render();
+/* ---------------- STATE ----------------
+   The key keeps its name and its shape. 'farewell-v2' holds one object with two
+   maps in it — `done` keyed by challenge id and `steps` keyed by pour, whose
+   keys are still "<run key>-<section>-<step>" — so an existing card survives
+   the rebuild. The key string stays literal so validate.js can see it. */
+let done={}, steps={}, filter='all';
+try{
+  const raw=localStorage.getItem('farewell-v2');
+  if(raw){const p=JSON.parse(raw)||{};done=p.done||{};steps=p.steps||{};}
+}catch(e){}
+
+function reportProgress(){
+  try{
+    const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');
+    r['m23']={done:CH.filter(c=>done[c.id]).length,total:CH.length,updated:Date.now()};
+    localStorage.setItem('hitman-progress-registry',JSON.stringify(r));
+  }catch(e){}
+}
+function sv(){
+  try{localStorage.setItem('farewell-v2',JSON.stringify({done,steps}));}catch(e){}
   reportProgress();
 }
-async function save(){try{localStorage.setItem('farewell-v2',JSON.stringify({done,steps}));}catch(e){}reportProgress();}
 
-/* ================= RENDER ================= */
-function badgeHTML(ids,warn,sv){
-  let h=(ids||[]).map(id=>{const c=byId[id];return c?`<span class="badge ${BC[c.t]}">${c.n}</span>`:'';}).join('');
-  if(warn)h+='<span class="badge b-warn">&#9888; Warning</span>';
-  if(sv)h+='<span class="badge b-save">&#9670; Save here</span>';
-  return h;
+const $=s=>document.getElementById(s);
+const esc=s=>String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;')
+  .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+/* The route text was written as markup — `does` carries <strong> and the
+   loadout carries <em> — so those are printed as they stand. Everything else
+   is plain text and is escaped, and attribute values are escaped either way. */
+const raw=s=>String(s==null?'':s);
+const byId=Object.fromEntries(CH.map(c=>[c.id,c]));
+
+/* the five families of note, in the order TYPES declares them */
+const FAM=Object.keys(TYPES);
+const CVAR={A:'var(--wine)',D:'var(--slate)',F:'var(--gold)',T:'var(--plum)',TC:'var(--olive)'};
+const byFam=k=>CH.filter(c=>c.t===k);
+const famDone=k=>byFam(k).filter(c=>done[c.id]).length;
+const tasted=()=>CH.filter(c=>done[c.id]).length;
+
+/* Every pour carries the ids of the notes it lands, so the link from a pour to
+   its challenges is the data's own and needs no name matching. */
+const POUR_CH={}, ALL_POURS=[], FLIGHT_OF={};
+RUNS.forEach((r,ri)=>r.sections.forEach((sec,si)=>sec.steps.forEach((st,x)=>{
+  st._id=r.key+'-'+si+'-'+x;
+  st._no=(si+1)+'.'+(x+1);
+  ALL_POURS.push(st._id);
+  POUR_CH[st._id]=(st.ch||[]).filter(id=>byId[id]);
+  POUR_CH[st._id].forEach(id=>{if(!FLIGHT_OF[id])FLIGHT_OF[id]=ri+1;});
+})));
+const flightPours=r=>{const o=[];r.sections.forEach(s=>s.steps.forEach(st=>o.push(st._id)));return o;};
+const flightTaken=r=>flightPours(r).filter(id=>steps[id]).length;
+const flightFull=r=>{const p=flightPours(r);return p.length>0&&p.every(id=>steps[id]);};
+
+/* ---------------- THE TASTING WHEEL ----------------
+   Five equal wedges, one per family, each inking from the hub outward in
+   proportion to that family's own count. The wheel is drawn once and only its
+   wedge paths are rewritten, so the labels never move. */
+const CX=180, CY=152, R_IN=36, R_OUT=104;
+const SEG=360/FAM.length;
+const START=-90;                                  /* first wedge starts at the top */
+const pt=(r,deg)=>{
+  const a=deg*Math.PI/180;
+  return [(CX+r*Math.cos(a)).toFixed(2),(CY+r*Math.sin(a)).toFixed(2)];
+};
+/* an annular sector from rIn to rOut between two angles */
+function wedgePath(rIn,rOut,a0,a1){
+  const [x0,y0]=pt(rOut,a0), [x1,y1]=pt(rOut,a1);
+  const [x2,y2]=pt(rIn,a1), [x3,y3]=pt(rIn,a0);
+  const big=(a1-a0)>180?1:0;
+  return `M${x0},${y0} A${rOut},${rOut} 0 ${big} 1 ${x1},${y1} L${x2},${y2} `+
+    `A${rIn},${rIn} 0 ${big} 0 ${x3},${y3} Z`;
 }
-function metaHTML(s){
-  const rows=[];
-  if(s.where)rows.push(`<div><k>Where</k>${s.where}</div>`);
-  if(s.disguise)rows.push(`<div><k>Disguise</k>${s.disguise}</div>`);
-  if(s.item)rows.push(`<div><k>Item</k>${s.item}</div>`);
-  if(s.npc)rows.push(`<div><k>NPC</k>${s.npc}</div>`);
-  return rows.length?`<div class="meta">${rows.join('')}</div>`:'';
-}
-function renderRuns(){
-  document.getElementById('runnav').innerHTML=RUNS.map((r,i)=>{
-    const all=r.sections.reduce((a,s)=>a+s.steps.length,0);
-    const dn=r.sections.reduce((a,s,si)=>a+s.steps.filter((_,x)=>steps[`${r.key}-${si}-${x}`]).length,0);
-    return `<button class="runbtn" data-jump="${r.key}"><b>Run ${i+1}</b>${r.short}<i> · ${dn}/${all} steps</i></button>`;
+(function drawWheel(){
+  const wg=$('wedges'), sp=$('spokes'), lb=$('wlabels');
+  if(!wg||!sp||!lb)return;
+  wg.innerHTML=FAM.map((k,i)=>
+    `<path class="wedge" id="wedge${i}" fill="${CVAR[k]}" d=""/>`).join('');
+  sp.innerHTML=FAM.map((k,i)=>{
+    const a=START+i*SEG, [x0,y0]=pt(R_IN,a), [x1,y1]=pt(R_OUT,a);
+    return `<path class="spoke" d="M${x0},${y0} L${x1},${y1}"/>`;
+  }).join('');
+  /* The family's own code, the one the data uses, set just outside the rim with
+     its count stacked underneath. Both sit at one anchor point rather than at
+     two radii: spacing them along the radius put them side by side on the
+     wheel's flanks, where they collided with each other and with the rim. The
+     anchor swings with the angle so a label on the left reads inward and one on
+     the right reads outward, and neither is clipped. */
+  lb.innerHTML=FAM.map((k,i)=>{
+    const mid=START+i*SEG+SEG/2;
+    const c=Math.cos(mid*Math.PI/180);
+    const anchor=c>0.35?'start':c<-0.35?'end':'middle';
+    const [ax,ay]=pt(116,mid);
+    const x=(+ax+(anchor==='start'?5:anchor==='end'?-5:0)).toFixed(2);
+    return `<g style="--m:${CVAR[k]}">
+      <text class="wcode" id="wcode${i}" x="${x}" y="${(+ay).toFixed(2)}"
+        text-anchor="${anchor}">${esc(k)}</text>
+      <text class="wcount" id="wcount${i}" x="${x}" y="${(+ay+13).toFixed(2)}"
+        text-anchor="${anchor}">0 / 0</text>
+    </g>`;
+  }).join('');
+})();
+
+function renderWheel(){
+  const n=tasted(), total=CH.length, all=total>0&&n===total;
+  FAM.forEach((k,i)=>{
+    const t=byFam(k).length, d=famDone(k), full=t>0&&d===t;
+    const a0=START+i*SEG, a1=a0+SEG;
+    const r=R_IN+(t?d/t:0)*(R_OUT-R_IN);
+    const w=$('wedge'+i);
+    if(w)w.setAttribute('d',d>0?wedgePath(R_IN,r,a0,a1):'');
+    const code=$('wcode'+i), cnt=$('wcount'+i);
+    if(code)code.classList.toggle('full',full);
+    if(cnt){cnt.classList.toggle('full',full);cnt.textContent=d+' / '+t;}
+  });
+
+  const hub=$('hub'), hn=$('hubnum'), ho=$('hubof'), rim=$('rimin');
+  if(hub)hub.classList.toggle('full',all);
+  if(hn){hn.textContent=n;hn.classList.toggle('full',all);}
+  if(ho){ho.textContent='of '+total;ho.classList.toggle('full',all);}
+  if(rim)rim.classList.toggle('closed',all);
+
+  $('numDone').textContent=n;
+  $('numOf').textContent='/ '+total+' notes tasted';
+  $('wheelcap').textContent=n===0?'Nothing poured yet'
+    :all?'Every note tasted'
+    :[...Object.keys(steps)].filter(k=>steps[k]&&POUR_CH[k]!==undefined).length+' of '+
+      ALL_POURS.length+' pours taken across '+RUNS.length+' flights';
+
+  $('families').innerHTML=FAM.map(k=>{
+    const t=byFam(k).length, d=famDone(k), full=t>0&&d===t;
+    return `<div class="fam${full?' full':''}" style="--m:${CVAR[k]}">
+      <span class="fn">${esc(TYPES[k])}</span>
+      <span class="gauge"><i style="width:${t?d/t*100:0}%"></i></span>
+      <span class="fv">${d} / ${t}${
+        full?'':' &middot; '+byFam(k).filter(c=>!done[c.id]).reduce((s,c)=>s+c.xp,0).toLocaleString()+' XP left'}</span>
+    </div>`;
   }).join('');
 
-  document.getElementById('runs').innerHTML=RUNS.map((run,ri)=>{
-    const open=!!openRuns[run.key];
-    const secs=run.sections.map((sec,si)=>{
-      const st=sec.steps.map((s,x)=>{
-        const key=`${run.key}-${si}-${x}`;const dn=!!steps[key];const op=!!openSteps[key];
-        return `<div class="step ${dn?'done':''}">
-          <div class="sthead">
-            <button class="tick" data-step="${key}" aria-pressed="${dn}" aria-label="Mark step done">&#10003;</button>
-            <span class="stnum">${si+1}.${x+1}</span>
-            <button class="sttoggle" data-stepopen="${key}" aria-expanded="${op}">
-              <span class="sttitle">${s.n}<span class="chev">${op?'\u25B4':'\u25BE'}</span></span>
-              <span class="badges">${badgeHTML(s.ch,s.warn,s.save)}</span>
-            </button>
-          </div>
-          <div class="stbody" id="b-${key}" ${op?'':'hidden'}>
-            ${metaHTML(s)}
-            <ul class="does">${(s.does||[]).map(d=>`<li>${d}</li>`).join('')}</ul>
-            ${s.warn?`<div class="note-line nl-warn"><b>Warning —</b> ${s.warn}</div>`:''}
-            ${s.alt?`<div class="note-line nl-alt"><b>If that fails —</b> ${s.alt}</div>`:''}
-            ${s.save?`<div class="note-line nl-save"><b>Save here —</b> take a manual save before this step\u2019s irreversible action; the next branch reloads to it.</div>`:''}
-          </div>
-        </div>`;
-      }).join('');
-      return `<div class="secbar"><span class="sech">${sec.h}</span>
-        <button class="exp" data-expand="${run.key}-${si}">Expand section</button></div>${st}`;
-    }).join('');
+  const desc=$('wheelDesc');
+  if(desc)desc.textContent=FAM.map(k=>TYPES[k]+' '+famDone(k)+' of '+byFam(k).length).join('. ')+'.';
+}
 
-    return `<section class="run" id="run-${run.key}">
-      <button class="runhead" data-run="${run.key}" aria-expanded="${open}">
-        <span class="chev">${open?'\u25B4 Collapse':'\u25BE Expand'}</span>
-        <span class="rn">Run ${ri+1} of ${RUNS.length}</span>
-        <h2>${run.title}</h2>
-        <p>${run.goal}</p>
-      </button>
-      <div class="runbody" ${open?'':'hidden'}>
-        <div class="loadout">
-          <div class="lo"><b>Starting location</b><span>${run.loadout.start}</span></div>
-          <div class="lo"><b>Suit</b><span>${run.loadout.suit}</span></div>
-          ${run.loadout.items.map((it,i)=>`<div class="lo"><b>Item slot ${i+1}</b><span>${it}</span></div>`).join('')}
-        </div>
-        ${secs}
+/* ---------------- THE FLIGHTS ---------------- */
+function chipHTML(id){
+  const c=byId[id];
+  if(!c)return '';
+  const on=!!done[id];
+  return `<button type="button" class="note-chip" role="switch" aria-checked="${on}"
+    data-ch="${esc(id)}" style="--m:${CVAR[c.t]}" title="${esc(c.d)}">${esc(c.n)}</button>`;
+}
+function metaRow(k,v){
+  return v?`<div class="mrow"><span class="mk">${k}</span><span class="mv">${esc(v)}</span></div>`:'';
+}
+function pourHTML(st){
+  const on=!!steps[st._id];
+  const chips=(st.ch||[]).map(chipHTML).join('');
+  return `<div class="step${on?' done':''}" id="pour-${esc(st._id)}">
+    <button type="button" class="ring" data-step="${esc(st._id)}" aria-pressed="${on}"
+      aria-label="${esc('Mark pour '+st._no+': '+st.n)}"></button>
+    <div class="pwrap">
+      <span class="pno">Pour ${esc(st._no)}${on?' &middot; taken':''}</span>
+      <p class="ptitle">${esc(st.n)}</p>
+      <div class="pmeta">
+        ${metaRow('Where',st.where)}
+        ${metaRow('Disguise',st.disguise)}
+        ${metaRow('Item',st.item)}
+        ${metaRow('NPC',st.npc)}
       </div>
-    </section>`;
+      ${(st.does||[]).length?`<ul class="does">${
+        st.does.map(d=>`<li>${raw(d)}</li>`).join('')}</ul>`:''}
+      ${st.warn?`<p class="nline off"><b>Off note</b>${esc(st.warn)}</p>`:''}
+      ${st.alt?`<p class="nline alt"><b>Second pour &middot; if that fails</b>${esc(st.alt)}</p>`:''}
+      ${st.save?`<p class="nline set"><b>Set the glass down</b>take a manual save before this step’s irreversible action; the next branch reloads to it.</p>`:''}
+      ${chips?`<div class="notes">${chips}</div>`:''}
+    </div>
+  </div>`;
+}
+
+function renderFlights(){
+  $('fnav').innerHTML=RUNS.map((r,i)=>{
+    const p=flightPours(r);
+    return `<button type="button" class="fjump${flightFull(r)?' full':''}" data-jump="${i}">
+      <b>Flight ${i+1}</b>${esc(r.short)}<i>&middot; ${flightTaken(r)}/${p.length} pours</i></button>`;
+  }).join('')+
+  `<button type="button" class="fjump" data-toggleall="1">Open / close every flight</button>`;
+
+  $('flights').innerHTML=RUNS.map((r,ri)=>{
+    const p=flightPours(r), d=flightTaken(r), open=!!openRun[ri], lo=r.loadout||{};
+    const mine=CH.filter(c=>FLIGHT_OF[c.id]===ri+1);
+    const body=r.sections.map(sec=>{
+      const keys=sec.steps.map(s=>s._id), sn=keys.filter(k=>steps[k]).length;
+      return `<h3 class="course">${esc(sec.h)}
+        <span class="cnt">${sn} / ${keys.length} poured</span></h3>`+
+        sec.steps.map(pourHTML).join('');
+    }).join('');
+    return `<article class="flight${flightFull(r)?' full':''}" id="flight-${ri}">
+      <button type="button" class="fhead" data-run="${ri}" aria-expanded="${open}"
+        aria-controls="fbody-${ri}">
+        <span class="fno"><span class="k">Flight</span><span class="v">${ri+1}</span></span>
+        <span class="fmain">
+          <span class="fshort">${esc(r.short)}</span>
+          <span class="ftitle">${esc(r.title)}</span>
+          <span class="fgoal">${esc(r.goal)}</span>
+          <span class="ftally">${d} of ${p.length} pours taken${mine.length?' &middot; '+
+            mine.filter(c=>done[c.id]).length+' of '+mine.length+' notes first landed here':''}${
+            open?'':' &middot; open the flight to work through it'}</span>
+        </span>
+      </button>
+      <div class="fbody" id="fbody-${ri}"${open?'':' hidden'}>
+        <div class="served">
+          ${lo.start?`<div class="slot"><span class="k">Starting location</span>
+            <span class="v">${raw(lo.start)}</span></div>`:''}
+          ${lo.suit?`<div class="slot"><span class="k">Suit</span>
+            <span class="v">${raw(lo.suit)}</span></div>`:''}
+          ${(lo.items||[]).map((it,i)=>`<div class="slot"><span class="k">Item slot ${i+1}</span>
+            <span class="v">${raw(it)}</span></div>`).join('')}
+        </div>
+        ${body}
+      </div>
+    </article>`;
   }).join('');
 }
-let filter='all';
+
+/* ---------------- THE CELLAR LIST ---------------- */
 function renderList(){
-  const opts=[['all','All'],['A','Assassination'],['D','Discovery'],['F','Feats'],['T','Targets'],['TC','Classics'],['inc','Incomplete']];
-  document.getElementById('filters').innerHTML=opts.map(([k,l])=>`<button class="filter" data-filter="${k}" aria-pressed="${filter===k}">${l}</button>`).join('');
-  const list=CH.filter(c=>filter==='all'?true:filter==='inc'?!done[c.id]:c.t===filter);
-  document.getElementById('chList').innerHTML=list.map(c=>`
-    <div class="ch ${done[c.id]?'done':''}">
-      <button class="tick" data-ch="${c.id}" aria-pressed="${!!done[c.id]}" aria-label="Mark ${c.n} complete">&#10003;</button>
-      <div><div class="ch-name">${c.n}</div><div class="ch-desc">${c.d}</div>
-      <div class="ch-meta">${TYPES[c.t]} · +${c.xp.toLocaleString()} XP</div></div>
-    </div>`).join('')||'<p style="color:var(--dim)">Nothing left in this filter.</p>';
+  const F=[['all','Whole list '+CH.length]]
+    .concat(FAM.map(k=>[k,TYPES[k]+' '+byFam(k).length]))
+    .concat([['inc','Still to pour '+(CH.length-tasted())]]);
+  $('filters').innerHTML=F.map(([k,l])=>
+    `<button type="button" data-f="${esc(k)}" aria-pressed="${filter===k}">${esc(l)}</button>`).join('');
+
+  let out='';
+  FAM.forEach(k=>{
+    const all=byFam(k);
+    if(!all.length)return;
+    if(filter!=='all'&&filter!=='inc'&&filter!==k)return;
+    const rows=filter==='inc'?all.filter(c=>!done[c.id]):all;
+    if(!rows.length)return;
+    out+=`<h3 class="grp" style="--m:${CVAR[k]}">${esc(TYPES[k])}
+      <span class="n">${famDone(k)} of ${all.length} tasted</span></h3>`;
+    out+=rows.map(c=>{
+      const on=!!done[c.id];
+      return `<div class="crow${on?' done':''}" style="--m:${CVAR[c.t]}">
+        <button type="button" class="mark" data-ch="${esc(c.id)}" aria-pressed="${on}"
+          aria-label="${esc('Mark '+c.n+' tasted')}"></button>
+        <div>
+          <p class="cn">${esc(c.n)}</p>
+          <p class="cd">${esc(c.d)}</p>
+        </div>
+        <span class="cmeta">
+          <span>${FLIGHT_OF[c.id]?'Flight '+FLIGHT_OF[c.id]:'Across flights'}</span>
+          <span class="xp">+${c.xp.toLocaleString()} XP</span>
+        </span>
+      </div>`;
+    }).join('');
+  });
+  $('checklist').innerHTML=out||'<p class="empty">Nothing left under this heading.</p>';
 }
-function renderTracker(){
-  const n=CH.filter(c=>done[c.id]).length,total=CH.length;
-  const xp=CH.filter(c=>done[c.id]).reduce((a,c)=>a+c.xp,0),tx=CH.reduce((a,c)=>a+c.xp,0);
-  document.getElementById('tDone').textContent=n;
-  document.getElementById('tXp').textContent=`${xp.toLocaleString()} / ${tx.toLocaleString()} XP`;
-  document.getElementById('tPct').textContent=`${Math.round(n/total*100)}% complete`;
-  document.getElementById('tBar').style.width=(n/total*100)+'%';
-  document.getElementById('tCats').innerHTML=Object.entries(TYPES).map(([k,l])=>{
-    const set=CH.filter(c=>c.t===k),d=set.filter(c=>done[c.id]).length;
-    return `<div class="cat"><b>${l}</b><i>${d}<small> / ${set.length}</small></i></div>`;}).join('');
+
+/* Wide tables in the lifted verification sheet scroll inside their own box
+   rather than pushing the page sideways. */
+function wrapTables(){
+  const box=$('p-ver');
+  if(!box)return;
+  box.querySelectorAll('table').forEach(t=>{
+    if(t.parentElement&&t.parentElement.classList.contains('tablewrap'))return;
+    const w=document.createElement('div');
+    w.className='tablewrap';
+    t.parentNode.insertBefore(w,t);
+    w.appendChild(t);
+  });
 }
-function render(){renderTracker();renderRuns();renderList();}
 
-/* ================= EVENTS ================= */
-document.addEventListener('click',e=>{
-  const tab=e.target.closest('.tab');
-  if(tab){document.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-selected',t===tab));
-    document.querySelectorAll('.view').forEach(v=>v.hidden=(v.id!=='view-'+tab.dataset.view));return;}
+const openRun={};
+function render(){renderFlights();renderList();renderWheel();}
 
-  const jump=e.target.closest('[data-jump]');
-  if(jump){const k=jump.dataset.jump;openRuns={};openRuns[k]=true;renderRuns();
-    document.getElementById('run-'+k).scrollIntoView({behavior:'smooth',block:'start'});return;}
-
-  const rh=e.target.closest('[data-run]');
-  if(rh){const k=rh.dataset.run;openRuns[k]=!openRuns[k];renderRuns();return;}
-
-  const ex=e.target.closest('[data-expand]');
-  if(ex){const[rk,si]=ex.dataset.expand.split('-');
-    const run=RUNS.find(r=>r.key===rk);const sec=run.sections[+si];
-    const anyClosed=sec.steps.some((_,x)=>!openSteps[`${rk}-${si}-${x}`]);
-    sec.steps.forEach((_,x)=>{openSteps[`${rk}-${si}-${x}`]=anyClosed;});
-    renderRuns();return;}
-
-  const so=e.target.closest('[data-stepopen]');
-  if(so){const k=so.dataset.stepopen;openSteps[k]=!openSteps[k];renderRuns();return;}
-
-  const st=e.target.closest('[data-step]');
-  if(st){const k=st.dataset.step;steps[k]=!steps[k];if(!steps[k])delete steps[k];save();renderRuns();return;}
-
-  const ch=e.target.closest('[data-ch]');
-  if(ch){const k=ch.dataset.ch;done[k]=!done[k];if(!done[k])delete done[k];save();renderTracker();renderList();return;}
-
-  const fl=e.target.closest('[data-filter]');
-  if(fl){filter=fl.dataset.filter;renderList();return;}
-
-  if(e.target.id==='resetBtn'){done={};steps={};save();render();}
+/* ---------------- EVENTS ---------------- */
+const tabs=[...document.querySelectorAll('.tab')];
+function selectTab(tb){
+  tabs.forEach(x=>{
+    const on=x===tb;
+    x.setAttribute('aria-selected',String(on));
+    x.tabIndex=on?0:-1;
+    $(x.getAttribute('aria-controls')).hidden=!on;
+  });
+}
+tabs.forEach((tb,i)=>{
+  tb.tabIndex=tb.getAttribute('aria-selected')==='true'?0:-1;
+  tb.addEventListener('keydown',e=>{
+    const d=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;
+    if(!d)return;
+    e.preventDefault();
+    const next=tabs[(i+d+tabs.length)%tabs.length];
+    selectTab(next);next.focus();
+  });
 });
-load();
-</script>
 
+document.addEventListener('click',e=>{
+  const t=e.target;
+
+  /* a note is a control wherever it is named — on its line in the cellar list,
+     or on the pour that lands it */
+  const cb=t.closest('[data-ch]');
+  if(cb){
+    const id=cb.dataset.ch;
+    done[id]?delete done[id]:done[id]=true;
+    sv();render();return;
+  }
+
+  /* taking a pour lands the notes it carries; wiping the ring again leaves them
+     tasted, because another pour may land the same note */
+  const sb=t.closest('[data-step]');
+  if(sb){
+    const id=sb.dataset.step, now=!steps[id];
+    now?steps[id]=true:delete steps[id];
+    if(now)(POUR_CH[id]||[]).forEach(c=>{done[c]=true;});
+    sv();render();return;
+  }
+
+  const rh=t.closest('[data-run]');
+  if(rh){const i=+rh.dataset.run;openRun[i]=!openRun[i];renderFlights();return;}
+
+  const jp=t.closest('[data-jump]');
+  if(jp){
+    const i=+jp.dataset.jump;
+    selectTab($('tab-runs'));
+    openRun[i]=true;renderFlights();
+    $('flight-'+i).scrollIntoView({behavior:'smooth',block:'start'});return;
+  }
+
+  const ta=t.closest('[data-toggleall]');
+  if(ta){
+    const anyClosed=RUNS.some((r,i)=>!openRun[i]);
+    RUNS.forEach((r,i)=>{openRun[i]=anyClosed});
+    renderFlights();return;
+  }
+
+  const fb=t.closest('[data-f]');
+  if(fb){filter=fb.dataset.f;renderList();return;}
+
+  const tb=t.closest('.tab');
+  if(tb){selectTab(tb);return;}
+});
+
+$('reset').addEventListener('click',()=>{
+  if(!confirm('Wipe the card? All '+CH.length+' notes and all '+ALL_POURS.length+
+    ' pours on this guide are cleared. Other guides are not affected.'))return;
+  done={};steps={};
+  sv();render();
+});
+
+openRun[0]=true;
+render();
+wrapTables();
+reportProgress();
+</script>
 <!-- step-progress-bridge -->
 <script>
 /* Reports route-step ticks into 'hitman-progress-registry' so the index can
@@ -837,3 +1278,5 @@ load();
 })();
 </script>
 <!-- /step-progress-bridge -->
+</body>
+</html>

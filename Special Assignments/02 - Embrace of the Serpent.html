@@ -3,180 +3,367 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Embrace of the Serpent — Verified Challenge Guide</title>
+<title>Embrace of the Serpent — Reddington's Black Book</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,600;0,800;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=Spectral:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
+/* ═══ SANTA FORTUNA — the Black Book ═══
+   The mission has two objectives and the second one is an object: retrieve
+   Reddington's Black Book. Diana says he carries it at all times; he does not,
+   it is lying on a table in the Shaman's Hut, and every route in this guide is
+   really a question of what order you touch that hut in. So the guide is the
+   book — oxblood leather with vellum leaves sewn into it, rites rather than
+   runs, verses rather than steps, ink-blot thumbprints for ticks, and a coiled
+   serpent for a tracker that tightens one turn per challenge until the head
+   reaches the centre and the embrace closes. Jungle ink and candlelight,
+   nothing like the map's other guide will want. */
 :root{
-  --canopy:#0d1512; --canopy-2:#141f1a; --bone:#e8e3d3; --bone-dim:#a5a190;
-  --jade:#5fbf8f; --amber:#e0a53c; --rust:#c9503f; --violet:#8a7fc4; --sky:#63a8c4;
-  --line:rgba(232,227,211,.14); --r:3px;
+  --leather:#150f0c; --leather-2:#211814; --leather-3:#2c211a;
+  --vellum:#e9e0ca; --vellum-2:#ded3b7; --vellum-3:#d2c5a3;
+  --ink:#241c14; --ink-2:#4e4133; --faint:#7a6a55;
+  --gold:#b8901f; --gold-2:#e0bb56; --venom:#5f7a33; --blood:#8c2f26; --bruise:#5b4a6b;
+  --rule:rgba(36,28,20,.24); --rule-2:rgba(36,28,20,.13); --rule-3:rgba(36,28,20,.07);
+  --disp:"IM Fell English",Georgia,"Times New Roman",serif;
+  --sc:"IM Fell English SC",Georgia,"Times New Roman",serif;
+  --body:"Spectral",Georgia,"Times New Roman",serif;
 }
 *{box-sizing:border-box}
-html,body{margin:0;padding:0}
-body{background:var(--canopy);color:var(--bone);font-family:"Bitter",Georgia,serif;font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
-.wrap{max-width:1060px;margin:0 auto;padding:0 20px 80px}
-.mono{font-family:"IBM Plex Mono",monospace}
+html{scroll-behavior:smooth}
+body{
+  margin:0;color:var(--vellum);background-color:var(--leather);
+  /* tooled leather: grain, a candle at the top, and the shadow of the spine */
+  background-image:
+    radial-gradient(800px 420px at 50% -6%,rgba(224,187,86,.10),transparent 62%),
+    radial-gradient(600px 500px at 8% 40%,rgba(95,122,51,.07),transparent 60%),
+    repeating-linear-gradient(64deg,rgba(255,255,255,.012) 0 2px,transparent 2px 5px),
+    repeating-linear-gradient(-27deg,rgba(0,0,0,.16) 0 3px,transparent 3px 7px);
+  background-attachment:fixed;
+  font-family:var(--body);font-size:16px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1000px;margin:0 auto;padding:0 16px 90px;position:relative}
+a{color:var(--gold-2)}
+b,strong{font-weight:600}
+:focus-visible{outline:2px solid var(--gold-2);outline-offset:2px}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:12px;top:12px;z-index:60;background:var(--gold);color:var(--leather);padding:8px 13px;font-weight:600}
+.sc{font-family:var(--sc);letter-spacing:.06em}
 
-/* masthead */
-.mast{border-bottom:1px solid var(--line);padding:36px 0 24px;margin-bottom:24px}
-.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--jade);margin:0 0 12px}
-h1{font-size:clamp(29px,6vw,50px);line-height:1.02;margin:0 0 14px;font-weight:800;letter-spacing:-.02em}
-h1 em{font-style:italic;font-weight:400;color:var(--bone-dim)}
-.facts{font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--bone-dim);margin:0}
-.facts b{color:var(--bone);font-weight:500}
+/* ── the cover ─────────────────────────────────────────────────────────── */
+header.book{margin-top:20px}
+.cover{position:relative;border:1px solid rgba(184,144,31,.34);border-radius:3px;
+  background:
+    radial-gradient(600px 300px at 20% 0%,rgba(224,187,86,.09),transparent 60%),
+    linear-gradient(180deg,var(--leather-3),var(--leather-2));
+  box-shadow:0 18px 40px -26px #000,inset 0 0 0 6px rgba(0,0,0,.28),inset 0 0 0 7px rgba(184,144,31,.16)}
+/* the sewn spine: a stitched cord down the binding edge */
+.cover::before{content:"";position:absolute;left:16px;top:14px;bottom:14px;width:2px;
+  background:repeating-linear-gradient(180deg,rgba(184,144,31,.5) 0 9px,transparent 9px 17px)}
+.cover-top{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;justify-content:space-between;
+  padding:11px 20px 11px 34px;border-bottom:1px solid rgba(184,144,31,.2);
+  font-family:var(--sc);font-size:13px;letter-spacing:.08em;color:#a08c6d}
+.cover-top a{color:#a08c6d;text-decoration:none;border-bottom:1px solid rgba(160,140,109,.45)}
+.cover-top a:hover{color:var(--gold-2);border-color:var(--gold-2)}
+.cover-top .gilt{color:var(--gold-2)}
+.cover-body{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:24px;padding:26px 24px 26px 34px}
+.plate{margin:0 0 10px;font-family:var(--sc);font-size:13.5px;letter-spacing:.16em;color:var(--gold)}
+h1.title{font-family:var(--disp);font-weight:400;font-size:clamp(36px,7.4vw,68px);line-height:.98;
+  margin:0 0 14px;color:var(--vellum);letter-spacing:.005em}
+h1.title em{display:block;font-style:italic;color:var(--gold-2)}
+.facts{margin:0;color:#c3b596;font-size:15px;line-height:1.75}
+.facts b{color:var(--vellum);font-weight:600;font-family:var(--sc);letter-spacing:.04em}
 
-/* tracker */
-.tracker{border:1px solid var(--line);border-radius:var(--r);background:var(--canopy-2);padding:18px 20px;margin-bottom:24px}
-.tracker-top{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:12px}
-.tracker-top h2{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--bone-dim);margin:0}
-.tally{font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--bone-dim)}
-.tally b{color:var(--jade);font-size:22px;font-weight:600}
-.bar{height:7px;background:rgba(232,227,211,.09);border-radius:99px;overflow:hidden;margin-bottom:16px}
-.bar span{display:block;height:100%;width:0;background:var(--jade);transition:width .35s ease}
-.cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
-.cat{border:1px solid var(--line);border-radius:var(--r);padding:9px 11px;background:rgba(0,0,0,.2)}
-.cat .n{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--bone-dim);display:block;margin-bottom:3px}
-.cat .v{font-family:"IBM Plex Mono",monospace;font-size:17px;font-weight:600}
-.cat .mb{height:3px;background:rgba(232,227,211,.1);margin-top:7px;border-radius:99px;overflow:hidden}
-.cat .mb i{display:block;height:100%;width:0;transition:width .3s ease}
+/* the tracker: a serpent that tightens one turn per challenge and closes on
+   its own centre when the last one lands — the embrace of the title */
+.coil{text-align:center}
+.coil svg{display:block;width:100%;height:auto;max-width:230px;margin:0 auto}
+.coil .slack{fill:none;stroke:rgba(233,224,202,.13);stroke-width:5;stroke-linecap:round}
+.coil .live{fill:none;stroke:url(#scale);stroke-width:5;stroke-linecap:round}
+.coil .head{fill:var(--gold-2);opacity:0}
+.coil.live .head{opacity:1}
+.coil.closed .head{filter:drop-shadow(0 0 6px var(--gold-2))}
+.coil-read{margin-top:8px}
+.coil-read b{display:block;font-family:var(--disp);font-size:34px;line-height:1;color:var(--vellum)}
+.coil-read b small{font-size:17px;color:#8d7c60}
+.coil-read span{font-family:var(--sc);font-size:12.5px;letter-spacing:.14em;color:#8d7c60}
 
-/* tabs */
-.tabs{display:flex;gap:2px;border-bottom:1px solid var(--line);margin-bottom:22px;flex-wrap:wrap}
-.tab{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;background:none;border:none;border-bottom:2px solid transparent;color:var(--bone-dim);padding:11px 15px;cursor:pointer}
-.tab:hover{color:var(--bone)}
-.tab[aria-selected="true"]{color:var(--jade);border-bottom-color:var(--jade)}
-.panel[hidden]{display:none}
+/* ── a leaf of vellum, sewn to the cover ───────────────────────────────── */
+.leaf{position:relative;margin-top:18px;background-color:var(--vellum);color:var(--ink);
+  background-image:
+    radial-gradient(420px 200px at 12% 0%,rgba(184,144,31,.13),transparent 62%),
+    radial-gradient(380px 260px at 92% 100%,rgba(140,47,38,.07),transparent 60%),
+    repeating-linear-gradient(91deg,rgba(36,28,20,.022) 0 1px,transparent 1px 4px);
+  border-radius:2px;padding:22px 24px;
+  box-shadow:0 14px 34px -22px #000,inset 0 0 0 1px rgba(36,28,20,.16),inset 0 0 30px rgba(140,47,38,.05)}
+.leaf::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;
+  background:repeating-linear-gradient(180deg,rgba(36,28,20,.34) 0 7px,transparent 7px 15px)}
+.leaf h2,.leaf h3,.leaf h4{font-family:var(--disp);font-weight:400;color:var(--ink);letter-spacing:.01em}
+.leaf a{color:var(--blood)}
 
-/* run nav */
-.runnav{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:20px;position:sticky;top:0;background:var(--canopy);padding:12px 0;z-index:20;border-bottom:1px solid var(--line)}
-.runnav button{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;background:rgba(0,0,0,.25);border:1px solid var(--line);color:var(--bone-dim);padding:8px 13px;border-radius:99px;cursor:pointer;transition:.15s}
-.runnav button:hover{color:var(--bone);border-color:var(--bone-dim)}
-.runnav button.hot{color:var(--canopy);background:var(--amber);border-color:var(--amber);font-weight:600}
-.runnav .util{margin-left:auto}
+/* the four hands: one corded string of beads per category */
+.hand{margin:0 0 4px;font-size:24px}
+.hand+p{margin:0 0 14px;color:var(--ink-2);font-size:14.5px;font-style:italic}
+.cord{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 14px;align-items:center;
+  padding:9px 0;border-bottom:1px solid var(--rule-3)}
+.cord:last-of-type{border-bottom:0}
+.cname{font-family:var(--sc);font-size:15px;letter-spacing:.05em}
+.ctally{font-family:var(--disp);font-size:17px;color:var(--ink-2);white-space:nowrap}
+.beads{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:6px;align-items:center;
+  padding:5px 0 1px;background:linear-gradient(180deg,transparent 46%,var(--rule) 46%,var(--rule) calc(46% + 1px),transparent calc(46% + 1px))}
+.beads i{width:14px;height:14px;border-radius:50%;border:1.5px solid var(--rule);background:var(--vellum-2);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
+.beads i.on{background:radial-gradient(circle at 34% 30%,#5a4a34,#241c14 70%);border-color:#241c14}
+.cordfoot{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;
+  margin-top:14px;padding-top:12px;border-top:1px solid var(--rule-2)}
+.note-sc{font-family:var(--sc);font-size:13px;letter-spacing:.08em;color:var(--faint)}
 
-/* runs */
-.run{border:1px solid var(--line);border-radius:var(--r);margin-bottom:14px;background:var(--canopy-2);overflow:hidden;scroll-margin-top:70px}
-.run.open{border-color:rgba(224,165,60,.4)}
-.run-head{width:100%;text-align:left;background:none;border:none;color:inherit;font:inherit;padding:18px 20px;cursor:pointer;display:flex;gap:14px;align-items:flex-start}
-.run-head:hover{background:rgba(255,255,255,.02)}
-.chev{flex:0 0 auto;font-family:"IBM Plex Mono",monospace;color:var(--amber);font-size:14px;margin-top:3px;transition:transform .2s}
-.run.open .chev{transform:rotate(90deg)}
-.run-head .rh{flex:1;min-width:0}
-.run-no{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.2em;color:var(--amber);text-transform:uppercase}
-.run-head h3{margin:5px 0 6px;font-size:21px;font-weight:800;letter-spacing:-.01em}
-.run-head p{margin:0;color:var(--bone-dim);font-size:13.5px;max-width:72ch}
-.run-prog{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--bone-dim);white-space:nowrap;margin-top:4px}
-.run-body[hidden]{display:none}
+.btn{font-family:var(--sc);font-size:14px;letter-spacing:.08em;background:var(--ink);color:var(--vellum);
+  border:0;border-radius:2px;padding:7px 15px;cursor:pointer}
+.btn:hover{background:var(--blood)}
+.btn-quill{font-family:var(--sc);font-size:13px;letter-spacing:.07em;background:transparent;color:var(--ink-2);
+  border:1px solid var(--rule);border-radius:2px;padding:5px 12px;cursor:pointer}
+.btn-quill:hover{border-color:var(--blood);color:var(--blood)}
 
-.loadout{padding:16px 20px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(0,0,0,.22)}
-.loadout h4{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--bone-dim);margin:0 0 10px}
-.lo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px 20px;font-family:"IBM Plex Mono",monospace;font-size:12.5px}
-.lo-grid div span{display:block;color:var(--bone-dim);font-size:10px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:2px}
-.lo-note{margin:12px 0 0;font-size:12.5px;color:var(--bone-dim)}
+/* ── ribbons ───────────────────────────────────────────────────────────── */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0 -6px;padding-left:10px}
+.tab{position:relative;font-family:var(--sc);font-size:14px;letter-spacing:.09em;cursor:pointer;
+  border:0;padding:9px 18px 13px;color:#f0e6cf;
+  background:linear-gradient(180deg,#5d2f28,#43221d);
+  clip-path:polygon(0 0,100% 0,100% 100%,50% 84%,0 100%)}
+.tab[aria-selected="true"]{background:linear-gradient(180deg,var(--gold),#8a6a12);color:#241c14}
+.tab:hover{filter:brightness(1.14)}
 
-.sect{padding:4px 20px 18px}
-.sect > h4{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--jade);margin:20px 0 10px;padding-bottom:6px;border-bottom:1px dashed var(--line)}
-.step{border:1px solid var(--line);border-radius:var(--r);margin-bottom:9px;background:rgba(0,0,0,.16)}
-.step.done{border-color:rgba(95,191,143,.5);background:rgba(95,191,143,.06)}
-.step-top{display:flex;gap:11px;padding:12px 14px;align-items:flex-start}
-.tick{flex:0 0 auto;width:22px;height:22px;border:1px solid var(--line);border-radius:var(--r);background:none;cursor:pointer;color:transparent;font-size:13px;line-height:1;margin-top:2px}
-.tick:hover{border-color:var(--jade)}
-.done .tick{background:var(--jade);border-color:var(--jade);color:var(--canopy)}
-.step-body{flex:1;min-width:0}
-.step-title{font-weight:600;font-size:15px;margin:0 0 6px}
-.step-title .num{font-family:"IBM Plex Mono",monospace;color:var(--bone-dim);font-size:12px;margin-right:7px}
-.bul{margin:0;padding:0;list-style:none;font-size:13.5px}
-.bul li{position:relative;padding-left:14px;margin-bottom:3px}
-.bul li:before{content:"›";position:absolute;left:0;color:var(--jade)}
-.bul k{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--bone-dim);margin-right:6px}
-.badges{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px}
-.badge{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;padding:3px 7px;border-radius:2px;border:1px solid;display:inline-block}
-.b-chal{color:var(--jade);border-color:rgba(95,191,143,.45);background:rgba(95,191,143,.08)}
-.b-warn{color:var(--rust);border-color:rgba(201,80,63,.55);background:rgba(201,80,63,.1)}
-.b-save{color:var(--amber);border-color:rgba(224,165,60,.5);background:rgba(224,165,60,.1)}
-.b-unv{color:var(--violet);border-color:rgba(138,127,196,.5);background:rgba(138,127,196,.1)}
-.b-src{color:var(--sky);border-color:rgba(99,168,196,.45);background:rgba(99,168,196,.08)}
-.more{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;background:none;border:none;color:var(--bone-dim);cursor:pointer;padding:0 14px 11px 47px}
-.more:hover{color:var(--jade)}
-.detail{padding:0 14px 13px 47px;font-size:13.5px}
-.detail[hidden]{display:none}
-.detail dt{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--bone-dim);margin-top:11px}
-.detail dd{margin:3px 0 0}
-.detail dl{margin:0}
-.flag{border-left:2px solid var(--rust);padding-left:10px;color:#f0b6ac;margin-top:11px}
-.flag.amber{border-color:var(--amber);color:#f0d29a}
-.flag.unv{border-color:var(--violet);color:#c9c1ea}
+/* ── the rites ─────────────────────────────────────────────────────────── */
+.jumpbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:16px}
+.jumpbar .jl{font-family:var(--sc);font-size:13px;letter-spacing:.1em;color:var(--faint)}
+.jump{display:flex;align-items:center;gap:9px;background:var(--vellum-2);border:1px solid var(--rule-2);
+  border-radius:2px;padding:5px 12px;font-family:var(--body);font-size:14.5px;color:var(--ink);cursor:pointer}
+.jump b{font-family:var(--disp);font-size:15px;color:var(--blood)}
+.jump .pg{font-family:var(--sc);font-size:12.5px;color:var(--faint)}
+.jump:hover{border-color:var(--blood)}
+.jump.full{background:rgba(95,122,51,.16);border-color:rgba(95,122,51,.5)}
 
-/* checklist */
-.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
-.filters button{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;background:none;border:1px solid var(--line);color:var(--bone-dim);padding:6px 12px;border-radius:99px;cursor:pointer}
-.filters button:hover{color:var(--bone);border-color:var(--bone-dim)}
-.filters button.on{color:var(--canopy);background:var(--jade);border-color:var(--jade)}
-.chal{display:flex;gap:11px;padding:12px 14px;border:1px solid var(--line);border-radius:var(--r);margin-bottom:8px;background:var(--canopy-2)}
-.chal.done{border-color:rgba(95,191,143,.5);background:rgba(95,191,143,.06)}
-.chal-main{flex:1;min-width:0}
-.chal-name{font-weight:600;margin:0}
-.chal.done .chal-name{text-decoration:line-through;color:var(--bone-dim)}
-.chal-cond{margin:2px 0 0;font-size:13px;color:var(--bone-dim)}
-.chal-meta{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}
+article.rite{position:relative;border:1px solid var(--rule-2);border-radius:2px;background:var(--vellum-2);
+  margin-bottom:14px}
+article.rite.open{border-color:var(--rule);background:var(--vellum)}
+.rhead{display:block;width:100%;text-align:left;background:none;border:0;cursor:pointer;
+  padding:16px 20px 16px 84px;font-family:var(--body);color:var(--ink)}
+.rhead:hover .rtitle{color:var(--blood)}
+/* a wax seal carrying the rite's number */
+.wax{position:absolute;left:16px;top:16px;width:52px;height:52px;border-radius:50%;
+  background:radial-gradient(circle at 36% 30%,#a8382d,#63201a 72%);
+  box-shadow:0 2px 5px rgba(0,0,0,.4),inset 0 0 0 3px rgba(255,255,255,.09);
+  display:grid;place-items:center;font-family:var(--disp);font-size:21px;color:#f3dfae;
+  clip-path:polygon(50% 0,66% 7%,82% 4%,92% 17%,100% 31%,97% 48%,100% 66%,88% 79%,80% 94%,63% 96%,48% 100%,33% 95%,18% 96%,9% 82%,0 68%,3% 50%,0 33%,11% 19%,18% 5%,34% 6%)}
+article.rite.sealed .wax{background:radial-gradient(circle at 36% 30%,#7f9a4a,#3f5222 72%)}
+.rline{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline;margin-bottom:5px}
+.rtag{font-family:var(--sc);font-size:13.5px;letter-spacing:.14em;color:var(--blood)}
+.rmeta{font-family:var(--sc);font-size:12.5px;letter-spacing:.07em;color:var(--faint)}
+.rtally{margin-left:auto;font-family:var(--disp);font-size:16px;color:var(--ink-2)}
+.rtitle{display:block;font-family:var(--disp);font-size:clamp(21px,3.4vw,30px);line-height:1.12;margin-bottom:5px}
+.rgoal{display:block;color:var(--ink-2);font-size:15px;max-width:76ch}
+.rchips{display:flex;flex-wrap:wrap;gap:6px;padding:0 20px 14px 84px}
+.rbody{padding:0 20px 18px}
 
-/* audit */
-.audit h3{font-size:19px;margin:26px 0 10px}
-.audit h3:first-child{margin-top:0}
-.audit ul{padding-left:20px;margin:0 0 14px}
-.audit li{margin-bottom:6px}
-table.src{font-family:"IBM Plex Mono",monospace;font-size:12px;border-collapse:collapse;width:100%}
-table.src th,table.src td{border-bottom:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
-table.src th{color:var(--bone-dim);font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:500}
-.pass{color:var(--jade)}.fail{color:var(--rust)}.part{color:var(--amber)}
-footer{margin-top:36px;padding-top:18px;border-top:1px solid var(--line);font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--bone-dim)}
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
-@media (max-width:600px){.more,.detail{padding-left:14px}}
+.word{border-left:3px solid var(--blood);background:rgba(140,47,38,.06);padding:9px 14px;margin:0 0 12px;
+  font-size:14.5px;color:var(--ink-2)}
+.word b{font-family:var(--sc);letter-spacing:.09em;color:var(--blood);font-weight:400}
+.carry{border:1px solid var(--rule-2);border-radius:2px;padding:12px 15px;margin-bottom:16px;background:rgba(233,224,202,.6)}
+.carry h5{margin:0 0 9px;font-family:var(--sc);font-size:13px;letter-spacing:.14em;color:var(--faint);font-weight:400}
+.carry dl{display:grid;grid-template-columns:112px minmax(0,1fr);gap:5px 14px;margin:0}
+.carry dt{font-family:var(--sc);font-size:12.5px;letter-spacing:.09em;color:var(--faint);padding-top:2px}
+.carry dd{margin:0;font-size:14.5px;color:var(--ink-2)}
+.carry ul{margin:0;padding-left:18px}
+
+.passage{display:flex;align-items:center;gap:12px;margin:20px 0 10px;font-family:var(--sc);
+  font-size:14px;letter-spacing:.12em;color:var(--blood)}
+.passage::before{content:"❧";font-family:var(--body);font-size:15px;color:var(--gold)}
+.passage::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--rule),transparent)}
+
+/* ── a verse ───────────────────────────────────────────────────────────── */
+.step{display:grid;grid-template-columns:30px 32px minmax(0,1fr);gap:11px;align-items:start;
+  padding:11px 12px;border-bottom:1px solid var(--rule-3)}
+.step:last-child{border-bottom:0}
+.step.done{background:rgba(95,122,51,.09)}
+/* the tick is a thumbprint pressed in ink */
+.tick{position:relative;width:30px;height:30px;padding:0;cursor:pointer;border:0;background:none}
+.tick::before{content:"";position:absolute;inset:2px;border-radius:52% 48% 46% 54%/58% 54% 46% 42%;
+  border:1.5px solid var(--rule);background:var(--vellum-3)}
+.tick::after{content:"";position:absolute;inset:7px;border-radius:52% 48% 46% 54%/58% 54% 46% 42%;
+  background:repeating-radial-gradient(circle at 46% 44%,transparent 0 2px,rgba(36,28,20,.35) 2px 3px);
+  opacity:0;transition:opacity .16s}
+.tick:hover::before{border-color:var(--blood)}
+.step.done .tick::before{background:#241c14;border-color:#241c14}
+.step.done .tick::after{opacity:1;background:repeating-radial-gradient(circle at 46% 44%,transparent 0 2px,rgba(233,224,202,.5) 2px 3px)}
+.vnum{font-family:var(--disp);font-size:19px;color:var(--faint);text-align:right;padding-top:2px}
+.step.done .vnum{color:var(--venom)}
+.swrap{min-width:0}
+.shead{display:block;width:100%;text-align:left;background:none;border:0;padding:2px 0;cursor:pointer;
+  font-family:var(--disp);font-size:19px;line-height:1.28;color:var(--ink)}
+.shead:hover{color:var(--blood)}
+.step.done .shead{color:var(--ink-2)}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
+.chip{font-family:var(--sc);font-size:13px;letter-spacing:.05em;cursor:pointer;border-radius:2px;
+  border:1px solid var(--rule);background:var(--vellum);color:var(--ink-2);padding:3px 10px}
+.chip:hover{border-color:var(--blood);color:var(--blood)}
+.chip.on{background:#241c14;border-color:#241c14;color:var(--vellum)}
+.mark{display:inline-block;font-family:var(--sc);font-size:12.5px;letter-spacing:.07em;border-radius:2px;
+  padding:3px 9px;border:1px solid}
+.m-save{color:#7a5a0d;border-color:rgba(184,144,31,.6);background:rgba(184,144,31,.13)}
+.m-warn{color:var(--blood);border-color:rgba(140,47,38,.5);background:rgba(140,47,38,.09)}
+.m-src,.badge.b-src{color:#4d5f7a;border-color:rgba(77,95,122,.45);background:rgba(77,95,122,.09)}
+.m-unv,.badge.b-unv{color:#5b4a6b;border-color:rgba(91,74,107,.45);background:rgba(91,74,107,.09)}
+.badge.b-src,.badge.b-unv{display:inline-block;font-family:var(--sc);font-size:12.5px;letter-spacing:.07em;
+  border-radius:2px;padding:2px 8px;border:1px solid}
+.sbody{margin-top:9px;padding-top:9px;border-top:1px dotted var(--rule)}
+.sbody dl{display:grid;grid-template-columns:96px minmax(0,1fr);gap:4px 14px;margin:0 0 10px}
+.sbody dt{font-family:var(--sc);font-size:12.5px;letter-spacing:.09em;color:var(--faint);padding-top:2px}
+.sbody dd{margin:0;font-size:15px;color:var(--ink-2)}
+.sbody dt.d-warn{color:var(--blood)}
+/* the marginalia: a later hand, written smaller and closer to the fold */
+.marg{margin:8px 0 0;padding:8px 0 2px 14px;border-left:2px solid rgba(184,144,31,.5)}
+.marg p{margin:0 0 6px;font-size:14px;color:var(--ink-2);font-style:italic}
+.marg p:last-child{margin-bottom:0}
+.marg b{font-family:var(--sc);font-style:normal;font-weight:400;letter-spacing:.08em;color:var(--faint)}
+
+/* ── the index ─────────────────────────────────────────────────────────── */
+.filters{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:16px}
+.filters button{font-family:var(--sc);font-size:13px;letter-spacing:.08em;background:var(--vellum-2);
+  border:1px solid var(--rule-2);color:var(--ink-2);border-radius:2px;padding:5px 12px;cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--vellum)}
+.idx-h{display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:space-between;align-items:baseline;
+  border-bottom:2px solid var(--rule);padding-bottom:6px;margin-bottom:4px}
+.idx-h b{font-family:var(--disp);font-size:22px;font-weight:400}
+.crow{display:grid;grid-template-columns:30px minmax(0,1fr) auto;gap:12px;align-items:start;
+  padding:10px 0;border-bottom:1px dotted var(--rule-2)}
+.crow:last-child{border-bottom:0}
+.crow.done .cn{color:var(--ink-2);text-decoration:line-through}
+.cn{margin:0;font-family:var(--disp);font-size:19px;line-height:1.25}
+.cc{margin:2px 0 0;color:var(--ink-2);font-size:14.5px}
+.cfolio{font-family:var(--sc);font-size:12.5px;letter-spacing:.08em;color:var(--faint);white-space:nowrap;
+  text-align:right;padding-top:5px}
+.empty{margin:16px 0;color:var(--ink-2);font-style:italic}
+
+/* ── the sources leaf ──────────────────────────────────────────────────── */
+.sources h3{font-size:23px;margin:22px 0 8px}
+.sources h3:first-child{margin-top:0}
+.sources p,.sources li{color:var(--ink-2);font-size:15px}
+.sources ul{padding-left:20px}
+.sources li{margin-bottom:7px}
+.tablewrap{overflow-x:auto;margin-bottom:8px}
+table{width:100%;border-collapse:collapse;font-size:14.5px;min-width:520px}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--rule-2);vertical-align:top;color:var(--ink-2)}
+th{font-family:var(--sc);font-size:12.5px;font-weight:400;letter-spacing:.1em;color:var(--faint);white-space:nowrap}
+td.pass{color:var(--venom);font-weight:600}
+td.fail{color:var(--blood);font-weight:600}
+td.part{color:#7a5a0d;font-weight:600}
+footer{margin-top:26px;padding:14px 18px;color:#9a8869;font-size:14px;font-style:italic;
+  border-top:1px solid rgba(184,144,31,.24)}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important;animation:none!important}}
+@media (max-width:760px){
+  .cover-body{grid-template-columns:minmax(0,1fr);padding:20px 18px 22px 30px}
+  .coil svg{max-width:190px}
+  .rhead{padding:70px 16px 16px 16px}
+  .wax{left:16px;top:14px;width:44px;height:44px;font-size:18px}
+  .rchips{padding:0 16px 14px}
+  .rbody{padding:0 16px 16px}
+  .carry dl,.sbody dl{grid-template-columns:minmax(0,1fr);gap:0}
+  .carry dt,.sbody dt{padding-top:8px}
+  .step{grid-template-columns:30px minmax(0,1fr)}
+  .vnum{display:none}
+  .crow{grid-template-columns:30px minmax(0,1fr)}
+  .cfolio{grid-column:2;text-align:left;padding-top:4px}
+}
+@media print{
+  body{background:#fff;background-image:none;color:#111;font-size:10.5pt}
+  .tabs,.jumpbar,.skip,.tick,.btn,.btn-quill,.coil{display:none!important}
+  .panel[hidden]{display:block!important}
+  .rbody,.sbody{display:block!important}
+  .leaf,.cover,article.rite{background:none;box-shadow:none;border:1px solid #999;color:#111}
+  .leaf::before,.cover::before{display:none}
+  h1.title,.rtitle,.cn{color:#111}
+  .step,article.rite{break-inside:avoid}
+}
 </style>
 </head>
 <body>
+<a class="skip" href="#p-runs">Skip to the rites</a>
 <div class="wrap">
 
-<header class="mast">
-  <p class="eyebrow">Special Assignment · Santa Fortuna, Colombia · World of Assassination</p>
-  <h1>Embrace of the Serpent <em>— challenge run planner</em></h1>
-  <p class="facts">
-    <b>Target:</b> Blair Reddington (&ldquo;The Poacher&rdquo;) &nbsp;·&nbsp; <b>Objectives:</b> Eliminate Blair Reddington · Retrieve Reddington's Black Book<br>
+<header class="book">
+  <div class="cover">
+    <div class="cover-top">
+      <a href="../index.html">&#8592; All guides</a>
+      <span><!--@eyebrow-->Special Assignment · Santa Fortuna, Colombia · World of Assassination<!--/@eyebrow--></span>
+      <span class="gilt">Recovered from the Shaman&rsquo;s Hut</span>
+    </div>
+    <div class="cover-body">
+      <div>
+        <p class="plate">The property of B. Reddington &middot; not to be carried</p>
+        <h1 class="title">Embrace of the<em>Serpent</em></h1>
+        <p class="facts">
+<!--@facts-->
+<b>Target:</b> Blair Reddington (&ldquo;The Poacher&rdquo;) &nbsp;·&nbsp; <b>Objectives:</b> Eliminate Blair Reddington · Retrieve Reddington's Black Book<br>
     <b>Challenges:</b> 18 — 9 Assassination · 3 Feats · 1 Targets · 5 The Classics &nbsp;·&nbsp; <b>Mission XP:</b> 43,000 total<br>
     <b>Mission Stories:</b> none exist in this mission &nbsp;·&nbsp; <b>Chameleon / Discovery:</b> neither category exists here<br>
     <b>Released:</b> 25 June 2019 (Expansion Pass, Special Assignments Pack 1) &nbsp;·&nbsp; <b>Runs needed:</b> 4
-  </p>
+<!--/@facts-->
+        </p>
+      </div>
+      <!-- the coil tightens one turn per challenge; at the last one the head
+           reaches the centre and the embrace closes -->
+      <div class="coil" id="coil">
+        <svg viewBox="0 0 220 224" role="img" aria-labelledby="coilTitle">
+          <title id="coilTitle">Challenge progress, drawn as a serpent tightening its coil</title>
+          <defs>
+            <linearGradient id="scale" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#5f7a33"/><stop offset="55%" stop-color="#b8901f"/>
+              <stop offset="100%" stop-color="#e0bb56"/>
+            </linearGradient>
+          </defs>
+          <path class="slack" id="coilPath" d="M202.0 112.0 L201.6 117.3 L198.7 132.8 L193.2 147.5 L185.3 160.9 L175.3 172.7 L163.5 182.4 L150.3 190.0 L136.0 195.1 L121.3 197.7 L106.4 197.7 L91.9 195.2 L78.1 190.2 L65.5 183.0 L54.4 173.8 L45.1 162.9 L37.9 150.6 L33.0 137.5 L30.4 123.8 L30.2 109.9 L32.4 96.4 L36.9 83.5 L43.5 71.7 L51.9 61.3 L61.9 52.6 L73.1 45.8 L85.3 41.1 L98.0 38.5 L110.8 38.2 L123.3 40.1 L135.3 44.1 L146.2 50.0 L155.9 57.7 L164.0 66.8 L170.4 77.1 L174.9 88.2 L177.4 99.9 L177.8 111.6 L176.2 123.2 L172.6 134.2 L167.3 144.3 L160.4 153.2 L152.1 160.8 L142.8 166.7 L132.6 170.9 L122.0 173.3 L111.3 173.8 L100.8 172.4 L90.7 169.3 L81.5 164.5 L73.3 158.3 L66.4 150.9 L60.9 142.4 L57.0 133.3 L54.8 123.7 L54.3 114.0 L55.4 104.5 L58.1 95.4 L62.3 87.1 L67.9 79.7 L74.5 73.4 L82.0 68.4 L90.2 64.9 L98.7 62.8 L107.4 62.3 L115.9 63.2 L124.0 65.6 L131.5 69.3 L138.1 74.2 L143.7 80.0 L148.1 86.7 L151.3 93.9 L153.2 101.4 L153.7 109.0 L152.9 116.5 L150.8 123.6 L147.6 130.2 L143.4 136.0 L138.3 140.9 L132.5 144.8 L126.3 147.6 L119.8 149.2 L113.2 149.6 L106.7 149.0 L100.6 147.2 L94.9 144.5 L90.0 140.8 L85.8 136.5 L82.5 131.6 L80.1 126.3 L78.8 120.7 L78.4 115.2 L79.0 109.7 L80.5 104.6 L82.8 99.9 L85.8 95.8 L89.5 92.3 L93.6 89.6 L97.9 87.7 L102.5 86.6 L107.0 86.4 L111.4 86.9 L115.6 88.2 L119.3 90.1 L122.6 92.6 L125.3 95.6 L127.3 98.8 L128.8 102.3 L129.5 105.9 L129.6 109.4 L129.1 112.8 L128.0 115.9 L126.5 118.7 L124.5 121.1 L122.2 123.0 L119.7 124.4 L117.1 125.3 L114.5 125.7 L112.0 125.6 L109.7 125.1 L107.5 124.2"/>
+          <path class="live" id="coilLive" d="M202.0 112.0 L201.6 117.3 L198.7 132.8 L193.2 147.5 L185.3 160.9 L175.3 172.7 L163.5 182.4 L150.3 190.0 L136.0 195.1 L121.3 197.7 L106.4 197.7 L91.9 195.2 L78.1 190.2 L65.5 183.0 L54.4 173.8 L45.1 162.9 L37.9 150.6 L33.0 137.5 L30.4 123.8 L30.2 109.9 L32.4 96.4 L36.9 83.5 L43.5 71.7 L51.9 61.3 L61.9 52.6 L73.1 45.8 L85.3 41.1 L98.0 38.5 L110.8 38.2 L123.3 40.1 L135.3 44.1 L146.2 50.0 L155.9 57.7 L164.0 66.8 L170.4 77.1 L174.9 88.2 L177.4 99.9 L177.8 111.6 L176.2 123.2 L172.6 134.2 L167.3 144.3 L160.4 153.2 L152.1 160.8 L142.8 166.7 L132.6 170.9 L122.0 173.3 L111.3 173.8 L100.8 172.4 L90.7 169.3 L81.5 164.5 L73.3 158.3 L66.4 150.9 L60.9 142.4 L57.0 133.3 L54.8 123.7 L54.3 114.0 L55.4 104.5 L58.1 95.4 L62.3 87.1 L67.9 79.7 L74.5 73.4 L82.0 68.4 L90.2 64.9 L98.7 62.8 L107.4 62.3 L115.9 63.2 L124.0 65.6 L131.5 69.3 L138.1 74.2 L143.7 80.0 L148.1 86.7 L151.3 93.9 L153.2 101.4 L153.7 109.0 L152.9 116.5 L150.8 123.6 L147.6 130.2 L143.4 136.0 L138.3 140.9 L132.5 144.8 L126.3 147.6 L119.8 149.2 L113.2 149.6 L106.7 149.0 L100.6 147.2 L94.9 144.5 L90.0 140.8 L85.8 136.5 L82.5 131.6 L80.1 126.3 L78.8 120.7 L78.4 115.2 L79.0 109.7 L80.5 104.6 L82.8 99.9 L85.8 95.8 L89.5 92.3 L93.6 89.6 L97.9 87.7 L102.5 86.6 L107.0 86.4 L111.4 86.9 L115.6 88.2 L119.3 90.1 L122.6 92.6 L125.3 95.6 L127.3 98.8 L128.8 102.3 L129.5 105.9 L129.6 109.4 L129.1 112.8 L128.0 115.9 L126.5 118.7 L124.5 121.1 L122.2 123.0 L119.7 124.4 L117.1 125.3 L114.5 125.7 L112.0 125.6 L109.7 125.1 L107.5 124.2"/>
+          <circle class="head" id="coilHead" cx="107.5" cy="124.2" r="6"/>
+        </svg>
+        <div class="coil-read">
+          <b><span id="doneN">0</span> <small>of <span id="totN">0</span></small></b>
+          <span>challenges bound</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="leaf" aria-label="Progress by category">
+    <h2 class="hand">The four hands</h2>
+    <p>One bead a challenge. The cord is strung the moment the challenge fires, and reloading never unstrings it.</p>
+    <div id="cats"></div>
+    <div class="cordfoot">
+      <span class="note-sc" id="stepRead">Verses marked 0 of 0</span>
+      <button class="btn" id="reset" type="button">Close the book</button>
+    </div>
+  </section>
 </header>
 
-<section class="tracker">
-  <div class="tracker-top">
-    <h2>Progress</h2>
-    <p class="tally"><b id="tDone">0</b> / 18 challenges complete</p>
-  </div>
-  <div class="bar"><span id="tBar"></span></div>
-  <div class="cats" id="cats"></div>
+<div class="tabs" role="tablist" aria-label="Guide sections">
+  <button class="tab" role="tab" id="t-runs" aria-controls="p-runs" aria-selected="true">The rites</button>
+  <button class="tab" role="tab" id="t-list" aria-controls="p-list" aria-selected="false">Index</button>
+  <button class="tab" role="tab" id="t-audit" aria-controls="p-audit" aria-selected="false">Hands &amp; sources</button>
+</div>
+
+<section class="panel leaf" id="p-runs" role="tabpanel" aria-labelledby="t-runs">
+  <div class="jumpbar" id="jumpbar"></div>
+  <div id="rites"></div>
 </section>
 
-<div class="tabs" role="tablist">
-  <button class="tab" role="tab" aria-selected="true" data-panel="runs">Optimized runs</button>
-  <button class="tab" role="tab" aria-selected="false" data-panel="checklist">Checklist</button>
-  <button class="tab" role="tab" aria-selected="false" data-panel="audit">Audit &amp; sources</button>
-</div>
-
-<div class="panel" id="p-runs">
-  <div class="runnav" id="runnav"></div>
-  <div id="runList"></div>
-</div>
-
-<div class="panel" id="p-checklist" hidden>
+<section class="panel leaf" id="p-list" role="tabpanel" aria-labelledby="t-list" hidden>
   <div class="filters" id="filters"></div>
-  <div id="chalList"></div>
-</div>
+  <div class="idx-h"><b>Index of the eighteen</b><span class="note-sc" id="idxMeta"></span></div>
+  <div id="clist"></div>
+</section>
 
-<div class="panel audit" id="p-audit" hidden>
-  <h3>Verification result</h3>
+<section class="panel leaf sources" id="p-audit" role="tabpanel" aria-labelledby="t-audit" hidden>
+<!--@audit-->
+<h3>Verification result</h3>
   <p>The 18 challenge names and unlock conditions now come from the official in-game challenge data you supplied, so the challenge list itself is <b>fully verified</b>. Route detail is verified where two sources agree and marked <span class="badge b-unv">Unverified</span> or <span class="badge b-src">Single source</span> where they don't. Nothing has been invented to fill a gap.</p>
 
   <table class="src">
@@ -238,15 +425,19 @@ footer{margin-top:36px;padding-top:18px;border-top:1px solid var(--line);font-fa
     <li><b>Steam Community</b> — Shameless's redacted-challenge guide; the SA/SO on Master discussion thread; Kunovega on The Classics requirements.</li>
     <li><b>GameFAQs</b> — RARusk's HITMAN 2 guide, for Classics composition, save/challenge-unlock mechanics, and the removed-challenge list.</li>
   </ul>
-</div>
+<!--/@audit-->
+</section>
 
 <footer>
-  Progress is saved in this browser and persists across reloads.<br>
+<!--@footer-->
+Progress is saved in this browser and persists across reloads.<br>
   Compiled 1 August 2026 against the uploaded in-game challenge list. Unverified detail is labelled, never filled in.
+<!--/@footer-->
 </footer>
 </div>
 
 <script>
+/*@data*/
 /* ---------------- challenges (verbatim from in-game data) ---------------- */
 const CH=[
  {id:'a1',cat:'Assassination',name:"Tasteless, Traceless",cond:"Assassinate a target with lethal poison.",run:2},
@@ -509,179 +700,295 @@ const RUNS=[
 }];
 
 /* ---------------- state ---------------- */
+/*/@data*/
+
+/* ---------------- STATE ---------------- */
 const KEY='embrace_serpent_done_v1', SKEY=KEY+':steps', OKEY=KEY+':open';
-const done=new Set(), stepsDone=new Set(), openRuns=new Set();
-function loadSet(k,set,fallback){
-  try{const v=JSON.parse(localStorage.getItem(k));if(Array.isArray(v)){v.forEach(x=>set.add(x));return;}}catch(e){}
-  if(fallback)fallback.forEach(x=>set.add(x));
+const state={done:new Set(),steps:new Set(),openRuns:new Set(),openSteps:new Set(),filter:'All'};
+let memOnly=false;
+
+function reportProgress(){try{const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r['sa02']={done:CH.filter(c=>state.done.has(c.id)).length,total:CH.length,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
+function readSet(k,set){try{const v=JSON.parse(localStorage.getItem(k));if(Array.isArray(v))v.forEach(x=>set.add(x));}catch(e){}}
+function load(){
+  /* the three keys the previous edition wrote are kept exactly, so nobody
+     loses a tick to the rebuild */
+  readSet(KEY,state.done);readSet(SKEY,state.steps);readSet(OKEY,state.openRuns);
+  if(!state.openRuns.size)state.openRuns.add('r1');
+  render();reportProgress();
 }
-loadSet(KEY,done);             /* ticked challenges */
-loadSet(SKEY,stepsDone);       /* ticked route steps */
-loadSet(OKEY,openRuns,['r1']); /* which runs are expanded */
-function reportProgress(){try{const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r['sa02']={done:done.size,total:CH.length,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
-/* one writer for all three sets - every toggle below calls this */
-function persist(){
-  try{
-    localStorage.setItem(KEY,JSON.stringify([...done]));
-    localStorage.setItem(SKEY,JSON.stringify([...stepsDone]));
-    localStorage.setItem(OKEY,JSON.stringify([...openRuns]));
-  }catch(e){}
+function save(){
+  if(!memOnly){try{
+    localStorage.setItem(KEY,JSON.stringify([...state.done]));
+    localStorage.setItem(SKEY,JSON.stringify([...state.steps]));
+    localStorage.setItem(OKEY,JSON.stringify([...state.openRuns]));
+  }catch(e){memOnly=true;}}
   reportProgress();
 }
-const saveDone=persist;
-let filter='All';
 
-/* ---------------- tracker ---------------- */
+const $=id=>document.getElementById(id);
+const byId=Object.fromEntries(CH.map(c=>[c.id,c]));
+const byName=Object.fromEntries(CH.map(c=>[c.name,c.id]));
+
+/* A `chal` badge names a challenge in words. It is a control when it names one
+   outright, or when it says the challenge completes on that verse; a badge that
+   only says a verse *counts toward* one is a note, not a tick — banking it
+   would be a lie. */
+function badgeChallenge(text){
+  if(byName[text]) return byName[text];
+  if(/completes? here|completes on/i.test(text)){
+    const hit=CH.filter(c=>text.indexOf(c.name)>=0).sort((a,b)=>b.name.length-a.name.length)[0];
+    if(hit) return hit.id;
+  }
+  return null;
+}
+
+/* verse id → the challenges that verse binds, so marking it binds them */
+const STEP_CH={};
+RUNS.forEach(r=>r.sections.forEach((sec,si)=>sec.steps.forEach((st,ti)=>{
+  st._id=r.id+':'+si+':'+ti;
+  STEP_CH[st._id]=(st.badges||[]).filter(b=>b[0]==='chal').map(b=>badgeChallenge(b[1])).filter(Boolean);
+})));
+const TOTAL_STEPS=RUNS.reduce((a,r)=>a+r.sections.reduce((b,s)=>b+s.steps.length,0),0);
+
+/* which challenges belong to a rite — read off the data, never typed */
+RUNS.forEach((r,i)=>{
+  const n=i+1, out=[];
+  r.sections.forEach(sec=>sec.steps.forEach(st=>STEP_CH[st._id].forEach(id=>{if(!out.includes(id))out.push(id);})));
+  CH.forEach(c=>{if(c.run===n&&!out.includes(c.id))out.push(c.id);});
+  r._ids=out;
+});
+
+function chip(id){
+  const c=byId[id];if(!c)return'';
+  const on=state.done.has(id);
+  return `<button type="button" class="chip${on?' on':''}" data-ch="${id}" aria-pressed="${on}" title="${c.cat}">${c.name}</button>`;
+}
+
+/* ---------------- THE COIL AND THE CORDS ---------------- */
+const CATS=['Assassination','Feats','Targets','The Classics'];
+
 function renderTracker(){
-  const cats=['Assassination','Feats','Targets','The Classics'];
-  document.getElementById('cats').innerHTML=cats.map(c=>{
-    const all=CH.filter(x=>x.cat===c), d=all.filter(x=>done.has(x.id)).length;
-    return `<div class="cat"><span class="n">${c}</span>
-      <span class="v">${d}<span style="color:var(--bone-dim);font-size:13px">/${all.length}</span></span>
-      <div class="mb"><i style="width:${Math.round(d/all.length*100)}%;background:${CAT_COLOR[c]}"></i></div></div>`;
+  const d=CH.filter(c=>state.done.has(c.id)).length, tot=CH.length;
+  $('doneN').textContent=d;
+  $('totN').textContent=tot;
+
+  const live=$('coilLive'), len=live.getTotalLength?live.getTotalLength():1200;
+  const shown=len*(tot?d/tot:0);
+  live.setAttribute('stroke-dasharray',shown+' '+len);
+  /* a round cap on a zero-length dash still paints a dot, which reads as a
+     serpent that is already somewhere. Hide the body until there is one. */
+  live.style.visibility=shown>0?'visible':'hidden';
+  const coil=$('coil');
+  coil.classList.toggle('live',shown>0);
+  coil.classList.toggle('closed',d===tot&&tot>0);
+  if(live.getPointAtLength&&shown>0){
+    const p=live.getPointAtLength(shown);
+    $('coilHead').setAttribute('cx',p.x);$('coilHead').setAttribute('cy',p.y);
+  }
+
+  $('cats').innerHTML=CATS.map(cat=>{
+    const all=CH.filter(c=>c.cat===cat), dn=all.filter(c=>state.done.has(c.id)).length;
+    return `<div class="cord">
+      <span class="cname">${cat}</span>
+      <span class="ctally">${dn} <small>/ ${all.length}</small></span>
+      <span class="beads">${all.map(c=>`<i class="${state.done.has(c.id)?'on':''}" title="${c.name}"></i>`).join('')}</span>
+    </div>`;
   }).join('');
-  document.getElementById('tDone').textContent=done.size;
-  document.getElementById('tBar').style.width=(done.size/CH.length*100)+'%';
+
+  $('stepRead').textContent='Verses marked '+state.steps.size+' of '+TOTAL_STEPS;
+  $('idxMeta').textContent=d+' of '+tot+' bound';
 }
 
-/* ---------------- run nav ---------------- */
-function renderNav(){
-  document.getElementById('runnav').innerHTML=
-    RUNS.map(r=>`<button data-jump="${r.id}">${r.tag} · ${r.title}</button>`).join('')+
-    `<span class="util"><button data-all="open">Expand all</button> <button data-all="close">Collapse all</button></span>`;
+function renderJump(){
+  $('jumpbar').innerHTML=`<span class="jl">The rites</span>`+
+    RUNS.map((r,i)=>{
+      const dn=r._ids.filter(x=>state.done.has(x)).length;
+      return `<button type="button" class="jump${dn===r._ids.length?' full':''}" data-jump="${i}">`+
+        `<b>${ROMAN[i]||i+1}</b>${r.title}<span class="pg">${dn}/${r._ids.length}</span></button>`;
+    }).join('')+
+    `<button type="button" class="btn-quill" data-toggleall="1" style="margin-left:auto">Open / close every rite</button>`;
 }
+const ROMAN=['I','II','III','IV','V','VI','VII','VIII'];
 
-/* ---------------- runs ---------------- */
-function badgeHTML(b){
-  const cls={chal:'b-chal',warn:'b-warn',save:'b-save',unv:'b-unv',src:'b-src'}[b[0]];
-  const pre={warn:'⚠ ',save:'◆ ',unv:'? ',src:'✎ ',chal:''}[b[0]];
-  return `<span class="badge ${cls}">${pre}${b[1]}</span>`;
-}
+/* ---------------- THE RITES ---------------- */
 function renderRuns(){
-  document.getElementById('runList').innerHTML=RUNS.map((r,ri)=>{
-    const open=openRuns.has(r.id);
-    let n=0;
-    const total=r.sections.reduce((a,s)=>a+s.steps.length,0);
-    const doneCount=r.sections.reduce((a,s,si)=>a+s.steps.filter((_,ti)=>stepsDone.has(`${r.id}-${si}-${ti}`)).length,0);
-    return `<article class="run ${open?'open':''}" id="${r.id}">
-      <button class="run-head" data-toggle="${r.id}" aria-expanded="${open}">
-        <span class="chev">▶</span>
-        <span class="rh">
-          <span class="run-no">${r.tag} · ${r.diff.split('.')[0]}</span>
-          <h3>${r.title}</h3>
-          <p>${r.goal}</p>
+  $('rites').innerHTML=RUNS.map((r,ri)=>{
+    const open=state.openRuns.has(r.id);
+    const dn=r._ids.filter(x=>state.done.has(x)).length;
+    const verses=r.sections.reduce((a,s)=>a+s.steps.length,0);
+    const marked=r.sections.reduce((a,s)=>a+s.steps.filter(st=>state.steps.has(st._id)).length,0);
+    const sealed=r._ids.length&&dn===r._ids.length;
+
+    /* the chips are buttons, so they sit under the header rather than inside
+       it — a button inside a button tears the header apart */
+    return `<article class="rite${open?' open':''}${sealed?' sealed':''}" id="rite-${ri}">
+      <span class="wax" aria-hidden="true">${ROMAN[ri]||ri+1}</span>
+      <button type="button" class="rhead" data-run="${r.id}" aria-expanded="${open}">
+        <span class="rline">
+          <span class="rtag">${r.tag}</span>
+          <span class="rmeta">${verses} verses &middot; ${marked} marked &middot; ${r.diff}</span>
+          <span class="rtally">${dn} <small>/ ${r._ids.length}</small></span>
         </span>
-        <span class="run-prog">${doneCount}/${total} steps</span>
+        <span class="rtitle">${r.title}</span>
+        <span class="rgoal">${r.goal}</span>
       </button>
-      <div class="run-body" ${open?'':'hidden'}>
-        <div class="loadout">
-          <h4>Loadout</h4>
-          <div class="lo-grid">
-            <div><span>Starting location</span>${r.loadout.start}</div>
-            <div><span>Difficulty</span>${r.diff}</div>
-            <div><span>Suit</span>${r.loadout.suit}</div>
-            ${r.loadout.items.map((it,i)=>`<div><span>Slot ${i+1}</span>${it}</div>`).join('')}
-          </div>
-          ${r.note?`<p class="lo-note">${r.note}</p>`:''}
+      <div class="rchips">${r._ids.map(chip).join('')}</div>
+      <div class="rbody"${open?'':' hidden'}>
+        ${r.note?`<p class="word"><b>A word before you begin &mdash;</b> ${r.note}</p>`:''}
+        <div class="carry">
+          <h5>What to carry in</h5>
+          <dl>
+            <dt>Start</dt><dd>${r.loadout.start}</dd>
+            <dt>Suit</dt><dd>${r.loadout.suit}</dd>
+            <dt>Carried</dt><dd><ul>${r.loadout.items.map(i=>`<li>${i}</li>`).join('')}</ul></dd>
+          </dl>
         </div>
-        <div class="sect">
-          ${r.sections.map((sec,si)=>`<h4>${sec.h}</h4>`+sec.steps.map((st,ti)=>{
-            const key=`${r.id}-${si}-${ti}`; n++;
-            const hasD=st.d&&Object.keys(st.d).length;
-            return `<div class="step ${stepsDone.has(key)?'done':''}" id="s-${key}">
-              <div class="step-top">
-                <button class="tick" data-step="${key}" aria-label="Mark step complete">✓</button>
-                <div class="step-body">
-                  <p class="step-title"><span class="num">${String(n).padStart(2,'0')}</span>${st.t}</p>
-                  <ul class="bul">${st.b.map(x=>`<li><k>${x[0]}</k>${x[1]}</li>`).join('')}</ul>
-                  <div class="badges">${st.badges.map(badgeHTML).join('')}</div>
-                </div>
-              </div>
-              ${hasD?`<button class="more" data-more="${key}" aria-expanded="false">+ Notes</button>
-              <div class="detail" id="d-${key}" hidden><dl>${Object.entries(st.d).map(([k,v])=>{
-                const c=k==='Unverified'?'flag unv':(/^(Why the order|Ordering|Order note|Requirement|Warning|Why first)/.test(k)?'flag amber':'');
-                return c?`<div class="${c}"><dt style="margin-top:0">${k}</dt><dd>${v}</dd></div>`:`<dt>${k}</dt><dd>${v}</dd>`;
-              }).join('')}</dl></div>`:''}
-            </div>`;
-          }).join('')).join('')}
-        </div>
+        ${r.sections.map(sec=>`<div class="passage">${sec.h}</div>`+
+          sec.steps.map(st=>verseHTML(r,st)).join('')).join('')}
       </div>
     </article>`;
   }).join('');
 }
 
-/* ---------------- checklist ---------------- */
-function renderFilters(){
-  const opts=['All','Assassination','Feats','Targets','The Classics','Incomplete'];
-  document.getElementById('filters').innerHTML=opts.map(o=>`<button class="${o===filter?'on':''}" data-f="${o}">${o}</button>`).join('');
-}
-function renderChecklist(){
-  const list=CH.filter(c=>filter==='All'?true:filter==='Incomplete'?!done.has(c.id):c.cat===filter);
-  document.getElementById('chalList').innerHTML=list.length?list.map(c=>`
-    <div class="chal ${done.has(c.id)?'done':''}">
-      <button class="tick" data-ch="${c.id}" aria-label="Mark ${c.name} complete">✓</button>
-      <div class="chal-main">
-        <p class="chal-name">${c.name}</p>
-        <p class="chal-cond">${c.cond}</p>
-        <div class="chal-meta">
-          <span class="badge" style="color:${CAT_COLOR[c.cat]};border-color:${CAT_COLOR[c.cat]}">${c.cat}</span>
-          <span class="badge b-chal">Run ${c.run}</span>
-          <span class="badge b-unv">? XP value unverified</span>
-        </div>
-      </div>
-    </div>`).join(''):'<p style="color:var(--bone-dim)">Nothing matches this filter.</p>';
+function verseNumber(run,id){
+  let n=0;
+  for(const sec of run.sections) for(const st of sec.steps){n++; if(st._id===id) return n;}
+  return '';
 }
 
-/* ---------------- events ---------------- */
-document.addEventListener('click',e=>{
-  const tab=e.target.closest('.tab');
-  if(tab){
-    document.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-selected',t===tab));
-    document.querySelectorAll('.panel').forEach(p=>p.hidden=p.id!=='p-'+tab.dataset.panel);
-    return;
-  }
-  const jump=e.target.closest('[data-jump]');
-  if(jump){
-    const id=jump.dataset.jump;
-    openRuns.add(id); persist(); renderRuns();
-    document.querySelectorAll('[data-jump]').forEach(b=>b.classList.toggle('hot',b.dataset.jump===id));
-    document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});
-    return;
-  }
-  const all=e.target.closest('[data-all]');
-  if(all){
-    if(all.dataset.all==='open') RUNS.forEach(r=>openRuns.add(r.id)); else openRuns.clear();
-    persist(); renderRuns(); return;
-  }
-  const tg=e.target.closest('[data-toggle]');
-  if(tg){
-    const id=tg.dataset.toggle;
-    openRuns.has(id)?openRuns.delete(id):openRuns.add(id);
-    persist(); renderRuns(); return;
-  }
-  const ch=e.target.closest('[data-ch]');
-  if(ch){
-    const id=ch.dataset.ch;
-    done.has(id)?done.delete(id):done.add(id);
-    saveDone(); renderTracker(); renderChecklist(); return;
-  }
-  const sp=e.target.closest('[data-step]');
-  if(sp){
-    const k=sp.dataset.step;
-    stepsDone.has(k)?stepsDone.delete(k):stepsDone.add(k);
-    persist(); renderRuns(); return;
-  }
-  const m=e.target.closest('[data-more]');
-  if(m){
-    const d=document.getElementById('d-'+m.dataset.more);
-    d.hidden=!d.hidden;
-    m.setAttribute('aria-expanded',String(!d.hidden));
-    m.textContent=d.hidden?'+ Notes':'− Notes';
-  }
+function verseHTML(run,st){
+  const done=state.steps.has(st._id), open=state.openSteps.has(st._id);
+  const badges=st.badges||[];
+  const marks=badges.filter(b=>b[0]!=='chal');
+  const chals=badges.filter(b=>b[0]==='chal');
+  const det=st.d||{};
+  const detKeys=Object.keys(det);
+  return `<div class="step${done?' done':''}">
+    <button type="button" class="tick" data-tick="${st._id}" aria-pressed="${done}"
+      aria-label="Mark verse ${verseNumber(run,st._id)}${STEP_CH[st._id].length?' and bind the challenges it binds':''}"></button>
+    <span class="vnum">${verseNumber(run,st._id)}</span>
+    <div class="swrap">
+      <button type="button" class="shead" data-open="${st._id}" aria-expanded="${open}">${st.t}</button>
+      <div class="badges">
+        ${chals.map(b=>{const id=badgeChallenge(b[1]);
+          return id?chip(id):`<span class="mark m-src">${b[1]}</span>`;}).join('')}
+        ${marks.map(b=>`<span class="mark m-${b[0]}">${b[1]}</span>`).join('')}
+      </div>
+      <div class="sbody"${open?'':' hidden'}>
+        <dl>${(st.b||[]).map(p=>
+          `<dt${/^warning$/i.test(p[0])?' class="d-warn"':''}>${p[0]}</dt><dd>${p[1]}</dd>`).join('')}</dl>
+        ${detKeys.length?`<div class="marg">${detKeys.map(k=>`<p><b>${k} &mdash;</b> ${det[k]}</p>`).join('')}</div>`:''}
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ---------------- THE INDEX ---------------- */
+const FILTERS=['All'].concat(CATS).concat(['Unbound']);
+function renderFilters(){
+  $('filters').innerHTML=FILTERS.map(f=>
+    `<button type="button" data-filter="${f}" aria-pressed="${state.filter===f}">${f}</button>`).join('');
+}
+function renderList(){
+  let rows=CH.slice();
+  if(state.filter==='Unbound') rows=rows.filter(c=>!state.done.has(c.id));
+  else if(state.filter!=='All') rows=rows.filter(c=>c.cat===state.filter);
+  const el=$('clist');
+  if(!rows.length){el.innerHTML=`<p class="empty">This page is blank &mdash; nothing here is left unbound.</p>`;return;}
+  el.innerHTML=rows.map(c=>{
+    const on=state.done.has(c.id);
+    return `<div class="crow${on?' done':''}">
+      <button type="button" class="tick" data-chal="${c.id}" aria-pressed="${on}" aria-label="Bind ${c.name}"></button>
+      <div>
+        <p class="cn">${c.name}</p>
+        <p class="cc">${c.cond}</p>
+      </div>
+      <span class="cfolio">${c.cat}<br>Rite ${ROMAN[c.run-1]||c.run} &middot; Run ${c.run}</span>
+    </div>`;
+  }).join('');
+}
+
+function render(){renderTracker();renderJump();renderRuns();renderFilters();renderList();}
+
+/* ---------------- EVENTS ---------------- */
+const tabs=[...document.querySelectorAll('.tab')];
+function selectTab(tb){
+  tabs.forEach(x=>{
+    const on=x===tb;
+    x.setAttribute('aria-selected',String(on));
+    x.tabIndex=on?0:-1;
+    $(x.getAttribute('aria-controls')).hidden=!on;
+  });
+}
+tabs.forEach((tb,i)=>{
+  tb.tabIndex=tb.getAttribute('aria-selected')==='true'?0:-1;
+  tb.addEventListener('keydown',e=>{
+    const d=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;
+    if(!d)return;
+    e.preventDefault();
+    const next=tabs[(i+d+tabs.length)%tabs.length];
+    selectTab(next);next.focus();
+  });
 });
 
-renderTracker(); renderNav(); renderFilters(); renderChecklist(); renderRuns();
-reportProgress();
+document.addEventListener('click',e=>{
+  const t=e.target;
+
+  /* a chip names a challenge: press it and that challenge is bound */
+  const cb=t.closest('[data-ch]');
+  if(cb){const id=cb.dataset.ch;
+    state.done.has(id)?state.done.delete(id):state.done.add(id);
+    save();render();return;}
+
+  const tk=t.closest('[data-tick]');
+  if(tk){
+    const id=tk.dataset.tick, now=!state.steps.has(id);
+    now?state.steps.add(id):state.steps.delete(id);
+    /* marking a verse binds what that verse binds; unmarking leaves the
+       challenges bound, because another verse may bind the same one */
+    if(now)(STEP_CH[id]||[]).forEach(c=>state.done.add(c));
+    save();render();return;
+  }
+  const so=t.closest('[data-open]');
+  if(so){const id=so.dataset.open;
+    state.openSteps.has(id)?state.openSteps.delete(id):state.openSteps.add(id);
+    renderRuns();return;}
+  const rh=t.closest('[data-run]');
+  if(rh){const id=rh.dataset.run;
+    state.openRuns.has(id)?state.openRuns.delete(id):state.openRuns.add(id);
+    save();renderRuns();return;}
+  const ch=t.closest('[data-chal]');
+  if(ch){const id=ch.dataset.chal;
+    state.done.has(id)?state.done.delete(id):state.done.add(id);
+    save();render();return;}
+  const jp=t.closest('[data-jump]');
+  if(jp){const i=+jp.dataset.jump;
+    state.openRuns.add(RUNS[i].id);save();renderRuns();
+    $('rite-'+i).scrollIntoView({behavior:'smooth',block:'start'});return;}
+  const ta=t.closest('[data-toggleall]');
+  if(ta){
+    if(state.openRuns.size===RUNS.length){state.openRuns.clear();state.openSteps.clear();}
+    else RUNS.forEach(r=>state.openRuns.add(r.id));
+    save();renderRuns();return;}
+  const ft=t.closest('[data-filter]');
+  if(ft){state.filter=ft.dataset.filter;renderFilters();renderList();return;}
+  const tb=t.closest('.tab');
+  if(tb){selectTab(tb);return;}
+});
+
+$('reset').addEventListener('click',()=>{
+  if(!confirm('Close the book? Every mark on this guide is erased. Other guides are not affected.'))return;
+  state.done.clear();state.steps.clear();save();render();
+});
+
+/* the audit tables scroll inside themselves on a phone */
+document.querySelectorAll('#p-audit table').forEach(t=>{
+  if(t.parentNode.classList.contains('tablewrap'))return;
+  const w=document.createElement('div');w.className='tablewrap';
+  t.parentNode.insertBefore(w,t);w.appendChild(t);
+});
+
+load();
 </script>
 <!-- step-progress-bridge -->
 <script>

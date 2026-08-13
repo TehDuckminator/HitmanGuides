@@ -1,193 +1,393 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>The Finish Line — Challenge Dossier (Manifest-Verified)</title>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--@title--><title>The Finish Line — Challenge Dossier (Manifest-Verified)</title><!--/@title-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Space+Mono:wght@400;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
+/* ═══ MIAMI — the pit wall, on race day ═══
+   The Finish Line is a motor race with the ICA standing on the pit wall, so
+   the guide is what a pit wall actually holds: timing sheets clipped to a
+   board, laid on asphalt, in the sun.
+
+   The tracker is the chequered flag — seventy-seven squares, one a challenge,
+   each taking its category's colour as it is claimed. A run is a session and
+   its steps are laps, numbered down the left in a lap column, with a pit box
+   drawn where the route says to save. The roster is the timing sheet itself,
+   ruled by sector.
+
+   The mission's own three-tier sourcing becomes the marshal's flags: green
+   where the manifest is authoritative, yellow where a note is only a guide
+   hint, red where the manifest redacted its own description — and a run's
+   standing warning is a yellow board held over the wall.
+
+   Asphalt, kerbstone red-and-white, Kronstadt aqua and flamingo, on printed
+   paper. Deliberately none of the glossy aqua plastic the other Miami guide
+   took for the Atlantide label. */
 :root{
---bg:#0e0e10;--bg2:#17171a;--bg3:#202024;--bd:#2c2c31;--bd2:#3a3a41;
---tx:#d6cfc0;--tx2:#8b8474;--tx3:#5c564c;--wh:#f2ebda;
---gold:#c9a84c;--goldd:#6f5a22;
---red:#c8353a;--redd:#3d1013;
---blue:#3d8ec8;--blued:#0e2438;
---green:#3aab5e;--greend:#0d2c1c;
---amber:#d4a820;--amberd:#332608;
+  --asphalt:#1b1d21; --asphalt-2:#26292f; --asphalt-3:#33373e;
+  --sheet:#f4f2ec; --sheet-2:#e7e4db; --sheet-3:#dbd7cc;
+  --ink:#15171b; --ink-2:#41464e; --faint:#767d87;
+  --kerb:#d5202c; --aqua:#00958d; --flamingo:#e0407a; --sun:#e59500;
+  --purple:#6242d6; --green:#17864a; --classic:#2f6fd0;
+  --rule:rgba(21,23,27,.22); --rule-2:rgba(21,23,27,.12); --rule-3:rgba(21,23,27,.06);
+  --disp:"Chakra Petch","Segoe UI",Tahoma,sans-serif;
+  --body:"Work Sans",system-ui,-apple-system,"Segoe UI",Helvetica,sans-serif;
+  --mono:"Space Mono",ui-monospace,Consolas,"Courier New",monospace;
 }
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--tx);font-family:'Inter',sans-serif;font-size:14px;line-height:1.6}
-.hd{position:relative;background:var(--bg2);border-bottom:1px solid var(--goldd);padding:26px 30px 20px;overflow:hidden}
-.hd::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(255,255,255,.012) 2px,rgba(255,255,255,.012) 4px);pointer-events:none}
-.hd::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
-.hdin{position:relative;max-width:1080px;margin:0 auto;display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap}
-.eyebrow{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.24em;color:var(--gold);text-transform:uppercase;margin-bottom:6px;opacity:.85}
-.ttl{font-family:'Oswald',sans-serif;font-size:36px;font-weight:700;color:var(--wh);letter-spacing:.02em;line-height:1;text-transform:uppercase;margin-bottom:5px}
-.sub{font-size:13px;color:var(--tx2);font-weight:300}
-.stamp{font-family:'Oswald',sans-serif;font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--green);border:2px solid var(--green);padding:5px 11px;transform:rotate(-4deg);opacity:.8;white-space:nowrap}
-.note{background:var(--greend);border-bottom:1px solid rgba(58,171,94,.3);padding:13px 30px}
-.notein{max-width:1080px;margin:0 auto;display:flex;gap:12px;align-items:flex-start}
-.note-ic{color:#5ccc80;font-size:15px;flex-shrink:0;line-height:1.4}
-.note-tx{font-size:12.5px;color:#a7cbb2;line-height:1.6}
-.note-tx b{color:#c8e6d0}
-.prog{background:var(--bg2);border-bottom:1px solid var(--bd);padding:13px 30px}
-.progin{max-width:1080px;margin:0 auto;display:flex;align-items:center;gap:18px}
-.pl{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--tx2);letter-spacing:.1em;white-space:nowrap}
-.pbar{flex:1;height:4px;background:var(--bg3);border-radius:2px;overflow:hidden;min-width:60px}
-.pfill{height:100%;background:linear-gradient(90deg,var(--goldd),var(--gold));border-radius:2px;transition:width .4s}
-.pcount{font-family:'Oswald',sans-serif;font-size:17px;font-weight:600;color:var(--gold);white-space:nowrap}
-.wrap{max-width:1080px;margin:0 auto;padding:26px 30px;display:grid;grid-template-columns:210px 1fr;gap:26px;align-items:start}
-.side{position:sticky;top:18px}
-.sblk{margin-bottom:22px}
-.slbl{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--tx3);margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--bd)}
-.nb{display:flex;align-items:center;justify-content:space-between;width:100%;background:none;border:none;padding:8px 11px;border-radius:4px;cursor:pointer;color:var(--tx2);font-family:'Inter',sans-serif;font-size:13px;text-align:left;transition:.15s;margin-bottom:2px}
-.nb:hover{background:var(--bg3);color:var(--tx)}
-.nb.on{background:var(--bg3);color:var(--wh);border-left:2px solid var(--gold);padding-left:9px}
-.nbc{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--tx3)}
-.nb.on .nbc{color:var(--gold)}
-.cwrap{margin-bottom:3px}
-.crow{display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:4px;cursor:pointer;transition:.12s}
-.crow:hover{background:var(--bg3)}
-.cdot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.cnm{font-size:12px;flex:1;color:var(--tx2)}
-.cfr{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--tx3)}
-.cmb{height:2px;background:var(--bd);border-radius:1px;overflow:hidden;margin:0 8px 6px}
-.cmf{height:100%;border-radius:1px;transition:width .4s}
-.rst{display:block;width:100%;background:none;border:1px solid var(--bd2);color:var(--tx3);font-size:11px;padding:7px;border-radius:4px;cursor:pointer;transition:.15s;font-family:'Inter',sans-serif}
-.rst:hover{border-color:var(--red);color:#e8686c}
-.pan{display:none}.pan.on{display:block}
-.legend{background:var(--bg2);border:1px solid var(--bd);border-radius:6px;padding:13px 16px;margin-bottom:18px}
-.lgt{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--tx3);margin-bottom:9px}
-.lgr{display:flex;gap:9px;align-items:flex-start;margin-bottom:7px;font-size:12px;color:var(--tx2);line-height:1.5}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;color:var(--sheet);background-color:var(--asphalt);
+  /* track surface: coarse aggregate, and the sun off the bay */
+  background-image:
+    radial-gradient(760px 420px at 82% -8%,rgba(0,149,141,.16),transparent 64%),
+    radial-gradient(620px 400px at 4% 2%,rgba(224,64,122,.1),transparent 62%),
+    repeating-linear-gradient(41deg,rgba(255,255,255,.014) 0 1px,transparent 1px 4px),
+    repeating-linear-gradient(-41deg,rgba(0,0,0,.16) 0 1px,transparent 1px 5px);
+  background-attachment:fixed;
+  font-family:var(--body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1120px;margin:0 auto;padding:0 16px 96px}
+a{color:var(--aqua)}
+b,strong{font-weight:600}
+i,em{font-style:italic}
+code{font-family:var(--mono);font-size:12.5px;background:var(--sheet-3);padding:1px 5px}
+:focus-visible{outline:2px solid var(--kerb);outline-offset:2px}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:12px;top:12px;z-index:60;background:var(--kerb);color:#fff;padding:8px 14px;
+  font-family:var(--mono);font-size:12px}
+.lbl{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+/* the kerbstone, used wherever the guide needs an edge */
+.kerb{height:9px;background:repeating-linear-gradient(90deg,var(--kerb) 0 24px,#f4f2ec 24px 48px)}
+
+/* ── the pit board ─────────────────────────────────────────────────────── */
+header.pit{margin-top:18px;background:var(--asphalt-2);border:1px solid #000;
+  box-shadow:0 26px 60px -44px #000}
+.topbar{display:flex;flex-wrap:wrap;gap:5px 18px;align-items:center;justify-content:space-between;
+  padding:9px 16px;border-bottom:1px solid rgba(255,255,255,.08);background:#15171a;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;color:#9aa2ad}
+.topbar a{color:var(--aqua);text-decoration:none;border-bottom:1px solid rgba(0,149,141,.5)}
+.topbar a:hover{color:var(--sun);border-color:var(--sun)}
+.board{position:relative;padding:30px 22px 26px}
+.session{margin:0 0 12px;font-family:var(--mono);font-size:11px;letter-spacing:.11em;color:var(--aqua);
+  text-transform:uppercase}
+h1{margin:0;font-family:var(--disp);font-weight:700;font-size:clamp(42px,8.6vw,88px);line-height:.92;
+  letter-spacing:-.02em;text-transform:uppercase;color:#fff}
+.sub{margin:14px 0 0;max-width:64ch;color:#c3c9d1;font-size:15.5px}
+/* the scrutineer's decal, stuck on the corner of the board */
+.decal{position:absolute;right:18px;top:26px;transform:rotate(3deg);background:var(--kerb);color:#fff;
+  font-family:var(--disp);font-weight:700;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;
+  padding:7px 13px;box-shadow:0 6px 16px -10px #000}
+
+/* ── the chequered flag ────────────────────────────────────────────────── */
+.flagbox{padding:20px 22px 4px;background:var(--asphalt)}
+.flagcap{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:baseline;justify-content:space-between;
+  margin-bottom:8px}
+/* eleven across, seven down: seventy-seven squares, one a challenge */
+.flag{display:grid;grid-template-columns:repeat(11,minmax(0,1fr));gap:0;border:2px solid #0b0c0e;
+  background:#0b0c0e}
+.sq{position:relative;aspect-ratio:1.72;padding:0;cursor:pointer;border:0;border-right:1px solid #0b0c0e;
+  border-bottom:1px solid #0b0c0e;background:var(--asphalt-3);transition:background .15s ease}
+.sq.alt{background:#161a1f}
+.sq:hover{background:var(--sun)}
+.sq.on{background:var(--c,var(--aqua))}
+.sq.on::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(160deg,rgba(255,255,255,.3),rgba(0,0,0,.24))}
+.readout{display:grid;grid-template-columns:minmax(0,290px) minmax(0,1fr);gap:22px;align-items:end;
+  padding:18px 22px 20px;background:var(--asphalt)}
+/* the guide's own count, kept in lower case so it reads as written */
+.timed{margin:5px 0 0;font-size:18px;color:#c3c9d1}
+.timed b{font-family:var(--disp);font-weight:700;font-size:52px;line-height:.9;color:#fff;margin-right:9px}
+.laps{margin:7px 0 0;font-family:var(--mono);font-size:11.5px;color:#8d959f}
+.sectors{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:1px;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08)}
+.sector{background:var(--asphalt-2);padding:8px 11px;min-width:0}
+.sector .k{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;
+  text-transform:uppercase;color:#8d959f}
+.sector .v{display:block;font-family:var(--disp);font-weight:700;font-size:20px;line-height:1.2;
+  margin-top:2px;color:#fff}
+.sector .v small{font-family:var(--body);font-weight:400;font-size:12.5px;color:#8d959f}
+.sector .b{display:block;height:4px;margin-top:6px;background:rgba(255,255,255,.1)}
+.sector .b i{display:block;height:100%;background:var(--c,var(--aqua))}
+.sector.full{box-shadow:inset 0 0 0 1px var(--c,var(--aqua))}
+.pitfoot{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:center;
+  padding:16px 22px;background:var(--asphalt-2);border-top:1px solid rgba(255,255,255,.08)}
+.scrut{font-size:13.5px;color:#c3c9d1;line-height:1.55}
+.scrut b{color:#fff}
+.btn{font-family:var(--disp);font-weight:700;font-size:13px;letter-spacing:.1em;text-transform:uppercase;
+  background:var(--kerb);color:#fff;border:0;padding:11px 18px;cursor:pointer;white-space:nowrap}
+.btn:hover{background:#fff;color:var(--kerb)}
+.btn-plain{font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;background:transparent;
+  color:var(--ink-2);border:1px solid var(--rule-2);padding:6px 11px;cursor:pointer}
+.btn-plain:hover{border-color:var(--kerb);color:var(--kerb)}
+
+/* ── tabs ──────────────────────────────────────────────────────────────── */
+.tabs{display:flex;gap:3px;flex-wrap:wrap;margin:24px 0 0}
+.tab{font-family:var(--disp);font-weight:600;font-size:13.5px;letter-spacing:.11em;text-transform:uppercase;
+  background:var(--asphalt-2);color:#b6bdc6;border:1px solid #000;border-bottom:0;padding:11px 18px;
+  cursor:pointer}
+.tab[aria-selected="true"]{background:var(--sheet);color:var(--ink);box-shadow:inset 0 3px 0 var(--kerb)}
+.tab:hover{color:#fff}
+.tab[aria-selected="true"]:hover{color:var(--kerb)}
+.panel{background:var(--sheet);color:var(--ink);border:1px solid #000;padding:22px}
+
+/* ── the timing tower (jump nav) ───────────────────────────────────────── */
+.tower{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1px;
+  background:var(--rule-2);border:1px solid var(--rule-2);margin:0 0 22px}
+.tw{display:grid;grid-template-columns:30px minmax(0,1fr) auto;gap:9px;align-items:center;
+  background:var(--sheet-2);border:0;border-left:4px solid var(--sheet-3);padding:9px 11px;
+  text-align:left;font-family:var(--body);font-size:13.5px;color:var(--ink);cursor:pointer;min-width:0}
+.tw:hover{background:#fff;border-left-color:var(--kerb)}
+.tw.full{border-left-color:var(--green);background:rgba(23,134,74,.09)}
+.tw .p{font-family:var(--disp);font-weight:700;font-size:17px;color:var(--faint)}
+.tw.full .p{color:var(--green)}
+.tw .n{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tw .s{font-family:var(--mono);font-size:10.5px;color:var(--faint)}
+
+/* ── a session sheet ───────────────────────────────────────────────────── */
+article.run{border:1px solid var(--rule-2);background:#fff;margin-bottom:16px;scroll-margin-top:14px;
+  box-shadow:0 12px 26px -24px #000}
+article.run.full{border-color:rgba(23,134,74,.5)}
+.rhead{display:grid;grid-template-columns:64px minmax(0,1fr);gap:16px;width:100%;text-align:left;
+  background:var(--sheet);border:0;border-bottom:1px solid var(--rule-3);cursor:pointer;
+  padding:15px 17px;font-family:var(--body);color:var(--ink)}
+/* the car number, painted on the nose */
+.rno{display:grid;place-content:center;background:var(--asphalt);color:#fff;font-family:var(--disp);
+  font-weight:700;font-size:30px;line-height:1;height:52px;letter-spacing:-.02em}
+article.run.full .rno{background:var(--green)}
+.rmain{min-width:0}
+.rkick{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--aqua)}
+.rtitle{display:block;font-family:var(--disp);font-weight:700;font-size:clamp(19px,3vw,27px);line-height:1.12;
+  margin:4px 0 8px}
+.rmeta{display:flex;flex-wrap:wrap;gap:5px 8px;margin-bottom:8px}
+.tagi{font-family:var(--mono);font-size:10.5px;color:var(--ink-2);background:var(--sheet-2);
+  border:1px solid var(--rule-3);padding:3px 8px}
+.rtally{display:block;font-family:var(--mono);font-size:10.5px;color:var(--faint)}
+.rbody{padding:16px 17px 20px}
+
+/* the yellow board held over the wall */
+.warn{display:grid;grid-template-columns:34px minmax(0,1fr);gap:12px;align-items:start;
+  background:#fdf3d6;border-left:5px solid var(--sun);padding:12px 14px;margin-bottom:16px;
+  font-size:14.2px;color:var(--ink-2)}
+.warn .fl{height:26px;background:var(--sun);
+  clip-path:polygon(0 0,100% 0,100% 74%,0 100%)}
+.warn b{color:var(--ink)}
+.loadout{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1px;
+  background:var(--rule-2);border:1px solid var(--rule-2);margin-bottom:18px}
+.slot{background:var(--sheet);padding:9px 12px;min-width:0}
+.slot .k{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.07em;
+  text-transform:uppercase;color:var(--faint)}
+.slot .v{display:block;font-family:var(--disp);font-weight:600;font-size:15.5px;line-height:1.35;
+  margin-top:3px;overflow-wrap:anywhere}
+.slot .v span{display:block;font-family:var(--body);font-weight:400;font-size:13.4px;color:var(--ink-2)}
+
+/* ── laps ──────────────────────────────────────────────────────────────── */
+.laphead{display:grid;grid-template-columns:44px 34px minmax(0,1fr);gap:12px;padding:0 0 6px;
+  border-bottom:2px solid var(--ink);font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--faint)}
+.step{display:grid;grid-template-columns:44px 34px minmax(0,1fr);gap:12px;align-items:start;
+  padding:12px 0;border-bottom:1px solid var(--rule-3)}
+.step:last-child{border-bottom:0}
+.step.done{background:rgba(23,134,74,.06)}
+.lapno{font-family:var(--mono);font-size:15px;color:var(--faint);padding-top:6px;text-align:right}
+.step.done .lapno{color:var(--green)}
+/* the tick takes the flag: an empty box until the square is chequered */
+.tick{width:34px;height:34px;padding:0;cursor:pointer;border:1px solid var(--rule);background:#fff}
+.tick:hover{border-color:var(--kerb)}
+.step.done .tick,.crow.done .tick{border-color:var(--ink);
+  background-image:
+    linear-gradient(45deg,var(--ink) 25%,transparent 25%,transparent 75%,var(--ink) 75%),
+    linear-gradient(45deg,var(--ink) 25%,transparent 25%,transparent 75%,var(--ink) 75%);
+  background-size:14px 14px;background-position:0 0,7px 7px;background-color:#fff}
+.swrap{min-width:0}
+.stitle{display:block;font-family:var(--disp);font-weight:600;font-size:16.5px;line-height:1.3;
+  color:var(--ink)}
+.step.done .stitle{color:var(--ink-2)}
+.sdesc{margin:5px 0 0;color:var(--ink-2);font-size:14.3px}
+.splits{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+.split{font-family:var(--body);font-size:13px;cursor:pointer;border:1px solid var(--rule-2);
+  border-left:4px solid var(--c,var(--aqua));background:var(--sheet);color:var(--ink-2);padding:4px 10px}
+.split:hover{border-color:var(--kerb);border-left-color:var(--c,var(--aqua));color:var(--ink)}
+.split.on{background:var(--c,var(--aqua));border-color:transparent;color:#fff;font-weight:500}
+/* the pit box, where the route says to save */
+.pitbox{display:inline-flex;align-items:center;gap:8px;margin-top:10px;background:var(--asphalt);
+  color:#fff;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  padding:5px 11px}
+.pitbox s{width:9px;height:9px;background:var(--kerb);text-decoration:none}
+
+/* ── the marshal's flags (source tiers) ────────────────────────────────── */
+.cf{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.07em;
+  text-transform:uppercase;padding:2px 7px;vertical-align:middle;white-space:nowrap;color:#fff}
+.cf-m{background:var(--green)}
+.cf-g{background:var(--sun);color:#2b1c00}
+.cf-r{background:var(--kerb)}
+.legend{border:1px solid var(--rule-2);background:var(--sheet-2);padding:14px 16px;margin:0 0 20px}
+.lgt{font-family:var(--disp);font-weight:700;font-size:13px;letter-spacing:.1em;text-transform:uppercase;
+  margin-bottom:9px}
+.lgr{display:grid;grid-template-columns:106px minmax(0,1fr);gap:12px;align-items:baseline;
+  margin-bottom:7px;font-size:13.6px;color:var(--ink-2)}
 .lgr:last-child{margin-bottom:0}
-.cf{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.06em;padding:2px 6px;border-radius:3px;border:1px solid;text-transform:uppercase;white-space:nowrap;flex-shrink:0;font-weight:500}
-.cf-m{background:var(--greend);border-color:rgba(58,171,94,.45);color:#5ccc80}
-.cf-g{background:var(--amberd);border-color:rgba(212,168,32,.45);color:#e8c84a}
-.cf-r{background:var(--blued);border-color:rgba(61,142,200,.45);color:#6abaee}
-.rl{display:flex;flex-direction:column;gap:10px}
-.rc{background:var(--bg2);border:1px solid var(--bd);border-radius:6px;overflow:hidden;transition:border-color .15s}
-.rc:hover{border-color:var(--bd2)}
-.rc.ex{border-color:var(--goldd)}
-.rh{display:flex;align-items:center;gap:13px;padding:14px 17px;cursor:pointer;user-select:none}
-.rn{font-family:'Oswald',sans-serif;font-size:21px;font-weight:700;color:var(--goldd);width:26px;flex-shrink:0;line-height:1}
-.rc.ex .rn{color:var(--gold)}
-.ri{flex:1;min-width:0}
-.rnm{font-family:'Oswald',sans-serif;font-size:15.5px;font-weight:600;color:var(--wh);text-transform:uppercase;letter-spacing:.04em;line-height:1.25;margin-bottom:3px}
-.rmr{display:flex;align-items:center;gap:11px;flex-wrap:wrap}
-.rmi{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--tx2)}
-.rpb{width:70px;height:3px;background:var(--bg3);border-radius:2px;overflow:hidden}
-.rpf{height:100%;background:var(--gold);border-radius:2px;transition:width .3s}
-.rsc{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--tx3);white-space:nowrap}
-.rch{color:var(--tx3);font-size:13px;transition:transform .2s;flex-shrink:0}
-.rc.ex .rch{transform:rotate(90deg)}
-.rb{display:none;border-top:1px solid var(--bd)}
-.rc.ex .rb{display:block}
-.warn{display:flex;gap:9px;padding:11px 17px;background:var(--redd);border-bottom:1px solid rgba(200,53,58,.3);font-size:12px;color:#e0b5b7;line-height:1.55}
-.warn-ic{color:#e8686c;flex-shrink:0}
-.warn b{color:#f2d0d2}
-.lo{display:flex;gap:10px;padding:13px 17px;background:rgba(201,168,76,.04);border-bottom:1px solid var(--bd);align-items:flex-start}
-.lol{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;white-space:nowrap;margin-top:2px}
-.loi{display:flex;flex-wrap:wrap;gap:5px}
-.lot{background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.25);color:var(--tx2);font-size:11px;padding:2px 8px;border-radius:3px}
-.stl{padding:2px 0 6px}
-.st{display:flex;gap:11px;padding:10px 17px;cursor:pointer;transition:background .1s;border-bottom:1px solid rgba(44,44,49,.5);align-items:flex-start}
-.st:last-child{border-bottom:none}
-.st:hover{background:rgba(255,255,255,.02)}
-.st.dn{opacity:.4}
-.stn{width:21px;height:21px;border-radius:50%;background:var(--bg3);border:1px solid var(--bd2);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--tx3);flex-shrink:0;margin-top:1px}
-.st.dn .stn{background:var(--greend);border-color:var(--green);color:var(--green)}
-.stc{flex:1;min-width:0}
-.stt{font-size:13px;font-weight:500;color:var(--wh);margin-bottom:2px;display:flex;gap:7px;align-items:center;flex-wrap:wrap}
-.st.dn .stt{color:var(--tx2)}
-.std{font-size:12px;color:var(--tx2);line-height:1.55}
-.sv{display:inline-flex;align-items:center;gap:4px;background:rgba(212,168,32,.1);border:1px solid rgba(212,168,32,.3);color:var(--amber);font-size:10px;font-family:'JetBrains Mono',monospace;padding:2px 7px;border-radius:3px;margin-top:5px;letter-spacing:.05em}
-.unlocks{margin-top:6px;display:flex;flex-wrap:wrap;gap:4px}
-.ul{font-size:10px;font-family:'JetBrains Mono',monospace;background:var(--bg3);border:1px solid var(--bd2);color:var(--tx2);padding:1px 6px;border-radius:3px}
+
+/* ── the timing sheet (roster) ─────────────────────────────────────────── */
+.filters{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 20px}
+.filters button{font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;background:var(--sheet-2);
+  border:1px solid var(--rule-2);color:var(--ink-2);padding:7px 12px;cursor:pointer}
+.filters button:hover{border-color:var(--kerb);color:var(--ink)}
+.filters button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--sheet)}
 .sec{margin-bottom:26px}
-.sh{display:flex;align-items:center;gap:11px;margin-bottom:10px;padding-bottom:9px;border-bottom:1px solid var(--bd);flex-wrap:wrap}
-.st2{font-family:'Oswald',sans-serif;font-size:15px;font-weight:600;text-transform:uppercase;letter-spacing:.08em}
-.sb{font-family:'JetBrains Mono',monospace;font-size:10px;padding:2px 8px;border-radius:3px}
-.sp{margin-left:auto;display:flex;align-items:center;gap:8px}
-.spb{width:56px;height:3px;background:var(--bg3);border-radius:2px;overflow:hidden}
-.spf{height:100%;border-radius:2px;transition:width .3s}
-.spt{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--tx3)}
-.chl{display:flex;flex-direction:column;gap:3px}
-.ch{display:flex;gap:10px;padding:9px 12px;background:var(--bg2);border:1px solid var(--bd);border-radius:4px;cursor:pointer;transition:.1s;align-items:flex-start}
-.ch:hover{border-color:var(--bd2);background:var(--bg3)}
-.ch.dn{opacity:.35}
-.cb{width:15px;height:15px;border-radius:3px;border:1.5px solid var(--bd2);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:10px;transition:.1s}
-.ch.dn .cb{background:var(--greend);border-color:var(--green);color:var(--green)}
-.ct{flex:1;min-width:0}
-.cnm2{font-size:13px;font-weight:500;color:var(--wh);margin-bottom:1px;display:flex;gap:7px;align-items:center;flex-wrap:wrap}
-.ch.dn .cnm2{color:var(--tx2)}
-.cd2{font-size:11.5px;color:var(--tx2);line-height:1.5}
-.hint{font-size:11px;color:var(--tx3);line-height:1.5;margin-top:3px;padding-left:9px;border-left:2px solid var(--bd2)}
-.tg{font-size:9px;padding:2px 6px;border-radius:3px;border:1px solid;font-family:'JetBrains Mono',monospace;letter-spacing:.05em;white-space:nowrap;flex-shrink:0;margin-top:2px;text-transform:uppercase}
-.ms{background:rgba(139,107,184,.12);border-color:rgba(139,107,184,.4);color:#b298d6}
-.conf{background:var(--amberd);border:1px solid rgba(212,168,32,.3);border-radius:6px;padding:12px 15px;margin-bottom:16px;font-size:12px;color:#d9c384;line-height:1.6}
-.conf b{color:#e8c84a}
-.tagA{background:var(--redd);border-color:rgba(200,53,58,.4);color:#e8686c}
-.tagD{background:var(--blued);border-color:rgba(61,142,200,.4);color:#6abaee}
-.tagF{background:var(--greend);border-color:rgba(58,171,94,.4);color:#5ccc80}
-.tagT{background:rgba(200,53,58,.08);border-color:rgba(200,53,58,.35);color:#e07575}
-.tagC{background:var(--amberd);border-color:rgba(212,168,32,.4);color:#e8c84a}
-.dotA{background:#c8353a}.dotD{background:#3d8ec8}.dotF{background:#3aab5e}.dotT{background:#c85050}.dotC{background:#d4a820}
-.clA{color:#e8686c}.clD{color:#6abaee}.clF{color:#5ccc80}.clT{color:#e07575}.clC{color:#e8c84a}
-.flA{background:#c8353a}.flD{background:#3d8ec8}.flF{background:#3aab5e}.flT{background:#c85050}.flC{background:#d4a820}
-::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:3px}
-@media(max-width:720px){.wrap{grid-template-columns:1fr;padding:16px}.side{position:static}.hd,.note,.prog{padding-left:16px;padding-right:16px}.ttl{font-size:26px}.stamp{display:none}}
+.sh{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;padding-bottom:7px;
+  border-bottom:2px solid var(--ink);margin-bottom:2px}
+.st2{font-family:var(--disp);font-weight:700;font-size:19px;letter-spacing:-.01em;
+  border-left:6px solid var(--c,var(--aqua));padding-left:9px}
+.sb{font-family:var(--mono);font-size:10.5px;color:var(--faint)}
+.sp{display:flex;align-items:center;gap:9px;margin-left:auto;min-width:130px}
+.spb{flex:1;height:5px;background:var(--sheet-3)}
+.spf{display:block;height:100%;background:var(--c,var(--aqua))}
+.spt{font-family:var(--mono);font-size:11px;color:var(--ink-2)}
+.crow{display:grid;grid-template-columns:34px 34px minmax(0,1fr) auto;gap:13px;align-items:start;
+  padding:11px 0;border-bottom:1px solid var(--rule-3)}
+.crow:last-child{border-bottom:0}
+.crow.done{background:rgba(23,134,74,.06)}
+.pos{font-family:var(--mono);font-size:13px;color:var(--faint);padding-top:7px;text-align:right}
+.cnm{margin:0;font-family:var(--disp);font-weight:600;font-size:16.5px;line-height:1.28}
+.crow.done .cnm{color:var(--green)}
+.cds{margin:4px 0 0;color:var(--ink-2);font-size:14.2px}
+.cds .red{color:var(--faint);font-style:italic}
+.hint{margin:6px 0 0;padding-left:11px;border-left:3px solid var(--sun);font-size:13.4px;color:var(--ink-2)}
+.tg{font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;
+  padding:2px 7px;border:1px solid var(--c,var(--aqua));color:var(--c,var(--aqua));white-space:nowrap}
+.tg.ms{border-color:var(--purple);color:var(--purple)}
+.cmeta{display:flex;flex-direction:column;align-items:flex-end;gap:4px;text-align:right}
+.empty{margin:18px 0;color:var(--ink-2)}
+
+/* ── race control (the audit) ──────────────────────────────────────────── */
+.conf{border:1px solid var(--rule-2);border-left:5px solid var(--aqua);background:var(--sheet-2);
+  padding:15px 17px;margin-bottom:14px;font-size:14.2px;color:var(--ink-2);line-height:1.72}
+.conf b{color:var(--ink)}
+#audit .sec .sh{margin-bottom:10px}
+.cd2{font-size:14.2px;color:var(--ink-2)}
+.cd2 b{color:var(--ink)}
+.clA{--c:var(--kerb)}.clD{--c:var(--aqua)}.clF{--c:var(--flamingo)}
+.clT{--c:var(--purple)}.clC{--c:var(--classic)}
+footer{margin-top:26px;padding-top:14px;border-top:1px solid rgba(255,255,255,.12);color:#9aa2ad;
+  font-size:13px}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important;animation:none!important}}
+@media (max-width:860px){
+  .readout{grid-template-columns:minmax(0,1fr);gap:16px;align-items:start}
+  .board{padding:26px 16px 22px}
+  .decal{position:static;display:inline-block;margin-top:16px;transform:none}
+  .flagbox,.readout,.pitfoot{padding-left:16px;padding-right:16px}
+  .pitfoot{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:620px){
+  .panel{padding:15px}
+  .rhead{grid-template-columns:48px minmax(0,1fr);gap:12px}
+  .rno{height:44px;font-size:24px}
+  .laphead,.step{grid-template-columns:34px minmax(0,1fr)}
+  .laphead span:first-child,.lapno{display:none}
+  .crow{grid-template-columns:34px minmax(0,1fr)}
+  .pos{display:none}
+  .cmeta{grid-column:2;align-items:flex-start;text-align:left;flex-direction:row;flex-wrap:wrap;
+    gap:5px 10px;margin-top:7px}
+  .lgr{grid-template-columns:minmax(0,1fr);gap:3px}
+  .sq{aspect-ratio:1.1}
+}
+@media print{
+  body{background:#fff;background-image:none;color:#000;font-size:10.5pt}
+  .tabs,.tower,.skip,.tick,.btn,.btn-plain,.filters,.topbar,.flagbox{display:none!important}
+  .panel[hidden]{display:block!important}
+  .rbody{display:block!important}
+  header.pit,.panel,article.run,.slot,.sector{background:#fff!important;color:#000;border-color:#999;
+    box-shadow:none!important}
+  h1,.sub,.session,.timed,.timed b,.sector .v{color:#000!important}
+  .rno{background:#000!important}
+  .step,article.run,.sec{break-inside:avoid}
+}
 </style>
 </head>
 <body>
-<header class="hd">
-  <div class="hdin">
-    <div>
-      <div class="eyebrow">ICA Dossier · Miami, Florida · Mission 02</div>
-      <div class="ttl">The Finish Line</div>
-      <div class="sub">Built from the game's own challenge manifest · 77 challenges</div>
+<a class="skip" href="#pane-runs">Skip to the six runs</a>
+<div class="wrap">
+
+<header class="pit">
+  <div class="topbar">
+    <a href="../index.html">&#8592; All guides</a>
+    <span>Miami, Florida &middot; Main campaign 09</span>
+    <span>Saved in this browser &middot; nothing leaves this device</span>
+  </div>
+
+  <div class="board">
+    <p class="session"><!--@eyebrow-->ICA Dossier · Miami, Florida · Mission 02<!--/@eyebrow--></p>
+    <h1><!--@ttl-->The Finish Line<!--/@ttl--></h1>
+    <p class="sub"><!--@sub-->Built from the game's own challenge manifest · 77 challenges<!--/@sub--></p>
+    <span class="decal"><!--@stamp-->Manifest-Sourced<!--/@stamp--></span>
+  </div>
+  <div class="kerb" aria-hidden="true"></div>
+
+  <div class="flagbox">
+    <div class="flagcap">
+      <span class="lbl">The chequered flag &middot; one square a challenge</span>
+      <span class="lbl" id="flagState">none taken</span>
     </div>
-    <div class="stamp">Manifest-Sourced</div>
+    <div class="flag" id="flag"></div>
+  </div>
+
+  <div class="readout">
+    <div>
+      <span class="lbl">Challenges claimed</span>
+      <p class="timed"><b id="numDone">0</b><span id="ofDone">/ 0 on the sheet</span></p>
+      <p class="laps" id="lapline">0 laps run</p>
+    </div>
+    <div class="sectors" id="sectors"></div>
+  </div>
+
+  <div class="pitfoot">
+    <p class="scrut"><!--@note--><b>Source of truth.</b> Every challenge name, description, and category on this page is taken verbatim from the uploaded game manifest — the authoritative list. Names and categories carry the <b>MANIFEST</b> tier. Where the manifest description is marked [REDACTED] or is a joke, any method note is a lower-tier <b>GUIDE</b> hint from earlier two-source research and is labelled as such. Nothing is invented; unconfirmed method details say so.<!--/@note--></p>
+    <button class="btn" id="reset" type="button">Clear the sheet</button>
   </div>
 </header>
-<div class="note">
-  <div class="notein">
-    <span class="note-ic">✓</span>
-    <div class="note-tx"><b>Source of truth.</b> Every challenge name, description, and category on this page is taken verbatim from the uploaded game manifest — the authoritative list. Names and categories carry the <b>MANIFEST</b> tier. Where the manifest description is marked [REDACTED] or is a joke, any method note is a lower-tier <b>GUIDE</b> hint from earlier two-source research and is labelled as such. Nothing is invented; unconfirmed method details say so.</div>
-  </div>
+
+<div class="tabs" role="tablist" aria-label="Guide sections">
+  <button class="tab" role="tab" id="tab-runs" aria-controls="pane-runs" aria-selected="true">The pit wall</button>
+  <button class="tab" role="tab" id="tab-list" aria-controls="pane-list" aria-selected="false">Timing sheet</button>
+  <button class="tab" role="tab" id="tab-audit" aria-controls="pane-audit" aria-selected="false">Race control</button>
 </div>
-<div class="prog">
-  <div class="progin">
-    <span class="pl">Challenges completed</span>
-    <div class="pbar"><div class="pfill" id="pf" style="width:0%"></div></div>
-    <span class="pcount" id="pc">0 / 78</span>
-  </div>
-</div>
-<div class="wrap">
-  <aside class="side">
-    <div class="sblk">
-      <div class="slbl">View</div>
-      <button class="nb on" id="b-r" onclick="tab('r')"><span>Optimized Runs</span><span class="nbc">6</span></button>
-      <button class="nb" id="b-c" onclick="tab('c')"><span>Challenge Roster</span><span class="nbc">77</span></button>
-      <button class="nb" id="b-a" onclick="tab('a')"><span>Audit &amp; Notes</span><span class="nbc">i</span></button>
-    </div>
-    <div class="sblk"><div class="slbl">By Category</div><div id="cats"></div></div>
-    <button class="rst" onclick="wipe()">⟳ Reset progress</button>
-  </aside>
-  <main>
-    <div class="pan on" id="p-r"><div class="rl" id="runs"></div></div>
-    <div class="pan" id="p-c">
-      <div class="legend">
+
+<section class="panel" id="pane-runs" role="tabpanel" aria-labelledby="tab-runs">
+  <nav class="tower" id="tower" aria-label="Jump to a run"></nav>
+  <div id="runs"></div>
+  <p class="conf" id="leftover"></p>
+</section>
+
+<section class="panel" id="pane-list" role="tabpanel" aria-labelledby="tab-list" hidden>
+<!--@legend-->
+<div class="legend">
         <div class="lgt">Source tiers</div>
         <div class="lgr"><span class="cf cf-m">Manifest</span><span>Name, description and category are verbatim from the game file.</span></div>
         <div class="lgr"><span class="cf cf-r">Redacted</span><span>Manifest lists the challenge but hides its description. Name/category still authoritative.</span></div>
         <div class="lgr"><span class="cf cf-g">Guide hint</span><span>A method note from earlier two-source research, added only to help. Provisional.</span></div>
       </div>
-      <div id="chs"></div>
-    </div>
-    <div class="pan" id="p-a"><div id="audit"></div></div>
-  </main>
+<!--/@legend-->
+  <div class="filters" id="filters"></div>
+  <div id="checklist"></div>
+</section>
+
+<section class="panel" id="pane-audit" role="tabpanel" aria-labelledby="tab-audit" hidden>
+  <div id="audit"></div>
+</section>
+
+<footer>Names, descriptions and categories are the mission's own manifest. Everything else &mdash; the
+routes, the running order and the flags on this page &mdash; is guide work, and race control says which
+is which.</footer>
 </div>
+
 <script>
+/*@data*/
 const CL={A:"Assassination",D:"Discovery",F:"Feats",T:"Targets",C:"The Classics"};
 const CT={A:"Assassin",D:"Discover",F:"Feat",T:"Target",C:"Classic"};
 const COUNTS={A:29,D:21,F:21,T:2,C:5};
@@ -364,95 +564,209 @@ st:[
 
 // Versatile bundle + Chameleon + Discover Miami + Straight Shot/Someone/Piano/Tasteless/Hot Shot noted below runs
 const LEFTOVER_NOTE = "Chameleon, Discover Miami, and the Dolphin discovery are collected passively across all six runs. Versatile Assassin auto-completes once Piano Man, Someone Could Hurt Themselves, Hold My Hair, Straight Shot and Tasteless, Traceless are each done — spread those single-target methods across your reloads.";
+/*/@data*/
 
+/* ---------------- STATE ----------------
+   The key and the shape the previous edition wrote are kept exactly:
+   'miami_v6' holding {ch:{<index>:true}, st:{'r<run>_<i>':true}, ex:{<run>:true}},
+   with challenges keyed by their position in CH, so an existing sheet survives
+   the rebuild untouched. */
 let S={ch:{},st:{},ex:{}};
 try{const d=JSON.parse(localStorage.getItem('miami_v6')||'{}');S.ch=d.ch||{};S.st=d.st||{};S.ex=d.ex||{}}catch(e){}
-function reportProgress(){try{const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');r['m09']={done:done(),total:CH.length,updated:Date.now()};localStorage.setItem('hitman-progress-registry',JSON.stringify(r));}catch(e){}}
+function reportProgress(){
+  try{
+    const r=JSON.parse(localStorage.getItem('hitman-progress-registry')||'{}');
+    r['m09']={done:doneCount(),total:CH.length,updated:Date.now()};
+    localStorage.setItem('hitman-progress-registry',JSON.stringify(r));
+  }catch(e){}
+}
 function sv(){try{localStorage.setItem('miami_v6',JSON.stringify(S))}catch(e){}reportProgress();}
 
-function nameIndex(nm){return CH.findIndex(x=>x.n===nm)}
-function done(){return CH.filter((_,i)=>S.ch[i]).length}
-function catDone(c){return CH.filter((x,i)=>x.c===c&&S.ch[i]).length}
+const $=s=>document.getElementById(s);
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+/* Every count on this page is taken from CH itself. The manifest's own COUNTS
+   table adds up to 78 because one of its entries is not a game challenge —
+   race control explains it — so the roster is the authority here, not the
+   table. */
+const CATC={A:'var(--kerb)',D:'var(--aqua)',F:'var(--flamingo)',T:'var(--purple)',C:'var(--classic)'};
+const CATS=['A','D','F','T','C'];
+const catTotal=c=>CH.filter(x=>x.c===c).length;
+const catDone=c=>CH.filter((x,i)=>x.c===c&&S.ch[i]).length;
+const doneCount=()=>CH.filter((_,i)=>S.ch[i]).length;
+const nameIndex=nm=>CH.findIndex(x=>x.n===nm);
+let filter='all';
 
-function tab(t){['r','c','a'].forEach(k=>{
-document.getElementById('p-'+k).classList.toggle('on',k===t);
-document.getElementById('b-'+k).classList.toggle('on',k===t)})}
+/* lap ids, fixed once: 'r<run>_<i>' exactly as the stored sheet spells them */
+const STEP_CH={};
+let TOTAL_LAPS=0;
+RUNS.forEach(r=>r.st.forEach((s,i)=>{
+  s._k='r'+r.id+'_'+i;
+  s._n=i+1;
+  STEP_CH[s._k]=(s.u||[]).map(nameIndex).filter(i=>i>=0);
+  TOTAL_LAPS++;
+}));
+const runDone=r=>r.st.filter(s=>S.st[s._k]).length;
 
-function upTop(){const d=done(),t=CH.length,p=Math.round(d/t*100);
-document.getElementById('pf').style.width=p+'%';document.getElementById('pc').textContent=d+' / '+t}
-function upCats(){['A','D','F','T','C'].forEach(c=>{
-const dn=catDone(c),tot=COUNTS[c];
-const f=document.querySelector('[data-cf="'+c+'"]'),r=document.querySelector('[data-cr="'+c+'"]');
-if(f)f.style.width=Math.round(dn/tot*100)+'%';if(r)r.textContent=dn+'/'+tot})}
+const PILL={
+  m:'<span class="cf cf-m">Manifest</span>',
+  g:'<span class="cf cf-g">Guide hint</span>',
+  r:'<span class="cf cf-r">Redacted</span>'
+};
 
-function tCh(i){S.ch[i]=!S.ch[i];sv();
-const el=document.querySelector('[data-k="'+i+'"]');
-if(el){el.classList.toggle('dn',!!S.ch[i]);el.querySelector('.cb').innerHTML=S.ch[i]?'✓':''}
-upTop();upCats();syncRunSteps()}
+/* ---------------- THE CHEQUERED FLAG ----------------
+   Eleven across, seven down. A square takes its category's colour the moment
+   its challenge is claimed. */
+function renderFlag(){
+  $('flag').innerHTML=CH.map((c,i)=>{
+    const on=!!S.ch[i], alt=((Math.floor(i/11)+i)%2)===0;
+    return `<button type="button" class="sq${alt?' alt':''}${on?' on':''}" data-ch="${i}"
+      style="--c:${CATC[c.c]}" aria-pressed="${on}"
+      title="${esc(c.n)}" aria-label="${esc(c.n)} — ${esc(CL[c.c])}"></button>`;
+  }).join('');
+}
 
-function tSt(r,i){const k='r'+r+'_'+i;S.st[k]=!S.st[k];sv();
-// mark mapped challenges done when a step is checked
-const run=RUNS.find(x=>x.id===r),step=run.st[i];
-if(step.u){step.u.forEach(nm=>{const ci=nameIndex(nm);if(ci>=0)S.ch[ci]=!!S.st[k]})}
-sv();build()}
+function renderStats(){
+  const d=doneCount();
+  $('numDone').textContent=d;
+  $('ofDone').textContent='/ '+CH.length+' on the sheet';
+  $('flagState').textContent=d===0?'none taken':d===CH.length?'flag taken on every square'
+    :d+' taken, '+(CH.length-d)+' to go';
+  const laps=RUNS.reduce((a,r)=>a+runDone(r),0);
+  $('lapline').textContent=laps+' of '+TOTAL_LAPS+' laps run across '+RUNS.length+' runs';
+  $('sectors').innerHTML=CATS.map(c=>{
+    const t=catTotal(c), n=catDone(c), pct=t?n/t*100:0;
+    return `<div class="sector${t&&n===t?' full':''}" style="--c:${CATC[c]}">
+      <span class="k">${CL[c]}</span>
+      <span class="v">${n}<small> / ${t}</small></span>
+      <span class="b"><i style="width:${pct}%"></i></span></div>`;
+  }).join('');
+  renderFlag();
+}
 
-function syncRunSteps(){/* re-render handled by build on challenge toggle from roster */}
+/* ---------------- THE PIT WALL ---------------- */
+const split=i=>{
+  const c=CH[i];
+  if(!c) return '';
+  const on=!!S.ch[i];
+  return `<button type="button" class="split${on?' on':''}" data-ch="${i}" style="--c:${CATC[c.c]}"
+    aria-pressed="${on}">${c.n}</button>`;
+};
 
-function tRun(r){S.ex[r]=!S.ex[r];sv();
-const el=document.querySelector('[data-r="'+r+'"]');if(el)el.classList.toggle('ex',!!S.ex[r])}
-function wipe(){if(!confirm('Reset all progress?'))return;S={ch:{},st:{},ex:{}};sv();build()}
+function renderTower(){
+  $('tower').innerHTML=RUNS.map(r=>{
+    const n=runDone(r), t=r.st.length;
+    return `<button type="button" class="tw${n===t?' full':''}" data-jump="${r.id}">
+      <span class="p">${String(r.id).padStart(2,'0')}</span>
+      <span class="n">${r.nm}</span>
+      <span class="s">${n}/${t}</span></button>`;
+  }).join('');
+}
 
-const PILL={m:'<span class="cf cf-m">Manifest</span>',g:'<span class="cf cf-g">Guide hint</span>',r:'<span class="cf cf-r">Redacted</span>'};
+function renderRuns(){
+  renderTower();
+  $('runs').innerHTML=RUNS.map(r=>{
+    const open=!!S.ex[r.id], n=runDone(r), t=r.st.length;
+    return `<article class="run${n===t?' full':''}" id="run${r.id}">
+      <button type="button" class="rhead" data-run="${r.id}" aria-expanded="${open}">
+        <span class="rno">${String(r.id).padStart(2,'0')}</span>
+        <span class="rmain">
+          <span class="rkick">Run ${r.id} of ${RUNS.length} &middot; ${open?'session open':'session closed'}</span>
+          <span class="rtitle">${r.nm}</span>
+          <span class="rmeta"><span class="tagi">Start &middot; ${r.loc}</span><span class="tagi">Suit &middot; ${r.su}</span></span>
+          <span class="rtally">${n} of ${t} laps run</span>
+        </span>
+      </button>
+      <div class="rbody"${open?'':' hidden'}>
+        ${r.warn?`<div class="warn"><span class="fl" aria-hidden="true"></span>
+          <span><b>Yellow flag.</b> ${r.warn}</span></div>`:''}
+        <div class="loadout">
+          <div class="slot"><span class="k">Start</span><span class="v">${r.loc}</span></div>
+          <div class="slot"><span class="k">Suit</span><span class="v">${r.su}</span></div>
+          ${r.it.map((x,i)=>`<div class="slot"><span class="k">Loadout ${i+1}</span><span class="v">${x}</span></div>`).join('')}
+        </div>
+        <div class="laphead"><span>Lap</span><span>Flag</span><span>What happens on it</span></div>
+        ${r.st.map(s=>lapHTML(s)).join('')}
+      </div>
+    </article>`;
+  }).join('');
+  $('leftover').innerHTML='<b>Collected as you go.</b> '+LEFTOVER_NOTE;
+}
 
-function build(){
-document.getElementById('runs').innerHTML=RUNS.map(r=>{
-const dn=r.st.filter((_,i)=>S.st['r'+r.id+'_'+i]).length,t=r.st.length;
-const steps=r.st.map((s,i)=>{
-const k='r'+r.id+'_'+i,d=!!S.st[k];
-const ul=(s.u&&s.u.length)?'<div class="unlocks">'+s.u.map(n=>'<span class="ul">'+n+'</span>').join('')+'</div>':'';
-return '<div class="st'+(d?' dn':'')+'" data-s="'+k+'" onclick="tSt('+r.id+','+i+')">'+
-'<div class="stn">'+(d?'✓':(i+1))+'</div><div class="stc">'+
-'<div class="stt">'+s.t+' '+PILL[s.cf]+'</div><div class="std">'+s.d+'</div>'+ul+
-(s.sv?'<div class="sv">◈ Hard save here</div>':'')+'</div></div>'}).join('');
-return '<div class="rc'+(S.ex[r.id]?' ex':'')+'" data-r="'+r.id+'">'+
-'<div class="rh" onclick="tRun('+r.id+')"><div class="rn">'+String(r.id).padStart(2,'0')+'</div>'+
-'<div class="ri"><div class="rnm">'+r.nm+'</div><div class="rmr">'+
-'<span class="rmi">◈ '+r.loc+'</span><span class="rmi">◈ '+r.su+'</span>'+
-'<div class="rpb"><div class="rpf" style="width:'+Math.round(dn/t*100)+'%"></div></div>'+
-'<span class="rsc">'+dn+'/'+t+'</span></div></div><span class="rch">▶</span></div>'+
-'<div class="rb">'+
-(r.warn?'<div class="warn"><span class="warn-ic">⚠</span><span>'+r.warn+'</span></div>':'')+
-'<div class="lo"><span class="lol">Loadout</span><div class="loi">'+r.it.map(i=>'<span class="lot">'+i+'</span>').join('')+'</div></div>'+
-'<div class="stl">'+steps+'</div></div></div>'}).join('');
+function lapHTML(s){
+  const on=!!S.st[s._k];
+  const splits=(STEP_CH[s._k]||[]).map(split).join('');
+  return `<div class="step${on?' done':''}" id="lap${s._k}">
+    <span class="lapno">${String(s._n).padStart(2,'0')}</span>
+    <button type="button" class="tick" data-step="${s._k}" aria-pressed="${on}"
+      aria-label="Take lap ${s._n}${(STEP_CH[s._k]||[]).length?', and claim the challenges it completes':''}"></button>
+    <div class="swrap">
+      <span class="stitle">${s.t} ${PILL[s.cf]||''}</span>
+      <p class="sdesc">${s.d}</p>
+      ${splits?`<div class="splits">${splits}</div>`:''}
+      ${s.sv?`<span class="pitbox"><s></s>Pit here &middot; hard save</span>`:''}
+    </div>
+  </div>`;
+}
 
-document.getElementById('chs').innerHTML=['A','D','F','T','C'].map(c=>{
-const items=CH.map((x,gi)=>({x,gi})).filter(o=>o.x.c===c);
-const dn=catDone(c),tot=COUNTS[c];
-const rows=items.map(o=>{
-const d=!!S.ch[o.gi];
-const isRed=o.x.redacted;
-const msTag=o.x.ms?'<span class="tg ms">Mission Story</span>':'';
-const tierPill=isRed?PILL.r:PILL.m;
-const desc=isRed?'<span style="color:var(--tx3)">[Description redacted in manifest]</span>':o.x.d;
-const hint=o.x.hint?'<div class="hint">'+(o.x.hint)+'</div>':'';
-return '<div class="ch'+(d?' dn':'')+'" data-k="'+o.gi+'" onclick="tCh('+o.gi+')">'+
-'<div class="cb">'+(d?'✓':'')+'</div><div class="ct">'+
-'<div class="cnm2">'+o.x.n+' '+tierPill+msTag+'</div>'+
-'<div class="cd2">'+desc+'</div>'+hint+
-'</div><span class="tg tag'+c+'">'+CT[c]+'</span></div>'}).join('');
-return '<div class="sec"><div class="sh"><span class="st2 cl'+c+'">'+CL[c]+'</span>'+
-'<span class="sb tag'+c+'">'+tot+' in game</span>'+
-'<div class="sp"><div class="spb"><div class="spf fl'+c+'" data-cf="'+c+'" style="width:'+Math.round(dn/tot*100)+'%"></div></div>'+
-'<span class="spt" data-cr="'+c+'">'+dn+'/'+tot+'</span></div></div>'+
-'<div class="chl">'+rows+'</div></div>'}).join('');
+/* ---------------- THE TIMING SHEET ---------------- */
+function renderList(){
+  const F=[['all','All '+CH.length]]
+    .concat(CATS.map(c=>[c,CL[c]+' '+catTotal(c)]))
+    .concat([['todo','Not yet claimed '+(CH.length-doneCount())]]);
+  $('filters').innerHTML=F.map(([k,l])=>
+    `<button type="button" data-f="${k}" aria-pressed="${filter===k}">${l}</button>`).join('');
 
-document.getElementById('cats').innerHTML=['A','D','F','T','C'].map(c=>{
-const dn=catDone(c),tot=COUNTS[c];
-return '<div class="cwrap"><div class="crow" onclick="tab(\'c\')">'+
-'<div class="cdot dot'+c+'"></div><span class="cnm">'+CL[c]+'</span>'+
-'<span class="cfr" data-cr="'+c+'">'+dn+'/'+tot+'</span></div>'+
-'<div class="cmb"><div class="cmf fl'+c+'" data-cf="'+c+'" style="width:'+Math.round(dn/tot*100)+'%"></div></div></div>'}).join('');
+  const shown=CATS.filter(c=>filter==='all'||filter==='todo'||filter===c);
+  let any=0;
+  const html=shown.map(c=>{
+    const rows=CH.map((x,i)=>({x,i})).filter(o=>o.x.c===c&&(filter!=='todo'||!S.ch[o.i]));
+    if(!rows.length) return '';
+    any+=rows.length;
+    const n=catDone(c), t=catTotal(c);
+    return `<div class="sec" style="--c:${CATC[c]}">
+      <div class="sh">
+        <span class="st2">${CL[c]}</span>
+        <span class="sb">${t} on the manifest</span>
+        <span class="sp"><span class="spb"><i class="spf" style="width:${t?n/t*100:0}%"></i></span>
+          <span class="spt">${n}/${t}</span></span>
+      </div>
+      ${rows.map(o=>rowHTML(o.x,o.i)).join('')}
+    </div>`;
+  }).join('');
+  $('checklist').innerHTML=any?html:'<p class="empty">Nothing left under this heading.</p>';
+}
 
+function rowHTML(c,i){
+  const on=!!S.ch[i];
+  const desc=c.redacted?'<span class="red">[Description redacted in manifest]</span>':c.d;
+  return `<div class="crow${on?' done':''}" style="--c:${CATC[c.c]}">
+    <button type="button" class="tick" data-ch="${i}" aria-pressed="${on}"
+      aria-label="Claim ${esc(c.n)}"></button>
+    <span class="pos">${String(i+1).padStart(2,'0')}</span>
+    <div>
+      <p class="cnm">${c.n} ${c.redacted?PILL.r:PILL.m}${c.ms?'<span class="tg ms">Mission Story</span>':''}</p>
+      <p class="cds">${desc}</p>
+      ${c.hint?`<p class="hint">${c.hint}</p>`:''}
+    </div>
+    <span class="cmeta">
+      <span class="tg">${CT[c.c]}</span>
+      <span class="sb">${runOf(c.n)}</span>
+    </span>
+  </div>`;
+}
+
+/* which run covers a challenge — read off the laps that claim it */
+const RUN_OF={};
+RUNS.forEach(r=>r.st.forEach(s=>(s.u||[]).forEach(nm=>{if(!RUN_OF[nm])RUN_OF[nm]='Run '+r.id;})));
+function runOf(nm){return RUN_OF[nm]||'Across runs';}
+
+function render(){renderRuns();renderList();renderStats();}
+
+/* Race control, lifted whole out of the previous edition: it is a single
+   JavaScript expression, so it keeps its own quotes and escapes and is only
+   fenced, never retyped. */
+function renderAudit(){
+/*@audit*/
 const redCount=CH.filter(x=>x.redacted).length;
 const msCount=CH.filter(x=>x.ms).length;
 document.getElementById('audit').innerHTML=
@@ -475,9 +789,79 @@ document.getElementById('audit').innerHTML=
 '</div></div>'+
 '<div class="sec"><div class="sh"><span class="st2 clD">Still not fully pinned down</span></div>'+
 '<div class="cd2" style="line-height:1.8">The manifest gives objectives, not walkthroughs, so exact positions for a few kills (e.g. Robert\'s sniper exposure for Sniper Assassin, the precise timing window for The Tree Falls on the Apple) are Guide-tier and worth verifying in-game. These are flagged rather than asserted.</div></div>';
+/*/@audit*/
+}
 
-upTop();upCats()}
-build();
+/* ---------------- EVENTS ---------------- */
+const tabs=[...document.querySelectorAll('.tab')];
+function selectTab(tb){
+  tabs.forEach(x=>{
+    const on=x===tb;
+    x.setAttribute('aria-selected',String(on));
+    x.tabIndex=on?0:-1;
+    $(x.getAttribute('aria-controls')).hidden=!on;
+  });
+}
+tabs.forEach((tb,i)=>{
+  tb.tabIndex=tb.getAttribute('aria-selected')==='true'?0:-1;
+  tb.addEventListener('keydown',e=>{
+    const d=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;
+    if(!d)return;
+    e.preventDefault();
+    const next=tabs[(i+d+tabs.length)%tabs.length];
+    selectTab(next);next.focus();
+  });
+});
+
+document.addEventListener('click',e=>{
+  const t=e.target;
+
+  /* a challenge is a control wherever it appears: on the flag, on a lap that
+     claims it, or on the timing sheet */
+  const cb=t.closest('[data-ch]');
+  if(cb){
+    const i=+cb.dataset.ch;
+    S.ch[i]?delete S.ch[i]:S.ch[i]=true;
+    sv();render();return;
+  }
+
+  const sb=t.closest('[data-step]');
+  if(sb){
+    const k=sb.dataset.step, now=!S.st[k];
+    now?S.st[k]=true:delete S.st[k];
+    /* taking a lap claims the challenges that lap completes; giving it back
+       leaves them claimed, because another lap may cover the same one */
+    if(now)(STEP_CH[k]||[]).forEach(i=>S.ch[i]=true);
+    sv();render();return;
+  }
+
+  const rb=t.closest('[data-run]');
+  if(rb){const id=+rb.dataset.run;S.ex[id]?delete S.ex[id]:S.ex[id]=true;sv();renderRuns();return;}
+
+  const jp=t.closest('[data-jump]');
+  if(jp){
+    const id=+jp.dataset.jump;
+    S.ex[id]=true;sv();renderRuns();
+    $('run'+id).scrollIntoView({behavior:'smooth',block:'start'});return;
+  }
+
+  const fb=t.closest('[data-f]');
+  if(fb){filter=fb.dataset.f;renderList();return;}
+
+  const tb=t.closest('.tab');
+  if(tb){selectTab(tb);return;}
+});
+
+$('reset').addEventListener('click',()=>{
+  if(!confirm('Clear the sheet? Every claimed challenge and every lap on this guide is cleared. Other guides are not affected.'))return;
+  S={ch:{},st:{},ex:{}};
+  sv();render();
+});
+
+/* first visit opens the first session, so the wall is not a row of shut doors */
+if(!Object.keys(S.ex).length) S.ex[1]=true;
+render();
+renderAudit();
 reportProgress();
 </script>
 <!-- step-progress-bridge -->
@@ -486,7 +870,7 @@ reportProgress();
    show them beside the challenge counts. Counts what is on screen rather than
    any guide-specific state, so one implementation serves every guide. */
 (function(){
-  var RID="m09", SEL=".st";
+  var RID="m09", SEL=".step";
   function isDone(s){
     var c=s.classList;
     if(c.contains('done')||c.contains('dn')) return true;
