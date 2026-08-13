@@ -799,15 +799,24 @@ var segEls = {}, catFilter = null, query = '';
   g.innerHTML = out;
 })();
 
-/* Read the shared registry every guide writes into. */
+/* Read the shared registry every guide writes into.
+   The TOTAL is this page's number, never the registry's. index.html and the
+   guides ship together, so the figure here is current, while a registry entry
+   can be any age and survives until that guide happens to be opened again — the
+   previous edition of Another Life reported its 38 route steps as its challenge
+   count, and that one stale entry quietly took 43 off the headline (1,606 read
+   as 1,563) for anyone who had opened it before the rebuild.
+   What the registry is for is `done`, clamped so an old count cannot exceed the
+   roster the guide now has. Keeping the totals below in step with the guides is
+   therefore load-bearing; _tools/check-totals.js compares the two. */
 function readRegistry(){
   var reg = {};
   try { reg = JSON.parse(localStorage.getItem('hitman-progress-registry') || '{}'); } catch(e){}
   var out = {};
   GUIDES.forEach(function(g){
     var r = reg[g.id];
-    var total = (r && typeof r.total === 'number' && r.total > 0) ? r.total : g.total;
-    var done  = (r && typeof r.done  === 'number') ? Math.min(r.done, total) : 0;
+    var total = g.total;
+    var done  = (r && typeof r.done === 'number') ? Math.max(0, Math.min(r.done, total)) : 0;
     /* Route steps come from each guide's step bridge. A guide that has never
        been opened has no step counts at all, so leave them at zero rather than
        inventing a 0/0 the files would have to render. */
